@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GZSkinsX.Contract\GZSkinsX.Contract.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj" />
   </ItemGroup>
   
   <!-- 

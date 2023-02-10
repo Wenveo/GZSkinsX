@@ -1,0 +1,125 @@
+﻿// Licensed to the GZSkins, Inc. under one or more agreements.
+// The GZSkins, Inc. licenses this file to you under the MS-PL license.
+
+using System.Diagnostics;
+
+using Microsoft.VisualStudio.Composition;
+
+namespace GZSkinsX.Composition;
+
+/// <summary>
+/// 用于枚举 MEF (v2) 组件的容器，基于 VS-MEF
+/// </summary>
+internal sealed class CompositionContainerV2
+{
+    /// <summary>
+    /// 已枚举的程序集目录
+    /// </summary>
+    private readonly AssemablyCatalogV2 _assemablyCatalog;
+
+    /// <summary>
+    /// 初始化 <see cref="CompositionContainerV2"/> 的新实例
+    /// </summary>
+    /// <param name="catalog"></param>
+    public CompositionContainerV2(AssemablyCatalogV2 catalog)
+    {
+        _assemablyCatalog = catalog;
+    }
+
+    /// <summary>
+    /// 从已有的缓存中加载或是创建一个新的 <see cref="ExportProvider"/> 实例
+    /// </summary>
+    /// <param name="useCache">是否使用缓存</param>
+    /// <returns>从容器中创建的  <see cref="ExportProvider"/> 实例</returns>
+    public async Task<ExportProvider> CreateExportProviderAsync(bool useCache)
+    {
+        return (await CreateExportProviderFactoryCoreAsync(useCache)).CreateExportProvider();
+    }
+
+    /// <summary>
+    /// 从已有的缓存中加载或是创建一个新的 <see cref="IExportProviderFactory"/> 实例
+    /// </summary>
+    /// <param name="useCache">是否使用缓存</param>
+    /// <returns>从容器中创建的 <see cref="IExportProviderFactory"/> 实例</returns>
+    private async Task<IExportProviderFactory> CreateExportProviderFactoryCoreAsync(bool useCache)
+    {
+        var resolver = Resolver.DefaultInstance;
+        if (useCache)
+        {
+            var factory = await TryGetCachedExportProviderFactoryAsync(resolver);
+            if (factory != null)
+            {
+                return factory;
+            }
+        }
+
+        return await CreateExportProviderFactoryAsync(resolver);
+    }
+
+    /// <summary>
+    /// 枚举程序集并创建 <see cref="IExportProviderFactory"/>
+    /// </summary>
+    /// <param name="resolver">默认解析器</param>
+    /// <returns>从容器中创建的  <see cref="IExportProviderFactory"/> 实例</returns>
+    private async Task<IExportProviderFactory> CreateExportProviderFactoryAsync(Resolver resolver)
+    {
+        var discovery = new AttributedPartDiscovery(resolver, true);
+        var parts = await discovery.CreatePartsAsync(_assemablyCatalog.Parts);
+        Debug.Assert(parts.ThrowOnErrors() == parts);
+
+        var composableCatalog = ComposableCatalog.Create(resolver).AddParts(parts);
+        var configuragtion = CompositionConfiguration.Create(composableCatalog);
+        Debug.Assert(configuragtion.ThrowOnErrors() == configuragtion);
+
+        await SaveMefCacheAsync(configuragtion);
+
+        return configuragtion.CreateExportProviderFactory();
+    }
+
+    /// <summary>
+    /// 尝试在已缓存的文件中获取 <see cref="IExportProviderFactory"/> 对象
+    /// </summary>
+    /// <param name="resolver">默认解析器</param>
+    /// <returns>从缓存中获取到的 <see cref="IExportProviderFactory"/> 对象，如果获取失败则返回 null </returns>
+    private static async Task<IExportProviderFactory?> TryGetCachedExportProviderFactoryAsync(Resolver resolver)
+    {
+        try
+        {
+            using var cachedStream = File.OpenRead(CompositionConstantsV2.MefCacheFileName);
+            return await new CachedComposition().LoadExportProviderFactoryAsync(cachedStream, resolver);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 将当前 <see cref="CompositionConfiguration"/> 对象的缓存以文件形式保存到本地
+    /// </summary>
+    /// <param name="configuration">用于缓存的对象</param>
+    private static async Task SaveMefCacheAsync(CompositionConfiguration configuration)
+    {
+        var isCreated = false;
+        var canDelete = true;
+
+        try
+        {
+            using var cachedStream = File.Create(CompositionConstantsV2.MefCacheFileName);
+            isCreated = true;
+
+            await new CachedComposition().SaveAsync(configuration, cachedStream);
+            canDelete = false;
+        }
+        catch when (isCreated && canDelete)
+        {
+            try
+            {
+                File.Delete(CompositionConstantsV2.MefCacheFileName);
+            }
+            catch
+            {
+            }
+        }
+    }
+}

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Composition;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Licensed to the GZSkins, Inc. under one or more agreements.
+// The GZSkins, Inc. licenses this file to you under the MS-PL license.
 
-using GZSkinsX.Contract.Navigation;
+using System.Composition;
+
+using GZSkinsX.Contracts.Navigation;
 
 namespace GZSkinsX.Navigation;
 

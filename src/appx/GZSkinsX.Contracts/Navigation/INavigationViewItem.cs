@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GZSkinsX.Contract.Navigation;
+namespace GZSkinsX.Contracts.Navigation;
 
 /// <summary>
 /// 导航菜单项，被用于 <see cref="INavigationService"/> 并在主视图中显示

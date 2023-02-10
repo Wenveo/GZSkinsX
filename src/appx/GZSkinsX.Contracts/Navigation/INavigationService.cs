@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GZSkinsX.Contract.Navigation;
+namespace GZSkinsX.Contracts.Navigation;
 
 /// <summary>
 /// 被用于主视图中的导航服务

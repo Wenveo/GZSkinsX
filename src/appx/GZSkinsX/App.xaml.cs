@@ -1,16 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
+﻿// Licensed to the GZSkins, Inc. under one or more agreements.
+// The GZSkins, Inc. licenses this file to you under the MS-PL license.
 
-using System.Composition;
-using System.Diagnostics;
 using System.Reflection;
 
-using GZSkinsX.Contract.App;
-using GZSkinsX.Contract.Navigation;
+using GZSkinsX.Composition;
+using GZSkinsX.Contracts.App;
 using GZSkinsX.MainApp;
 
 using Microsoft.UI.Xaml;
-using Microsoft.VisualStudio.Composition;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,18 +24,48 @@ public partial class App : Application
     /// </summary>
     public App()
     {
-        this.InitializeComponent();
+        InitializeComponent();
+
+        ThrowCatchTest();
+    }
+
+    static void ThrowCatchTest()
+    {
+        try
+        {
+            throw new ArgumentNullException("AAAA");
+        }
+        finally
+        {
+
+        }
     }
 
     /// <summary>
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
-    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
+        var catalog = new AssemablyCatalogV2();
+        catalog.AddParts(GetAssemblies());
+
+        var container = new CompositionContainerV2(catalog);
+        var exportProvider = await container.CreateExportProviderAsync(true);
+
+        var appWindow = exportProvider.GetExportedValue<IAppWindow>();
+        appWindow.Log("Test");
+
         AppWindow = new MainWindow();
         AppWindow.Activate();
     }
 
+
     public Window? AppWindow { get; private set; }
+
+    private static IEnumerable<Assembly> GetAssemblies()
+    {
+        yield return typeof(AppWindow).Assembly;
+        yield return typeof(IAppWindow).Assembly;
+    }
 }
