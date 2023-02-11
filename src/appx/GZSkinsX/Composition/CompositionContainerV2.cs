@@ -14,6 +14,8 @@
 
 using System.Diagnostics;
 
+using Microsoft.VisualStudio.Composition;
+
 namespace GZSkinsX.Composition;
 
 /// <summary>
