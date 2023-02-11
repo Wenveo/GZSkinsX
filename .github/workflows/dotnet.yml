@@ -41,7 +41,10 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
-    
+
+    - name: InferSharp
+      uses: microsoft/infersharpaction@v1.4
+
     - name: Run Infer#
       id: runinfersharp
       uses: ./
