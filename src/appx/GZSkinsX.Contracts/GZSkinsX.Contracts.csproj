@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -9,7 +9,5 @@
 
   <ItemGroup>
       <PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.4.16" />
-      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
-      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
   </ItemGroup>
 </Project>
