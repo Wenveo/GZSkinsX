@@ -27,6 +27,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2  
 
@@ -41,16 +48,3 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
-
-    - name: InferSharp
-      uses: microsoft/infersharpaction@v1.4
-
-    - name: Run Infer#
-      id: runinfersharp
-      uses: ./
-      with:
-        binary-path: .\
-    
-    - name: Infer# analysis results
-      run: echo "${{ steps.runinfersharp.outputs.results }}"
-
