@@ -31,7 +31,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2  
 
     - name: Restore
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform=$env:Platforms --force-evaluate
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform=$env:Platforms
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
@@ -41,10 +41,3 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
-
-    - uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
