@@ -15,7 +15,7 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Platform)'!='AnyCPU'">
+  <PropertyGroup Condition="'$(PublishMicrosoftStore)'=='true'">
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
