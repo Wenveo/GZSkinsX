@@ -1,0 +1,17 @@
+name: InferSharp
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Run Infer#
+      id: runinfersharp
+      uses: ./
+      with:
+        binary-path: .\
+
+    - name: Infer# analysis results
+      run: echo "${{ steps.runinfersharp.outputs.results }}"
