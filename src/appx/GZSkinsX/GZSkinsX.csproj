@@ -8,16 +8,13 @@
     <RootNamespace>GZSkinsX</RootNamespace>
     <UseWinUI>true</UseWinUI>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
-    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(PublishMicrosoftStore)'=='true'">
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
 
   <ItemGroup>
