@@ -5,17 +5,17 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
 
     strategy:
       matrix:
-        configuration: [Release]
-        platforms: [x86, x64]
+        configuration: [ Release ]
+        platforms: [ x64 ]
     
     runs-on: windows-latest
 
