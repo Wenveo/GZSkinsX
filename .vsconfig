@@ -4,6 +4,9 @@
     "Microsoft.Component.MSBuild",
     "Microsoft.NetCore.Component.Runtime.7.0",
     "Microsoft.NetCore.Component.SDK",
+    "Microsoft.NetCore.Component.DevelopmentTools",
+    "Microsoft.VisualStudio.Component.CoreEditor",
+    "Microsoft.VisualStudio.Component.Git",
     "Microsoft.VisualStudio.Component.ManagedDesktop.Core",
     "Microsoft.VisualStudio.Component.ManagedDesktop.Prerequisites",
     "Microsoft.VisualStudio.Component.NuGet",
@@ -11,6 +14,7 @@
     "Microsoft.VisualStudio.Component.Windows10SDK",
     "Microsoft.VisualStudio.ComponentGroup.MSIX.Packaging",
     "Microsoft.VisualStudio.ComponentGroup.WindowsAppSDK.Cs",
-    "Microsoft.VisualStudio.Workload.ManagedDesktop"
+    "Microsoft.VisualStudio.Workload.ManagedDesktop",
+    "Microsoft.VisualStudio.Workload.CoreEditor"
   ]
 }
