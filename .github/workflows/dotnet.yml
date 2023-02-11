@@ -44,7 +44,7 @@ jobs:
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Build
-      run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platforms
+      run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platforms /p:SelfContained=false /p:WindowsAppSDKSelfContained=false /p:GenerateTemporaryStoreCertificate=false
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
