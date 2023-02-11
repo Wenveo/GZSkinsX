@@ -1,6 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <Target Condition="'$(Configuration)'=='Release'" Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(SignWithGZSkinsExec) $(TargetPath)" />
-  </Target>
 </Project>
