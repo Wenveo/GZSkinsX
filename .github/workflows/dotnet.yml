@@ -27,13 +27,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2  
 
@@ -43,6 +36,13 @@ jobs:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
         
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
     - name: Build
       run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platforms /p:SelfContained=false /p:WindowsAppSDKSelfContained=false /p:GenerateTemporaryStoreCertificate=false
       env:
