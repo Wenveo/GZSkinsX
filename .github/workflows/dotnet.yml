@@ -38,11 +38,11 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2  
 
     - name: Restore
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform=$env:Platforms
       env:
         Configuration: ${{ matrix.configuration }}
-
-    # Create the app package by building and packaging the Windows Application Packaging project
+        Platforms: ${{ matrix.platforms }}
+        
     - name: Build
       run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platforms /p:SelfContained=false /p:WindowsAppSDKSelfContained=false /p:GenerateTemporaryStoreCertificate=false
       env:
