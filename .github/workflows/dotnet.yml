@@ -12,17 +12,38 @@ on:
 jobs:
   build:
 
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    
     runs-on: windows-latest
 
+    env:
+      Solution_Name: GZSkinsX.sln
+      Appx_Project_Path: src\appx\GZSkinsX\GZSkinsX.csproject
+
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3      
+      with:
+        fetch-depth: 0
+        
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+        
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2  
+
+    - name: Restore the application
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Create the app package by building and packaging the Windows Application Packaging project
+    - name: Build the application
+      run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration 
+      env:
+        Appx_Bundle_Platforms: x86|x64
+        Configuration: ${{ matrix.configuration }}
