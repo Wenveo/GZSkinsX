@@ -1,6 +1,6 @@
 ﻿// Copyright 2022 - 2023 GZSkins, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")；
+// Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -29,8 +29,5 @@ internal static class CompositionConstantsV2
     /// <summary>
     /// 初始化 <see cref="CompositionConstantsV2"/> 的静态成员
     /// </summary>
-    static CompositionConstantsV2()
-    {
-        MefCacheFileName = Path.Combine(AppxContext.AppxDirectory, "mef-cacheV2.bin");
-    }
+    static CompositionConstantsV2() => MefCacheFileName = Path.Combine(AppxContext.AppxDirectory, "mef-cacheV2.bin");
 }

@@ -1,6 +1,6 @@
 ﻿// Copyright 2022 - 2023 GZSkins, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")；
+// Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -34,10 +34,7 @@ internal sealed class AssemablyCatalogV2
     /// <summary>
     /// 初始化 <see cref="AssemablyCatalogV2"/> 的新实例
     /// </summary>
-    public AssemablyCatalogV2()
-    {
-        _hashCodeAsm = new Dictionary<int, Assembly>();
-    }
+    public AssemablyCatalogV2() => _hashCodeAsm = new Dictionary<int, Assembly>();
 
     /// <summary>
     /// 将程序集添加到集合并返回当前对象 <see cref="AssemablyCatalogV2"/>

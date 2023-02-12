@@ -1,6 +1,6 @@
 ﻿// Copyright 2022 - 2023 GZSkins, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")；
+// Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -33,10 +33,7 @@ public partial class App : Application
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
     /// </summary>
-    public App()
-    {
-        InitializeComponent();
-    }
+    public App() => InitializeComponent();
 
     /// <summary>
     /// Invoked when the application is launched.
@@ -45,24 +42,33 @@ public partial class App : Application
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         var catalog = new AssemablyCatalogV2();
-        catalog.AddParts(GetAssemblies());
+        var unused = catalog
+            .AddParts(GetAssemblies())
+            .AddParts(GetExtensionAssemblies());
 
         var container = new CompositionContainerV2(catalog);
         var exportProvider = await container.CreateExportProviderAsync(true);
 
-        var appWindow = exportProvider.GetExportedValue<IAppWindow>();
-        appWindow.Log("Test");
-
-        AppWindow = new MainWindow();
-        AppWindow.Activate();
+        new MainWindow().Activate();
     }
-
-
-    public Window? AppWindow { get; private set; }
 
     private static IEnumerable<Assembly> GetAssemblies()
     {
         yield return typeof(AppWindow).Assembly;
         yield return typeof(IAppWindow).Assembly;
+    }
+
+    private static IEnumerable<Assembly> GetExtensionAssemblies()
+    {
+        var root = new DirectoryInfo(AppxContext.AppxDirectory);
+        foreach (var appx in root.GetFiles("GZSkinsX.Appx*", SearchOption.TopDirectoryOnly))
+        {
+            yield return Assembly.LoadFrom(appx.FullName);
+        }
+
+        foreach (var exAsm in root.GetFiles("*.x.dll", SearchOption.AllDirectories))
+        {
+            yield return Assembly.LoadFrom(exAsm.FullName);
+        }
     }
 }

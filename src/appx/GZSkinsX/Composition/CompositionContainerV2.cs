@@ -1,6 +1,6 @@
 ﻿// Copyright 2022 - 2023 GZSkins, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License")；
+// Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -32,20 +32,14 @@ internal sealed class CompositionContainerV2
     /// 初始化 <see cref="CompositionContainerV2"/> 的新实例
     /// </summary>
     /// <param name="catalog"></param>
-    public CompositionContainerV2(AssemablyCatalogV2 catalog)
-    {
-        _assemablyCatalog = catalog;
-    }
+    public CompositionContainerV2(AssemablyCatalogV2 catalog) => _assemablyCatalog = catalog;
 
     /// <summary>
     /// 从已有的缓存中加载或是创建一个新的 <see cref="ExportProvider"/> 实例
     /// </summary>
     /// <param name="useCache">是否使用缓存</param>
     /// <returns>从容器中创建的  <see cref="ExportProvider"/> 实例</returns>
-    public async Task<ExportProvider> CreateExportProviderAsync(bool useCache)
-    {
-        return (await CreateExportProviderFactoryCoreAsync(useCache)).CreateExportProvider();
-    }
+    public async Task<ExportProvider> CreateExportProviderAsync(bool useCache) => (await CreateExportProviderFactoryCoreAsync(useCache)).CreateExportProvider();
 
     /// <summary>
     /// 从已有的缓存中加载或是创建一个新的 <see cref="IExportProviderFactory"/> 实例
