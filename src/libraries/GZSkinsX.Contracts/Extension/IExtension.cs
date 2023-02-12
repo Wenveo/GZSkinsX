@@ -16,9 +16,13 @@ namespace GZSkinsX.Contracts.Extension;
 
 public interface IExtension
 {
-    ExtensionInfo Info { get; }
+    string? Name { get; set; }
+
+    string? ShortDescription { get; set; }
+
+    string? Copyright { get; set; }
 
     IEnumerable<string> MergedResourceDictionaries { get; }
 
-    void OnEvent(object? sender, ExtensionEvent e);
+    void OnEvent(ExtensionEvent e);
 }

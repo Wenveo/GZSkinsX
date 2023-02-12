@@ -12,13 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace GZSkinsX.Contracts.Extension;
+using GZSkinsX.Contracts.Extension;
 
-public sealed class ExtensionInfo
+using Microsoft.UI.Xaml;
+
+namespace GZSkinsX.Extension;
+
+internal interface IExtensionService
 {
-    public string? Name { get; set; }
+    IEnumerable<ResourceDictionary> GetMergedResourceDictionaries();
 
-    public string? ShortDescription { get; set; }
+    void LoadAutoLoaded(AutoLoadedType loadType);
 
-    public string? Copyright { get; set; }
+    void NotifyExtensions(ExtensionEvent eventType);
 }
