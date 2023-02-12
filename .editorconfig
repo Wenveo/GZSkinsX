@@ -110,7 +110,7 @@ csharp_prefer_simple_default_expression = true:suggestion
 
 # Expression-bodied members
 csharp_style_expression_bodied_methods = false
-csharp_style_expression_bodied_constructors = true:silent
+csharp_style_expression_bodied_constructors = false:silent
 csharp_style_expression_bodied_operators = true:silent
 csharp_style_expression_bodied_properties = true:silent
 csharp_style_expression_bodied_indexers = true:silent
