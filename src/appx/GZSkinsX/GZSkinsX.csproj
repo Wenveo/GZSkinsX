@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GZSkinsX.Contracts.Mvvm\GZSkinsX.Contracts.Mvvm.csproj" />
-    <ProjectReference Include="..\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj" />
+    <ProjectReference Include="..\..\libraries\GZSkinsX.Contracts.Mvvm\GZSkinsX.Contracts.Mvvm.csproj" />
+    <ProjectReference Include="..\..\libraries\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj" />
   </ItemGroup>
   
   <!-- 
