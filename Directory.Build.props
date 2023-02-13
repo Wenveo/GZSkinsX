@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <AppxVersion>1.4.1.0</AppxVersion>
+    <AppxCompany>GZSkins, Inc.</AppxCompany>
+    <AppxCopyright>@2022 - 2023 GZSkins, Inc.</AppxCopyright>
+    <AppxSDKVersion>1.2.230118.102</AppxSDKVersion>
+    <AppxBuildToolsVersion>10.0.22621.755</AppxBuildToolsVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Version>$(AppxVersion)</Version>
+    <FileVersion>$(AppxVersion)</FileVersion>
+    <AssemblyVersion>$(AppxVersion)</AssemblyVersion>
+    <Copyright>$(AppxCopyright)</Copyright>
+    <Company>$(AppxCopyright)</Company>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SolutionRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),GZSkinsX.sln))</SolutionRoot>
+    <BuildDirectory>$(SolutionRoot)build\bin\$(Configuration)\$(Platform)\$(TargetFramework)\</BuildDirectory>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SolutionRoot)GZSkinsX.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+</Project>
