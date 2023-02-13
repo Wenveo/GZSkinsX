@@ -29,7 +29,7 @@ namespace GZSkinsX.Appx;
 /// 主程序应用窗口类，用于管理、创建、以及注册主窗口
 /// </summary>
 [Shared]
-[Export, Export(typeof(IAppxWindow))]
+[Export(typeof(IAppxWindow))]
 internal sealed class AppxWindow : IAppxWindow
 {
     /// <summary>
