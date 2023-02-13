@@ -31,6 +31,8 @@ internal sealed class AppWindow : IAppWindow
 
     public event EventHandler<WindowActivatedEventArgs>? Activated;
 
+    public event EventHandler<WindowActivatedEventArgs>? Deactivated;
+
     public event EventHandler<WindowEventArgs>? Closed;
 
     public Window MainWindow => _shellWindow;
@@ -52,7 +54,14 @@ internal sealed class AppWindow : IAppWindow
 
     private void OnActivated(object sender, WindowActivatedEventArgs args)
     {
+        if (args.WindowActivationState == WindowActivationState.Deactivated)
+        {
+            Deactivated?.Invoke(this, args);
+        }
+        else
+        {
         Activated?.Invoke(this, args);
+    }
     }
 
     private void OnClosed(object sender, WindowEventArgs args)

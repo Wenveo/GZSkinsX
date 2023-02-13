@@ -20,6 +20,8 @@ public interface IAppWindow
 {
     event EventHandler<WindowActivatedEventArgs>? Activated;
 
+    event EventHandler<WindowActivatedEventArgs>? Deactivated;
+
     event EventHandler<WindowEventArgs>? Closed;
 
     Window MainWindow { get; }
