@@ -87,7 +87,7 @@ public partial class App : Application
     private static IEnumerable<Assembly> GetExtensionAssemblies()
     {
         var root = new DirectoryInfo(AppxContext.AppxDirectory);
-        foreach (var appx in root.GetFiles("GZSkinsX.Appx*", SearchOption.TopDirectoryOnly))
+        foreach (var appx in root.GetFiles("GZSkinsX.Appx.*", SearchOption.TopDirectoryOnly))
         {
             yield return Assembly.LoadFrom(appx.FullName);
         }
