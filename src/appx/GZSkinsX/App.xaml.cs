@@ -53,7 +53,6 @@ public partial class App : Application
         InitializeExtension(extensionService);
 
         var appWindow = exportProvider.GetExportedValue<AppWindow>();
-        appWindow.InitializeMainWindow();
         appWindow.ShowWindow();
     }
 

@@ -25,6 +25,12 @@ namespace GZSkinsX.Contracts.App;
 /// </summary>
 public static class AppxContext
 {
+    /// <summary>
+    /// 获取当前应用包的名称
+    /// </summary>
+    /// <param name="packageFullNameLength">用于返回字符串长度</param>
+    /// <param name="packageFullName">用于存储应用包名称</param>
+    /// <returns></returns>
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
     private static extern int GetCurrentPackageFullName(
         ref int packageFullNameLength,

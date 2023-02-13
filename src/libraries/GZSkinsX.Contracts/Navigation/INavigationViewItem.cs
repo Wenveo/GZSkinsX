@@ -15,7 +15,7 @@
 namespace GZSkinsX.Contracts.Navigation;
 
 /// <summary>
-/// 导航菜单项，被用于 <see cref="INavigationService"/> 并在主视图中显示
+/// 在主视图中显示的导航菜单项
 /// </summary>
 public interface INavigationViewItem
 {

@@ -16,8 +16,14 @@ using System.Composition;
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 应用程序扩展的元数据
+/// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExtensionMetadataAttribute : Attribute
 {
+    /// <summary>
+    /// 扩展的加载顺序
+    /// </summary>
     public double Order { get; set; }
 }

@@ -14,6 +14,9 @@
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 使用该接口表明为可自动加载的扩展
+/// </summary>
 public interface IAutoLoaded
 {
 }

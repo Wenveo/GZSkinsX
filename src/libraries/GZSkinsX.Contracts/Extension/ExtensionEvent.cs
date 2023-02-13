@@ -14,9 +14,21 @@
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 应用程序扩展触发的事件类型
+/// </summary>
 public enum ExtensionEvent
 {
+    /// <summary>
+    /// 当扩展被加载时发生
+    /// </summary>
     Loaded,
+    /// <summary>
+    /// 当应用加载时发生
+    /// </summary>
     AppLoaded,
+    /// <summary>
+    /// 当应用退出时发生
+    /// </summary>
     AppExit
 }

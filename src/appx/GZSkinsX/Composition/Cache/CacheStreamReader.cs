@@ -65,14 +65,14 @@ internal sealed class CacheStreamReader : IAsyncDisposable, IDisposable
     /// <summary>
     /// 查找特定类型的缓存并设置当前流的偏移量
     /// </summary>
-    /// <param name="isAssmblyCatalog">需要查找的缓存类型；当为 true 时表示 <see cref="AssemblyCatalogV2Cache"/>，否则为 <see cref="CachedComposition"/></param>
+    /// <param name="isAssmblyCatalogCache">需要查找的缓存类型；当为 true 时表示 <see cref="AssemblyCatalogV2Cache"/>，否则为 <see cref="CachedComposition"/></param>
     [SkipLocalsInit]
-    private void SeekCache(bool isAssmblyCatalog)
+    private void SeekCache(bool isAssmblyCatalogCache)
     {
-        // 设置 AssmblyCatalog 的默认偏移量
-        // 如果非 AssmblyCatalog 则另外计算
+        // 设置 AssmblyCatalogCache 的默认偏移量
+        // 如果非 AssmblyCatalogCache 则另外计算
         var offset = 4;
-        if (!isAssmblyCatalog)
+        if (!isAssmblyCatalogCache)
         {
             // 跳转到文件头并读取第二段数据的偏移量
             _cachedStream.Seek(0, SeekOrigin.Begin);
@@ -97,7 +97,7 @@ internal sealed class CacheStreamReader : IAsyncDisposable, IDisposable
     /// <returns>从缓存流中读取到的 <see cref="AssemblyCatalogV2Cache"/> 实例</returns>
     public async Task<AssemblyCatalogV2Cache> ReadAssemablyCatalogCacheAsync()
     {
-        SeekCache(isAssmblyCatalog: true);
+        SeekCache(isAssmblyCatalogCache: true);
         return await MessagePackSerializer.DeserializeAsync<AssemblyCatalogV2Cache>(
             stream: _cachedStream, options: ContractlessStandardResolverAllowPrivate.Options);
     }
@@ -109,7 +109,7 @@ internal sealed class CacheStreamReader : IAsyncDisposable, IDisposable
     /// <returns>从缓存流中读取到的 <see cref="IExportProviderFactory"/> 实例</returns>
     public async Task<IExportProviderFactory> ReadCompositionCacheAsync(Resolver resolver)
     {
-        SeekCache(isAssmblyCatalog: false);
+        SeekCache(isAssmblyCatalogCache: false);
         return await new CachedComposition().LoadExportProviderFactoryAsync(
             cacheStream: _cachedStream, resolver: resolver);
     }

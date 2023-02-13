@@ -16,13 +16,28 @@ using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.Contracts.App;
 
+/// <summary>
+/// 提供应用程序主窗口的事件，以及窗口管理相关的 Api
+/// </summary>
 public interface IAppWindow
 {
+    /// <summary>
+    /// 当应用程序主窗口被激活时触发
+    /// </summary>
     event EventHandler<WindowActivatedEventArgs>? Activated;
 
+    /// <summary>
+    /// 当应用程序主窗口被置为后台窗口时触发
+    /// </summary>
     event EventHandler<WindowActivatedEventArgs>? Deactivated;
 
+    /// <summary>
+    /// 当应用程序主窗口被关闭时触发
+    /// </summary>
     event EventHandler<WindowEventArgs>? Closed;
 
+    /// <summary>
+    /// 当前应用程序主窗口
+    /// </summary>
     Window MainWindow { get; }
 }

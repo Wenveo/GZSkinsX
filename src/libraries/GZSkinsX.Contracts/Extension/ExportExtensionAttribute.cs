@@ -16,9 +16,15 @@ using System.Composition;
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 声明并导出为应用程序扩展
+/// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportExtensionAttribute : ExportAttribute
 {
+    /// <summary>
+    /// 初始化 <see cref="ExportExtensionAttribute"/> 的新实例，并以 <see cref="IExtension"/> 类型导出
+    /// </summary>
     public ExportExtensionAttribute()
         : base(typeof(IExtension)) { }
 }

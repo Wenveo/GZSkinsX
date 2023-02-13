@@ -16,9 +16,15 @@ using System.Composition;
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 声明并导出为自动加载的扩展
+/// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportAutoLoadedAttribute : ExportAttribute
 {
+    /// <summary>
+    /// 初始化 <see cref="ExportAutoLoadedAttribute"/> 的新实例，并以 <see cref="IAutoLoaded"/> 类型导出
+    /// </summary>
     public ExportAutoLoadedAttribute()
         : base(typeof(IAutoLoaded)) { }
 }

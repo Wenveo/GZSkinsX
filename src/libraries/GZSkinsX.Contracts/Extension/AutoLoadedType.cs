@@ -14,10 +14,25 @@
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 自动加载的扩展的触发类型
+/// </summary>
 public enum AutoLoadedType
 {
+    /// <summary>
+    /// 在加载扩展之前
+    /// </summary>
     BeforeExtensions,
+    /// <summary>
+    /// 在加载完扩展之后
+    /// </summary>
     AfterExtensions,
+    /// <summary>
+    /// 在触发扩展的 <see cref="ExtensionEvent.Loaded"/> 事件之后
+    /// </summary>
     AfterExtensionsLoaded,
+    /// <summary>
+    /// 在应用程序加载时
+    /// </summary>
     AppLoaded
 }

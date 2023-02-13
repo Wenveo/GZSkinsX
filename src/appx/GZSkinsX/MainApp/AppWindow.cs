@@ -22,36 +22,63 @@ using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.MainApp;
 
+/// <summary>
+/// 主程序应用窗口类，用于管理、创建、以及注册主窗口
+/// </summary>
 [Shared]
 [Export, Export(typeof(IAppWindow))]
 internal sealed class AppWindow : IAppWindow
 {
+    /// <summary>
+    /// 当前应用程序的扩展服务，主要用于在 OnAppLoaded 事件中对已加载的扩展进行通知 AppLoaded 事件
+    /// </summary>
     private readonly ExtensionService _extensionService;
+
+    /// <summary>
+    /// 当前应用程序主窗口实例
+    /// </summary>
     private readonly ShellWindow _shellWindow;
 
+    /// <inheritdoc/>
     public event EventHandler<WindowActivatedEventArgs>? Activated;
 
+    /// <inheritdoc/>
     public event EventHandler<WindowActivatedEventArgs>? Deactivated;
 
+    /// <inheritdoc/>
     public event EventHandler<WindowEventArgs>? Closed;
 
+    /// <inheritdoc/>
     public Window MainWindow => _shellWindow;
 
+    /// <summary>
+    /// 初始化 <see cref="AppWindow"/> 的新实例
+    /// </summary>
+    /// <param name="extensionService">应用程序扩展服务</param>
     [ImportingConstructor]
     public AppWindow(ExtensionService extensionService)
     {
         _extensionService = extensionService;
         _shellWindow = new ShellWindow();
 
+        _shellWindow.Activated += OnActivated;
+        _shellWindow.Closed += OnClosed;
+
         Activated += OnAppLoaded;
     }
 
+    /// <summary>
+    /// 负责对已加载的应用程序扩展通知 AppLoaded 事件
+    /// </summary>
     private void OnAppLoaded(object? sender, WindowActivatedEventArgs e)
     {
         Activated -= OnAppLoaded;
         _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
     }
 
+    /// <summary>
+    /// 当前应用程序主窗口的激活事件
+    /// </summary>
     private void OnActivated(object sender, WindowActivatedEventArgs args)
     {
         if (args.WindowActivationState == WindowActivationState.Deactivated)
@@ -60,26 +87,26 @@ internal sealed class AppWindow : IAppWindow
         }
         else
         {
-        Activated?.Invoke(this, args);
-    }
+            Activated?.Invoke(this, args);
+        }
     }
 
+    /// <summary>
+    /// 当前应用程序主窗口的关闭事件
+    /// </summary>
     private void OnClosed(object sender, WindowEventArgs args)
     {
         Closed?.Invoke(this, args);
 
         if (!args.Handled)
         {
-        _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
-    }
-    }
-
-    public void InitializeMainWindow()
-    {
-        _shellWindow.Activated += OnActivated;
-        _shellWindow.Closed += OnClosed;
+            _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
+        }
     }
 
+    /// <summary>
+    /// 显示当前应用程序主窗口
+    /// </summary>
     public void ShowWindow()
     {
         _shellWindow.Activate();

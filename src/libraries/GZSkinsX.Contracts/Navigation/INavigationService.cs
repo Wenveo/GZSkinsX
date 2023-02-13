@@ -15,17 +15,17 @@
 namespace GZSkinsX.Contracts.Navigation;
 
 /// <summary>
-/// 被用于主视图中的导航服务
+/// 提供对主视图中的页面操作和管理的能力
 /// </summary>
 public interface INavigationService
 {
     /// <summary>
-    /// 获取当前 <see cref="INavigationService"/> 是否可以向后导航
+    /// 能否向后导航
     /// </summary>
     bool CanGoback { get; }
 
     /// <summary>
-    /// 获取当前 <see cref="INavigationService"/> 是否可以向前导航
+    /// 能否向前导航
     /// </summary>
     bool CanGoForward { get; }
 

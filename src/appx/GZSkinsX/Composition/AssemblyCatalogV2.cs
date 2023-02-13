@@ -19,7 +19,7 @@ using GZSkinsX.Composition.Cache;
 namespace GZSkinsX.Composition;
 
 /// <summary>
-/// 一个轻量级的类，用于枚举 <see cref="Assembly"/>
+/// 一个轻量级的类，用于枚举 <see cref="Assembly"/> 列表
 /// </summary>
 internal sealed class AssemblyCatalogV2 : IEquatable<AssemblyCatalogV2>
 {

@@ -16,10 +16,19 @@ using System.Composition;
 
 namespace GZSkinsX.Contracts.Extension;
 
+/// <summary>
+/// 表示自动加载的扩展的元数据
+/// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class AutoLoadedMetadataAttribute : Attribute
 {
+    /// <summary>
+    /// 扩展的加载顺序
+    /// </summary>
     public double Order { get; set; }
 
+    /// <summary>
+    /// 扩展的触发类型
+    /// </summary>
     public AutoLoadedType LoadType { get; set; }
 }
