@@ -40,6 +40,14 @@ internal sealed class AppWindow : IAppWindow
     {
         _extensionService = extensionService;
         _shellWindow = new ShellWindow();
+
+        Activated += OnAppLoaded;
+    }
+
+    private void OnAppLoaded(object? sender, WindowActivatedEventArgs e)
+    {
+        Activated -= OnAppLoaded;
+        _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
     }
 
     private void OnActivated(object sender, WindowActivatedEventArgs args)
@@ -50,7 +58,11 @@ internal sealed class AppWindow : IAppWindow
     private void OnClosed(object sender, WindowEventArgs args)
     {
         Closed?.Invoke(this, args);
+
+        if (!args.Handled)
+        {
         _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
+    }
     }
 
     public void InitializeMainWindow()
@@ -62,6 +74,5 @@ internal sealed class AppWindow : IAppWindow
     public void ShowWindow()
     {
         _shellWindow.Activate();
-        _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
     }
 }
