@@ -32,9 +32,14 @@ public interface IAppWindow
     event EventHandler<WindowActivatedEventArgs>? Deactivated;
 
     /// <summary>
-    /// 当应用程序主窗口被关闭时触发
+    /// 在应用程序主窗口关闭时触发
     /// </summary>
-    event EventHandler<WindowEventArgs>? Closed;
+    event EventHandler<WindowEventArgs>? Closing;
+
+    /// <summary>
+    /// 在应用程序主窗口关闭之后触发
+    /// </summary>
+    event EventHandler? Closed;
 
     /// <summary>
     /// 当前应用程序主窗口

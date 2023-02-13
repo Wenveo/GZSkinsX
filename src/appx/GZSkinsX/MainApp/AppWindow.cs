@@ -46,7 +46,10 @@ internal sealed class AppWindow : IAppWindow
     public event EventHandler<WindowActivatedEventArgs>? Deactivated;
 
     /// <inheritdoc/>
-    public event EventHandler<WindowEventArgs>? Closed;
+    public event EventHandler<WindowEventArgs>? Closing;
+
+    /// <inheritdoc/>
+    public event EventHandler? Closed;
 
     /// <inheritdoc/>
     public Window MainWindow => _shellWindow;
@@ -65,6 +68,13 @@ internal sealed class AppWindow : IAppWindow
         _shellWindow.Closed += OnClosed;
 
         Activated += OnAppLoaded;
+    }
+
+    event EventHandler? IAppWindow.Closed
+    {
+        add => throw new NotImplementedException();
+
+        remove => throw new NotImplementedException();
     }
 
     /// <summary>
@@ -96,11 +106,12 @@ internal sealed class AppWindow : IAppWindow
     /// </summary>
     private void OnClosed(object sender, WindowEventArgs args)
     {
-        Closed?.Invoke(this, args);
+        Closing?.Invoke(this, args);
 
         if (!args.Handled)
         {
             _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
+            Closed?.Invoke(this, new EventArgs());
         }
     }
 
