@@ -70,13 +70,6 @@ internal sealed class AppWindow : IAppWindow
         Activated += OnAppLoaded;
     }
 
-    event EventHandler? IAppWindow.Closed
-    {
-        add => throw new NotImplementedException();
-
-        remove => throw new NotImplementedException();
-    }
-
     /// <summary>
     /// 负责对已加载的应用程序扩展通知 AppLoaded 事件
     /// </summary>
