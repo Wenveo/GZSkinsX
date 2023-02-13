@@ -18,7 +18,10 @@ using GZSkinsX.Contracts.App;
 using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Extension;
 
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+
+using WinUIEx;
 
 namespace GZSkinsX.MainApp;
 
@@ -108,11 +111,39 @@ internal sealed class AppWindow : IAppWindow
         }
     }
 
-    /// <summary>
-    /// 显示当前应用程序主窗口
-    /// </summary>
-    public void ShowWindow()
-    {
-        _shellWindow.Activate();
-    }
+    /// <inheritdoc/>
+    public void Activate()
+    => _shellWindow.Activate();
+
+    /// <inheritdoc/>
+    public void BringToFront()
+    => _shellWindow.BringToFront();
+
+    /// <inheritdoc/>
+    public void Minimize()
+    => _shellWindow.Minimize();
+
+    /// <inheritdoc/>
+    public void Maximize()
+    => _shellWindow.Maximize();
+
+    /// <inheritdoc/>
+    public void Restore()
+    => _shellWindow.Restore();
+
+    /// <inheritdoc/>
+    public void Close()
+    => _shellWindow.Close();
+
+    /// <inheritdoc/>
+    public void Hide()
+    => _shellWindow.Hide();
+
+    /// <inheritdoc/>
+    public void Show()
+    => _shellWindow.Show();
+
+    /// <inheritdoc/>
+    public void SetWindowPresenter(AppWindowPresenterKind kind)
+    => _shellWindow.SetWindowPresenter(kind);
 }

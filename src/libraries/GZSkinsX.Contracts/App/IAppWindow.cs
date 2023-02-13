@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.Contracts.App;
@@ -45,4 +46,50 @@ public interface IAppWindow
     /// 当前应用程序主窗口
     /// </summary>
     Window MainWindow { get; }
+
+    /// <summary>
+    /// 激活当前应用程序主窗口
+    /// </summary>
+    void Activate();
+
+    /// <summary>
+    /// 将当前应用程序主窗口置于前台
+    /// </summary>
+    void BringToFront();
+
+    /// <summary>
+    /// 最小化当前应用程序主窗口
+    /// </summary>
+    void Minimize();
+
+    /// <summary>
+    /// 最大化当前应用程序主窗口
+    /// </summary>
+    void Maximize();
+
+    /// <summary>
+    /// 向下还原当前应用程序主窗口
+    /// </summary>
+    void Restore();
+
+    /// <summary>
+    /// 关闭当前应用程序主窗口
+    /// </summary>
+    void Close();
+
+    /// <summary>
+    /// 隐藏当前应用程序主窗口
+    /// </summary>
+    void Hide();
+
+    /// <summary>
+    /// 显示当前应用程序主窗口
+    /// </summary>
+    void Show();
+
+    /// <summary>
+    /// 设置当前应用程序主窗口的呈现类型
+    /// </summary>
+    /// <param name="kind">要呈现的类型</param>
+    void SetWindowPresenter(AppWindowPresenterKind kind);
 }
