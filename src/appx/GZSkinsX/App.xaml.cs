@@ -49,7 +49,7 @@ public partial class App : Application
         var container = new CompositionContainerV2(catalog);
         var exportProvider = await container.CreateExportProviderAsync(true);
 
-        var extensionService = exportProvider.GetExportedValue<IExtensionService>();
+        var extensionService = exportProvider.GetExportedValue<ExtensionService>();
         InitializeExtension(extensionService);
 
         var appWindow = exportProvider.GetExportedValue<AppWindow>();
@@ -61,7 +61,7 @@ public partial class App : Application
     /// 初始化扩展组件以及服务
     /// </summary>
     /// <param name="extensionService">扩展服务</param>
-    private void InitializeExtension(IExtensionService extensionService)
+    private void InitializeExtension(ExtensionService extensionService)
     {
         extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
         foreach (var rsrc in extensionService.GetMergedResourceDictionaries())

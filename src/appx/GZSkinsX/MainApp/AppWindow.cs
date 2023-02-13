@@ -26,7 +26,7 @@ namespace GZSkinsX.MainApp;
 [Export, Export(typeof(IAppWindow))]
 internal sealed class AppWindow : IAppWindow
 {
-    private readonly IExtensionService _extensionService;
+    private readonly ExtensionService _extensionService;
     private readonly ShellWindow _shellWindow;
 
     public event EventHandler<WindowActivatedEventArgs>? Activated;
@@ -36,7 +36,7 @@ internal sealed class AppWindow : IAppWindow
     public Window MainWindow => _shellWindow;
 
     [ImportingConstructor]
-    public AppWindow(IExtensionService extensionService)
+    public AppWindow(ExtensionService extensionService)
     {
         _extensionService = extensionService;
         _shellWindow = new ShellWindow();

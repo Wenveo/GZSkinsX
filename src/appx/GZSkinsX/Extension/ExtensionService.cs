@@ -21,8 +21,8 @@ using Microsoft.UI.Xaml;
 namespace GZSkinsX.Extension;
 
 [Shared]
-[Export(typeof(IExtensionService))]
-internal sealed class ExtensionServiceImpl : IExtensionService
+[Export]
+internal sealed class ExtensionService
 {
     private readonly Lazy<IAutoLoaded, AutoLoadedMetadataAttribute>[] _mefAutoLoaded;
     private readonly Lazy<IExtension, ExtensionMetadataAttribute>[] _extensions;
@@ -30,7 +30,7 @@ internal sealed class ExtensionServiceImpl : IExtensionService
     public IEnumerable<IExtension> Extensions => _extensions.Select(a => a.Value);
 
     [ImportingConstructor]
-    public ExtensionServiceImpl(
+    public ExtensionService(
         [ImportMany] IEnumerable<Lazy<IAutoLoaded, AutoLoadedMetadataAttribute>> mefAutoLoaded,
         [ImportMany] IEnumerable<Lazy<IExtension, ExtensionMetadataAttribute>> extensions)
     {
