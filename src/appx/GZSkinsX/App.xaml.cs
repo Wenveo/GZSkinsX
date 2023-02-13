@@ -14,11 +14,11 @@
 
 using System.Reflection;
 
+using GZSkinsX.Appx;
 using GZSkinsX.Composition;
-using GZSkinsX.Contracts.App;
+using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Extension;
-using GZSkinsX.MainApp;
 
 using Microsoft.UI.Xaml;
 
@@ -52,8 +52,8 @@ public partial class App : Application
         var extensionService = exportProvider.GetExportedValue<ExtensionService>();
         InitializeExtension(extensionService);
 
-        var appWindow = exportProvider.GetExportedValue<AppWindow>();
-        appWindow.ShowWindow();
+        var appWindow = exportProvider.GetExportedValue<AppxWindow>();
+        appWindow.Show();
     }
 
     /// <summary>
@@ -78,8 +78,8 @@ public partial class App : Application
     /// </summary>
     private static IEnumerable<Assembly> GetAssemblies()
     {
-        yield return typeof(AppWindow).Assembly;
-        yield return typeof(IAppWindow).Assembly;
+        yield return typeof(AppxWindow).Assembly;
+        yield return typeof(IAppxWindow).Assembly;
     }
 
     /// <summary>

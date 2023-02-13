@@ -14,7 +14,7 @@
 
 using System.Composition;
 
-using GZSkinsX.Contracts.App;
+using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Extension;
 
@@ -23,14 +23,14 @@ using Microsoft.UI.Xaml;
 
 using WinUIEx;
 
-namespace GZSkinsX.MainApp;
+namespace GZSkinsX.Appx;
 
 /// <summary>
 /// 主程序应用窗口类，用于管理、创建、以及注册主窗口
 /// </summary>
 [Shared]
-[Export, Export(typeof(IAppWindow))]
-internal sealed class AppWindow : IAppWindow
+[Export, Export(typeof(IAppxWindow))]
+internal sealed class AppxWindow : IAppxWindow
 {
     /// <summary>
     /// 当前应用程序的扩展服务，主要用于在 OnAppLoaded 事件中对已加载的扩展进行通知 AppLoaded 事件
@@ -58,11 +58,11 @@ internal sealed class AppWindow : IAppWindow
     public Window MainWindow => _shellWindow;
 
     /// <summary>
-    /// 初始化 <see cref="AppWindow"/> 的新实例
+    /// 初始化 <see cref="AppxWindow"/> 的新实例
     /// </summary>
     /// <param name="extensionService">应用程序扩展服务</param>
     [ImportingConstructor]
-    public AppWindow(ExtensionService extensionService)
+    public AppxWindow(ExtensionService extensionService)
     {
         _extensionService = extensionService;
         _shellWindow = new ShellWindow();

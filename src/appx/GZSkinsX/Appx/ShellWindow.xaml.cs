@@ -17,7 +17,7 @@
 
 using WinUIEx;
 
-namespace GZSkinsX.MainApp;
+namespace GZSkinsX.Appx;
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>

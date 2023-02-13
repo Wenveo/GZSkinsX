@@ -15,12 +15,12 @@
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
-namespace GZSkinsX.Contracts.App;
+namespace GZSkinsX.Contracts.Appx;
 
 /// <summary>
 /// 提供应用程序主窗口的事件，以及窗口管理相关的 Api
 /// </summary>
-public interface IAppWindow
+public interface IAppxWindow
 {
     /// <summary>
     /// 当应用程序主窗口被激活时触发
