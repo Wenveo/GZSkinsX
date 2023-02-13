@@ -12,7 +12,6 @@
 
   <PropertyGroup>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
-    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
