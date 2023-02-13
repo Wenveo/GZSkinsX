@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc.
+// Copyright 2022 - 2023 GZSkins, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using Microsoft.UI.Xaml;
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace GZSkinsX.Contracts.App;
+using WinUIEx;
 
-public interface IAppWindow
+namespace GZSkinsX.MainApp;
+/// <summary>
+/// An empty window that can be used on its own or navigated to within a Frame.
+/// </summary>
+public sealed partial class ShellWindow : WindowEx
 {
-    event EventHandler<WindowActivatedEventArgs>? Activated;
-
-    event EventHandler<WindowEventArgs>? Closed;
-
-    Window MainWindow { get; }
+    public ShellWindow()
+    {
+        InitializeComponent();
+    }
 }

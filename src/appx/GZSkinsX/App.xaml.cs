@@ -21,7 +21,6 @@ using GZSkinsX.Extension;
 using GZSkinsX.MainApp;
 
 using Microsoft.UI.Xaml;
-using Microsoft.VisualStudio.Composition;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,12 +33,15 @@ namespace GZSkinsX;
 public partial class App : Application
 {
     /// <inheritdoc/>
-    public App() => InitializeComponent();
+    public App()
+    {
+        InitializeComponent();
+    }
 
     /// <inheritdoc/>
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
-        var catalog = new AssemablyCatalogV2();
+        var catalog = new AssemblyCatalogV2();
         var unused = catalog
             .AddParts(GetAssemblies())
             .AddParts(GetExtensionAssemblies());
@@ -50,7 +52,9 @@ public partial class App : Application
         var extensionService = exportProvider.GetExportedValue<IExtensionService>();
         InitializeExtension(extensionService);
 
-        new MainWindow().Activate();
+        var appWindow = exportProvider.GetExportedValue<AppWindow>();
+        appWindow.InitializeMainWindow();
+        appWindow.ShowWindow();
     }
 
     /// <summary>

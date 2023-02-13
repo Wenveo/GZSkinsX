@@ -1,4 +1,4 @@
-// Copyright 2022 - 2023 GZSkins, Inc.
+﻿// Copyright 2022 - 2023 GZSkins, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License")
 // you may not use this file except in compliance with the License.
@@ -12,16 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using Microsoft.VisualStudio.Composition;
 
-using Microsoft.UI.Xaml;
+namespace GZSkinsX.Composition.Cache;
 
-namespace GZSkinsX.MainApp;
 /// <summary>
-/// An empty window that can be used on its own or navigated to within a Frame.
+/// 缓存数据的类型
 /// </summary>
-public sealed partial class MainWindow : Window
+internal enum CacheDataType
 {
-    public MainWindow() => InitializeComponent();
+    /// <summary>
+    /// 表示 <see cref="AssemblyCatalogV2"/> 类型的缓存
+    /// </summary>
+    AssemablyCatalog,
+    /// <summary>
+    /// 表示 <see cref="CachedComposition"/> 类型的缓存
+    /// </summary>
+    Composition
 }

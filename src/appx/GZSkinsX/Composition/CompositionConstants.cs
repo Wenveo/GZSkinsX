@@ -17,17 +17,25 @@ using GZSkinsX.Contracts.App;
 namespace GZSkinsX.Composition;
 
 /// <summary>
-/// 存放静态成员或常量，通常会在 <see cref="CompositionContainerV2"/> 中被使用
+/// 存放静态成员或常量，该类通常会被 <see cref="CompositionContainerV2"/> 中使用
 /// </summary>
-internal static class CompositionConstantsV2
+internal static class CompositionConstants
 {
     /// <summary>
-    /// 缓存文件的完整名称（包含路径）
+    /// 缓存文件的名称 
     /// </summary>
-    public static readonly string MefCacheFileName;
+    public const string CacheFileName = "mef-cacheV2.bin";
 
     /// <summary>
-    /// 初始化 <see cref="CompositionConstantsV2"/> 的静态成员
+    /// 缓存文件的完整名称
     /// </summary>
-    static CompositionConstantsV2() => MefCacheFileName = Path.Combine(AppxContext.AppxDirectory, "mef-cacheV2.bin");
+    public static readonly string CacheFileFullPath;
+
+    /// <summary>
+    /// 初始化 <see cref="CompositionConstants"/> 的静态成员
+    /// </summary>
+    static CompositionConstants()
+    {
+        CacheFileFullPath = Path.Combine(AppxContext.AppxDirectory, CacheFileName);
+    }
 }

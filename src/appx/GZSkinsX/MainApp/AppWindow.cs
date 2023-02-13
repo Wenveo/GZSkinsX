@@ -13,9 +13,12 @@
 // limitations under the License.
 
 using System.Composition;
-using System.Diagnostics;
 
 using GZSkinsX.Contracts.App;
+using GZSkinsX.Contracts.Extension;
+using GZSkinsX.Extension;
+
+using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.MainApp;
 
@@ -23,5 +26,42 @@ namespace GZSkinsX.MainApp;
 [Export, Export(typeof(IAppWindow))]
 internal sealed class AppWindow : IAppWindow
 {
-    public void Log(string message) => Debug.WriteLine(message);
+    private readonly IExtensionService _extensionService;
+    private readonly ShellWindow _shellWindow;
+
+    public event EventHandler<WindowActivatedEventArgs>? Activated;
+
+    public event EventHandler<WindowEventArgs>? Closed;
+
+    public Window MainWindow => _shellWindow;
+
+    [ImportingConstructor]
+    public AppWindow(IExtensionService extensionService)
+    {
+        _extensionService = extensionService;
+        _shellWindow = new ShellWindow();
+    }
+
+    private void OnActivated(object sender, WindowActivatedEventArgs args)
+    {
+        Activated?.Invoke(this, args);
+    }
+
+    private void OnClosed(object sender, WindowEventArgs args)
+    {
+        Closed?.Invoke(this, args);
+        _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
+    }
+
+    public void InitializeMainWindow()
+    {
+        _shellWindow.Activated += OnActivated;
+        _shellWindow.Closed += OnClosed;
+    }
+
+    public void ShowWindow()
+    {
+        _shellWindow.Activate();
+        _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
+    }
 }

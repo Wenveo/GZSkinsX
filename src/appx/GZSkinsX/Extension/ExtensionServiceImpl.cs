@@ -69,5 +69,7 @@ internal sealed class ExtensionServiceImpl : IExtensionService
     }
 
     public override int GetHashCode()
-    => HashCode.Combine(_mefAutoLoaded, _extensions);
+    {
+        return HashCode.Combine(_mefAutoLoaded, _extensions);
+    }
 }
