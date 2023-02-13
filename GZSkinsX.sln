@@ -1,0 +1,111 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C86F32B8-8704-49C6-80D0-C06194B92922}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.markdownlint.json = .markdownlint.json
+		.vsconfig = .vsconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Solution.props = Directory.Solution.props
+		global.json = global.json
+		GZSkinsX.snk = GZSkinsX.snk
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Appx", "Appx", "{85F8F327-C977-4CFC-8BDC-366E652F4E79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX", "src\appx\GZSkinsX\GZSkinsX.csproj", "{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Contracts", "src\libraries\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj", "{9479C781-B26B-4410-96C9-AB332AB00AB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{48A1D71B-7F31-434A-BE44-B4B3774518BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{2B058960-3542-434D-A4B0-009ABDCC3BFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8282E051-BFCA-420A-8130-6DEB48C5E954}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\move.yml = .github\move.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E07555FD-FAD2-4779-A977-D90676C5B1E6}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\inclusiveness-analyzer.yml = .github\workflows\inclusiveness-analyzer.yml
+		.github\workflows\markdownlint-problem-matcher.json = .github\workflows\markdownlint-problem-matcher.json
+		.github\workflows\markdownlint.yml = .github\workflows\markdownlint.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|Any CPU.Build.0 = Debug|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|ARM64.Build.0 = Debug|ARM64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|x64.ActiveCfg = Debug|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|x64.Build.0 = Debug|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|x64.Deploy.0 = Debug|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|x86.ActiveCfg = Debug|x86
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|x86.Build.0 = Debug|x86
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Debug|x86.Deploy.0 = Debug|x86
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|Any CPU.ActiveCfg = Release|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|Any CPU.Build.0 = Release|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|Any CPU.Deploy.0 = Release|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|ARM64.ActiveCfg = Release|ARM64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|ARM64.Build.0 = Release|ARM64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|ARM64.Deploy.0 = Release|ARM64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|x64.ActiveCfg = Release|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|x64.Build.0 = Release|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|x64.Deploy.0 = Release|x64
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|x86.ActiveCfg = Release|x86
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|x86.Build.0 = Release|x86
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5}.Release|x86.Deploy.0 = Release|x86
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|x64.Build.0 = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Debug|x86.Build.0 = Debug|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|ARM64.Build.0 = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x64.ActiveCfg = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x64.Build.0 = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x86.ActiveCfg = Release|Any CPU
+		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3CA3F398-E500-46FF-A605-EBB8F4F5B5B5} = {85F8F327-C977-4CFC-8BDC-366E652F4E79}
+		{9479C781-B26B-4410-96C9-AB332AB00AB9} = {48A1D71B-7F31-434A-BE44-B4B3774518BA}
+		{8282E051-BFCA-420A-8130-6DEB48C5E954} = {C86F32B8-8704-49C6-80D0-C06194B92922}
+		{E07555FD-FAD2-4779-A977-D90676C5B1E6} = {8282E051-BFCA-420A-8130-6DEB48C5E954}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A248245-EAEC-41D5-9752-0435BD2394B6}
+	EndGlobalSection
+EndGlobal
