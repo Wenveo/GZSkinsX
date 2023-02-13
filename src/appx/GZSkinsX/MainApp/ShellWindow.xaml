@@ -10,4 +10,10 @@
     <windowex:WindowEx.Backdrop>
         <windowex:MicaSystemBackdrop />
     </windowex:WindowEx.Backdrop>
+    <Button
+        Width="120"
+        Height="45"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Content="Click Me!" />
 </windowex:WindowEx>
