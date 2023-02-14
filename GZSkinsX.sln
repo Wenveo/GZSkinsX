@@ -31,12 +31,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8282E051-BFCA-420A-8130-6DEB48C5E954}"
 	ProjectSection(SolutionItems) = preProject
+		.github\auto-assign.yml = .github\auto-assign.yml
 		.github\dependabot.yml = .github\dependabot.yml
 		.github\move.yml = .github\move.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E07555FD-FAD2-4779-A977-D90676C5B1E6}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\auto-assign.yml = .github\workflows\auto-assign.yml
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\inclusiveness-analyzer.yml = .github\workflows\inclusiveness-analyzer.yml
 		.github\workflows\markdownlint-problem-matcher.json = .github\workflows\markdownlint-problem-matcher.json
