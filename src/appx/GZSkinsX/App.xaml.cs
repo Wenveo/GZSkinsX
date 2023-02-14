@@ -7,9 +7,9 @@
 
 using System.Reflection;
 
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
 using GZSkinsX.Composition;
-using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Extension;
 
 using Microsoft.UI.Xaml;

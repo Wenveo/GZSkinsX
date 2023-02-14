@@ -7,7 +7,7 @@
 
 using System.Composition;
 
-using GZSkinsX.Contracts.Extension;
+using GZSkinsX.Api.Extension;
 
 using Microsoft.UI.Xaml;
 

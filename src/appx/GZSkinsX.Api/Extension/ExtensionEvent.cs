@@ -5,27 +5,23 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Contracts.Extension;
+namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 自动加载的扩展的触发类型
+/// 应用程序扩展触发的事件类型
 /// </summary>
-public enum AutoLoadedType
+public enum ExtensionEvent
 {
     /// <summary>
-    /// 在加载扩展之前
+    /// 当扩展被加载时发生
     /// </summary>
-    BeforeExtensions,
+    Loaded,
     /// <summary>
-    /// 在加载完扩展之后
+    /// 当应用加载时发生
     /// </summary>
-    AfterExtensions,
+    AppLoaded,
     /// <summary>
-    /// 在触发扩展的 <see cref="ExtensionEvent.Loaded"/> 事件之后
+    /// 当应用退出时发生
     /// </summary>
-    AfterExtensionsLoaded,
-    /// <summary>
-    /// 在应用程序加载时
-    /// </summary>
-    AppLoaded
+    AppExit
 }

@@ -5,23 +5,30 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Contracts.Extension;
+namespace GZSkinsX.Api.Navigation;
 
 /// <summary>
-/// 应用程序扩展触发的事件类型
+/// 提供对主视图中的页面操作和管理的能力
 /// </summary>
-public enum ExtensionEvent
+public interface INavigationService
 {
     /// <summary>
-    /// 当扩展被加载时发生
+    /// 能否向后导航
     /// </summary>
-    Loaded,
+    bool CanGoback { get; }
+
     /// <summary>
-    /// 当应用加载时发生
+    /// 能否向前导航
     /// </summary>
-    AppLoaded,
+    bool CanGoForward { get; }
+
     /// <summary>
-    /// 当应用退出时发生
+    /// 向后导航
     /// </summary>
-    AppExit
+    void GoBack();
+
+    /// <summary>
+    /// 向前导航
+    /// </summary>
+    void GoForward();
 }

@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Contracts.Extension;
+namespace GZSkinsX.Api.Extension;
 
 /// <summary>
 /// 应用程序扩展接口，所有的 "应用程序扩展" 都继承于此

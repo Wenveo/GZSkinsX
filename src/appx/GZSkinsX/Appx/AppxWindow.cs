@@ -7,8 +7,8 @@
 
 using System.Composition;
 
-using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Extension;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
 using GZSkinsX.Extension;
 
 using Microsoft.UI.Windowing;

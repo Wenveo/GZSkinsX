@@ -7,17 +7,17 @@
 
 using System.Composition;
 
-namespace GZSkinsX.Contracts.Extension;
+namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 声明并导出为应用程序扩展
+/// 声明并导出为自动加载的扩展
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportExtensionAttribute : ExportAttribute
+public sealed class ExportAutoLoadedAttribute : ExportAttribute
 {
     /// <summary>
-    /// 初始化 <see cref="ExportExtensionAttribute"/> 的新实例，并以 <see cref="IExtension"/> 类型导出
+    /// 初始化 <see cref="ExportAutoLoadedAttribute"/> 的新实例，并以 <see cref="IAutoLoaded"/> 类型导出
     /// </summary>
-    public ExportExtensionAttribute()
-        : base(typeof(IExtension)) { }
+    public ExportAutoLoadedAttribute()
+        : base(typeof(IAutoLoaded)) { }
 }

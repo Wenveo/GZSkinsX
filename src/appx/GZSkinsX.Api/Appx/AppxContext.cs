@@ -11,7 +11,7 @@ using System.Text;
 
 using Windows.ApplicationModel;
 
-namespace GZSkinsX.Contracts.Appx;
+namespace GZSkinsX.Api.Appx;
 
 /// <summary>
 /// 当前 Appx 应用的上下文

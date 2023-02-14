@@ -7,17 +7,21 @@
 
 using System.Composition;
 
-namespace GZSkinsX.Contracts.Extension;
+namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 声明并导出为自动加载的扩展
+/// 表示自动加载的扩展的元数据
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportAutoLoadedAttribute : ExportAttribute
+[MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public sealed class AutoLoadedMetadataAttribute : Attribute
 {
     /// <summary>
-    /// 初始化 <see cref="ExportAutoLoadedAttribute"/> 的新实例，并以 <see cref="IAutoLoaded"/> 类型导出
+    /// 扩展的加载顺序
     /// </summary>
-    public ExportAutoLoadedAttribute()
-        : base(typeof(IAutoLoaded)) { }
+    public double Order { get; set; }
+
+    /// <summary>
+    /// 扩展的触发类型
+    /// </summary>
+    public AutoLoadedType LoadType { get; set; }
 }

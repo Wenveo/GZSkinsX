@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libraries\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj" />
+    <ProjectReference Include="..\\GZSkinsX.Api\GZSkinsX.Api.csproj" />
   </ItemGroup>
   
   <!-- 

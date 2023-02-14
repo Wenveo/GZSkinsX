@@ -5,20 +5,18 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Contracts.Navigation;
+using System.Composition;
+
+namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 在主视图中显示的导航菜单项
+/// 应用程序扩展的元数据
 /// </summary>
-public interface INavigationViewItem
+[MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public sealed class ExtensionMetadataAttribute : Attribute
 {
     /// <summary>
-    /// 用于显示的名称
+    /// 扩展的加载顺序
     /// </summary>
-    string Header { get; }
-
-    /// <summary>
-    /// 默认显示的字形图标
-    /// </summary>
-    string Icon { get; }
+    public double Order { get; set; }
 }

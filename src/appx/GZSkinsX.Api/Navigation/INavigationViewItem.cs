@@ -5,30 +5,20 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Contracts.Navigation;
+namespace GZSkinsX.Api.Navigation;
 
 /// <summary>
-/// 提供对主视图中的页面操作和管理的能力
+/// 在主视图中显示的导航菜单项
 /// </summary>
-public interface INavigationService
+public interface INavigationViewItem
 {
     /// <summary>
-    /// 能否向后导航
+    /// 用于显示的名称
     /// </summary>
-    bool CanGoback { get; }
+    string Header { get; }
 
     /// <summary>
-    /// 能否向前导航
+    /// 默认显示的字形图标
     /// </summary>
-    bool CanGoForward { get; }
-
-    /// <summary>
-    /// 向后导航
-    /// </summary>
-    void GoBack();
-
-    /// <summary>
-    /// 向前导航
-    /// </summary>
-    void GoForward();
+    string Icon { get; }
 }
