@@ -2,9 +2,9 @@
   "version": "1.0",
   "components": [
     "Microsoft.Component.MSBuild",
+    "Microsoft.NetCore.Component.DevelopmentTools",
     "Microsoft.NetCore.Component.Runtime.7.0",
     "Microsoft.NetCore.Component.SDK",
-    "Microsoft.NetCore.Component.DevelopmentTools",
     "Microsoft.VisualStudio.Component.CoreEditor",
     "Microsoft.VisualStudio.Component.Git",
     "Microsoft.VisualStudio.Component.ManagedDesktop.Core",
