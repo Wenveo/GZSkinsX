@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <PropertyGroup Condition="'$(AppxExtension)'=='true'">
-    <OutputPath>$(BuildDirectory)</OutputPath>
-  </PropertyGroup>
+  <ItemGroup Condition="'$(AppxExtension)'=='true'">
+    <ProjectReference Private="false" Include="$(SolutionRoot)src\appx\GZSkinsX.Api\GZSkinsX.Api.csproj"/>
+  </ItemGroup>
   
   <ItemGroup Condition="'$(UseWinUI)'=='true'">
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="$(AppxSDKVersion)" />
