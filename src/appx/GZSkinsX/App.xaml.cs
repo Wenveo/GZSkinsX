@@ -13,6 +13,7 @@ using GZSkinsX.Composition;
 using GZSkinsX.Extension;
 
 using Microsoft.UI.Xaml;
+using Microsoft.VisualStudio.Composition;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,25 +34,35 @@ public partial class App : Application
     /// <inheritdoc/>
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
-        var catalog = new AssemblyCatalogV2();
-        var unused = catalog
+        var catalog = new AssemblyCatalogV2()
             .AddParts(GetAssemblies())
             .AddParts(GetExtensionAssemblies());
 
         var container = new CompositionContainerV2(catalog);
         var exportProvider = await container.CreateExportProviderAsync(true);
 
-        var extensionService = exportProvider.GetExportedValue<ExtensionService>();
-        InitializeExtension(extensionService);
+        InitializeServices(exportProvider);
 
         var appWindow = exportProvider.GetExportedValue<IAppxWindow>();
         appWindow.Show();
     }
 
     /// <summary>
-    /// 初始化扩展组件以及服务
+    /// 初始化应用程序核心服务
     /// </summary>
-    /// <param name="extensionService">扩展服务</param>
+    /// <param name="exportProvider"><see cref="ExportProvider"/> 对象的实例</param>
+    private void InitializeServices(ExportProvider exportProvider)
+    {
+        var serviceLocator = exportProvider.GetExportedValue<ServiceLocator>();
+        serviceLocator.SetExportProvider(exportProvider);
+
+        InitializeExtension(exportProvider.GetExportedValue<ExtensionService>());
+    }
+
+    /// <summary>
+    /// 初始化应用程序扩展组件
+    /// </summary>
+    /// <param name="extensionService">扩展服务实例</param>
     private void InitializeExtension(ExtensionService extensionService)
     {
         extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
