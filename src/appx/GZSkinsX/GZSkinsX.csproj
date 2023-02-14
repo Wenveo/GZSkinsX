@@ -17,6 +17,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
     <Manifest Include="app.manifest" />
   </ItemGroup>
 
