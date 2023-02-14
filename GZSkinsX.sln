@@ -37,7 +37,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8282
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E07555FD-FAD2-4779-A977-D90676C5B1E6}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\codeql.yml = .github\workflows\codeql.yml
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\inclusiveness-analyzer.yml = .github\workflows\inclusiveness-analyzer.yml
 		.github\workflows\markdownlint-problem-matcher.json = .github\workflows\markdownlint-problem-matcher.json
