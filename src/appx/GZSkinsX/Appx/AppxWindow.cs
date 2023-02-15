@@ -73,6 +73,7 @@ internal sealed class AppxWindow : IAppxWindow
     {
         Activated -= OnAppLoaded;
         _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
+        _extensionService.LoadAutoLoaded(AutoLoadedType.AppLoaded);
     }
 
     /// <summary>
@@ -110,7 +111,9 @@ internal sealed class AppxWindow : IAppxWindow
 
     /// <inheritdoc/>
     public void BringToFront()
-    => _shellWindow.BringToFront();
+    {
+
+    }
 
     /// <inheritdoc/>
     public void Minimize()
