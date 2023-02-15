@@ -159,6 +159,7 @@ csharp_space_between_square_brackets = false
 
 dotnet_diagnostic.IDE0058.severity = none
 dotnet_diagnostic.IDE0022.severity = none
+dotnet_diagnostic.CA1806.severity = none
 
 # C++ Files
 [*.{cpp,h,in}]
