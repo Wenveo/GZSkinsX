@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\markdownlint.yml = .github\workflows\markdownlint.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Backdrops", "src\appx\GZSkinsX.Appx.Backdrops\GZSkinsX.Appx.Backdrops.csproj", "{1B6A5515-4167-4507-B0AD-A360595D3CB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,22 @@ Global
 		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x64.Build.0 = Release|Any CPU
 		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x86.ActiveCfg = Release|Any CPU
 		{9479C781-B26B-4410-96C9-AB332AB00AB9}.Release|x86.Build.0 = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|x64.Build.0 = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Debug|x86.Build.0 = Debug|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|ARM64.Build.0 = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|x64.ActiveCfg = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|x64.Build.0 = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|x86.ActiveCfg = Release|Any CPU
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +123,7 @@ Global
 		{9479C781-B26B-4410-96C9-AB332AB00AB9} = {85F8F327-C977-4CFC-8BDC-366E652F4E79}
 		{8282E051-BFCA-420A-8130-6DEB48C5E954} = {C86F32B8-8704-49C6-80D0-C06194B92922}
 		{E07555FD-FAD2-4779-A977-D90676C5B1E6} = {8282E051-BFCA-420A-8130-6DEB48C5E954}
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2} = {85F8F327-C977-4CFC-8BDC-366E652F4E79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0A248245-EAEC-41D5-9752-0435BD2394B6}
