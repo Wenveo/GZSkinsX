@@ -21,8 +21,6 @@
 
   <PropertyGroup Condition="">
     <SolutionRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),GZSkinsX.sln))</SolutionRoot>
-    <BuildDirectory>$(SolutionRoot)build\bin\$(Configuration)</BuildDirectory>
-    <ExtensionOutputPath>$(SolutionRoot)build\extensions</ExtensionOutputPath>
   </PropertyGroup>
   
   <PropertyGroup>

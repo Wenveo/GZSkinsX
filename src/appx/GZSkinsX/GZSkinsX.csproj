@@ -7,7 +7,6 @@
     <RootNamespace>GZSkinsX</RootNamespace>
     <Platforms>x86;x64;ARM64</Platforms>
     <UseWinUI>true</UseWinUI>
-    <OutputPath>$(BuildDirectory)</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
