@@ -44,7 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\markdownlint.yml = .github\workflows\markdownlint.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Backdrops", "src\appx\GZSkinsX.Appx.Backdrops\GZSkinsX.Appx.Backdrops.csproj", "{1B6A5515-4167-4507-B0AD-A360595D3CB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.Backdrops", "src\extensions\GZSkinsX.Appx.Backdrops\GZSkinsX.Appx.Backdrops.csproj", "{1B6A5515-4167-4507-B0AD-A360595D3CB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,7 +123,7 @@ Global
 		{9479C781-B26B-4410-96C9-AB332AB00AB9} = {85F8F327-C977-4CFC-8BDC-366E652F4E79}
 		{8282E051-BFCA-420A-8130-6DEB48C5E954} = {C86F32B8-8704-49C6-80D0-C06194B92922}
 		{E07555FD-FAD2-4779-A977-D90676C5B1E6} = {8282E051-BFCA-420A-8130-6DEB48C5E954}
-		{1B6A5515-4167-4507-B0AD-A360595D3CB2} = {85F8F327-C977-4CFC-8BDC-366E652F4E79}
+		{1B6A5515-4167-4507-B0AD-A360595D3CB2} = {2B058960-3542-434D-A4B0-009ABDCC3BFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0A248245-EAEC-41D5-9752-0435BD2394B6}
