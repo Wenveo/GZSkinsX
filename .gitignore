@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 # GZSkinsX build direcotry
 build/bin
+build/extensions
