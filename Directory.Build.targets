@@ -25,7 +25,7 @@
     Defining the "ProjectReference" item for the main appx project to copy them (output files) in build time.
   -->
   <Target Name="BuildAppxExtensionProjects" Condition="'$(MainAppx)'=='true'"
-          BeforeTargets="Build" DependsOnTargets="BuildAppxExtensionProjectsOn">
+          BeforeTargets="BeforeBuild;BeforeRebuild" DependsOnTargets="BuildAppxExtensionProjectsOn">
     <ItemGroup>
       <ProjectReference Include="@(AppxExtensionProjects)" />
     </ItemGroup>
@@ -50,5 +50,5 @@
   </Target>
 
   <Target Name="FixesBuild" Condition="'$(AppxExtension)'=='true'"
-          BeforeTargets="Build" DependsOnTargets="FixesBuildOn"/>
+          BeforeTargets="BeforeBuild;BeforeRebuild" DependsOnTargets="FixesBuildOn"/>
 </Project>
