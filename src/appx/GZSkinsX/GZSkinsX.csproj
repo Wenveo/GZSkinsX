@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <MainAppx>true</MainAppx>
     <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
@@ -23,7 +24,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Manifest Include="app.manifest" />
   </ItemGroup>
@@ -32,12 +33,12 @@
     <PackageReference Include="MessagePack" Version="2.4.59" />
     <PackageReference Include="WinUIEx" Version="2.1.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\\GZSkinsX.Api\GZSkinsX.Api.csproj" />
   </ItemGroup>
-  
-  <!-- 
+
+  <!--
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
     package has not yet been restored.
@@ -46,9 +47,9 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
 
-  <!-- 
-    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
-    Explorer "Package and Publish" context menu entry to be enabled for this project even if 
+  <!--
+    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
+    Explorer "Package and Publish" context menu entry to be enabled for this project even if
     the Windows App SDK Nuget package has not yet been restored.
   -->
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
