@@ -136,26 +136,6 @@ internal sealed class WindowBackdropManager : IWindowBackdropManager
         };
     }
 
-    /// <inheritdoc/>
-    public bool SetBackdrop(BackdropType type)
-    {
-        CleanUpBackdrop();
-
-        _currentBackdrop = type;
-        if (_currentBackdrop is BackdropType.Mica or BackdropType.MicaAlt)
-        {
-            return MicaBackdrop.Apply(_currentBackdrop == BackdropType.MicaAlt);
-        }
-        else if (_currentBackdrop is BackdropType.DesktopAcrylic)
-        {
-            return AcrylicBackdrop.Apply();
-        }
-        else
-        {
-            return true;
-        }
-    }
-
     /// <summary>
     /// 清除当前背景
     /// </summary>
@@ -170,4 +150,41 @@ internal sealed class WindowBackdropManager : IWindowBackdropManager
             _acrylicBackdrop?.CleanUp();
         }
     }
+
+    /// <summary>
+    /// 对传入的目标背景类型进行应用
+    /// </summary>
+    /// <param name="type">需要设置的窗口背景类型</param>
+    /// <returns>应用成功时返回 true，否则返回 false</returns>
+    private bool SetBackdropCore(BackdropType type) => type switch
+    {
+        BackdropType.Mica => MicaBackdrop.Apply(false),
+        BackdropType.MicaAlt => MicaBackdrop.Apply(true),
+        BackdropType.DesktopAcrylic => AcrylicBackdrop.Apply(),
+        BackdropType.DefaultColor => true,
+        _ => false
+    };
+
+    /// <inheritdoc/>
+    public bool SetBackdrop(BackdropType type)
+    {
+        CleanUpBackdrop();
+
+        var ret = SetBackdropCore(_currentBackdrop = type);
+        if (!ret)
+        {
+            _currentBackdrop = BackdropType.DefaultColor;
+        }
+
+        return ret;
+    }
+
+    /// <inheritdoc/>
+    public bool IsSupported(BackdropType type) => type switch
+    {
+        BackdropType.Mica or BackdropType.MicaAlt => MicaSystemBackdrop.IsSupported,
+        BackdropType.DesktopAcrylic => AcrylicSystemBackdrop.IsSupported,
+        BackdropType.DefaultColor => true,
+        _ => false,
+    };
 }

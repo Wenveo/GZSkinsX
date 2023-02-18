@@ -15,10 +15,19 @@ namespace GZSkinsX.Appx.Backdrops;
 /// </summary>
 internal sealed class MicaSystemBackdrop : IDisposable
 {
-    /// <inheritdoc cref="WindowBackdropManager._target"/>
+    /// <summary>
+    /// 表示当前系统是否支持使用云母材质
+    /// </summary>
+    public static readonly bool IsSupported = MicaController.IsSupported();
+
+    /// <summary>
+    /// 用于设置 Backdrop 的目标窗体对象
+    /// </summary>
     private readonly ICompositionSupportsSystemBackdrop _target;
 
-    /// <inheritdoc cref="WindowBackdropManager._configurationSource"/>
+    /// <summary>
+    /// 当前应用程序的 Backdrop 配置源
+    /// </summary>
     private readonly SystemBackdropConfiguration _configuration;
 
     /// <summary>
@@ -43,7 +52,7 @@ internal sealed class MicaSystemBackdrop : IDisposable
         _target = target;
         _configuration = configuration;
 
-        if (MicaController.IsSupported())
+        if (IsSupported)
         {
             _micaController = new MicaController();
         }
