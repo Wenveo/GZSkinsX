@@ -8,6 +8,7 @@
 using System.Reflection;
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Appx.Backdrops;
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Composition;
 using GZSkinsX.Extension;
@@ -45,6 +46,9 @@ public partial class App : Application
 
         var appWindow = exportProvider.GetExportedValue<IAppxWindow>();
         appWindow.Show();
+
+        var backdropManager = exportProvider.GetExportedValue<IWindowBackdropManager>();
+        backdropManager.SetBackdrop(BackdropType.Mica);
     }
 
     /// <summary>
