@@ -19,12 +19,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="">
-    <SolutionRoot>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory),GZSkinsX.sln))</SolutionRoot>
+  <PropertyGroup>
+    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
   </PropertyGroup>
   
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(SolutionRoot)GZSkinsX.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$([System.IO.Path]::Combine($(SolutionRoot), GZSkinsX.snk))</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 </Project>
