@@ -22,6 +22,7 @@ jobs:
     env:
       Solution_Name: GZSkinsX.sln
       Appx_Project_Path: src\appx\GZSkinsX\GZSkinsX.csproj
+      Appx_Extension_Projects: src\extension\**\*.csproj
 
     steps:
     - name: Checkout
@@ -35,8 +36,11 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
-        
-    - name: Build
+
+    - name: Build Extensions
+      run: msbuild $env:Appx_Extension_Projects /p:Configuration=$env:Configuration /p:Platform=$env:Platforms
+
+    - name: Build MainAppx
       run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platforms /p:SelfContained=false /p:WindowsAppSDKSelfContained=false /p:GenerateTemporaryStoreCertificate=false
       env:
         Configuration: ${{ matrix.configuration }}
