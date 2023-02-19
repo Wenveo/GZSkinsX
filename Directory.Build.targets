@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+  <PropertyGroup>
+    <AppxExtensionDirectory>$([System.IO.Path]::Combine($(SolutionRoot), src, extensions))</AppxExtensionDirectory>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <AppxExtensionProjects Include="$([System.IO.Directory]::GetFiles($(AppxExtensionDirectory), *.csproj, SearchOption.AllDirectories))" />
+  </ItemGroup>
+  
   <!--
     ***********************************************************************************************
     ***********************************************************************************************
@@ -12,20 +20,13 @@
     Defining the "AppxExtensionProjects" item here to get the extension projects and build them.
   -->
   <Target Name="BuildAppxExtensionProjectsOn">
-    <PropertyGroup>
-      <AppxExtensionDirectory>$([System.IO.Path]::Combine($(SolutionRoot), src, extensions))</AppxExtensionDirectory>
-    </PropertyGroup>
-    <ItemGroup>
-      <AppxExtensionProjects Include="$([System.IO.Directory]::GetFiles($(AppxExtensionDirectory), *.csproj, SearchOption.AllDirectories))" />
-    </ItemGroup>
     <MSBuild Projects="@(AppxExtensionProjects)" Properties="OutputPath=$([System.IO.Path]::Combine(bin, $(Configuration), $(TargetFramework)))" />
   </Target>
 
   <!--
     Defining the "ProjectReference" item for the main appx project to copy them (output files) in build time.
   -->
-  <Target Name="BuildAppxExtensionProjects" Condition="'$(MainAppx)'=='true'"
-          BeforeTargets="BuildOnlySettings" DependsOnTargets="BuildAppxExtensionProjectsOn">
+  <Target Name="BuildAppxExtensionProjects" Condition="'$(MainAppx)'=='true'" DependsOnTargets="BuildAppxExtensionProjectsOn">
     <ItemGroup>
       <ProjectReference Include="@(AppxExtensionProjects)" />
     </ItemGroup>
@@ -50,5 +51,5 @@
   </Target>
 
   <Target Name="FixesBuild" Condition="'$(AppxExtension)'=='true'"
-          BeforeTargets="BuildOnlySettings" DependsOnTargets="FixesBuildOn"/>
+          BeforeTargets="BeforeBuild" DependsOnTargets="FixesBuildOn"/>
 </Project>
