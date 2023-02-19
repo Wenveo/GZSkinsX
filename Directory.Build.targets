@@ -1,55 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <PropertyGroup>
-    <AppxExtensionDirectory>$([System.IO.Path]::Combine($(SolutionRoot), src, extensions))</AppxExtensionDirectory>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <AppxExtensionProjects Include="$([System.IO.Directory]::GetFiles($(AppxExtensionDirectory), *.csproj, SearchOption.AllDirectories))" />
-  </ItemGroup>
-  
   <!--
     ***********************************************************************************************
     ***********************************************************************************************
-                                                                MainAppx Section
+                                            MainAppx Section
     ***********************************************************************************************
     ***********************************************************************************************
     -->
 
-  <!--
-    Defining the "AppxExtensionProjects" item here to get the extension projects and build them.
-  -->
-  <Target Name="BuildAppxExtensionProjectsOn">
-    <MSBuild Projects="@(AppxExtensionProjects)" Properties="OutputPath=$([System.IO.Path]::Combine(bin, $(Configuration), $(TargetFramework)))" />
+  <Target Name="_GenerateExtensionProjectProperties">
+    <PropertyGroup>
+      <AppxExtensionDirectory>$([System.IO.Path]::Combine($(SolutionRoot), src, extensions))</AppxExtensionDirectory>
+    </PropertyGroup>
+    <ItemGroup>
+      <AppxExtensionProjects Include="$([System.IO.Directory]::GetFiles($(AppxExtensionDirectory), *.csproj, SearchOption.AllDirectories))" />
+    </ItemGroup>
   </Target>
 
   <!--
     Defining the "ProjectReference" item for the main appx project to copy them (output files) in build time.
   -->
-  <Target Name="BuildAppxExtensionProjects" Condition="'$(MainAppx)'=='true'" DependsOnTargets="BuildAppxExtensionProjectsOn">
+  <Target Name="_AppendExtensionProjectReferences" DependsOnTargets="_GenerateExtensionProjectProperties">
     <ItemGroup>
       <ProjectReference Include="@(AppxExtensionProjects)" />
     </ItemGroup>
   </Target>
-
-  
-  <!--
-    ***********************************************************************************************
-    ***********************************************************************************************
-                                                                AppxExtension Section
-    ***********************************************************************************************
-    ***********************************************************************************************
-    -->
-  
-  <!--
-    Defining the "TargetRefPath" property to fix the ref output path. (obj\x64\Debug\... -> obj\Debug\...)
-  -->
-  <Target Name="FixesBuildOn">
-    <PropertyGroup>
-      <TargetRefPath>$([MSBuild]::NormalizePath($(MSBuildProjectDirectory), $(BaseIntermediateOutputPath), $(Configuration), $(TargetFramework), 'ref', $(TargetFileName)))</TargetRefPath>
-    </PropertyGroup>
-  </Target>
-
-  <Target Name="FixesBuild" Condition="'$(AppxExtension)'=='true'"
-          BeforeTargets="BeforeBuild" DependsOnTargets="FixesBuildOn"/>
 </Project>
