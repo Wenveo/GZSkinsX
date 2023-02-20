@@ -5,7 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.Api.Appx;
@@ -46,11 +45,6 @@ public interface IAppxWindow
     void Activate();
 
     /// <summary>
-    /// 将当前应用程序主窗口置于前台
-    /// </summary>
-    void BringToFront();
-
-    /// <summary>
     /// 最小化当前应用程序主窗口
     /// </summary>
     void Minimize();
@@ -79,10 +73,4 @@ public interface IAppxWindow
     /// 显示当前应用程序主窗口
     /// </summary>
     void Show();
-
-    /// <summary>
-    /// 设置当前应用程序主窗口的呈现类型
-    /// </summary>
-    /// <param name="kind">要呈现的类型</param>
-    void SetWindowPresenter(AppWindowPresenterKind kind);
 }

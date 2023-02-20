@@ -11,7 +11,6 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Extension;
 
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 using WinUIEx;
@@ -110,12 +109,6 @@ internal sealed class AppxWindow : IAppxWindow
     => _shellWindow.Activate();
 
     /// <inheritdoc/>
-    public void BringToFront()
-    {
-
-    }
-
-    /// <inheritdoc/>
     public void Minimize()
     => _shellWindow.Minimize();
 
@@ -137,9 +130,5 @@ internal sealed class AppxWindow : IAppxWindow
 
     /// <inheritdoc/>
     public void Show()
-    => _shellWindow.Show();
-
-    /// <inheritdoc/>
-    public void SetWindowPresenter(AppWindowPresenterKind kind)
-    => _shellWindow.SetWindowPresenter(kind);
+    => _shellWindow.Show()
 }
