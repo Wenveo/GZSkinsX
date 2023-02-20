@@ -14,18 +14,6 @@ function Restore-Solution {
     }
 }
 
-function Build-Extensions {
-    $ExtensionDirectory = "src\extensions"
-    $ExtensionProjects = Get-ChildItem -Path $ExtensionDirectory -Include *.csproj -Force -Recurse
-    foreach ($proj in $ExtensionProjects) {
-        msbuild $proj /p:Configuration=$Configuration /p:Platform=$Platform
-        if ($LastExitCode -ne 0) {
-            Write-Error "Failed to build the extension project: "$proj""
-            exit 1
-        }
-    }
-}
-
 function Build-MainAppx {
     $SolutionName = "GZSkinsX.sln"
     $MainAppxProject = "src\appx\GZSkinsX\GZSkinsX.csproj"
@@ -37,5 +25,4 @@ function Build-MainAppx {
 }
 
 Restore-Solution
-Build-Extensions
 Build-MainAppx
