@@ -130,5 +130,5 @@ internal sealed class AppxWindow : IAppxWindow
 
     /// <inheritdoc/>
     public void Show()
-    => _shellWindow.Show()
+    => _shellWindow.Show();
 }
