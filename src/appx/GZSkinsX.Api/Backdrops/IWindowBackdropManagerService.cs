@@ -5,12 +5,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Appx.Backdrops;
+namespace GZSkinsX.Api.Backdrops;
 
 /// <summary>
 /// 提供管理应用程序主窗口背景的能力
 /// </summary>
-public interface IWindowBackdropManager
+public interface IWindowBackdropManagerService
 {
     /// <summary>
     /// 当前应用程序主窗口的背景类型

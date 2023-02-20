@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Appx.Backdrops;
+namespace GZSkinsX.Api.Backdrops;
 
 /// <summary>
 /// 应用程序窗口背景类型
