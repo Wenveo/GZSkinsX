@@ -22,7 +22,6 @@ jobs:
     env:
       Solution_Name: GZSkinsX.sln
       Appx_Project_Path: src\appx\GZSkinsX\GZSkinsX.csproj
-      Appx_Extension_Projects: src\extension\**\*.csproj
 
     steps:
     - name: Checkout
@@ -31,17 +30,8 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2  
 
-    - name: Restore
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform=$env:Platforms
-      env:
-        Configuration: ${{ matrix.configuration }}
-        Platforms: ${{ matrix.platforms }}
-
-    - name: Build Extensions
-      run: msbuild $env:Appx_Extension_Projects /p:Configuration=$env:Configuration /p:Platform=$env:Platforms
-
-    - name: Build MainAppx
-      run: msbuild $env:Appx_Project_Path /p:Configuration=$env:Configuration /p:Platform=$env:Platforms /p:SelfContained=false /p:WindowsAppSDKSelfContained=false /p:GenerateTemporaryStoreCertificate=false
+    - name: Build GZSkinsX
+      run:  .\build.ps1 Configuration=$env:Configuration Platform=$env:Platforms
       env:
         Configuration: ${{ matrix.configuration }}
         Platforms: ${{ matrix.platforms }}
