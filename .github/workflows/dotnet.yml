@@ -11,17 +11,12 @@ on:
 
 jobs:
   build:
-
     strategy:
       matrix:
         configuration: [ Release ]
         platforms: [ x64 ]
         
     runs-on: windows-latest
-
-    env:
-      Solution_Name: GZSkinsX.sln
-      Appx_Project_Path: src\appx\GZSkinsX\GZSkinsX.csproj
 
     steps:
     - name: Checkout
