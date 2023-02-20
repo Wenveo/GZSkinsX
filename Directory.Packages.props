@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <ItemGroup Condition="'$(AppxExtension)'=='true'">
-    <ProjectReference Private="false" Include="$(SolutionRoot)src\appx\GZSkinsX.Api\GZSkinsX.Api.csproj" />
+    <ProjectReference Include="$(GZSkinsXApiProj)" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(UseWinUI)'=='true'">
