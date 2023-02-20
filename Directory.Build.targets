@@ -25,4 +25,24 @@
       <ProjectReference Include="@(AppxExtensionProjects)" />
     </ItemGroup>
   </Target>
+
+  
+  <!--
+    ***********************************************************************************************
+    ***********************************************************************************************
+                                            AppxExtension Section
+    ***********************************************************************************************
+    ***********************************************************************************************
+    -->
+
+
+  <!--
+    Defining the "Private" property to false when building in visual studio.
+    (Don't need to copy the api assembly to the (bin) output directory.)
+  -->
+  <Target Name="_SetProjectReferenceToPrivate" BeforeTargets="BeforeBuild" Condition="'$(AppxExtension)'=='true'">
+    <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
+      <ProjectReference Private="false" Include="$(GZSkinsXApiProj)"/>
+    </ItemGroup>
+  </Target>
 </Project>
