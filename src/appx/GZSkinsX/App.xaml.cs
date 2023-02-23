@@ -48,7 +48,7 @@ public partial class App : Application
         var appWindow = exportProvider.GetExportedValue<IAppxWindow>();
         appWindow.Show();
 
-        var backdropManager = exportProvider.GetExportedValue<IWindowBackdropManagerService>();
+        var backdropManager = exportProvider.GetExportedValue<IBackdropManagerService>();
         backdropManager.SetBackdrop(BackdropType.MicaAlt);
     }
 

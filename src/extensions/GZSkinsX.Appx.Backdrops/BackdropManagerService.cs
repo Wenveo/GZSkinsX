@@ -18,9 +18,9 @@ using WinRT;
 
 namespace GZSkinsX.Appx.Backdrops;
 
-/// <inheritdoc cref="IWindowBackdropManagerService"/>
-[Shared, Export(typeof(IWindowBackdropManagerService))]
-internal sealed class WindowBackdropManagerService : IWindowBackdropManagerService
+/// <inheritdoc cref="IBackdropManagerService"/>
+[Shared, Export(typeof(IBackdropManagerService))]
+internal sealed class BackdropManagerService : IBackdropManagerService
 {
     /// <summary>
     /// 当前应用程序主窗口
@@ -80,10 +80,10 @@ internal sealed class WindowBackdropManagerService : IWindowBackdropManagerServi
     }
 
     /// <summary>
-    /// 初始化 <see cref="WindowBackdropManagerService"/> 的新实例
+    /// 初始化 <see cref="BackdropManagerService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public WindowBackdropManagerService(IAppxWindow appxWindow)
+    public BackdropManagerService(IAppxWindow appxWindow)
     {
         _mainWindow = appxWindow.MainWindow;
         _target = _mainWindow.As<ICompositionSupportsSystemBackdrop>();

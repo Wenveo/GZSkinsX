@@ -10,7 +10,7 @@ namespace GZSkinsX.Api.Backdrops;
 /// <summary>
 /// 提供管理应用程序主窗口背景的能力
 /// </summary>
-public interface IWindowBackdropManagerService
+public interface IBackdropManagerService
 {
     /// <summary>
     /// 当前应用程序主窗口的背景类型
