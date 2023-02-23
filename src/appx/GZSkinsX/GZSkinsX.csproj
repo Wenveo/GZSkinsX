@@ -35,7 +35,6 @@
   
   <ItemGroup>
     <ProjectReference Include="$(GZSkinsXApiProj)" />
-    <ProjectReference Include="..\..\libraries\GZSkinsX.Window.Extensions\GZSkinsX.Window.Extensions.csproj" />
   </ItemGroup>
 
   <!--
