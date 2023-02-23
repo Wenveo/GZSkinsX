@@ -57,7 +57,7 @@ internal sealed class AppxWindow : IAppxWindow
     public AppxWindow(ExtensionService extensionService)
     {
         _extensionService = extensionService;
-        _shellWindow = new ShellWindow();
+
 
         _shellWindow = new Window();
         _shellWindow.Activated += OnActivated;
