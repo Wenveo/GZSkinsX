@@ -32,7 +32,7 @@ internal sealed class AppxWindow : IAppxWindow
     /// <summary>
     /// 当前应用程序主窗口实例
     /// </summary>
-    private readonly ShellWindow _shellWindow;
+    private readonly Window _shellWindow;
 
     /// <inheritdoc/>
     public event EventHandler<WindowActivatedEventArgs>? Activated;
@@ -59,10 +59,22 @@ internal sealed class AppxWindow : IAppxWindow
         _extensionService = extensionService;
         _shellWindow = new ShellWindow();
 
+        _shellWindow = new Window();
         _shellWindow.Activated += OnActivated;
         _shellWindow.Closed += OnClosed;
 
         Activated += OnAppLoaded;
+    }
+
+    private void InitializeUIElement()
+    {
+#if DEBUG
+        var title = "GZSkinsX (DEBUG)";
+#else
+        var title = "GZSkinsX";
+#endif
+        _shellWindow.Title = title;
+        _shellWindow.ExtendsContentIntoTitleBar = true;
     }
 
     /// <summary>
@@ -71,6 +83,8 @@ internal sealed class AppxWindow : IAppxWindow
     private void OnAppLoaded(object? sender, WindowActivatedEventArgs e)
     {
         Activated -= OnAppLoaded;
+        InitializeUIElement();
+
         _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
         _extensionService.LoadAutoLoaded(AutoLoadedType.AppLoaded);
     }
