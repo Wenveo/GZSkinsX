@@ -14,7 +14,7 @@
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Update="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -35,6 +35,7 @@
   
   <ItemGroup>
     <ProjectReference Include="$(GZSkinsXApiProj)" />
+    <ProjectReference Include="..\..\libraries\GZSkinsX.Window.Extensions\GZSkinsX.Window.Extensions.csproj" />
   </ItemGroup>
 
   <!--
