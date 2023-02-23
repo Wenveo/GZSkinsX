@@ -4,8 +4,8 @@
     <AppxVersion>1.4.1.0</AppxVersion>
     <AppxCompany>GZSkins, Inc.</AppxCompany>
     <AppxCopyright>@2022 - 2023 GZSkins, Inc.</AppxCopyright>
-    <AppxSDKVersion>1.2.230118.102</AppxSDKVersion>
-    <AppxBuildToolsVersion>10.0.22621.755</AppxBuildToolsVersion>
+    <AppxSDKVersion>1.2.230217.4</AppxSDKVersion>
+    <AppxBuildToolsVersion>10.0.22621.1</AppxBuildToolsVersion>
   </PropertyGroup>
   
   <PropertyGroup>
