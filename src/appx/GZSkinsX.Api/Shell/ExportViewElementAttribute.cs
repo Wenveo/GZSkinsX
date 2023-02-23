@@ -5,20 +5,19 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System.Composition;
+
 namespace GZSkinsX.Api.Shell;
 
 /// <summary>
-/// 
+/// 声明并将目标类以 <see cref="IViewElement"/> 类型导出
 /// </summary>
-public static class ViewElementConstants
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public sealed class ExportViewElementAttribute : ExportAttribute
 {
     /// <summary>
-    /// 
+    /// 初始化 <see cref="ExportViewElementAttribute"/> 的新实例，并以 <see cref="IViewElement"/> 类型导出
     /// </summary>
-    public const string StartUpPage_Guid = "1C3A5F43-5383-4B87-A365-1D1610B92060";
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public const string MainPage_Guid = "95FF48E7-E179-4DA5-8F41-1923B7F22963";
+    public ExportViewElementAttribute()
+        : base(typeof(IViewElement)) { }
 }

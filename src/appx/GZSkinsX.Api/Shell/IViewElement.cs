@@ -5,17 +5,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Microsoft.UI.Xaml.Controls;
-
 namespace GZSkinsX.Api.Shell;
 
 /// <summary>
-/// 主程序中的页面视图元素
+/// 表示位于应用程序主窗口中的视图元素，通常被用于在主窗口中对根元素进行页面切换
 /// </summary>
 public interface IViewElement
 {
-    /// <summary>
-    /// 用于显示的用户接口对象
-    /// </summary>
-    Page UIObject { get; }
+    
 }

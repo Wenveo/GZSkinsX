@@ -9,7 +9,9 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
+using GZSkinsX.Api.Shell;
 using GZSkinsX.Extension;
+using GZSkinsX.Shell;
 
 using Microsoft.UI.Xaml;
 
@@ -28,6 +30,11 @@ internal sealed class AppxWindow : IAppxWindow
     /// 当前应用程序的扩展服务，主要用于在 OnAppLoaded 事件中对已加载的扩展进行通知 AppLoaded 事件
     /// </summary>
     private readonly ExtensionService _extensionService;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private readonly IViewManagerServiceImpl _viewManagerService;
 
     /// <summary>
     /// 当前应用程序主窗口实例
@@ -54,10 +61,11 @@ internal sealed class AppxWindow : IAppxWindow
     /// </summary>
     /// <param name="extensionService">应用程序扩展服务</param>
     [ImportingConstructor]
-    public AppxWindow(ExtensionService extensionService)
+    public AppxWindow(ExtensionService extensionService, IViewManagerServiceImpl viewManagerService)
     {
         _extensionService = extensionService;
 
+        _viewManagerService = viewManagerService;
 
         _shellWindow = new Window();
         _shellWindow.Activated += OnActivated;
@@ -68,6 +76,7 @@ internal sealed class AppxWindow : IAppxWindow
 
     private void InitializeUIElement()
     {
+        _shellWindow.Content = _viewManagerService.InitializeFrame();
 #if DEBUG
         var title = "GZSkinsX (DEBUG)";
 #else
@@ -75,6 +84,7 @@ internal sealed class AppxWindow : IAppxWindow
 #endif
         _shellWindow.Title = title;
         _shellWindow.ExtendsContentIntoTitleBar = true;
+        _viewManagerService.NavigateTo(ViewElementConstants.StartUpPage_Guid);
     }
 
     /// <summary>

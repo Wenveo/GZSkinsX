@@ -5,17 +5,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Shell;
+using GZSkinsX.Api.Shell;
 
-public interface IViewManager
+using Microsoft.UI.Xaml.Controls;
+
+namespace GZSkinsX.Appx;
+
+[ExportViewElement]
+[ViewElementMetadata(Guid = ViewElementConstants.StartUpPage_Guid, PageType = typeof(StartUpPage))]
+internal sealed class AppxStartUpPageLoader : IViewElementLoader
 {
-    bool CanGoBack { get; }
-
-    bool CanGoForward { get; }
-
-    void GoBack();
-
-    void GoForward();
-
-    void NavigateTo(Guid elemGuid);
+    public void OnInitialized(Page viewElement)
+    {
+    }
 }
