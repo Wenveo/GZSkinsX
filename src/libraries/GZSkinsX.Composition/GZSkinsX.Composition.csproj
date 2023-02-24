@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4C946033-B0F2-43FF-8644-7892E2A58C53}</ProjectGuid>
+    <ProjectGuid>{2D80C1B8-8E34-4F82-A09A-5D93B500ED6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GZSkinsX.Api</RootNamespace>
-    <AssemblyName>GZSkinsX.Api</AssemblyName>
+    <RootNamespace>GZSkinsX.Composition</RootNamespace>
+    <AssemblyName>GZSkinsX.Composition</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
@@ -121,8 +121,27 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssemblyCatalogV2.cs" />
+    <Compile Include="Cache\AssemblyCatalogV2Cache.cs" />
+    <Compile Include="Cache\CacheStreamReader.cs" />
+    <Compile Include="Cache\CacheStreamWriter.cs" />
+    <Compile Include="CompositionContainerV2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Composition.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MessagePack">
+      <Version>2.4.59</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Bcl.HashCode">
+      <Version>1.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Composition">
+      <Version>17.4.16</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
