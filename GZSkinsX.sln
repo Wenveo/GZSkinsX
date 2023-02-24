@@ -13,9 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azure-pipelines.yml = azure-pipelines.yml
 		build.cmd = build.cmd
 		build.ps1 = build.ps1
-		Directory.Build.props = Directory.Build.props
 		global.json = global.json
-		GZSkinsX.snk = GZSkinsX.snk
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
