@@ -20,7 +20,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArguments: '/t:Restore /p:SelfContained=false /p:WindowsAppSDKSelfContained=false'
+    msbuildArguments: '/t:Restore'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
