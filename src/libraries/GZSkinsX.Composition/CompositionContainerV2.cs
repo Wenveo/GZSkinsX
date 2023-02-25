@@ -7,6 +7,7 @@
 
 #nullable enable
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ using GZSkinsX.Composition.Cache;
 
 using Microsoft.VisualStudio.Composition;
 
+using Windows.Storage;
+
 namespace GZSkinsX.Composition;
 
 /// <summary>
@@ -22,6 +25,11 @@ namespace GZSkinsX.Composition;
 /// </summary>
 public sealed class CompositionContainerV2
 {
+    /// <summary>
+    /// 当前应用程序的目录，用于存放组件缓存
+    /// </summary>
+    private readonly StorageFolder _currentFolder;
+
     /// <summary>
     /// 已枚举的组件目录
     /// </summary>
@@ -34,6 +42,7 @@ public sealed class CompositionContainerV2
     public CompositionContainerV2(AssemblyCatalogV2 catalog)
     {
         _assemablyCatalog = catalog;
+        _currentFolder = ApplicationData.Current.LocalFolder;
     }
 
     /// <summary>
@@ -54,7 +63,7 @@ public sealed class CompositionContainerV2
     private async Task<IExportProviderFactory> CreateExportProviderFactoryCoreAsync(string? cacheFilename)
     {
         var resolver = Resolver.DefaultInstance;
-        if (string.IsNullOrEmpty(cacheFilename) && File.Exists(cacheFilename))
+        if (cacheFilename is not null)
         {
             var factory = await TryGetCachedExportProviderFactoryAsync(resolver, cacheFilename);
             if (factory != null)
@@ -91,11 +100,16 @@ public sealed class CompositionContainerV2
     /// </summary>
     /// <param name="resolver">默认解析器</param>
     /// <returns>从缓存中获取到的 <see cref="IExportProviderFactory"/> 对象，如果获取失败则返回 null </returns>
-    private async Task<IExportProviderFactory?> TryGetCachedExportProviderFactoryAsync(Resolver resolver, string? cacheFileName)
+    private async Task<IExportProviderFactory?> TryGetCachedExportProviderFactoryAsync(Resolver resolver, string? cacheFilename)
     {
+        if (await _currentFolder.TryGetItemAsync(cacheFilename) is not IStorageFile cacheFile)
+        {
+            return null;
+        }
+
         try
         {
-            using var cachedStream = File.OpenRead(cacheFileName);
+            using var cachedStream = await cacheFile.OpenStreamForReadAsync();
             using var reader = new CacheStreamReader(cachedStream);
             var oldCache = await reader.ReadAssemablyCatalogCacheAsync();
             var newCache = _assemablyCatalog.Cache;
@@ -118,16 +132,17 @@ public sealed class CompositionContainerV2
     /// <param name="configuration">用于缓存的对象</param>
     private async Task SaveMefCacheAsync(CompositionConfiguration configuration, string? cacheFilename)
     {
-        if (string.IsNullOrEmpty(cacheFilename)) return;
-
         var isCreated = false;
         var canDelete = true;
 
+        var cacheFile = await _currentFolder.TryGetItemAsync(cacheFilename) as IStorageFile;
+
         try
         {
-            using var cachedStream = File.Create(cacheFilename);
-            isCreated = true;
+            cacheFile ??= await _currentFolder.CreateFileAsync(cacheFilename);
+            using var cachedStream = await cacheFile.OpenStreamForWriteAsync();
 
+            isCreated = true;
             using var writer = new CacheStreamWriter();
             await writer.WriteAssemablyCatalogCacheAsync(_assemablyCatalog.Cache);
             await writer.WriteCompositionCacheAsync(configuration);
@@ -139,7 +154,7 @@ public sealed class CompositionContainerV2
         {
             try
             {
-                File.Delete(cacheFilename);
+                await cacheFile?.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
             catch
             {

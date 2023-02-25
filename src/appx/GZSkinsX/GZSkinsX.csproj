@@ -126,10 +126,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Extension\ExtensionService.cs" />
+    <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowManager\ViewElementContext.cs" />
+    <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -201,23 +202,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.2</Version>
+    <PackageReference Include="PolySharp">
+      <Version>1.12.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\libraries\GZSkinsX.Composition\GZSkinsX.Composition.csproj">
       <Project>{2d80c1b8-8e34-4f82-a09a-5d93b500ed6f}</Project>
       <Name>GZSkinsX.Composition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
+      <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
+      <Name>GZSkinsX.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
+      <Project>{92b1e3b4-92a4-4c0b-85a9-b83bc0287daf}</Project>
+      <Name>GZSkinsX.Appx.StartUp</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

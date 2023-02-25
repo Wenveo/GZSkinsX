@@ -74,7 +74,7 @@ public sealed class CacheStreamReader : IDisposable
 
             var buffer = ArrayPool<byte>.Shared.Rent(4);
             var count = _cachedStream.Read(buffer, 0, 4);
-            Debug.Assert(count == buffer.Length);
+            Debug.Assert(count == 4);
 
             offset = MemoryMarshal.Read<int>(buffer);
             ArrayPool<byte>.Shared.Return(buffer, true);

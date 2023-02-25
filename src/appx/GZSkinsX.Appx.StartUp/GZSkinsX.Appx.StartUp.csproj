@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4C946033-B0F2-43FF-8644-7892E2A58C53}</ProjectGuid>
+    <ProjectGuid>{92B1E3B4-92A4-4C0B-85A9-B83BC0287DAF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GZSkinsX.Api</RootNamespace>
-    <AssemblyName>GZSkinsX.Api</AssemblyName>
+    <RootNamespace>GZSkinsX.Appx.StartUp</RootNamespace>
+    <AssemblyName>GZSkinsX.Appx.StartUp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
@@ -121,41 +121,29 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Appx\AppxContext.cs" />
-    <Compile Include="Appx\IAppxWindow.cs" />
-    <Compile Include="Extension\AutoLoadedMetadataAttribute.cs" />
-    <Compile Include="Extension\AutoLoadedType.cs" />
-    <Compile Include="Extension\ExportAutoLoadedAttribute.cs" />
-    <Compile Include="Extension\ExportExtensionAttribute.cs" />
-    <Compile Include="Extension\ExtensionEvent.cs" />
-    <Compile Include="Extension\ExtensionMetadataAttribute.cs" />
-    <Compile Include="Extension\IAutoLoaded.cs" />
-    <Compile Include="Extension\IExtension.cs" />
+    <Compile Include="AppxStartUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowManager\ExportViewElementAttribute.cs" />
-    <Compile Include="WindowManager\IViewElement.cs" />
-    <Compile Include="WindowManager\IViewElementLoader.cs" />
-    <Compile Include="WindowManager\IViewElementLoaderAsync.cs" />
-    <Compile Include="WindowManager\IWindowManagerService.cs" />
-    <Compile Include="WindowManager\ViewElementConstants.cs" />
-    <Compile Include="WindowManager\ViewElementMetadataAttribute.cs" />
-    <Compile Include="WindowManager\WindowFrameNavigateEventArgs.cs" />
-    <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
+    <Compile Include="StartUpPage.xaml.cs">
+      <DependentUpon>StartUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StartUpPageLoader.cs" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Appx.StartUp.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="StartUpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
+      <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
+      <Name>GZSkinsX.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.8.2</Version>
-    </PackageReference>
-    <PackageReference Include="PolySharp">
-      <Version>1.12.1</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="System.Composition.AttributedModel">
-      <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
