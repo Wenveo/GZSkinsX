@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.Api.Shell;
 
 /// <summary>
 /// 声明并将目标类以 <see cref="IViewElement"/> 类型导出

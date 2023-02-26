@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.Api.Shell;
 
 /// <summary>
 /// 用于导出的视图元素的元数据

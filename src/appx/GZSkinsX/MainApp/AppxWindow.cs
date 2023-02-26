@@ -12,9 +12,9 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Api.Shell;
 using GZSkinsX.Extension;
-using GZSkinsX.WindowManager;
+using GZSkinsX.Shell;
 
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -63,7 +63,7 @@ internal sealed class AppxWindow : IAppxWindow
     /// </summary>
     /// <param name="extensionService">应用程序扩展服务</param>
     [ImportingConstructor]
-    public AppxWindow(ExtensionService extensionService, IWindowManagerServiceImpl windowManagerService, IWindowManagerService _)
+    public AppxWindow(ExtensionService extensionService, IViewManagerServiceImpl windowManagerService, IViewManagerService _)
     {
         _extensionService = extensionService;
         _currentAppView = ApplicationView.GetForCurrentView();

@@ -7,9 +7,9 @@
 
 using System;
 
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Api.Shell;
 
-namespace GZSkinsX.WindowManager;
+namespace GZSkinsX.Shell;
 
 /// <summary>
 /// 用于存储导出的 <see cref="IViewElement"/> 以及元数据 <see cref="ViewElementMetadataAttribute"/> 的上下文

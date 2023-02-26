@@ -129,8 +129,8 @@
     <Compile Include="Extension\ExtensionService.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowManager\ViewElementContext.cs" />
-    <Compile Include="WindowManager\WindowManagerService.cs" />
+    <Compile Include="Shell\ViewElementContext.cs" />
+    <Compile Include="Shell\ViewManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

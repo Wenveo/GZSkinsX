@@ -132,14 +132,14 @@
     <Compile Include="Extension\IAutoLoaded.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowManager\ExportViewElementAttribute.cs" />
-    <Compile Include="WindowManager\IViewElement.cs" />
-    <Compile Include="WindowManager\IViewElementLoader.cs" />
-    <Compile Include="WindowManager\IViewElementLoaderAsync.cs" />
-    <Compile Include="WindowManager\IWindowManagerService.cs" />
-    <Compile Include="WindowManager\ViewElementConstants.cs" />
-    <Compile Include="WindowManager\ViewElementMetadataAttribute.cs" />
-    <Compile Include="WindowManager\WindowFrameNavigateEventArgs.cs" />
+    <Compile Include="Shell\ExportViewElementAttribute.cs" />
+    <Compile Include="Shell\IViewElement.cs" />
+    <Compile Include="Shell\IViewElementLoader.cs" />
+    <Compile Include="Shell\IViewElementLoaderAsync.cs" />
+    <Compile Include="Shell\IViewManagerService.cs" />
+    <Compile Include="Shell\ViewElementConstants.cs" />
+    <Compile Include="Shell\ViewElementMetadataAttribute.cs" />
+    <Compile Include="WindowFrameNavigateEventArgs.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
   </ItemGroup>
   <ItemGroup>

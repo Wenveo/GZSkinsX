@@ -9,12 +9,12 @@ using System;
 
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.Api.Shell;
 
 /// <summary>
 /// 提供对当前应用程序主窗口中的根元素对象 切换/导航 的能力
 /// </summary>
-public interface IWindowManagerService
+public interface IViewManagerService
 {
     /// <summary>
     /// 获取当前容器是否可返回至上一个页面
@@ -60,7 +60,7 @@ public interface IWindowManagerService
     /// <summary>
     /// 导航到与标识符匹配的指定页面
     /// </summary>
-    /// <param name="guidString">视图对象的 <see cref="Guid"/> 值</param>
+    /// <param name="elemGuid">视图对象的 <see cref="Guid"/> 值</param>
     void NavigateTo(Guid elemGuid);
 
     /// <summary>

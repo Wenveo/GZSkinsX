@@ -12,17 +12,18 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Api;
+using GZSkinsX.Api.Shell;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.WindowManager;
+namespace GZSkinsX.Shell;
 
 /// <summary>
 /// 视图管理服务的内部接口定义
 /// </summary>
-internal interface IWindowManagerServiceImpl : IWindowManagerService
+internal interface IViewManagerServiceImpl : IViewManagerService
 {
     /// <summary>
     /// 用于导航的内部 <see cref="Windows.UI.Xaml.Controls.Frame"/> 对象
@@ -31,10 +32,10 @@ internal interface IWindowManagerServiceImpl : IWindowManagerService
 }
 
 
-/// <inheritdoc cref="IWindowManagerService"/>
+/// <inheritdoc cref="IViewManagerService"/>
 [Shared]
-[Export(typeof(IWindowManagerServiceImpl)), Export(typeof(IWindowManagerService))]
-internal sealed class WindowManagerService : IWindowManagerServiceImpl
+[Export(typeof(IViewManagerServiceImpl)), Export(typeof(IViewManagerService))]
+internal sealed class ViewManagerService : IViewManagerServiceImpl
 {
     /// <summary>
     /// 存放所有已导出的 <see cref="IViewElement"/> 类型对象
@@ -69,7 +70,7 @@ internal sealed class WindowManagerService : IWindowManagerServiceImpl
     /// 初始化 <see cref="ViewManagerService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public WindowManagerService(
+    public ViewManagerService(
         [ImportMany] IEnumerable<Lazy<IViewElement, ViewElementMetadataAttribute>> viewElements)
     {
         _viewElements = viewElements;

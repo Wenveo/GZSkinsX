@@ -7,7 +7,8 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Api;
+using GZSkinsX.Api.Shell;
 using GZSkinsX.Appx.StartUp;
 
 using Windows.UI.Xaml.Controls;

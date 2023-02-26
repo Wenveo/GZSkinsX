@@ -15,9 +15,9 @@ using System.Reflection;
 using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Api.Shell;
 using GZSkinsX.Extension;
-using GZSkinsX.WindowManager;
+using GZSkinsX.Shell;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -35,7 +35,7 @@ sealed partial class App : Application
 
     private IAppxWindow? _appxWindow;
 
-    private IWindowManagerServiceImpl? _windowManagerService;
+    private IViewManagerServiceImpl? _windowManagerService;
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -88,7 +88,7 @@ sealed partial class App : Application
 
         if (e.PrelaunchActivated == false)
         {
-            _windowManagerService ??= _compositionHost.GetExport<IWindowManagerServiceImpl>();
+            _windowManagerService ??= _compositionHost.GetExport<IViewManagerServiceImpl>();
             if (_windowManagerService.Frame.Content is null)
             {
                 _windowManagerService.NavigateTo(ViewElementConstants.StartUpPage_Guid);

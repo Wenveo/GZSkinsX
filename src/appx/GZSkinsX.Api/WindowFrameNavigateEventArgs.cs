@@ -5,20 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.Api;
 
 /// <summary>
-/// 
+/// 导航的事件参数，当触发导航操作时被使用
 /// </summary>
-public static class ViewElementConstants
+public sealed class WindowFrameNavigateEventArgs : System.EventArgs
 {
     /// <summary>
-    /// 
+    /// 表示当前事件是否已经被处理；当为 true 时表明当前事件已被处理且不再继续往下执行
     /// </summary>
-    public const string StartUpPage_Guid = "1C3A5F43-5383-4B87-A365-1D1610B92060";
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public const string MainPage_Guid = "95FF48E7-E179-4DA5-8F41-1923B7F22963";
+    public bool Handled { get; set; }
 }

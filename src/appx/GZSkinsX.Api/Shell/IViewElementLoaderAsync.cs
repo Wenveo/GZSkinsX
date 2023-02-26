@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.Api.Shell;
 
 /// <summary>
 /// 表示对页面进行初始化等操作的一个中间组件
