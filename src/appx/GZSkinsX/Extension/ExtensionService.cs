@@ -89,7 +89,7 @@ internal sealed class ExtensionService
         {
             if (extension.Metadata.LoadType == loadType)
             {
-                var value = extension.Value;
+                _ = extension.Value;
             }
         }
     }
