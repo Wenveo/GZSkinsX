@@ -9,18 +9,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Composition.Hosting;
 using System.Reflection;
-using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.WindowManager;
-using GZSkinsX.Composition;
 using GZSkinsX.Extension;
 using GZSkinsX.WindowManager;
-
-using Microsoft.VisualStudio.Composition;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -34,7 +31,7 @@ namespace GZSkinsX;
 /// </summary>
 sealed partial class App : Application
 {
-    private ExportProvider? _exportProvider;
+    private CompositionHost? _compositionHost;
 
     private IAppxWindow? _appxWindow;
 
@@ -79,10 +76,10 @@ sealed partial class App : Application
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override async void OnLaunched(LaunchActivatedEventArgs e)
+    protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
-        _exportProvider ??= await InitializeMEF();
-        _appxWindow ??= _exportProvider.GetExportedValue<IAppxWindow>();
+        _compositionHost ??= InitializeMEF();
+        _appxWindow ??= _compositionHost.GetExport<IAppxWindow>();
         if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
         {
             //TODO: Load state from previously suspended application
@@ -90,7 +87,7 @@ sealed partial class App : Application
 
         if (e.PrelaunchActivated == false)
         {
-            _windowManagerService ??= _exportProvider.GetExportedValue<IWindowManagerServiceImpl>();
+            _windowManagerService ??= _compositionHost.GetExport<IWindowManagerServiceImpl>();
             if (_windowManagerService.Frame.Content is null)
             {
                 _windowManagerService.NavigateTo(ViewElementConstants.StartUpPage_Guid);
@@ -100,26 +97,26 @@ sealed partial class App : Application
         }
     }
 
-    private async Task<ExportProvider> InitializeMEF()
+    private CompositionHost InitializeMEF()
     {
-        var catalog = new AssemblyCatalogV2().AddParts(GetAssemblies());
-        var container = new CompositionContainerV2(catalog);
-        var exportProvider = await container.CreateExportProviderAsync("mefv2.bin");
+        var configuration = new ContainerConfiguration();
+        configuration.WithAssemblies(GetAssemblies());
 
-        InitializeServices(exportProvider);
-        return exportProvider;
+        var compositionHost = configuration.CreateContainer();
+        InitializeServices(compositionHost);
+        return compositionHost;
     }
 
     /// <summary>
     /// 初始化应用程序核心服务
     /// </summary>
     /// <param name="exportProvider"><see cref="ExportProvider"/> 对象的实例</param>
-    private void InitializeServices(ExportProvider exportProvider)
+    private void InitializeServices(CompositionHost compositionHost)
     {
         //var serviceLocator = exportProvider.GetExportedValue<ServiceLocator>();
         //serviceLocator.SetExportProvider(exportProvider);
 
-        InitializeExtension(exportProvider.GetExportedValue<ExtensionService>());
+        InitializeExtension(compositionHost.GetExport<ExtensionService>());
     }
 
     /// <summary>

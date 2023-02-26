@@ -204,6 +204,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.HashCode">
+      <Version>1.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
@@ -212,12 +215,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.Composition">
+      <Version>7.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\libraries\GZSkinsX.Composition\GZSkinsX.Composition.csproj">
-      <Project>{2d80c1b8-8e34-4f82-a09a-5d93b500ed6f}</Project>
-      <Name>GZSkinsX.Composition</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
