@@ -31,7 +31,7 @@ namespace GZSkinsX;
 /// </summary>
 sealed partial class App : Application
 {
-    private CompositionHost? _compositionHost;
+    private readonly CompositionHost _compositionHost;
 
     private IAppxWindow? _appxWindow;
 
@@ -45,6 +45,8 @@ sealed partial class App : Application
     {
         InitializeComponent();
         Suspending += OnSuspending;
+
+        _compositionHost = InitializeMEF();
     }
 
     /// <summary>
@@ -78,7 +80,6 @@ sealed partial class App : Application
     /// <param name="e">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
-        _compositionHost ??= InitializeMEF();
         _appxWindow ??= _compositionHost.GetExport<IAppxWindow>();
         if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
         {
@@ -110,7 +111,7 @@ sealed partial class App : Application
     /// <summary>
     /// 初始化应用程序核心服务
     /// </summary>
-    /// <param name="exportProvider"><see cref="ExportProvider"/> 对象的实例</param>
+    /// <param name="compositionHost"><see cref="CompositionHost"/> 对象的实例</param>
     private void InitializeServices(CompositionHost compositionHost)
     {
         //var serviceLocator = exportProvider.GetExportedValue<ServiceLocator>();
