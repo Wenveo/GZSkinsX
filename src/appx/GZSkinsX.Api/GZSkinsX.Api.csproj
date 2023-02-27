@@ -134,6 +134,7 @@
     <Compile Include="Extension\IAutoLoaded.cs" />
     <Compile Include="Extension\IExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripting\IServiceLocator.cs" />
     <Compile Include="Shell\ExportViewElementAttribute.cs" />
     <Compile Include="Shell\IViewElement.cs" />
     <Compile Include="Shell\IViewElementLoader.cs" />
