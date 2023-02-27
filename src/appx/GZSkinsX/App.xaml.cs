@@ -7,23 +7,19 @@
 
 #nullable enable
 
-using System;
-using System.Collections.Generic;
 using System.Composition.Hosting;
-using System.Reflection;
 
 using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Shell;
+using GZSkinsX.Composition;
 using GZSkinsX.Diagnostics;
 using GZSkinsX.Extension;
 
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX;
 
@@ -54,33 +50,10 @@ sealed partial class App : Application
     public App()
     {
         InitializeComponent();
-        Suspending += OnSuspending;
 
-        _compositionHost = InitializeMEF();
-    }
-
-    /// <summary>
-    /// Invoked when Navigation to a certain page fails
-    /// </summary>
-    /// <param name="sender">The Frame which failed navigation</param>
-    /// <param name="e">Details about the navigation failure</param>
-    void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-    {
-        throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-    }
-
-    /// <summary>
-    /// Invoked when application execution is being suspended.  Application state is saved
-    /// without knowing whether the application will be terminated or resumed with the contents
-    /// of memory still intact.
-    /// </summary>
-    /// <param name="sender">The source of the suspend request.</param>
-    /// <param name="e">Details about the suspend request.</param>
-    private void OnSuspending(object sender, SuspendingEventArgs e)
-    {
-        var deferral = e.SuspendingOperation.GetDeferral();
-        //TODO: Save application state and stop any background activity
-        deferral.Complete();
+        var provider = CompositionContainerProvider.Instance;
+        _compositionHost = provider.CompositionHost;
+        InitializeServices(_compositionHost);
     }
 
     /// <summary>
@@ -111,28 +84,11 @@ sealed partial class App : Application
     }
 
     /// <summary>
-    /// 创建并初始化 MEF2 组件
-    /// </summary>
-    /// <returns>组件容器宿主实例</returns>
-    private CompositionHost InitializeMEF()
-    {
-        var configuration = new ContainerConfiguration();
-        configuration.WithAssemblies(GetAssemblies());
-
-        var compositionHost = configuration.CreateContainer();
-        InitializeServices(compositionHost);
-        return compositionHost;
-    }
-
-    /// <summary>
     /// 初始化应用程序核心服务
     /// </summary>
     /// <param name="compositionHost"><see cref="CompositionHost"/> 对象的实例</param>
     private void InitializeServices(CompositionHost compositionHost)
     {
-        //var serviceLocator = exportProvider.GetExportedValue<ServiceLocator>();
-        //serviceLocator.SetExportProvider(exportProvider);
-
         InitializeExtension(compositionHost.GetExport<ExtensionService>());
     }
 
@@ -151,18 +107,5 @@ sealed partial class App : Application
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensionsLoaded);
-    }
-
-    /// <summary>
-    /// 获取当前 Appx 引用程序集
-    /// </summary>
-    private static IEnumerable<Assembly> GetAssemblies()
-    {
-        // Self Assembly
-        yield return typeof(App).Assembly;
-        // GZSkinsX.Api
-        yield return typeof(IAppxWindow).Assembly;
-        // GZSkinsX.Appx.StartUp
-        yield return typeof(Appx.StartUp.AppxStartUp).Assembly;
     }
 }
