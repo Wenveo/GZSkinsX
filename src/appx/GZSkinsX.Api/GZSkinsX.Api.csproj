@@ -122,6 +122,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Appx\AppxContext.cs" />
+    <Compile Include="Appx\IAppxTitleBar.cs" />
+    <Compile Include="Appx\IAppxTitleBarButton.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
     <Compile Include="Extension\AutoLoadedMetadataAttribute.cs" />
     <Compile Include="Extension\AutoLoadedType.cs" />
