@@ -9,9 +9,10 @@ using System.Composition;
 
 using GZSkinsX.Api;
 using GZSkinsX.Api.Shell;
-using GZSkinsX.Appx.StartUp;
 
 using Windows.UI.Xaml.Controls;
+
+namespace GZSkinsX.Appx.StartUp;
 
 [Shared, ExportViewElement]
 [ViewElementMetadata(Guid = ViewElementConstants.StartUpPage_Guid, PageType = typeof(StartUpPage))]

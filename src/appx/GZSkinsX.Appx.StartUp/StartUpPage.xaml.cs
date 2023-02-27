@@ -23,8 +23,11 @@ public sealed partial class StartUpPage : Page
         InitializeComponent();
 
         var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-        titleBar.ButtonBackgroundColor = Colors.Transparent;
 
+        titleBar.ButtonBackgroundColor = Colors.Transparent;
+        titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+        // Hide default title bar.
         var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
         coreTitleBar.ExtendViewIntoTitleBar = true;
     }
