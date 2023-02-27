@@ -16,12 +16,13 @@ using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Shell;
+using GZSkinsX.Diagnostics;
 using GZSkinsX.Extension;
-using GZSkinsX.Shell;
 
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX;
@@ -31,11 +32,20 @@ namespace GZSkinsX;
 /// </summary>
 sealed partial class App : Application
 {
+    /// <summary>
+    /// 当前组件容器的宿主实例
+    /// </summary>
     private readonly CompositionHost _compositionHost;
 
+    /// <summary>
+    /// 当前应用程序主窗口
+    /// </summary>
     private IAppxWindow? _appxWindow;
 
-    private IViewManagerServiceImpl? _windowManagerService;
+    /// <summary>
+    /// 当前窗口视图核心管理服务
+    /// </summary>
+    private IViewManagerService? _viewManagerService;
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -88,16 +98,22 @@ sealed partial class App : Application
 
         if (e.PrelaunchActivated == false)
         {
-            _windowManagerService ??= _compositionHost.GetExport<IViewManagerServiceImpl>();
-            if (_windowManagerService.Frame.Content is null)
+            var frame = _appxWindow.MainWindow.Content as Frame;
+            Debug2.Assert(frame is not null);
+            if (frame.Content is null)
             {
-                _windowManagerService.NavigateTo(ViewElementConstants.StartUpPage_Guid);
+                _viewManagerService ??= _compositionHost.GetExport<IViewManagerService>();
+                _viewManagerService.NavigateTo(ViewElementConstants.StartUpPage_Guid);
             }
 
             _appxWindow.Activate();
         }
     }
 
+    /// <summary>
+    /// 创建并初始化 MEF2 组件
+    /// </summary>
+    /// <returns>组件容器宿主实例</returns>
     private CompositionHost InitializeMEF()
     {
         var configuration = new ContainerConfiguration();

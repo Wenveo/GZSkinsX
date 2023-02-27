@@ -13,6 +13,7 @@ using System.Composition;
 using System.Diagnostics;
 
 using GZSkinsX.Api;
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Shell;
 
 using Windows.UI.Xaml.Controls;
@@ -20,23 +21,15 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace GZSkinsX.Shell;
 
-/// <summary>
-/// 视图管理服务的内部接口定义
-/// </summary>
-internal interface IViewManagerServiceImpl : IViewManagerService
+/// <inheritdoc cref="IViewManagerService"/>
+[Shared, Export(typeof(IViewManagerService))]
+internal sealed class ViewManagerService : IViewManagerService
 {
     /// <summary>
-    /// 用于导航的内部 <see cref="Windows.UI.Xaml.Controls.Frame"/> 对象
+    /// 当前应用程序主窗口
     /// </summary>
-    Frame Frame { get; }
-}
+    private readonly IAppxWindow _appxWindow;
 
-
-/// <inheritdoc cref="IViewManagerService"/>
-[Shared]
-[Export(typeof(IViewManagerServiceImpl)), Export(typeof(IViewManagerService))]
-internal sealed class ViewManagerService : IViewManagerServiceImpl
-{
     /// <summary>
     /// 存放所有已导出的 <see cref="IViewElement"/> 类型对象
     /// </summary>
@@ -70,9 +63,9 @@ internal sealed class ViewManagerService : IViewManagerServiceImpl
     /// 初始化 <see cref="ViewManagerService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public ViewManagerService(
-        [ImportMany] IEnumerable<Lazy<IViewElement, ViewElementMetadataAttribute>> viewElements)
+    public ViewManagerService(IAppxWindow appxWindow, [ImportMany] IEnumerable<Lazy<IViewElement, ViewElementMetadataAttribute>> viewElements)
     {
+        _appxWindow = appxWindow;
         _viewElements = viewElements;
 
         _frame = new Frame();
@@ -110,6 +103,7 @@ internal sealed class ViewManagerService : IViewManagerServiceImpl
                 _guidToViewElement[guid] = new ViewElementContext(elem);
             }
 
+            _appxWindow.MainWindow.Content = _frame;
             _isInitialize = true;
         }
     }
