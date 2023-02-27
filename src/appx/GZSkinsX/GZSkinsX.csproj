@@ -130,6 +130,7 @@
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
+    <Compile Include="MainApp\AutoExtendViewIntoTitleBar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\ViewElementContext.cs" />
     <Compile Include="Shell\ViewManagerService.cs" />
