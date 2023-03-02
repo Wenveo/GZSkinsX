@@ -14,7 +14,7 @@ namespace GZSkinsX.Api.Shell;
 /// <summary>
 /// 表示对页面进行初始化等操作的一个中间组件
 /// </summary>
-public interface IViewElementLoaderAsync : IViewElement
+public interface IAsyncViewElementLoader : IViewElement
 {
     /// <summary>
     /// 在进入导航操作时触发，可在导航到目标页面前进行相关操作

@@ -194,7 +194,7 @@ internal sealed class ViewManagerService : IViewManagerService
             _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
             loader.OnInitialize((Page)_frame.Content);
         }
-        else if (context.Value is IViewElementLoaderAsync loaderAsync)
+        else if (context.Value is IAsyncViewElementLoader loaderAsync)
         {
             var args = new WindowFrameNavigateEventArgs();
             await loaderAsync.OnNavigatingAsync(args);
