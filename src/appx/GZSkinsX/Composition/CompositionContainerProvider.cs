@@ -24,7 +24,7 @@ internal sealed class CompositionContainerProvider
     /// <summary>
     /// 懒加载容器，只有当获取时才会创建目标类型
     /// </summary>
-    private static readonly Lazy<CompositionContainerProvider> s_lazy = new();
+    private static readonly Lazy<CompositionContainerProvider> s_lazy = new(() => new());
 
     /// <summary>
     /// 全局静态 <see cref="CompositionContainerProvider"/> 的实例，该类仅能存在且只会有一个实例
