@@ -14,7 +14,6 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Shell;
 using GZSkinsX.Composition;
-using GZSkinsX.Diagnostics;
 using GZSkinsX.Extension;
 
 using Windows.ApplicationModel.Activation;
@@ -71,9 +70,7 @@ public sealed partial class App : Application
 
         if (e.PrelaunchActivated == false)
         {
-            var frame = _appxWindow.MainWindow.Content as Frame;
-            Debug2.Assert(frame is not null);
-            if (frame.Content is null)
+            if (_appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
             {
                 _viewManagerService ??= _compositionHost.GetExport<IViewManagerService>();
                 _viewManagerService.NavigateTo(ViewElementConstants.StartUpPage_Guid);
