@@ -26,7 +26,7 @@ namespace GZSkinsX;
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.
 /// </summary>
-sealed partial class App : Application
+public sealed partial class App : Application
 {
     /// <summary>
     /// 当前组件容器的宿主实例

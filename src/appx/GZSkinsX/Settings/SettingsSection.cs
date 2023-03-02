@@ -57,8 +57,10 @@ internal sealed class SettingsSection : ISettingsSection
     public object Attribute(string key)
     {
         Debug2.Assert(_container is not null);
-        if (_container is null) throw new InvalidOperationException();
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (_container is null)
+            throw new InvalidOperationException();
+        if (key == null)
+            throw new ArgumentNullException(nameof(key));
 
         return _container.Values[key];
     }
@@ -67,8 +69,10 @@ internal sealed class SettingsSection : ISettingsSection
     public TValue? Attribute<TValue>(string key) where TValue : class
     {
         Debug2.Assert(_container is not null);
-        if (_container is null) throw new InvalidOperationException();
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (_container is null)
+            throw new InvalidOperationException();
+        if (key == null)
+            throw new ArgumentNullException(nameof(key));
 
         return _container.Values[key] as TValue;
     }
@@ -77,8 +81,10 @@ internal sealed class SettingsSection : ISettingsSection
     public void Attribute(string key, object value)
     {
         Debug2.Assert(_container is not null);
-        if (_container is null) throw new InvalidOperationException();
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (_container is null)
+            throw new InvalidOperationException();
+        if (key == null)
+            throw new ArgumentNullException(nameof(key));
 
         _container.Values[key] = value ?? throw new ArgumentNullException(nameof(value));
     }
@@ -87,8 +93,10 @@ internal sealed class SettingsSection : ISettingsSection
     public bool Delete(string key)
     {
         Debug2.Assert(_container is not null);
-        if (_container is null) throw new InvalidOperationException();
-        if (key == null) throw new ArgumentNullException(nameof(key));
+        if (_container is null)
+            throw new InvalidOperationException();
+        if (key == null)
+            throw new ArgumentNullException(nameof(key));
 
         return _container.Values.Remove(key);
     }
@@ -113,8 +121,10 @@ internal sealed class SettingsSection : ISettingsSection
     public ISettingsSection GetOrCreateSection(string name)
     {
         Debug2.Assert(_container is not null);
-        if (_container is null) throw new InvalidOperationException();
-        if (name == null) throw new ArgumentNullException(nameof(name));
+        if (_container is null)
+            throw new InvalidOperationException();
+        if (name == null)
+            throw new ArgumentNullException(nameof(name));
 
         if (!_nameToSectionDict.TryGetValue(name, out var settingsSection))
         {
