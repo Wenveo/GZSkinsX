@@ -17,26 +17,43 @@ using Windows.Storage;
 
 namespace GZSkinsX.Settings;
 
+/// <inheritdoc cref="ISettingsSection"/>
 internal sealed class SettingsSection : ISettingsSection
 {
+    /// <summary>
+    /// 用于存储子节点配置的字典，并使用子节点配置的名称当作值的键
+    /// </summary>
     private readonly Dictionary<string, SettingsSection> _nameToSectionDict;
 
+    /// <summary>
+    /// 内部定义的 UWP 中的配置容器
+    /// </summary>
     private ApplicationDataContainer? _container;
 
+    /// <inheritdoc/>
     public string Name { get; }
 
-    public SettingsSection(ApplicationDataContainer container)
+    /// <inheritdoc/>
+    public SettingsType Type { get; }
+
+    /// <summary>
+    /// 初始化 <see cref="SettingsSection"/> 的新实例
+    /// </summary>
+    /// <param name="container"></param>
+    public SettingsSection(ApplicationDataContainer container, SettingsType settingsType)
     {
         _container = container;
         _nameToSectionDict = new Dictionary<string, SettingsSection>();
         foreach (var item in container.Containers)
         {
-            _nameToSectionDict.Add(item.Key, new SettingsSection(item.Value));
+            _nameToSectionDict.Add(item.Key, new SettingsSection(item.Value, settingsType));
         }
 
         Name = container.Name;
+        Type = settingsType;
     }
 
+    /// <inheritdoc/>
     public object Attribute(string key)
     {
         Debug2.Assert(_container is not null);
@@ -46,6 +63,7 @@ internal sealed class SettingsSection : ISettingsSection
         return _container.Values[key];
     }
 
+    /// <inheritdoc/>
     public TValue? Attribute<TValue>(string key) where TValue : class
     {
         Debug2.Assert(_container is not null);
@@ -55,6 +73,7 @@ internal sealed class SettingsSection : ISettingsSection
         return _container.Values[key] as TValue;
     }
 
+    /// <inheritdoc/>
     public void Attribute(string key, object value)
     {
         Debug2.Assert(_container is not null);
@@ -64,6 +83,7 @@ internal sealed class SettingsSection : ISettingsSection
         _container.Values[key] = value ?? throw new ArgumentNullException(nameof(value));
     }
 
+    /// <inheritdoc/>
     public bool Delete(string key)
     {
         Debug2.Assert(_container is not null);
@@ -73,6 +93,7 @@ internal sealed class SettingsSection : ISettingsSection
         return _container.Values.Remove(key);
     }
 
+    /// <inheritdoc/>
     public void DeleteSection(string name)
     {
         if (_container is null)
@@ -88,6 +109,7 @@ internal sealed class SettingsSection : ISettingsSection
         }
     }
 
+    /// <inheritdoc/>
     public ISettingsSection GetOrCreateSection(string name)
     {
         Debug2.Assert(_container is not null);
@@ -101,7 +123,7 @@ internal sealed class SettingsSection : ISettingsSection
                 container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
             }
 
-            _nameToSectionDict.Add(name, settingsSection = new(container));
+            _nameToSectionDict.Add(name, settingsSection = new(container, Type));
         }
 
         return settingsSection;

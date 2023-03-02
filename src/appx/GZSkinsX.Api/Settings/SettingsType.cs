@@ -8,16 +8,16 @@
 namespace GZSkinsX.Api.Settings;
 
 /// <summary>
-/// 
+/// 表示子节点配置的类型
 /// </summary>
 public enum SettingsType
 {
     /// <summary>
-    /// 
+    /// 表示为本地数据类型的配置
     /// </summary>
     Local,
     /// <summary>
-    /// 
+    /// 表示为漫游数据类型的配置
     /// </summary>
     Roaming
 }

@@ -15,39 +15,53 @@ using Windows.Storage;
 
 namespace GZSkinsX.Settings;
 
+/// <inheritdoc cref="ISettingsService"/>
 [Shared, Export(typeof(ISettingsService))]
 internal sealed class SettingsService : ISettingsService
 {
+    /// <summary>
+    /// 用于存储本地数据的配置节点
+    /// </summary>
     private readonly SettingsSection _localSettingsSection;
 
+    /// <summary>
+    /// 用于存储漫游数据的配置节点
+    /// </summary>
     private readonly SettingsSection _roamingSettingsSection;
 
+    /// <summary>
+    /// 初始化 <see cref="SettingsService"/> 的新实例
+    /// </summary>
     public SettingsService()
     {
         var current = ApplicationData.Current;
-        _localSettingsSection = new(current.LocalSettings);
-        _roamingSettingsSection = new(current.RoamingSettings);
+        _localSettingsSection = new(current.LocalSettings, SettingsType.Local);
+        _roamingSettingsSection = new(current.RoamingSettings, SettingsType.Roaming);
     }
 
+    /// <inheritdoc/>
+    public void DeleteSection(string name)
+    => _localSettingsSection.GetOrCreateSection(name);
+
+    /// <inheritdoc/>
+    public void DeleteSection(string name, SettingsType type)
+    {
+        if (type == SettingsType.Roaming)
+            _roamingSettingsSection.DeleteSection(name);
+        else
+            _localSettingsSection.DeleteSection(name);
+    }
+
+    /// <inheritdoc/>
     public ISettingsSection GetOrCreateSection(string name)
     => _localSettingsSection.GetOrCreateSection(name);
 
+    /// <inheritdoc/>
     public ISettingsSection GetOrCreateSection(string name, SettingsType type)
     {
         if (type == SettingsType.Roaming)
             return _roamingSettingsSection.GetOrCreateSection(name);
         else
             return _localSettingsSection.GetOrCreateSection(name);
-    }
-
-    public void DeleteSection(string name)
-    => _localSettingsSection.GetOrCreateSection(name);
-
-    public void DeleteSection(string name, SettingsType type)
-    {
-        if (type == SettingsType.Roaming)
-            _roamingSettingsSection.DeleteSection(name);
-        else
-            _localSettingsSection.GetOrCreateSection(name);
     }
 }
