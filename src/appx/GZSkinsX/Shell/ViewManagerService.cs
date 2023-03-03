@@ -46,20 +46,6 @@ internal sealed class ViewManagerService : IViewManagerService
     private readonly Frame _frame;
 
     /// <summary>
-    /// 判断当前是否已初始化
-    /// </summary>
-    private bool _isInitialize;
-
-    /// <inheritdoc/>
-    public bool CanGoBack => _frame.CanGoBack;
-
-    /// <inheritdoc/>
-    public bool CanGoForward => _frame.CanGoForward;
-
-    /// <inheritdoc/>
-    public Frame Frame => _frame;
-
-    /// <summary>
     /// 初始化 <see cref="ViewManagerService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
@@ -79,7 +65,7 @@ internal sealed class ViewManagerService : IViewManagerService
     /// </summary>
     public void InitializeContext()
     {
-        if (!_isInitialize)
+        if (_appxWindow.MainWindow.Content is not Frame frame || frame != _frame)
         {
             foreach (var elem in _viewElements)
             {
@@ -101,28 +87,8 @@ internal sealed class ViewManagerService : IViewManagerService
                     continue;
 
                 _guidToViewElement[guid] = new ViewElementContext(elem);
+                _appxWindow.MainWindow.Content = _frame;
             }
-
-            _appxWindow.MainWindow.Content = _frame;
-            _isInitialize = true;
-        }
-    }
-
-    /// <inheritdoc/>
-    public void GoBack()
-    {
-        if (_frame.CanGoBack)
-        {
-            _frame.GoBack();
-        }
-    }
-
-    /// <inheritdoc/>
-    public void GoForward()
-    {
-        if (_frame.CanGoForward)
-        {
-            _frame.GoForward();
         }
     }
 
@@ -158,7 +124,7 @@ internal sealed class ViewManagerService : IViewManagerService
     {
         if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
         {
-            NavigateCore(elem, null, null);
+            NavigateCoreAsync(elem, null, null);
         }
     }
 
@@ -167,7 +133,7 @@ internal sealed class ViewManagerService : IViewManagerService
     {
         if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
         {
-            NavigateCore(elem, parameter, null);
+            NavigateCoreAsync(elem, parameter, null);
         }
     }
 
@@ -176,11 +142,11 @@ internal sealed class ViewManagerService : IViewManagerService
     {
         if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
         {
-            NavigateCore(elem, parameter, infoOverride);
+            NavigateCoreAsync(elem, parameter, infoOverride);
         }
     }
 
-    private async void NavigateCore(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
+    private async void NavigateCoreAsync(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         infoOverride ??= new DrillInNavigationTransitionInfo();
         if (context.Value is IViewElementLoader loader)
@@ -209,5 +175,7 @@ internal sealed class ViewManagerService : IViewManagerService
         {
             _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
         }
+
+        _frame.BackStack.Clear();
     }
 }

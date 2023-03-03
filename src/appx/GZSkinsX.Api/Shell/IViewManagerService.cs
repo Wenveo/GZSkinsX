@@ -17,26 +17,6 @@ namespace GZSkinsX.Api.Shell;
 public interface IViewManagerService
 {
     /// <summary>
-    /// 获取当前容器是否可返回至上一个页面
-    /// </summary>
-    bool CanGoBack { get; }
-
-    /// <summary>
-    /// 获取当前容器是否可向前导航
-    /// </summary>
-    bool CanGoForward { get; }
-
-    /// <summary>
-    /// 返回至上一个页面
-    /// </summary>
-    void GoBack();
-
-    /// <summary>
-    /// 向前导航
-    /// </summary>
-    void GoForward();
-
-    /// <summary>
     /// 导航到与标识符匹配的指定页面
     /// </summary>
     /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值</param>
