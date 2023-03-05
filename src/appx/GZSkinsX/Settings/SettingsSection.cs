@@ -26,6 +26,11 @@ internal sealed class SettingsSection : ISettingsSection
     private readonly Dictionary<string, SettingsSection> _nameToSectionDict;
 
     /// <summary>
+    /// 线程锁对象，以保证在多线程下资源的同步访问
+    /// </summary>
+    private readonly object _lockObj;
+
+    /// <summary>
     /// 内部定义的 UWP 中的配置容器
     /// </summary>
     private ApplicationDataContainer? _container;
@@ -42,6 +47,7 @@ internal sealed class SettingsSection : ISettingsSection
     /// <param name="container"></param>
     public SettingsSection(ApplicationDataContainer container, SettingsType settingsType)
     {
+        _lockObj = new();
         _container = container;
         _nameToSectionDict = new Dictionary<string, SettingsSection>();
         foreach (var item in container.Containers)
@@ -54,7 +60,7 @@ internal sealed class SettingsSection : ISettingsSection
     }
 
     /// <inheritdoc/>
-    public object Attribute(string key)
+    public object? Attribute(string key)
     {
         Debug2.Assert(_container is not null);
         if (_container is null)
@@ -62,11 +68,20 @@ internal sealed class SettingsSection : ISettingsSection
         if (key == null)
             throw new ArgumentNullException(nameof(key));
 
-        return _container.Values[key];
+        object? value;
+        lock (_lockObj)
+        {
+            if (!_container.Values.TryGetValue(key, out value))
+            {
+                value = default;
+            }
+        }
+
+        return value;
     }
 
     /// <inheritdoc/>
-    public TValue? Attribute<TValue>(string key) where TValue : class
+    public TValue? Attribute<TValue>(string key)
     {
         Debug2.Assert(_container is not null);
         if (_container is null)
@@ -74,7 +89,16 @@ internal sealed class SettingsSection : ISettingsSection
         if (key == null)
             throw new ArgumentNullException(nameof(key));
 
-        return _container.Values[key] as TValue;
+        object? value;
+        lock (_lockObj)
+        {
+            if (!_container.Values.TryGetValue(key, out value))
+            {
+                value = default(TValue);
+            }
+        }
+
+        return (TValue?)value;
     }
 
     /// <inheritdoc/>
@@ -86,7 +110,8 @@ internal sealed class SettingsSection : ISettingsSection
         if (key == null)
             throw new ArgumentNullException(nameof(key));
 
-        _container.Values[key] = value ?? throw new ArgumentNullException(nameof(value));
+        lock (_lockObj)
+            _container.Values[key] = value ?? throw new ArgumentNullException(nameof(value));
     }
 
     /// <inheritdoc/>
@@ -98,7 +123,11 @@ internal sealed class SettingsSection : ISettingsSection
         if (key == null)
             throw new ArgumentNullException(nameof(key));
 
-        return _container.Values.Remove(key);
+        bool b;
+        lock (_lockObj)
+            b = _container.Values.Remove(key);
+
+        return b;
     }
 
     /// <inheritdoc/>
@@ -109,11 +138,14 @@ internal sealed class SettingsSection : ISettingsSection
             return;
         }
 
-        if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
+        lock (_lockObj)
         {
-            settingsSection._container = null;
-            _nameToSectionDict.Remove(name);
-            _container.DeleteContainer(name);
+            if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
+            {
+                settingsSection._container = null;
+                _container.DeleteContainer(name);
+                _nameToSectionDict.Remove(name);
+            }
         }
     }
 
@@ -126,14 +158,18 @@ internal sealed class SettingsSection : ISettingsSection
         if (name == null)
             throw new ArgumentNullException(nameof(name));
 
-        if (!_nameToSectionDict.TryGetValue(name, out var settingsSection))
+        SettingsSection? settingsSection;
+        lock (_lockObj)
         {
-            if (!_container.Containers.TryGetValue(name, out var container))
+            if (!_nameToSectionDict.TryGetValue(name, out settingsSection))
             {
-                container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
-            }
+                if (!_container.Containers.TryGetValue(name, out var container))
+                {
+                    container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
+                }
 
-            _nameToSectionDict.Add(name, settingsSection = new(container, Type));
+                _nameToSectionDict.Add(name, settingsSection = new(container, Type));
+            }
         }
 
         return settingsSection;

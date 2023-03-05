@@ -33,7 +33,7 @@ public interface ISettingsSection
     /// <returns>与指定的键相关联的值</returns>
     /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
     /// <exception cref="ArgumentNullException"><paramref name="key"/> 上声明的默认值为 null</exception>
-    object Attribute(string key);
+    object? Attribute(string key);
 
     /// <summary>
     /// 获取与指定的键关联的值
@@ -43,7 +43,7 @@ public interface ISettingsSection
     /// <returns>与指定的键匹配的元素</returns>
     /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
     /// <exception cref="ArgumentNullException"><paramref name="key"/> 上声明的默认值为 null</exception>
-    TValue? Attribute<TValue>(string key) where TValue : class;
+    TValue? Attribute<TValue>(string key);
 
     /// <summary>
     /// 设置与指定的键关联的值

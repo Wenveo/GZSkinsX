@@ -30,10 +30,17 @@ internal sealed class SettingsService : ISettingsService
     private readonly SettingsSection _roamingSettingsSection;
 
     /// <summary>
+    /// 线程锁对象，以保证在多线程下资源的同步访问
+    /// </summary>
+    private readonly object _lockObj;
+
+    /// <summary>
     /// 初始化 <see cref="SettingsService"/> 的新实例
     /// </summary>
     public SettingsService()
     {
+        _lockObj = new();
+
         var current = ApplicationData.Current;
         _localSettingsSection = new(current.LocalSettings, SettingsType.Local);
         _roamingSettingsSection = new(current.RoamingSettings, SettingsType.Roaming);
@@ -41,27 +48,48 @@ internal sealed class SettingsService : ISettingsService
 
     /// <inheritdoc/>
     public void DeleteSection(string name)
-    => _localSettingsSection.GetOrCreateSection(name);
+    {
+        lock (_lockObj)
+        {
+            _localSettingsSection.GetOrCreateSection(name);
+        }
+    }
 
     /// <inheritdoc/>
     public void DeleteSection(string name, SettingsType type)
     {
-        if (type == SettingsType.Roaming)
-            _roamingSettingsSection.DeleteSection(name);
-        else
-            _localSettingsSection.DeleteSection(name);
+        lock (_lockObj)
+        {
+            if (type == SettingsType.Roaming)
+                _roamingSettingsSection.DeleteSection(name);
+            else
+                _localSettingsSection.DeleteSection(name);
+        }
     }
 
     /// <inheritdoc/>
     public ISettingsSection GetOrCreateSection(string name)
-    => _localSettingsSection.GetOrCreateSection(name);
+    {
+        ISettingsSection settingsSection;
+        lock (_lockObj)
+        {
+            settingsSection = _localSettingsSection.GetOrCreateSection(name);
+        }
+
+        return settingsSection;
+    }
 
     /// <inheritdoc/>
     public ISettingsSection GetOrCreateSection(string name, SettingsType type)
     {
-        if (type == SettingsType.Roaming)
-            return _roamingSettingsSection.GetOrCreateSection(name);
-        else
-            return _localSettingsSection.GetOrCreateSection(name);
+        ISettingsSection settingsSection;
+        lock (_lockObj)
+        {
+            settingsSection = type == SettingsType.Roaming
+                ? _roamingSettingsSection.GetOrCreateSection(name)
+                : _localSettingsSection.GetOrCreateSection(name);
+        }
+
+        return settingsSection;
     }
 }
