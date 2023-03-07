@@ -123,6 +123,8 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AccessCache\FutureAccessService.cs" />
+    <Compile Include="AccessCache\MostRecentlyUsedService.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

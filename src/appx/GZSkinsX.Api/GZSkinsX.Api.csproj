@@ -121,6 +121,10 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AccessCache\AccessCacheItemNotFoundException.cs" />
+    <Compile Include="AccessCache\IAccessCacheService.cs" />
+    <Compile Include="AccessCache\IFutureAccessService.cs" />
+    <Compile Include="AccessCache\IMostRecentlyUsedService.cs" />
     <Compile Include="Appx\AppxContext.cs" />
     <Compile Include="Appx\IAppxTitleBar.cs" />
     <Compile Include="Appx\IAppxTitleBarButton.cs" />
