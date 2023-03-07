@@ -130,6 +130,9 @@
     </Compile>
     <Compile Include="Composition\CompositionContainerProvider.cs" />
     <Compile Include="Extension\ExtensionService.cs" />
+    <Compile Include="Game\GameData.cs" />
+    <Compile Include="Game\GameService.cs" />
+    <Compile Include="Game\GameSettings.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
