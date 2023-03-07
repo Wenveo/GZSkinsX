@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8DA0D0B5-5B7A-4571-B708-CD993A8BA47F}</ProjectGuid>
+    <ProjectGuid>{CA4BC5E8-390C-4751-8D38-7D75D25633A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GZSkinsX.Diagnostics</RootNamespace>
-    <AssemblyName>GZSkinsX.Diagnostics</AssemblyName>
+    <RootNamespace>GZSkinsX.DotNet.Diagnostics</RootNamespace>
+    <AssemblyName>GZSkinsX.DotNet.Diagnostics</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
@@ -123,7 +123,7 @@
   <ItemGroup>
     <Compile Include="Debug2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\GZSkinsX.Diagnostics.rd.xml" />
+    <EmbeddedResource Include="Properties\GZSkinsX.DotNet.Diagnostics.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">

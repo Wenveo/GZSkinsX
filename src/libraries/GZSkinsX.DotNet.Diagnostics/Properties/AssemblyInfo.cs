@@ -11,11 +11,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GZSkinsX.Diagnostics")]
+[assembly: AssemblyTitle("GZSkinsX.DotNet.Diagnostics")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GZSkins, Inc.")]
-[assembly: AssemblyProduct("GZSkinsX.Diagnostics")]
+[assembly: AssemblyProduct("GZSkinsX.DotNet.Diagnostics")]
 [assembly: AssemblyCopyright("Copyright © 2022 - 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

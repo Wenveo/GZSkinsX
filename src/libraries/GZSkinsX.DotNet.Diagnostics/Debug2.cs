@@ -10,7 +10,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace GZSkinsX.Diagnostics;
+namespace GZSkinsX.DotNet.Diagnostics;
 
 /// <summary>
 /// Provides a set of properties and methods for debugging code.
@@ -26,7 +26,9 @@ public static class Debug2
     => Assert(condition, message, string.Empty);
 
     [Conditional("DEBUG")]
-    public static void Assert([DoesNotReturnIf(false)] bool condition, string? message, string? detailMessage)
+    public static void Assert(
+        [DoesNotReturnIf(false)] bool condition,
+        string? message, string? detailMessage)
     {
         if (!condition)
         {
@@ -36,6 +38,7 @@ public static class Debug2
 
     [Conditional("DEBUG")]
     public static void Assert([DoesNotReturnIf(false)] bool condition, string? message,
-    [StringSyntax(StringSyntaxAttribute.CompositeFormat)] string detailMessageFormat, params object?[] args)
+        [StringSyntax(StringSyntaxAttribute.CompositeFormat)] string detailMessageFormat,
+        params object?[] args)
     => Assert(condition, message, string.Format(detailMessageFormat, args));
 }

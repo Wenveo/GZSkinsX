@@ -227,9 +227,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\libraries\GZSkinsX.Diagnostics\GZSkinsX.Diagnostics.csproj">
-      <Project>{8da0d0b5-5b7a-4571-b708-cd993a8ba47f}</Project>
-      <Name>GZSkinsX.Diagnostics</Name>
+    <ProjectReference Include="..\..\libraries\GZSkinsX.DotNet.Diagnostics\GZSkinsX.DotNet.Diagnostics.csproj">
+      <Project>{ca4bc5e8-390c-4751-8d38-7d75d25633a3}</Project>
+      <Name>GZSkinsX.DotNet.Diagnostics</Name>
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
