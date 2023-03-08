@@ -146,17 +146,17 @@ internal sealed class ViewManagerService : IViewManagerService
         }
     }
 
-    private void NavigateCore(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
+    private async void NavigateCore(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         infoOverride ??= new DrillInNavigationTransitionInfo();
         var args = new WindowFrameNavigateEventArgs();
 
-        context.Value.OnNavigating(args);
+        await context.Value.OnNavigatingAsync(args);
         if (args.Handled)
             return;
 
         _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
-        context.Value.OnInitialize((Page)_frame.Content);
+        await context.Value.OnInitializeAsync((Page)_frame.Content);
 
         _frame.BackStack.Clear();
     }

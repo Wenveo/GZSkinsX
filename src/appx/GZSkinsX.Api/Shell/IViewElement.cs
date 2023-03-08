@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System.Threading.Tasks;
+
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.Shell;
@@ -18,11 +20,11 @@ public interface IViewElement
     /// 在页面初始化时触发，可对目标页面属性进行更改及调整
     /// </summary>
     /// <param name="viewElement">目标视图对象</param>
-    void OnInitialize(Page viewElement);
+    Task OnInitializeAsync(Page viewElement);
 
     /// <summary>
     /// 在进入导航操作时触发，可在导航到目标页面前进行相关操作
     /// </summary>
     /// <param name="args">导航的事件参数</param>
-    void OnNavigating(WindowFrameNavigateEventArgs args);
+    Task OnNavigatingAsync(WindowFrameNavigateEventArgs args);
 }
