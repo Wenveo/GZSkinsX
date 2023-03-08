@@ -122,14 +122,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppxStartUp.cs" />
+    <Compile Include="LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartUpPage.xaml.cs">
       <DependentUpon>StartUpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartUpPageLoader.cs" />
+    <Compile Include="ViewElements.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.StartUp.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="LoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StartUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
