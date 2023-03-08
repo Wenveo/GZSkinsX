@@ -20,11 +20,19 @@ namespace GZSkinsX.Appx.StartUp;
 internal sealed class ExportLoadingPage : IViewElement
 {
     public const string THE_GUID = "96BAB9A3-08CE-4A16-95E6-25403A49C378";
+
+    public void OnInitialize(Page viewElement)
+    {
+    }
+
+    public void OnNavigating(WindowFrameNavigateEventArgs args)
+    {
+    }
 }
 
 [Shared, ExportViewElement]
-[ViewElementMetadata(Guid = ViewElementConstants.StartUpPage_Guid, PageType = typeof(StartUpPage))]
-internal sealed class ExportStartUpPage : IViewElementLoader
+[ViewElementMetadata(Guid = ViewElementConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
+internal sealed class ExportStartUpPage : IViewElement
 {
     private readonly IViewManagerService _viewManagerService;
     private readonly IGameService _gameService;
@@ -41,11 +49,10 @@ internal sealed class ExportStartUpPage : IViewElementLoader
         _viewManagerService.NavigateTo(ExportLoadingPage.THE_GUID);
         if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
         {
-            _viewManagerService.NavigateTo(ViewElementConstants.MainPage_Guid);
+            _viewManagerService.NavigateTo(ViewElementConstants.Main_Guid);
+            args.Handled = true;
             return;
         }
-
-        args.Handled = true;
     }
 
     public void OnInitialize(Page viewElement)
