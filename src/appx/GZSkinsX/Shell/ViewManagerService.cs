@@ -149,21 +149,14 @@ internal sealed class ViewManagerService : IViewManagerService
     private void NavigateCore(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         infoOverride ??= new DrillInNavigationTransitionInfo();
-        if (context.Value is IViewElementLoader loader)
-        {
-            var args = new WindowFrameNavigateEventArgs();
-            loader.OnNavigating(args);
+        var args = new WindowFrameNavigateEventArgs();
 
-            if (args.Handled)
-                return;
+        context.Value.OnNavigating(args);
+        if (args.Handled)
+            return;
 
-            _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
-            loader.OnInitialize((Page)_frame.Content);
-        }
-        else
-        {
-            _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
-        }
+        _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
+        context.Value.OnInitialize((Page)_frame.Content);
 
         _frame.BackStack.Clear();
     }
