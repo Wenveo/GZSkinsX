@@ -44,9 +44,6 @@ internal sealed class GameService : IGameService
     {
         _gameSettings = gameSettings;
         _gameData = new GameData();
-
-        // 尝试从本地数据中更新当前游戏信息
-        TryUpdate(_gameSettings.RootDirectory, _gameSettings.CurrentRegion);
     }
 
     /// <inheritdoc/>
