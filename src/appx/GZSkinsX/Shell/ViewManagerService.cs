@@ -124,7 +124,7 @@ internal sealed class ViewManagerService : IViewManagerService
     {
         if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
         {
-            NavigateCoreAsync(elem, null, null);
+            NavigateCore(elem, null, null);
         }
     }
 
@@ -133,7 +133,7 @@ internal sealed class ViewManagerService : IViewManagerService
     {
         if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
         {
-            NavigateCoreAsync(elem, parameter, null);
+            NavigateCore(elem, parameter, null);
         }
     }
 
@@ -142,11 +142,11 @@ internal sealed class ViewManagerService : IViewManagerService
     {
         if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
         {
-            NavigateCoreAsync(elem, parameter, infoOverride);
+            NavigateCore(elem, parameter, infoOverride);
         }
     }
 
-    private async void NavigateCoreAsync(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
+    private void NavigateCore(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         infoOverride ??= new DrillInNavigationTransitionInfo();
         if (context.Value is IViewElementLoader loader)
@@ -159,17 +159,6 @@ internal sealed class ViewManagerService : IViewManagerService
 
             _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
             loader.OnInitialize((Page)_frame.Content);
-        }
-        else if (context.Value is IAsyncViewElementLoader loaderAsync)
-        {
-            var args = new WindowFrameNavigateEventArgs();
-            await loaderAsync.OnNavigatingAsync(args);
-
-            if (args.Handled)
-                return;
-
-            _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
-            await loaderAsync.OnInitializeAsync((Page)_frame.Content);
         }
         else
         {
