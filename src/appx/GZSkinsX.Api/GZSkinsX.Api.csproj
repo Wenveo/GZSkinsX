@@ -147,7 +147,6 @@
     <Compile Include="Settings\SettingsType.cs" />
     <Compile Include="Shell\ExportViewElementAttribute.cs" />
     <Compile Include="Shell\IViewElement.cs" />
-    <Compile Include="Shell\IViewElementLoader.cs" />
     <Compile Include="Shell\IViewManagerService.cs" />
     <Compile Include="Shell\ViewElementConstants.cs" />
     <Compile Include="Shell\ViewElementMetadataAttribute.cs" />
