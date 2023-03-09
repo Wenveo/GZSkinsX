@@ -7,8 +7,8 @@
     <ProjectGuid>{AD96D3E2-356D-4E4F-ADFF-EAA481F7403D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GZSkinsX.Windows.IO.Extensions</RootNamespace>
-    <AssemblyName>GZSkinsX.Windows.IO.Extensions</AssemblyName>
+    <RootNamespace>GZSkinsX.Uwp.IO.Extensions</RootNamespace>
+    <AssemblyName>GZSkinsX.Uwp.IO.Extensions</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
@@ -129,7 +129,7 @@
     <Compile Include="WindowCorePropertiesBuilder.cs" />
     <Compile Include="WindowCorePropertiesContainer.cs" />
     <Compile Include="WindowCorePropertiesConverter.cs" />
-    <EmbeddedResource Include="Properties\GZSkinsX.Windows.IO.Extensions.rd.xml" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Uwp.IO.Extensions.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">

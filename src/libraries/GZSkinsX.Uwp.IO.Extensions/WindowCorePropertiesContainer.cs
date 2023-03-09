@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace GZSkinsX.Windows.IO.Extensions;
+namespace GZSkinsX.Uwp.IO.Extensions;
 
 /// <summary>
 /// 

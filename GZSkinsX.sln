@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Api", "src\appx\GZ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.StartUp", "src\appx\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj", "{92B1E3B4-92A4-4C0B-85A9-B83BC0287DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Windows.IO.Extensions", "src\libraries\GZSkinsX.Windows.IO.Extensions\GZSkinsX.Windows.IO.Extensions.csproj", "{AD96D3E2-356D-4E4F-ADFF-EAA481F7403D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Uwp.IO.Extensions", "src\libraries\GZSkinsX.Windows.IO.Extensions\GZSkinsX.Uwp.IO.Extensions.csproj", "{AD96D3E2-356D-4E4F-ADFF-EAA481F7403D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.DotNet.Diagnostics", "src\libraries\GZSkinsX.DotNet.Diagnostics\GZSkinsX.DotNet.Diagnostics.csproj", "{CA4BC5E8-390C-4751-8D38-7D75D25633A3}"
 EndProject

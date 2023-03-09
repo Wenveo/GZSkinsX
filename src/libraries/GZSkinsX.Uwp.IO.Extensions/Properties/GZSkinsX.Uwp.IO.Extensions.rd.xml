@@ -25,7 +25,7 @@
     https://go.microsoft.com/fwlink/?LinkID=391919
 -->
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
-  <Library Name="GZSkinsX.Windows.IO.Extensions">
+  <Library Name="GZSkinsX.Uwp.IO.Extensions">
 
   	<!-- add directives for your library here -->
 

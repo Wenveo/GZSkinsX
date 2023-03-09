@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 
-namespace GZSkinsX.Windows.IO.Extensions;
+namespace GZSkinsX.Uwp.IO.Extensions;
 
 /// <summary>
 /// 

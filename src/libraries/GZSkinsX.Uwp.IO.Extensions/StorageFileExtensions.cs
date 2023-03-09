@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace GZSkinsX.Windows.IO.Extensions;
+namespace GZSkinsX.Uwp.IO.Extensions;
 
 /// <summary>
 /// 
