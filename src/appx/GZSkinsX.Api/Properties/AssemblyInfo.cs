@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GZSkins, Inc.")]
 [assembly: AssemblyProduct("GZSkinsX.Api")]
-[assembly: AssemblyCopyright("Copyright © 2022 - 2023")]
+[assembly: AssemblyCopyright("Copyright ©  2022 - 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
