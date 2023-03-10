@@ -8,7 +8,6 @@
 #nullable enable
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 using Windows.UI.Composition;
@@ -26,14 +25,8 @@ public static partial class CompositionExtensions
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
-    [return: NotNullIfNotNull(nameof(element))]
-    public static InsetClip? ClipToBounds(this UIElement? element)
+    public static InsetClip ClipToBounds(this UIElement element)
     {
-        if (element is null)
-        {
-            return null;
-        }
-
         var visual = GetElementVisual(element);
         var insetClip = visual.Compositor.CreateInsetClip();
         visual.Clip = insetClip;
@@ -69,14 +62,8 @@ public static partial class CompositionExtensions
     /// <param name="element"></param>
     /// <param name="defaultTranslation"></param>
     /// <returns></returns>
-    [return: NotNullIfNotNull(nameof(element))]
-    public static UIElement? EnableCompositionTranslation(this UIElement? element, Vector3? defaultTranslation)
+    public static UIElement EnableCompositionTranslation(this UIElement element, Vector3? defaultTranslation)
     {
-        if (element is null)
-        {
-            return null;
-        }
-
         var visual = GetElementVisual(element);
         if (visual.Properties.TryGetVector3(CompositionFactory.TRANSLATION, out _) == CompositionGetValueStatus.NotFound)
         {
@@ -125,14 +112,8 @@ public static partial class CompositionExtensions
     /// <param name="element"></param>
     /// <param name="linkSize"></param>
     /// <returns></returns>
-    [return: NotNullIfNotNull(nameof(element))]
-    public static ContainerVisual? GetContainerVisual(this UIElement? element)
+    public static ContainerVisual GetContainerVisual(this UIElement element)
     {
-        if (element is null)
-        {
-            return null;
-        }
-
         if (ElementCompositionPreview.GetElementChildVisual(element) is ContainerVisual container)
         {
             return container;
@@ -152,9 +133,8 @@ public static partial class CompositionExtensions
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
-    [return: NotNullIfNotNull(nameof(element))]
-    public static Visual? GetElementVisual(this UIElement? element)
-     => element == null ? null : ElementCompositionPreview.GetElementVisual(element);
+    public static Visual GetElementVisual(this UIElement element)
+     => ElementCompositionPreview.GetElementVisual(element);
 
     /// <summary>
     /// 
@@ -185,9 +165,9 @@ public static partial class CompositionExtensions
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
-    public static bool IsTranslationEnabled(this UIElement? element)
+    public static bool IsTranslationEnabled(this UIElement element)
     {
-        return GetElementVisual(element)?.Properties.TryGetVector3(CompositionFactory.TRANSLATION, out _) != CompositionGetValueStatus.NotFound;
+        return GetElementVisual(element).Properties.TryGetVector3(CompositionFactory.TRANSLATION, out _) != CompositionGetValueStatus.NotFound;
     }
 
     /// <summary>
@@ -229,12 +209,9 @@ public static partial class CompositionExtensions
     /// <param name="element"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    [return: NotNullIfNotNull(nameof(element))]
-    public static UIElement? SetTranslation(this UIElement? element, Vector3 value)
+    public static UIElement SetTranslation(this UIElement element, Vector3 value)
     {
-        var visual = element.GetElementVisual();
-        visual?.Properties.InsertVector3("Translation", value);
-
+        element.GetElementVisual().Properties.InsertVector3("Translation", value);
         return element;
     }
 

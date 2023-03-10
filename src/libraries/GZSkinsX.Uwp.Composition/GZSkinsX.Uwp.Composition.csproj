@@ -131,7 +131,6 @@
     <Compile Include="CompositionFactory.PropertyChangedCallback.cs" />
     <Compile Include="CompositionObjectPool.cs" />
     <Compile Include="CompositionExtensions.CompositionPropetrySet.cs" />
-    <Compile Include="CompositionProvider.cs" />
     <Compile Include="CompositionExtensions.Compositor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CompositionExtensions.UIElement.cs" />

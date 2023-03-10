@@ -375,19 +375,15 @@ public partial class CompositionFactory
     /// 
     /// </summary>
     /// <param name="sender"></param>
-    /// <param name="args"></param>
-    public static void PlayStandardEntrance(object sender, RoutedEventArgs args)
+    public static void PlayStandardEntrance(FrameworkElement element)
     {
         if (UISettings.AnimationsEnabled is false)
         {
             return;
         }
 
-        if (sender is FrameworkElement e)
-        {
-            e.GetElementVisual().StartAnimationGroup(
-                CreateEntranceAnimation(e, new Vector3(100, 0, 0), 200));
-        }
+        element.GetElementVisual().StartAnimationGroup(
+            CreateEntranceAnimation(element, new Vector3(100, 0, 0), 200));
     }
 
     /// <summary>
