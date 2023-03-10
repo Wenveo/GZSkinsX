@@ -240,6 +240,10 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.Preload\GZSkinsX.Appx.Preload.csproj">
+      <Project>{af4f7004-c24f-40be-b145-b420aeb1aef3}</Project>
+      <Name>GZSkinsX.Appx.Preload</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
       <Project>{92b1e3b4-92a4-4c0b-85a9-b83bc0287daf}</Project>
       <Name>GZSkinsX.Appx.StartUp</Name>

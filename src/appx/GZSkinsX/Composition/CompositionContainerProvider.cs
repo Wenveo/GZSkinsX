@@ -60,6 +60,8 @@ internal sealed class CompositionContainerProvider
         yield return typeof(App).Assembly;
         // GZSkinsX.Api
         yield return typeof(IAppxWindow).Assembly;
+        // GZSkinsX.Appx.Preload
+        yield return typeof(Appx.Preload.AppxPreload).Assembly;
         // GZSkinsX.Appx.StartUp
         yield return typeof(Appx.StartUp.AppxStartUp).Assembly;
     }

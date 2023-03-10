@@ -87,8 +87,9 @@ internal sealed class ViewManagerService : IViewManagerService
                     continue;
 
                 _guidToViewElement[guid] = new ViewElementContext(elem);
-                _appxWindow.MainWindow.Content = _frame;
             }
+
+            _appxWindow.MainWindow.Content = _frame;
         }
     }
 
@@ -151,12 +152,13 @@ internal sealed class ViewManagerService : IViewManagerService
         infoOverride ??= new DrillInNavigationTransitionInfo();
         var args = new WindowFrameNavigateEventArgs();
 
-        await context.Value.OnNavigatingAsync(args);
+        var element = context.Value;
+        await element.OnNavigatingAsync(args);
         if (args.Handled)
             return;
 
         _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
-        await context.Value.OnInitializeAsync((Page)_frame.Content);
+        await element.OnInitializeAsync((Page)_frame.Content);
 
         _frame.BackStack.Clear();
     }

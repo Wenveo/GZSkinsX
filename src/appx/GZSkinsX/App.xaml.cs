@@ -73,7 +73,7 @@ public sealed partial class App : Application
             if (_appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
             {
                 _viewManagerService ??= _compositionHost.GetExport<IViewManagerService>();
-                _viewManagerService.NavigateTo(ViewElementConstants.StartUp_Guid);
+                _viewManagerService.NavigateTo(ViewElementConstants.Preload_Guid);
             }
 
             _appxWindow.Activate();
