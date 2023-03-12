@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Uwp.UI.Triggers;
+namespace GZSkinsX.Uwp.UI.Toolkit;
 
 /// <summary>
 /// Provide an abstraction around the Toolkit ControlSizeTrigger for both UWP and WinUI 3 in the same namespace (until 8.0).

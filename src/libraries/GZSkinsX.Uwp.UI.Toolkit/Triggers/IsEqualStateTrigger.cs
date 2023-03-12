@@ -10,7 +10,7 @@ using System.Globalization;
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Uwp.UI.Triggers;
+namespace GZSkinsX.Uwp.UI.Toolkit;
 
 /// <summary>
 /// Enables a state if the value is equal to another value

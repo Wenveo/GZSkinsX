@@ -8,12 +8,10 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-using GZSkinsX.Uwp.UI.Toolkit.Helpers;
-
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Uwp.UI.Triggers;
+namespace GZSkinsX.Uwp.UI.Toolkit;
 
 /// <summary>
 /// Enables a state if an Object is <c>null</c> or a String/IEnumerable is empty

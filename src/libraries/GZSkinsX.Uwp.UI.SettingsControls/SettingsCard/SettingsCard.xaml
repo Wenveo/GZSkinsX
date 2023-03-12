@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GZSkinsX.Uwp.UI.SettingsControls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:triggers="using:GZSkinsX.Uwp.UI.Triggers"
+    xmlns:toolkit="using:GZSkinsX.Uwp.UI.Toolkit"
     xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.ThemeDictionaries>
@@ -100,7 +100,7 @@
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
             <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
             <Setter Property="FocusVisualMargin" Value="-3" />
-            <Setter Property="labs:StyleExtensions.Resources">
+            <Setter Property="toolkit:StyleExtensions.Resources">
                 <Setter.Value>
                     <ResourceDictionary>
                         <!--  Making sure ToggleSwitches are right-aligned by default  -->
@@ -325,7 +325,7 @@
                                     <!--  Whenever the control width is less than SettingsCardWrapThreshold, the Content is below the Header/Description  -->
                                     <VisualState x:Name="RightWrapped">
                                         <VisualState.StateTriggers>
-                                            <triggers:ControlSizeTrigger
+                                            <toolkit:ControlSizeTrigger
                                                 MinWidth="{ThemeResource SettingsCardWrapNoIconThreshold}"
                                                 MaxWidth="{ThemeResource SettingsCardWrapThreshold}"
                                                 TargetElement="{Binding ElementName=PART_RootGrid}" />
@@ -343,7 +343,7 @@
                                     <!--  For even smaller widths: the HeaderIcon is collapsed.  -->
                                     <VisualState x:Name="RightWrappedNoIcon">
                                         <VisualState.StateTriggers>
-                                            <triggers:ControlSizeTrigger MaxWidth="{ThemeResource SettingsCardWrapNoIconThreshold}" TargetElement="{Binding ElementName=PART_RootGrid}" />
+                                            <toolkit:ControlSizeTrigger MaxWidth="{ThemeResource SettingsCardWrapNoIconThreshold}" TargetElement="{Binding ElementName=PART_RootGrid}" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="PART_HeaderIconPresenterHolder.Visibility" Value="Collapsed" />
@@ -359,7 +359,7 @@
                                     <!--  Header/Description/Icon collapsed, content is to the left. Great for e.g. Checkboxes  -->
                                     <VisualState x:Name="Left">
                                         <VisualState.StateTriggers>
-                                            <triggers:IsEqualStateTrigger Value="{Binding ContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" To="Left" />
+                                            <toolkit:IsEqualStateTrigger Value="{Binding ContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" To="Left" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="PART_HeaderIconPresenterHolder.Visibility" Value="Collapsed" />
@@ -374,7 +374,7 @@
                                     <!--  Similiar to Left, but the HeaderIcon/Header/Description is visible  -->
                                     <VisualState x:Name="Vertical">
                                         <VisualState.StateTriggers>
-                                            <triggers:IsEqualStateTrigger Value="{Binding ContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" To="Vertical" />
+                                            <toolkit:IsEqualStateTrigger Value="{Binding ContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" To="Vertical" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="PART_ContentPresenter.(Grid.Row)" Value="1" />
@@ -391,7 +391,7 @@
                                     <VisualState x:Name="Visible" />
                                     <VisualState x:Name="Collapsed">
                                         <VisualState.StateTriggers>
-                                            <triggers:IsNullOrEmptyStateTrigger Value="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            <toolkit:IsNullOrEmptyStateTrigger Value="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
                                         </VisualState.StateTriggers>
                                         <VisualState.Setters>
                                             <Setter Target="PART_ContentPresenter.Visibility" Value="Collapsed" />

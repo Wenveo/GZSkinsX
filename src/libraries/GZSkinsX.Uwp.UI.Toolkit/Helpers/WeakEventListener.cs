@@ -7,7 +7,7 @@
 
 using System;
 
-namespace GZSkinsX.Uwp.UI.Toolkit.Helpers;
+namespace GZSkinsX.Uwp.UI.Toolkit;
 
 /// <summary>
 /// Implements a weak event listener that allows the owner to be garbage

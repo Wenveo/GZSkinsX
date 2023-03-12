@@ -156,9 +156,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GZSkinsX.Uwp.UI.Triggers\GZSkinsX.Uwp.UI.Triggers.csproj">
-      <Project>{a1647858-5c1c-40a5-a070-cb44dca86599}</Project>
-      <Name>GZSkinsX.Uwp.UI.Triggers</Name>
+    <ProjectReference Include="..\GZSkinsX.Uwp.UI.Toolkit\GZSkinsX.Uwp.UI.Toolkit.csproj">
+      <Project>{8ff44d52-4886-489a-950c-9da5ad62b90e}</Project>
+      <Name>GZSkinsX.Uwp.UI.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
