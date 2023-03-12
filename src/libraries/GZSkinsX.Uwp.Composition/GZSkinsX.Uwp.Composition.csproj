@@ -125,10 +125,10 @@
     <Compile Include="CompositionExtensions.FrameworkElement.cs" />
     <Compile Include="CompositionExtensions.KeyFrameAnimation.cs" />
     <Compile Include="CompositionExtensions.Visual.cs" />
-    <Compile Include="CompositionFactory.DependencyProperty.cs" />
+    <Compile Include="CompositionFactory.Properties.cs" />
     <Compile Include="CompositionFactory.cs" />
     <Compile Include="CompositionExtensions.CompositionObject.cs" />
-    <Compile Include="CompositionFactory.PropertyChangedCallback.cs" />
+    <Compile Include="CompositionFactory.PropertyChangedCallbacks.cs" />
     <Compile Include="CompositionObjectPool.cs" />
     <Compile Include="CompositionExtensions.CompositionPropetrySet.cs" />
     <Compile Include="CompositionExtensions.Compositor.cs" />
