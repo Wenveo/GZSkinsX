@@ -136,6 +136,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.Composition\GZSkinsX.Uwp.Composition.csproj">
+      <Project>{7182D367-4984-4A8F-98BD-E276C98AD095}</Project>
+      <Name>GZSkinsX.Uwp.Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
       <Name>GZSkinsX.Api</Name>
