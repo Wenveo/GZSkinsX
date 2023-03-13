@@ -76,11 +76,8 @@ internal sealed class AppxWindow : IAppxWindow
     private void InitializeUIElement()
     {
 #if DEBUG
-        var title = "GZSkinsX (DEBUG)";
-#else
-            var title = "GZSkinsX";
+        _currentAppView.Title = "DEBUG";
 #endif
-        _currentAppView.Title = title;
     }
 
     /// <summary>
