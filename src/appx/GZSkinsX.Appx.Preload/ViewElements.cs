@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using GZSkinsX.Api;
 using GZSkinsX.Api.Shell;
 
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Preload;
@@ -32,10 +34,16 @@ internal sealed class ExportPreloadPage : IViewElement
     /// <summary>
     /// 
     /// </summary>
+    private readonly PreloadSettings _preloadSettings;
+
+    /// <summary>
+    /// 
+    /// </summary>
     [ImportingConstructor]
-    public ExportPreloadPage(IViewManagerService viewManagerService)
+    public ExportPreloadPage(IViewManagerService viewManagerService, PreloadSettings preloadSettings)
     {
         _viewManagerService = viewManagerService;
+        _preloadSettings = preloadSettings;
     }
 
     /// <inheritdoc/>
@@ -52,6 +60,15 @@ internal sealed class ExportPreloadPage : IViewElement
     /// <inheritdoc/>
     public async Task OnNavigatingAsync(WindowFrameNavigateEventArgs args)
     {
+        if (_preloadSettings.IsInitialize is false)
+        {
+            var applicationView = ApplicationView.GetForCurrentView();
+            applicationView.SetPreferredMinSize(new Size { Width = 400, Height = 400 });
+
+            applicationView.TryResizeView(new Size(600, 400));
+            _preloadSettings.IsInitialize = true;
+        }
+
         await Task.CompletedTask;
     }
 }
