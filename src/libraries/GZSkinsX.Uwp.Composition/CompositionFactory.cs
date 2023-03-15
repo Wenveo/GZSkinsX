@@ -220,10 +220,20 @@ public partial class CompositionFactory
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="f"></param>
-    public static void DisableStandardReposition(FrameworkElement f)
+    /// <param name="e"></param>
+    public static void DisableStandardFadeInOut(UIElement e)
     {
-        f.GetElementVisual().ImplicitAnimations?.Remove(nameof(Visual.Offset));
+        e.SetHideAnimation(null);
+        e.SetShowAnimation(null);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="f"></param>
+    public static void DisableStandardReposition(UIElement e)
+    {
+        e.GetElementVisual().ImplicitAnimations?.Remove(nameof(Visual.Offset));
     }
 
     /// <summary>
@@ -508,18 +518,6 @@ public partial class CompositionFactory
     /// 
     /// </summary>
     /// <param name="e"></param>
-    /// <param name="durationMs"></param>
-    private static void SetFadeInOut(FrameworkElement e, int durationMs)
-    {
-        var v = e.GetElementVisual();
-        e.SetHideAnimation(CreateFade(v.Compositor, 0, null, durationMs));
-        e.SetShowAnimation(CreateFade(v.Compositor, 1, null, durationMs));
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="e"></param>
     /// <param name="t"></param>
     private static void SetOpacityTransition(FrameworkElement e, TimeSpan t)
     {
@@ -563,19 +561,17 @@ public partial class CompositionFactory
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
-    public static void SetStandardFadeInOut(object sender, RoutedEventArgs args)
+    /// <param name="e"></param>
+    public static void SetStandardFadeInOut(UIElement e, int durationMs = 300)
     {
         if (UISettings.AnimationsEnabled is false)
         {
             return;
         }
 
-        if (sender is FrameworkElement e)
-        {
-            SetFadeInOut(e, 200);
-        }
+        var v = e.GetElementVisual();
+        e.SetHideAnimation(CreateFade(v.Compositor, 0, null, durationMs));
+        e.SetShowAnimation(CreateFade(v.Compositor, 1, null, durationMs));
     }
 
     /// <summary>

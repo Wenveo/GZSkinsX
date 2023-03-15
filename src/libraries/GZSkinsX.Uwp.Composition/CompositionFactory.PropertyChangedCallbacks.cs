@@ -87,4 +87,19 @@ public partial class CompositionFactory
             }
         }
     }
+
+    private static void OnUseStandardFadeInOutChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is FrameworkElement f && e.NewValue is bool b)
+        {
+            if (b)
+            {
+                SetStandardFadeInOut(f);
+            }
+            else
+            {
+                DisableStandardFadeInOut(f);
+            }
+        }
+    }
 }

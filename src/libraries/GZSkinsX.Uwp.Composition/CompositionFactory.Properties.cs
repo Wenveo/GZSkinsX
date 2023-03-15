@@ -105,4 +105,16 @@ public partial class CompositionFactory
 
     public static void SetUseStandardReposition(DependencyObject obj, bool value)
     => obj.SetValue(UseStandardRepositionProperty, value);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static readonly DependencyProperty UseStandardFadeInOutProperty =
+        DependencyProperty.RegisterAttached("UseStandardFadeInOut", typeof(bool),
+            typeof(CompositionFactory), new PropertyMetadata(false, OnUseStandardFadeInOutChanged));
+    public static bool GetUseStandardFadeInOut(DependencyObject obj)
+    => (bool)obj.GetValue(UseStandardFadeInOutProperty);
+
+    public static void SetUseStandardFadeInOut(DependencyObject obj, bool value)
+    => obj.SetValue(UseStandardFadeInOutProperty, value);
 }
