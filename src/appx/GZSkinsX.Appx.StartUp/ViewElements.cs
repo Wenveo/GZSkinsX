@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using GZSkinsX.Api;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Shell;
+using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml.Controls;
 
@@ -36,6 +37,11 @@ internal sealed class ExportStartUpPage : IViewElement
     /// <summary>
     /// 
     /// </summary>
+    private bool _isInvalid;
+
+    /// <summary>
+    /// 
+    /// </summary>
     [ImportingConstructor]
     public ExportStartUpPage(IViewManagerService viewManagerService, IGameService gameService)
     {
@@ -46,6 +52,12 @@ internal sealed class ExportStartUpPage : IViewElement
     /// <inheritdoc/>
     public async Task OnInitializeAsync(Page viewElement)
     {
+        Debug2.Assert(viewElement is StartUpPage);
+        if (viewElement is StartUpPage startUpPage)
+        {
+            startUpPage.InitializeContext(_viewManagerService, _gameService, _isInvalid);
+        }
+
         await Task.CompletedTask;
     }
 
@@ -56,6 +68,11 @@ internal sealed class ExportStartUpPage : IViewElement
         {
             _viewManagerService.NavigateTo(ViewElementConstants.Main_Guid);
             args.Handled = true;
+        }
+        else
+        {
+            _isInvalid = _gameService.CurrentRegion != GameRegion.Unknown ||
+                string.IsNullOrEmpty(_gameService.RootDirectory) is false;
         }
 
         await Task.CompletedTask;

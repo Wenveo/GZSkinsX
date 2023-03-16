@@ -9,12 +9,93 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
-    <Grid composition:CompositionFactory.UseStandardReposition="True">
+    <Grid
+        x:Name="RootGrid"
+        VerticalAlignment="Center"
+        composition:CompositionFactory.UseStandardReposition="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width=".2*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="6" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="24"
-            FontWeight="Bold"
-            Text="欢迎来到" />
+            x:Name="Appx_StartUp_Initialize_Title"
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            FontSize="20"
+            FontWeight="Bold" />
+        <muxc:InfoBar
+            x:Uid="Appx_StartUp_Initialize_Error_InfoBar"
+            Grid.Row="4"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            IsOpen="False"
+            Severity="Error" />
+        <StackPanel Grid.Row="6" Grid.Column="1">
+            <TextBlock
+                x:Uid="Appx_StartUp_Initialize_Directory_Title"
+                FontSize="16"
+                FontWeight="Bold" />
+            <TextBlock x:Uid="Appx_StartUp_Initialize_Directory_Subtitle" />
+        </StackPanel>
+        <TextBox
+            Grid.Row="8"
+            Grid.Column="1"
+            IsReadOnly="True" />
+        <Button
+            x:Uid="Appx_StartUp_Initialize_Directory_Browser"
+            Grid.Row="8"
+            Grid.Column="3"
+            HorizontalAlignment="Right" />
+        <StackPanel Grid.Row="10" Grid.Column="1">
+            <TextBlock
+                x:Uid="Appx_StartUp_Initialize_Region_Title"
+                FontSize="16"
+                FontWeight="Bold" />
+            <TextBlock x:Uid="Appx_StartUp_Initialize_Region_Subtitle" />
+        </StackPanel>
+        <StackPanel
+            Grid.Row="12"
+            Grid.Column="1"
+            Orientation="Horizontal"
+            Spacing="12">
+            <ComboBox Width="100" MinWidth="100" />
+            <muxc:InfoBadge
+                x:Uid="Appx_StartUp_Initialize_Region_Helper"
+                Padding="0,4,0,2"
+                ToolTipService.Placement="Mouse">
+                <muxc:InfoBadge.IconSource>
+                    <muxc:FontIconSource Glyph="&#xE897;" />
+                </muxc:InfoBadge.IconSource>
+            </muxc:InfoBadge>
+        </StackPanel>
+        <Button
+            x:Uid="Appx_StartUp_Initialize_OKButton"
+            Grid.Row="14"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Width="72"
+            HorizontalAlignment="Right"
+            Style="{StaticResource AccentButtonStyle}" />
     </Grid>
 </Page>

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GZSkinsX.Appx.StartUp</RootNamespace>
     <AssemblyName>GZSkinsX.Appx.StartUp</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -136,6 +136,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\libraries\GZSkinsX.DotNet.Diagnostics\GZSkinsX.DotNet.Diagnostics.csproj">
+      <Project>{CA4BC5E8-390C-4751-8D38-7D75D25633A3}</Project>
+      <Name>GZSkinsX.DotNet.Diagnostics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.Composition\GZSkinsX.Uwp.Composition.csproj">
       <Project>{7182D367-4984-4A8F-98BD-E276C98AD095}</Project>
       <Name>GZSkinsX.Uwp.Composition</Name>
@@ -149,6 +153,10 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PRIResource Include="Resources\zh-CN\Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 using GZSkinsX.Api;
 using GZSkinsX.Api.Shell;
 
-using Windows.Foundation;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Preload;
@@ -60,13 +60,32 @@ internal sealed class ExportPreloadPage : IViewElement
     /// <inheritdoc/>
     public async Task OnNavigatingAsync(WindowFrameNavigateEventArgs args)
     {
+        var minWindowSize = SizeHelper.FromDimensions(720, 480);
+        var appView = ApplicationView.GetForCurrentView();
+        appView.SetPreferredMinSize(minWindowSize);
+
         if (_preloadSettings.IsInitialize is false)
         {
-            var applicationView = ApplicationView.GetForCurrentView();
-            applicationView.SetPreferredMinSize(new Size { Width = 400, Height = 400 });
-
-            applicationView.TryResizeView(new Size(600, 400));
+            appView.TryResizeView(minWindowSize);
             _preloadSettings.IsInitialize = true;
+        }
+        else
+        {
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+        }
+
+        if (!Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons")) // PC Family
+        {
+            // Disable the system view activation policy during the first launch of the app
+            // only for PC family devices and not for phone family devices
+            try
+            {
+                ApplicationViewSwitcher.DisableSystemViewActivationPolicy();
+            }
+            catch (Exception)
+            {
+                // Log that DisableSystemViewActionPolicy didn't work
+            }
         }
 
         await Task.CompletedTask;

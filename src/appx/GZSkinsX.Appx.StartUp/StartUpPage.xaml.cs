@@ -10,6 +10,10 @@
 using System;
 using System.Numerics;
 
+using GZSkinsX.Api.Game;
+using GZSkinsX.Api.Shell;
+
+using Windows.ApplicationModel.Resources.Core;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
@@ -27,13 +31,36 @@ namespace GZSkinsX.Appx.StartUp;
 /// </summary>
 public sealed partial class StartUpPage : Page
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    private IViewManagerService? _viewManagerService;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private IGameService? _gameService;
+
+    /// <summary>
+    /// 
+    /// </summary>
     public StartUpPage()
     {
         InitializeComponent();
     }
 
-    private void OnClick(object sender, RoutedEventArgs e)
+    internal void InitializeContext(IViewManagerService viewManagerService,
+                                    IGameService gameService,
+                                    bool isInvalid)
     {
+        _viewManagerService = viewManagerService;
+        _gameService = gameService;
+
+        var val = ResourceManager.Current.MainResourceMap.GetValue(isInvalid
+            ? "GZSkinsX.Appx.StartUp/Resources/Appx_StartUp_Initialize_Invalid_Title"
+            : "GZSkinsX.Appx.StartUp/Resources/Appx_StartUp_Initialize_Default_Title");
+
+        Appx_StartUp_Initialize_Title.Text = val.ValueAsString;
     }
 }
 
