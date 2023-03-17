@@ -8,19 +8,17 @@
 #nullable enable
 
 using System;
-using System.Numerics;
 
+using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Game;
+using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.Shell;
+using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.ApplicationModel.Resources.Core;
-using Windows.UI;
-using Windows.UI.Composition;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Hosting;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,185 +29,86 @@ namespace GZSkinsX.Appx.StartUp;
 /// </summary>
 public sealed partial class StartUpPage : Page
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    private readonly ResourceMap _resourceMap;
+    private IServiceLocator? _serviceLocator;
+    private IGameService? _gameService;
     private IViewManagerService? _viewManagerService;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private IGameService? _gameService;
-
-    /// <summary>
-    /// 
-    /// </summary>
     public StartUpPage()
     {
         InitializeComponent();
+        _resourceMap = ResourceManager.Current.MainResourceMap;
     }
 
-    internal void InitializeContext(IViewManagerService viewManagerService,
-                                    IGameService gameService,
-                                    bool isInvalid)
+    internal void InitializeContext(IServiceLocator serviceLocator, bool isInvalid)
     {
-        _viewManagerService = viewManagerService;
-        _gameService = gameService;
+        _serviceLocator = serviceLocator;
+        _gameService = serviceLocator.Resolve<IGameService>();
+        _viewManagerService = serviceLocator.Resolve<IViewManagerService>();
 
-        var val = ResourceManager.Current.MainResourceMap.GetValue(isInvalid
-            ? "GZSkinsX.Appx.StartUp/Resources/Appx_StartUp_Initialize_Invalid_Title"
-            : "GZSkinsX.Appx.StartUp/Resources/Appx_StartUp_Initialize_Default_Title");
+        // 设置标题
+        var resTitle = GetLocalized(isInvalid
+            ? "Appx_StartUp_Initialize_Invalid_Title"
+            : "Appx_StartUp_Initialize_Default_Title");
+        Appx_StartUp_Initialize_Title.Text = resTitle;
 
-        Appx_StartUp_Initialize_Title.Text = val.ValueAsString;
-    }
-}
+        // 添加游戏区域枚举的本地化字符串至选择器列表
+        var riotRes = GetLocalized("Appx_StartUp_Initialize_Region_Riot");
+        Appx_StartUp_Initialize_Region_Selector.Items.Add(riotRes);
 
-/// <summary>
-/// 
-/// </summary>
-internal sealed class HoverXamlLight : XamlLight
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public static readonly string Id = typeof(HoverXamlLight).FullName;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private ExpressionAnimation? _lightPositionExpression;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private ScalarKeyFrameAnimation? _pointerEnteredAnimation;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private ScalarKeyFrameAnimation? _pointerExitedAnimation;
-
-    /// <inheritdoc/>
-    protected override void OnConnected(UIElement newElement)
-    {
-        var compositor = Window.Current.Compositor;
-
-        // Create SpotLight and set its properties
-        var pointLight = compositor.CreatePointLight();
-        pointLight.Color = Colors.FloralWhite;
-        pointLight.Intensity = 0f;
-
-        // Associate CompositionLight with XamlLight
-        CompositionLight = pointLight;
-
-        _pointerEnteredAnimation = compositor.CreateScalarKeyFrameAnimation();
-        _pointerEnteredAnimation.InsertKeyFrame(1, 5f);
-        _pointerEnteredAnimation.Duration = TimeSpan.FromMilliseconds(800d);
-
-        _pointerExitedAnimation = compositor.CreateScalarKeyFrameAnimation();
-        _pointerExitedAnimation.InsertKeyFrame(1, 0);
-        _pointerExitedAnimation.Duration = TimeSpan.FromMilliseconds(600d);
-
-        // Define expression animation that relates light's offset to pointer position 
-        var hoverPosition = ElementCompositionPreview.GetPointerPositionPropertySet(newElement);
-        _lightPositionExpression = compositor.CreateExpressionAnimation("Vector3(hover.Position.X, hover.Position.Y, height)");
-        _lightPositionExpression.SetReferenceParameter("hover", hoverPosition);
-        _lightPositionExpression.SetScalarParameter("height", 32f);
-
-        newElement.PointerEntered += OnPointerEntered;
-        newElement.PointerExited += OnPointerExited;
-        newElement.PointerMoved += OnPointerMoved;
-
-        AddTargetElement(GetId(), newElement);
+        var tencentRes = GetLocalized("Appx_StartUp_Initialize_Region_Tencent");
+        Appx_StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
     }
 
-    private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
+    private async void OnBrowser(object sender, RoutedEventArgs e)
     {
-        CompositionLight?.StartAnimation("Intensity", _pointerEnteredAnimation);
-    }
-
-    private void OnPointerExited(object sender, PointerRoutedEventArgs e)
-    {
-        CompositionLight?.StartAnimation("Intensity", _pointerExitedAnimation);
-    }
-
-    private void OnPointerMoved(object sender, PointerRoutedEventArgs e)
-    {
-        if (CompositionLight is PointLight pointLight)
+        var folder = await new FolderPicker().PickSingleFolderAsync();
+        if (folder is not null)
         {
-            // touch input is still UI thread-bound as of the Creator's Update
-            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Touch)
-            {
-                var offset = e.GetCurrentPoint((UIElement)sender).Position.ToVector2();
-                pointLight.Offset = new Vector3(offset.X, offset.Y, 32.0f);
-            }
-            else
-            {
-                // Get the pointer's current position from the property and bind the SpotLight's X-Y Offset
-                pointLight.StartAnimation("Offset", _lightPositionExpression);
-            }
+            Debug2.Assert(_serviceLocator is not null);
+            var futureAccessService = _serviceLocator.Resolve<IFutureAccessService>();
+            futureAccessService.Add(folder, FutureAccessItemConstants.Game_Directory_Name);
+
+            Appx_StartUp_Initialize_Directory_TextBox.Text = folder.Path;
         }
     }
 
-    /// <inheritdoc/>
-    protected override void OnDisconnected(UIElement oldElement)
+    private void ShowErrorMessage(string errorMsg)
     {
-        oldElement.PointerEntered -= OnPointerEntered;
-        oldElement.PointerExited -= OnPointerExited;
-        oldElement.PointerMoved -= OnPointerMoved;
-
-        RemoveTargetElement(GetId(), oldElement);
-        CompositionLight?.Dispose();
-
-        _lightPositionExpression?.Dispose();
-        _pointerEnteredAnimation?.Dispose();
-        _pointerExitedAnimation?.Dispose();
+        Appx_StartUp_Initialize_Error_InfoBar.Title = errorMsg;
+        Appx_StartUp_Initialize_Error_InfoBar.IsOpen = true;
     }
 
-    /// <inheritdoc/>
-    protected override string GetId()
+    private void OnOK(object sender, RoutedEventArgs e)
     {
-        return Id;
-    }
-}
+        var directoryPath = Appx_StartUp_Initialize_Directory_TextBox.Text;
+        if (string.IsNullOrEmpty(directoryPath))
+        {
+            ShowErrorMessage(GetLocalized("Appx_StartUp_Error_Directory_Null"));
+            return;
+        }
 
-/// <summary>
-/// 
-/// </summary>
-internal sealed class AmbientXamlLight : XamlLight
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public static readonly string Id = typeof(AmbientXamlLight).FullName;
+        var selector = Appx_StartUp_Initialize_Region_Selector;
+        if (selector.SelectedIndex is -1)
+        {
+            ShowErrorMessage(GetLocalized("Appx_StartUp_Error_Region_Null"));
+            return;
+        }
 
-    /// <inheritdoc/>
-    protected override void OnConnected(UIElement newElement)
-    {
-        var compositor = Window.Current.Compositor;
+        Debug2.Assert(_gameService is not null);
+        if (!_gameService.TryUpdate(directoryPath, (GameRegion)(selector.SelectedIndex + 1)))
+        {
+            ShowErrorMessage(GetLocalized("Appx_StartUp_Error_Directory_Invalid"));
+            return;
+        }
 
-        // Create AmbientLight and set its properties
-        var ambientLight = compositor.CreateAmbientLight();
-        ambientLight.Color = Colors.White;
-
-        // Associate CompositionLight with XamlLight
-        CompositionLight = ambientLight;
-
-        // Add UIElement to the Light's Targets
-        AddTargetElement(GetId(), newElement);
+        Debug2.Assert(_viewManagerService is not null);
+        _viewManagerService.NavigateTo(ViewElementConstants.Main_Guid);
     }
 
-    /// <inheritdoc/>
-    protected override void OnDisconnected(UIElement oldElement)
+    private string GetLocalized(string resourceKey)
     {
-        // Dispose Light when it is removed from the tree
-        RemoveTargetElement(GetId(), oldElement);
-        CompositionLight?.Dispose();
-    }
-
-    /// <inheritdoc/>
-    protected override string GetId()
-    {
-        return Id;
+        const string PREFIX = "GZSkinsX.Appx.StartUp/Resources/";
+        return _resourceMap.GetValue(PREFIX + resourceKey).ValueAsString;
     }
 }

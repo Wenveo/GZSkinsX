@@ -122,6 +122,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AccessCache\AccessCacheItemNotFoundException.cs" />
+    <Compile Include="AccessCache\FutureAccessItemConstants.cs" />
     <Compile Include="AccessCache\IAccessCacheService.cs" />
     <Compile Include="AccessCache\IFutureAccessService.cs" />
     <Compile Include="AccessCache\IMostRecentlyUsedService.cs" />

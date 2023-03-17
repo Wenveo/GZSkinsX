@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Api;
 using GZSkinsX.Api.Game;
+using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.Shell;
 using GZSkinsX.DotNet.Diagnostics;
 
@@ -17,36 +18,22 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.StartUp;
 
-/// <summary>
-/// 
-/// </summary>
 [Shared, ExportViewElement]
 [ViewElementMetadata(Guid = ViewElementConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
 internal sealed class ExportStartUpPage : IViewElement
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    private readonly IServiceLocator _serviceLocator;
+    private readonly IGameService _gameService;
     private readonly IViewManagerService _viewManagerService;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private readonly IGameService _gameService;
-
-    /// <summary>
-    /// 
-    /// </summary>
     private bool _isInvalid;
 
-    /// <summary>
-    /// 
-    /// </summary>
     [ImportingConstructor]
-    public ExportStartUpPage(IViewManagerService viewManagerService, IGameService gameService)
+    public ExportStartUpPage(IServiceLocator serviceLocator)
     {
-        _viewManagerService = viewManagerService;
-        _gameService = gameService;
+        _serviceLocator = serviceLocator;
+        _gameService = serviceLocator.Resolve<IGameService>();
+        _viewManagerService = serviceLocator.Resolve<IViewManagerService>();
     }
 
     /// <inheritdoc/>
@@ -55,7 +42,7 @@ internal sealed class ExportStartUpPage : IViewElement
         Debug2.Assert(viewElement is StartUpPage);
         if (viewElement is StartUpPage startUpPage)
         {
-            startUpPage.InitializeContext(_viewManagerService, _gameService, _isInvalid);
+            startUpPage.InitializeContext(_serviceLocator, _isInvalid);
         }
 
         await Task.CompletedTask;

@@ -19,26 +19,13 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Preload;
 
-/// <summary>
-/// 
-/// </summary>
 [Shared, ExportViewElement]
 [ViewElementMetadata(Guid = ViewElementConstants.Preload_Guid, PageType = typeof(PreloadPage))]
 internal sealed class ExportPreloadPage : IViewElement
 {
-    /// <summary>
-    /// 
-    /// </summary>
     private readonly IViewManagerService _viewManagerService;
-
-    /// <summary>
-    /// 
-    /// </summary>
     private readonly PreloadSettings _preloadSettings;
 
-    /// <summary>
-    /// 
-    /// </summary>
     [ImportingConstructor]
     public ExportPreloadPage(IViewManagerService viewManagerService, PreloadSettings preloadSettings)
     {

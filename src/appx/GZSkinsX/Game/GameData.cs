@@ -7,7 +7,9 @@
 
 #nullable enable
 
+using System;
 using System.IO;
+using System.Linq;
 
 using GZSkinsX.Api.Game;
 
@@ -69,6 +71,7 @@ internal sealed class GameData : IGameData
     {
         if (Directory.Exists(rootDirectory) && region != GameRegion.Unknown)
         {
+            /// 定义基本的文件或文件夹路径
             var gameDirectory = Path.Combine(rootDirectory, GAME_DIRECTORY_NAME);
             var gameExecutePath = Path.Combine(gameDirectory, GAME_EXECUTE_NAME);
 
@@ -77,8 +80,22 @@ internal sealed class GameData : IGameData
                 : Path.Combine(rootDirectory, LCU_DIRECTORY_NAME);
             var lcuExecutePath = Path.Combine(lcuDirectory, LCU_EXECUTE_NAME);
 
-            if (Directory.Exists(gameDirectory) && File.Exists(gameExecutePath) &&
-                Directory.Exists(lcuDirectory) && File.Exists(lcuExecutePath))
+            /// 这里用 DirectoryInfo 获取文件夹信息并判断文件是否存在
+            var gameDirectoryInfo = new DirectoryInfo(gameDirectory);
+            var lcuDirectoryInfo = new DirectoryInfo(lcuDirectory);
+
+            /// 优先判断文件夹是否存在
+            if (gameDirectoryInfo.Exists is false || lcuDirectoryInfo.Exists is false)
+            {
+                return false;
+            }
+
+            /// File.Exists 在这里不适用，且无法正确判断，因此只能通过获取文件列表进行判定
+            if (gameDirectoryInfo.GetFiles(GAME_EXECUTE_NAME).Any(
+                a => StringComparer.Ordinal.Equals(a.FullName, gameExecutePath))
+                &&
+                lcuDirectoryInfo.GetFiles(LCU_EXECUTE_NAME).Any(
+                b => StringComparer.Ordinal.Equals(b.FullName, lcuExecutePath)))
             {
                 GameDirectory = gameDirectory;
                 GameExecutePath = gameExecutePath;

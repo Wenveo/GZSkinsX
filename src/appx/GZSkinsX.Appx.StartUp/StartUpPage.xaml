@@ -45,7 +45,7 @@
             FontSize="20"
             FontWeight="Bold" />
         <muxc:InfoBar
-            x:Uid="Appx_StartUp_Initialize_Error_InfoBar"
+            x:Name="Appx_StartUp_Initialize_Error_InfoBar"
             Grid.Row="4"
             Grid.Column="1"
             Grid.ColumnSpan="3"
@@ -59,6 +59,7 @@
             <TextBlock x:Uid="Appx_StartUp_Initialize_Directory_Subtitle" />
         </StackPanel>
         <TextBox
+            x:Name="Appx_StartUp_Initialize_Directory_TextBox"
             Grid.Row="8"
             Grid.Column="1"
             IsReadOnly="True" />
@@ -66,7 +67,8 @@
             x:Uid="Appx_StartUp_Initialize_Directory_Browser"
             Grid.Row="8"
             Grid.Column="3"
-            HorizontalAlignment="Right" />
+            HorizontalAlignment="Right"
+            Click="OnBrowser" />
         <StackPanel Grid.Row="10" Grid.Column="1">
             <TextBlock
                 x:Uid="Appx_StartUp_Initialize_Region_Title"
@@ -79,7 +81,10 @@
             Grid.Column="1"
             Orientation="Horizontal"
             Spacing="12">
-            <ComboBox Width="100" MinWidth="100" />
+            <ComboBox
+                x:Name="Appx_StartUp_Initialize_Region_Selector"
+                Width="100"
+                MinWidth="100" />
             <muxc:InfoBadge
                 x:Uid="Appx_StartUp_Initialize_Region_Helper"
                 Padding="0,4,0,2"
@@ -96,6 +101,7 @@
             Grid.ColumnSpan="3"
             Width="72"
             HorizontalAlignment="Right"
+            Click="OnOK"
             Style="{StaticResource AccentButtonStyle}" />
     </Grid>
 </Page>
