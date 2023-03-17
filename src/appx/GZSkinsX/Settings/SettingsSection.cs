@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 using GZSkinsX.Api.Settings;
 using GZSkinsX.DotNet.Diagnostics;
@@ -60,7 +61,7 @@ internal sealed class SettingsSection : ISettingsSection
     }
 
     /// <inheritdoc/>
-    public object? Attribute(string key)
+    public string? Attribute(string key)
     {
         Debug2.Assert(_container is not null);
         if (_container is null)
@@ -73,11 +74,11 @@ internal sealed class SettingsSection : ISettingsSection
         {
             if (!_container.Values.TryGetValue(key, out value))
             {
-                value = default;
+                return default;
             }
         }
 
-        return value;
+        return (string?)value;
     }
 
     /// <inheritdoc/>
@@ -94,24 +95,41 @@ internal sealed class SettingsSection : ISettingsSection
         {
             if (!_container.Values.TryGetValue(key, out value))
             {
-                value = default(TValue);
+                return default;
             }
         }
 
-        return (TValue?)value;
+        var c = TypeDescriptor.GetConverter(typeof(TValue));
+        try
+        {
+            return (TValue?)c.ConvertFromInvariantString((string)value);
+        }
+        catch (FormatException)
+        {
+        }
+        catch (NotSupportedException)
+        {
+        }
+
+        return default;
     }
 
     /// <inheritdoc/>
-    public void Attribute(string key, object value)
+    public void Attribute<TValue>(string key, TValue value)
     {
         Debug2.Assert(_container is not null);
         if (_container is null)
             throw new InvalidOperationException();
         if (key == null)
             throw new ArgumentNullException(nameof(key));
+        if (value == null)
+            throw new ArgumentNullException(nameof(value));
+
+        var c = TypeDescriptor.GetConverter(typeof(TValue));
+        var stringValue = c.ConvertToInvariantString(value);
 
         lock (_lockObj)
-            _container.Values[key] = value ?? throw new ArgumentNullException(nameof(value));
+            _container.Values[key] = stringValue;
     }
 
     /// <inheritdoc/>
