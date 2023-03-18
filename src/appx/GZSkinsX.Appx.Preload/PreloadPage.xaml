@@ -22,9 +22,9 @@
             Height="80"
             IsIndeterminate="True" />
         <TextBlock
+            x:Uid="Appx_Preload_Loading_Title"
             Grid.Row="1"
             FontSize="24"
-            FontWeight="Bold"
-            Text="正在加载中" />
+            FontWeight="Bold" />
     </Grid>
 </Page>
