@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
-using GZSkinsX.Api;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Shell;
 

@@ -8,7 +8,6 @@
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.Shell;

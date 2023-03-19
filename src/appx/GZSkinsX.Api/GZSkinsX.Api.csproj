@@ -154,7 +154,7 @@
     <Compile Include="Shell\IViewManagerService.cs" />
     <Compile Include="Shell\ViewElementConstants.cs" />
     <Compile Include="Shell\ViewElementMetadataAttribute.cs" />
-    <Compile Include="WindowFrameNavigateEventArgs.cs" />
+    <Compile Include="Shell\WindowFrameNavigateEventArgs.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
   </ItemGroup>
   <ItemGroup>

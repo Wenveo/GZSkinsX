@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api;
+namespace GZSkinsX.Api.Shell;
 
 /// <summary>
 /// 导航的事件参数，当触发导航操作时被使用

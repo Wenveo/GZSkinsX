@@ -10,7 +10,6 @@ using System.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api;
 using GZSkinsX.Api.Shell;
 
 using Windows.UI.ViewManagement;
