@@ -13,7 +13,7 @@ namespace GZSkinsX.Api.MRT;
 /// <summary>
 /// 
 /// </summary>
-public interface IResourceCoreMap
+public interface IMRTCoreMap
 {
     /// <summary>
     /// 
@@ -37,5 +37,5 @@ public interface IResourceCoreMap
     /// <param name="reference"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    IResourceCoreMap GetSubtree(string reference);
+    IMRTCoreMap GetSubtree(string reference);
 }

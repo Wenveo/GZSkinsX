@@ -14,12 +14,12 @@ namespace GZSkinsX.Api.MRT;
 /// <summary>
 /// 
 /// </summary>
-public interface IResourceCoreService
+public interface IMRTCoreService
 {
     /// <summary>
     /// 
     /// </summary>
-    IResourceCoreMap MainResourceMap { get; }
+    IMRTCoreMap MainResourceMap { get; }
 
     /// <summary>
     /// 

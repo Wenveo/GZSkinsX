@@ -10,7 +10,7 @@ namespace GZSkinsX.Api.MRT;
 /// <summary>
 /// 
 /// </summary>
-public static class ResourceCoreConstants
+public static class MRTCoreConstants
 {
     /// <summary>
     /// 

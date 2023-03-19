@@ -29,7 +29,7 @@ namespace GZSkinsX.Appx.StartUp;
 /// </summary>
 public sealed partial class StartUpPage : Page
 {
-    private IResourceCoreMap? _resourceCoreMap;
+    private IMRTCoreMap? _mrtCoreMap;
     private IServiceLocator? _serviceLocator;
     private IGameService? _gameService;
     private IViewManagerService? _viewManagerService;
@@ -45,20 +45,20 @@ public sealed partial class StartUpPage : Page
         _gameService = serviceLocator.Resolve<IGameService>();
         _viewManagerService = serviceLocator.Resolve<IViewManagerService>();
 
-        var mrtService = serviceLocator.Resolve<IResourceCoreService>();
-        _resourceCoreMap = mrtService.MainResourceMap.GetSubtree(ResourceCoreConstants.Appx_StartUp);
+        var mrtCoreService = serviceLocator.Resolve<IMRTCoreService>();
+        _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
 
         // 设置标题
-        var resTitle = _resourceCoreMap.GetString(isInvalid
+        var resTitle = _mrtCoreMap.GetString(isInvalid
             ? "Appx_StartUp_Initialize_Invalid_Title"
             : "Appx_StartUp_Initialize_Default_Title");
         Appx_StartUp_Initialize_Title.Text = resTitle;
 
         // 添加游戏区域枚举的本地化字符串至选择器列表
-        var riotRes = _resourceCoreMap.GetString("Appx_StartUp_Initialize_Region_Riot");
+        var riotRes = _mrtCoreMap.GetString("Appx_StartUp_Initialize_Region_Riot");
         Appx_StartUp_Initialize_Region_Selector.Items.Add(riotRes);
 
-        var tencentRes = _resourceCoreMap.GetString("Appx_StartUp_Initialize_Region_Tencent");
+        var tencentRes = _mrtCoreMap.GetString("Appx_StartUp_Initialize_Region_Tencent");
         Appx_StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
     }
 
@@ -84,26 +84,26 @@ public sealed partial class StartUpPage : Page
     private void OnOK(object sender, RoutedEventArgs e)
     {
         Debug2.Assert(_gameService is not null);
-        Debug2.Assert(_resourceCoreMap is not null);
+        Debug2.Assert(_mrtCoreMap is not null);
         Debug2.Assert(_viewManagerService is not null);
 
         var directoryPath = Appx_StartUp_Initialize_Directory_TextBox.Text;
         if (string.IsNullOrEmpty(directoryPath))
         {
-            ShowErrorMessage(_resourceCoreMap.GetString("Appx_StartUp_Error_Directory_Null"));
+            ShowErrorMessage(_mrtCoreMap.GetString("Appx_StartUp_Error_Directory_Null"));
             return;
         }
 
         var selector = Appx_StartUp_Initialize_Region_Selector;
         if (selector.SelectedIndex is -1)
         {
-            ShowErrorMessage(_resourceCoreMap.GetString("Appx_StartUp_Error_Region_Null"));
+            ShowErrorMessage(_mrtCoreMap.GetString("Appx_StartUp_Error_Region_Null"));
             return;
         }
 
         if (!_gameService.TryUpdate(directoryPath, (GameRegion)(selector.SelectedIndex + 1)))
         {
-            ShowErrorMessage(_resourceCoreMap.GetString("Appx_StartUp_Error_Directory_Invalid"));
+            ShowErrorMessage(_mrtCoreMap.GetString("Appx_StartUp_Error_Directory_Invalid"));
             return;
         }
 

@@ -15,9 +15,9 @@ using Windows.Storage;
 
 namespace GZSkinsX.MRT;
 
-/// <inheritdoc cref="IResourceCoreService"/>
-[Shared, Export(typeof(IResourceCoreService))]
-internal sealed class ResourceCoreService : IResourceCoreService
+/// <inheritdoc cref="IMRTCoreService"/>
+[Shared, Export(typeof(IMRTCoreService))]
+internal sealed class MRTCoreService : IMRTCoreService
 {
     /// <summary>
     /// 当前应用程序的资源管理器实例
@@ -27,18 +27,18 @@ internal sealed class ResourceCoreService : IResourceCoreService
     /// <summary>
     /// 当前的主资源表实例，因经常访问故而不使用懒加载
     /// </summary>
-    private readonly ResourceCoreMap _mainResourceMap;
+    private readonly MRTCoreMap _mainResourceMap;
 
     /// <inheritdoc/>
-    public IResourceCoreMap MainResourceMap => _mainResourceMap;
+    public IMRTCoreMap MainResourceMap => _mainResourceMap;
 
     /// <summary>
-    /// 初始化 <see cref="ResourceCoreService"/> 的新实例
+    /// 初始化 <see cref="MRTCoreService"/> 的新实例
     /// </summary>
-    public ResourceCoreService()
+    public MRTCoreService()
     {
         _resourceManager = ResourceManager.Current;
-        _mainResourceMap = new ResourceCoreMap(_resourceManager.MainResourceMap);
+        _mainResourceMap = new MRTCoreMap(_resourceManager.MainResourceMap);
     }
 
     /// <inheritdoc/>

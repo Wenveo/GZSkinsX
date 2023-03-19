@@ -16,8 +16,8 @@ using Windows.Storage;
 
 namespace GZSkinsX.MRT;
 
-/// <inheritdoc cref="IResourceCoreMap"/>
-internal sealed class ResourceCoreMap : IResourceCoreMap
+/// <inheritdoc cref="IMRTCoreMap"/>
+internal sealed class MRTCoreMap : IMRTCoreMap
 {
     /// <summary>
     /// 用于获取本地化资源内容的资源表
@@ -25,9 +25,9 @@ internal sealed class ResourceCoreMap : IResourceCoreMap
     private readonly ResourceMap _resourceMap;
 
     /// <summary>
-    /// 初始化 <see cref="ResourceCoreMap"/> 的新实例
+    /// 初始化 <see cref="MRTCoreMap"/> 的新实例
     /// </summary>
-    public ResourceCoreMap(ResourceMap resourceMap)
+    public MRTCoreMap(ResourceMap resourceMap)
     {
         _resourceMap = resourceMap;
     }
@@ -58,7 +58,7 @@ internal sealed class ResourceCoreMap : IResourceCoreMap
     }
 
     /// <inheritdoc/>
-    public IResourceCoreMap GetSubtree(string reference)
+    public IMRTCoreMap GetSubtree(string reference)
     {
         if (string.IsNullOrEmpty(reference))
         {
@@ -66,6 +66,6 @@ internal sealed class ResourceCoreMap : IResourceCoreMap
         }
 
         var subtree = _resourceMap.GetSubtree(reference);
-        return new ResourceCoreMap(subtree);
+        return new MRTCoreMap(subtree);
     }
 }
