@@ -23,7 +23,7 @@ internal sealed class ExportStartUpPage : IWindowFrame
 {
     private readonly IServiceLocator _serviceLocator;
     private readonly IGameService _gameService;
-    private readonly IWindowManagerService _viewManagerService;
+    private readonly IWindowManagerService _windowManagerService;
 
     private bool _isInvalid;
 
@@ -32,7 +32,7 @@ internal sealed class ExportStartUpPage : IWindowFrame
     {
         _serviceLocator = serviceLocator;
         _gameService = serviceLocator.Resolve<IGameService>();
-        _viewManagerService = serviceLocator.Resolve<IWindowManagerService>();
+        _windowManagerService = serviceLocator.Resolve<IWindowManagerService>();
     }
 
     /// <inheritdoc/>
@@ -52,7 +52,7 @@ internal sealed class ExportStartUpPage : IWindowFrame
     {
         if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
         {
-            _viewManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
+            _windowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
             args.Handled = true;
         }
         else

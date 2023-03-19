@@ -32,7 +32,7 @@ public sealed partial class StartUpPage : Page
     private IMRTCoreMap? _mrtCoreMap;
     private IServiceLocator? _serviceLocator;
     private IGameService? _gameService;
-    private IWindowManagerService? _viewManagerService;
+    private IWindowManagerService? _windowManagerService;
 
     public StartUpPage()
     {
@@ -43,7 +43,7 @@ public sealed partial class StartUpPage : Page
     {
         _serviceLocator = serviceLocator;
         _gameService = serviceLocator.Resolve<IGameService>();
-        _viewManagerService = serviceLocator.Resolve<IWindowManagerService>();
+        _windowManagerService = serviceLocator.Resolve<IWindowManagerService>();
 
         var mrtCoreService = serviceLocator.Resolve<IMRTCoreService>();
         _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
@@ -85,7 +85,7 @@ public sealed partial class StartUpPage : Page
     {
         Debug2.Assert(_gameService is not null);
         Debug2.Assert(_mrtCoreMap is not null);
-        Debug2.Assert(_viewManagerService is not null);
+        Debug2.Assert(_windowManagerService is not null);
 
         var directoryPath = Appx_StartUp_Initialize_Directory_TextBox.Text;
         if (string.IsNullOrEmpty(directoryPath))
@@ -107,6 +107,6 @@ public sealed partial class StartUpPage : Page
             return;
         }
 
-        _viewManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
+        _windowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
     }
 }

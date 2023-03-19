@@ -40,7 +40,7 @@ public sealed partial class App : Application
     /// <summary>
     /// 当前窗口视图核心管理服务
     /// </summary>
-    private IWindowManagerService? _viewManagerService;
+    private IWindowManagerService? _windowManagerService;
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -72,8 +72,8 @@ public sealed partial class App : Application
         {
             if (_appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
             {
-                _viewManagerService ??= _compositionHost.GetExport<IWindowManagerService>();
-                _viewManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+                _windowManagerService ??= _compositionHost.GetExport<IWindowManagerService>();
+                _windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             }
 
             _appxWindow.Activate();

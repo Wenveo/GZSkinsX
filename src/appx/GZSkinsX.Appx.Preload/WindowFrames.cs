@@ -22,13 +22,13 @@ namespace GZSkinsX.Appx.Preload;
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
 internal sealed class ExportPreloadPage : IWindowFrame
 {
-    private readonly IWindowManagerService _viewManagerService;
+    private readonly IWindowManagerService _windowManagerService;
     private readonly PreloadSettings _preloadSettings;
 
     [ImportingConstructor]
-    public ExportPreloadPage(IWindowManagerService viewManagerService, PreloadSettings preloadSettings)
+    public ExportPreloadPage(IWindowManagerService windowManagerService, PreloadSettings preloadSettings)
     {
-        _viewManagerService = viewManagerService;
+        _windowManagerService = windowManagerService;
         _preloadSettings = preloadSettings;
     }
 
@@ -40,7 +40,7 @@ internal sealed class ExportPreloadPage : IWindowFrame
         Debug.WriteLine($"AppxPreload: Waiting Time = {waitingTime}");
         await Task.Delay(waitingTime);
 
-        _viewManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+        _windowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
     }
 
     /// <inheritdoc/>

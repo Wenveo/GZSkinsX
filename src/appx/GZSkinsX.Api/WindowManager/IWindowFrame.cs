@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// 表示位于应用程序主窗口中的视图元素，通常被用于在主窗口中对根元素进行页面切换
+/// 表示位于应用程序主窗口中的页面元素，通常被用于在主窗口进行页面切换
 /// </summary>
 public interface IWindowFrame
 {
