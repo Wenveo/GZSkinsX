@@ -149,12 +149,12 @@
     <Compile Include="Settings\ISettingsSection.cs" />
     <Compile Include="Settings\ISettingsService.cs" />
     <Compile Include="Settings\SettingsType.cs" />
-    <Compile Include="Shell\ExportViewElementAttribute.cs" />
-    <Compile Include="Shell\IViewElement.cs" />
-    <Compile Include="Shell\IViewManagerService.cs" />
-    <Compile Include="Shell\ViewElementConstants.cs" />
-    <Compile Include="Shell\ViewElementMetadataAttribute.cs" />
-    <Compile Include="Shell\WindowFrameNavigateEventArgs.cs" />
+    <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
+    <Compile Include="WindowManager\IWindowFrame.cs" />
+    <Compile Include="WindowManager\IWindowManagerService.cs" />
+    <Compile Include="WindowManager\WindowFrameConstants.cs" />
+    <Compile Include="WindowManager\WindowFrameMetadataAttribute.cs" />
+    <Compile Include="WindowManager\WindowFrameNavigateEventArgs.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
   </ItemGroup>
   <ItemGroup>

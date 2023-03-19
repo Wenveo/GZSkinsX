@@ -10,7 +10,7 @@ using System.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.Shell;
+using GZSkinsX.Api.WindowManager;
 
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -18,15 +18,15 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Preload;
 
-[Shared, ExportViewElement]
-[ViewElementMetadata(Guid = ViewElementConstants.Preload_Guid, PageType = typeof(PreloadPage))]
-internal sealed class ExportPreloadPage : IViewElement
+[Shared, ExportWindowFrame]
+[WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
+internal sealed class ExportPreloadPage : IWindowFrame
 {
-    private readonly IViewManagerService _viewManagerService;
+    private readonly IWindowManagerService _viewManagerService;
     private readonly PreloadSettings _preloadSettings;
 
     [ImportingConstructor]
-    public ExportPreloadPage(IViewManagerService viewManagerService, PreloadSettings preloadSettings)
+    public ExportPreloadPage(IWindowManagerService viewManagerService, PreloadSettings preloadSettings)
     {
         _viewManagerService = viewManagerService;
         _preloadSettings = preloadSettings;
@@ -40,7 +40,7 @@ internal sealed class ExportPreloadPage : IViewElement
         Debug.WriteLine($"AppxPreload: Waiting Time = {waitingTime}");
         await Task.Delay(waitingTime);
 
-        _viewManagerService.NavigateTo(ViewElementConstants.StartUp_Guid);
+        _viewManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
     }
 
     /// <inheritdoc/>

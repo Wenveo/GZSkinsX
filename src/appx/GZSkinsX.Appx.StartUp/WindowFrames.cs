@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Scripting;
-using GZSkinsX.Api.Shell;
+using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.StartUp;
 
-[Shared, ExportViewElement]
-[ViewElementMetadata(Guid = ViewElementConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
-internal sealed class ExportStartUpPage : IViewElement
+[Shared, ExportWindowFrame]
+[WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
+internal sealed class ExportStartUpPage : IWindowFrame
 {
     private readonly IServiceLocator _serviceLocator;
     private readonly IGameService _gameService;
-    private readonly IViewManagerService _viewManagerService;
+    private readonly IWindowManagerService _viewManagerService;
 
     private bool _isInvalid;
 
@@ -32,7 +32,7 @@ internal sealed class ExportStartUpPage : IViewElement
     {
         _serviceLocator = serviceLocator;
         _gameService = serviceLocator.Resolve<IGameService>();
-        _viewManagerService = serviceLocator.Resolve<IViewManagerService>();
+        _viewManagerService = serviceLocator.Resolve<IWindowManagerService>();
     }
 
     /// <inheritdoc/>
@@ -52,7 +52,7 @@ internal sealed class ExportStartUpPage : IViewElement
     {
         if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
         {
-            _viewManagerService.NavigateTo(ViewElementConstants.Main_Guid);
+            _viewManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
             args.Handled = true;
         }
         else

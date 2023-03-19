@@ -126,7 +126,7 @@
     <Compile Include="StartUpPage.xaml.cs">
       <DependentUpon>StartUpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewElements.cs" />
+    <Compile Include="WindowFrames.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.StartUp.rd.xml" />
   </ItemGroup>
   <ItemGroup>

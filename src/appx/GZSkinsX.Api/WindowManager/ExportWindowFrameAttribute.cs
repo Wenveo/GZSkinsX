@@ -8,17 +8,17 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.Shell;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// 声明并将目标类以 <see cref="IViewElement"/> 类型导出
+/// 声明并将目标类以 <see cref="IWindowFrame"/> 类型导出
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportViewElementAttribute : ExportAttribute
+public sealed class ExportWindowFrameAttribute : ExportAttribute
 {
     /// <summary>
-    /// 初始化 <see cref="ExportViewElementAttribute"/> 的新实例，并以 <see cref="IViewElement"/> 类型导出
+    /// 初始化 <see cref="ExportWindowFrameAttribute"/> 的新实例，并以 <see cref="IWindowFrame"/> 类型导出
     /// </summary>
-    public ExportViewElementAttribute()
-        : base(typeof(IViewElement)) { }
+    public ExportWindowFrameAttribute()
+        : base(typeof(IWindowFrame)) { }
 }

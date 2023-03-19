@@ -7,12 +7,12 @@
 
 using System;
 
-namespace GZSkinsX.Api.Shell;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
 /// 表示存放视图元素相关的元数据的静态类
 /// </summary>
-public static class ViewElementConstants
+public static class WindowFrameConstants
 {
     /// <summary>
     /// 表示预加载页的 <seealso cref="Guid"/> 字符串值

@@ -9,12 +9,12 @@ using System;
 
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Api.Shell;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
 /// 提供对当前应用程序主窗口中的根元素对象 切换/导航 的能力
 /// </summary>
-public interface IViewManagerService
+public interface IWindowManagerService
 {
     /// <summary>
     /// 导航到与标识符匹配的指定页面

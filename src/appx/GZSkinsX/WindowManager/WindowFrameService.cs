@@ -13,16 +13,16 @@ using System.Composition;
 using System.Diagnostics;
 
 using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Shell;
+using GZSkinsX.Api.WindowManager;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Shell;
+namespace GZSkinsX.WindowManager;
 
-/// <inheritdoc cref="IViewManagerService"/>
-[Shared, Export(typeof(IViewManagerService))]
-internal sealed class ViewManagerService : IViewManagerService
+/// <inheritdoc cref="IWindowManagerService"/>
+[Shared, Export(typeof(IWindowManagerService))]
+internal sealed class WindowFrameService : IWindowManagerService
 {
     /// <summary>
     /// 当前应用程序主窗口
@@ -30,14 +30,14 @@ internal sealed class ViewManagerService : IViewManagerService
     private readonly IAppxWindow _appxWindow;
 
     /// <summary>
-    /// 存放所有已导出的 <see cref="IViewElement"/> 类型对象
+    /// 存放所有已导出的 <see cref="IWindowFrame"/> 类型对象
     /// </summary>
-    private readonly IEnumerable<Lazy<IViewElement, ViewElementMetadataAttribute>> _viewElements;
+    private readonly IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> _viewElements;
 
     /// <summary>
-    /// 使用 <see cref="Guid"/> 作为 Key 并存储所有 <see cref="IViewElement"/> 上下文对象
+    /// 使用 <see cref="Guid"/> 作为 Key 并存储所有 <see cref="IWindowFrame"/> 上下文对象
     /// </summary>
-    private readonly Dictionary<Guid, ViewElementContext> _guidToViewElement;
+    private readonly Dictionary<Guid, WindowFrameContext> _guidToViewElement;
 
     /// <summary>
     /// 用于导航的内部定义控件
@@ -45,16 +45,16 @@ internal sealed class ViewManagerService : IViewManagerService
     private readonly Frame _frame;
 
     /// <summary>
-    /// 初始化 <see cref="ViewManagerService"/> 的新实例
+    /// 初始化 <see cref="WindowFrameService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public ViewManagerService(IAppxWindow appxWindow, [ImportMany] IEnumerable<Lazy<IViewElement, ViewElementMetadataAttribute>> viewElements)
+    public WindowFrameService(IAppxWindow appxWindow, [ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> viewElements)
     {
         _appxWindow = appxWindow;
         _viewElements = viewElements;
 
         _frame = new Frame();
-        _guidToViewElement = new Dictionary<Guid, ViewElementContext>();
+        _guidToViewElement = new Dictionary<Guid, WindowFrameContext>();
 
         InitializeContext();
     }
@@ -85,7 +85,7 @@ internal sealed class ViewManagerService : IViewManagerService
                 if (!b)
                     continue;
 
-                _guidToViewElement[guid] = new ViewElementContext(elem);
+                _guidToViewElement[guid] = new WindowFrameContext(elem);
             }
 
             _appxWindow.MainWindow.Content = _frame;
@@ -146,7 +146,7 @@ internal sealed class ViewManagerService : IViewManagerService
         }
     }
 
-    private async void NavigateCore(ViewElementContext context, object? parameter, NavigationTransitionInfo? infoOverride)
+    private async void NavigateCore(WindowFrameContext context, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         infoOverride ??= new DrillInNavigationTransitionInfo();
         var args = new WindowFrameNavigateEventArgs();

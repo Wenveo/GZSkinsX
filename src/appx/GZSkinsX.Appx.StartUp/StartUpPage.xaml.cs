@@ -13,7 +13,7 @@ using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.Scripting;
-using GZSkinsX.Api.Shell;
+using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Storage.Pickers;
@@ -32,7 +32,7 @@ public sealed partial class StartUpPage : Page
     private IMRTCoreMap? _mrtCoreMap;
     private IServiceLocator? _serviceLocator;
     private IGameService? _gameService;
-    private IViewManagerService? _viewManagerService;
+    private IWindowManagerService? _viewManagerService;
 
     public StartUpPage()
     {
@@ -43,7 +43,7 @@ public sealed partial class StartUpPage : Page
     {
         _serviceLocator = serviceLocator;
         _gameService = serviceLocator.Resolve<IGameService>();
-        _viewManagerService = serviceLocator.Resolve<IViewManagerService>();
+        _viewManagerService = serviceLocator.Resolve<IWindowManagerService>();
 
         var mrtCoreService = serviceLocator.Resolve<IMRTCoreService>();
         _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
@@ -107,6 +107,6 @@ public sealed partial class StartUpPage : Page
             return;
         }
 
-        _viewManagerService.NavigateTo(ViewElementConstants.Main_Guid);
+        _viewManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
     }
 }

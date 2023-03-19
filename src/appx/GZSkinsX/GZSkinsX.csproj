@@ -143,8 +143,8 @@
     <Compile Include="Scripting\ServiceLocator.cs" />
     <Compile Include="Settings\SettingsSection.cs" />
     <Compile Include="Settings\SettingsService.cs" />
-    <Compile Include="Shell\ViewElementContext.cs" />
-    <Compile Include="Shell\ViewManagerService.cs" />
+    <Compile Include="WindowManager\WindowFrameContext.cs" />
+    <Compile Include="WindowManager\WindowFrameService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

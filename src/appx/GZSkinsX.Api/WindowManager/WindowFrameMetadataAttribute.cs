@@ -8,13 +8,13 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.Shell;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
 /// 用于导出的视图元素的元数据
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ViewElementMetadataAttribute : Attribute
+public sealed class WindowFrameMetadataAttribute : Attribute
 {
     /// <summary>
     /// 声明当前视图元素的标识符，该值具有唯一性

@@ -12,7 +12,7 @@ using System.Composition.Hosting;
 using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.Shell;
+using GZSkinsX.Api.WindowManager;
 using GZSkinsX.Composition;
 using GZSkinsX.Extension;
 
@@ -40,7 +40,7 @@ public sealed partial class App : Application
     /// <summary>
     /// 当前窗口视图核心管理服务
     /// </summary>
-    private IViewManagerService? _viewManagerService;
+    private IWindowManagerService? _viewManagerService;
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -72,8 +72,8 @@ public sealed partial class App : Application
         {
             if (_appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
             {
-                _viewManagerService ??= _compositionHost.GetExport<IViewManagerService>();
-                _viewManagerService.NavigateTo(ViewElementConstants.Preload_Guid);
+                _viewManagerService ??= _compositionHost.GetExport<IWindowManagerService>();
+                _viewManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             }
 
             _appxWindow.Activate();

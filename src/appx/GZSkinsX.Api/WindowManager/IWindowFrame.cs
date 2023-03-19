@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.Shell;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
 /// 表示位于应用程序主窗口中的视图元素，通常被用于在主窗口中对根元素进行页面切换
 /// </summary>
-public interface IViewElement
+public interface IWindowFrame
 {
     /// <summary>
     /// 在页面初始化时触发，可对目标页面属性进行更改及调整

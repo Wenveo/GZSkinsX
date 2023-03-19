@@ -127,7 +127,7 @@
     </Compile>
     <Compile Include="PreloadSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewElements.cs" />
+    <Compile Include="WindowFrames.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.Preload.rd.xml" />
   </ItemGroup>
   <ItemGroup>

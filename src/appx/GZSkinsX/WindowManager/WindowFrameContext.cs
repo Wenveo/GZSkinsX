@@ -7,34 +7,34 @@
 
 using System;
 
-using GZSkinsX.Api.Shell;
+using GZSkinsX.Api.WindowManager;
 
-namespace GZSkinsX.Shell;
+namespace GZSkinsX.WindowManager;
 
 /// <summary>
-/// 用于存储导出的 <see cref="IViewElement"/> 以及元数据 <see cref="ViewElementMetadataAttribute"/> 的上下文
+/// 用于存储导出的 <see cref="IWindowFrame"/> 以及元数据 <see cref="WindowFrameMetadataAttribute"/> 的上下文
 /// </summary>
-internal sealed class ViewElementContext
+internal sealed class WindowFrameContext
 {
     /// <summary>
     /// 当前上下文中的懒加载对象
     /// </summary>
-    private readonly Lazy<IViewElement, ViewElementMetadataAttribute> _lazy;
+    private readonly Lazy<IWindowFrame, WindowFrameMetadataAttribute> _lazy;
 
     /// <summary>
     /// 获取当前懒加载对象的值
     /// </summary>
-    public IViewElement Value => _lazy.Value;
+    public IWindowFrame Value => _lazy.Value;
 
     /// <summary>
     /// 获取当前懒加载对象的元数据
     /// </summary>
-    public ViewElementMetadataAttribute Metadata => _lazy.Metadata;
+    public WindowFrameMetadataAttribute Metadata => _lazy.Metadata;
 
     /// <summary>
-    /// 初始化 <see cref="ViewElementContext"/> 的新实例
+    /// 初始化 <see cref="WindowFrameContext"/> 的新实例
     /// </summary>
-    public ViewElementContext(Lazy<IViewElement, ViewElementMetadataAttribute> lazy)
+    public WindowFrameContext(Lazy<IWindowFrame, WindowFrameMetadataAttribute> lazy)
     {
         _lazy = lazy;
     }
