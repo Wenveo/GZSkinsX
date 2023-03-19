@@ -11,11 +11,11 @@ using System;
 
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Game;
+using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.Shell;
 using GZSkinsX.DotNet.Diagnostics;
 
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,7 +29,7 @@ namespace GZSkinsX.Appx.StartUp;
 /// </summary>
 public sealed partial class StartUpPage : Page
 {
-    private readonly ResourceMap _resourceMap;
+    private IResourceCoreMap? _resourceCoreMap;
     private IServiceLocator? _serviceLocator;
     private IGameService? _gameService;
     private IViewManagerService? _viewManagerService;
@@ -37,7 +37,6 @@ public sealed partial class StartUpPage : Page
     public StartUpPage()
     {
         InitializeComponent();
-        _resourceMap = ResourceManager.Current.MainResourceMap;
     }
 
     internal void InitializeContext(IServiceLocator serviceLocator, bool isInvalid)
@@ -46,17 +45,20 @@ public sealed partial class StartUpPage : Page
         _gameService = serviceLocator.Resolve<IGameService>();
         _viewManagerService = serviceLocator.Resolve<IViewManagerService>();
 
+        var mrtService = serviceLocator.Resolve<IResourceCoreService>();
+        _resourceCoreMap = mrtService.MainResourceMap.GetSubtree(ResourceCoreConstants.Appx_StartUp);
+
         // 设置标题
-        var resTitle = GetLocalized(isInvalid
+        var resTitle = _resourceCoreMap.GetString(isInvalid
             ? "Appx_StartUp_Initialize_Invalid_Title"
             : "Appx_StartUp_Initialize_Default_Title");
         Appx_StartUp_Initialize_Title.Text = resTitle;
 
         // 添加游戏区域枚举的本地化字符串至选择器列表
-        var riotRes = GetLocalized("Appx_StartUp_Initialize_Region_Riot");
+        var riotRes = _resourceCoreMap.GetString("Appx_StartUp_Initialize_Region_Riot");
         Appx_StartUp_Initialize_Region_Selector.Items.Add(riotRes);
 
-        var tencentRes = GetLocalized("Appx_StartUp_Initialize_Region_Tencent");
+        var tencentRes = _resourceCoreMap.GetString("Appx_StartUp_Initialize_Region_Tencent");
         Appx_StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
     }
 
@@ -81,34 +83,30 @@ public sealed partial class StartUpPage : Page
 
     private void OnOK(object sender, RoutedEventArgs e)
     {
+        Debug2.Assert(_gameService is not null);
+        Debug2.Assert(_resourceCoreMap is not null);
+        Debug2.Assert(_viewManagerService is not null);
+
         var directoryPath = Appx_StartUp_Initialize_Directory_TextBox.Text;
         if (string.IsNullOrEmpty(directoryPath))
         {
-            ShowErrorMessage(GetLocalized("Appx_StartUp_Error_Directory_Null"));
+            ShowErrorMessage(_resourceCoreMap.GetString("Appx_StartUp_Error_Directory_Null"));
             return;
         }
 
         var selector = Appx_StartUp_Initialize_Region_Selector;
         if (selector.SelectedIndex is -1)
         {
-            ShowErrorMessage(GetLocalized("Appx_StartUp_Error_Region_Null"));
+            ShowErrorMessage(_resourceCoreMap.GetString("Appx_StartUp_Error_Region_Null"));
             return;
         }
 
-        Debug2.Assert(_gameService is not null);
         if (!_gameService.TryUpdate(directoryPath, (GameRegion)(selector.SelectedIndex + 1)))
         {
-            ShowErrorMessage(GetLocalized("Appx_StartUp_Error_Directory_Invalid"));
+            ShowErrorMessage(_resourceCoreMap.GetString("Appx_StartUp_Error_Directory_Invalid"));
             return;
         }
 
-        Debug2.Assert(_viewManagerService is not null);
         _viewManagerService.NavigateTo(ViewElementConstants.Main_Guid);
-    }
-
-    private string GetLocalized(string resourceKey)
-    {
-        const string PREFIX = "GZSkinsX.Appx.StartUp/Resources/";
-        return _resourceMap.GetValue(PREFIX + resourceKey).ValueAsString;
     }
 }

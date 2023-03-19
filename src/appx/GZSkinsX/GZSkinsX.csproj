@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GZSkinsX</RootNamespace>
     <AssemblyName>GZSkinsX</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -137,6 +137,8 @@
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="MainApp\AutoExtendViewIntoTitleBar.cs" />
+    <Compile Include="MRT\ResourceCoreMap.cs" />
+    <Compile Include="MRT\ResourceCoreService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\ServiceLocator.cs" />
     <Compile Include="Settings\SettingsSection.cs" />

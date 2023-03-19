@@ -141,6 +141,9 @@
     <Compile Include="Game\GameRegion.cs" />
     <Compile Include="Game\IGameData.cs" />
     <Compile Include="Game\IGameService.cs" />
+    <Compile Include="MRT\IResourceCoreMap.cs" />
+    <Compile Include="MRT\IResourceCoreService.cs" />
+    <Compile Include="MRT\ResourceCoreConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\IServiceLocator.cs" />
     <Compile Include="Settings\ISettingsSection.cs" />
