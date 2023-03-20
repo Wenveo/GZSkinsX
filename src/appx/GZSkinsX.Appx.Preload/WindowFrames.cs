@@ -20,13 +20,13 @@ namespace GZSkinsX.Appx.Preload;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
-internal sealed class ExportPreloadPage : IWindowFrame
+internal sealed class ExportPreloadFrame : IWindowFrame
 {
     private readonly IWindowManagerService _windowManagerService;
     private readonly PreloadSettings _preloadSettings;
 
     [ImportingConstructor]
-    public ExportPreloadPage(IWindowManagerService windowManagerService, PreloadSettings preloadSettings)
+    public ExportPreloadFrame(IWindowManagerService windowManagerService, PreloadSettings preloadSettings)
     {
         _windowManagerService = windowManagerService;
         _preloadSettings = preloadSettings;

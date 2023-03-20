@@ -19,7 +19,7 @@ namespace GZSkinsX.Appx.StartUp;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
-internal sealed class ExportStartUpPage : IWindowFrame
+internal sealed class ExportStartUpFrame : IWindowFrame
 {
     private readonly IServiceLocator _serviceLocator;
     private readonly IGameService _gameService;
@@ -28,7 +28,7 @@ internal sealed class ExportStartUpPage : IWindowFrame
     private bool _isInvalid;
 
     [ImportingConstructor]
-    public ExportStartUpPage(IServiceLocator serviceLocator)
+    public ExportStartUpFrame(IServiceLocator serviceLocator)
     {
         _serviceLocator = serviceLocator;
         _gameService = serviceLocator.Resolve<IGameService>();
