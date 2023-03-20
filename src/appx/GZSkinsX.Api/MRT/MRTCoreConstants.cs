@@ -8,12 +8,12 @@
 namespace GZSkinsX.Api.MRT;
 
 /// <summary>
-/// 
+/// 提供与部分资源子集相关联的资源标识符访问
 /// </summary>
 public static class MRTCoreConstants
 {
     /// <summary>
-    /// 
+    /// 表示子集 AppxStartUp 的资源标识符
     /// </summary>
     public const string Appx_StartUp = "GZSkinsX.Appx.StartUp/Resources";
 }
