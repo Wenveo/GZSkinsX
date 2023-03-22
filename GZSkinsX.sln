@@ -40,6 +40,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Uwp.UI.Toolkit", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.DotNet.Diagnostics", "src\libraries\GZSkinsX.DotNet.Diagnostics\GZSkinsX.DotNet.Diagnostics.csproj", "{CA70472C-577B-4CD2-BFBF-29F13542BE07}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{E6CB98F8-7A29-4173-B1FC-068D719AF557}"
+	ProjectSection(SolutionItems) = preProject
+		eng\uap.props = eng\uap.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -256,6 +261,7 @@ Global
 		{8884EFB7-02B2-4DD3-85BC-48D95EE21804} = {5FD28DBA-9BFC-42A5-8B0B-90C0DEA20020}
 		{8FF44D52-4886-489A-950C-9DA5AD62B90E} = {5FD28DBA-9BFC-42A5-8B0B-90C0DEA20020}
 		{CA70472C-577B-4CD2-BFBF-29F13542BE07} = {5FD28DBA-9BFC-42A5-8B0B-90C0DEA20020}
+		{E6CB98F8-7A29-4173-B1FC-068D719AF557} = {BCC31D25-B55E-47BC-A0A7-7A770534C962}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A2AC82C-CEF8-45E5-9A55-DF750CD7CB83}
