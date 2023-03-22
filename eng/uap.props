@@ -21,13 +21,13 @@
 
   <!-- Default Properties -->
   <PropertyGroup>
-    <!-- UWP Project Type Guid -->
+    <!-- UWP Project Type Guid (UWP Class Library + Windows (C#)) -->
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <!-- Common UWP Properties -->
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition="'$(TargetPlatformVersion)' == ''">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
