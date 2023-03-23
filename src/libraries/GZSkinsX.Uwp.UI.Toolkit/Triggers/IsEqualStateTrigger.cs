@@ -5,7 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 using Windows.UI.Xaml;
@@ -93,7 +96,8 @@ public class IsEqualStateTrigger : StateTriggerBase
         return value2.Equals(value1);
     }
 
-    private static object ConvertToEnum(Type enumType, object value)
+    [return: NotNullIfNotNull(nameof(value))]
+    private static object? ConvertToEnum(Type enumType, object? value)
     {
         // value cannot be the same type of enum now
         return value switch
