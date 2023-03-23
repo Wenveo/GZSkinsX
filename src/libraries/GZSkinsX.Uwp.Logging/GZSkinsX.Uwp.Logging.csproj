@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{CA85D852-7774-47AE-8B7C-B33CE48BCC1F}</ProjectGuid>
+    <RootNamespace>GZSkinsX.Uwp.Logging</RootNamespace>
+    <AssemblyName>GZSkinsX.Uwp.Logging</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Uwp.Logging.rd.xml" />
+  </ItemGroup>
+
+  <!-- FOR BUILD -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'"/>
+  <!-- IMPORT COMMON PROPS -->
+  <Import Project="..\..\..\eng\uap.props" />
+</Project>
