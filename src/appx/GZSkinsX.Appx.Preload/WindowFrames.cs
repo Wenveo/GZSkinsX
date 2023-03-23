@@ -8,10 +8,15 @@
 using System;
 using System.Composition;
 using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using GZSkinsX.Api.WindowManager;
 
+using Windows.Foundation;
+using Windows.Foundation.Metadata;
+using Windows.Globalization;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -52,6 +57,11 @@ internal sealed class ExportPreloadFrame : IWindowFrame
 
         if (_preloadSettings.IsInitialize is false)
         {
+            // Set Default Language
+            var cultureId = GetUserDefaultUILanguage();
+            var cultureInfo = CultureInfo.GetCultureInfo(cultureId);
+            ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;
+
             appView.TryResizeView(minWindowSize);
             _preloadSettings.IsInitialize = true;
         }
@@ -60,7 +70,7 @@ internal sealed class ExportPreloadFrame : IWindowFrame
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
         }
 
-        if (!Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons")) // PC Family
+        if (!ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons")) // PC Family
         {
             // Disable the system view activation policy during the first launch of the app
             // only for PC family devices and not for phone family devices
@@ -76,5 +86,9 @@ internal sealed class ExportPreloadFrame : IWindowFrame
 
         await Task.CompletedTask;
     }
+
+    [ContractVersion(typeof(UniversalApiContract), 65536u)]
+    [DllImport("api-ms-win-core-localization-obsolete-l1-2-0.dll", CharSet = CharSet.Auto)]
+    private static extern ushort GetUserDefaultUILanguage();
 }
 
