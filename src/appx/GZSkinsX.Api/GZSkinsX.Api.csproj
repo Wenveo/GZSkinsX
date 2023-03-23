@@ -51,5 +51,8 @@
     </PackageReference>
   </ItemGroup>
 
-  <Import Project="..\..\..\eng\uap.props"/>
+  <!-- FOR BUILD -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'"/>
+  <!-- IMPORT COMMON PROPS -->
+  <Import Project="..\..\..\eng\uap.props" />
 </Project>

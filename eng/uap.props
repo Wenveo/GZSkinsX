@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Import Common Properties -->
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
@@ -40,7 +40,6 @@
   <!-- FOR BUILD -->
   <PropertyGroup>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>$(Platform)</PlatformTarget>
   </PropertyGroup>
@@ -54,24 +53,24 @@
   <!-- FOR NOT ANYCPU -->
   <PropertyGroup Condition="'$(Configuration)' != 'AnyCPU'">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>;2008</NoWarn>
   </PropertyGroup>
 
   <!-- FOR DEBUG -->
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <PlatformTarget>$(Platform)</PlatformTarget>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
-    <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
   <!-- FOR RELEASE -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <UseDotNetNativeToolchain Condition="'$(IsAppx)' == 'true'">true</UseDotNetNativeToolchain>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <UseDotNetNativeToolchain Condition="'$(IsAppx)' == 'true'">true</UseDotNetNativeToolchain>
   </PropertyGroup>
 
   <ItemGroup Label="UAP_Packages">
@@ -83,7 +82,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0'">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
