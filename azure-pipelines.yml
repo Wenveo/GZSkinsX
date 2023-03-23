@@ -21,6 +21,13 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     msbuildArguments: '/t:Restore'
+    
+- task: MSBuild@1
+  inputs:
+    solution: '**/GZSkinsX.csproj'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArguments: '/t:Build'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
