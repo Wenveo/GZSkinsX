@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 
@@ -19,7 +21,7 @@ public static partial class CompositionExtensions
     /// <param name="path"></param>
     /// <param name="animation"></param>
     /// <returns></returns>
-    public static FrameworkElement SetImplicitAnimation(this FrameworkElement element, string path, ICompositionAnimationBase animation)
+    public static FrameworkElement SetImplicitAnimation(this FrameworkElement element, string path, ICompositionAnimationBase? animation)
     {
         SetImplicitAnimation(GetElementVisual(element), path, animation);
         return element;

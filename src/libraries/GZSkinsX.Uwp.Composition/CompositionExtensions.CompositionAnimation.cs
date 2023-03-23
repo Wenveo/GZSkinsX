@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System;
 using System.Numerics;
 
@@ -232,7 +234,7 @@ public static partial class CompositionExtensions
     /// <param name="animation"></param>
     /// <param name="target"></param>
     /// <returns></returns>
-    private static T SetSafeTarget<T>(this T animation, string target) where T : CompositionAnimation
+    private static T SetSafeTarget<T>(this T animation, string? target) where T : CompositionAnimation
     {
         if (string.IsNullOrEmpty(target) is false)
         {
