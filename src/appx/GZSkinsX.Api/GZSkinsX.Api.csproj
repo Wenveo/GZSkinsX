@@ -6,7 +6,6 @@
     <AssemblyName>GZSkinsX.Api</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="AccessCache\AccessCacheItemNotFoundException.cs" />
     <Compile Include="AccessCache\FutureAccessItemConstants.cs" />
@@ -28,6 +27,8 @@
     <Compile Include="Game\GameRegion.cs" />
     <Compile Include="Game\IGameData.cs" />
     <Compile Include="Game\IGameService.cs" />
+    <Compile Include="Logging\ILoggingService.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="MRT\IMRTCoreMap.cs" />
     <Compile Include="MRT\IMRTCoreService.cs" />
     <Compile Include="MRT\MRTCoreConstants.cs" />
@@ -44,15 +45,13 @@
     <Compile Include="WindowManager\WindowFrameNavigateEventArgs.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Composition.AttributedModel">
       <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
-
   <!-- FOR BUILD -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'"/>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
   <Import Project="..\..\..\eng\uap.props" />
 </Project>

@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
 
 using Windows.Foundation;
@@ -29,12 +30,17 @@ internal sealed class ExportPreloadFrame : IWindowFrame
 {
     private readonly IWindowManagerService _windowManagerService;
     private readonly PreloadSettings _preloadSettings;
+    private readonly ILoggingService _loggingService;
 
     [ImportingConstructor]
-    public ExportPreloadFrame(IWindowManagerService windowManagerService, PreloadSettings preloadSettings)
+    public ExportPreloadFrame(
+        IWindowManagerService windowManagerService,
+        PreloadSettings preloadSettings,
+        ILoggingService loggingService)
     {
         _windowManagerService = windowManagerService;
         _preloadSettings = preloadSettings;
+        _loggingService = loggingService;
     }
 
     /// <inheritdoc/>
@@ -83,6 +89,9 @@ internal sealed class ExportPreloadFrame : IWindowFrame
                 // Log that DisableSystemViewActionPolicy didn't work
             }
         }
+
+        _loggingService.LogAlways(
+            $"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
 
         await Task.CompletedTask;
     }

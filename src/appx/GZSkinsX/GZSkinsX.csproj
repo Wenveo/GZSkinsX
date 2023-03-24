@@ -7,7 +7,6 @@
     <OutputType>AppContainerExe</OutputType>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="AccessCache\FutureAccessService.cs" />
     <Compile Include="AccessCache\MostRecentlyUsedService.cs" />
@@ -19,6 +18,7 @@
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameService.cs" />
     <Compile Include="Game\GameSettings.cs" />
+    <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
@@ -32,13 +32,11 @@
     <Compile Include="WindowManager\WindowFrameContext.cs" />
     <Compile Include="WindowManager\WindowFrameService.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
@@ -99,14 +97,12 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
-
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.HashCode">
       <Version>1.1.1</Version>
@@ -115,7 +111,6 @@
       <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\libraries\GZSkinsX.DotNet.Diagnostics\GZSkinsX.DotNet.Diagnostics.csproj">
       <Project>{ca4bc5e8-390c-4751-8d38-7d75d25633a3}</Project>
@@ -134,9 +129,8 @@
       <Name>GZSkinsX.Appx.StartUp</Name>
     </ProjectReference>
   </ItemGroup>
-
   <!-- FOR BUILD -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'"/>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
   <Import Project="..\..\..\eng\uap.props" />
 </Project>
