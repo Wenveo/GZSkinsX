@@ -19,8 +19,7 @@ namespace GZSkinsX.Extension;
 /// <summary>
 /// 应用程序扩展服务，负责加载和通知已加载的扩展
 /// </summary>
-[Shared]
-[Export]
+[Shared, Export]
 internal sealed class ExtensionService
 {
     /// <summary>
