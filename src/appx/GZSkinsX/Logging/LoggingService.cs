@@ -51,7 +51,7 @@ internal sealed class LoggingService : ILoggingService
         _lockObj = new object();
     }
 
-    private async Task InitializeAsync()
+    internal async Task InitializeAsync()
     {
         if (_isInitialize)
         {
@@ -82,9 +82,8 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public async void LogAlways(string message)
+    public void LogAlways(string message)
     {
-        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -95,10 +94,9 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public async void LogDebug(string message)
+    public void LogDebug(string message)
     {
 #if DEBUG
-        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -110,9 +108,8 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public async void LogError(string message)
+    public void LogError(string message)
     {
-        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -123,9 +120,8 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public async void LogOkay(string message)
+    public void LogOkay(string message)
     {
-        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -136,9 +132,8 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public async void LogWarning(string message)
+    public void LogWarning(string message)
     {
-        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)

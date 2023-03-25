@@ -12,9 +12,11 @@ using System.Composition.Hosting;
 using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
+using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.Composition;
 using GZSkinsX.Extension;
+using GZSkinsX.Logging;
 
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -52,7 +54,7 @@ public sealed partial class App : Application
 
         var provider = CompositionHostProvider.Instance;
         _compositionHost = provider.CompositionHost;
-        InitializeServices(_compositionHost);
+        InitializeServices();
     }
 
     /// <summary>
@@ -83,10 +85,12 @@ public sealed partial class App : Application
     /// <summary>
     /// 初始化应用程序核心服务
     /// </summary>
-    /// <param name="compositionHost"><see cref="CompositionHost"/> 对象的实例</param>
-    private void InitializeServices(CompositionHost compositionHost)
+    private async void InitializeServices()
     {
-        InitializeExtension(compositionHost.GetExport<ExtensionService>());
+        var loggingService = _compositionHost.GetExport<ILoggingService>();
+        await ((LoggingService)loggingService).InitializeAsync();
+
+        InitializeExtension(_compositionHost.GetExport<ExtensionService>());
     }
 
     /// <summary>
