@@ -13,7 +13,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Logging;
 using GZSkinsX.DotNet.Diagnostics;
 
@@ -33,41 +32,43 @@ internal sealed class LoggingService : ILoggingService
     private const string WarningString  =   "  WARN";
 
     private const string LoggingFileNameFormat  = "{0:yyyy-MM-ddTHH-mm-ss}_cor3.log";
-    private const string LoggingStartedFormat   = "Logging started at {0:yyyy-MM-ddThh:mm:ss.ffff}";
     private const string LoggingMessageFormat   = "{0:yyyy-MM-ddTHH:mm:ss}| {1}| {2}";
+    private const string LoggingStartedFormat   = "Logging started at {0:yyyy-MM-ddThh:mm:ss.ffff}";
+    private const string LogsFolderNameString   = "Logs";
 #pragma warning restore format
 
     private IStorageFolder? _logsFolder;
     private IStorageFile? _loggingFile;
     private StreamWriter? _logWriter;
     private readonly object _lockObj;
+    private bool _isInitialize;
 
     /// <summary>
     /// 初始化 <see cref="LoggingService"/> 的新实例
     /// </summary>
-    [ImportingConstructor]
-    public LoggingService(IAppxWindow appxWindow)
+    public LoggingService()
     {
         _lockObj = new object();
-        appxWindow.Closed += OnClosed;
-        Task.Run(InitializeAsync).GetAwaiter().GetResult();
     }
 
     private async Task InitializeAsync()
     {
-        _logsFolder ??= await ApplicationData.Current.LocalFolder.CreateFolderAsync(
-            "Logs", CreationCollisionOption.OpenIfExists);
+        if (_isInitialize)
+        {
+            return;
+        }
 
-        _loggingFile ??= await _logsFolder.CreateFileAsync(
+        _logsFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync(
+        LogsFolderNameString, CreationCollisionOption.OpenIfExists);
+
+        _loggingFile = await _logsFolder.CreateFileAsync(
             string.Format(LoggingFileNameFormat, DateTime.Now),
             CreationCollisionOption.ReplaceExisting);
 
-        if (_logWriter is null)
-        {
-            var stream = await _loggingFile.OpenStreamForWriteAsync();
-            _logWriter = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
-        }
+        var stream = await _loggingFile.OpenStreamForWriteAsync();
+        _logWriter = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
 
+        _isInitialize = true;
         LogAlways(string.Format(LoggingStartedFormat, DateTime.Now));
     }
 
@@ -81,8 +82,9 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public void LogAlways(string message)
+    public async void LogAlways(string message)
     {
+        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -93,9 +95,10 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public void LogDebug(string message)
+    public async void LogDebug(string message)
     {
 #if DEBUG
+        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -107,8 +110,9 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public void LogError(string message)
+    public async void LogError(string message)
     {
+        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -119,8 +123,9 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public void LogOkay(string message)
+    public async void LogOkay(string message)
     {
+        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
@@ -131,8 +136,9 @@ internal sealed class LoggingService : ILoggingService
     }
 
     /// <inheritdoc/>
-    public void LogWarning(string message)
+    public async void LogWarning(string message)
     {
+        await InitializeAsync();
         Debug2.Assert(_logWriter is not null);
 
         lock (_lockObj)
