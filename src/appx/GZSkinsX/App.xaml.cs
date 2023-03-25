@@ -50,7 +50,7 @@ public sealed partial class App : Application
     {
         InitializeComponent();
 
-        var provider = CompositionContainerProvider.Instance;
+        var provider = CompositionHostProvider.Instance;
         _compositionHost = provider.CompositionHost;
         InitializeServices(_compositionHost);
     }

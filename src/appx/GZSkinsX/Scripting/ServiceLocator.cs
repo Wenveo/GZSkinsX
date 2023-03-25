@@ -30,7 +30,7 @@ internal sealed class ServiceLocator : IServiceLocator
     /// </summary>
     public ServiceLocator()
     {
-        var provider = CompositionContainerProvider.Instance;
+        var provider = CompositionHostProvider.Instance;
         _compositionHost = provider.CompositionHost;
     }
 

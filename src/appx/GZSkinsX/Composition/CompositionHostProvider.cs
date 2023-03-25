@@ -19,17 +19,17 @@ namespace GZSkinsX.Composition;
 /// <summary>
 /// 一个组件容器代理类，负责提供并创建 <see cref="global::System.Composition.Hosting.CompositionHost"/> 的实例
 /// </summary>
-internal sealed class CompositionContainerProvider
+internal sealed class CompositionHostProvider
 {
     /// <summary>
     /// 懒加载容器，只有当获取时才会创建目标类型
     /// </summary>
-    private static readonly Lazy<CompositionContainerProvider> s_lazy = new(() => new());
+    private static readonly Lazy<CompositionHostProvider> s_lazy = new(() => new());
 
     /// <summary>
-    /// 全局静态 <see cref="CompositionContainerProvider"/> 的实例，该类仅能存在且只会有一个实例
+    /// 全局静态 <see cref="CompositionHostProvider"/> 的实例，该类仅能存在且只会有一个实例
     /// </summary>
-    public static CompositionContainerProvider Instance => s_lazy.Value;
+    public static CompositionHostProvider Instance => s_lazy.Value;
 
     /// <summary>
     /// 当前组件容器宿主的实例
@@ -42,9 +42,9 @@ internal sealed class CompositionContainerProvider
     public CompositionHost CompositionHost => _compositionHost;
 
     /// <summary>
-    /// 初始化 <see cref="CompositionContainerProvider"/> 的新实例
+    /// 初始化 <see cref="CompositionHostProvider"/> 的新实例
     /// </summary>
-    private CompositionContainerProvider()
+    private CompositionHostProvider()
     {
         var configuration = new ContainerConfiguration();
         configuration.WithAssemblies(GetAssemblies());
