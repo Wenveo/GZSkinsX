@@ -13,7 +13,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Composition\CompositionHostProvider.cs" />
     <Compile Include="Extension\ExtensionService.cs" />
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameService.cs" />

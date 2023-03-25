@@ -7,14 +7,15 @@
 
 #nullable enable
 
+using System.Collections.Generic;
 using System.Composition.Hosting;
+using System.Reflection;
 
 using GZSkinsX.Api.Appx;
 
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
-using GZSkinsX.Composition;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 
@@ -32,7 +33,7 @@ public sealed partial class App : Application
     /// <summary>
     /// 当前组件容器的宿主实例
     /// </summary>
-    private readonly CompositionHost _compositionHost;
+    internal readonly CompositionHost _compositionHost;
 
     /// <summary>
     /// 当前应用程序主窗口
@@ -50,11 +51,12 @@ public sealed partial class App : Application
     /// </summary>
     public App()
     {
-        InitializeComponent();
+        var configuration = new ContainerConfiguration();
+        configuration.WithAssemblies(GetAssemblies());
+        _compositionHost = configuration.CreateContainer();
 
-        var provider = CompositionHostProvider.Instance;
-        _compositionHost = provider.CompositionHost;
         InitializeServices();
+        InitializeComponent();
     }
 
     /// <summary>
@@ -108,5 +110,22 @@ public sealed partial class App : Application
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensionsLoaded);
+    }
+
+    /// <summary>
+    /// 获取当前 Appx 引用程序集
+    /// </summary>
+    private static IEnumerable<Assembly> GetAssemblies()
+    {
+        // Self Assembly
+        yield return typeof(App).Assembly;
+        // GZSkinsX.Api
+        yield return typeof(IAppxWindow).Assembly;
+        // GZSkinsX.Appx.Navigation
+        yield return typeof(Appx.Navigation.AppxNavigation).Assembly;
+        // GZSkinsX.Appx.Preload
+        yield return typeof(Appx.Preload.AppxPreload).Assembly;
+        // GZSkinsX.Appx.StartUp
+        yield return typeof(Appx.StartUp.AppxStartUp).Assembly;
     }
 }
