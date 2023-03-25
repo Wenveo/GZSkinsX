@@ -10,6 +10,7 @@
 using System.Composition;
 
 using GZSkinsX.Api.Game;
+using GZSkinsX.Api.Logging;
 
 namespace GZSkinsX.Game;
 
@@ -27,6 +28,11 @@ internal sealed class GameService : IGameService
     /// </summary>
     private readonly GameData _gameData;
 
+    /// <summary>
+    /// 用于记录日志的日志服务
+    /// </summary>
+    private readonly ILoggingService _loggingService;
+
     /// <inheritdoc/>
     public GameRegion CurrentRegion => _gameSettings.CurrentRegion;
 
@@ -40,10 +46,12 @@ internal sealed class GameService : IGameService
     /// 初始化 <see cref="GameService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public GameService(GameSettings gameSettings)
+    public GameService(GameSettings gameSettings, ILoggingService loggingService)
     {
         _gameSettings = gameSettings;
         _gameData = new GameData();
+
+        _loggingService = loggingService;
     }
 
     /// <inheritdoc/>
@@ -53,9 +61,12 @@ internal sealed class GameService : IGameService
         {
             _gameSettings.RootDirectory = rootDirectory;
             _gameSettings.CurrentRegion = region;
+
+            _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootDirectory} /p:GameRegion={region}");
             return true;
         }
 
+        _loggingService.LogWarning($"GameService: Failed to update game data /p:RootDirectory={rootDirectory} /p:GameRegion={region}");
         return false;
     }
 }

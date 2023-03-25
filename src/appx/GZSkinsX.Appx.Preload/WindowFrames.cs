@@ -68,7 +68,10 @@ internal sealed class ExportPreloadFrame : IWindowFrame
             var cultureInfo = CultureInfo.GetCultureInfo(cultureId);
             ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;
 
-            appView.TryResizeView(minWindowSize);
+            if (appView.TryResizeView(minWindowSize))
+            {
+                _loggingService.LogWarning("AppxPreload: Failed to resize the window.");
+            }
             _preloadSettings.IsInitialize = true;
         }
         else
@@ -90,7 +93,7 @@ internal sealed class ExportPreloadFrame : IWindowFrame
             }
         }
 
-        _loggingService.LogAlways(
+        _loggingService.LogDebug(
             $"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
 
         await Task.CompletedTask;

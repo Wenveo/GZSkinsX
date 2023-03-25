@@ -11,6 +11,7 @@ using System.Composition;
 using System.Linq;
 
 using GZSkinsX.Api.Extension;
+using GZSkinsX.Api.Logging;
 
 using Windows.UI.Xaml;
 
@@ -31,6 +32,11 @@ internal sealed class ExtensionService
     /// 基本组件扩展集
     /// </summary>
     private readonly Lazy<IExtension, ExtensionMetadataAttribute>[] _extensions;
+
+    /// <summary>
+    /// 用于记录日志的日志服务
+    /// </summary>
+    private readonly ILoggingService _loggingService;
 
     /// <summary>
     /// 一个用于获取所有扩展实例的迭代器
@@ -54,10 +60,14 @@ internal sealed class ExtensionService
     [ImportingConstructor]
     public ExtensionService(
         [ImportMany] IEnumerable<Lazy<IAutoLoaded, AutoLoadedMetadataAttribute>> mefAutoLoaded,
-        [ImportMany] IEnumerable<Lazy<IExtension, ExtensionMetadataAttribute>> extensions)
+        [ImportMany] IEnumerable<Lazy<IExtension, ExtensionMetadataAttribute>> extensions,
+        ILoggingService loggingService)
     {
         _mefAutoLoaded = mefAutoLoaded.OrderBy(a => a.Metadata.Order).ToArray();
         _extensions = extensions.OrderBy(a => a.Metadata.Order).ToArray();
+
+        _loggingService = loggingService;
+        _loggingService.LogAlways("ExtensionService: Initialized successfully.");
     }
 
     /// <summary>
@@ -91,6 +101,8 @@ internal sealed class ExtensionService
                 _ = extension.Value;
             }
         }
+
+        _loggingService.LogAlways($"ExtensionService: Load all AutoLoaded of type '{loadType}'.");
     }
 
     /// <summary>
@@ -103,6 +115,8 @@ internal sealed class ExtensionService
         {
             extension.Value.OnEvent(eventType);
         }
+
+        _loggingService.LogAlways($"ExtensionService: Notify event '{eventType}' for all extensions.");
     }
 
     /// <inheritdoc/>
