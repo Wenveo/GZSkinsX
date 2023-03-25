@@ -30,7 +30,7 @@
     <Compile Include="Settings\SettingsSection.cs" />
     <Compile Include="Settings\SettingsService.cs" />
     <Compile Include="WindowManager\WindowFrameContext.cs" />
-    <Compile Include="WindowManager\WindowFrameService.cs" />
+    <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

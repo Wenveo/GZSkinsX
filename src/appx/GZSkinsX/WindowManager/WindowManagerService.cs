@@ -22,7 +22,7 @@ namespace GZSkinsX.WindowManager;
 
 /// <inheritdoc cref="IWindowManagerService"/>
 [Shared, Export(typeof(IWindowManagerService))]
-internal sealed class WindowFrameService : IWindowManagerService
+internal sealed class WindowManagerService : IWindowManagerService
 {
     /// <summary>
     /// 当前应用程序主窗口
@@ -45,10 +45,10 @@ internal sealed class WindowFrameService : IWindowManagerService
     private readonly Frame _frame;
 
     /// <summary>
-    /// 初始化 <see cref="WindowFrameService"/> 的新实例
+    /// 初始化 <see cref="WindowManagerService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public WindowFrameService(IAppxWindow appxWindow, [ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> viewElements)
+    public WindowManagerService(IAppxWindow appxWindow, [ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> viewElements)
     {
         _appxWindow = appxWindow;
         _viewElements = viewElements;
