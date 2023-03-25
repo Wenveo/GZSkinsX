@@ -60,6 +60,8 @@ internal sealed class CompositionHostProvider
         yield return typeof(App).Assembly;
         // GZSkinsX.Api
         yield return typeof(IAppxWindow).Assembly;
+        // GZSkinsX.Appx.Navigation
+        yield return typeof(Appx.Navigation.AppxNavigation).Assembly;
         // GZSkinsX.Appx.Preload
         yield return typeof(Appx.Preload.AppxPreload).Assembly;
         // GZSkinsX.Appx.StartUp

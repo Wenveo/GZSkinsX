@@ -120,6 +120,10 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.Navigation\GZSkinsX.Appx.Navigation.csproj">
+      <Project>{b6a6c8af-5632-48fc-9a05-7a1163ca3ce9}</Project>
+      <Name>GZSkinsX.Appx.Navigation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.Preload\GZSkinsX.Appx.Preload.csproj">
       <Project>{af4f7004-c24f-40be-b145-b420aeb1aef3}</Project>
       <Name>GZSkinsX.Appx.Preload</Name>
