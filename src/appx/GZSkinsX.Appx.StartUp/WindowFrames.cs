@@ -52,7 +52,7 @@ internal sealed class ExportStartUpFrame : IWindowFrame
     {
         if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
         {
-            _windowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
+            _windowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
             args.Handled = true;
         }
         else

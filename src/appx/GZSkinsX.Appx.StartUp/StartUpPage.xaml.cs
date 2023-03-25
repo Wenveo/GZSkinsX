@@ -107,6 +107,6 @@ public sealed partial class StartUpPage : Page
             return;
         }
 
-        _windowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
+        _windowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
     }
 }

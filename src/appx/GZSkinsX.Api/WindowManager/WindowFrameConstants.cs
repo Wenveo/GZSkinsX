@@ -25,7 +25,7 @@ public static class WindowFrameConstants
     public const string StartUp_Guid = "1C3A5F43-5383-4B87-A365-1D1610B92060";
 
     /// <summary>
-    /// 表示应用程序主页的 <seealso cref="Guid"/> 字符串值
+    /// 表示导航页的 <seealso cref="Guid"/> 字符串值
     /// </summary>
-    public const string Main_Guid = "95FF48E7-E179-4DA5-8F41-1923B7F22963";
+    public const string NavigationRoot_Guid = "95FF48E7-E179-4DA5-8F41-1923B7F22963";
 }
