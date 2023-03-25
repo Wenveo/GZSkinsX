@@ -5,8 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
-
 using System.Collections.Generic;
 
 namespace GZSkinsX.Api.Extension;
@@ -19,17 +17,17 @@ public interface IExtension
     /// <summary>
     /// 应用程序扩展的名称
     /// </summary>
-    string? Name { get; set; }
+    string Name { get; }
 
     /// <summary>
     /// 应用程序扩展的简短描述
     /// </summary>
-    string? ShortDescription { get; set; }
+    string ShortDescription { get; }
 
     /// <summary>
     /// 应用程序扩展的版权信息
     /// </summary>
-    string? Copyright { get; set; }
+    string Copyright { get; }
 
     /// <summary>
     /// 用于合并的资源字典列表，资源路径必须是相对于程序集的
