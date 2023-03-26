@@ -12,7 +12,10 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
+using GZSkinsX.Api.Logging;
+using GZSkinsX.DotNet.Diagnostics;
 using GZSkinsX.Extension;
+using GZSkinsX.Logging;
 
 using Windows.UI.Core;
 using Windows.UI.Core.Preview;
@@ -115,8 +118,16 @@ internal sealed class AppxWindow : IAppxWindow
     {
         if (!e.Handled)
         {
+            // 优先通知事件，因为有可能会在关闭事件中输出日志
             _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
             Closed?.Invoke(this, new EventArgs());
+
+            // 获取当前 App
+            var mainApp = Application.Current as App;
+            Debug2.Assert(mainApp is not null);
+            // 调用内部方法以关闭日志输出流
+            var loggingService = mainApp._compositionHost.GetExport<ILoggingService>();
+            ((LoggingService)loggingService).CloseOutputStream();
         }
     }
 

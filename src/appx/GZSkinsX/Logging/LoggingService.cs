@@ -72,12 +72,17 @@ internal sealed class LoggingService : ILoggingService
         LogAlways(string.Format(LoggingStartedFormat, DateTime.Now));
     }
 
-    private void OnClosed(object sender, EventArgs e)
+    internal void CloseOutputStream()
     {
         lock (_lockObj)
         {
-            _logWriter?.Close();
-            _logWriter?.Dispose();
+            if (_logWriter is not null)
+            {
+                _logWriter.Close();
+                _logWriter.Dispose();
+
+                _logWriter = null;
+            }
         }
     }
 
