@@ -15,6 +15,7 @@ using GZSkinsX.Api.Extension;
 using GZSkinsX.Extension;
 
 using Windows.UI.Core;
+using Windows.UI.Core.Preview;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
@@ -68,8 +69,7 @@ internal sealed class AppxWindow : IAppxWindow
 
         _shellWindow = Window.Current;
         _shellWindow.Activated += OnActivated;
-        _shellWindow.Closed += OnClosed;
-
+        SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequested;
         Activated += OnAppLoaded;
     }
 
@@ -110,10 +110,13 @@ internal sealed class AppxWindow : IAppxWindow
     /// <summary>
     /// 当前应用程序主窗口的关闭事件
     /// </summary>
-    private void OnClosed(object sender, CoreWindowEventArgs args)
+    private void OnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
     {
-        _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
-        Closed?.Invoke(this, new EventArgs());
+        if (!e.Handled)
+        {
+            _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
+            Closed?.Invoke(this, new EventArgs());
+        }
     }
 
     /// <inheritdoc/>
