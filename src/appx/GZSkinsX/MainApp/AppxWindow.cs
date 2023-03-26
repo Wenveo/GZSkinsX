@@ -69,7 +69,7 @@ internal sealed class AppxWindow : IAppxWindow
 
         _shellWindow = Window.Current;
         _shellWindow.Activated += OnActivated;
-        SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequested;
+
         Activated += OnAppLoaded;
     }
 
@@ -90,6 +90,7 @@ internal sealed class AppxWindow : IAppxWindow
 
         _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
         _extensionService.LoadAutoLoaded(AutoLoadedType.AppLoaded);
+        SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequested;
     }
 
     /// <summary>
