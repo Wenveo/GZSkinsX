@@ -32,6 +32,15 @@
     <Compile Include="MRT\IMRTCoreMap.cs" />
     <Compile Include="MRT\IMRTCoreService.cs" />
     <Compile Include="MRT\MRTCoreConstants.cs" />
+    <Compile Include="Navigation\ExportNavigationGroupAttribute.cs" />
+    <Compile Include="Navigation\ExportNavigationItemAttribute.cs" />
+    <Compile Include="Navigation\INavigationGroup.cs" />
+    <Compile Include="Navigation\INavigationItem.cs" />
+    <Compile Include="Navigation\INavigationService.cs" />
+    <Compile Include="Navigation\NavigationConstants.cs" />
+    <Compile Include="Navigation\NavigationGroupMetadataAttribute.cs" />
+    <Compile Include="Navigation\NavigationItemMetadataAttribute.cs" />
+    <Compile Include="Navigation\NavigationItemPlacement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\IServiceLocator.cs" />
     <Compile Include="Settings\ISettingsSection.cs" />

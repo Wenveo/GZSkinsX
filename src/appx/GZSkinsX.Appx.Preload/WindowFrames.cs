@@ -41,6 +41,11 @@ internal sealed class ExportPreloadFrame : IWindowFrame
         _windowManagerService = windowManagerService;
         _preloadSettings = preloadSettings;
         _loggingService = loggingService;
+
+        //if (Debugger.IsAttached)
+        //{
+        //    Application.Current.DebugSettings.EnableFrameRateCounter = true;
+        //}
     }
 
     /// <inheritdoc/>
