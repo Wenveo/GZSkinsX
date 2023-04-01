@@ -2,14 +2,27 @@
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Dark">
             <StaticResource x:Key="MainFrameBackground" ResourceKey="LayerFillColorDefaultBrush" />
+            <AcrylicBrush
+                x:Key="NavigationViewDefaultPaneBackground"
+                FallbackColor="#1F1F1F"
+                TintColor="#1F1F1F"
+                TintOpacity="0.8" />
         </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
             <StaticResource x:Key="MainFrameBackground" ResourceKey="LayerFillColorDefaultBrush" />
+            <AcrylicBrush
+                x:Key="NavigationViewDefaultPaneBackground"
+                FallbackColor="#F2F2F2"
+                TintColor="White"
+                TintOpacity="0.8" />
         </ResourceDictionary>
         <ResourceDictionary x:Key="HighContrast">
             <SolidColorBrush x:Key="MainFrameBackground" Color="{ThemeResource SystemColorWindowColor}" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
+
+    <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
 
     <Style x:Key="MainFrameStyle" TargetType="Frame">
         <Setter Property="Background" Value="{ThemeResource MainFrameBackground}" />

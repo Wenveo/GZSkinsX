@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 using System.Numerics;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Navigation;
 using GZSkinsX.DotNet.Diagnostics;
@@ -192,11 +193,7 @@ internal sealed class NavigationService : INavigationService
         _navigationViewRoot.IsTitleBarAutoPaddingEnabled = false;
         _navigationViewRoot.Resources.MergedDictionaries.Add(new()
         {
-            Source = new Uri("ms-appx:///GZSkinsX.Appx.Navigation/Styles/NavigationView.xaml")
-        });
-        _navigationViewRoot.Resources.MergedDictionaries.Add(new()
-        {
-            Source = new Uri("ms-appx:///GZSkinsX.Appx.Navigation/Styles/Frame.xaml")
+            Source = new Uri("ms-appx:///GZSkinsX.Appx.Navigation/Styles/Default.xaml")
         });
 
         _rootFrame.Style = (Style)_navigationViewRoot.Resources["MainFrameStyle"];
@@ -264,6 +261,7 @@ internal sealed class NavigationService : INavigationService
         var guid = (Guid)navItem.Tag;
         if (_allNavItemCtx.TryGetValue(guid, out var context))
         {
+            _rootFrame.Tag = guid;
             Debug2.Assert(context.Metadata.PageType is not null);
             _rootFrame.Navigate(context.Metadata.PageType);
         }
@@ -274,20 +272,17 @@ internal sealed class NavigationService : INavigationService
     /// </summary>
     private async void OnNavigated(object sender, NavigationEventArgs e)
     {
-        if (_navigationViewRoot.SelectedItem is MUXC.NavigationViewItem selectedItem)
+        var guid = (Guid)_rootFrame.Tag;
+        if (_allNavItemCtx.TryGetValue(guid, out var ctx) is false ||
+            _createdNavItems.TryGetValue(guid, out var item) is false)
         {
-            var guid = (Guid)selectedItem.Tag;
-            if (_allNavItemCtx.TryGetValue(guid, out var ctx) is false ||
-                _createdNavItems.TryGetValue(guid, out var item) is false)
-            {
-                return;
-            }
-
-            await ctx.Value.OnNavigatedToAsync(e);
-            _navigationViewRoot.SelectedItem = item;
-
-            Navigated?.Invoke(sender, e);
+            return;
         }
+
+        await ctx.Value.OnNavigatedToAsync(e);
+        _navigationViewRoot.SelectedItem = item;
+
+        Navigated?.Invoke(sender, e);
     }
 
     /// <summary>
@@ -392,64 +387,61 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(string guidString)
+    public async void NavigateTo(string guidString)
     {
         if (Guid.TryParse(guidString, out var guid))
         {
-            NavigateTo(guid);
+            await NavigateCoreAsync(guid, null, null);
         }
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(string guidString, object parameter)
+    public async void NavigateTo(string guidString, object parameter)
     {
         if (Guid.TryParse(guidString, out var guid))
         {
-            NavigateTo(guid, parameter);
+            await NavigateCoreAsync(guid, parameter, null);
         }
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride)
+    public async void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride)
     {
         if (Guid.TryParse(guidString, out var guid))
         {
-            NavigateTo(guid, parameter, infoOverride);
+            await NavigateCoreAsync(guid, parameter, infoOverride);
         }
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(Guid elemGuid)
+    public async void NavigateTo(Guid navItemGuid)
     {
-        if (_allNavItemCtx.TryGetValue(elemGuid, out var elem))
-        {
-            NavigateCore(elem, null, null);
-        }
+        await NavigateCoreAsync(navItemGuid, null, null);
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(Guid elemGuid, object parameter)
+    public async void NavigateTo(Guid navItemGuid, object parameter)
     {
-        if (_allNavItemCtx.TryGetValue(elemGuid, out var elem))
-        {
-            NavigateCore(elem, parameter, null);
-        }
+        await NavigateCoreAsync(navItemGuid, parameter, null);
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(Guid elemGuid, object parameter, NavigationTransitionInfo infoOverride)
+    public async void NavigateTo(Guid navItemGuid, object parameter, NavigationTransitionInfo infoOverride)
     {
-        if (_allNavItemCtx.TryGetValue(elemGuid, out var elem))
-        {
-            NavigateCore(elem, parameter, infoOverride);
-        }
+        await NavigateCoreAsync(navItemGuid, parameter, infoOverride);
     }
 
-    private async void NavigateCore(NavigationItemContext context, object? parameter, NavigationTransitionInfo? infoOverride)
+    private async Task NavigateCoreAsync(Guid guid, object? parameter, NavigationTransitionInfo? infoOverride)
     {
+        if (_allNavItemCtx.TryGetValue(guid, out var context) is false)
+        {
+            return;
+        }
+
         var beforeNavItemCtx = GetCurrentNavItemCtx();
         infoOverride ??= new DrillInNavigationTransitionInfo();
 
+        _rootFrame.Tag = guid;
         Debug2.Assert(context.Metadata.PageType is not null);
         if (_rootFrame.Navigate(context.Metadata.PageType, parameter, infoOverride))
         {

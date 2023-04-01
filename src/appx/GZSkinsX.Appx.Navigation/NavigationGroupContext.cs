@@ -19,7 +19,7 @@ internal sealed class NavigationGroupContext
     /// <summary>
     /// 
     /// </summary>
-    private Lazy<INavigationGroup, NavigationGroupMetadataAttribute> _lazy;
+    private readonly Lazy<INavigationGroup, NavigationGroupMetadataAttribute> _lazy;
 
     /// <summary>
     /// 

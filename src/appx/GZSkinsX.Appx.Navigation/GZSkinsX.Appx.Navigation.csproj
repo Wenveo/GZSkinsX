@@ -16,33 +16,15 @@
     </Compile>
     <Compile Include="NavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\TestPageA.xaml.cs">
-      <DependentUpon>TestPageA.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TestPageB.xaml.cs">
-      <DependentUpon>TestPageB.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WindowFrames.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.Navigation.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\NavigationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Frame.xaml">
+    <Page Include="Styles\Default.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NavigationRootPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TestPageA.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TestPageB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

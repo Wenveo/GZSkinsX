@@ -5,8 +5,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System.Numerics;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Navigation;
 
 using Windows.Foundation.Metadata;
@@ -24,32 +27,49 @@ namespace GZSkinsX.Appx.Navigation;
 /// </summary>
 public sealed partial class NavigationRootPage : Page
 {
+    private NavigationService? _navigationService;
+    private IAppxTitleBar? _appxTitleBar;
+
     public NavigationRootPage()
     {
         InitializeComponent();
-        Window.Current.SetTitleBar(AppTitleBar);
     }
 
-    internal void Initialize(INavigationService navigationService)
+    internal void OnLoaded(INavigationService navigationService, IAppxTitleBar appxTitleBar)
     {
-        var navService = (NavigationService)navigationService;
-        navService._navigationViewRoot.DisplayModeChanged += OnDisplayModeChanged;
-        navService._navigationViewRoot.PaneClosing += OnPaneClosing;
-        navService._navigationViewRoot.PaneOpening += OnPaneOpening;
-        contentPresenter.Content = navService._navigationViewRoot;
+        _navigationService = (NavigationService)navigationService;
+        _navigationService._navigationViewRoot.DisplayModeChanged += OnNavDisplayModeChanged;
+        _navigationService._navigationViewRoot.PaneClosing += OnNavPaneClosing;
+        _navigationService._navigationViewRoot.PaneOpening += OnNavPaneOpening;
+        contentPresenter.Content = _navigationService._navigationViewRoot;
+
+        _appxTitleBar = appxTitleBar;
+        _appxTitleBar.SetTitleBar(AppTitleBar);
     }
 
-    private void OnPaneClosing(MUXC.NavigationView sender, MUXC.NavigationViewPaneClosingEventArgs args)
+    internal void OnUnloaded()
+    {
+        if (_navigationService is not null)
+        {
+            _navigationService._navigationViewRoot.DisplayModeChanged -= OnNavDisplayModeChanged;
+            _navigationService._navigationViewRoot.PaneClosing -= OnNavPaneClosing;
+            _navigationService._navigationViewRoot.PaneOpening -= OnNavPaneOpening;
+        }
+
+        _appxTitleBar?.SetTitleBar(null);
+    }
+
+    private void OnNavPaneClosing(MUXC.NavigationView sender, MUXC.NavigationViewPaneClosingEventArgs args)
     {
         UpdateAppTitleMargin(sender);
     }
 
-    private void OnPaneOpening(MUXC.NavigationView sender, object args)
+    private void OnNavPaneOpening(MUXC.NavigationView sender, object args)
     {
         UpdateAppTitleMargin(sender);
     }
 
-    private void OnDisplayModeChanged(MUXC.NavigationView sender, MUXC.NavigationViewDisplayModeChangedEventArgs args)
+    private void OnNavDisplayModeChanged(MUXC.NavigationView sender, MUXC.NavigationViewDisplayModeChangedEventArgs args)
     {
         var currMargin = AppTitleBar.Margin;
         var leftMargin = sender.DisplayMode == MUXC.NavigationViewDisplayMode.Minimal
@@ -66,25 +86,26 @@ public sealed partial class NavigationRootPage : Page
         UpdateAppTitleMargin(sender);
     }
 
+    private readonly Vector3 _smallLeftIndent = new(4f, 0f, 0f);
+    private readonly Vector3 _largeLeftIndent = new(24f, 0f, 0f);
+
     private void UpdateAppTitleMargin(MUXC.NavigationView sender)
     {
-        const int smallLeftIndent = 4, largeLeftIndent = 24;
-
         var leftIndent = (sender.DisplayMode == MUXC.NavigationViewDisplayMode.Expanded && sender.IsPaneOpen)
-            || sender.DisplayMode == MUXC.NavigationViewDisplayMode.Minimal ? smallLeftIndent : largeLeftIndent;
+            || sender.DisplayMode == MUXC.NavigationViewDisplayMode.Minimal ? _smallLeftIndent : _largeLeftIndent;
 
         // 1809
         if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
         {
-            AppTitle.TranslationTransition = new Vector3Transition();
-            AppTitle.Translation = new Vector3(leftIndent, 0, 0);
+            AppTitle.TranslationTransition ??= new Vector3Transition();
+            AppTitle.Translation = leftIndent;
         }
         else
         {
             var currMargin = AppTitle.Margin;
             AppTitle.Margin = new Thickness()
             {
-                Left = leftIndent,
+                Left = leftIndent.X,
                 Top = currMargin.Top,
                 Right = currMargin.Right,
                 Bottom = currMargin.Bottom

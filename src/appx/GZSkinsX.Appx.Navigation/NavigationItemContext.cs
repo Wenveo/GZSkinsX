@@ -19,7 +19,7 @@ internal sealed class NavigationItemContext
     /// <summary>
     /// 
     /// </summary>
-    private Lazy<INavigationItem, NavigationItemMetadataAttribute> _lazy;
+    private readonly Lazy<INavigationItem, NavigationItemMetadataAttribute> _lazy;
 
     /// <summary>
     /// 

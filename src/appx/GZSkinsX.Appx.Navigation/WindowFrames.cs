@@ -5,10 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
 using System.Composition;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Navigation;
 using GZSkinsX.Api.WindowManager;
 
@@ -21,17 +21,19 @@ namespace GZSkinsX.Appx.Navigation;
 internal sealed class ExportNavigationRootFrame : IWindowFrame
 {
     private readonly INavigationService _navigationService;
+    private readonly IAppxTitleBar _appxTitleBar;
 
     [ImportingConstructor]
-    public ExportNavigationRootFrame(INavigationService navigationService)
+    public ExportNavigationRootFrame(INavigationService navigationService, IAppxTitleBar appxTitleBar)
     {
         _navigationService = navigationService;
+        _appxTitleBar = appxTitleBar;
     }
 
     public async Task OnInitializeAsync(Page viewElement)
     {
         var navRootPage = (NavigationRootPage)viewElement;
-        navRootPage.Initialize(_navigationService);
+        navRootPage.OnLoaded(_navigationService, _appxTitleBar);
 
         await Task.CompletedTask;
     }
