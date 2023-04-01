@@ -32,5 +32,5 @@ public interface IWindowFrame
     /// 在进入导航操作时触发，可在导航到目标页面前进行相关操作
     /// </summary>
     /// <param name="args">导航的事件参数</param>
-    Task OnNavigatingAsync(WindowFrameNavigateEventArgs args);
+    Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args);
 }

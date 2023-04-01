@@ -51,7 +51,7 @@ internal sealed class ExportStartUpFrame : IWindowFrame
     }
 
     /// <inheritdoc/>
-    public async Task OnNavigatingAsync(WindowFrameNavigateEventArgs args)
+    public async Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args)
     {
         if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
         {

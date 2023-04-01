@@ -171,7 +171,7 @@ internal sealed class WindowManagerService : IWindowManagerService
 
         var beforeFrameContext = GetCurrentWindowFrameContext();
         infoOverride ??= new DrillInNavigationTransitionInfo();
-        var args = new WindowFrameNavigateEventArgs();
+        var args = new WindowFrameNavigatingEventArgs();
 
         var element = context.Value;
         await element.OnNavigatingAsync(args);

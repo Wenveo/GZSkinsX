@@ -46,7 +46,7 @@ internal sealed class ExportNavigationRootFrame : IWindowFrame
         await Task.CompletedTask;
     }
 
-    public async Task OnNavigatingAsync(WindowFrameNavigateEventArgs args)
+    public async Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args)
     {
         await Task.CompletedTask;
     }

@@ -65,7 +65,7 @@ internal sealed class ExportPreloadFrame : IWindowFrame
     }
 
     /// <inheritdoc/>
-    public async Task OnNavigatingAsync(WindowFrameNavigateEventArgs args)
+    public async Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args)
     {
         var minWindowSize = SizeHelper.FromDimensions(720, 480);
         var appView = ApplicationView.GetForCurrentView();
