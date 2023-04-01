@@ -40,21 +40,21 @@ public interface IWindowManagerService
     /// <summary>
     /// 导航到与标识符匹配的指定页面
     /// </summary>
-    /// <param name="elemGuid">视图对象的 <see cref="Guid"/> 值</param>
-    void NavigateTo(Guid elemGuid);
+    /// <param name="frameGuid">视图对象的 <see cref="Guid"/> 值</param>
+    void NavigateTo(Guid frameGuid);
 
     /// <summary>
     /// 导航到与标识符匹配的指定页面，并传递导航参数
     /// </summary>
-    /// <param name="elemGuid">视图对象的 <see cref="Guid"/> 值</param>
+    /// <param name="frameGuid">视图对象的 <see cref="Guid"/> 值</param>
     /// <param name="parameter">传递给目标页面的参数</param>
-    void NavigateTo(Guid elemGuid, object parameter);
+    void NavigateTo(Guid frameGuid, object parameter);
 
     /// <summary>
     /// 导航到与标识符匹配的指定页面，并传递导航参数和指定导航页面切换效果
     /// </summary>
-    /// <param name="elemGuid">视图对象的 <see cref="Guid"/> 值</param>
+    /// <param name="frameGuid">视图对象的 <see cref="Guid"/> 值</param>
     /// <param name="parameter">传递给目标页面的参数</param>
     /// <param name="infoOverride"></param>
-    void NavigateTo(Guid elemGuid, object parameter, NavigationTransitionInfo infoOverride);
+    void NavigateTo(Guid frameGuid, object parameter, NavigationTransitionInfo infoOverride);
 }

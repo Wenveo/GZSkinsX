@@ -11,12 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.WindowManager;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.WindowManager;
 
@@ -37,7 +39,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// <summary>
     /// 使用 <see cref="Guid"/> 作为 Key 并存储所有 <see cref="IWindowFrame"/> 上下文对象
     /// </summary>
-    private readonly Dictionary<Guid, WindowFrameContext> _guidToViewElement;
+    private readonly Dictionary<Guid, WindowFrameContext> _guidToWindowFrame;
 
     /// <summary>
     /// 用于导航的内部定义控件
@@ -53,8 +55,8 @@ internal sealed class WindowManagerService : IWindowManagerService
         _appxWindow = appxWindow;
         _viewElements = viewElements;
 
-        _frame = new Frame();
-        _guidToViewElement = new Dictionary<Guid, WindowFrameContext>();
+        _frame = new();
+        _guidToWindowFrame = new();
 
         InitializeContext();
     }
@@ -85,69 +87,89 @@ internal sealed class WindowManagerService : IWindowManagerService
                 if (!b)
                     continue;
 
-                _guidToViewElement[guid] = new WindowFrameContext(elem);
+                _guidToWindowFrame[guid] = new WindowFrameContext(elem);
             }
 
+            _frame.Navigated += OnNavigated;
             _appxWindow.MainWindow.Content = _frame;
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    private async void OnNavigated(object sender, NavigationEventArgs e)
+    {
+        var frameGuid = (Guid)_frame.Tag;
+        if (_guidToWindowFrame.TryGetValue(frameGuid, out var context))
+        {
+            await context.Value.OnNavigateToAsync(e);
+        }
+    }
+
     /// <inheritdoc/>
-    public void NavigateTo(string guidString)
+    public async void NavigateTo(string guidString)
     {
         if (Guid.TryParse(guidString, out var guid))
         {
-            NavigateTo(guid);
+            await NavigateCoreAsync(guid, null, null);
         }
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(string guidString, object parameter)
+    public async void NavigateTo(string guidString, object parameter)
     {
         if (Guid.TryParse(guidString, out var guid))
         {
-            NavigateTo(guid, parameter);
+            await NavigateCoreAsync(guid, parameter, null);
         }
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride)
+    public async void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride)
     {
         if (Guid.TryParse(guidString, out var guid))
         {
-            NavigateTo(guid, parameter, infoOverride);
+            await NavigateCoreAsync(guid, parameter, infoOverride);
         }
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(Guid elemGuid)
+    public async void NavigateTo(Guid frameGuid)
     {
-        if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
-        {
-            NavigateCore(elem, null, null);
-        }
+        await NavigateCoreAsync(frameGuid, null, null);
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(Guid elemGuid, object parameter)
+    public async void NavigateTo(Guid frameGuid, object parameter)
     {
-        if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
-        {
-            NavigateCore(elem, parameter, null);
-        }
+        await NavigateCoreAsync(frameGuid, parameter, null);
     }
 
     /// <inheritdoc/>
-    public void NavigateTo(Guid elemGuid, object parameter, NavigationTransitionInfo infoOverride)
+    public async void NavigateTo(Guid frameGuid, object parameter, NavigationTransitionInfo infoOverride)
     {
-        if (_guidToViewElement.TryGetValue(elemGuid, out var elem))
-        {
-            NavigateCore(elem, parameter, infoOverride);
-        }
+        await NavigateCoreAsync(frameGuid, parameter, infoOverride);
     }
 
-    private async void NavigateCore(WindowFrameContext context, object? parameter, NavigationTransitionInfo? infoOverride)
+    private WindowFrameContext? GetCurrentWindowFrameContext()
     {
+        if (_frame.Tag is Guid frameGuid && _guidToWindowFrame.TryGetValue(frameGuid, out var context))
+        {
+            return context;
+        }
+
+        return null;
+    }
+
+    private async Task NavigateCoreAsync(Guid frameGuid, object? parameter, NavigationTransitionInfo? infoOverride)
+    {
+        if (_guidToWindowFrame.TryGetValue(frameGuid, out var context) is false)
+        {
+            return;
+        }
+
+        var beforeFrameContext = GetCurrentWindowFrameContext();
         infoOverride ??= new DrillInNavigationTransitionInfo();
         var args = new WindowFrameNavigateEventArgs();
 
@@ -156,9 +178,13 @@ internal sealed class WindowManagerService : IWindowManagerService
         if (args.Handled)
             return;
 
+        _frame.Tag = frameGuid;
         _frame.Navigate(context.Metadata.PageType, parameter, infoOverride);
-        await element.OnInitializeAsync((Page)_frame.Content);
-
         _frame.BackStack.Clear();
+
+        if (beforeFrameContext is not null)
+        {
+            await beforeFrameContext.Value.OnNavigateFromAsync();
+        }
     }
 }

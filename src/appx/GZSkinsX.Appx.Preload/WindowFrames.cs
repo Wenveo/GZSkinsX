@@ -20,7 +20,7 @@ using Windows.Foundation.Metadata;
 using Windows.Globalization;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Appx.Preload;
 
@@ -42,14 +42,19 @@ internal sealed class ExportPreloadFrame : IWindowFrame
         _preloadSettings = preloadSettings;
         _loggingService = loggingService;
 
-        //if (Debugger.IsAttached)
-        //{
-        //    Application.Current.DebugSettings.EnableFrameRateCounter = true;
-        //}
+        if (Debugger.IsAttached)
+        {
+            Application.Current.DebugSettings.EnableFrameRateCounter = true;
+        }
+    }
+
+    public async Task OnNavigateFromAsync()
+    {
+        await Task.CompletedTask;
     }
 
     /// <inheritdoc/>
-    public async Task OnInitializeAsync(Page viewElement)
+    public async Task OnNavigateToAsync(NavigationEventArgs args)
     {
         var random = new Random();
         var waitingTime = random.Next(1000, 2000);

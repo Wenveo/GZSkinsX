@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Navigation;
 using GZSkinsX.Api.WindowManager;
+using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Appx.Navigation;
 
@@ -30,9 +32,15 @@ internal sealed class ExportNavigationRootFrame : IWindowFrame
         _appxTitleBar = appxTitleBar;
     }
 
-    public async Task OnInitializeAsync(Page viewElement)
+    public async Task OnNavigateFromAsync()
     {
-        var navRootPage = (NavigationRootPage)viewElement;
+        await Task.CompletedTask;
+    }
+
+    public async Task OnNavigateToAsync(NavigationEventArgs args)
+    {
+        var navRootPage = args.Content as NavigationRootPage;
+        Debug2.Assert(navRootPage is not null);
         navRootPage.OnLoaded(_navigationService, _appxTitleBar);
 
         await Task.CompletedTask;

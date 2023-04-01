@@ -13,7 +13,7 @@ using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Appx.StartUp;
 
@@ -35,14 +35,17 @@ internal sealed class ExportStartUpFrame : IWindowFrame
         _windowManagerService = serviceLocator.Resolve<IWindowManagerService>();
     }
 
-    /// <inheritdoc/>
-    public async Task OnInitializeAsync(Page viewElement)
+    public async Task OnNavigateFromAsync()
     {
-        Debug2.Assert(viewElement is StartUpPage);
-        if (viewElement is StartUpPage startUpPage)
-        {
-            startUpPage.InitializeContext(_serviceLocator, _isInvalid);
-        }
+        await Task.CompletedTask;
+    }
+
+    /// <inheritdoc/>
+    public async Task OnNavigateToAsync(NavigationEventArgs args)
+    {
+        var startUpPage = args.Content as StartUpPage;
+        Debug2.Assert(startUpPage is not null);
+        startUpPage.InitializeContext(_serviceLocator, _isInvalid);
 
         await Task.CompletedTask;
     }

@@ -8,6 +8,7 @@
 using System.Threading.Tasks;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Api.WindowManager;
 
@@ -17,10 +18,15 @@ namespace GZSkinsX.Api.WindowManager;
 public interface IWindowFrame
 {
     /// <summary>
-    /// 在页面初始化时触发，可对目标页面属性进行更改及调整
+    /// 在离开当前页面时触发，可在此进行取消事件注册等相关操作
     /// </summary>
-    /// <param name="viewElement">目标视图对象</param>
-    Task OnInitializeAsync(Page viewElement);
+    Task OnNavigateFromAsync();
+
+    /// <summary>
+    /// 在导航至目标页面时触发，可对目标页面属性进行更改及调整
+    /// </summary>
+    /// <param name="args"><seealso cref="Frame"/> 的导航事件参数</param>
+    Task OnNavigateToAsync(NavigationEventArgs args);
 
     /// <summary>
     /// 在进入导航操作时触发，可在导航到目标页面前进行相关操作
