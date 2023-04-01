@@ -12,7 +12,7 @@
     <Compile Include="DefineNavigationGroups.cs" />
     <Compile Include="NavigationItemContext.cs" />
     <Compile Include="QueryNavigationItem.cs" />
-    <Compile Include="Views\NavigationRootPage.xaml.cs">
+    <Compile Include="NavigationRootPage.xaml.cs">
       <DependentUpon>NavigationRootPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NavigationService.cs" />
@@ -25,7 +25,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NavigationRootPage.xaml">
+    <Page Include="NavigationRootPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
