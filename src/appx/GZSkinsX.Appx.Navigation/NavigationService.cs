@@ -11,15 +11,21 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
 using GZSkinsX.Api.Navigation;
 using GZSkinsX.DotNet.Diagnostics;
 
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.AnimatedVisuals;
+
 using Windows.Foundation.Metadata;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -186,9 +192,11 @@ internal sealed class NavigationService : INavigationService
     {
         Canvas.SetZIndex(_navigationViewRoot, 0);
         _navigationViewRoot.Content = _rootFrame;
+        _navigationViewRoot.AutoSuggestBox = CreateAutoSuggestBox();
         _navigationViewRoot.DisplayModeChanged += OnNavDisplayModeChanged;
         _navigationViewRoot.SelectionChanged += OnNavSelectionChanged;
         _navigationViewRoot.IsBackButtonVisible = MUXC.NavigationViewBackButtonVisible.Auto;
+        _navigationViewRoot.IsTabStop = false;
         _navigationViewRoot.IsSettingsVisible = false;
         _navigationViewRoot.IsTitleBarAutoPaddingEnabled = false;
         _navigationViewRoot.Resources.MergedDictionaries.Add(new()
@@ -200,6 +208,39 @@ internal sealed class NavigationService : INavigationService
         _rootFrame.Navigated += OnNavigated;
 
         InitializeNavView(_navigationViewRoot);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="navigationView"></param>
+    private void InitializeNavView(MUXC.NavigationView navigationView)
+    {
+        var needSeparator = false;
+        foreach (var group in _navGroups)
+        {
+            var container = group.Metadata.Placement == NavigationItemPlacement.Footer
+                ? navigationView.FooterMenuItems
+                : navigationView.MenuItems;
+
+            var guid = new Guid(group.Metadata.Guid);
+            if (_guidToNavItems.TryGetValue(guid, out var navItems))
+            {
+                if (navItems.Count == 0)
+                    continue;
+
+                if (needSeparator)
+                    container.Add(new MUXC.NavigationViewItemSeparator());
+                else
+                    needSeparator = true;
+
+                if (!string.IsNullOrEmpty(group.Metadata.Header))
+                    container.Add(new MUXC.NavigationViewItemHeader { Content = group.Metadata.Header });
+
+                foreach (var item in navItems)
+                    container.Add(CreateNavItemUIObject(item));
+            }
+        }
     }
 
     private readonly Vector3 _smallTopIndent = new(0f, 0f, 0f);
@@ -285,36 +326,80 @@ internal sealed class NavigationService : INavigationService
         Navigated?.Invoke(sender, e);
     }
 
+    private AutoSuggestBox CreateAutoSuggestBox()
+    {
+        var autoSuggestBox = new AutoSuggestBox
+        {
+            MinWidth = 200d,
+            PlaceholderText = "Search",
+            QueryIcon = new AnimatedIcon
+            {
+                Source = new AnimatedFindVisualSource(),
+                FallbackIconSource = new MUXC.SymbolIconSource { Symbol = Symbol.Find }
+            },
+            VerticalAlignment = VerticalAlignment.Center,
+            KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden
+        };
+
+        var ctrlF = new KeyboardAccelerator { Key = VirtualKey.F, Modifiers = VirtualKeyModifiers.Control };
+        ctrlF.Invoked += (_, _) => _navigationViewRoot.AutoSuggestBox?.Focus(FocusState.Programmatic);
+
+        autoSuggestBox.KeyboardAccelerators.Add(ctrlF);
+        autoSuggestBox.TextChanged += OnAutoSuggestBoxTextChanged;
+        autoSuggestBox.QuerySubmitted += OnAutoSuggestBoxQuerySubmitted;
+
+        return autoSuggestBox;
+    }
+
+
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="navigationView"></param>
-    private void InitializeNavView(MUXC.NavigationView navigationView)
+    void OnAutoSuggestBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
-        var needSeparator = false;
-        foreach (var group in _navGroups)
+        if (args.Reason != AutoSuggestionBoxTextChangeReason.SuggestionChosen)
         {
-            var container = group.Metadata.Placement == NavigationItemPlacement.Footer
-                ? navigationView.FooterMenuItems
-                : navigationView.MenuItems;
+            var suggestions = new List<QueryNavigationItem>();
 
-            var guid = new Guid(group.Metadata.Guid);
-            if (_guidToNavItems.TryGetValue(guid, out var navItems))
+            var querySplit = sender.Text.Split(" ");
+            foreach (var item in _createdNavItems.Values)
             {
-                if (navItems.Count == 0)
-                    continue;
+                if (item.SelectsOnInvoked)
+                {
+                    foreach (var queryToken in querySplit)
+                    {
+                        var header = item.Content as string;
+                        Debug2.Assert(header is not null);
+                        Debug2.Assert(header.Length > 0);
 
-                if (needSeparator)
-                    container.Add(new MUXC.NavigationViewItemSeparator());
-                else
-                    needSeparator = true;
-
-                if (!string.IsNullOrEmpty(group.Metadata.Header))
-                    container.Add(new MUXC.NavigationViewItemHeader { Content = group.Metadata.Header });
-
-                foreach (var item in navItems)
-                    container.Add(CreateNavItemUIObject(item));
+                        if (header.IndexOf(queryToken, StringComparison.CurrentCultureIgnoreCase) is not -1)
+                        {
+                            suggestions.Add(new QueryNavigationItem(header, (Guid)item.Tag));
+                            break;
+                        }
+                    }
+                }
             }
+
+            if (suggestions.Count > 0)
+            {
+                sender.ItemsSource = suggestions.OrderByDescending(i => i.Title.StartsWith(sender.Text, StringComparison.CurrentCultureIgnoreCase)).ThenBy(i => i.Title);
+            }
+            else
+            {
+                sender.ItemsSource = new string[] { "No results found" };
+            }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private async void OnAutoSuggestBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    {
+        if (args.ChosenSuggestion is QueryNavigationItem queryNavigationItem)
+        {
+            await NavigateCoreAsync(queryNavigationItem.Guid, null, null);
         }
     }
 

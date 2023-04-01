@@ -11,6 +11,7 @@
     <Compile Include="NavigationGroupContext.cs" />
     <Compile Include="DefineNavigationGroups.cs" />
     <Compile Include="NavigationItemContext.cs" />
+    <Compile Include="QueryNavigationItem.cs" />
     <Compile Include="Views\NavigationRootPage.xaml.cs">
       <DependentUpon>NavigationRootPage.xaml</DependentUpon>
     </Compile>
