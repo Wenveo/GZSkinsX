@@ -3,11 +3,4 @@
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup Label="DotNet_Packages">
-    <PackageReference Include="PolySharp" Version="1.12.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 </Project>
