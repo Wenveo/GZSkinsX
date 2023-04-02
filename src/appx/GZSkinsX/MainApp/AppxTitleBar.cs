@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System.Composition;
 
 using GZSkinsX.Api.Appx;
@@ -45,6 +47,6 @@ internal sealed class AppxTitleBar : IAppxTitleBar
     }
 
     /// <inheritdoc/>
-    public void SetTitleBar(Windows.UI.Xaml.UIElement value)
+    public void SetTitleBar(Windows.UI.Xaml.UIElement? value)
     => _appxWindow.MainWindow.SetTitleBar(value);
 }

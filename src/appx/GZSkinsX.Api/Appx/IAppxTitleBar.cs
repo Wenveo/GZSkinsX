@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 namespace GZSkinsX.Api.Appx;
 
 /// <summary>
@@ -21,5 +23,5 @@ public interface IAppxTitleBar
     /// 设置当前窗口标题栏的界面元素
     /// </summary>
     /// <param name="value">需要设为标题栏的 UI 元素</param>
-    void SetTitleBar(Windows.UI.Xaml.UIElement value);
+    void SetTitleBar(Windows.UI.Xaml.UIElement? value);
 }
