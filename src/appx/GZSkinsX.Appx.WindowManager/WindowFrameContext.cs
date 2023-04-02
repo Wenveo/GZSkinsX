@@ -9,7 +9,7 @@ using System;
 
 using GZSkinsX.Api.WindowManager;
 
-namespace GZSkinsX.WindowManager;
+namespace GZSkinsX.Appx.WindowManager;
 
 /// <summary>
 /// 用于存储导出的 <see cref="IWindowFrame"/> 以及元数据 <see cref="WindowFrameMetadataAttribute"/> 的上下文

@@ -24,8 +24,6 @@
     <Compile Include="Scripting\ServiceLocator.cs" />
     <Compile Include="Settings\SettingsSection.cs" />
     <Compile Include="Settings\SettingsService.cs" />
-    <Compile Include="WindowManager\WindowFrameContext.cs" />
-    <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -134,6 +132,10 @@
     <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
       <Project>{92b1e3b4-92a4-4c0b-85a9-b83bc0287daf}</Project>
       <Name>GZSkinsX.Appx.StartUp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.WindowManager\GZSkinsX.Appx.WindowManager.csproj">
+      <Project>{5580f8b8-2da0-45f1-a45b-8272179d561d}</Project>
+      <Name>GZSkinsX.Appx.WindowManager</Name>
     </ProjectReference>
   </ItemGroup>
   <!-- FOR BUILD -->

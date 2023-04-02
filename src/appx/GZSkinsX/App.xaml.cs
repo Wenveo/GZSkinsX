@@ -131,5 +131,7 @@ public sealed partial class App : Application
         yield return typeof(Appx.Preload.AppxPreload).Assembly;
         // GZSkinsX.Appx.StartUp
         yield return typeof(Appx.StartUp.AppxStartUp).Assembly;
+        // GZSkinsX.Appx.WindowManager
+        yield return typeof(Appx.WindowManager.AppxWindowManager).Assembly;
     }
 }
