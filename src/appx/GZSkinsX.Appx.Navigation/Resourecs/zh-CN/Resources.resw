@@ -120,6 +120,9 @@
   <data name="AppTitle.Text" xml:space="preserve">
     <value>格子</value>
   </data>
+  <data name="NavigationGroup_DevTools_Header" xml:space="preserve">
+    <value>开发者工具</value>
+  </data>
   <data name="Query_NotResultsFound" xml:space="preserve">
     <value>未找到匹配的项</value>
   </data>

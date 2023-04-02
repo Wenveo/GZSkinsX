@@ -120,6 +120,9 @@
   <data name="AppTitle.Text" xml:space="preserve">
     <value>Gezi</value>
   </data>
+  <data name="NavigationGroup_DevTools_Header" xml:space="preserve">
+    <value>Dev Tools</value>
+  </data>
   <data name="Query_NotResultsFound" xml:space="preserve">
     <value>No results found</value>
   </data>
