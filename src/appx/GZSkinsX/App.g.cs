@@ -30,6 +30,8 @@ public sealed partial class App
             yield return typeof(global::GZSkinsX.Appx.Navigation.AppxNavigation).Assembly;
             // GZSkinsX.Appx.Preload
             yield return typeof(global::GZSkinsX.Appx.Preload.AppxPreload).Assembly;
+            // GZSkinsX.Appx.Settings
+            yield return typeof(global::GZSkinsX.Appx.Settings.AppxSettings).Assembly;
             // GZSkinsX.Appx.StartUp
             yield return typeof(global::GZSkinsX.Appx.StartUp.AppxStartUp).Assembly;
             // GZSkinsX.Appx.WindowManager

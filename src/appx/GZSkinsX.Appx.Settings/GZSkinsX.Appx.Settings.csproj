@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{98F53217-362A-40FE-A0AD-C16FCE8C2FE2}</ProjectGuid>
+    <RootNamespace>GZSkinsX.Appx.Settings</RootNamespace>
+    <AssemblyName>GZSkinsX.Appx.Settings</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AppxSettings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsSection.cs" />
+    <Compile Include="SettingsService.cs" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Appx.Settings.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\libraries\GZSkinsX.DotNet.Diagnostics\GZSkinsX.DotNet.Diagnostics.csproj">
+      <Project>{ca70472c-577b-4cd2-bfbf-29f13542be07}</Project>
+      <Name>GZSkinsX.DotNet.Diagnostics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
+      <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
+      <Name>GZSkinsX.Api</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- FOR BUILD -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
+  <!-- IMPORT COMMON PROPS -->
+  <Import Project="..\..\..\eng\uap.props" />
+</Project>

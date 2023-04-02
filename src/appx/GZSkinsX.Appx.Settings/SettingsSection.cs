@@ -16,7 +16,7 @@ using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Settings;
+namespace GZSkinsX.Appx.Settings;
 
 /// <inheritdoc cref="ISettingsSection"/>
 internal sealed class SettingsSection : ISettingsSection
