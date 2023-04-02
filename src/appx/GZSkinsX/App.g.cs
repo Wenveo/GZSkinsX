@@ -24,6 +24,8 @@ public sealed partial class App
             yield return typeof(global::GZSkinsX.Api.Appx.IAppxWindow).Assembly;
             // GZSkinsX.Appx.AccessCache
             yield return typeof(global::GZSkinsX.Appx.AccessCache.AppxAccessCache).Assembly;
+            // GZSkinsX.Appx.Game
+            yield return typeof(global::GZSkinsX.Appx.Game.AppxGame).Assembly;
             // GZSkinsX.Appx.MRT
             yield return typeof(global::GZSkinsX.Appx.MRT.AppxMRT).Assembly;
             // GZSkinsX.Appx.Navigation

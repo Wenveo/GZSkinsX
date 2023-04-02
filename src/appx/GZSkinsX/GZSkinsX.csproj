@@ -24,9 +24,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extension\ExtensionService.cs" />
-    <Compile Include="Game\GameData.cs" />
-    <Compile Include="Game\GameService.cs" />
-    <Compile Include="Game\GameSettings.cs" />
     <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />

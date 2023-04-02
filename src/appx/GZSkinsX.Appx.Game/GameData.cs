@@ -13,7 +13,7 @@ using System.Linq;
 
 using GZSkinsX.Api.Game;
 
-namespace GZSkinsX.Game;
+namespace GZSkinsX.Appx.Game;
 
 /// <inheritdoc cref="IGameData"/>
 internal sealed class GameData : IGameData
