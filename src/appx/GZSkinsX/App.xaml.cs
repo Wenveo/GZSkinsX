@@ -123,6 +123,8 @@ public sealed partial class App : Application
         yield return typeof(IAppxWindow).Assembly;
         // GZSkinsX.Appx.AccessCache
         yield return typeof(Appx.AccessCache.AppxAccessCache).Assembly;
+        // GZSkinsX.Appx.MRT
+        yield return typeof(Appx.MRT.AppxMRT).Assembly;
         // GZSkinsX.Appx.Navigation
         yield return typeof(Appx.Navigation.AppxNavigation).Assembly;
         // GZSkinsX.Appx.Preload

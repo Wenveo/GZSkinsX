@@ -20,8 +20,6 @@
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="MainApp\AutoExtendViewIntoTitleBar.cs" />
-    <Compile Include="MRT\MRTCoreMap.cs" />
-    <Compile Include="MRT\MRTCoreService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\ServiceLocator.cs" />
     <Compile Include="Settings\SettingsSection.cs" />
@@ -120,6 +118,10 @@
     <ProjectReference Include="..\GZSkinsX.Appx.AccessCache\GZSkinsX.Appx.AccessCache.csproj">
       <Project>{e600cf64-92f7-4e1e-99c2-d4245a03e443}</Project>
       <Name>GZSkinsX.Appx.AccessCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.MRT\GZSkinsX.Appx.MRT.csproj">
+      <Project>{777ad69a-34b6-44d7-8b2e-fae91f0aa6d3}</Project>
+      <Name>GZSkinsX.Appx.MRT</Name>
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.Navigation\GZSkinsX.Appx.Navigation.csproj">
       <Project>{b6a6c8af-5632-48fc-9a05-7a1163ca3ce9}</Project>
