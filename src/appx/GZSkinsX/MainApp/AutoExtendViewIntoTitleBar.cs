@@ -14,8 +14,8 @@ using Windows.UI;
 
 namespace GZSkinsX.MainApp;
 
-[Shared]
-[ExportAutoLoaded, AutoLoadedMetadata(LoadType = AutoLoadedType.AppLoaded)]
+[Shared, ExportAutoLoaded]
+[AutoLoadedMetadata(LoadType = AutoLoadedType.AppLoaded)]
 internal sealed class AutoExtendViewIntoTitleBar : IAutoLoaded
 {
     [ImportingConstructor]
