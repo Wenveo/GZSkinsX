@@ -35,6 +35,13 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
   </PropertyGroup>
 
   <!-- FOR BUILD -->
@@ -86,4 +93,8 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+
+  <Target Name="AA" AfterTargets="Build">
+    <Exec Command="echo ItemGroup: @(ItemGroup)"/>
+  </Target>
 </Project>
