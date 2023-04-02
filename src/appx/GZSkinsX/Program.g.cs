@@ -9,7 +9,7 @@
 
 namespace GZSkinsX;
 
-public sealed partial class App
+internal static partial class Program
 {
     /// <summary>
     /// 获取当前 Appx 引用程序集

@@ -12,9 +12,6 @@ using System.Composition.Hosting;
 using System.Diagnostics.CodeAnalysis;
 
 using GZSkinsX.Api.Scripting;
-using GZSkinsX.DotNet.Diagnostics;
-
-using Windows.UI.Xaml;
 
 namespace GZSkinsX.Scripting;
 
@@ -32,10 +29,7 @@ internal sealed class ServiceLocator : IServiceLocator
     /// </summary>
     public ServiceLocator()
     {
-        var mainApp = Application.Current as App;
-        Debug2.Assert(mainApp is not null);
-
-        _compositionHost = mainApp._compositionHost;
+        _compositionHost = Program.CompositionHost;
     }
 
     /// <inheritdoc/>

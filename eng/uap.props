@@ -7,10 +7,12 @@
   <PropertyGroup>
     <IsAppx Condition="'$(OutputType)' == 'AppContainerExe'">true</IsAppx>
     <IsAppx Condition="'$(OutputType)' != 'AppContainerExe'">false</IsAppx>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;</DefineConstants>
   </PropertyGroup>
 
   <!-- Application Properties -->
   <PropertyGroup Condition="'$(IsAppx)' == 'true'">
+    <DefineConstants>$(DefineConstants)DISABLE_XAML_GENERATED_MAIN;</DefineConstants>
     <Platform Condition="'$(Platform)' == ''">x64</Platform>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
@@ -66,14 +68,13 @@
 
   <!-- FOR DEBUG -->
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
   <!-- FOR RELEASE -->
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <NoWarn>;2008</NoWarn>

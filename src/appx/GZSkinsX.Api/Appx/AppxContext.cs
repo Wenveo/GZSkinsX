@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System;
 
 using Windows.ApplicationModel;
@@ -14,7 +16,7 @@ namespace GZSkinsX.Api.Appx;
 /// <summary>
 /// 当前 Appx 应用的上下文
 /// </summary>
-public static class AppxContext
+public static partial class AppxContext
 {
     /// <summary>
     /// 初始化 <see cref="AppxContext"/> 的静态成员

@@ -12,8 +12,6 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.Logging;
-using GZSkinsX.DotNet.Diagnostics;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 
@@ -76,20 +74,12 @@ internal sealed class AppxWindow : IAppxWindow
         Activated += OnAppLoaded;
     }
 
-    private void InitializeUIElement()
-    {
-#if DEBUG
-        _currentAppView.Title = "DEBUG";
-#endif
-    }
-
     /// <summary>
     /// 负责对已加载的应用程序扩展通知 AppLoaded 事件
     /// </summary>
     private void OnAppLoaded(object? sender, WindowActivatedEventArgs e)
     {
         Activated -= OnAppLoaded;
-        InitializeUIElement();
 
         _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
         _extensionService.LoadAutoLoaded(AutoLoadedType.AppLoaded);
@@ -122,20 +112,16 @@ internal sealed class AppxWindow : IAppxWindow
             _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
             Closed?.Invoke(this, new EventArgs());
 
-            // 获取当前 App
-            var mainApp = Application.Current as App;
-            Debug2.Assert(mainApp is not null);
-            // 调用内部方法以关闭日志输出流
-            var loggingService = mainApp._compositionHost.GetExport<ILoggingService>();
-            ((LoggingService)loggingService).CloseOutputStream();
+            // 关闭日志输出流
+            LoggerImpl.Shared.CloseOutputStream();
         }
     }
 
     /// <inheritdoc/>
     public void Activate()
-    => MainWindow.Activate();
+    => _shellWindow.Activate();
 
     /// <inheritdoc/>
     public void Close()
-    => MainWindow.Close();
+    => _shellWindow.Close();
 }

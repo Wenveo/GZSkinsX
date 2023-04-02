@@ -14,7 +14,7 @@
 
 namespace GZSkinsX;
 
-public sealed partial class App
+internal static partial class Program
 {
 <#
     var appxDirectory = Path.Combine("src", "appx");

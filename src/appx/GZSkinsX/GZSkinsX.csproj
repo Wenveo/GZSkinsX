@@ -8,16 +8,18 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.g.cs">
+    <Compile Include="Logging\LoggerImpl.cs" />
+    <Compile Include="Program.g.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>App.g.tt</DependentUpon>
+      <DependentUpon>Program.g.tt</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extension\ExtensionService.cs" />
     <Compile Include="Logging\LoggingService.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
@@ -30,9 +32,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.g.tt">
+    <Content Include="Program.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>App.g.cs</LastGenOutput>
+      <LastGenOutput>Program.g.cs</LastGenOutput>
     </Content>
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
