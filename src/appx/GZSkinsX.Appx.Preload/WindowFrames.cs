@@ -12,12 +12,14 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
 
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Globalization;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
@@ -33,14 +35,16 @@ internal sealed class ExportPreloadFrame : IWindowFrame
     private readonly ILoggingService _loggingService;
 
     [ImportingConstructor]
-    public ExportPreloadFrame(
-        IWindowManagerService windowManagerService,
-        PreloadSettings preloadSettings,
-        ILoggingService loggingService)
+    public ExportPreloadFrame(IAppxTitleBar appxTitleBar, IAppxTitleBarButton appxTitleBarButton,
+        ILoggingService loggingService, IWindowManagerService windowManagerService, PreloadSettings preloadSettings)
     {
         _windowManagerService = windowManagerService;
         _preloadSettings = preloadSettings;
         _loggingService = loggingService;
+
+        appxTitleBar.ExtendViewIntoTitleBar = true;
+        appxTitleBarButton.ButtonBackgroundColor = Colors.Transparent;
+        appxTitleBarButton.ButtonInactiveBackgroundColor = Colors.Transparent;
 
         if (Debugger.IsAttached)
         {
