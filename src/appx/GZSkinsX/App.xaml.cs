@@ -7,9 +7,7 @@
 
 #nullable enable
 
-using System.Collections.Generic;
 using System.Composition.Hosting;
-using System.Reflection;
 
 using GZSkinsX.Api.Appx;
 
@@ -110,28 +108,5 @@ public sealed partial class App : Application
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensionsLoaded);
-    }
-
-    /// <summary>
-    /// 获取当前 Appx 引用程序集
-    /// </summary>
-    private static IEnumerable<Assembly> GetAssemblies()
-    {
-        // Self Assembly
-        yield return typeof(App).Assembly;
-        // GZSkinsX.Api
-        yield return typeof(IAppxWindow).Assembly;
-        // GZSkinsX.Appx.AccessCache
-        yield return typeof(Appx.AccessCache.AppxAccessCache).Assembly;
-        // GZSkinsX.Appx.MRT
-        yield return typeof(Appx.MRT.AppxMRT).Assembly;
-        // GZSkinsX.Appx.Navigation
-        yield return typeof(Appx.Navigation.AppxNavigation).Assembly;
-        // GZSkinsX.Appx.Preload
-        yield return typeof(Appx.Preload.AppxPreload).Assembly;
-        // GZSkinsX.Appx.StartUp
-        yield return typeof(Appx.StartUp.AppxStartUp).Assembly;
-        // GZSkinsX.Appx.WindowManager
-        yield return typeof(Appx.WindowManager.AppxWindowManager).Assembly;
     }
 }
