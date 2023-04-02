@@ -44,6 +44,12 @@
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resourecs\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resourecs\en-US\Resources.resw" />
+  </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

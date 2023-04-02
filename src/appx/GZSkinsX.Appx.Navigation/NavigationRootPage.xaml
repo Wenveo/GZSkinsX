@@ -19,10 +19,10 @@
             IsHitTestVisible="True">
             <TextBlock
                 x:Name="AppTitle"
+                x:Uid="AppTitle"
                 Margin="0,15,0,0"
                 VerticalAlignment="Top"
-                Style="{StaticResource CaptionTextBlockStyle}"
-                Text="格子" />
+                Style="{StaticResource CaptionTextBlockStyle}" />
         </Border>
 
         <ContentPresenter x:Name="contentPresenter" />

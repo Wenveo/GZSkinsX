@@ -15,6 +15,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.Navigation;
 using GZSkinsX.DotNet.Diagnostics;
 
@@ -46,6 +47,11 @@ internal sealed class NavigationService : INavigationService
     /// 
     /// </summary>
     private readonly IEnumerable<Lazy<INavigationItem, NavigationItemMetadataAttribute>> _mefNavItems;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private readonly IMRTCoreService _mrtCoreService;
 
     /// <summary>
     /// 
@@ -92,10 +98,12 @@ internal sealed class NavigationService : INavigationService
     [ImportingConstructor]
     public NavigationService(
         [ImportMany] IEnumerable<Lazy<INavigationGroup, NavigationGroupMetadataAttribute>> mefNavGroups,
-        [ImportMany] IEnumerable<Lazy<INavigationItem, NavigationItemMetadataAttribute>> mefNavItems)
+        [ImportMany] IEnumerable<Lazy<INavigationItem, NavigationItemMetadataAttribute>> mefNavItems,
+        IMRTCoreService mrtCoreService)
     {
         _mefNavGroups = mefNavGroups;
         _mefNavItems = mefNavItems;
+        _mrtCoreService = mrtCoreService;
 
         _createdNavItems = new();
         _guidToNavItems = new();
@@ -331,7 +339,7 @@ internal sealed class NavigationService : INavigationService
         var autoSuggestBox = new AutoSuggestBox
         {
             MinWidth = 200d,
-            PlaceholderText = "Search",
+            PlaceholderText = GetLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/SearchBox_SearchText"),
             QueryIcon = new AnimatedIcon
             {
                 Source = new AnimatedFindVisualSource(),
@@ -387,7 +395,7 @@ internal sealed class NavigationService : INavigationService
             }
             else
             {
-                sender.ItemsSource = new string[] { "No results found" };
+                sender.ItemsSource = new string[] { GetLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/Query_NotResultsFound") };
             }
         }
     }
@@ -415,7 +423,7 @@ internal sealed class NavigationService : INavigationService
         {
             Tag = guid,
             Icon = context.Value.Icon,
-            Content = context.Metadata.Header,
+            Content = GetLocalizedOrDefault(context.Metadata.Header),
             SelectsOnInvoked = context.Metadata.PageType is not null
         };
 
@@ -430,6 +438,18 @@ internal sealed class NavigationService : INavigationService
 
         _createdNavItems.Add(guid, navItem);
         return navItem;
+    }
+
+    private string GetLocalizedOrDefault(string resourceKey)
+    {
+        if (resourceKey.StartsWith("resx:"))
+        {
+            return _mrtCoreService.MainResourceMap.GetString(resourceKey[5..]);
+        }
+        else
+        {
+            return resourceKey;
+        }
     }
 
     private NavigationItemContext? GetCurrentNavItemCtx()

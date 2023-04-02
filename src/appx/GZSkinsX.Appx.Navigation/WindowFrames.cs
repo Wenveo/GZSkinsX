@@ -13,7 +13,6 @@ using GZSkinsX.Api.Navigation;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Appx.Navigation;
