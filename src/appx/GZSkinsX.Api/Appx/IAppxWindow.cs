@@ -21,7 +21,7 @@ namespace GZSkinsX.Api.Appx;
 public interface IAppxWindow
 {
     /// <summary>
-    /// 当前应用主视图
+    /// 当前应用程序主视图
     /// </summary>
     ApplicationView ApplicationView { get; }
 

@@ -6,7 +6,6 @@
     <AssemblyName>GZSkinsX.Appx.Preload</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="AppxPreload.cs" />
     <Compile Include="PreloadPage.xaml.cs">
@@ -17,28 +16,24 @@
     <Compile Include="WindowFrames.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.Preload.rd.xml" />
   </ItemGroup>
-
   <ItemGroup>
     <Page Include="PreloadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
   <ItemGroup>
     <PRIResource Include="Resources\zh-CN\Resources.resw" />
     <PRIResource Include="Resources\en-US\Resources.resw" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
   </ItemGroup>
-
   <!-- FOR BUILD -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'"/>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
   <Import Project="..\..\..\eng\uap.props" />
 </Project>
