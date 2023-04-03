@@ -5,10 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System.CodeDom.Compiler;
 using System.Composition.Hosting;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
@@ -48,14 +46,10 @@ public sealed partial class StartUpClass
         s_compositionHost = configuration.CreateContainer();
     }
 
-    [GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks", " 0.0.0.0")]
-    [DebuggerNonUserCodeAttribute]
+    [DebuggerNonUserCode]
     public static void Main(string[] args)
     {
-        Application.Start(async (p) =>
-        {
-            await InitializeServicesAsync(p, new App());
-        });
+        Application.Start((p) => InitializeServices(p, new App()));
     }
 
     /// <summary>
@@ -63,7 +57,8 @@ public sealed partial class StartUpClass
     /// </summary>
     /// <param name="parms">应用程序初始化时的参数</param>
     /// <param name="mainApp">用于初始化的应用程序</param>
-    private static async Task InitializeServicesAsync(ApplicationInitializationCallbackParams parms, App mainApp)
+    [DebuggerNonUserCode]
+    private static async void InitializeServices(ApplicationInitializationCallbackParams parms, App mainApp)
     {
         await LoggerImpl.Shared.InitializeAsync();
 
