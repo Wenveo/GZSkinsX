@@ -13,7 +13,11 @@
     <Compile Include="AccessCache\IFutureAccessService.cs" />
     <Compile Include="AccessCache\IMostRecentlyUsedService.cs" />
     <Compile Include="Appx\AppxContext.cs" />
-    <Compile Include="Appx\AppxContext.Services.cs" />
+    <Compile Include="Appx\AppxContext.Services.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppxContext.Services.g.tt</DependentUpon>
+    </Compile>
     <Compile Include="Appx\IAppxTitleBar.cs" />
     <Compile Include="Appx\IAppxTitleBarButton.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
@@ -60,6 +64,15 @@
     <PackageReference Include="System.Composition.AttributedModel">
       <Version>7.0.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Appx\AppxContext.Services.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
