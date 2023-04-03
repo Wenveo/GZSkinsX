@@ -8,23 +8,38 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
-    <Grid
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        RowSpacing="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <muxc:ProgressRing
-            Grid.Row="0"
-            Width="80"
-            Height="80"
-            IsIndeterminate="True" />
-        <TextBlock
-            x:Uid="Appx_Preload_Loading_Title"
-            Grid.Row="1"
-            FontSize="24"
-            FontWeight="Bold" />
+    <Grid>
+        <StackPanel
+            x:Name="CrashContent"
+            Margin="20,0,20,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            Spacing="12"
+            Visibility="Collapsed">
+            <RichTextBlock
+                FontSize="16"
+                FontWeight="Bold"
+                TextWrapping="Wrap">
+                <Paragraph>
+                    <Run x:Name="CrashTextHost" />
+                </Paragraph>
+            </RichTextBlock>
+        </StackPanel>
+        <StackPanel
+            x:Name="DefaultContent"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            Spacing="20">
+            <muxc:ProgressRing
+                Width="80"
+                Height="80"
+                IsIndeterminate="True" />
+            <TextBlock
+                x:Uid="Appx_Preload_Loading_Title"
+                FontSize="24"
+                FontWeight="Bold" />
+        </StackPanel>
     </Grid>
 </Page>

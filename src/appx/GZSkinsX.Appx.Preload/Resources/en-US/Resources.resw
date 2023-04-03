@@ -120,4 +120,10 @@
   <data name="Appx_Preload_Loading_Title.Text" xml:space="preserve">
     <value>Loading</value>
   </data>
+  <data name="Crash_Failed_To_Check_Access" xml:space="preserve">
+    <value>Catastrophic failure: The application is missing core components or has been compromised.</value>
+  </data>
+  <data name="Crash_Failed_To_Find_Component" xml:space="preserve">
+    <value>Catastrophic failure: Component cannot be found IID='{0}'.</value>
+  </data>
 </root>

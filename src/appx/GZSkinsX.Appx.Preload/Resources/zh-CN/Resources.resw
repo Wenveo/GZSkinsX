@@ -120,4 +120,10 @@
   <data name="Appx_Preload_Loading_Title.Text" xml:space="preserve">
     <value>正在加载中</value>
   </data>
+  <data name="Crash_Failed_To_Check_Access" xml:space="preserve">
+    <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
+  </data>
+  <data name="Crash_Failed_To_Find_Component" xml:space="preserve">
+    <value>灾难性故障：找不到组件 IID='{0}'。</value>
+  </data>
 </root>
