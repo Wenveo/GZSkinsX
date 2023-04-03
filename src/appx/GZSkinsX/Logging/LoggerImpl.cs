@@ -44,11 +44,6 @@ internal sealed class LoggerImpl
     private StreamWriter? _logWriter;
 
     /// <summary>
-    /// 获取和判断日志器是否已进行初始化操作
-    /// </summary>
-    private bool _isInitialize;
-
-    /// <summary>
     /// 初始化 <see cref="LoggerImpl"/> 的新实例
     /// </summary>
     private LoggerImpl()
@@ -61,22 +56,18 @@ internal sealed class LoggerImpl
     /// </summary>
     public async Task InitializeAsync()
     {
-        if (_isInitialize)
+        if (_logWriter is null)
         {
-            return;
+            var _logsFolder = await ApplicationData.Current.LocalFolder
+                .CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
+
+            var _loggingFile = await _logsFolder.CreateFileAsync(
+                string.Format("{0:yyyy-MM-ddTHH-mm-ss}_cor3.log", DateTime.Now),
+                    CreationCollisionOption.ReplaceExisting);
+
+            var stream = await _loggingFile.OpenStreamForWriteAsync();
+            _logWriter = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
         }
-
-        var _logsFolder = await ApplicationData.Current.LocalFolder
-            .CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
-
-        var _loggingFile = await _logsFolder.CreateFileAsync(
-            string.Format("{0:yyyy-MM-ddTHH-mm-ss}_cor3.log", DateTime.Now),
-                CreationCollisionOption.ReplaceExisting);
-
-        var stream = await _loggingFile.OpenStreamForWriteAsync();
-        _logWriter = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
-
-        _isInitialize = true;
     }
 
     /// <summary>
@@ -106,7 +97,6 @@ internal sealed class LoggerImpl
                 _logWriter.Dispose();
 
                 _logWriter = null;
-                _isInitialize = false;
             }
         }
     }
