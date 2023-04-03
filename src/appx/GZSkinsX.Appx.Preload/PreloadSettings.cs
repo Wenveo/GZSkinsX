@@ -7,47 +7,27 @@
 
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Settings;
 
 namespace GZSkinsX.Appx.Preload;
 
-/// <summary>
-/// 
-/// </summary>
 [Shared, Export]
 internal sealed class PreloadSettings
 {
-    /// <summary>
-    /// 
-    /// </summary>
     private const string THE_GUID = "F4523D71-8866-4241-9F5B-D56D850BD878";
-
-    /// <summary>
-    /// 
-    /// </summary>
     private const string ISINITIALIZE_NAME = "IsInitialize";
 
-    /// <summary>
-    /// 
-    /// </summary>
     private readonly ISettingsSection _settingsSection;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool IsInitialize
     {
         get => _settingsSection.Attribute<bool>(ISINITIALIZE_NAME);
         set => _settingsSection.Attribute(ISINITIALIZE_NAME, value);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="settingsService"></param>
-    [ImportingConstructor]
-    public PreloadSettings(ISettingsService settingsService)
+    public PreloadSettings()
     {
-        _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
+        _settingsSection = AppxContext.SettingsService.GetOrCreateSection(THE_GUID);
     }
 }
