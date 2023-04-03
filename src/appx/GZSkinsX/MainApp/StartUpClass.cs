@@ -68,19 +68,20 @@ public sealed partial class StartUpClass
         await LoggerImpl.Shared.InitializeAsync();
 
         // 这部分可能看着有些别扭，但这里必须先获取导出
-        // 的 ExtensionService，随后开始输出日志消息
+        // 的 ExtensionService，然后开始输出日志消息
         var extensionService = s_compositionHost.GetExport<ExtensionService>();
         var serviceLocator = s_compositionHost.GetExport<IServiceLocator>();
         AppxContext.InitializeLifetimeService(parms, serviceLocator);
         extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
 
         // 合并扩展组件的资源字典至主程序内
-        var mergedResources = new XamlControlsResources();
+        var xamlControlsResources = new XamlControlsResources();
+        var mergedResourceDictionaries = xamlControlsResources.MergedDictionaries;
         foreach (var rsrc in extensionService.GetMergedResourceDictionaries())
         {
-            mergedResources.MergedDictionaries.Add(rsrc);
+            mergedResourceDictionaries.Add(rsrc);
         }
-        mainApp.Resources = mergedResources;
+        mainApp.Resources = xamlControlsResources;
 
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);
