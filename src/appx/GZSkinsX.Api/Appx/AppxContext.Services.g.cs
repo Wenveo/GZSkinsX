@@ -62,11 +62,27 @@ public static partial class AppxContext
     }
 
     /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.MRT.IMRTCoreService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.MRT.IMRTCoreService MRTCoreService
+    {
+        get => CheckAccess(ref s_mRTCoreService);
+    }
+
+    /// <summary>
     /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Scripting.IServiceLocator"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Scripting.IServiceLocator ServiceLocator
     {
         get => CheckAccess(ref s_serviceLocator);
+    }
+
+    /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Settings.ISettingsService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.Settings.ISettingsService SettingsService
+    {
+        get => CheckAccess(ref s_settingsService);
     }
 
     /// <summary>
@@ -92,5 +108,7 @@ public static partial class AppxContext
     private static global::GZSkinsX.Api.Appx.IAppxTitleBar? s_appxTitleBar;
     private static global::GZSkinsX.Api.Appx.IAppxTitleBarButton? s_appxTitleBarButton;
     private static global::GZSkinsX.Api.Logging.ILoggingService? s_loggingService;
+    private static global::GZSkinsX.Api.MRT.IMRTCoreService? s_mRTCoreService;
     private static global::GZSkinsX.Api.Scripting.IServiceLocator? s_serviceLocator;
+    private static global::GZSkinsX.Api.Settings.ISettingsService? s_settingsService;
 }

@@ -27,7 +27,9 @@ public static partial class AppxContext
         "global::GZSkinsX.Api.Appx.IAppxTitleBar",
         "global::GZSkinsX.Api.Appx.IAppxTitleBarButton",
         "global::GZSkinsX.Api.Logging.ILoggingService",
+        "global::GZSkinsX.Api.MRT.IMRTCoreService",
         "global::GZSkinsX.Api.Scripting.IServiceLocator",
+        "global::GZSkinsX.Api.Settings.ISettingsService",
     };
 
     var shortNames = new List<string>(services.Count);
