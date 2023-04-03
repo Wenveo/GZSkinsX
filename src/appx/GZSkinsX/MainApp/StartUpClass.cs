@@ -16,15 +16,17 @@ using GZSkinsX.Api.Scripting;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 
+using Microsoft.UI.Xaml.Controls;
+
 using Windows.UI.Xaml;
 
-namespace GZSkinsX;
+namespace GZSkinsX.MainApp;
 
 #if DISABLE_XAML_GENERATED_MAIN
 /// <summary>
 /// 自定义的程序启动类
 /// </summary>
-internal static partial class Program
+public sealed partial class StartUpClass
 {
     /// <summary>
     /// 当前组件容器的宿主实例
@@ -37,9 +39,9 @@ internal static partial class Program
     public static CompositionHost CompositionHost => s_compositionHost;
 
     /// <summary>
-    /// 初始化 <see cref="Program"/> 的静态成员
+    /// 初始化 <see cref="StartUpClass"/> 的静态成员
     /// </summary>
-    static Program()
+    static StartUpClass()
     {
         var configuration = new ContainerConfiguration();
         configuration.WithAssemblies(GetAssemblies());
@@ -65,15 +67,20 @@ internal static partial class Program
     {
         await LoggerImpl.Shared.InitializeAsync();
 
+        // 这部分可能看着有些别扭，但这里必须先获取导出
+        // 的 ExtensionService，随后开始输出日志消息
         var extensionService = s_compositionHost.GetExport<ExtensionService>();
         var serviceLocator = s_compositionHost.GetExport<IServiceLocator>();
         AppxContext.InitializeLifetimeService(parms, serviceLocator);
-
         extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
+
+        // 合并扩展组件的资源字典至主程序内
+        var mergedResources = new XamlControlsResources();
         foreach (var rsrc in extensionService.GetMergedResourceDictionaries())
         {
-            mainApp.Resources.MergedDictionaries.Add(rsrc);
+            mergedResources.MergedDictionaries.Add(rsrc);
         }
+        mainApp.Resources = mergedResources;
 
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);

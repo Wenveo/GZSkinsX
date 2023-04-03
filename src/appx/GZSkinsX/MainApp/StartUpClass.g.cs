@@ -7,9 +7,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX;
+namespace GZSkinsX.MainApp;
 
-internal static partial class Program
+partial class StartUpClass
 {
     /// <summary>
     /// 获取当前 Appx 引用程序集
@@ -19,7 +19,7 @@ internal static partial class Program
         // Main Appx
         {
             // Self Assembly
-            yield return typeof(global::GZSkinsX.App).Assembly;
+            yield return typeof(global::GZSkinsX.MainApp.App).Assembly;
             // GZSkinsX.Api
             yield return typeof(global::GZSkinsX.Api.Appx.IAppxWindow).Assembly;
             // GZSkinsX.Appx.AccessCache

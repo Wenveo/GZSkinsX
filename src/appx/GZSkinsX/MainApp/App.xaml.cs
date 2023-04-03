@@ -5,8 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
-
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.WindowManager;
 
@@ -16,7 +14,7 @@ using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX;
+namespace GZSkinsX.MainApp;
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.
@@ -42,7 +40,7 @@ public sealed partial class App : Application
         var appxWindow = AppxContext.AppxWindow;
         if (appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
         {
-            if (Program.CompositionHost.TryGetExport<IWindowManagerService>(out var windowManagerService))
+            if (StartUpClass.CompositionHost.TryGetExport<IWindowManagerService>(out var windowManagerService))
             {
                 windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             }

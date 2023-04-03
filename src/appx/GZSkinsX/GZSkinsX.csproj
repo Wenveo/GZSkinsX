@@ -9,17 +9,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Logging\LoggerImpl.cs" />
-    <Compile Include="Program.g.cs">
+    <Compile Include="MainApp\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainApp\StartUpClass.g.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Program.g.tt</DependentUpon>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+      <DependentUpon>StartUpClass.g.tt</DependentUpon>
     </Compile>
     <Compile Include="Extension\ExtensionService.cs" />
     <Compile Include="Logging\LoggingService.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="MainApp\StartUpClass.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
@@ -32,9 +32,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Program.g.tt">
+    <Content Include="MainApp\StartUpClass.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Program.g.cs</LastGenOutput>
+      <LastGenOutput>StartUpClass.g.cs</LastGenOutput>
     </Content>
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
@@ -96,12 +96,6 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.HashCode">
       <Version>1.1.1</Version>
     </PackageReference>
@@ -122,6 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="MainApp\App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
