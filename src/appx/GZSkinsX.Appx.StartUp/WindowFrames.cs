@@ -6,14 +6,10 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Composition;
-using System.Threading.Tasks;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
-using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.WindowManager;
-using GZSkinsX.DotNet.Diagnostics;
-
-using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Appx.StartUp;
 
@@ -21,50 +17,31 @@ namespace GZSkinsX.Appx.StartUp;
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
 internal sealed class ExportStartUpFrame : IWindowFrame
 {
-    private readonly IServiceLocator _serviceLocator;
     private readonly IGameService _gameService;
     private readonly IWindowManagerService _windowManagerService;
 
-    private bool _isInvalid;
-
-    [ImportingConstructor]
-    public ExportStartUpFrame(IServiceLocator serviceLocator)
+    public ExportStartUpFrame()
     {
-        _serviceLocator = serviceLocator;
-        _gameService = serviceLocator.Resolve<IGameService>();
-        _windowManagerService = serviceLocator.Resolve<IWindowManagerService>();
+        var resolver = AppxContext.ServiceLocator;
+        _gameService = resolver.Resolve<IGameService>();
+        _windowManagerService = resolver.Resolve<IWindowManagerService>();
     }
 
-    public async Task OnNavigateFromAsync()
-    {
-        await Task.CompletedTask;
-    }
-
-    /// <inheritdoc/>
-    public async Task OnNavigateToAsync(NavigationEventArgs args)
-    {
-        var startUpPage = args.Content as StartUpPage;
-        Debug2.Assert(startUpPage is not null);
-        startUpPage.InitializeContext(_serviceLocator, _isInvalid);
-
-        await Task.CompletedTask;
-    }
-
-    /// <inheritdoc/>
-    public async Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args)
+    public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
         if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
         {
             _windowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
-            args.Handled = true;
+            return false;
         }
         else
         {
-            _isInvalid = _gameService.CurrentRegion != GameRegion.Unknown ||
+            // IsInvalid
+            args.Parameter = _gameService.CurrentRegion != GameRegion.Unknown ||
                 string.IsNullOrEmpty(_gameService.RootDirectory) is false;
-        }
 
-        await Task.CompletedTask;
+            return true;
+        }
     }
 }
 

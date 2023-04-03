@@ -5,11 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System.Threading.Tasks;
-
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-
 namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
@@ -18,19 +13,9 @@ namespace GZSkinsX.Api.WindowManager;
 public interface IWindowFrame
 {
     /// <summary>
-    /// 在离开当前页面时触发，可在此进行取消事件注册等相关操作
+    /// 获取当前 <see cref="IWindowFrame"/> 是否可以进行导航
     /// </summary>
-    Task OnNavigateFromAsync();
-
-    /// <summary>
-    /// 在导航至目标页面时触发，可对目标页面属性进行更改及调整
-    /// </summary>
-    /// <param name="args"><seealso cref="Frame"/> 的导航事件参数</param>
-    Task OnNavigateToAsync(NavigationEventArgs args);
-
-    /// <summary>
-    /// 在进入导航操作时触发，可在导航到目标页面前进行相关操作
-    /// </summary>
-    /// <param name="args">导航的事件参数</param>
-    Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args);
+    /// <param name="args">进入导航时的事件参数</param>
+    /// <returns>如果可以导航至目标 <see cref="IWindowFrame"/> 则返回 true，否则返回 false</returns>
+    bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args);
 }

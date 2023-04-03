@@ -11,24 +11,18 @@ using GZSkinsX.Api.WindowManager;
 
 namespace GZSkinsX.Appx.WindowManager;
 
-/// <summary>
-/// 用于存储导出的 <see cref="IWindowFrame"/> 以及元数据 <see cref="WindowFrameMetadataAttribute"/> 的上下文
-/// </summary>
-internal sealed class WindowFrameContext
+/// <inheritdoc cref="IWindowFrameContext"/>
+internal sealed class WindowFrameContext : IWindowFrameContext
 {
     /// <summary>
     /// 当前上下文中的懒加载对象
     /// </summary>
     private readonly Lazy<IWindowFrame, WindowFrameMetadataAttribute> _lazy;
 
-    /// <summary>
-    /// 获取当前懒加载对象的值
-    /// </summary>
+    /// <inheritdoc/>
     public IWindowFrame Value => _lazy.Value;
 
-    /// <summary>
-    /// 获取当前懒加载对象的元数据
-    /// </summary>
+    /// <inheritdoc/>
     public WindowFrameMetadataAttribute Metadata => _lazy.Metadata;
 
     /// <summary>

@@ -15,6 +15,7 @@ using GZSkinsX.Api.Navigation;
 using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 
@@ -27,36 +28,39 @@ namespace GZSkinsX.Appx.Navigation;
 /// </summary>
 public sealed partial class NavigationRootPage : Page
 {
-    private NavigationService? _navigationService;
-    private IAppxTitleBar? _appxTitleBar;
+    private readonly NavigationService _navigationService;
+    private readonly IAppxTitleBar _appxTitleBar;
 
     public NavigationRootPage()
     {
+        var resolver = AppxContext.ServiceLocator;
+
+        _appxTitleBar = AppxContext.AppxTitleBar;
+        _navigationService = (NavigationService)resolver.Resolve<INavigationService>();
+
         InitializeComponent();
     }
 
-    internal void OnLoaded(INavigationService navigationService, IAppxTitleBar appxTitleBar)
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        _navigationService = (NavigationService)navigationService;
         _navigationService._navigationViewRoot.DisplayModeChanged += OnNavDisplayModeChanged;
         _navigationService._navigationViewRoot.PaneClosing += OnNavPaneClosing;
         _navigationService._navigationViewRoot.PaneOpening += OnNavPaneOpening;
         contentPresenter.Content = _navigationService._navigationViewRoot;
 
-        _appxTitleBar = appxTitleBar;
         _appxTitleBar.SetTitleBar(AppTitleBar);
+        base.OnNavigatedTo(e);
     }
 
-    internal void OnUnloaded()
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
-        if (_navigationService is not null)
-        {
-            _navigationService._navigationViewRoot.DisplayModeChanged -= OnNavDisplayModeChanged;
-            _navigationService._navigationViewRoot.PaneClosing -= OnNavPaneClosing;
-            _navigationService._navigationViewRoot.PaneOpening -= OnNavPaneOpening;
-        }
+        _navigationService._navigationViewRoot.DisplayModeChanged -= OnNavDisplayModeChanged;
+        _navigationService._navigationViewRoot.PaneClosing -= OnNavPaneClosing;
+        _navigationService._navigationViewRoot.PaneOpening -= OnNavPaneOpening;
+        contentPresenter.Content = null;
 
-        _appxTitleBar?.SetTitleBar(null);
+        _appxTitleBar.SetTitleBar(null);
+        base.OnNavigatedFrom(e);
     }
 
     private void OnNavPaneClosing(MUXC.NavigationView sender, MUXC.NavigationViewPaneClosingEventArgs args)

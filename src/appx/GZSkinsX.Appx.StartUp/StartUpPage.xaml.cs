@@ -10,15 +10,16 @@
 using System;
 
 using GZSkinsX.Api.AccessCache;
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.MRT;
-using GZSkinsX.Api.Scripting;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,24 +30,28 @@ namespace GZSkinsX.Appx.StartUp;
 /// </summary>
 public sealed partial class StartUpPage : Page
 {
-    private IMRTCoreMap? _mrtCoreMap;
-    private IServiceLocator? _serviceLocator;
-    private IGameService? _gameService;
-    private IWindowManagerService? _windowManagerService;
+    private readonly IWindowManagerService _windowManagerService;
+    private readonly IFutureAccessService _futureAccessService;
+    private readonly IGameService _gameService;
+    private readonly IMRTCoreMap _mrtCoreMap;
 
     public StartUpPage()
     {
+        var resolver = AppxContext.ServiceLocator;
+
+        _windowManagerService = resolver.Resolve<IWindowManagerService>();
+        _futureAccessService = resolver.Resolve<IFutureAccessService>();
+        _gameService = resolver.Resolve<IGameService>();
+
+        var mrtCoreService = resolver.Resolve<IMRTCoreService>();
+        _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
+
         InitializeComponent();
     }
 
-    internal void InitializeContext(IServiceLocator serviceLocator, bool isInvalid)
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        _serviceLocator = serviceLocator;
-        _gameService = serviceLocator.Resolve<IGameService>();
-        _windowManagerService = serviceLocator.Resolve<IWindowManagerService>();
-
-        var mrtCoreService = serviceLocator.Resolve<IMRTCoreService>();
-        _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
+        var isInvalid = e.Parameter is bool b && b;
 
         // 设置标题
         var resTitle = _mrtCoreMap.GetString(isInvalid
@@ -60,6 +65,15 @@ public sealed partial class StartUpPage : Page
 
         var tencentRes = _mrtCoreMap.GetString("Appx_StartUp_Initialize_Region_Tencent");
         Appx_StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
+
+        base.OnNavigatedTo(e);
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e)
+    {
+        Appx_StartUp_Initialize_Title.Text = string.Empty;
+        Appx_StartUp_Initialize_Region_Selector.Items.Clear();
+        base.OnNavigatedFrom(e);
     }
 
     private async void OnBrowser(object sender, RoutedEventArgs e)
@@ -67,9 +81,7 @@ public sealed partial class StartUpPage : Page
         var folder = await new FolderPicker().PickSingleFolderAsync();
         if (folder is not null)
         {
-            Debug2.Assert(_serviceLocator is not null);
-            var futureAccessService = _serviceLocator.Resolve<IFutureAccessService>();
-            futureAccessService.Add(folder, FutureAccessItemConstants.Game_Directory_Name);
+            _futureAccessService.Add(folder, FutureAccessItemConstants.Game_Directory_Name);
 
             Appx_StartUp_Initialize_Directory_TextBox.Text = folder.Path;
         }

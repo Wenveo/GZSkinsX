@@ -8,12 +8,17 @@
 namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// 导航的事件参数，当触发导航操作时被使用
+/// 用于存储导出的 <see cref="IWindowFrame"/> 对象以及上下文数据
 /// </summary>
-public sealed class WindowFrameNavigatingEventArgs : System.EventArgs
+public interface IWindowFrameContext
 {
     /// <summary>
-    /// 表示当前事件是否已经被处理；当为 true 时表明当前事件已被处理且不再继续往下执行
+    /// 获取当前上下文的 <see cref="IWindowFrame"/> 对象
     /// </summary>
-    public bool Handled { get; set; }
+    IWindowFrame Value { get; }
+
+    /// <summary>
+    /// 获取当前上下文的 <see cref="WindowFrameMetadataAttribute"/> 元数据
+    /// </summary>
+    WindowFrameMetadataAttribute Metadata { get; }
 }

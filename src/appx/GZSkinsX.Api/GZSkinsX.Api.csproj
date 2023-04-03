@@ -54,10 +54,11 @@
     <Compile Include="Settings\SettingsType.cs" />
     <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
     <Compile Include="WindowManager\IWindowFrame.cs" />
+    <Compile Include="WindowManager\IWindowFrameContext.cs" />
     <Compile Include="WindowManager\IWindowManagerService.cs" />
     <Compile Include="WindowManager\WindowFrameConstants.cs" />
     <Compile Include="WindowManager\WindowFrameMetadataAttribute.cs" />
-    <Compile Include="WindowManager\WindowFrameNavigatingEventArgs.cs" />
+    <Compile Include="WindowManager\WindowFrameNavigatingEvnetArgs.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,6 @@ using System.Composition;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Logging;
@@ -22,7 +21,6 @@ using Windows.Globalization;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
 
 namespace GZSkinsX.Appx.Preload;
 
@@ -30,46 +28,34 @@ namespace GZSkinsX.Appx.Preload;
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
 internal sealed class ExportPreloadFrame : IWindowFrame
 {
-    private readonly IWindowManagerService _windowManagerService;
-    private readonly PreloadSettings _preloadSettings;
     private readonly ILoggingService _loggingService;
+    private readonly PreloadSettings _preloadSettings;
 
-    [ImportingConstructor]
-    public ExportPreloadFrame(IAppxTitleBar appxTitleBar, IAppxTitleBarButton appxTitleBarButton,
-        ILoggingService loggingService, IWindowManagerService windowManagerService, PreloadSettings preloadSettings)
+    public ExportPreloadFrame()
     {
-        _windowManagerService = windowManagerService;
-        _preloadSettings = preloadSettings;
-        _loggingService = loggingService;
+        var resolver = AppxContext.ServiceLocator;
+        _loggingService = AppxContext.LoggingService;
+        _preloadSettings = resolver.Resolve<PreloadSettings>();
 
-        appxTitleBar.ExtendViewIntoTitleBar = true;
-        appxTitleBarButton.ButtonBackgroundColor = Colors.Transparent;
-        appxTitleBarButton.ButtonInactiveBackgroundColor = Colors.Transparent;
+        AppxContext.AppxTitleBar.ExtendViewIntoTitleBar = true;
+        AppxContext.AppxTitleBarButton.ButtonBackgroundColor = Colors.Transparent;
+        AppxContext.AppxTitleBarButton.ButtonInactiveBackgroundColor = Colors.Transparent;
 
         if (Debugger.IsAttached)
         {
             Application.Current.DebugSettings.EnableFrameRateCounter = true;
         }
-    }
 
-    public async Task OnNavigateFromAsync()
-    {
-        await Task.CompletedTask;
+        InitializeMainWindow();
     }
 
     /// <inheritdoc/>
-    public async Task OnNavigateToAsync(NavigationEventArgs args)
+    public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        var random = new Random();
-        var waitingTime = random.Next(1000, 2000);
-        Debug.WriteLine($"AppxPreload: Waiting Time = {waitingTime}");
-        await Task.Delay(waitingTime);
-
-        _windowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+        return true;
     }
 
-    /// <inheritdoc/>
-    public async Task OnNavigatingAsync(WindowFrameNavigatingEventArgs args)
+    private void InitializeMainWindow()
     {
         var minWindowSize = SizeHelper.FromDimensions(720, 480);
         var appView = ApplicationView.GetForCurrentView();
@@ -107,10 +93,7 @@ internal sealed class ExportPreloadFrame : IWindowFrame
             }
         }
 
-        _loggingService.LogDebug(
-            $"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
-
-        await Task.CompletedTask;
+        _loggingService.LogDebug($"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
     }
 
     [ContractVersion(typeof(UniversalApiContract), 65536u)]
