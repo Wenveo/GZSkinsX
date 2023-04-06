@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <ItemGroup Label="DotNet_Packages">
-    <PackageReference Include="PolySharp" Version="1.12.1">
+    <PackageReference Include="PolySharp" Version="1.13.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
