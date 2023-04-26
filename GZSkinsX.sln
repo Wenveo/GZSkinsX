@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Uwp.Composition", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Preload", "src\appx\GZSkinsX.Appx.Preload\GZSkinsX.Appx.Preload.csproj", "{AF4F7004-C24F-40BE-B145-B420AEB1AEF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Uwp.UI.SettingsControls", "src\libraries\GZSkinsX.Uwp.UI.SettingsControls\GZSkinsX.Uwp.UI.SettingsControls.csproj", "{8884EFB7-02B2-4DD3-85BC-48D95EE21804}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Uwp.UI", "src\libraries\GZSkinsX.Uwp.UI\GZSkinsX.Uwp.UI.csproj", "{8884EFB7-02B2-4DD3-85BC-48D95EE21804}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Uwp.UI.Toolkit", "src\libraries\GZSkinsX.Uwp.UI.Toolkit\GZSkinsX.Uwp.UI.Toolkit.csproj", "{8FF44D52-4886-489A-950C-9DA5AD62B90E}"
 EndProject

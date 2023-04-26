@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
-namespace GZSkinsX.Uwp.UI.SettingsControls;
+namespace GZSkinsX.Uwp.UI.Controls;
 
 [ContentProperty(Name = nameof(Content))]
 public partial class SettingsExpander

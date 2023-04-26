@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
-namespace GZSkinsX.Uwp.UI.SettingsControls;
+namespace GZSkinsX.Uwp.UI.Controls;
 
 public partial class SettingsCard : ButtonBase
 {

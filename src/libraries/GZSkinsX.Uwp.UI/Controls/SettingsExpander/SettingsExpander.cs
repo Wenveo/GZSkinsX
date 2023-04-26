@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Uwp.UI.SettingsControls;
+namespace GZSkinsX.Uwp.UI.Controls;
 
 //// Note: ItemsRepeater will request all the available horizontal space: https://github.com/microsoft/microsoft-ui-xaml/issues/3842
 [TemplatePart(Name = PART_ItemsRepeater, Type = typeof(ItemsRepeater))]

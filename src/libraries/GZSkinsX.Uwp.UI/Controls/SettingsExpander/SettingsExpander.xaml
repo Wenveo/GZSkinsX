@@ -2,13 +2,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:local="using:GZSkinsX.Uwp.UI.SettingsControls"
+    xmlns:local="using:GZSkinsX.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///GZSkinsX.Uwp.UI.SettingsControls/SettingsCard/SettingsCard.xaml" />
+        <ResourceDictionary Source="ms-appx:///GZSkinsX.Uwp.UI/Controls/SettingsCard/SettingsCard.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <x:String x:Key="SettingsExpanderChevronToolTip">Show all settings</x:String>
