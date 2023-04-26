@@ -67,10 +67,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Appx\AppxContext.Services.g.tt">
+    <None Include="Appx\AppxContext.Services.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
