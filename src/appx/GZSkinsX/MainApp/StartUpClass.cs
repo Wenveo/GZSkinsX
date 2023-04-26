@@ -16,6 +16,7 @@ using GZSkinsX.Logging;
 
 using Microsoft.UI.Xaml.Controls;
 
+using Windows.System;
 using Windows.UI.Xaml;
 
 namespace GZSkinsX.MainApp;
@@ -76,7 +77,16 @@ public sealed partial class StartUpClass
         {
             mergedResourceDictionaries.Add(rsrc);
         }
-        mainApp.Resources = xamlControlsResources;
+
+        // ÐÞ¸´ XamlControlsResources ·ÃÎÊ³åÍ»µÄÒì³£
+        var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        if (dispatcherQueue.HasThreadAccess)
+        {
+            dispatcherQueue.TryEnqueue(() =>
+            {
+                mainApp.Resources = xamlControlsResources;
+            });
+        }
 
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);
