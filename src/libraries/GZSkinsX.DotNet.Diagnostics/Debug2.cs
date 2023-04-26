@@ -17,15 +17,15 @@ namespace GZSkinsX.DotNet.Diagnostics;
 /// </summary>
 public static class Debug2
 {
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), DebuggerNonUserCode]
     public static void Assert([DoesNotReturnIf(false)] bool condition)
     => Assert(condition, string.Empty, string.Empty);
 
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), DebuggerNonUserCode]
     public static void Assert([DoesNotReturnIf(false)] bool condition, string? message)
     => Assert(condition, message, string.Empty);
 
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), DebuggerNonUserCode]
     public static void Assert(
         [DoesNotReturnIf(false)] bool condition,
         string? message, string? detailMessage)
@@ -36,7 +36,7 @@ public static class Debug2
         }
     }
 
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), DebuggerNonUserCode]
     public static void Assert([DoesNotReturnIf(false)] bool condition, string? message,
         [StringSyntax(StringSyntaxAttribute.CompositeFormat)] string detailMessageFormat,
         params object?[] args)
