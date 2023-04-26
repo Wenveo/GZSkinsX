@@ -81,10 +81,7 @@
             Grid.Column="1"
             Orientation="Horizontal"
             Spacing="12">
-            <ComboBox
-                x:Name="Appx_StartUp_Initialize_Region_Selector"
-                Width="100"
-                MinWidth="100" />
+            <ComboBox x:Name="Appx_StartUp_Initialize_Region_Selector" MinWidth="100" />
             <muxc:InfoBadge
                 x:Uid="Appx_StartUp_Initialize_Region_Helper"
                 Padding="0,4,0,2"
