@@ -18,7 +18,6 @@ using GZSkinsX.Api.WindowManager;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.Globalization;
-using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
@@ -36,10 +35,6 @@ internal sealed class ExportPreloadFrame : IWindowFrame
         var resolver = AppxContext.ServiceLocator;
         _loggingService = AppxContext.LoggingService;
         _preloadSettings = resolver.Resolve<PreloadSettings>();
-
-        AppxContext.AppxTitleBar.ExtendViewIntoTitleBar = true;
-        AppxContext.AppxTitleBarButton.ButtonBackgroundColor = Colors.Transparent;
-        AppxContext.AppxTitleBarButton.ButtonInactiveBackgroundColor = Colors.Transparent;
 
         if (Debugger.IsAttached)
         {
@@ -72,6 +67,7 @@ internal sealed class ExportPreloadFrame : IWindowFrame
             {
                 _loggingService.LogWarning("AppxPreload: Failed to resize the window.");
             }
+
             _preloadSettings.IsInitialize = true;
         }
         else
