@@ -29,7 +29,7 @@ internal sealed class TestItemA : INavigationItem
 {
     internal sealed class TestPageA : Page { }
 
-    public IconElement Icon => new SymbolIcon(Symbol.Home);
+    public IconElement Icon => new FontIcon { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe Fluent Icons"), Glyph = "\uE10F" };
 
     public async Task OnNavigatedFromAsync()
     {
