@@ -51,6 +51,8 @@
     <Compile Include="Settings\ISettingsSection.cs" />
     <Compile Include="Settings\ISettingsService.cs" />
     <Compile Include="Settings\SettingsType.cs" />
+    <Compile Include="Themes\IThemeService.cs" />
+    <Compile Include="Themes\ThemeChangedEventArgs.cs" />
     <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
     <Compile Include="WindowManager\IWindowFrame.cs" />
     <Compile Include="WindowManager\IWindowFrameContext.cs" />
