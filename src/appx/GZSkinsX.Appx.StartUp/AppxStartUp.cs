@@ -7,9 +7,6 @@
 
 namespace GZSkinsX.Appx.StartUp;
 
-/// <summary>
-/// 
-/// </summary>
 public static class AppxStartUp
 {
 
