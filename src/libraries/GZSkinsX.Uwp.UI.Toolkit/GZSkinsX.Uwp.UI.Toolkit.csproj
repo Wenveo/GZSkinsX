@@ -6,8 +6,8 @@
     <AssemblyName>GZSkinsX.Uwp.UI.Toolkit</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Include="Extensions\DispatcherQueueExtensions.cs" />
     <Compile Include="Helpers\ResourceDictionaryExtensions.cs" />
     <Compile Include="Helpers\StyleExtensions.cs" />
     <Compile Include="Helpers\WeakEventListener.cs" />
@@ -17,9 +17,8 @@
     <Compile Include="Triggers\IsNullOrEmptyStateTrigger.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Uwp.UI.Toolkit.rd.xml" />
   </ItemGroup>
-
   <!-- FOR BUILD -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'"/>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
   <Import Project="..\..\..\eng\uap.props" />
 </Project>
