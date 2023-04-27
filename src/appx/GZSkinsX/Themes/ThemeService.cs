@@ -137,6 +137,8 @@ internal sealed class ThemeService : IThemeService
                 frameworkElement.RequestedTheme = newTheme;
                 _themeSettings.CurrentTheme = newTheme;
                 CurrentTheme = newTheme;
+
+                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, CurrentTheme, IsHighContrast));
                 return true;
             }
 
