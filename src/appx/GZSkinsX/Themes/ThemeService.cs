@@ -122,7 +122,7 @@ internal sealed class ThemeService : IThemeService
                     _themeSettings.CurrentTheme = frameworkElement.ActualTheme;
                 }
 
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(CurrentTheme, IsHighContrast));
+                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, CurrentTheme, IsHighContrast));
             }
         });
     }
