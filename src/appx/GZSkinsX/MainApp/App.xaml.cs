@@ -48,10 +48,14 @@ public sealed partial class App : Application
 
         if (e.PrelaunchActivated == false)
         {
-            if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
-            {
-                CoreApplication.EnablePrelaunch(true);
-            }
+            // 如果启用了 Prelaunch 就可能会跳过 StartUpClass 里的 InitializeServices，
+            // 从而导致上面的 "var appxWindow = AppxContext.AppxWindow;" 这段代码触发异常。
+            // 目前暂时不做这个处理，并注释掉以下代码。
+
+            //if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
+            //{
+            //    CoreApplication.EnablePrelaunch(true);
+            //}
 
             appxWindow.Activate();
         }
