@@ -29,9 +29,7 @@ using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Navigation;
 
-/// <summary>
-/// 
-/// </summary>
+/// <inheritdoc cref="MUXC.NavigationView"/>
 internal sealed class NavigationView2 : MUXC.NavigationView
 {
     [DebuggerNonUserCode]
@@ -46,47 +44,47 @@ internal sealed class NavigationView2 : MUXC.NavigationView
 internal sealed class NavigationService : INavigationService
 {
     /// <summary>
-    /// 
+    /// 存放所有已导出的 <see cref="INavigationGroup"/> 对象实例
     /// </summary>
     private readonly IEnumerable<Lazy<INavigationGroup, NavigationGroupMetadataAttribute>> _mefNavGroups;
 
     /// <summary>
-    /// 
+    /// 存放所有已导出的 <see cref="INavigationItem"/> 对象实例
     /// </summary>
     private readonly IEnumerable<Lazy<INavigationItem, NavigationItemMetadataAttribute>> _mefNavItems;
 
     /// <summary>
-    /// 
+    /// 表示用于获取本地化资源的服务实例
     /// </summary>
     private readonly IMRTCoreService _mrtCoreService;
 
     /// <summary>
-    /// 
+    /// 用于存放序列化后的 <see cref="NavigationItemContext"/> 对象实例
     /// </summary>
     private readonly Dictionary<Guid, List<NavigationItemContext>> _guidToNavItems;
 
     /// <summary>
-    /// 
+    /// 存放所有已创建的 <see cref="MUXC.NavigationViewItem"/> 对象实例
     /// </summary>
     internal readonly Dictionary<Guid, MUXC.NavigationViewItem> _createdNavItems;
 
     /// <summary>
-    /// 
+    /// 存储所有 <see cref="NavigationItemContext"/> 对象实例，并使用 <see cref="Guid"/> 作为键以供快速访问
     /// </summary>
     private readonly Dictionary<Guid, NavigationItemContext> _allNavItemCtx;
 
     /// <summary>
-    /// 
+    /// 用于存放所有已枚举的 <see cref="NavigationGroupContext"/> 对象实例
     /// </summary>
     private readonly List<NavigationGroupContext> _navGroups;
 
     /// <summary>
-    /// 
+    /// 用于切换导航项的内部 <see cref="NavigationView2"/> 对象实例
     /// </summary>
     internal readonly NavigationView2 _navigationViewRoot;
 
     /// <summary>
-    /// 
+    /// 用于呈现页面的内部 <see cref="Frame"/> 对象实例
     /// </summary>
     internal readonly Frame _rootFrame;
 
@@ -100,7 +98,7 @@ internal sealed class NavigationService : INavigationService
     public bool CanGoForward => _rootFrame.CanGoForward;
 
     /// <summary>
-    /// 
+    /// 初始化 <see cref="NavigationService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
     public NavigationService(
@@ -126,7 +124,7 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 初始化容器以序列化所有的 <see cref="INavigationGroup"/> 对象实例
     /// </summary>
     private void InitializeNavGroups()
     {
@@ -151,7 +149,7 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 初始化容器以序列化所有的 <see cref="INavigationItem"/> 对象实例
     /// </summary>
     private void InitializeNavItems()
     {
@@ -201,7 +199,7 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 初始化内部的 UI 元素对象
     /// </summary>
     private void InitializeUIObject()
     {
@@ -222,6 +220,9 @@ internal sealed class NavigationService : INavigationService
         InitializeNavView(_navigationViewRoot);
     }
 
+    /// <summary>
+    /// 创建应用于 <see cref="MUXC.NavigationView.PaneHeader"/> 的内容（应用标题）
+    /// </summary>
     private TextBlock CreatePaneHeader()
     {
         return new TextBlock
@@ -235,9 +236,9 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 为导航视图 <see cref="MUXC.NavigationView"/> 创建和添加子项
     /// </summary>
-    /// <param name="navigationView"></param>
+    /// <param name="navigationView">需要进行初始化的 <see cref="MUXC.NavigationView"/> 对象实例</param>
     private void InitializeNavView(MUXC.NavigationView navigationView)
     {
         var needSeparator = false;
@@ -262,7 +263,7 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 在 <see cref="MUXC.NavigationView"/> 中选择导航项时触发，并根据已选择的项进行导航操作
     /// </summary>
     private void OnNavSelectionChanged(MUXC.NavigationView sender, MUXC.NavigationViewSelectionChangedEventArgs args)
     {
@@ -282,7 +283,10 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 在导航至目标页面时触发，并同步导航视图中的选择项
+    /// <para>
+    /// （当通过后台 Api 进行导航，而不是在 UI 上选择时，需要手动同步导航视图中的选择项）
+    /// </para>
     /// </summary>
     private async void OnNavigated(object sender, NavigationEventArgs e)
     {
@@ -300,10 +304,10 @@ internal sealed class NavigationService : INavigationService
     }
 
     /// <summary>
-    /// 
+    /// 通过解析 <see cref="NavigationItemContext"/> 上下文对象并创建 <see cref="MUXC.NavigationViewItem"/> 对象实例
     /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
+    /// <param name="context">需要解析的 <see cref="NavigationItemContext"/> 上下文对象</param>
+    /// <returns>已创建的 <see cref="MUXC.NavigationViewItem"/> 对象实例</returns>
     private MUXC.NavigationViewItem CreateNavItemUIObject(NavigationItemContext context)
     {
         var guid = new Guid(context.Metadata.Guid);
@@ -330,6 +334,11 @@ internal sealed class NavigationService : INavigationService
         return navItem;
     }
 
+    /// <summary>
+    /// 根据传入具有特定的标识符的资源键的名称以获取本地化资源
+    /// </summary>
+    /// <param name="resourceKey">需要获取的本地化的资源的键</param>
+    /// <returns>如果传入的 <paramref name="resourceKey"/> 包含特定的标识符则会获取本地化的资源，否则将会返回原对象</returns>
     internal string GetLocalizedOrDefault(string resourceKey)
     {
         if (resourceKey.StartsWith("resx:"))
@@ -342,6 +351,10 @@ internal sealed class NavigationService : INavigationService
         }
     }
 
+    /// <summary>
+    /// 获取与当前导航视图中的选中项所关联的 <see cref="NavigationItemContext"/> 上下文对象
+    /// </summary>
+    /// <returns>如果找到所关联的 <see cref="NavigationItemContext"/> 上下文对象则会返回该实例，否则返回空</returns>
     private NavigationItemContext? GetCurrentNavItemCtx()
     {
         if (_navigationViewRoot.SelectedItem is MUXC.NavigationViewItem selectedItem
@@ -426,6 +439,9 @@ internal sealed class NavigationService : INavigationService
         await NavigateCoreAsync(navItemGuid, parameter, infoOverride);
     }
 
+    /// <summary>
+    /// 核心导航方法，包含具体的导航操作实现。大部分导航相关的 Api 都使用此函数进行页面导航
+    /// </summary>
     internal async Task NavigateCoreAsync(Guid guid, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         if (_allNavItemCtx.TryGetValue(guid, out var context) is false)

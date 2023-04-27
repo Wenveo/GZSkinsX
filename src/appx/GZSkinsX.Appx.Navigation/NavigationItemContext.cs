@@ -12,29 +12,28 @@ using GZSkinsX.Api.Navigation;
 namespace GZSkinsX.Appx.Navigation;
 
 /// <summary>
-/// 
+/// 用于存储导出的 <see cref="INavigationItem"/> 对象以及上下文数据
 /// </summary>
 internal sealed class NavigationItemContext
 {
     /// <summary>
-    /// 
+    /// 当前上下文中的懒加载对象
     /// </summary>
     private readonly Lazy<INavigationItem, NavigationItemMetadataAttribute> _lazy;
 
     /// <summary>
-    /// 
+    /// 获取当前上下文的 <see cref="INavigationItem"/> 对象
     /// </summary>
     public INavigationItem Value => _lazy.Value;
 
     /// <summary>
-    /// 
+    /// 获取当前上下文的 <see cref="NavigationItemMetadataAttribute"/> 元数据
     /// </summary>
     public NavigationItemMetadataAttribute Metadata => _lazy.Metadata;
 
     /// <summary>
-    /// 
+    /// 初始化 <see cref="NavigationItemContext"/> 的新实例
     /// </summary>
-    /// <param name="lazy"></param>
     public NavigationItemContext(Lazy<INavigationItem, NavigationItemMetadataAttribute> lazy)
     {
         _lazy = lazy;
