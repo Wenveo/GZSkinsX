@@ -11,28 +11,35 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
-using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 
 using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.Navigation;
+using GZSkinsX.Appx.Navigation.Controls;
 using GZSkinsX.DotNet.Diagnostics;
 
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.AnimatedVisuals;
-
-using Windows.Foundation.Metadata;
-using Windows.System;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Navigation;
+
+/// <summary>
+/// 
+/// </summary>
+internal sealed class NavigationView2 : MUXC.NavigationView
+{
+    [DebuggerNonUserCode]
+    public object GetTemplateChild2(string childName)
+    {
+        return GetTemplateChild(childName);
+    }
+}
 
 /// <inheritdoc cref="INavigationService"/>
 [Shared, Export(typeof(INavigationService))]
@@ -61,7 +68,7 @@ internal sealed class NavigationService : INavigationService
     /// <summary>
     /// 
     /// </summary>
-    private readonly Dictionary<Guid, MUXC.NavigationViewItem> _createdNavItems;
+    internal readonly Dictionary<Guid, MUXC.NavigationViewItem> _createdNavItems;
 
     /// <summary>
     /// 
@@ -76,7 +83,7 @@ internal sealed class NavigationService : INavigationService
     /// <summary>
     /// 
     /// </summary>
-    internal readonly MUXC.NavigationView _navigationViewRoot;
+    internal readonly NavigationView2 _navigationViewRoot;
 
     /// <summary>
     /// 
@@ -198,24 +205,33 @@ internal sealed class NavigationService : INavigationService
     /// </summary>
     private void InitializeUIObject()
     {
-        Canvas.SetZIndex(_navigationViewRoot, 0);
+        _rootFrame.Navigated += OnNavigated;
         _navigationViewRoot.Content = _rootFrame;
-        _navigationViewRoot.AutoSuggestBox = CreateAutoSuggestBox();
-        _navigationViewRoot.DisplayModeChanged += OnNavDisplayModeChanged;
-        _navigationViewRoot.SelectionChanged += OnNavSelectionChanged;
-        _navigationViewRoot.IsBackButtonVisible = MUXC.NavigationViewBackButtonVisible.Auto;
+        _navigationViewRoot.PaneDisplayMode = MUXC.NavigationViewPaneDisplayMode.Top;
+        _navigationViewRoot.IsBackButtonVisible = MUXC.NavigationViewBackButtonVisible.Collapsed;
         _navigationViewRoot.IsTabStop = false;
         _navigationViewRoot.IsSettingsVisible = false;
         _navigationViewRoot.IsTitleBarAutoPaddingEnabled = false;
-        _navigationViewRoot.Resources.MergedDictionaries.Add(new()
-        {
-            Source = new Uri("ms-appx:///GZSkinsX.Appx.Navigation/Styles/Default.xaml")
-        });
+        _navigationViewRoot.PaneHeader = CreatePaneHeader();
 
-        _rootFrame.Style = (Style)_navigationViewRoot.Resources["MainFrameStyle"];
-        _rootFrame.Navigated += OnNavigated;
+        var navPaneCustomContent = new CustomizeNavPaneContent(this);
+        _navigationViewRoot.PaneCustomContent = navPaneCustomContent;
+        _navigationViewRoot.SelectionChanged += OnNavSelectionChanged;
+        _navigationViewRoot.Resources.Add("TopNavigationViewTopNavGridMargin", new Thickness(4, 0, 188, 0));
 
         InitializeNavView(_navigationViewRoot);
+    }
+
+    private TextBlock CreatePaneHeader()
+    {
+        return new TextBlock
+        {
+            Margin = new(14, 0, 8, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+            FontWeight = FontWeights.ExtraBold,
+            IsHitTestVisible = false,
+            Text = GetLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/MainAppx_Title")
+        };
     }
 
     /// <summary>
@@ -227,10 +243,7 @@ internal sealed class NavigationService : INavigationService
         var needSeparator = false;
         foreach (var group in _navGroups)
         {
-            var container = group.Metadata.Placement == NavigationItemPlacement.Footer
-                ? navigationView.FooterMenuItems
-                : navigationView.MenuItems;
-
+            var container = navigationView.MenuItems;
             var guid = new Guid(group.Metadata.Guid);
             if (_guidToNavItems.TryGetValue(guid, out var navItems))
             {
@@ -242,56 +255,8 @@ internal sealed class NavigationService : INavigationService
                 else
                     needSeparator = true;
 
-                if (!string.IsNullOrEmpty(group.Metadata.Header))
-                    container.Add(new MUXC.NavigationViewItemHeader { Content = group.Metadata.Header });
-
                 foreach (var item in navItems)
                     container.Add(CreateNavItemUIObject(item));
-            }
-        }
-    }
-
-    private readonly Vector3 _smallTopIndent = new(0f, 0f, 0f);
-    private readonly Vector3 _largeTopIndent = new(0f, 42f, 0f);
-    private readonly Thickness _emptyPadding = new(0d, 0d, 0d, 0d);
-    private readonly Thickness _framePadding = new(0d, 42d, 0d, 0d);
-    private readonly CornerRadius _defaultCR = new(8d, 0d, 0d, 0d);
-    private readonly CornerRadius _minimalCR = new(0d, 0d, 0d, 0d);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void OnNavDisplayModeChanged(MUXC.NavigationView sender, MUXC.NavigationViewDisplayModeChangedEventArgs args)
-    {
-        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
-        {
-            _rootFrame.TranslationTransition ??= new Vector3Transition();
-            if (sender.DisplayMode == MUXC.NavigationViewDisplayMode.Minimal)
-            {
-                _rootFrame.CornerRadius = _minimalCR;
-                _rootFrame.Translation = _smallTopIndent;
-                _rootFrame.Padding = _framePadding;
-            }
-            else
-            {
-                _rootFrame.CornerRadius = _defaultCR;
-                _rootFrame.Translation = _largeTopIndent;
-                _rootFrame.Padding = _emptyPadding;
-            }
-        }
-        else
-        {
-            if (sender.DisplayMode == MUXC.NavigationViewDisplayMode.Minimal)
-            {
-                _rootFrame.CornerRadius = _minimalCR;
-                _rootFrame.Margin = _emptyPadding;
-                _rootFrame.Padding = _framePadding;
-            }
-            else
-            {
-                _rootFrame.CornerRadius = _defaultCR;
-                _rootFrame.Margin = _framePadding;
-                _rootFrame.Padding = _emptyPadding;
             }
         }
     }
@@ -334,83 +299,6 @@ internal sealed class NavigationService : INavigationService
         Navigated?.Invoke(sender, e);
     }
 
-    private AutoSuggestBox CreateAutoSuggestBox()
-    {
-        var autoSuggestBox = new AutoSuggestBox
-        {
-            MinWidth = 200d,
-            PlaceholderText = GetLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/SearchBox_SearchText"),
-            QueryIcon = new AnimatedIcon
-            {
-                Source = new AnimatedFindVisualSource(),
-                FallbackIconSource = new MUXC.SymbolIconSource { Symbol = Symbol.Find }
-            },
-            VerticalAlignment = VerticalAlignment.Center,
-            KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden
-        };
-
-        var ctrlF = new KeyboardAccelerator { Key = VirtualKey.F, Modifiers = VirtualKeyModifiers.Control };
-        ctrlF.Invoked += (_, _) => _navigationViewRoot.AutoSuggestBox?.Focus(FocusState.Programmatic);
-
-        autoSuggestBox.KeyboardAccelerators.Add(ctrlF);
-        autoSuggestBox.TextChanged += OnAutoSuggestBoxTextChanged;
-        autoSuggestBox.QuerySubmitted += OnAutoSuggestBoxQuerySubmitted;
-
-        return autoSuggestBox;
-    }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    void OnAutoSuggestBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-    {
-        if (args.Reason != AutoSuggestionBoxTextChangeReason.SuggestionChosen)
-        {
-            var suggestions = new List<QueryNavigationItem>();
-
-            var querySplit = sender.Text.Split(" ");
-            foreach (var item in _createdNavItems.Values)
-            {
-                if (item.SelectsOnInvoked)
-                {
-                    foreach (var queryToken in querySplit)
-                    {
-                        var header = item.Content as string;
-                        Debug2.Assert(header is not null);
-                        Debug2.Assert(header.Length > 0);
-
-                        if (header.IndexOf(queryToken, StringComparison.CurrentCultureIgnoreCase) is not -1)
-                        {
-                            suggestions.Add(new QueryNavigationItem(header, (Guid)item.Tag));
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (suggestions.Count > 0)
-            {
-                sender.ItemsSource = suggestions.OrderByDescending(i => i.Title.StartsWith(sender.Text, StringComparison.CurrentCultureIgnoreCase)).ThenBy(i => i.Title);
-            }
-            else
-            {
-                sender.ItemsSource = new string[] { GetLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/Query_NotResultsFound") };
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private async void OnAutoSuggestBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-    {
-        if (args.ChosenSuggestion is QueryNavigationItem queryNavigationItem)
-        {
-            await NavigateCoreAsync(queryNavigationItem.Guid, null, null);
-        }
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -427,6 +315,8 @@ internal sealed class NavigationService : INavigationService
             SelectsOnInvoked = context.Metadata.PageType is not null
         };
 
+        AutomationProperties.SetName(navItem, navItem.Content as string);
+
         if (_guidToNavItems.TryGetValue(guid, out var navItems))
         {
             foreach (var item in navItems)
@@ -440,7 +330,7 @@ internal sealed class NavigationService : INavigationService
         return navItem;
     }
 
-    private string GetLocalizedOrDefault(string resourceKey)
+    internal string GetLocalizedOrDefault(string resourceKey)
     {
         if (resourceKey.StartsWith("resx:"))
         {
@@ -536,7 +426,7 @@ internal sealed class NavigationService : INavigationService
         await NavigateCoreAsync(navItemGuid, parameter, infoOverride);
     }
 
-    private async Task NavigateCoreAsync(Guid guid, object? parameter, NavigationTransitionInfo? infoOverride)
+    internal async Task NavigateCoreAsync(Guid guid, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         if (_allNavItemCtx.TryGetValue(guid, out var context) is false)
         {

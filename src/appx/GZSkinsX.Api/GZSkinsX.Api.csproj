@@ -46,7 +46,6 @@
     <Compile Include="Navigation\NavigationConstants.cs" />
     <Compile Include="Navigation\NavigationGroupMetadataAttribute.cs" />
     <Compile Include="Navigation\NavigationItemMetadataAttribute.cs" />
-    <Compile Include="Navigation\NavigationItemPlacement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\IServiceLocator.cs" />
     <Compile Include="Settings\ISettingsSection.cs" />

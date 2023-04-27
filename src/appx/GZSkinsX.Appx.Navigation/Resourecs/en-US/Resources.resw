@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppTitle.Text" xml:space="preserve">
+  <data name="MainAppx_Title" xml:space="preserve">
     <value>Gezi</value>
   </data>
-  <data name="NavigationGroup_DevTools_Header" xml:space="preserve">
-    <value>Dev Tools</value>
+  <data name="MainSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
   </data>
-  <data name="Query_NotResultsFound" xml:space="preserve">
+  <data name="MainSearchBox_Query_NotResultsFound" xml:space="preserve">
     <value>No results found</value>
   </data>
-  <data name="SearchBox_SearchText" xml:space="preserve">
-    <value>Search</value>
+  <data name="MenuFlyout_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MenuFlyout_Theme_Dark.Text" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="MenuFlyout_Theme_Default.Text" xml:space="preserve">
+    <value>Windows default</value>
+  </data>
+  <data name="MenuFlyout_Theme_Light.Text" xml:space="preserve">
+    <value>Light</value>
   </data>
 </root>

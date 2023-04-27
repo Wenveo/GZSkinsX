@@ -26,16 +26,6 @@ public sealed class NavigationGroupMetadataAttribute : Attribute
     /// <summary>
     /// 
     /// </summary>
-    public string? Header { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
     public double Order { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public NavigationItemPlacement Placement { get; set; }
 }
 

@@ -20,22 +20,12 @@ public static class NavigationConstants
     /// <summary>
     /// 
     /// </summary>
-    public const string NAV_FOOTER_GROUP = "606DB4AA-C5E8-4856-8E54-108E47CF8D37";
-
-    /// <summary>
-    /// 
-    /// </summary>
     public const string NAV_DEV_TOOLS_GROUP = "855F915C-FCFC-4C44-880A-BE9EEAF9ACBB";
 
     /// <summary>
     /// 
     /// </summary>
     public const double ORDER_MAIN_GROUP = 0d;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public const double ORDER_FOOTER_GROUP = 0d;
 
     /// <summary>
     /// 

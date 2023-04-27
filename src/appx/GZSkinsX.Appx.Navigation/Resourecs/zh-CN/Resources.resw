@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppTitle.Text" xml:space="preserve">
+  <data name="MainAppx_Title" xml:space="preserve">
     <value>格子</value>
   </data>
-  <data name="NavigationGroup_DevTools_Header" xml:space="preserve">
-    <value>开发者工具</value>
+  <data name="MainSearchBox.PlaceholderText" xml:space="preserve">
+    <value>查找导航项</value>
   </data>
-  <data name="Query_NotResultsFound" xml:space="preserve">
+  <data name="MainSearchBox_Query_NotResultsFound" xml:space="preserve">
     <value>未找到匹配的项</value>
   </data>
-  <data name="SearchBox_SearchText" xml:space="preserve">
-    <value>查找导航项</value>
+  <data name="MenuFlyout_Settings.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="MenuFlyout_Theme_Dark.Text" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="MenuFlyout_Theme_Default.Text" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="MenuFlyout_Theme_Light.Text" xml:space="preserve">
+    <value>浅色</value>
   </data>
 </root>
