@@ -23,10 +23,6 @@ internal sealed class NavMainGroup : INavigationGroup { }
 [NavigationGroupMetadata(Guid = NavigationConstants.NAV_DEV_TOOLS_GROUP, Order = NavigationConstants.ORDER_DEV_TOOLS_GROUP)]
 internal sealed class NavDevToolsGroup : INavigationGroup { }
 
-[Shared, ExportNavigationGroup]
-[NavigationGroupMetadata(Guid = NavigationConstants.NAV_FOOTER_GROUP, Order = NavigationConstants.ORDER_FOOTER_GROUP)]
-internal sealed class NavFooterGroup : INavigationGroup { }
-
 [Shared, ExportNavigationItem]
 [NavigationItemMetadata(Guid = "7C9D47B5-879B-453F-9DBB-8EFF2B1FF96A", Header = "Home", OwnerGuid = NavigationConstants.NAV_MAIN_GROUP, PageType = typeof(TestPageA))]
 internal sealed class TestItemA : INavigationItem
