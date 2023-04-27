@@ -11,8 +11,11 @@ using System;
 using System.Collections.Generic;
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Themes;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
+
+using Microsoft.UI.Xaml.Controls;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,10 +28,13 @@ namespace GZSkinsX.Appx.Navigation.Controls;
 public sealed partial class CustomizeNavPaneContent : UserControl
 {
     private readonly NavigationService _navigationService;
+    private readonly IThemeService _themeService;
 
     internal CustomizeNavPaneContent(NavigationService navigationService)
     {
         _navigationService = navigationService;
+        _themeService = AppxContext.ThemeService;
+
         InitializeComponent();
     }
 
@@ -83,6 +89,31 @@ public sealed partial class CustomizeNavPaneContent : UserControl
     private void OnControlFInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
     {
         MainSearchBox.Focus(FocusState.Keyboard);
+    }
+
+    private void OnThemeMenuFlyoutOpening(object sender, object e)
+    {
+        switch (_themeService.CurrentTheme)
+        {
+            case ElementTheme.Light:
+                MenuFlyout_LightTheme_MenuItem.IsChecked = true;
+                break;
+            case ElementTheme.Dark:
+                MenuFlyout_DarkTheme_MenuItem.IsChecked = true;
+                break;
+            default:
+                MenuFlyout_DefaultTheme_MenuItem.IsChecked = true;
+                break;
+        }
+    }
+
+    private async void OnSwitchTheme(XamlUICommand sender, ExecuteRequestedEventArgs args)
+    {
+        if (args.Parameter is ElementTheme newTheme &&
+            _themeService.CurrentTheme != newTheme)
+        {
+            await _themeService.SetElementThemeAsync(newTheme);
+        }
     }
 }
 

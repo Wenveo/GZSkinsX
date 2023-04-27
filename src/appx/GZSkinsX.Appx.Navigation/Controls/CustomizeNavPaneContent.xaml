@@ -10,6 +10,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <XamlUICommand x:Name="SwitchThemeCommand" ExecuteRequested="OnSwitchTheme" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".22*" />
@@ -82,11 +85,18 @@
                 </muxc:AnimatedIcon.Source>
             </muxc:AnimatedIcon>
             <Button.Flyout>
-                <MenuFlyout x:Name="ThemeMenuFlyout" Windows10version1903:ShouldConstrainToRootBounds="True">
+                <MenuFlyout
+                    x:Name="ThemeMenuFlyout"
+                    Windows10version1903:ShouldConstrainToRootBounds="True"
+                    Opening="OnThemeMenuFlyoutOpening">
                     <muxc:RadioMenuFlyoutItem
                         x:Name="MenuFlyout_LightTheme_MenuItem"
                         x:Uid="MenuFlyout_Theme_Light"
+                        Command="{StaticResource SwitchThemeCommand}"
                         GroupName="ThemeMenu">
+                        <muxc:RadioMenuFlyoutItem.CommandParameter>
+                            <ElementTheme>Light</ElementTheme>
+                        </muxc:RadioMenuFlyoutItem.CommandParameter>
                         <muxc:RadioMenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE793;" />
                         </muxc:RadioMenuFlyoutItem.Icon>
@@ -94,7 +104,11 @@
                     <muxc:RadioMenuFlyoutItem
                         x:Name="MenuFlyout_DarkTheme_MenuItem"
                         x:Uid="MenuFlyout_Theme_Dark"
+                        Command="{StaticResource SwitchThemeCommand}"
                         GroupName="ThemeMenu">
+                        <muxc:RadioMenuFlyoutItem.CommandParameter>
+                            <ElementTheme>Dark</ElementTheme>
+                        </muxc:RadioMenuFlyoutItem.CommandParameter>
                         <muxc:RadioMenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE708;" />
                         </muxc:RadioMenuFlyoutItem.Icon>
@@ -102,7 +116,11 @@
                     <muxc:RadioMenuFlyoutItem
                         x:Name="MenuFlyout_DefaultTheme_MenuItem"
                         x:Uid="MenuFlyout_Theme_Default"
+                        Command="{StaticResource SwitchThemeCommand}"
                         GroupName="ThemeMenu">
+                        <muxc:RadioMenuFlyoutItem.CommandParameter>
+                            <ElementTheme>Default</ElementTheme>
+                        </muxc:RadioMenuFlyoutItem.CommandParameter>
                         <muxc:RadioMenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE770;" />
                         </muxc:RadioMenuFlyoutItem.Icon>
