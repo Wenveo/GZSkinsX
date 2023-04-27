@@ -30,6 +30,7 @@ public static partial class AppxContext
         "global::GZSkinsX.Api.MRT.IMRTCoreService",
         "global::GZSkinsX.Api.Scripting.IServiceLocator",
         "global::GZSkinsX.Api.Settings.ISettingsService",
+        "global::GZSkinsX.Api.Themes.IThemeService"
     };
 
     var shortNames = new List<string>(services.Count);

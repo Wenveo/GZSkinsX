@@ -86,6 +86,14 @@ public static partial class AppxContext
     }
 
     /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Themes.IThemeService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.Themes.IThemeService ThemeService
+    {
+        get => CheckAccess(ref s_themeService);
+    }
+
+    /// <summary>
     /// 检查和获取指定导出类型的成员对象
     /// </summary>
     /// <typeparam name="T">需要获取对象导出类型</typeparam>
@@ -111,4 +119,5 @@ public static partial class AppxContext
     private static global::GZSkinsX.Api.MRT.IMRTCoreService? s_mRTCoreService;
     private static global::GZSkinsX.Api.Scripting.IServiceLocator? s_serviceLocator;
     private static global::GZSkinsX.Api.Settings.ISettingsService? s_settingsService;
+    private static global::GZSkinsX.Api.Themes.IThemeService? s_themeService;
 }
