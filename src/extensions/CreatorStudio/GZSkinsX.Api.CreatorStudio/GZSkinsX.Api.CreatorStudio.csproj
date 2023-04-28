@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{10D13373-784E-40F7-96CA-CDA2F6092E8A}</ProjectGuid>
+    <RootNamespace>GZSkinsX.Api.CreatorStudio</RootNamespace>
+    <AssemblyName>GZSkinsX.Api.CreatorStudio</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Api.CreatorStudio.rd.xml" />
+  </ItemGroup>
+  <!-- FOR BUILD -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
+  <!-- IMPORT COMMON PROPS -->
+  <Import Project="..\..\..\..\eng\uap.props" />
+</Project>
