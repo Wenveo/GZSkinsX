@@ -11,7 +11,9 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Themes;
 
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Xaml;
 
 namespace GZSkinsX.Themes;
 
@@ -33,11 +35,26 @@ internal sealed class AutoThemeTitleBar : IAutoLoaded
 
         _themeService = themeService;
         _themeService.ThemeChanged += OnThemeChanged;
+
+        var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        if (dispatcherQueue.HasThreadAccess)
+            OnInitialize();
+        else
+            dispatcherQueue.TryEnqueue(OnInitialize);
+    }
+
+    private void OnInitialize()
+    {
+        OnThemeChangedImpl(_themeService.CurrentTheme);
     }
 
     private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
     {
-        _appxTitleBarButton.ButtonForegroundColor =
-            e.ActualTheme == Windows.UI.Xaml.ElementTheme.Light ? Colors.Black : Colors.White;
+        OnThemeChangedImpl(e.ActualTheme);
+    }
+
+    private void OnThemeChangedImpl(ElementTheme newTheme)
+    {
+        _appxTitleBarButton.ButtonForegroundColor = newTheme == ElementTheme.Light ? Colors.Black : Colors.White;
     }
 }
