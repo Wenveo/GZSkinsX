@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 using GZSkinsX.Api.MRT;
@@ -110,6 +111,21 @@ internal sealed class NavigationService : INavigationService
         InitializeNavGroups();
         InitializeNavItems();
         InitializeUIObject();
+
+        _navigationViewRoot.Loaded += NativateToFirst;
+    }
+
+    /// <summary>
+    /// 在首次加载时导航至第一个元素
+    /// </summary>
+    private void NativateToFirst(object sender, RoutedEventArgs e)
+    {
+        _navigationViewRoot.Loaded -= NativateToFirst;
+
+        if (_allNavItemCtx.Any())
+        {
+            NavigateTo(_allNavItemCtx.First().Key);
+        }
     }
 
     /// <summary>
