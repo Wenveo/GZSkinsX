@@ -105,6 +105,8 @@ internal sealed class ThemeService : IThemeService
                     IsHighContrast = false;
                     CurrentTheme = ElementTheme.Light;
                     ActualTheme = ElementTheme.Light;
+
+                    ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ElementTheme.Light, ElementTheme.Light, IsHighContrast));
                 }
                 else
                 {
@@ -112,9 +114,9 @@ internal sealed class ThemeService : IThemeService
                     IsHighContrast = _accessible.HighContrast;
                     CurrentTheme = frameworkElement.RequestedTheme;
                     ActualTheme = frameworkElement.ActualTheme;
-                }
 
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, CurrentTheme, IsHighContrast));
+                    ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, frameworkElement.RequestedTheme, IsHighContrast));
+                }
             }
         });
     }
@@ -130,7 +132,7 @@ internal sealed class ThemeService : IThemeService
                 ActualTheme = frameworkElement.ActualTheme;
                 CurrentTheme = newTheme;
 
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, CurrentTheme, IsHighContrast));
+                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, newTheme, IsHighContrast));
                 return true;
             }
 
