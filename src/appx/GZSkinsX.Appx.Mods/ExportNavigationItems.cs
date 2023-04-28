@@ -17,8 +17,8 @@ using Windows.UI.Xaml.Navigation;
 namespace GZSkinsX.Appx.Mods;
 
 [Shared, ExportNavigationItem]
-[NavigationItemMetadata(Guid = NavigationConstants.MAIN_MODS_GUID, Header = "Mods", PageType = typeof(ModsView),
-    Order = NavigationConstants.ORDER_MAIN_GROUP_MODS, OwnerGuid = NavigationConstants.MAIN_GROUP)]
+[NavigationItemMetadata(Guid = NavigationConstants.MAIN_MODS_GUID, Header = "resx:GZSkinsX.Appx.Mods/Resources/NavItem_Header",
+    PageType = typeof(ModsView), Order = NavigationConstants.ORDER_MAIN_GROUP_MODS, OwnerGuid = NavigationConstants.MAIN_GROUP)]
 internal sealed class ExportModsNavigationItem : INavigationItem
 {
     public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE74C" };

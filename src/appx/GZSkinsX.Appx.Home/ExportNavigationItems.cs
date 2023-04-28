@@ -18,8 +18,8 @@ using Windows.UI.Xaml.Navigation;
 namespace GZSkinsX.Appx.Home;
 
 [Shared, ExportNavigationItem]
-[NavigationItemMetadata(Guid = NavigationConstants.MAIN_HOME_GUID, Header = "Home", PageType = typeof(HomeView),
-    Order = NavigationConstants.ORDER_MAIN_GROUP_HOME, OwnerGuid = NavigationConstants.MAIN_GROUP)]
+[NavigationItemMetadata(Guid = NavigationConstants.MAIN_HOME_GUID, Header = "resx:GZSkinsX.Appx.Home/Resources/NavItem_Header",
+    PageType = typeof(HomeView), Order = NavigationConstants.ORDER_MAIN_GROUP_HOME, OwnerGuid = NavigationConstants.MAIN_GROUP)]
 internal sealed class ExportHomeNavigationItem : INavigationItem
 {
     public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE10F" };

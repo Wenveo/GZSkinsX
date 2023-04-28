@@ -18,8 +18,8 @@ using Windows.UI.Xaml.Navigation;
 namespace GZSkinsX.Extensions.CreatorStudio;
 
 [Shared, ExportNavigationItem]
-[NavigationItemMetadata(Guid = NavigationConstants.DEV_TOOLS_CREATORSTUDIO_GUID, Header = "Creator Studio", PageType = typeof(ShellView),
-    Order = NavigationConstants.ORDER_DEV_TOOLS_GROUP_CREATORSTUDIO, OwnerGuid = NavigationConstants.DEV_TOOLS_GROUP)]
+[NavigationItemMetadata(Guid = NavigationConstants.DEV_TOOLS_CREATORSTUDIO_GUID, Header = "resx:GZSkinsX.Extensions.CreatorStudio/Resources/NavItem_Header",
+    PageType = typeof(ShellView), Order = NavigationConstants.ORDER_DEV_TOOLS_GROUP_CREATORSTUDIO, OwnerGuid = NavigationConstants.DEV_TOOLS_GROUP)]
 internal sealed class ExportCreatorStudioNavigationItem : INavigationItem
 {
     public IconElement Icon => new SegoeFluentIcon { Glyph = "\uEB3C" };
