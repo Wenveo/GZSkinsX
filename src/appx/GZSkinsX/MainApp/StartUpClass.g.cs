@@ -26,6 +26,8 @@ partial class StartUpClass
             yield return typeof(global::GZSkinsX.Appx.AccessCache.AppxAccessCache).Assembly;
             // GZSkinsX.Appx.Game
             yield return typeof(global::GZSkinsX.Appx.Game.AppxGame).Assembly;
+            // GZSkinsX.Appx.Home
+            yield return typeof(global::GZSkinsX.Appx.Home.AppxHome).Assembly;
             // GZSkinsX.Appx.Mods
             yield return typeof(global::GZSkinsX.Appx.Mods.AppxMods).Assembly;
             // GZSkinsX.Appx.MRT
