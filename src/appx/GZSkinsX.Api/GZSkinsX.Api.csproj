@@ -22,6 +22,11 @@
     <Compile Include="Appx\IAppxTitleBarButton.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
     <Compile Include="Appx\AppxContext.InternalCalls.cs" />
+    <Compile Include="Controls\SegoeFluentIcon.cs" />
+    <Compile Include="Controls\SegoeFluentIconSource.cs" />
+    <Compile Include="Controls\SegoeMDL2Assets.cs" />
+    <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
+    <Compile Include="Controls\StaticFontFamilys.cs" />
     <Compile Include="Extension\AutoLoadedMetadataAttribute.cs" />
     <Compile Include="Extension\AutoLoadedType.cs" />
     <Compile Include="Extension\ExportAutoLoadedAttribute.cs" />

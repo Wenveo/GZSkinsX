@@ -35,6 +35,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
+    <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
     <None Include="MainApp\StartUpClass.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>StartUpClass.g.cs</LastGenOutput>
