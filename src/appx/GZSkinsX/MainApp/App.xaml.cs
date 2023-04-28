@@ -9,8 +9,6 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.WindowManager;
 
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
-using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -44,6 +42,12 @@ public sealed partial class App : Application
             {
                 windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             }
+        }
+
+        if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
+        {
+            var themeService = AppxContext.ThemeService;
+            frameworkElement.RequestedTheme = themeService.CurrentTheme;
         }
 
         if (e.PrelaunchActivated == false)

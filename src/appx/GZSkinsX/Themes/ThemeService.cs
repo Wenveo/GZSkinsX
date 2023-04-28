@@ -69,23 +69,7 @@ internal sealed class ThemeService : IThemeService
         _accessible.HighContrastChanged += OnHighContrastChanged;
         _settings.ColorValuesChanged += OnColorValuesChanged;
 
-        if (_dispatcherQueue.HasThreadAccess)
-        {
-            InitializeTheme();
-        }
-        else
-        {
-            _dispatcherQueue.TryEnqueue(InitializeTheme);
-        }
-    }
-
-    private void InitializeTheme()
-    {
-        if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
-        {
-            frameworkElement.RequestedTheme = _themeSettings.CurrentTheme;
-            CurrentTheme = _themeSettings.CurrentTheme;
-        }
+        CurrentTheme = _themeSettings.CurrentTheme;
     }
 
     private void OnHighContrastChanged(AccessibilitySettings sender, object args)
