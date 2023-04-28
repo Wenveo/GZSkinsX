@@ -5,15 +5,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Windows.UI.Xaml.Controls;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace GZSkinsX.Appx.Navigation.Controls;
 
-public sealed partial class CustomizeNavTitleBar : Grid
+public sealed partial class CustomTitleBar : Windows.UI.Xaml.Controls.Grid
 {
-    public CustomizeNavTitleBar()
+    public CustomTitleBar()
     {
         InitializeComponent();
     }

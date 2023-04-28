@@ -20,7 +20,6 @@ using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
@@ -28,16 +27,6 @@ using Windows.UI.Xaml.Navigation;
 using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Navigation;
-
-/// <inheritdoc cref="MUXC.NavigationView"/>
-internal sealed class NavigationView2 : MUXC.NavigationView
-{
-    [DebuggerNonUserCode]
-    public object GetTemplateChild2(string childName)
-    {
-        return GetTemplateChild(childName);
-    }
-}
 
 /// <inheritdoc cref="INavigationService"/>
 [Shared, Export(typeof(INavigationService))]
@@ -81,7 +70,7 @@ internal sealed class NavigationService : INavigationService
     /// <summary>
     /// 用于切换导航项的内部 <see cref="NavigationView2"/> 对象实例
     /// </summary>
-    internal readonly NavigationView2 _navigationViewRoot;
+    internal readonly CustomNavigationView _navigationViewRoot;
 
     /// <summary>
     /// 用于呈现页面的内部 <see cref="Frame"/> 对象实例
@@ -115,7 +104,7 @@ internal sealed class NavigationService : INavigationService
         _allNavItemCtx = new();
         _navGroups = new();
 
-        _navigationViewRoot = new();
+        _navigationViewRoot = new(this);
         _rootFrame = new();
 
         InitializeNavGroups();
@@ -205,19 +194,10 @@ internal sealed class NavigationService : INavigationService
     {
         _rootFrame.Navigated += OnNavigated;
         _navigationViewRoot.Content = _rootFrame;
-        _navigationViewRoot.PaneDisplayMode = MUXC.NavigationViewPaneDisplayMode.Top;
-        _navigationViewRoot.IsBackButtonVisible = MUXC.NavigationViewBackButtonVisible.Collapsed;
-        _navigationViewRoot.IsTabStop = false;
-        _navigationViewRoot.IsSettingsVisible = false;
-        _navigationViewRoot.IsTitleBarAutoPaddingEnabled = false;
         _navigationViewRoot.PaneHeader = CreatePaneHeader();
-
-        var navPaneCustomContent = new CustomizeNavPaneContent(this);
-        _navigationViewRoot.PaneCustomContent = navPaneCustomContent;
         _navigationViewRoot.SelectionChanged += OnNavSelectionChanged;
-        _navigationViewRoot.Resources.Add("TopNavigationViewTopNavGridMargin", new Thickness(4, 0, 188, 0));
 
-        InitializeNavView(_navigationViewRoot);
+        InitializeMenuItems(_navigationViewRoot);
     }
 
     /// <summary>
@@ -239,7 +219,7 @@ internal sealed class NavigationService : INavigationService
     /// 为导航视图 <see cref="MUXC.NavigationView"/> 创建和添加子项
     /// </summary>
     /// <param name="navigationView">需要进行初始化的 <see cref="MUXC.NavigationView"/> 对象实例</param>
-    private void InitializeNavView(MUXC.NavigationView navigationView)
+    private void InitializeMenuItems(MUXC.NavigationView navigationView)
     {
         var needSeparator = false;
         foreach (var group in _navGroups)
@@ -318,8 +298,6 @@ internal sealed class NavigationService : INavigationService
             Content = GetLocalizedOrDefault(context.Metadata.Header),
             SelectsOnInvoked = context.Metadata.PageType is not null
         };
-
-        AutomationProperties.SetName(navItem, navItem.Content as string);
 
         if (_guidToNavItems.TryGetValue(guid, out var navItems))
         {

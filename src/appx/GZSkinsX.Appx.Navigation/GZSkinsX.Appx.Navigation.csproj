@@ -8,11 +8,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppxNavigation.cs" />
-    <Compile Include="Controls\CustomizeNavPaneContent.xaml.cs">
-      <DependentUpon>CustomizeNavPaneContent.xaml</DependentUpon>
+    <Compile Include="Controls\CustomNavigationView.xaml.cs">
+      <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CustomizeNavTitleBar.xaml.cs">
-      <DependentUpon>CustomizeNavTitleBar.xaml</DependentUpon>
+    <Compile Include="Controls\CustomTitleBar.xaml.cs">
+      <DependentUpon>CustomTitleBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="DefineNavigationGroups.cs" />
     <Compile Include="NavigationGroupContext.cs" />
@@ -26,11 +26,11 @@
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.Navigation.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\CustomizeNavPaneContent.xaml">
+    <Page Include="Controls\CustomNavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CustomizeNavTitleBar.xaml">
+    <Page Include="Controls\CustomTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Themes;
@@ -20,21 +21,75 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace GZSkinsX.Appx.Navigation.Controls;
 
-public sealed partial class CustomizeNavPaneContent : UserControl
+public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.NavigationView
 {
     private readonly NavigationService _navigationService;
+
+    private readonly IAppxTitleBar _appxTitleBar;
     private readonly IThemeService _themeService;
 
-    internal CustomizeNavPaneContent(NavigationService navigationService)
+    internal CustomNavigationView(NavigationService navigationService)
     {
         _navigationService = navigationService;
+
+        _appxTitleBar = AppxContext.AppxTitleBar;
         _themeService = AppxContext.ThemeService;
 
         InitializeComponent();
+
+        Loaded += OnLoaded;
+        Unloaded += OnUnloaded;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (GetTemplateChild("TopNavArea") is StackPanel topNavArea &&
+            topNavArea.Parent is Grid topRootGrid)
+        {
+            const string TopNavTitleBar = "TopNavTitleBar";
+            var navTitleBar = topRootGrid.Children.FirstOrDefault(child =>
+            {
+                // 查找是否已经在模板中注入了自定义标题栏
+                if (child is FrameworkElement frameworkElement)
+                {
+                    return frameworkElement.Name == TopNavTitleBar;
+                }
+
+                return false;
+            });
+
+            if (navTitleBar is null)
+            {
+                // 设置背景色为空，不然会挡住自定义的标题栏
+                topNavArea.Background = null;
+                navTitleBar = new CustomTitleBar
+                {
+                    Name = TopNavTitleBar,
+                    HorizontalAlignment = topNavArea.HorizontalAlignment,
+                    VerticalAlignment = topNavArea.VerticalAlignment
+                };
+
+                // 设置 UI 元素在显示层中的 Z 轴顺序
+                Canvas.SetZIndex(topNavArea, 2);
+                Canvas.SetZIndex(navTitleBar, 1);
+
+                topRootGrid.Children.Add(navTitleBar);
+            }
+
+            _appxTitleBar.SetTitleBar(navTitleBar);
+        }
+        else
+        {
+            // 当注入自定义标题栏失败时启用边距填充
+            IsTitleBarAutoPaddingEnabled = true;
+        }
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        _appxTitleBar.SetTitleBar(null);
     }
 
     private void OnMainSearchBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -64,7 +119,7 @@ public sealed partial class CustomizeNavPaneContent : UserControl
                             else
                             {
                                 suggestions.Add(new(header, string.Empty,
-                                    item.FontFamily, (Guid)item.Tag));
+                                item.FontFamily, (Guid)item.Tag));
                             }
 
                             break;

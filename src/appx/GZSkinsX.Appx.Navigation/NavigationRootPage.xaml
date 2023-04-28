@@ -8,13 +8,5 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     HighContrastAdjustment="None"
     mc:Ignorable="d">
-    <Grid>
-        <Border
-            x:Name="AppTitleBar"
-            Height="12"
-            VerticalAlignment="Top"
-            Background="Transparent"
-            Canvas.ZIndex="1" />
-        <ContentPresenter x:Name="contentPresenter" />
-    </Grid>
+    <ContentPresenter x:Name="contentPresenter" />
 </Page>
