@@ -7,15 +7,29 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TheExtension.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Extensions.CreatorStudio.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\appx\GZSkinsX.Api\GZSkinsX.Api.csproj">
+      <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
+      <Name>GZSkinsX.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Api.CreatorStudio\GZSkinsX.Api.CreatorStudio.csproj">
       <Project>{10d13373-784e-40f7-96ca-cda2f6092e8a}</Project>
       <Name>GZSkinsX.Api.CreatorStudio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
