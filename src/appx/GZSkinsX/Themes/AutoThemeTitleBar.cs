@@ -45,7 +45,7 @@ internal sealed class AutoThemeTitleBar : IAutoLoaded
 
     private void OnInitialize()
     {
-        OnThemeChangedImpl(_themeService.CurrentTheme);
+        OnThemeChangedImpl(_themeService.ActualTheme);
     }
 
     private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
