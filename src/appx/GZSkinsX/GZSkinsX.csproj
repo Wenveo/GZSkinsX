@@ -122,6 +122,7 @@
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\**\GZSkinsX.Appx.*.csproj" Name="%(Filename)" />
+    <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
