@@ -15,11 +15,10 @@ using GZSkinsX.Api.Themes;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
-using Microsoft.UI.Xaml.Controls;
-
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -57,10 +56,16 @@ public sealed partial class CustomizeNavPaneContent : UserControl
 
                         if (header.IndexOf(queryToken, StringComparison.CurrentCultureIgnoreCase) is not -1)
                         {
-                            suggestions.Add(new QueryNavigationItem(
-                                header,
-                                item.Icon is FontIcon fontIcon ? fontIcon.Glyph : string.Empty,
-                                (Guid)item.Tag));
+                            if (item.Icon is FontIcon fontIcon)
+                            {
+                                suggestions.Add(new(header, fontIcon.Glyph,
+                                    fontIcon.FontFamily, (Guid)item.Tag));
+                            }
+                            else
+                            {
+                                suggestions.Add(new(header, string.Empty,
+                                    item.FontFamily, (Guid)item.Tag));
+                            }
 
                             break;
                         }
@@ -117,7 +122,7 @@ public sealed partial class CustomizeNavPaneContent : UserControl
     }
 }
 
-internal record class QueryNavigationItem(string Title, string Glyph, Guid Guid)
+internal record class QueryNavigationItem(string Title, string Glyph, FontFamily FontFamily, Guid Guid)
 {
     public override string ToString() => Title;
 }

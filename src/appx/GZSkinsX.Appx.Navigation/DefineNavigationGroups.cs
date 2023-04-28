@@ -8,6 +8,7 @@
 using System.Composition;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.Navigation;
 
 using Windows.UI.Xaml.Controls;
@@ -29,7 +30,7 @@ internal sealed class TestItemA : INavigationItem
 {
     internal sealed class TestPageA : Page { }
 
-    public IconElement Icon => new FontIcon { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe Fluent Icons"), Glyph = "\uE10F" };
+    public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE10F" };
 
     public async Task OnNavigatedFromAsync()
     {
@@ -48,7 +49,7 @@ internal sealed class TestItemB : INavigationItem
 {
     internal sealed class TestPageB : Page { }
 
-    public IconElement Icon => new FontIcon { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe Fluent Icons"), Glyph = "\uE74C" };
+    public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE74C" };
 
     public async Task OnNavigatedFromAsync()
     {
@@ -67,7 +68,7 @@ internal sealed class TestItemC : INavigationItem
 {
     internal sealed class TestPageC : Page { }
 
-    public IconElement Icon => new FontIcon { FontFamily = new Windows.UI.Xaml.Media.FontFamily("Segoe Fluent Icons"), Glyph = "\uEB3C" };
+    public IconElement Icon => new SegoeFluentIcon { Glyph = "\uEB3C" };
 
     public async Task OnNavigatedFromAsync()
     {

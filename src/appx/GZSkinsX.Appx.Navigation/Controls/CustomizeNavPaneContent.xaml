@@ -5,6 +5,7 @@
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:composition="using:GZSkinsX.Uwp.Composition"
+    xmlns:ctrls2="using:GZSkinsX.Api.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Appx.Navigation.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -43,6 +44,9 @@
             </AutoSuggestBox.KeyboardAccelerators>
             <AutoSuggestBox.QueryIcon>
                 <muxc:AnimatedIcon>
+                    <muxc:AnimatedIcon.FallbackIconSource>
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE11A;" />
+                    </muxc:AnimatedIcon.FallbackIconSource>
                     <muxc:AnimatedIcon.Source>
                         <animatedvisuals:AnimatedFindVisualSource />
                     </muxc:AnimatedIcon.Source>
@@ -61,7 +65,7 @@
                             Margin="12,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
-                            <FontIcon Glyph="{Binding Glyph}" />
+                            <FontIcon FontFamily="{Binding FontFamily}" Glyph="{Binding Glyph}" />
                         </Viewbox>
                         <TextBlock
                             Grid.Column="1"
@@ -80,6 +84,9 @@
             Height="32"
             Padding="8">
             <muxc:AnimatedIcon>
+                <muxc:AnimatedIcon.FallbackIconSource>
+                    <ctrls2:SegoeFluentIconSource Glyph="&#xE700;" />
+                </muxc:AnimatedIcon.FallbackIconSource>
                 <muxc:AnimatedIcon.Source>
                     <animatedvisuals:AnimatedGlobalNavigationButtonVisualSource />
                 </muxc:AnimatedIcon.Source>
@@ -98,7 +105,7 @@
                             <ElementTheme>Light</ElementTheme>
                         </muxc:RadioMenuFlyoutItem.CommandParameter>
                         <muxc:RadioMenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE793;" />
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE793;" />
                         </muxc:RadioMenuFlyoutItem.Icon>
                     </muxc:RadioMenuFlyoutItem>
                     <muxc:RadioMenuFlyoutItem
@@ -110,7 +117,7 @@
                             <ElementTheme>Dark</ElementTheme>
                         </muxc:RadioMenuFlyoutItem.CommandParameter>
                         <muxc:RadioMenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE708;" />
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE708;" />
                         </muxc:RadioMenuFlyoutItem.Icon>
                     </muxc:RadioMenuFlyoutItem>
                     <muxc:RadioMenuFlyoutItem
@@ -122,7 +129,7 @@
                             <ElementTheme>Default</ElementTheme>
                         </muxc:RadioMenuFlyoutItem.CommandParameter>
                         <muxc:RadioMenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE770;" />
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE770;" />
                         </muxc:RadioMenuFlyoutItem.Icon>
                     </muxc:RadioMenuFlyoutItem>
                     <MenuFlyoutSeparator />
@@ -131,11 +138,7 @@
                             <XamlUICommand ExecuteRequested="OnSettingsInvoke" />
                         </MenuFlyoutItem.Command>
                         <MenuFlyoutItem.Icon>
-                            <muxc:AnimatedIcon>
-                                <muxc:AnimatedIcon.Source>
-                                    <animatedvisuals:AnimatedSettingsVisualSource />
-                                </muxc:AnimatedIcon.Source>
-                            </muxc:AnimatedIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE713;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                 </MenuFlyout>
