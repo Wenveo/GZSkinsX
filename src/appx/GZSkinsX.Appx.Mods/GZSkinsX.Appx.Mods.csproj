@@ -8,6 +8,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppxMods.cs" />
+    <Compile Include="ExportNavigationItems.cs" />
+    <Compile Include="ModsView.xaml.cs">
+      <DependentUpon>ModsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Appx.Mods.rd.xml" />
   </ItemGroup>
@@ -16,6 +20,12 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ModsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
