@@ -20,6 +20,11 @@ namespace GZSkinsX.Api.Themes;
 public interface IThemeService
 {
     /// <summary>
+    /// 获取当前应用程序中 UI 的实际元素主题
+    /// </summary>
+    ElementTheme ActualTheme { get; }
+
+    /// <summary>
     /// 获取当前应用程序中的 UI 元素主题
     /// </summary>
     ElementTheme CurrentTheme { get; }

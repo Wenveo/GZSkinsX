@@ -46,7 +46,14 @@ internal sealed class ThemeService : IThemeService
     private readonly UISettings _settings;
 
     /// <inheritdoc/>
-    public ElementTheme CurrentTheme { get; private set; }
+    public ElementTheme ActualTheme { get; private set; }
+
+    /// <inheritdoc/>
+    public ElementTheme CurrentTheme
+    {
+        get => _themeSettings.CurrentTheme;
+        private set => _themeSettings.CurrentTheme = value;
+    }
 
     /// <inheritdoc/>
     public bool IsHighContrast { get; private set; }
@@ -69,7 +76,10 @@ internal sealed class ThemeService : IThemeService
         _accessible.HighContrastChanged += OnHighContrastChanged;
         _settings.ColorValuesChanged += OnColorValuesChanged;
 
-        CurrentTheme = _themeSettings.CurrentTheme;
+        ActualTheme = CurrentTheme is not ElementTheme.Default
+            ? CurrentTheme
+            : Application.Current.RequestedTheme == ApplicationTheme.Light
+                ? ElementTheme.Light : ElementTheme.Dark;
     }
 
     private void OnHighContrastChanged(AccessibilitySettings sender, object args)
@@ -94,16 +104,14 @@ internal sealed class ThemeService : IThemeService
                     // If our HighContrastScheme is ON & a lighter one, then we should remain in 'Light' theme mode for Monaco Themes Perspective
                     IsHighContrast = false;
                     CurrentTheme = ElementTheme.Light;
-
-                    _themeSettings.CurrentTheme = ElementTheme.Light;
+                    ActualTheme = ElementTheme.Light;
                 }
                 else
                 {
                     // Otherwise, we just set to what's in the system as we'd expect.
                     IsHighContrast = _accessible.HighContrast;
                     CurrentTheme = frameworkElement.RequestedTheme;
-
-                    _themeSettings.CurrentTheme = frameworkElement.ActualTheme;
+                    ActualTheme = frameworkElement.ActualTheme;
                 }
 
                 ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, CurrentTheme, IsHighContrast));
@@ -119,7 +127,7 @@ internal sealed class ThemeService : IThemeService
             if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = newTheme;
-                _themeSettings.CurrentTheme = newTheme;
+                ActualTheme = frameworkElement.ActualTheme;
                 CurrentTheme = newTheme;
 
                 ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, CurrentTheme, IsHighContrast));
