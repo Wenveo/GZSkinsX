@@ -79,14 +79,10 @@ public sealed partial class StartUpClass
         }
 
         // ÐÞ¸´ XamlControlsResources ·ÃÎÊ³åÍ»µÄÒì³£
-        var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        if (dispatcherQueue.HasThreadAccess)
+        DispatcherQueue.GetForCurrentThread().TryEnqueue(() =>
         {
-            dispatcherQueue.TryEnqueue(() =>
-            {
-                mainApp.Resources = xamlControlsResources;
-            });
-        }
+            mainApp.Resources = xamlControlsResources;
+        });
 
         extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
         extensionService.NotifyExtensions(ExtensionEvent.Loaded);
