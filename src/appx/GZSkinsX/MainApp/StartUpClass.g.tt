@@ -20,6 +20,10 @@ partial class StartUpClass
     var appxDirectory = Path.Combine("src", "appx");
     var appxProjects = Directory.EnumerateFiles(appxDirectory,
         "GZSkinsX.Appx.*.csproj", SearchOption.AllDirectories);
+
+    var extsDirectory = Path.Combine("src", "extensions");
+    var extsProjects = Directory.EnumerateFiles(extsDirectory,
+        "GZSkinsX.Extensions.*.csproj", SearchOption.AllDirectories);
 #>
     /// <summary>
     /// 获取当前 Appx 引用程序集
@@ -40,6 +44,42 @@ partial class StartUpClass
             // <#= projName #>
             yield return typeof(global::<#= projName #>.<#= className #>).Assembly;
 <#
+        }
+#>
+        }
+
+        // Extensions
+        {
+<#
+        foreach (var item2 in extsProjects)
+        {
+            const string ExtClassName = "TheExtension";
+            const string ExtClassFileName = "TheExtension.cs";
+
+            var projName2 = Path.GetFileNameWithoutExtension(item2);
+            var extClassFullName = $"global::{projName2}.{ExtClassName}";
+#>
+            // <#= projName2 #>
+            yield return typeof(<#= extClassFullName #>).Assembly;
+<#
+            var parentDirectory = Path.GetDirectoryName(item2);
+            var extClassFilePath = Path.Combine(parentDirectory, ExtClassFileName);
+
+            var extClassText = File.ReadAllText(extClassFilePath);
+            if (extClassText.Contains("Assembly> GetSubModules()"))
+            {
+                var lasterName = projName2.Split('.').Last();
+                var variableName = $"g__{char.ToLower(lasterName[0])}{lasterName.Substring(1)}__subModule";
+#>
+            {
+                // SubModules of <#= projName2 #>
+                foreach (var <#= variableName #> in <#= extClassFullName #>.GetSubModules())
+                {
+                    yield return <#= variableName #>;
+                }
+            }
+<#
+            }
         }
 #>
         }
