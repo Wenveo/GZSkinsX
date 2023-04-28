@@ -5,14 +5,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Microsoft.UI.Xaml.Controls;
-
 namespace GZSkinsX.Api.Controls;
 
 /// <summary>
 /// 表示使用了特定的字体中的图标源 <seealso href="https://learn.microsoft.com/zh-cn/windows/apps/design/style/segoe-ui-symbol-font">Segoe MDL2 Assets</seealso> 作为字形
 /// </summary>
-public sealed class SegoeMDL2AssetsSource : FontIconSource
+public sealed class SegoeMDL2AssetsSource : Microsoft.UI.Xaml.Controls.FontIconSource
 {
     /// <summary>
     /// 初始化 <see cref="SegoeMDL2AssetsSource"/> 的新实例
