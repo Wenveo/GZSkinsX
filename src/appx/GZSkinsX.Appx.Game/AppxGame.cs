@@ -9,4 +9,5 @@ namespace GZSkinsX.Appx.Game;
 
 public static class AppxGame
 {
+
 }

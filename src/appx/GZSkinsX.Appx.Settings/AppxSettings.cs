@@ -9,4 +9,5 @@ namespace GZSkinsX.Appx.Settings;
 
 public static class AppxSettings
 {
+
 }
