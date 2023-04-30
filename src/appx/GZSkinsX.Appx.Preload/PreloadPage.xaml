@@ -9,6 +9,11 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
     <Grid>
+        <Grid.Transitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.Transitions>
         <StackPanel
             x:Name="CrashContent"
             Margin="20,0,20,0"
