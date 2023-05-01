@@ -61,11 +61,9 @@ internal sealed class AppxWindow : IAppxWindow
     /// <summary>
     /// 初始化 <see cref="AppxWindow"/> 的新实例
     /// </summary>
-    /// <param name="extensionService">应用程序扩展服务</param>
-    [ImportingConstructor]
-    public AppxWindow(ExtensionService extensionService)
+    public AppxWindow()
     {
-        _extensionService = extensionService;
+        _extensionService = StartUpClass.s_extensionService;
         _currentAppView = ApplicationView.GetForCurrentView();
 
         _shellWindow = Window.Current;
