@@ -129,7 +129,7 @@ public partial class SettingsExpander
         get => (bool)GetValue(IsExpandedProperty);
         set => SetValue(IsExpandedProperty, value);
     }
-    protected virtual void OnIsExpandedPropertyChanged(bool oldValue, bool newValue)
+    private void OnIsExpandedPropertyChanged(bool oldValue, bool newValue)
     {
         OnIsExpandedChanged(oldValue, newValue);
 
