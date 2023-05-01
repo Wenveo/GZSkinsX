@@ -12,8 +12,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-using GZSkinsX.DotNet.Diagnostics;
-
 using Windows.Storage;
 
 namespace GZSkinsX.Logging;
@@ -76,11 +74,9 @@ internal sealed class LoggerImpl
     /// <param name="message">要记录的内容</param>
     public void Log(string message)
     {
-        Debug2.Assert(_logWriter is not null);
-
         lock (_lockObj)
         {
-            _logWriter.WriteLine(message);
+            _logWriter?.WriteLine(message);
         }
     }
 
