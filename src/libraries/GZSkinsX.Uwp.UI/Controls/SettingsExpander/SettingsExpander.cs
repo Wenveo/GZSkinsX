@@ -20,7 +20,7 @@ namespace GZSkinsX.Uwp.UI.Controls;
 
 //// Note: ItemsRepeater will request all the available horizontal space: https://github.com/microsoft/microsoft-ui-xaml/issues/3842
 [TemplatePart(Name = PART_ItemsRepeater, Type = typeof(ItemsRepeater))]
-public partial class SettingsExpander : Control
+public sealed partial class SettingsExpander : Control
 {
     private const string PART_ItemsRepeater = "PART_ItemsRepeater";
 

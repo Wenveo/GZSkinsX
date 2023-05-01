@@ -13,7 +13,7 @@ namespace GZSkinsX.Uwp.UI.Controls;
 /// <summary>
 /// AutomationPeer for SettingsExpander
 /// </summary>
-public class SettingsExpanderAutomationPeer : FrameworkElementAutomationPeer
+public sealed class SettingsExpanderAutomationPeer : FrameworkElementAutomationPeer
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="SettingsExpander"/> class.
