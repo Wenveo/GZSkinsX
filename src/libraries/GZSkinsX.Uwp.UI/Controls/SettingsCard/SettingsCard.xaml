@@ -76,9 +76,9 @@
     <x:Double x:Key="SettingsCardWrapThreshold">476</x:Double>
     <x:Double x:Key="SettingsCardWrapNoIconThreshold">286</x:Double>
 
-    <Style BasedOn="{StaticResource DefaultSettingsCardStyle}" TargetType="labs:SettingsCard" />
+    <Style BasedOn="{StaticResource DefaultSettingsCardStyle}" TargetType="local:SettingsCard" />
 
-    <Style x:Key="DefaultSettingsCardStyle" TargetType="labs:SettingsCard">
+    <Style x:Key="DefaultSettingsCardStyle" TargetType="local:SettingsCard">
         <Style.Setters>
             <Setter Property="Background" Value="{ThemeResource SettingsCardBackground}" />
             <Setter Property="Foreground" Value="{ThemeResource SettingsCardForeground}" />
