@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System.Composition.Hosting;
 using System.Diagnostics;
 
@@ -14,9 +16,6 @@ using GZSkinsX.Api.Scripting;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 
-using Microsoft.UI.Xaml.Controls;
-
-using Windows.System;
 using Windows.UI.Xaml;
 
 namespace GZSkinsX.MainApp;
@@ -36,6 +35,16 @@ public sealed partial class StartUpClass
     /// 获取内部的 <see cref="global::System.Composition.Hosting.CompositionHost"/> 公开实现
     /// </summary>
     public static CompositionHost CompositionHost => s_compositionHost;
+
+    /// <summary>
+    /// 获取内部的 <see cref="ExtensionService"/> 静态成员实例
+    /// </summary>
+    internal static ExtensionService s_extensionService = null!;
+
+    /// <summary>
+    /// 获取内部的 <see cref="IServiceLocator"/> 静态成员实例
+    /// </summary>
+    internal static IServiceLocator s_serviceLocator = null!;
 
     /// <summary>
     /// 初始化 <see cref="StartUpClass"/> 的静态成员
@@ -63,30 +72,14 @@ public sealed partial class StartUpClass
     {
         await LoggerImpl.Shared.InitializeAsync();
 
-        // 这部分可能看着有些别扭，但这里必须先获取导出
-        // 的 ExtensionService，然后开始输出日志消息
-        var extensionService = s_compositionHost.GetExport<ExtensionService>();
-        var serviceLocator = s_compositionHost.GetExport<IServiceLocator>();
-        AppxContext.InitializeLifetimeService(parms, serviceLocator);
-        extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
+        s_extensionService = s_compositionHost.GetExport<ExtensionService>();
+        s_serviceLocator = s_compositionHost.GetExport<IServiceLocator>();
+        AppxContext.InitializeLifetimeService(parms, s_serviceLocator);
 
-        // 合并扩展组件的资源字典至主程序内
-        var xamlControlsResources = new XamlControlsResources();
-        var mergedResourceDictionaries = xamlControlsResources.MergedDictionaries;
-        foreach (var rsrc in extensionService.GetMergedResourceDictionaries())
-        {
-            mergedResourceDictionaries.Add(rsrc);
-        }
-
-        // 修复 XamlControlsResources 访问冲突的异常
-        DispatcherQueue.GetForCurrentThread().TryEnqueue(() =>
-        {
-            mainApp.Resources = xamlControlsResources;
-        });
-
-        extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
-        extensionService.NotifyExtensions(ExtensionEvent.Loaded);
-        extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensionsLoaded);
+        s_extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
+        s_extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
+        s_extensionService.NotifyExtensions(ExtensionEvent.Loaded);
+        s_extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensionsLoaded);
     }
 }
 #endif

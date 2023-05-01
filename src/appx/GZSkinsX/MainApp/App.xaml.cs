@@ -8,6 +8,8 @@
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.WindowManager;
 
+using Microsoft.UI.Xaml.Controls;
+
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,6 +40,14 @@ public sealed partial class App : Application
         var appxWindow = AppxContext.AppxWindow;
         if (appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
         {
+            // 合并扩展组件的资源字典至主程序内
+            var xamlControlsResources = Resources = new XamlControlsResources();
+            var mergedResourceDictionaries = xamlControlsResources.MergedDictionaries;
+            foreach (var rsrc in StartUpClass.s_extensionService.GetMergedResourceDictionaries())
+            {
+                mergedResourceDictionaries.Add(rsrc);
+            }
+
             if (StartUpClass.CompositionHost.TryGetExport<IWindowManagerService>(out var windowManagerService))
             {
                 windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
