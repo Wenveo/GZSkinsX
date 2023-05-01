@@ -82,7 +82,7 @@ internal sealed class ExtensionService
             foreach (var rsrc in value.MergedResourceDictionaries)
             {
                 var asm = value.GetType().Assembly.GetName();
-                var uri = new Uri($"ms-appx://{asm.Name}/{rsrc}", UriKind.Absolute);
+                var uri = new Uri($"ms-appx:///{asm.Name}/{rsrc}", UriKind.Absolute);
                 yield return new ResourceDictionary { Source = uri };
             }
         }
