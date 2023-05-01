@@ -7,6 +7,12 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\GridSplitter\GridSplitter.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Data.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Events.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Helper.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Options.cs" />
+    <Compile Include="Controls\GridSplitter\GripperHoverWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controls\SettingsCard\SettingsCard.cs" />
     <Compile Include="Controls\SettingsCard\SettingsCard.Properties.cs" />
@@ -20,6 +26,10 @@
     <EmbeddedResource Include="Properties\GZSkinsX.Uwp.UI.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\GridSplitter\GridSplitter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\SettingsCard\SettingsCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
