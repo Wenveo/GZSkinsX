@@ -85,6 +85,14 @@ public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.Na
             // 当注入自定义标题栏失败时启用边距填充
             IsTitleBarAutoPaddingEnabled = true;
         }
+
+        // 清楚内容区域的背景以及边框
+        if (GetTemplateChild("ContentGrid") is Grid contentGrid)
+        {
+            contentGrid.Background = null;
+            contentGrid.BorderBrush = null;
+            contentGrid.BorderThickness = default;
+        }
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
