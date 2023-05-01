@@ -54,6 +54,7 @@ public partial class GridSplitter
         }
     }
 
+    [System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_gripperDisplay))]
     private void CreateGripperDisplay()
     {
         if (_gripperDisplay == null)
