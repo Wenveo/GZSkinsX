@@ -71,7 +71,11 @@ public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.Na
                     VerticalAlignment = topNavArea.VerticalAlignment
                 };
 
-                // 设置 UI 元素在显示层中的 Z 轴顺序
+                // 更新 UI 元素在显示层中的 Z 轴顺序，以将 navTitleBar 置于底层
+                //  Before                      After
+                //  0 - ...                     0 - ...
+                //  1 - topNavArea              1 - navTitleBar
+                //  2 - navTitleBar             2 - topNavArea
                 Canvas.SetZIndex(topNavArea, 2);
                 Canvas.SetZIndex(navTitleBar, 1);
 
@@ -86,7 +90,7 @@ public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.Na
             IsTitleBarAutoPaddingEnabled = true;
         }
 
-        // 清楚内容区域的背景以及边框
+        // 清楚内容区域的背景色以及边框
         if (GetTemplateChild("ContentGrid") is Grid contentGrid)
         {
             contentGrid.Background = null;
