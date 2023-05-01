@@ -6,12 +6,36 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Collections.Generic;
+using System.Composition;
 using System.Reflection;
+
+using GZSkinsX.Api.Extension;
 
 namespace GZSkinsX.Extensions.CreatorStudio;
 
-public static class TheExtension
+[Shared, ExportExtension, ExtensionMetadata]
+public class TheExtension : IExtension
 {
+    public string Name => "Creator Studio";
+
+    public string ShortDescription => "The extension of 'Creator Studio' for 'GZSkinsX' app.";
+
+    public string Copyright => "Copyright ©  2022 - 2023";
+
+    public IEnumerable<string> MergedResourceDictionaries
+    {
+        get
+        {
+            //yield return "Styles/TabViewFluent.xaml";
+            yield break;
+        }
+    }
+
+    public void OnEvent(ExtensionEvent e)
+    {
+
+    }
+
     public static IEnumerable<Assembly> GetSubModules()
     {
         yield break;

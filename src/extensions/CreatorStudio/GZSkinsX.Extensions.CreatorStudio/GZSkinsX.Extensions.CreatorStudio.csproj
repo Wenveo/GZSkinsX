@@ -9,7 +9,8 @@
   <ItemGroup>
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShellView.xaml.cs">
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TheExtension.cs" />
@@ -20,13 +21,21 @@
       <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\libraries\GZSkinsX.Uwp.Composition\GZSkinsX.Uwp.Composition.csproj">
+      <Project>{7182d367-4984-4a8f-98bd-e276c98ad095}</Project>
+      <Name>GZSkinsX.Uwp.Composition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\libraries\GZSkinsX.Uwp.UI\GZSkinsX.Uwp.UI.csproj">
+      <Project>{8884efb7-02b2-4dd3-85bc-48d95ee21804}</Project>
+      <Name>GZSkinsX.Uwp.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Api.CreatorStudio\GZSkinsX.Api.CreatorStudio.csproj">
       <Project>{10d13373-784e-40f7-96ca-cda2f6092e8a}</Project>
       <Name>GZSkinsX.Api.CreatorStudio</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ShellView.xaml">
+    <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -37,6 +46,12 @@
   <ItemGroup>
     <PRIResource Include="Resources\zh-CN\Resources.resw" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
