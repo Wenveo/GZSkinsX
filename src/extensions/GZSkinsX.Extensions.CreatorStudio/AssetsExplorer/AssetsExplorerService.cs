@@ -18,6 +18,10 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.MRT;
 
+using Windows.UI.Xaml.Automation;
+
+using MUXC = Microsoft.UI.Xaml.Controls;
+
 namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 
 [Shared, Export]
@@ -40,12 +44,13 @@ internal sealed partial class AssetsExplorerService
         _treeView = new();
         _refreshButton = new();
         _collapseButton = new();
+        _loadAssetItemsWorker = new();
 
         InitializeUIObject();
         InitializeEvents();
     }
 
-    private async Task InitializeContainerAsync()
+    private async Task InitializeAssetsExplorerAsync()
     {
         var rootDirectory = new DirectoryInfo(_gameService.RootDirectory);
 
@@ -90,10 +95,41 @@ internal sealed partial class AssetsExplorerService
             currentContainer.AddChild(new AssetsExplorerFile(item));
         }
 
+        void LoadNodesFromContainer(AssetsExplorerContainer rootConatiner)
+        {
+            _treeView.RootNodes.Clear();
+            foreach (var subContainers in rootConatiner.Children.OfType<AssetsExplorerContainer>())
+                _treeView.RootNodes.Add(CreateItemFromContainer(subContainers));
+
+            foreach (var subFile in rootConatiner.Children.OfType<AssetsExplorerFile>())
+                _treeView.RootNodes.Add(CreateItemFromFile(subFile));
+        }
+
         if (_treeView.Dispatcher.HasThreadAccess)
             LoadNodesFromContainer(_rootContainer);
         else
             await _treeView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => LoadNodesFromContainer(_rootContainer));
+    }
+
+    private MUXC.TreeViewNode CreateItemFromContainer(AssetsExplorerContainer container)
+    {
+        var treeViewNode = new MUXC.TreeViewNode { Content = container };
+        AutomationProperties.SetName(treeViewNode, container.Name);
+
+        foreach (var subContainers in container.Children.OfType<AssetsExplorerContainer>())
+            treeViewNode.Children.Add(CreateItemFromContainer(subContainers));
+
+        foreach (var subFile in container.Children.OfType<AssetsExplorerFile>())
+            treeViewNode.Children.Add(CreateItemFromFile(subFile));
+
+        return treeViewNode;
+    }
+
+    private MUXC.TreeViewNode CreateItemFromFile(AssetsExplorerFile item)
+    {
+        var treeViewNode = new MUXC.TreeViewNode() { Content = item };
+        AutomationProperties.SetName(treeViewNode, item.Name);
+        return treeViewNode;
     }
 
     private static bool IsSupportedFileType(string fileNameWithExtension) => fileNameWithExtension switch

@@ -28,7 +28,7 @@ namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 
 internal sealed partial class AssetsExplorerService
 {
-
+    private readonly BackgroundWorker _loadAssetItemsWorker;
     private readonly MUXC.TreeView _treeView;
     private readonly Button _refreshButton;
     private readonly Button _collapseButton;
@@ -118,6 +118,9 @@ internal sealed partial class AssetsExplorerService
         _refreshButton.Click += OnRefreshButtonClick;
         _collapseButton.Click += OnCollapseButtonClick;
         _loading.ActualThemeChanged += OnLoadingActualThemeChanged;
+
+        _loadAssetItemsWorker.DoWork += Worker_DoWork;
+        _loadAssetItemsWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
     }
 
     private void OnTreeViewLoaded(object sender, RoutedEventArgs e)
@@ -172,46 +175,7 @@ internal sealed partial class AssetsExplorerService
             : new SolidColorBrush(Color.FromArgb(0x72, 0xF3, 0xF3, 0xF3));
     }
 
-    private MUXC.TreeViewNode CreateItemFromContainer(AssetsExplorerContainer container)
-    {
-        var treeViewNode = new MUXC.TreeViewNode { Content = container };
-        AutomationProperties.SetName(treeViewNode, container.Name);
-
-        foreach (var subContainers in container.Children.OfType<AssetsExplorerContainer>())
-            treeViewNode.Children.Add(CreateItemFromContainer(subContainers));
-
-        foreach (var subFile in container.Children.OfType<AssetsExplorerFile>())
-            treeViewNode.Children.Add(CreateItemFromFile(subFile));
-
-        return treeViewNode;
-    }
-
-    private MUXC.TreeViewNode CreateItemFromFile(AssetsExplorerFile item)
-    {
-        var treeViewNode = new MUXC.TreeViewNode() { Content = item };
-        AutomationProperties.SetName(treeViewNode, item.Name);
-        return treeViewNode;
-    }
-
-    private void LoadNodesFromContainer(AssetsExplorerContainer rootConatiner)
-    {
-        _treeView.RootNodes.Clear();
-        foreach (var subContainers in rootConatiner.Children.OfType<AssetsExplorerContainer>())
-            _treeView.RootNodes.Add(CreateItemFromContainer(subContainers));
-
-        foreach (var subFile in rootConatiner.Children.OfType<AssetsExplorerFile>())
-            _treeView.RootNodes.Add(CreateItemFromFile(subFile));
-    }
-
-    private void LoadAssetItemsUI()
-    {
-        var worker = new BackgroundWorker();
-        worker.DoWork += Worker_DoWork;
-        worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-        worker.RunWorkerAsync();
-    }
-
-    private async void Worker_DoWork(object sender, DoWorkEventArgs e)
+    private async void LoadAssetItemsUI()
     {
         if (_loading.Dispatcher.HasThreadAccess)
         {
@@ -224,7 +188,12 @@ internal sealed partial class AssetsExplorerService
                 () => _loading.Visibility = Visibility.Visible);
         }
 
-        await InitializeContainerAsync();
+        _loadAssetItemsWorker.RunWorkerAsync();
+    }
+
+    private async void Worker_DoWork(object sender, DoWorkEventArgs e)
+    {
+        await InitializeAssetsExplorerAsync();
     }
 
     private async void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
