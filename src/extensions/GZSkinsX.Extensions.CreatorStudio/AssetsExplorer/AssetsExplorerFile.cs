@@ -5,15 +5,16 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
+using System.IO;
 
-using CommunityToolkit.Mvvm.ComponentModel;
+namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 
-namespace GZSkinsX.Extensions.CreatorStudio.ViewModels;
-
-internal sealed partial class ShellViewModel : ObservableObject
+internal sealed class AssetsExplorerFile : AssetsExplorerItem
 {
-    public ShellViewModel()
+    public FileInfo FileInfo { get; }
+
+    public AssetsExplorerFile(FileInfo fileInfo) : base(fileInfo.Name, "\uE130")
     {
+        FileInfo = fileInfo;
     }
 }

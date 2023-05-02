@@ -26,42 +26,6 @@
                     <StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="LayerOnMicaBaseAltFillColorDefaultBrush" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-
-            <DataTemplate x:Key="FolderTemplate" x:DataType="viewModels:ExplorerItem">
-                <muxc:TreeViewItem AutomationProperties.Name="{Binding Name, Mode=OneWay}" ItemsSource="{Binding Childrens, Mode=OneWay}">
-                    <StackPanel Orientation="Horizontal">
-                        <Viewbox
-                            Width="16"
-                            Height="16"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                            <ctrls2:SegoeFluentIcon Glyph="&#xE188;" />
-                        </Viewbox>
-                        <TextBlock Margin="10,0,0,0" Text="{Binding Name, Mode=OneWay}" />
-                    </StackPanel>
-                </muxc:TreeViewItem>
-            </DataTemplate>
-
-            <DataTemplate x:Key="FileTemplate" x:DataType="viewModels:ExplorerItem">
-                <muxc:TreeViewItem AutomationProperties.Name="{Binding Name, Mode=OneWay}" ItemsSource="{Binding Childrens, Mode=OneWay}">
-                    <StackPanel Orientation="Horizontal">
-                        <Viewbox
-                            Width="16"
-                            Height="16"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                            <ctrls2:SegoeFluentIcon Glyph="&#xE130;" />
-                        </Viewbox>
-                        <TextBlock Margin="10,0,0,0" Text="{Binding Name, Mode=OneWay}" />
-                    </StackPanel>
-                </muxc:TreeViewItem>
-            </DataTemplate>
-
-            <viewModels:ExplorerItemTemplateSelector
-                x:Key="ExplorerItemTemplateSelector"
-                FileTemplate="{StaticResource FileTemplate}"
-                FolderTemplate="{StaticResource FolderTemplate}" />
-
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -136,63 +100,11 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="240" />
+                <ColumnDefinition Width="240" MinWidth="240" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" RowSpacing="12">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid Margin="10,10,10,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontWeight="SemiBold"
-                        Text="Assets Explorer" />
-                    <StackPanel
-                        Grid.Column="2"
-                        Orientation="Horizontal"
-                        Spacing="4">
-                        <Button Padding="6">
-                            <Viewbox
-                                Width="12"
-                                Height="12"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                                <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
-                            </Viewbox>
-                        </Button>
-                        <Button Padding="6">
-                            <Viewbox
-                                Width="12"
-                                Height="12"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                                <ctrls2:SegoeFluentIcon Glyph="&#xF165;" />
-                            </Viewbox>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-                <muxc:TreeView
-                    Grid.Row="1"
-                    Padding="0,0,12,0"
-                    ItemTemplateSelector="{StaticResource ExplorerItemTemplateSelector}"
-                    ItemsSource="{Binding ExplorerItems, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                    <muxc:TreeView.ItemContainerTransitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition />
-                        </TransitionCollection>
-                    </muxc:TreeView.ItemContainerTransitions>
-                </muxc:TreeView>
-            </Grid>
-
+            <ContentPresenter x:Name="AssetsExplorerHost" />
             <ui:GridSplitter
                 Grid.Column="1"
                 Width="4"
