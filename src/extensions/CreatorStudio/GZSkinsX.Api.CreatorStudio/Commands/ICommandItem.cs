@@ -11,8 +11,6 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public interface ICommandItem
 {
-    CommandHotKey? HotKey { get; }
-
     bool IsEnabled(ICommandEventArgs args);
 
     bool IsVisible(ICommandEventArgs args);

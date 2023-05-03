@@ -17,6 +17,8 @@ public interface ICommandButton : ICommandItem
 
     public string? ToolTip { get; }
 
+    CommandHotKey? HotKey { get; }
+
     IconElement? Icon { get; }
 
     void OnClick();
