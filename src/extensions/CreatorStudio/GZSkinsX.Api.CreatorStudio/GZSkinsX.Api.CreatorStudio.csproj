@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandConstants.cs" />
     <Compile Include="Commands\CommandHotKey.cs" />
     <Compile Include="Commands\CommandItemMetadataAttribute.cs" />
     <Compile Include="Commands\CommandPlacement.cs" />
