@@ -15,6 +15,8 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class CommandItemMetadataAttribute : Attribute
 {
+    public required string Guid { get; set; }
+
     public string? GroupName { get; set; }
 
     public string? DisplayName { get; set; }
