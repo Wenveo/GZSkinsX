@@ -9,6 +9,6 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public enum CommandPlacement
 {
-    Default,
+    Primary,
     Secondary
 }
