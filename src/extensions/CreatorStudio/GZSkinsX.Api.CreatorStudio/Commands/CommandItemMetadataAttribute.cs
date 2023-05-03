@@ -5,8 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
-
 using System;
 using System.Composition;
 
@@ -16,10 +14,6 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 public sealed class CommandItemMetadataAttribute : Attribute
 {
     public required string Group { get; set; }
-
-    public string? DisplayName { get; set; }
-
-    public string? ToolTip { get; set; }
 
     public double Order { get; set; }
 

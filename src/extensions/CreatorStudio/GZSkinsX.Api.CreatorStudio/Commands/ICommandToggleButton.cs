@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
-public interface ICommandButton : ICommandItem
+public interface ICommandToggleButton : ICommandItem
 {
     public string? DisplayName { get; }
 
@@ -19,5 +19,5 @@ public interface ICommandButton : ICommandItem
 
     IconElement? Icon { get; }
 
-    void OnClick();
+    void OnToggle(bool newValue);
 }

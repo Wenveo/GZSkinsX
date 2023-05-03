@@ -7,15 +7,11 @@
 
 #nullable enable
 
-using Windows.UI.Xaml.Controls;
-
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public interface ICommandItem
 {
-    IconElement? Icon { get; set; }
-
-    CommandHotKey? HotKey { get; set; }
+    CommandHotKey? HotKey { get; }
 
     bool IsEnabled(ICommandEventArgs args);
 

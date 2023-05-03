@@ -16,6 +16,7 @@
     <Compile Include="Commands\ICommandEventArgs.cs" />
     <Compile Include="Commands\ICommandItem.cs" />
     <Compile Include="Commands\ICommandObject.cs" />
+    <Compile Include="Commands\ICommandToggleButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.CreatorStudio.rd.xml" />
   </ItemGroup>
