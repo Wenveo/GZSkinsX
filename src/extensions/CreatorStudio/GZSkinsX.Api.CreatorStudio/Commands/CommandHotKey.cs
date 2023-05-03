@@ -5,26 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
-
 using Windows.System;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public sealed class CommandHotKey
 {
-    public VirtualKey? Key { get; set; }
+    public required VirtualKey Key { get; set; }
 
-    public VirtualKeyModifiers? Modifiers { get; set; }
-
-    public CommandHotKey(VirtualKey key)
-    {
-        Key = key;
-    }
-
-    public CommandHotKey(VirtualKey key, VirtualKeyModifiers modifiers)
-    {
-        Key = key;
-        Modifiers = modifiers;
-    }
+    public required VirtualKeyModifiers Modifiers { get; set; }
 }
