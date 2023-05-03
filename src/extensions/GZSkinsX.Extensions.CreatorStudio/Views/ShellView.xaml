@@ -42,7 +42,7 @@
                 DefaultLabelPosition="Right"
                 IsOpen="False">
                 <CommandBar.Content>
-                    <muxc:DropDownButton Margin="4,0,0,0">
+                    <muxc:DropDownButton Margin="4,0,2,0">
                         <StackPanel
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
@@ -57,33 +57,39 @@
                             <TextBlock Margin="10,0,0,1" Text="New" />
                         </StackPanel>
                         <muxc:DropDownButton.Flyout>
-                            <MenuFlyout Placement="Bottom" />
+                            <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                <MenuFlyoutItem Text="File">
+                                    <MenuFlyoutItem.Icon>
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE8A5;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
                         </muxc:DropDownButton.Flyout>
                     </muxc:DropDownButton>
                 </CommandBar.Content>
-                <AppBarSeparator Margin="2,0,0,0" />
+                <AppBarSeparator />
                 <AppBarButton Label="Open File">
                     <AppBarButton.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE197;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="Save">
+                <AppBarButton IsEnabled="False" Label="Save">
                     <AppBarButton.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE105;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="Save As">
+                <AppBarButton IsEnabled="False" Label="Save As">
                     <AppBarButton.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE792;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarSeparator />
-                <AppBarButton Label="Undo">
+                <AppBarButton IsEnabled="False" Label="Undo">
                     <AppBarButton.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE7A7;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="Redo">
+                <AppBarButton IsEnabled="False" Label="Redo">
                     <AppBarButton.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE7A6;" />
                     </AppBarButton.Icon>
