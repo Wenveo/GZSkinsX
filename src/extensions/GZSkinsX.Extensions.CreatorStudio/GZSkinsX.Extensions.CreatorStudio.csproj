@@ -22,7 +22,6 @@
     <Compile Include="Commands\CommandItemGroupContext.cs" />
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
