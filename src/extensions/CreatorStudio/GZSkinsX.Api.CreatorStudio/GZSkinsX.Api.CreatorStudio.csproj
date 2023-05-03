@@ -7,9 +7,21 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Commands\CommandHotKey.cs" />
+    <Compile Include="Commands\CommandItemMetadataAttribute.cs" />
+    <Compile Include="Commands\ExportCommandItemAttribute.cs" />
+    <Compile Include="Commands\ICommandButton.cs" />
+    <Compile Include="Commands\ICommandContext.cs" />
+    <Compile Include="Commands\ICommandItem.cs" />
+    <Compile Include="Commands\ICommandObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.CreatorStudio.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\appx\GZSkinsX.Api\GZSkinsX.Api.csproj">
+      <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
+      <Name>GZSkinsX.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
