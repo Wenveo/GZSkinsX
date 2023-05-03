@@ -9,14 +9,14 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Controls;
+using GZSkinsX.Api.Themes;
 
 using Windows.UI;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
@@ -90,7 +90,7 @@ internal sealed partial class AssetsExplorerService
         topArea.Children.Add(stackPanel);
 
         _loading.Visibility = Visibility.Collapsed;
-        _loading.Background = GetLoadingBackground(_treeView.ActualTheme);
+        _loading.Background = GetLoadingBackground(AppxContext.ThemeService.ActualTheme);
         _loading.Child = new MUXC.ProgressRing
         {
             IsIndeterminate = true,
@@ -117,10 +117,11 @@ internal sealed partial class AssetsExplorerService
         _treeView.ItemInvoked += OnTreeViewItemInvoked;
         _refreshButton.Click += OnRefreshButtonClick;
         _collapseButton.Click += OnCollapseButtonClick;
-        _loading.ActualThemeChanged += OnLoadingActualThemeChanged;
 
         _loadAssetItemsWorker.DoWork += Worker_DoWork;
         _loadAssetItemsWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+
+        AppxContext.ThemeService.ThemeChanged += OnThemeChanged;
     }
 
     private void OnTreeViewLoaded(object sender, RoutedEventArgs e)
@@ -163,9 +164,9 @@ internal sealed partial class AssetsExplorerService
         }
     }
 
-    private void OnLoadingActualThemeChanged(FrameworkElement sender, object args)
+    private void OnThemeChanged(object sender, ThemeChangedEventArgs args)
     {
-        _loading.Background = GetLoadingBackground(sender.ActualTheme);
+        _loading.Background = GetLoadingBackground(args.ActualTheme);
     }
 
     private static SolidColorBrush GetLoadingBackground(ElementTheme actualTheme)
