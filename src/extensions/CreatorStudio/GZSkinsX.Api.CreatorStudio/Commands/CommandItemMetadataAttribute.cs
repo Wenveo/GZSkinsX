@@ -22,4 +22,6 @@ public sealed class CommandItemMetadataAttribute : Attribute
     public string? ToolTip { get; set; }
 
     public double Order { get; set; }
+
+    public CommandPlacement Placement { get; set; }
 }

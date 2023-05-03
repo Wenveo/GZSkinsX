@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandHotKey.cs" />
     <Compile Include="Commands\CommandItemMetadataAttribute.cs" />
+    <Compile Include="Commands\CommandPlacement.cs" />
     <Compile Include="Commands\ExportCommandItemAttribute.cs" />
     <Compile Include="Commands\ICommandButton.cs" />
     <Compile Include="Commands\ICommandContext.cs" />
