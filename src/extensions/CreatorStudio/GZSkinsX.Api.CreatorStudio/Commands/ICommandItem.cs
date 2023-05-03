@@ -17,7 +17,7 @@ public interface ICommandItem
 
     CommandHotKey? HotKey { get; set; }
 
-    bool IsEnabled(ICommandContext ctx);
+    bool IsEnabled(ICommandEventArgs args);
 
-    bool IsVisible(ICommandContext ctx);
+    bool IsVisible(ICommandEventArgs args);
 }

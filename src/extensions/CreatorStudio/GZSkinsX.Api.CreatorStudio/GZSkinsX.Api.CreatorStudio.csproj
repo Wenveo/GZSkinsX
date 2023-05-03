@@ -12,7 +12,7 @@
     <Compile Include="Commands\CommandPlacement.cs" />
     <Compile Include="Commands\ExportCommandItemAttribute.cs" />
     <Compile Include="Commands\ICommandButton.cs" />
-    <Compile Include="Commands\ICommandContext.cs" />
+    <Compile Include="Commands\ICommandEventArgs.cs" />
     <Compile Include="Commands\ICommandItem.cs" />
     <Compile Include="Commands\ICommandObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

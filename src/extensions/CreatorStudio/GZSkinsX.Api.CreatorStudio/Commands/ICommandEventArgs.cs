@@ -9,7 +9,7 @@
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
-public interface ICommandContext
+public interface ICommandEventArgs
 {
     // TODO: 当实现了 DocumentService 之后再对此类型进行更改
     object? ActiveDocument { get; }
