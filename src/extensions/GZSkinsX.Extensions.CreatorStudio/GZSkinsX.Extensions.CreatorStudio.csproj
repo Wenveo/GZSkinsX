@@ -15,6 +15,11 @@
     <Compile Include="AssetsExplorer\TreeViewNodeItemTemplate.xaml.cs">
       <DependentUpon>TreeViewNodeItemTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands\AppCommands.cs" />
+    <Compile Include="Commands\CommandBarService.cs" />
+    <Compile Include="Commands\CommandItemContext.cs" />
+    <Compile Include="Commands\CommandEventArgs.cs" />
+    <Compile Include="Commands\CommandItemGroupContext.cs" />
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -36,6 +41,10 @@
     <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.UI\GZSkinsX.Uwp.UI.csproj">
       <Project>{8884efb7-02b2-4dd3-85bc-48d95ee21804}</Project>
       <Name>GZSkinsX.Uwp.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CreatorStudio\GZSkinsX.Api.CreatorStudio\GZSkinsX.Api.CreatorStudio.csproj">
+      <Project>{53cef44a-afe0-4377-b199-cc72c26b2356}</Project>
+      <Name>GZSkinsX.Api.CreatorStudio</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -34,74 +34,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
-            <CommandBar
-                HorizontalAlignment="Left"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                Background="Transparent"
-                DefaultLabelPosition="Right"
-                IsOpen="False">
-                <CommandBar.Content>
-                    <muxc:DropDownButton Margin="4,0,2,0">
-                        <StackPanel
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Orientation="Horizontal">
-                            <Viewbox
-                                Width="16"
-                                Height="16"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                                <ctrls2:SegoeFluentIcon Glyph="&#xECC8;" />
-                            </Viewbox>
-                            <TextBlock Margin="10,0,0,1" Text="New" />
-                        </StackPanel>
-                        <muxc:DropDownButton.Flyout>
-                            <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                <MenuFlyoutItem Text="File">
-                                    <MenuFlyoutItem.Icon>
-                                        <ctrls2:SegoeFluentIcon Glyph="&#xE8A5;" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
-                            </MenuFlyout>
-                        </muxc:DropDownButton.Flyout>
-                    </muxc:DropDownButton>
-                </CommandBar.Content>
-                <AppBarSeparator />
-                <AppBarButton Label="Open File">
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE197;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton IsEnabled="False" Label="Save">
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE105;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton IsEnabled="False" Label="Save As">
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE792;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarSeparator />
-                <AppBarButton IsEnabled="False" Label="Undo">
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE7A7;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton IsEnabled="False" Label="Redo">
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE7A6;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton Icon="Setting" Label="Settings">
-                        <AppBarButton.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="I" Modifiers="Control" />
-                        </AppBarButton.KeyboardAccelerators>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
+            <ContentPresenter x:Name="CommandBarHost" />
         </Grid>
 
         <Grid Grid.Row="1">
