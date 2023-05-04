@@ -10,6 +10,7 @@ using System.Composition;
 using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.Commands;
 
+using Windows.System;
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Shell;
@@ -18,18 +19,11 @@ namespace GZSkinsX.Extensions.CreatorStudio.Shell;
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_VIEW, Order = 0d)]
 internal sealed class ShowOrHideAssetsExplorerCommand : CommandToggleButtonBase
 {
-    private readonly SegoeFluentIcon _icon;
-    private readonly string _displayName;
+    public override string GetDisplayName() => "Assets Explorer";
 
-    public ShowOrHideAssetsExplorerCommand()
-    {
-        _displayName = "Assets Explorer";
-        _icon = new SegoeFluentIcon { Glyph = "\uE179" };
-    }
+    public override IconElement GetIcon() => new SegoeFluentIcon { Glyph = "\uE179" };
 
-    public override string GetDisplayName() => _displayName;
-
-    public override IconElement GetIcon() => _icon;
+    public override CommandHotKey GetHotKey() => new() { Key = VirtualKey.E, Modifiers = VirtualKeyModifiers.Control };
 
     public override bool IsChecked() => ShellViewControl.Instance.AssetsExplorerIsVisible;
 
