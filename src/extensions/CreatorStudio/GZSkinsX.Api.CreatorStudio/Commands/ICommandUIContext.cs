@@ -5,21 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
-
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
-public interface ICommandButton : ICommandItem
+public interface ICommandUIContext
 {
-    public string? DisplayName { get; }
+    public object UIObject { get; }
 
-    public string? ToolTip { get; }
-
-    CommandHotKey? HotKey { get; }
-
-    IconElement? Icon { get; }
-
-    void OnClick(ICommandUIContext ctx);
+    public RoutedEventArgs EventArgs { get; }
 }

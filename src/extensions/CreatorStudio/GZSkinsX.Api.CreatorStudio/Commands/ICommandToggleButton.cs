@@ -21,5 +21,5 @@ public interface ICommandToggleButton : ICommandItem
 
     IconElement? Icon { get; }
 
-    void OnToggle(bool newValue);
+    void OnToggle(bool newValue, ICommandUIContext ctx);
 }

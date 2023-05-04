@@ -167,6 +167,16 @@ internal sealed class CommandBarService
         button.IsEnabled = item.IsEnabled();
         button.Visibility = Bool2Visibility(item.IsVisible());
 
+        static void OnClickEvent(object sender, RoutedEventArgs e)
+        {
+            var self = (AppBarButton)sender;
+            var item = (ICommandButton)self.Tag;
+
+            item.OnClick(new CommandUIContext(sender, e));
+        }
+
+        button.Click += OnClickEvent;
+
         return button;
     }
 
@@ -198,7 +208,7 @@ internal sealed class CommandBarService
             var self = (AppBarToggleButton)sender;
             var item = (ICommandToggleButton)self.Tag;
 
-            item.OnToggle(self.IsChecked ?? false);
+            item.OnToggle(self.IsChecked ?? false, new CommandUIContext(sender, e));
         }
 
         toggleButton.Checked += OnToggleEvent;
