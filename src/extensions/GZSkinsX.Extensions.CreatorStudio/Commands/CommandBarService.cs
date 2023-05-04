@@ -49,7 +49,7 @@ internal sealed class CommandBarService
         InitializeUIObject();
     }
 
-    public void InitializeGroups()
+    private void InitializeGroups()
     {
         static bool ParseGroup(string group, out string name, out double order)
         {
@@ -90,7 +90,7 @@ internal sealed class CommandBarService
         }
     }
 
-    public void InitializeUIObject()
+    private void InitializeUIObject()
     {
         int AddItems(
             IObservableVector<ICommandBarElement> collection,
@@ -124,7 +124,6 @@ internal sealed class CommandBarService
         _commandBar.Background = new SolidColorBrush(Colors.Transparent);
         _commandBar.IsOpen = false;
 
-        var initializeArgs = new CommandEventArgs() { ActiveDocument = null };
         var orderedGroups = _groupDict.Values.OrderBy(a => a.Order);
 
         var primaryNeedSeparator = false;
@@ -237,5 +236,23 @@ internal sealed class CommandBarService
         {
             return resourceKey;
         }
+    }
+
+    public void RefreshUI()
+    {
+        void Refresh(IObservableVector<ICommandBarElement> collection)
+        {
+            foreach (var item in collection)
+            {
+                if (item is Control control && control.Tag is ICommandItem commandItem)
+                {
+                    control.IsEnabled = commandItem.IsVisible();
+                    control.Visibility = Bool2Visibility(commandItem.IsVisible());
+                }
+            }
+        }
+
+        Refresh(_commandBar.PrimaryCommands);
+        Refresh(_commandBar.SecondaryCommands);
     }
 }
