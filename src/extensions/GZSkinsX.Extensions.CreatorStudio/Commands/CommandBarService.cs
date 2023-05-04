@@ -142,30 +142,19 @@ internal sealed class CommandBarService : ICommandBarService
             secondaryNeedSeparator = AddItems(_commandBar.SecondaryCommands,
                 group.Items.Where(item => item.Metadata.Placement == CommandPlacement.Secondary)) > 0;
         }
+
+        _commandBar.Loaded += OnCommandBarLoaded;
+    }
+
+    private void OnCommandBarLoaded(object sender, RoutedEventArgs e)
+    {
+        _commandBar.Loaded -= OnCommandBarLoaded;
+        RefreshUI();
     }
 
     private AppBarButton CreateAppBarButton(ICommandButton item, CommandItemMetadataAttribute metadata)
     {
         var button = new AppBarButton { Tag = item };
-
-        var displayName = item.DisplayName;
-        if (!string.IsNullOrEmpty(displayName))
-            button.Label = GetLocalizedOrDefault(displayName!);
-
-        var toolTip = item.ToolTip;
-        if (!string.IsNullOrEmpty(toolTip))
-            ToolTipService.SetToolTip(button, GetLocalizedOrDefault(toolTip!));
-
-        var iconElement = item.Icon;
-        if (iconElement is not null)
-            button.Icon = iconElement;
-
-        var commandHotKey = item.HotKey;
-        if (commandHotKey is not null)
-            button.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
-
-        button.IsEnabled = item.IsEnabled();
-        button.Visibility = Bool2Visibility(item.IsVisible());
 
         static void OnClickEvent(object sender, RoutedEventArgs e)
         {
@@ -183,25 +172,6 @@ internal sealed class CommandBarService : ICommandBarService
     private AppBarToggleButton CreateAppBarToggleButton(ICommandToggleButton item, CommandItemMetadataAttribute metadata)
     {
         var toggleButton = new AppBarToggleButton { Tag = item };
-
-        var displayName = item.DisplayName;
-        if (!string.IsNullOrEmpty(displayName))
-            toggleButton.Label = GetLocalizedOrDefault(displayName!);
-
-        var toolTip = item.ToolTip;
-        if (!string.IsNullOrEmpty(toolTip))
-            ToolTipService.SetToolTip(toggleButton, GetLocalizedOrDefault(toolTip!));
-
-        var iconElement = item.Icon;
-        if (iconElement is not null)
-            toggleButton.Icon = iconElement;
-
-        var commandHotKey = item.HotKey;
-        if (commandHotKey is not null)
-            toggleButton.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
-
-        toggleButton.IsEnabled = item.IsEnabled();
-        toggleButton.Visibility = Bool2Visibility(item.IsVisible());
 
         static void OnToggleEvent(object sender, RoutedEventArgs e)
         {
@@ -223,8 +193,6 @@ internal sealed class CommandBarService : ICommandBarService
         {
             Tag = item,
             Content = item.UIObject,
-            IsEnabled = item.IsEnabled(),
-            Visibility = Bool2Visibility(item.IsVisible()),
             VerticalContentAlignment = VerticalAlignment.Center,
         };
 
@@ -250,7 +218,7 @@ internal sealed class CommandBarService : ICommandBarService
 
     public void RefreshUI()
     {
-        void Refresh(IObservableVector<ICommandBarElement> collection)
+        void RefreshCommands(IObservableVector<ICommandBarElement> collection)
         {
             foreach (var item in collection)
             {
@@ -258,11 +226,60 @@ internal sealed class CommandBarService : ICommandBarService
                 {
                     control.IsEnabled = commandItem.IsVisible();
                     control.Visibility = Bool2Visibility(commandItem.IsVisible());
+
+                    if (control is AppBarButton appBarButton)
+                    {
+                        var commandButton = (ICommandButton)commandItem;
+
+                        var displayName = commandButton.GetDisplayName();
+                        if (!string.IsNullOrEmpty(displayName))
+                            appBarButton.Label = GetLocalizedOrDefault(displayName!);
+
+                        var toolTip = commandButton.GetDisplayName();
+                        if (!string.IsNullOrEmpty(toolTip))
+                            ToolTipService.SetToolTip(appBarButton, GetLocalizedOrDefault(toolTip!));
+
+                        var iconElement = commandButton.GetIcon();
+                        if (iconElement is not null)
+                            appBarButton.Icon = iconElement;
+
+                        appBarButton.KeyboardAccelerators.Clear();
+
+                        var commandHotKey = commandButton.GetHotKey();
+                        if (commandHotKey is not null)
+                            appBarButton.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
+                    }
+                    else if (control is AppBarToggleButton appBarToggleButton)
+                    {
+                        var commandToggleButton = (ICommandToggleButton)commandItem;
+
+                        var displayName = commandToggleButton.GetDisplayName();
+                        if (!string.IsNullOrEmpty(displayName))
+                            appBarToggleButton.Label = GetLocalizedOrDefault(displayName!);
+
+                        var toolTip = commandToggleButton.GetDisplayName();
+                        if (!string.IsNullOrEmpty(toolTip))
+                            ToolTipService.SetToolTip(appBarToggleButton, GetLocalizedOrDefault(toolTip!));
+
+                        var iconElement = commandToggleButton.GetIcon();
+                        if (iconElement is not null)
+                            appBarToggleButton.Icon = iconElement;
+
+                        appBarToggleButton.KeyboardAccelerators.Clear();
+
+                        var commandHotKey = commandToggleButton.GetHotKey();
+                        if (commandHotKey is not null)
+                            appBarToggleButton.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
         }
 
-        Refresh(_commandBar.PrimaryCommands);
-        Refresh(_commandBar.SecondaryCommands);
+        RefreshCommands(_commandBar.PrimaryCommands);
+        RefreshCommands(_commandBar.SecondaryCommands);
     }
 }

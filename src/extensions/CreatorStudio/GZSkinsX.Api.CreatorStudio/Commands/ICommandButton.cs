@@ -13,13 +13,13 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public interface ICommandButton : ICommandItem
 {
-    public string? DisplayName { get; }
+    string? GetDisplayName();
 
-    public string? ToolTip { get; }
+    string? GetToolTip();
 
-    CommandHotKey? HotKey { get; }
+    CommandHotKey? GetHotKey();
 
-    IconElement? Icon { get; }
+    IconElement? GetIcon();
 
     void OnClick(ICommandUIContext ctx);
 }

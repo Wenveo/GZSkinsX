@@ -79,23 +79,17 @@ internal sealed class NewCommand : ICommandObject
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
 internal sealed class OpenFileCommand : ICommandButton
 {
-    public string? DisplayName => "Open File";
+    public string? GetDisplayName() => "Open File";
 
-    public string? ToolTip => null;
+    public CommandHotKey? GetHotKey() => null;
 
-    public CommandHotKey? HotKey => null;
+    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE197" };
 
-    public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE197" };
+    public string? GetToolTip() => null;
 
-    public bool IsEnabled()
-    {
-        return true;
-    }
+    public bool IsEnabled() => true;
 
-    public bool IsVisible()
-    {
-        return true;
-    }
+    public bool IsVisible() => true;
 
     public void OnClick(ICommandUIContext ctx)
     {
@@ -106,23 +100,17 @@ internal sealed class OpenFileCommand : ICommandButton
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 1)]
 internal sealed class SaveFileCommand : ICommandButton
 {
-    public string? DisplayName => "Save";
+    public string? GetDisplayName() => "Save";
 
-    public string? ToolTip => null;
+    public CommandHotKey? GetHotKey() => null;
 
-    public CommandHotKey? HotKey => null;
+    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE105" };
 
-    public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE105" };
+    public string? GetToolTip() => null;
 
-    public bool IsEnabled()
-    {
-        return true;
-    }
+    public bool IsEnabled() => true;
 
-    public bool IsVisible()
-    {
-        return true;
-    }
+    public bool IsVisible() => true;
 
     public void OnClick(ICommandUIContext ctx)
     {
@@ -133,23 +121,17 @@ internal sealed class SaveFileCommand : ICommandButton
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 2)]
 internal sealed class SaveAsFileCommand : ICommandButton
 {
-    public string? DisplayName => "Save As";
+    public string? GetDisplayName() => "Save As";
 
-    public string? ToolTip => null;
+    public CommandHotKey? GetHotKey() => null;
 
-    public CommandHotKey? HotKey => null;
+    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE792" };
 
-    public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE792" };
+    public string? GetToolTip() => null;
 
-    public bool IsEnabled()
-    {
-        return true;
-    }
+    public bool IsEnabled() => true;
 
-    public bool IsVisible()
-    {
-        return true;
-    }
+    public bool IsVisible() => true;
 
     public void OnClick(ICommandUIContext ctx)
     {
@@ -160,23 +142,17 @@ internal sealed class SaveAsFileCommand : ICommandButton
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]
 internal sealed class UndoCommand : ICommandButton
 {
-    public string? DisplayName => "Undo";
+    public string? GetDisplayName() => "Undo";
 
-    public string? ToolTip => null;
+    public CommandHotKey? GetHotKey() => null;
 
-    public CommandHotKey? HotKey => null;
+    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A7" };
 
-    public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE7A7" };
+    public string? GetToolTip() => null;
 
-    public bool IsEnabled()
-    {
-        return true;
-    }
+    public bool IsEnabled() => true;
 
-    public bool IsVisible()
-    {
-        return true;
-    }
+    public bool IsVisible() => true;
 
     public void OnClick(ICommandUIContext ctx)
     {
@@ -187,23 +163,17 @@ internal sealed class UndoCommand : ICommandButton
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1)]
 internal sealed class RedoCommand : ICommandButton
 {
-    public string? DisplayName => "Redo";
+    public string? GetDisplayName() => "Redo";
 
-    public string? ToolTip => null;
+    public CommandHotKey? GetHotKey() => null;
 
-    public CommandHotKey? HotKey => null;
+    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A6" };
 
-    public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE7A6" };
+    public string? GetToolTip() => null;
 
-    public bool IsEnabled()
-    {
-        return true;
-    }
+    public bool IsEnabled() => true;
 
-    public bool IsVisible()
-    {
-        return true;
-    }
+    public bool IsVisible() => true;
 
     public void OnClick(ICommandUIContext ctx)
     {
