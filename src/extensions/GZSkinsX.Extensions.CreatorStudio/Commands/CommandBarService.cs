@@ -269,6 +269,8 @@ internal sealed class CommandBarService : ICommandBarService
                         var commandHotKey = commandToggleButton.GetHotKey();
                         if (commandHotKey is not null)
                             appBarToggleButton.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
+
+                        appBarToggleButton.IsChecked = commandToggleButton.IsChecked();
                     }
                     else if (control is AppBarElementContainer appBarElementContainer)
                     {

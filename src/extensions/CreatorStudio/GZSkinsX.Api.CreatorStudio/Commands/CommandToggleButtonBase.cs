@@ -21,6 +21,8 @@ public abstract class CommandToggleButtonBase : ICommandToggleButton
 
     public virtual string? GetToolTip() => null;
 
+    public virtual bool IsChecked() => false;
+
     public virtual bool IsEnabled() => true;
 
     public virtual bool IsVisible() => true;
