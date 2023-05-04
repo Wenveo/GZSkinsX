@@ -64,12 +64,12 @@ internal sealed class NewCommand : ICommandObject
         };
     }
 
-    public bool IsEnabled(ICommandEventArgs args)
+    public bool IsEnabled()
     {
         return true;
     }
 
-    public bool IsVisible(ICommandEventArgs args)
+    public bool IsVisible()
     {
         return true;
     }
@@ -87,12 +87,12 @@ internal sealed class OpenFileCommand : ICommandButton
 
     public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE197" };
 
-    public bool IsEnabled(ICommandEventArgs args)
+    public bool IsEnabled()
     {
         return true;
     }
 
-    public bool IsVisible(ICommandEventArgs args)
+    public bool IsVisible()
     {
         return true;
     }
@@ -114,12 +114,12 @@ internal sealed class SaveFileCommand : ICommandButton
 
     public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE105" };
 
-    public bool IsEnabled(ICommandEventArgs args)
+    public bool IsEnabled()
     {
         return true;
     }
 
-    public bool IsVisible(ICommandEventArgs args)
+    public bool IsVisible()
     {
         return true;
     }
@@ -141,12 +141,12 @@ internal sealed class SaveAsFileCommand : ICommandButton
 
     public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE792" };
 
-    public bool IsEnabled(ICommandEventArgs args)
+    public bool IsEnabled()
     {
         return true;
     }
 
-    public bool IsVisible(ICommandEventArgs args)
+    public bool IsVisible()
     {
         return true;
     }
@@ -168,12 +168,12 @@ internal sealed class UndoCommand : ICommandButton
 
     public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE7A7" };
 
-    public bool IsEnabled(ICommandEventArgs args)
+    public bool IsEnabled()
     {
         return true;
     }
 
-    public bool IsVisible(ICommandEventArgs args)
+    public bool IsVisible()
     {
         return true;
     }
@@ -195,12 +195,12 @@ internal sealed class RedoCommand : ICommandButton
 
     public IconElement? Icon => new SegoeFluentIcon { Glyph = "\uE7A6" };
 
-    public bool IsEnabled(ICommandEventArgs args)
+    public bool IsEnabled()
     {
         return true;
     }
 
-    public bool IsVisible(ICommandEventArgs args)
+    public bool IsVisible()
     {
         return true;
     }

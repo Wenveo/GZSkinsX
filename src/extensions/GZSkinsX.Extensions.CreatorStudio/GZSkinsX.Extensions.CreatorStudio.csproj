@@ -18,7 +18,6 @@
     <Compile Include="Commands\AppCommands.cs" />
     <Compile Include="Commands\CommandBarService.cs" />
     <Compile Include="Commands\CommandItemContext.cs" />
-    <Compile Include="Commands\CommandEventArgs.cs" />
     <Compile Include="Commands\CommandItemGroupContext.cs" />
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

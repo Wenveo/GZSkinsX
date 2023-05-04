@@ -93,7 +93,6 @@ internal sealed class CommandBarService
     public void InitializeUIObject()
     {
         int AddItems(
-            ICommandEventArgs args,
             IObservableVector<ICommandBarElement> collection,
             IEnumerable<CommandItemContext> items)
         {
@@ -104,11 +103,11 @@ internal sealed class CommandBarService
                 var metadata = item.Metadata;
 
                 if (value is ICommandButton button)
-                    collection.Add(CreateAppBarButton(button, metadata, args));
+                    collection.Add(CreateAppBarButton(button, metadata));
                 else if (value is ICommandToggleButton toggleButton)
-                    collection.Add(CreateAppBarToggleButton(toggleButton, metadata, args));
+                    collection.Add(CreateAppBarToggleButton(toggleButton, metadata));
                 else if (value is ICommandObject uiObject)
-                    collection.Add(CreateElementContainer(uiObject, metadata, args));
+                    collection.Add(CreateElementContainer(uiObject, metadata));
                 else
                     continue;
 
@@ -138,15 +137,15 @@ internal sealed class CommandBarService
             if (secondaryNeedSeparator)
                 _commandBar.SecondaryCommands.Add(new AppBarSeparator());
 
-            primaryNeedSeparator = AddItems(initializeArgs, _commandBar.PrimaryCommands,
+            primaryNeedSeparator = AddItems(_commandBar.PrimaryCommands,
                 group.Items.Where(item => item.Metadata.Placement == CommandPlacement.Primary)) > 0;
 
-            secondaryNeedSeparator = AddItems(initializeArgs, _commandBar.SecondaryCommands,
+            secondaryNeedSeparator = AddItems(_commandBar.SecondaryCommands,
                 group.Items.Where(item => item.Metadata.Placement == CommandPlacement.Secondary)) > 0;
         }
     }
 
-    private AppBarButton CreateAppBarButton(ICommandButton item, CommandItemMetadataAttribute metadata, ICommandEventArgs args)
+    private AppBarButton CreateAppBarButton(ICommandButton item, CommandItemMetadataAttribute metadata)
     {
         var button = new AppBarButton { Tag = item };
 
@@ -166,13 +165,13 @@ internal sealed class CommandBarService
         if (commandHotKey is not null)
             button.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
 
-        button.IsEnabled = item.IsEnabled(args);
-        button.Visibility = Bool2Visibility(item.IsVisible(args));
+        button.IsEnabled = item.IsEnabled();
+        button.Visibility = Bool2Visibility(item.IsVisible());
 
         return button;
     }
 
-    private AppBarToggleButton CreateAppBarToggleButton(ICommandToggleButton item, CommandItemMetadataAttribute metadata, ICommandEventArgs args)
+    private AppBarToggleButton CreateAppBarToggleButton(ICommandToggleButton item, CommandItemMetadataAttribute metadata)
     {
         var toggleButton = new AppBarToggleButton { Tag = item };
 
@@ -192,8 +191,8 @@ internal sealed class CommandBarService
         if (commandHotKey is not null)
             toggleButton.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
 
-        toggleButton.IsEnabled = item.IsEnabled(args);
-        toggleButton.Visibility = Bool2Visibility(item.IsVisible(args));
+        toggleButton.IsEnabled = item.IsEnabled();
+        toggleButton.Visibility = Bool2Visibility(item.IsVisible());
 
         static void OnToggleEvent(object sender, RoutedEventArgs e)
         {
@@ -209,14 +208,14 @@ internal sealed class CommandBarService
         return toggleButton;
     }
 
-    private AppBarElementContainer CreateElementContainer(ICommandObject item, CommandItemMetadataAttribute metadata, ICommandEventArgs args)
+    private AppBarElementContainer CreateElementContainer(ICommandObject item, CommandItemMetadataAttribute metadata)
     {
         var elementContainer = new AppBarElementContainer
         {
             Tag = item,
             Content = item.UIObject,
-            IsEnabled = item.IsEnabled(args),
-            Visibility = Bool2Visibility(item.IsVisible(args)),
+            IsEnabled = item.IsEnabled(),
+            Visibility = Bool2Visibility(item.IsVisible()),
             VerticalContentAlignment = VerticalAlignment.Center,
         };
 

@@ -11,7 +11,7 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public interface ICommandItem
 {
-    bool IsEnabled(ICommandEventArgs args);
+    bool IsEnabled();
 
-    bool IsVisible(ICommandEventArgs args);
+    bool IsVisible();
 }
