@@ -1,0 +1,82 @@
+﻿<Grid
+    x:Class="GZSkinsX.Extensions.CreatorStudio.Shell.ShellViewControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:composition="using:GZSkinsX.Uwp.Composition"
+    xmlns:ctrls2="using:GZSkinsX.Api.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Extensions.CreatorStudio.Shell"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="using:GZSkinsX.Uwp.UI.Controls"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+    <Grid.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <StaticResource x:Key="TabViewItemHeaderBackground" ResourceKey="LayerOnMicaBaseAltFillColorTransparentBrush" />
+                    <StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="LayerOnMicaBaseAltFillColorDefaultBrush" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <StaticResource x:Key="TabViewItemHeaderBackground" ResourceKey="LayerOnMicaBaseAltFillColorTransparentBrush" />
+                    <StaticResource x:Key="TabViewItemHeaderBackgroundSelected" ResourceKey="LayerOnMicaBaseAltFillColorDefaultBrush" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Grid.Resources>
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+        <ContentPresenter x:Name="CommandBarHost" />
+    </Grid>
+
+    <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="PART_ColumnLeft" Width="Auto" />
+            <ColumnDefinition x:Name="PART_ColumnMiddle" Width="Auto" />
+            <ColumnDefinition x:Name="PART_ColumnRight" Width="*" />
+        </Grid.ColumnDefinitions>
+        <ContentPresenter x:Name="AssetsExplorerHost" />
+        <ui:GridSplitter
+            x:Name="MiddleSplitter"
+            Grid.Column="1"
+            Width="4"
+            MinWidth="4"
+            Background="{ThemeResource TabViewItemHeaderBackgroundSelected}"
+            GripperCursor="SizeWestEast"
+            GripperForeground="Transparent"
+            ResizeDirection="Columns" />
+        <muxc:TabView
+            Grid.Column="2"
+            VerticalAlignment="Stretch"
+            composition:CompositionFactory.UseStandardReposition="True"
+            IsAddTabButtonVisible="False">
+            <muxc:TabView.TabItems>
+                <muxc:TabViewItem Header="Aatrox.wad.client">
+                    <muxc:TabViewItem.IconSource>
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE8A5;" />
+                    </muxc:TabViewItem.IconSource>
+                    <Grid Background="Transparent" />
+                </muxc:TabViewItem>
+                <muxc:TabViewItem Header="Skin20.bin">
+                    <muxc:TabViewItem.IconSource>
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE8A5;" />
+                    </muxc:TabViewItem.IconSource>
+                    <Border Width="900" Height="900" />
+                </muxc:TabViewItem>
+                <muxc:TabViewItem Header="fontconfig_en_us.txt">
+                    <muxc:TabViewItem.IconSource>
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE8A5;" />
+                    </muxc:TabViewItem.IconSource>
+                    <Border Width="900" Height="900" />
+                </muxc:TabViewItem>
+            </muxc:TabView.TabItems>
+        </muxc:TabView>
+    </Grid>
+</Grid>
