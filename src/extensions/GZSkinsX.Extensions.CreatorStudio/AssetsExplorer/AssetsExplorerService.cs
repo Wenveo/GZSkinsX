@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Controls;
+using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.Themes;
@@ -34,8 +35,8 @@ using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 
-[Shared, Export]
-internal sealed class AssetsExplorerService
+[Shared, Export(typeof(IAssetsExplorerService))]
+internal sealed class AssetsExplorerService : IAssetsExplorerService
 {
     private readonly IFutureAccessService _futureAccessService;
     private readonly IMRTCoreService _mrtCoreService;
@@ -51,6 +52,10 @@ internal sealed class AssetsExplorerService
     private AssetsExplorerContainer? _rootContainer;
 
     internal FrameworkElement UIObject => _rootGrid;
+
+    public IAssetsExplorerItem? SelectedItem => (IAssetsExplorerItem?)_treeView.SelectedNode?.Content;
+
+    public event EventHandler<AssetsExplorerItemInvokedEventArgs>? ItemInvoked;
 
     public AssetsExplorerService()
     {
@@ -164,6 +169,10 @@ internal sealed class AssetsExplorerService
 
     private void OnTreeViewItemInvoked(MUXC.TreeView sender, MUXC.TreeViewItemInvokedEventArgs args)
     {
+        if (args.InvokedItem is MUXC.TreeViewNode node)
+        {
+            ItemInvoked?.Invoke(this, new AssetsExplorerItemInvokedEventArgs((IAssetsExplorerItem)node.Content));
+        }
     }
 
     private void OnRefreshButtonClick(object sender, RoutedEventArgs e)

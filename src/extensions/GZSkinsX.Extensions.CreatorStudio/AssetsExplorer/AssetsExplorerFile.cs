@@ -7,9 +7,11 @@
 
 using System.IO;
 
+using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
+
 namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 
-internal sealed class AssetsExplorerFile : AssetsExplorerItem
+internal sealed class AssetsExplorerFile : AssetsExplorerItem, IAssetsExplorerFile
 {
     public FileInfo FileInfo { get; }
 

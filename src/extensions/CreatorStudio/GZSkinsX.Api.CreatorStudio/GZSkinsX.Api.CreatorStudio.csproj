@@ -7,6 +7,11 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AssetsExplorer\AssetsExplorerItemInvokedEventArgs.cs" />
+    <Compile Include="AssetsExplorer\IAssetsExplorerContainer.cs" />
+    <Compile Include="AssetsExplorer\IAssetsExplorerFile.cs" />
+    <Compile Include="AssetsExplorer\IAssetsExplorerItem.cs" />
+    <Compile Include="AssetsExplorer\IAssetsExplorerService.cs" />
     <Compile Include="Commands\CommandButtonBase.cs" />
     <Compile Include="Commands\CommandConstants.cs" />
     <Compile Include="Commands\CommandHotKey.cs" />

@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Api.CreatorStudio.Commands;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Extensions.CreatorStudio.Commands;
@@ -27,7 +28,7 @@ public sealed partial class ShellView : Page
 
         var serviceLocator = AppxContext.ServiceLocator;
 
-        var assetsExplorerService = serviceLocator.Resolve<AssetsExplorerService>();
+        var assetsExplorerService = (AssetsExplorerService)serviceLocator.Resolve<IAssetsExplorerService>();
         AssetsExplorerHost.Content = assetsExplorerService.UIObject;
 
         var commandBarService = (CommandBarService)serviceLocator.Resolve<ICommandBarService>();
