@@ -25,8 +25,8 @@ using Windows.UI.Xaml.Media;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Commands;
 
-[Shared, Export]
-internal sealed class CommandBarService
+[Shared, Export(typeof(ICommandBarService))]
+internal sealed class CommandBarService : ICommandBarService
 {
     private readonly IEnumerable<Lazy<ICommandItem, CommandItemMetadataAttribute>> _mefItems;
     private readonly Dictionary<string, CommandItemGroupContext> _groupDict;
