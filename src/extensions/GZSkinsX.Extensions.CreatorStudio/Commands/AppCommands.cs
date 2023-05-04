@@ -22,11 +22,9 @@ namespace GZSkinsX.Extensions.CreatorStudio.Commands;
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_NEW)]
-internal sealed class NewCommand : ICommandObject
+internal sealed class NewCommand : CommandObjectBase
 {
     public readonly MUXC.DropDownButton dropDownButton;
-
-    public CommandHotKey? HotKey => null;
 
     public NewCommand()
     {
@@ -64,120 +62,70 @@ internal sealed class NewCommand : ICommandObject
         };
     }
 
-    public FrameworkElement GetUIObject() => dropDownButton;
-
-    public bool IsEnabled()
-    {
-        return true;
-    }
-
-    public bool IsVisible()
-    {
-        return true;
-    }
+    public override FrameworkElement GetUIObject() => dropDownButton;
 }
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
-internal sealed class OpenFileCommand : ICommandButton
+internal sealed class OpenFileCommand : CommandButtonBase
 {
-    public string? GetDisplayName() => "Open File";
+    public override string? GetDisplayName() => "Open File";
 
-    public CommandHotKey? GetHotKey() => null;
+    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE197" };
 
-    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE197" };
-
-    public string? GetToolTip() => null;
-
-    public bool IsEnabled() => true;
-
-    public bool IsVisible() => true;
-
-    public void OnClick(ICommandUIContext ctx)
+    public override void OnClick(ICommandUIContext ctx)
     {
     }
 }
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 1)]
-internal sealed class SaveFileCommand : ICommandButton
+internal sealed class SaveFileCommand : CommandButtonBase
 {
-    public string? GetDisplayName() => "Save";
+    public override string? GetDisplayName() => "Save";
 
-    public CommandHotKey? GetHotKey() => null;
+    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE105" };
 
-    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE105" };
-
-    public string? GetToolTip() => null;
-
-    public bool IsEnabled() => true;
-
-    public bool IsVisible() => true;
-
-    public void OnClick(ICommandUIContext ctx)
+    public override void OnClick(ICommandUIContext ctx)
     {
     }
 }
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 2)]
-internal sealed class SaveAsFileCommand : ICommandButton
+internal sealed class SaveAsFileCommand : CommandButtonBase
 {
-    public string? GetDisplayName() => "Save As";
+    public override string? GetDisplayName() => "Save As";
 
-    public CommandHotKey? GetHotKey() => null;
+    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE792" };
 
-    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE792" };
-
-    public string? GetToolTip() => null;
-
-    public bool IsEnabled() => true;
-
-    public bool IsVisible() => true;
-
-    public void OnClick(ICommandUIContext ctx)
+    public override void OnClick(ICommandUIContext ctx)
     {
     }
 }
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]
-internal sealed class UndoCommand : ICommandButton
+internal sealed class UndoCommand : CommandButtonBase
 {
-    public string? GetDisplayName() => "Undo";
+    public override string? GetDisplayName() => "Undo";
 
-    public CommandHotKey? GetHotKey() => null;
+    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A7" };
 
-    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A7" };
-
-    public string? GetToolTip() => null;
-
-    public bool IsEnabled() => true;
-
-    public bool IsVisible() => true;
-
-    public void OnClick(ICommandUIContext ctx)
+    public override void OnClick(ICommandUIContext ctx)
     {
     }
 }
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1)]
-internal sealed class RedoCommand : ICommandButton
+internal sealed class RedoCommand : CommandButtonBase
 {
-    public string? GetDisplayName() => "Redo";
+    public override string? GetDisplayName() => "Redo";
 
-    public CommandHotKey? GetHotKey() => null;
+    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A6" };
 
-    public IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A6" };
-
-    public string? GetToolTip() => null;
-
-    public bool IsEnabled() => true;
-
-    public bool IsVisible() => true;
-
-    public void OnClick(ICommandUIContext ctx)
+    public override void OnClick(ICommandUIContext ctx)
     {
     }
 }
