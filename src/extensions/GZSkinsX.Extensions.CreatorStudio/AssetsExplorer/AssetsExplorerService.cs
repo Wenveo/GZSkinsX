@@ -38,6 +38,9 @@ namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 [Shared, Export(typeof(IAssetsExplorerService))]
 internal sealed class AssetsExplorerService : IAssetsExplorerService
 {
+    private static readonly SolidColorBrush s_loading_dark_background = new(Color.FromArgb(0x0D, 0xFF, 0xFF, 0xFF));
+    private static readonly SolidColorBrush s_loading_light_background = new(Color.FromArgb(0x72, 0xF3, 0xF3, 0xF3));
+
     private readonly IFutureAccessService _futureAccessService;
     private readonly IMRTCoreService _mrtCoreService;
     private readonly IGameService _gameService;
@@ -210,13 +213,6 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
         _loading.Background = GetLoadingBackground(args.ActualTheme);
     }
 
-    private static SolidColorBrush GetLoadingBackground(ElementTheme actualTheme)
-    {
-        return actualTheme == ElementTheme.Dark
-            ? new SolidColorBrush(Color.FromArgb(0x0D, 0xFF, 0xFF, 0xFF))
-            : new SolidColorBrush(Color.FromArgb(0x72, 0xF3, 0xF3, 0xF3));
-    }
-
     private async void LoadAssetItemsUI()
     {
         if (_loading.Dispatcher.HasThreadAccess)
@@ -339,4 +335,11 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
         ".cfg" or ".ini" or ".json" or ".yaml" or ".wad" or ".client" => true,
         _ => false
     };
+
+    private static SolidColorBrush GetLoadingBackground(ElementTheme actualTheme)
+    {
+        return actualTheme == ElementTheme.Dark
+            ? s_loading_dark_background
+            : s_loading_light_background;
+    }
 }
