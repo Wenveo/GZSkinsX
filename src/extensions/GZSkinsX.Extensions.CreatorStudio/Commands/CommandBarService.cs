@@ -192,7 +192,6 @@ internal sealed class CommandBarService : ICommandBarService
         var elementContainer = new AppBarElementContainer
         {
             Tag = item,
-            Content = item.UIObject,
             VerticalContentAlignment = VerticalAlignment.Center,
         };
 
@@ -270,6 +269,11 @@ internal sealed class CommandBarService : ICommandBarService
                         var commandHotKey = commandToggleButton.GetHotKey();
                         if (commandHotKey is not null)
                             appBarToggleButton.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = commandHotKey.Key, Modifiers = commandHotKey.Modifiers });
+                    }
+                    else if (control is AppBarElementContainer appBarElementContainer)
+                    {
+                        var commandObject = (ICommandObject)commandItem;
+                        appBarElementContainer.Content = commandObject.GetUIObject();
                     }
                     else
                     {

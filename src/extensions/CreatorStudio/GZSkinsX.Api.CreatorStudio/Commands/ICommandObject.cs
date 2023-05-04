@@ -13,5 +13,5 @@ namespace GZSkinsX.Api.CreatorStudio.Commands;
 
 public interface ICommandObject : ICommandItem
 {
-    FrameworkElement UIObject { get; }
+    FrameworkElement GetUIObject();
 }

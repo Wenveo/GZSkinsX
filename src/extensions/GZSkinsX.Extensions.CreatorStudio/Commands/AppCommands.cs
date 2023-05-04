@@ -24,7 +24,7 @@ namespace GZSkinsX.Extensions.CreatorStudio.Commands;
 [CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_NEW)]
 internal sealed class NewCommand : ICommandObject
 {
-    public FrameworkElement UIObject { get; }
+    public readonly MUXC.DropDownButton dropDownButton;
 
     public CommandHotKey? HotKey => null;
 
@@ -56,13 +56,15 @@ internal sealed class NewCommand : ICommandObject
             Icon = new SegoeFluentIcon { Glyph = "\uE8A5" }
         });
 
-        UIObject = new MUXC.DropDownButton
+        dropDownButton = new MUXC.DropDownButton
         {
             Content = stackPanel,
             Flyout = menuFlyout,
             Margin = new Thickness(4, 0, 2, 0)
         };
     }
+
+    public FrameworkElement GetUIObject() => dropDownButton;
 
     public bool IsEnabled()
     {
