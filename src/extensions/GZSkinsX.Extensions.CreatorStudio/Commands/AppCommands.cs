@@ -97,7 +97,7 @@ internal sealed class OpenFileCommand : ICommandButton
         return true;
     }
 
-    public void OnClick()
+    public void OnClick(ICommandUIContext ctx)
     {
     }
 }
@@ -124,7 +124,7 @@ internal sealed class SaveFileCommand : ICommandButton
         return true;
     }
 
-    public void OnClick()
+    public void OnClick(ICommandUIContext ctx)
     {
     }
 }
@@ -151,7 +151,7 @@ internal sealed class SaveAsFileCommand : ICommandButton
         return true;
     }
 
-    public void OnClick()
+    public void OnClick(ICommandUIContext ctx)
     {
     }
 }
@@ -178,7 +178,7 @@ internal sealed class UndoCommand : ICommandButton
         return true;
     }
 
-    public void OnClick()
+    public void OnClick(ICommandUIContext ctx)
     {
     }
 }
@@ -205,7 +205,7 @@ internal sealed class RedoCommand : ICommandButton
         return true;
     }
 
-    public void OnClick()
+    public void OnClick(ICommandUIContext ctx)
     {
     }
 }
