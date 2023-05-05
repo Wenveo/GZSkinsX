@@ -11,6 +11,7 @@
     <Compile Include="AssetsExplorer\AssetsExplorerFile.cs" />
     <Compile Include="AssetsExplorer\AssetsExplorerItem.cs" />
     <Compile Include="AssetsExplorer\AssetsExplorerService.cs" />
+    <Compile Include="AssetsExplorer\ContextMenuItems.cs" />
     <Compile Include="AssetsExplorer\TreeViewNodeItemTemplate.xaml.cs">
       <DependentUpon>TreeViewNodeItemTemplate.xaml</DependentUpon>
     </Compile>

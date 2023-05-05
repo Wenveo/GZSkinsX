@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.ContextMenu;
 using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Api.Game;
@@ -44,6 +45,7 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
     private readonly IFutureAccessService _futureAccessService;
     private readonly IMRTCoreService _mrtCoreService;
     private readonly IGameService _gameService;
+    private readonly IContextMenuService _contextMenuService;
 
     private readonly BackgroundWorker _loadAssetItemsWorker;
     private readonly MUXC.TreeView _treeView;
@@ -65,6 +67,7 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
         _mrtCoreService = AppxContext.MRTCoreService;
         _futureAccessService = AppxContext.FutureAccessService;
         _gameService = AppxContext.ServiceLocator.Resolve<IGameService>();
+        _contextMenuService = AppxContext.ServiceLocator.Resolve<IContextMenuService>();
 
         _loading = new();
         _rootGrid = new();
@@ -79,6 +82,14 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
 
     private void InitializeUIObject()
     {
+        _treeView.ContextFlyout =
+            _contextMenuService.CreateContextFlyout(MenuItemConstants.TREEVIEW_GUID,
+            (sender, e) =>
+            {
+                var menuFlyout = (MenuFlyout)sender;
+                return new ContextMenuUIContext(menuFlyout.Target, "123456");
+            });
+
         _treeView.Padding = new Thickness(0, 0, 12, 0);
         _treeView.ItemContainerTransitions = new TransitionCollection
         {

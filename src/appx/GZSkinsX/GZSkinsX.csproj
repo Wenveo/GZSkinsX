@@ -8,6 +8,10 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ContextMenu\ContextItemGroupContext.cs" />
+    <Compile Include="ContextMenu\ContextMenuItemContext.cs" />
+    <Compile Include="ContextMenu\ContextMenuService.cs" />
+    <Compile Include="ContextMenu\ContextMenuFlyoutHelper.cs" />
     <Compile Include="Logging\LoggerImpl.cs" />
     <Compile Include="MainApp\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

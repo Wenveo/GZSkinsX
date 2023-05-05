@@ -22,6 +22,27 @@
     <Compile Include="Appx\IAppxTitleBarButton.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
     <Compile Include="Appx\AppxContext.InternalCalls.cs" />
+    <Compile Include="ContextMenu\ContextMenuConstants.cs" />
+    <Compile Include="ContextMenu\ContextMenuUIContext%27T.cs" />
+    <Compile Include="ContextMenu\ContextRadioMenuItemBase%27T.cs" />
+    <Compile Include="ContextMenu\ContextRadioMenuItemBase.cs" />
+    <Compile Include="ContextMenu\ContextToggleMenuItemBase%27T.cs" />
+    <Compile Include="ContextMenu\CreatedContextMenuItem.cs" />
+    <Compile Include="ContextMenu\IContextMenuItemProvider.cs" />
+    <Compile Include="ContextMenu\CoerceContextMenuUIContextCallback.cs" />
+    <Compile Include="ContextMenu\IContextRadioMenuItem.cs" />
+    <Compile Include="ContextMenu\IContextToggleMenuItem.cs" />
+    <Compile Include="ContextMenu\ContextToggleMenuItemBase.cs" />
+    <Compile Include="ContextMenu\ExportMenuItemAttribute.cs" />
+    <Compile Include="ContextMenu\IContextMenuService.cs" />
+    <Compile Include="ContextMenu\IContextMenuItem.cs" />
+    <Compile Include="ContextMenu\IContextMenuUIContext%27T.cs" />
+    <Compile Include="ContextMenu\IContextMenuUIContext.cs" />
+    <Compile Include="ContextMenu\ContextMenuItemBase%27T.cs" />
+    <Compile Include="ContextMenu\ContextMenuItemBase.cs" />
+    <Compile Include="ContextMenu\ContextMenuItemHotKey.cs" />
+    <Compile Include="ContextMenu\ContextMenuItemMetadataAttribute.cs" />
+    <Compile Include="ContextMenu\ContextMenuUIContext.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />
     <Compile Include="Controls\SegoeFluentIconSource.cs" />
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
@@ -81,6 +102,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
