@@ -56,6 +56,7 @@ internal sealed class TestItemA : ContextMenuItemBase
     {
         Header = "TestItemA";
         Icon = new SegoeFluentIcon { Glyph = "\uE7F4" };
+        HotKey = new ContextMenuItemHotKey(VirtualKey.A, VirtualKeyModifiers.Control);
     }
 
     public override void OnExecute(IContextMenuUIContext context)
