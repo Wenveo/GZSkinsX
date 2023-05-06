@@ -20,6 +20,8 @@ public abstract class ContextMenuItemBase<TContext> : IContextMenuItem
 
     public ContextMenuItemHotKey? HotKey { get; protected set; }
 
+    public object? ToolTip { get; protected set; }
+
     public virtual bool IsEnabled(TContext context) => true;
 
     public virtual bool IsVisible(TContext context) => true;

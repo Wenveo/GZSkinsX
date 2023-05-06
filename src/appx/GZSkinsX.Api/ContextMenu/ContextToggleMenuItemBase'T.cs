@@ -19,6 +19,8 @@ public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuIt
 
     public ContextMenuItemHotKey? HotKey { get; protected set; }
 
+    public object? ToolTip { get; protected set; }
+
     public virtual bool IsChecked(TContext context) => false;
 
     public virtual bool IsEnabled(TContext context) => true;

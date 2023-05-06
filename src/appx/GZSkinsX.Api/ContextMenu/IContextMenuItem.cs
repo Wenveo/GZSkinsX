@@ -19,6 +19,8 @@ public interface IContextMenuItem
 
     ContextMenuItemHotKey? HotKey { get; }
 
+    object? ToolTip { get; }
+
     bool IsVisible(IContextMenuUIContext context);
 
     bool IsEnabled(IContextMenuUIContext context);

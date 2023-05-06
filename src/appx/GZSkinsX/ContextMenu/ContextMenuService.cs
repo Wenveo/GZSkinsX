@@ -114,6 +114,10 @@ internal sealed class ContextMenuService : IContextMenuService
         var hotKey = menuItem.HotKey;
         if (hotKey is not null)
             uiObject.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+
+        var toolTip = menuItem.ToolTip;
+        if (toolTip is not null)
+            ToolTipService.SetToolTip(uiObject, toolTip);
     }
 
     private MenuFlyoutItem CreateMenuItem(IContextMenuItem menuItem)
