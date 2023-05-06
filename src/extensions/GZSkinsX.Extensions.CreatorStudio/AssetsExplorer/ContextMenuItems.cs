@@ -39,10 +39,6 @@ internal sealed class OpenInNewTab : ContextMenuItemBase
         Icon = new SegoeFluentIcon { Glyph = "\uE8A7" };
         HotKey = new ContextMenuItemHotKey(VirtualKey.O, VirtualKeyModifiers.Control);
     }
-
-    public override void OnExecute(IContextMenuUIContext context)
-    {
-    }
 }
 
 [Shared, ExportMenuItem]
@@ -58,10 +54,6 @@ internal sealed class TestItemA : ContextMenuItemBase
         Icon = new SegoeFluentIcon { Glyph = "\uE7F4" };
         HotKey = new ContextMenuItemHotKey(VirtualKey.A, VirtualKeyModifiers.Control);
     }
-
-    public override void OnExecute(IContextMenuUIContext context)
-    {
-    }
 }
 
 [Shared, ExportMenuItem]
@@ -76,14 +68,6 @@ internal sealed class TestItemB : ContextToggleMenuItemBase
         Header = "TestItemB";
         Icon = new SegoeFluentIcon { Glyph = "\uE80A" };
         HotKey = new ContextMenuItemHotKey(VirtualKey.B, VirtualKeyModifiers.Control);
-    }
-
-    public override void OnExecute(IContextMenuUIContext context)
-    {
-    }
-
-    public override void OnToggle(bool newValue, IContextMenuUIContext context)
-    {
     }
 }
 
@@ -107,15 +91,6 @@ internal sealed class TestItemC : ContextRadioMenuItemBase
     {
         return _count++ % 2 == 0;
     }
-
-    public override void OnExecute(IContextMenuUIContext context)
-    {
-    }
-
-    public override void OnClick(bool isChecked, IContextMenuUIContext context)
-    {
-
-    }
 }
 
 [Shared, ExportMenuItem]
@@ -131,10 +106,6 @@ internal sealed class TestSubItems : ContextMenuItemBase, IContextMenuItemProvid
         {
             Header = header;
             Icon = new SegoeFluentIcon { Glyph = glpyh };
-        }
-
-        public override void OnExecute(IContextMenuUIContext context)
-        {
         }
     }
 
@@ -157,10 +128,6 @@ internal sealed class TestSubItems : ContextMenuItemBase, IContextMenuItemProvid
         Header = "MenuSubItem";
         Icon = new SegoeFluentIcon { Glyph = "\uE14C" };
     }
-
-    public override void OnExecute(IContextMenuUIContext context)
-    {
-    }
 }
 
 [Shared, ExportMenuItem]
@@ -173,14 +140,5 @@ internal sealed class TestSubItemSubItem : ContextRadioMenuItemBase
     {
         Header = "TestSubItem - SubItem";
         Icon = new SegoeFluentIcon { Glyph = "\uE14A" };
-    }
-
-    public override void OnExecute(IContextMenuUIContext context)
-    {
-    }
-
-    public override void OnClick(bool isChecked, IContextMenuUIContext context)
-    {
-
     }
 }
