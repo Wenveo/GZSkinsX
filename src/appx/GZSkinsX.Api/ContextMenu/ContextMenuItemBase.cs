@@ -23,5 +23,5 @@ public abstract class ContextMenuItemBase : IContextMenuItem
 
     public virtual bool IsVisible(IContextMenuUIContext context) => true;
 
-    public abstract void OnExecute(IContextMenuUIContext context);
+    public virtual void OnExecute(IContextMenuUIContext context) { }
 }

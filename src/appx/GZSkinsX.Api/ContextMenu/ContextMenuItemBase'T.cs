@@ -24,7 +24,7 @@ public abstract class ContextMenuItemBase<TContext> : IContextMenuItem
 
     public virtual bool IsVisible(TContext context) => true;
 
-    public abstract void OnExecute(TContext context);
+    public virtual void OnExecute(TContext context) { }
 
     bool IContextMenuItem.IsEnabled(IContextMenuUIContext ctx) => IsEnabled((TContext)ctx);
 

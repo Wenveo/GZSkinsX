@@ -25,7 +25,7 @@ public abstract class ContextToggleMenuItemBase : IContextToggleMenuItem
 
     public virtual bool IsVisible(IContextMenuUIContext context) => true;
 
-    public abstract void OnExecute(IContextMenuUIContext context);
+    public virtual void OnExecute(IContextMenuUIContext context) { }
 
-    public abstract void OnToggle(bool newValue, IContextMenuUIContext context);
+    public virtual void OnToggle(bool newValue, IContextMenuUIContext context) { }
 }

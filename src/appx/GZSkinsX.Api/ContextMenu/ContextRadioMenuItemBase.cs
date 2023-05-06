@@ -27,7 +27,7 @@ public abstract class ContextRadioMenuItemBase : IContextRadioMenuItem
 
     public virtual bool IsVisible(IContextMenuUIContext context) => true;
 
-    public abstract void OnClick(bool isChecked, IContextMenuUIContext context);
+    public virtual void OnClick(bool isChecked, IContextMenuUIContext context) { }
 
-    public abstract void OnExecute(IContextMenuUIContext context);
+    public virtual void OnExecute(IContextMenuUIContext context) { }
 }
