@@ -59,6 +59,7 @@
     <Compile Include="Game\GameRegion.cs" />
     <Compile Include="Game\IGameData.cs" />
     <Compile Include="Game\IGameService.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="MRT\IMRTCoreMap.cs" />
