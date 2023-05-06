@@ -40,7 +40,7 @@
     <Compile Include="ContextMenu\IContextMenuUIContext.cs" />
     <Compile Include="ContextMenu\ContextMenuItemBase%27T.cs" />
     <Compile Include="ContextMenu\ContextMenuItemBase.cs" />
-    <Compile Include="ContextMenu\ContextMenuItemHotKey.cs" />
+    <Compile Include="ContextMenu\ContextMenuItemShortcutKey.cs" />
     <Compile Include="ContextMenu\ContextMenuItemMetadataAttribute.cs" />
     <Compile Include="ContextMenu\ContextMenuUIContext.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />

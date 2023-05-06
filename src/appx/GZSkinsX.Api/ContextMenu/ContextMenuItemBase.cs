@@ -17,7 +17,7 @@ public abstract class ContextMenuItemBase : IContextMenuItem
 
     public IconElement? Icon { get; protected set; }
 
-    public ContextMenuItemHotKey? HotKey { get; protected set; }
+    public ContextMenuItemShortcutKey? ShortcutKey { get; protected set; }
 
     public object? ToolTip { get; protected set; }
 

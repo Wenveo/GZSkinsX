@@ -9,13 +9,13 @@ using Windows.System;
 
 namespace GZSkinsX.Api.ContextMenu;
 
-public sealed class ContextMenuItemHotKey
+public sealed class ContextMenuItemShortcutKey
 {
     public VirtualKey Key { get; }
 
     public VirtualKeyModifiers Modifiers { get; }
 
-    public ContextMenuItemHotKey(VirtualKey key, VirtualKeyModifiers modifiers)
+    public ContextMenuItemShortcutKey(VirtualKey key, VirtualKeyModifiers modifiers)
     {
         Key = key;
         Modifiers = modifiers;

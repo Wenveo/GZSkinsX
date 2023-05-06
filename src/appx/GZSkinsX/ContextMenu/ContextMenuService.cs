@@ -122,7 +122,7 @@ internal sealed class ContextMenuService : IContextMenuService
         if (header is not null)
             AutomationProperties.SetName(uiObject, uiObject.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
 
-        var hotKey = menuItem.HotKey;
+        var hotKey = menuItem.ShortcutKey;
         if (hotKey is not null)
             uiObject.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
 
@@ -159,7 +159,7 @@ internal sealed class ContextMenuService : IContextMenuService
         if (header is not null)
             AutomationProperties.SetName(menuFlyoutSubItem, menuFlyoutSubItem.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
 
-        var hotKey = menuItem.HotKey;
+        var hotKey = menuItem.ShortcutKey;
         if (hotKey is not null)
             menuFlyoutSubItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
 

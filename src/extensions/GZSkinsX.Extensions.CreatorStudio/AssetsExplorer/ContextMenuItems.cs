@@ -37,7 +37,7 @@ internal sealed class OpenInNewTab : ContextMenuItemBase
     {
         Header = "Open In New Tab";
         Icon = new SegoeFluentIcon { Glyph = "\uE8A7" };
-        HotKey = new ContextMenuItemHotKey(VirtualKey.O, VirtualKeyModifiers.Control);
+        ShortcutKey = new ContextMenuItemShortcutKey(VirtualKey.O, VirtualKeyModifiers.Control);
     }
 }
 
@@ -52,7 +52,7 @@ internal sealed class TestItemA : ContextMenuItemBase
     {
         Header = "TestItemA";
         Icon = new SegoeFluentIcon { Glyph = "\uE7F4" };
-        HotKey = new ContextMenuItemHotKey(VirtualKey.A, VirtualKeyModifiers.Control);
+        ShortcutKey = new ContextMenuItemShortcutKey(VirtualKey.A, VirtualKeyModifiers.Control);
     }
 }
 
@@ -67,7 +67,7 @@ internal sealed class TestItemB : ContextToggleMenuItemBase
     {
         Header = "TestItemB";
         Icon = new SegoeFluentIcon { Glyph = "\uE80A" };
-        HotKey = new ContextMenuItemHotKey(VirtualKey.B, VirtualKeyModifiers.Control);
+        ShortcutKey = new ContextMenuItemShortcutKey(VirtualKey.B, VirtualKeyModifiers.Control);
     }
 }
 
@@ -84,7 +84,7 @@ internal sealed class TestItemC : ContextRadioMenuItemBase
     {
         Header = "TestItemC";
         Icon = new SegoeFluentIcon { Glyph = "\uE811" };
-        HotKey = new ContextMenuItemHotKey(VirtualKey.C, VirtualKeyModifiers.Control);
+        ShortcutKey = new ContextMenuItemShortcutKey(VirtualKey.C, VirtualKeyModifiers.Control);
     }
 
     public override bool IsVisible(IContextMenuUIContext context)

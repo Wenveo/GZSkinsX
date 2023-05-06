@@ -18,6 +18,7 @@ public interface IContextMenuItem
     IconElement? Icon { get; }
 
     ContextMenuItemHotKey? HotKey { get; }
+    ContextMenuItemShortcutKey? ShortcutKey { get; }
 
     object? ToolTip { get; }
 
