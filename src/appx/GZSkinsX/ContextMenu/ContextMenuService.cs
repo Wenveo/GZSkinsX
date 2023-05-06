@@ -25,12 +25,23 @@ using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.ContextMenu;
 
+/// <inheritdoc cref="IContextMenuService"/>
 [Shared, Export(typeof(IContextMenuService))]
 internal sealed class ContextMenuService : IContextMenuService
 {
+    /// <summary>
+    /// 用于存放所有已枚举的 <see cref="IContextMenuItem"/> 菜单项和 <see cref="ContextMenuItemMetadataAttribute"/> 元数据的集合
+    /// </summary>
     private readonly IEnumerable<Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute>> _mefItems;
+
+    /// <summary>
+    /// 用于存放所有已序列化后的组，并以 <see cref="System.Guid">OwnerGuid</see> 作为键
+    /// </summary>
     private readonly Dictionary<Guid, Dictionary<string, ContextItemGroupContext>> _guidToGroups;
 
+    /// <summary>
+    /// 初始化 <see cref="ContextMenuService"/> 的新实例
+    /// </summary>
     [ImportingConstructor]
     public ContextMenuService([ImportMany] IEnumerable<Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute>> mefItems)
     {
@@ -40,6 +51,9 @@ internal sealed class ContextMenuService : IContextMenuService
         InitializeGroups();
     }
 
+    /// <summary>
+    /// 通过枚举所有的菜单项和元数据的集合进行序列化并分组
+    /// </summary>
     private void InitializeGroups()
     {
         static bool ParseGroup(string group, out string name, out double order)
@@ -112,6 +126,11 @@ internal sealed class ContextMenuService : IContextMenuService
         }
     }
 
+    /// <summary>
+    /// 通过传入的 <see cref="IContextMenuItem"/> 上下文菜单项并为指定的 <see cref="MenuFlyoutItem"/> 设置通用的 UI 属性
+    /// </summary>
+    /// <param name="uiObject">需要设置 UI 属性的对象</param>
+    /// <param name="menuItem">传入的上下文菜单项</param>
     private void SetCommonUIProperties(MenuFlyoutItem uiObject, IContextMenuItem menuItem)
     {
         var icon = menuItem.Icon;
@@ -131,6 +150,11 @@ internal sealed class ContextMenuService : IContextMenuService
             ToolTipService.SetToolTip(uiObject, toolTip);
     }
 
+    /// <summary>
+    /// 通过传入的 <see cref="IContextMenuItem"/> 对象创建一个新的 <see cref="MenuFlyoutItem"/> 实例
+    /// </summary>
+    /// <param name="menuItem">传入的上下文菜单项</param>
+    /// <returns>返回已创建的 <see cref="MenuFlyoutItem"/> 实例</returns>
     private MenuFlyoutItem CreateMenuItem(IContextMenuItem menuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -147,6 +171,11 @@ internal sealed class ContextMenuService : IContextMenuService
         return menuFlyoutItem;
     }
 
+    /// <summary>
+    /// 通过传入的 <see cref="IContextMenuItem"/> 对象创建一个新的 <see cref="MenuFlyoutSubItem"/> 实例
+    /// </summary>
+    /// <param name="menuItem">传入的上下文菜单项</param>
+    /// <returns>返回已创建的 <see cref="MenuFlyoutSubItem"/> 实例</returns>
     private MenuFlyoutSubItem CreateMenuSubItem(IContextMenuItem menuItem)
     {
         var menuFlyoutSubItem = new MenuFlyoutSubItem { DataContext = menuItem };
@@ -170,6 +199,11 @@ internal sealed class ContextMenuService : IContextMenuService
         return menuFlyoutSubItem;
     }
 
+    /// <summary>
+    /// 通过传入的 <see cref="IContextToggleMenuItem"/> 对象创建一个新的 <see cref="ToggleMenuFlyoutItem"/> 实例
+    /// </summary>
+    /// <param name="toggleMenuItem">传入的上下文菜单项</param>
+    /// <returns>返回已创建的 <see cref="ToggleMenuFlyoutItem"/> 实例</returns>
     private ToggleMenuFlyoutItem CreateToggleMenuItem(IContextToggleMenuItem toggleMenuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -189,6 +223,11 @@ internal sealed class ContextMenuService : IContextMenuService
         return toggleMenuFlyoutItem;
     }
 
+    /// <summary>
+    /// 通过传入的 <see cref="IContextRadioMenuItem"/> 对象创建一个新的 <see cref="MUXC.RadioMenuFlyoutItem"/> 实例
+    /// </summary>
+    /// <param name="radioMenuItem">传入的上下文菜单项</param>
+    /// <returns>返回已创建的 <see cref="MUXC.RadioMenuFlyoutItem"/> 实例</returns>
     private MUXC.RadioMenuFlyoutItem CreateRadioMenuItem(IContextRadioMenuItem radioMenuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -212,6 +251,12 @@ internal sealed class ContextMenuService : IContextMenuService
         return radioMenuFlyoutItem;
     }
 
+    /// <summary>
+    /// 通过传入的 <see cref="IContextMenuItem"/> 对象和 <see cref="ContextMenuItemMetadataAttribute"/> 元数据创建一个新的 <see cref="MenuFlyoutItemBase"/> 类型实例
+    /// </summary>
+    /// <param name="item">传入的上下文菜单项</param>
+    /// <param name="metadata">与上下文菜单项相关联的元数据</param>
+    /// <returns>返回已创建的 <see cref="MenuFlyoutItemBase"/> 类型实例</returns>
     private MenuFlyoutItemBase CreateContextMenuItem(IContextMenuItem item, ContextMenuItemMetadataAttribute metadata)
     {
         if (Guid.TryParse(metadata.Guid, out var guid) &&
@@ -248,6 +293,11 @@ internal sealed class ContextMenuService : IContextMenuService
         }
     }
 
+    /// <summary>
+    /// 通过枚举的 <see cref="ContextItemGroupContext"/> 组的集合中的子项，以对目标列表 <paramref name="collection"/> 创建和添加 UI 子元素
+    /// </summary>
+    /// <param name="groups">用于创建 UI 子元素的组的集合</param>
+    /// <param name="collection">用于将已创建的 UI 子元素的添加至目标集合的列表</param>
     private void CreateSubItems(Dictionary<string, ContextItemGroupContext> groups, IList<MenuFlyoutItemBase> collection)
     {
         var needSeparator = false;
@@ -263,6 +313,7 @@ internal sealed class ContextMenuService : IContextMenuService
         }
     }
 
+    /// <inheritdoc/>
     public MenuFlyout CreateContextFlyout(string ownerGuidString, CoerceContextMenuUIContextCallback? coerceValueCallback = null)
     {
         static void OnOpening(object sender, object e)
