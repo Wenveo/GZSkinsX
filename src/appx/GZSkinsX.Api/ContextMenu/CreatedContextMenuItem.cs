@@ -12,7 +12,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// 表示为自定义创建的上下文菜单项
+/// 表示为通过自定义创建的上下文菜单项
 /// </summary>
 public readonly struct CreatedContextMenuItem
 {

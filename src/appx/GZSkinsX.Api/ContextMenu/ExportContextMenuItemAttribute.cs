@@ -11,7 +11,7 @@ using System.Composition;
 namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// 声明当前类以 <see cref="IContextMenuItem"/> 类型导出
+/// 声明目标类以 <see cref="IContextMenuItem"/> 类型导出
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportContextMenuItemAttribute : ExportAttribute
