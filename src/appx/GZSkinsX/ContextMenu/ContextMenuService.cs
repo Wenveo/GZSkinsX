@@ -133,6 +133,22 @@ internal sealed class ContextMenuService : IContextMenuService
         return menuFlyoutItem;
     }
 
+    private MenuFlyoutSubItem CreateMenuSubItem(IContextMenuItem menuItem)
+    {
+        var menuFlyoutSubItem = new MenuFlyoutSubItem
+        {
+            Icon = menuItem.Icon,
+            Text = menuItem.Header,
+            DataContext = menuItem
+        };
+
+        var hotKey = menuItem.HotKey;
+        if (hotKey is not null)
+            menuFlyoutSubItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+
+        return menuFlyoutSubItem;
+    }
+
     private ToggleMenuFlyoutItem CreateToggleMenuItem(IContextToggleMenuItem toggleMenuItem)
     {
         var toggleMenuFlyoutItem = new ToggleMenuFlyoutItem
@@ -193,23 +209,13 @@ internal sealed class ContextMenuService : IContextMenuService
         if (Guid.TryParse(metadata.Guid, out var guid) &&
             _guidToGroups.TryGetValue(guid, out var subItemGroup))
         {
-            var menuFlyoutSubItem = new MenuFlyoutSubItem
-            {
-                Icon = item.Icon,
-                Text = item.Header,
-                DataContext = item
-            };
+            var menuFlyoutSubItem = CreateMenuSubItem(item);
             CreateSubItems(subItemGroup, menuFlyoutSubItem.Items);
             return menuFlyoutSubItem;
         }
         else if (item is IContextMenuItemProvider provider)
         {
-            var menuFlyoutSubItem2 = new MenuFlyoutSubItem
-            {
-                Icon = item.Icon,
-                Text = item.Header,
-                DataContext = item
-            };
+            var menuFlyoutSubItem2 = CreateMenuSubItem(item);
             foreach (var subItem in provider.CreateSubItems())
             {
                 if (subItem.IsEmpty)
