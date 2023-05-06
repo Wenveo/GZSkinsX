@@ -14,7 +14,6 @@ using GZSkinsX.Api.ContextMenu;
 using GZSkinsX.Api.Controls;
 
 using Windows.System;
-using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 
@@ -34,19 +33,11 @@ internal static class MenuItemConstants
     Group = MenuItemConstants.GROUP_A)]
 internal sealed class OpenInNewTab : ContextMenuItemBase
 {
-    public override IconElement? GetIcon(IContextMenuUIContext context)
+    public OpenInNewTab()
     {
-        return new SegoeFluentIcon { Glyph = "\uE8A7" };
-    }
-
-    public override string? GetHeader(IContextMenuUIContext ctx)
-    {
-        return "Open In New Tab";
-    }
-
-    public override ContextMenuItemHotKey? GetHotKey(IContextMenuUIContext context)
-    {
-        return new ContextMenuItemHotKey(VirtualKey.O, VirtualKeyModifiers.Control);
+        Header = "Open In New Tab";
+        Icon = new SegoeFluentIcon { Glyph = "\uE8A7" };
+        HotKey = new ContextMenuItemHotKey(VirtualKey.O, VirtualKeyModifiers.Control);
     }
 
     public override void OnExecute(IContextMenuUIContext context)
@@ -61,14 +52,10 @@ internal sealed class OpenInNewTab : ContextMenuItemBase
     Group = MenuItemConstants.GORUP_B)]
 internal sealed class TestItemA : ContextMenuItemBase
 {
-    public override IconElement? GetIcon(IContextMenuUIContext context)
+    public TestItemA()
     {
-        return new SegoeFluentIcon { Glyph = "\uE7F4" };
-    }
-
-    public override string? GetHeader(IContextMenuUIContext ctx)
-    {
-        return "TestItemA";
+        Header = "TestItemA";
+        Icon = new SegoeFluentIcon { Glyph = "\uE7F4" };
     }
 
     public override void OnExecute(IContextMenuUIContext context)
@@ -83,19 +70,11 @@ internal sealed class TestItemA : ContextMenuItemBase
     Group = MenuItemConstants.GORUP_B)]
 internal sealed class TestItemB : ContextToggleMenuItemBase
 {
-    public override IconElement? GetIcon(IContextMenuUIContext context)
+    public TestItemB()
     {
-        return new SegoeFluentIcon { Glyph = "\uE80A" };
-    }
-
-    public override string? GetHeader(IContextMenuUIContext ctx)
-    {
-        return "TestItemB";
-    }
-
-    public override ContextMenuItemHotKey? GetHotKey(IContextMenuUIContext context)
-    {
-        return new ContextMenuItemHotKey(VirtualKey.B, VirtualKeyModifiers.Control);
+        Header = "TestItemB";
+        Icon = new SegoeFluentIcon { Glyph = "\uE80A" };
+        HotKey = new ContextMenuItemHotKey(VirtualKey.B, VirtualKeyModifiers.Control);
     }
 
     public override void OnExecute(IContextMenuUIContext context)
@@ -116,24 +95,16 @@ internal sealed class TestItemC : ContextRadioMenuItemBase
 {
     private int _count;
 
-    public override IconElement? GetIcon(IContextMenuUIContext context)
+    public TestItemC()
     {
-        return new SegoeFluentIcon { Glyph = "\uE811" };
+        Header = "TestItemC";
+        Icon = new SegoeFluentIcon { Glyph = "\uE811" };
+        HotKey = new ContextMenuItemHotKey(VirtualKey.C, VirtualKeyModifiers.Control);
     }
 
     public override bool IsVisible(IContextMenuUIContext context)
     {
         return _count++ % 2 == 0;
-    }
-
-    public override string? GetHeader(IContextMenuUIContext ctx)
-    {
-        return "TestItemC";
-    }
-
-    public override ContextMenuItemHotKey? GetHotKey(IContextMenuUIContext context)
-    {
-        return new ContextMenuItemHotKey(VirtualKey.C, VirtualKeyModifiers.Control);
     }
 
     public override void OnExecute(IContextMenuUIContext context)
@@ -155,23 +126,10 @@ internal sealed class TestSubItems : ContextMenuItemBase, IContextMenuItemProvid
 {
     private sealed class SubMenuItemBase : ContextMenuItemBase
     {
-        private readonly string _header;
-        private readonly string _glyph;
-
         public SubMenuItemBase(string header, string glpyh)
         {
-            _header = header;
-            _glyph = glpyh;
-        }
-
-        public override string? GetHeader(IContextMenuUIContext ctx)
-        {
-            return _header;
-        }
-
-        public override IconElement? GetIcon(IContextMenuUIContext context)
-        {
-            return new SegoeFluentIcon { Glyph = _glyph };
+            Header = header;
+            Icon = new SegoeFluentIcon { Glyph = glpyh };
         }
 
         public override void OnExecute(IContextMenuUIContext context)
@@ -193,14 +151,10 @@ internal sealed class TestSubItems : ContextMenuItemBase, IContextMenuItemProvid
         yield return new CreatedContextMenuItem(new(), new SubMenuItemBase("SubItemD", "\uE791"));
     }
 
-    public override string? GetHeader(IContextMenuUIContext ctx)
+    public TestSubItems()
     {
-        return "MenuSubItem";
-    }
-
-    public override IconElement? GetIcon(IContextMenuUIContext context)
-    {
-        return new SegoeFluentIcon { Glyph = "\uE14C" };
+        Header = "MenuSubItem";
+        Icon = new SegoeFluentIcon { Glyph = "\uE14C" };
     }
 
     public override void OnExecute(IContextMenuUIContext context)
@@ -214,14 +168,10 @@ internal sealed class TestSubItems : ContextMenuItemBase, IContextMenuItemProvid
     Guid = "94546174-7BB4-46C7-9214-2BE072356F47")]
 internal sealed class TestSubItemSubItem : ContextRadioMenuItemBase
 {
-    public override IconElement? GetIcon(IContextMenuUIContext context)
+    public TestSubItemSubItem()
     {
-        return new SegoeFluentIcon { Glyph = "\uE14A" };
-    }
-
-    public override string? GetHeader(IContextMenuUIContext ctx)
-    {
-        return "TestSubItem - SubItem";
+        Header = "TestSubItem - SubItem";
+        Icon = new SegoeFluentIcon { Glyph = "\uE14A" };
     }
 
     public override void OnExecute(IContextMenuUIContext context)

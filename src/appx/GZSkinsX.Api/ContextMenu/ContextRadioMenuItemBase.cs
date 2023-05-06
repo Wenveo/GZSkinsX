@@ -13,13 +13,13 @@ namespace GZSkinsX.Api.ContextMenu;
 
 public abstract class ContextRadioMenuItemBase : IContextRadioMenuItem
 {
-    public virtual string? GetGroupName() => null;
+    public string? GroupName { get; protected set; }
 
-    public virtual string? GetHeader(IContextMenuUIContext ctx) => null;
+    public string? Header { get; protected set; }
 
-    public virtual ContextMenuItemHotKey? GetHotKey(IContextMenuUIContext context) => null;
+    public IconElement? Icon { get; protected set; }
 
-    public virtual IconElement? GetIcon(IContextMenuUIContext context) => null;
+    public ContextMenuItemHotKey? HotKey { get; protected set; }
 
     public virtual bool IsChecked(IContextMenuUIContext context) => false;
 

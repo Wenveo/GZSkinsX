@@ -13,13 +13,13 @@ namespace GZSkinsX.Api.ContextMenu;
 
 public abstract class ContextRadioMenuItemBase<TContext> : IContextRadioMenuItem where TContext : IContextMenuUIContext
 {
-    public virtual string? GetGroupName() => null;
+    public string? GroupName { get; protected set; }
 
-    public virtual string? GetHeader(TContext ctx) => null;
+    public string? Header { get; protected set; }
 
-    public virtual ContextMenuItemHotKey? GetHotKey(TContext context) => null;
+    public IconElement? Icon { get; protected set; }
 
-    public virtual IconElement? GetIcon(TContext context) => null;
+    public ContextMenuItemHotKey? HotKey { get; protected set; }
 
     public virtual bool IsChecked(TContext context) => false;
 
@@ -30,14 +30,6 @@ public abstract class ContextRadioMenuItemBase<TContext> : IContextRadioMenuItem
     public abstract void OnClick(bool isChecked, TContext context);
 
     public abstract void OnExecute(TContext context);
-
-    string? IContextRadioMenuItem.GetGroupName() => GetGroupName();
-
-    string? IContextMenuItem.GetHeader(IContextMenuUIContext ctx) => GetHeader((TContext)ctx);
-
-    ContextMenuItemHotKey? IContextMenuItem.GetHotKey(IContextMenuUIContext ctx) => GetHotKey((TContext)ctx);
-
-    IconElement? IContextMenuItem.GetIcon(IContextMenuUIContext ctx) => GetIcon((TContext)ctx);
 
     bool IContextRadioMenuItem.IsChecked(IContextMenuUIContext context) => IsChecked((TContext)context);
 

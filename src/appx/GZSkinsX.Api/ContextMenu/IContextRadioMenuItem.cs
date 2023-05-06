@@ -11,7 +11,7 @@ namespace GZSkinsX.Api.ContextMenu;
 
 public interface IContextRadioMenuItem : IContextMenuItem
 {
-    string? GetGroupName();
+    string? GroupName { get; }
 
     bool IsChecked(IContextMenuUIContext context);
 

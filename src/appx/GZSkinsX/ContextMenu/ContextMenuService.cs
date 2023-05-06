@@ -17,7 +17,6 @@ using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 
@@ -112,7 +111,16 @@ internal sealed class ContextMenuService : IContextMenuService
 
     private MenuFlyoutItem CreateMenuItem(IContextMenuItem menuItem)
     {
-        var menuFlyoutItem = new MenuFlyoutItem { DataContext = menuItem };
+        var menuFlyoutItem = new MenuFlyoutItem
+        {
+            Icon = menuItem.Icon,
+            Text = menuItem.Header,
+            DataContext = menuItem
+        };
+
+        var hotKey = menuItem.HotKey;
+        if (hotKey is not null)
+            menuFlyoutItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
@@ -127,7 +135,16 @@ internal sealed class ContextMenuService : IContextMenuService
 
     private ToggleMenuFlyoutItem CreateToggleMenuItem(IContextToggleMenuItem toggleMenuItem)
     {
-        var toggleMenuFlyoutItem = new ToggleMenuFlyoutItem { DataContext = toggleMenuItem };
+        var toggleMenuFlyoutItem = new ToggleMenuFlyoutItem
+        {
+            Icon = toggleMenuItem.Icon,
+            Text = toggleMenuItem.Header,
+            DataContext = toggleMenuItem
+        };
+
+        var hotKey = toggleMenuItem.HotKey;
+        if (hotKey is not null)
+            toggleMenuFlyoutItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
@@ -147,9 +164,15 @@ internal sealed class ContextMenuService : IContextMenuService
     {
         var radioMenuFlyoutItem = new MUXC.RadioMenuFlyoutItem
         {
-            GroupName = radioMenuItem.GetGroupName() ?? string.Empty,
-            DataContext = radioMenuItem
+            Icon = radioMenuItem.Icon,
+            Text = radioMenuItem.Header,
+            GroupName = radioMenuItem.GroupName ?? string.Empty,
+            DataContext = radioMenuItem,
         };
+
+        var hotKey = radioMenuItem.HotKey;
+        if (hotKey is not null)
+            radioMenuFlyoutItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
@@ -170,13 +193,23 @@ internal sealed class ContextMenuService : IContextMenuService
         if (Guid.TryParse(metadata.Guid, out var guid) &&
             _guidToGroups.TryGetValue(guid, out var subItemGroup))
         {
-            var menuFlyoutSubItem = new MenuFlyoutSubItem { DataContext = item };
+            var menuFlyoutSubItem = new MenuFlyoutSubItem
+            {
+                Icon = item.Icon,
+                Text = item.Header,
+                DataContext = item
+            };
             CreateSubItems(subItemGroup, menuFlyoutSubItem.Items);
             return menuFlyoutSubItem;
         }
         else if (item is IContextMenuItemProvider provider)
         {
-            var menuFlyoutSubItem2 = new MenuFlyoutSubItem { DataContext = provider };
+            var menuFlyoutSubItem2 = new MenuFlyoutSubItem
+            {
+                Icon = item.Icon,
+                Text = item.Header,
+                DataContext = item
+            };
             foreach (var subItem in provider.CreateSubItems())
             {
                 if (subItem.IsEmpty)
@@ -227,19 +260,12 @@ internal sealed class ContextMenuService : IContextMenuService
 
                 var menuItem = (IContextMenuItem)item.DataContext;
 
-                item.KeyboardAccelerators.Clear();
-                var hotKey = menuItem.GetHotKey(uiContext);
-                if (hotKey is not null)
-                    item.KeyboardAccelerators.Add(new KeyboardAccelerator { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
-
                 item.IsEnabled = menuItem.IsEnabled(uiContext);
                 item.Visibility = Bool2Visibility(menuItem.IsVisible(uiContext));
 
                 if (item is MenuFlyoutItem menuFlyoutItem)
                 {
                     menuFlyoutItem.Tag = uiContext;
-                    menuFlyoutItem.Text = menuItem.GetHeader(uiContext);
-                    menuFlyoutItem.Icon = menuItem.GetIcon(uiContext);
 
                     if (item is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
                     {
@@ -258,8 +284,6 @@ internal sealed class ContextMenuService : IContextMenuService
                 }
                 else if (item is MenuFlyoutSubItem menuFlyoutSubItem)
                 {
-                    menuFlyoutSubItem.Text = menuItem.GetHeader(uiContext);
-                    menuFlyoutSubItem.Icon = menuItem.GetIcon(uiContext);
                     foreach (var subItem in menuFlyoutSubItem.Items)
                     {
                         InitializeSubItem(subItem, uiContext);

@@ -13,11 +13,11 @@ namespace GZSkinsX.Api.ContextMenu;
 
 public interface IContextMenuItem
 {
-    string? GetHeader(IContextMenuUIContext context);
+    string? Header { get; }
 
-    IconElement? GetIcon(IContextMenuUIContext context);
+    IconElement? Icon { get; }
 
-    ContextMenuItemHotKey? GetHotKey(IContextMenuUIContext context);
+    ContextMenuItemHotKey? HotKey { get; }
 
     bool IsVisible(IContextMenuUIContext context);
 

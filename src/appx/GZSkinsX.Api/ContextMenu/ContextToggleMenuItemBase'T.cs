@@ -13,11 +13,11 @@ namespace GZSkinsX.Api.ContextMenu;
 
 public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuItem where TContext : IContextMenuUIContext
 {
-    public virtual string? GetHeader(TContext ctx) => null;
+    public string? Header { get; protected set; }
 
-    public virtual ContextMenuItemHotKey? GetHotKey(TContext context) => null;
+    public IconElement? Icon { get; protected set; }
 
-    public virtual IconElement? GetIcon(TContext context) => null;
+    public ContextMenuItemHotKey? HotKey { get; protected set; }
 
     public virtual bool IsChecked(TContext context) => false;
 
@@ -30,12 +30,6 @@ public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuIt
     public abstract void OnToggle(bool newValue, TContext context);
 
     void IContextMenuItem.OnExecute(IContextMenuUIContext ctx) => OnExecute((TContext)ctx);
-
-    string? IContextMenuItem.GetHeader(IContextMenuUIContext ctx) => GetHeader((TContext)ctx);
-
-    ContextMenuItemHotKey? IContextMenuItem.GetHotKey(IContextMenuUIContext ctx) => GetHotKey((TContext)ctx);
-
-    IconElement? IContextMenuItem.GetIcon(IContextMenuUIContext ctx) => GetIcon((TContext)ctx);
 
     bool IContextToggleMenuItem.IsChecked(IContextMenuUIContext context) => IsChecked((TContext)context);
 

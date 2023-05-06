@@ -14,23 +14,17 @@ namespace GZSkinsX.Api.ContextMenu;
 public abstract class ContextMenuItemBase<TContext> : IContextMenuItem
     where TContext : IContextMenuUIContext
 {
-    public virtual string? GetHeader(TContext ctx) => null;
+    public string? Header { get; protected set; }
 
-    public virtual ContextMenuItemHotKey? GetHotKey(TContext context) => null;
+    public IconElement? Icon { get; protected set; }
 
-    public virtual IconElement? GetIcon(TContext context) => null;
+    public ContextMenuItemHotKey? HotKey { get; protected set; }
 
     public virtual bool IsEnabled(TContext context) => true;
 
     public virtual bool IsVisible(TContext context) => true;
 
     public abstract void OnExecute(TContext context);
-
-    string? IContextMenuItem.GetHeader(IContextMenuUIContext ctx) => GetHeader((TContext)ctx);
-
-    ContextMenuItemHotKey? IContextMenuItem.GetHotKey(IContextMenuUIContext ctx) => GetHotKey((TContext)ctx);
-
-    IconElement? IContextMenuItem.GetIcon(IContextMenuUIContext ctx) => GetIcon((TContext)ctx);
 
     bool IContextMenuItem.IsEnabled(IContextMenuUIContext ctx) => IsEnabled((TContext)ctx);
 
