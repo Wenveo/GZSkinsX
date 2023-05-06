@@ -9,9 +9,22 @@
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 表示可以在选中和未选中两种状态之间切换的菜单项
+/// </summary>
 public interface IContextToggleMenuItem : IContextMenuItem
 {
+    /// <summary>
+    /// 通过当前 UI 上下文判断当前菜单项是否为选中状态
+    /// </summary>
+    /// <param name="context">与当前上下文菜单所关联的 UI 上下文内容</param>
+    /// <returns>如果返回 true 则表示为选中状态，否则将表示为未选中的状态</returns>
     bool IsChecked(IContextMenuUIContext context);
 
+    /// <summary>
+    /// 表示菜单项的默认点击行为
+    /// </summary>
+    /// <param name="newValue">表示是否为选中状态</param>
+    /// <param name="context">与当前上下文菜单所关联的 UI 上下文内容</param>
     void OnToggle(bool newValue, IContextMenuUIContext context);
 }

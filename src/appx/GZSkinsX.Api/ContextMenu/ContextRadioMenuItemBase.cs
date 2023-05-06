@@ -11,25 +11,38 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 表示派生自 <see cref="IContextRadioMenuItem"/> 的抽象基类，并提供基本的接口成员实现
+/// </summary>
 public abstract class ContextRadioMenuItemBase : IContextRadioMenuItem
 {
+    /// <inheritdoc/>
     public string? GroupName { get; protected set; }
 
+    /// <inheritdoc/>
     public string? Header { get; protected set; }
 
+    /// <inheritdoc/>
     public IconElement? Icon { get; protected set; }
 
+    /// <inheritdoc/>
     public ContextMenuItemShortcutKey? ShortcutKey { get; protected set; }
 
+    /// <inheritdoc/>
     public object? ToolTip { get; protected set; }
 
+    /// <inheritdoc/>
     public virtual bool IsChecked(IContextMenuUIContext context) => false;
 
+    /// <inheritdoc/>
     public virtual bool IsEnabled(IContextMenuUIContext context) => true;
 
+    /// <inheritdoc/>
     public virtual bool IsVisible(IContextMenuUIContext context) => true;
 
+    /// <inheritdoc/>
     public virtual void OnClick(bool isChecked, IContextMenuUIContext context) { }
 
+    /// <inheritdoc/>
     public virtual void OnExecute(IContextMenuUIContext context) { }
 }

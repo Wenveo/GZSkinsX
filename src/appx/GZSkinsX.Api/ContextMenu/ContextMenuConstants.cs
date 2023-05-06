@@ -7,6 +7,9 @@
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 表示存放上下文菜单项相关的元数据静态类
+/// </summary>
 public static class ContextMenuConstants
 {
 

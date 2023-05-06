@@ -7,12 +7,22 @@
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 表示派生自 <see cref="IContextMenuUIContext"/> 的默认实现
+/// </summary>
 public class ContextMenuUIContext : IContextMenuUIContext
 {
+    /// <inheritdoc/>
     public object UIObject { get; }
 
+    /// <inheritdoc/>
     public object Parameter { get; }
 
+    /// <summary>
+    /// 初始化 <see cref="ContextMenuUIContext"/> 的新实例
+    /// </summary>
+    /// <param name="uiObject">指定当前 UI 上下文中的 UI 对象</param>
+    /// <param name="parameter">指定当前 UI 上下文中的参数</param>
     public ContextMenuUIContext(object uiObject, object parameter)
     {
         UIObject = uiObject;

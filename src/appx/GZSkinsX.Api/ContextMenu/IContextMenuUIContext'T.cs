@@ -7,9 +7,16 @@
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 用于表示上下文菜单中所关联的 UI 上下文
+/// </summary>
+/// <typeparam name="T1">指定 <see cref="UIObject"/> 的类型</typeparam>
+/// <typeparam name="T2">指定 <see cref="Parameter"/> 的类型</typeparam>
 public interface IContextMenuUIContext<T1, T2> : IContextMenuUIContext
 {
+    /// <inheritdoc cref="IContextMenuUIContext.UIObject"/>
     new T1 UIObject { get; }
 
+    /// <inheritdoc cref="IContextMenuUIContext.Parameter"/>
     new T2 Parameter { get; }
 }

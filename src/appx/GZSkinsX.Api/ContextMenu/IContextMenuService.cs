@@ -11,7 +11,16 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 表示上下文菜单的基本服务，并提供创建上下文菜单的能力
+/// </summary>
 public interface IContextMenuService
 {
+    /// <summary>
+    /// 通过指定的 <paramref name="ownerGuidString"/> 创建一个新的 <see cref="MenuFlyout"/> 实现
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值</param>
+    /// <param name="coerceValueCallback">目标 UI 上下文的回调委托</param>
+    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例</returns>
     MenuFlyout CreateContextFlyout(string ownerGuidString, CoerceContextMenuUIContextCallback? coerceValueCallback = null);
 }

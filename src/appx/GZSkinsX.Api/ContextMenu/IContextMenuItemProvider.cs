@@ -9,7 +9,14 @@ using System.Collections.Generic;
 
 namespace GZSkinsX.Api.ContextMenu;
 
+/// <summary>
+/// 提供用于实现菜单项的自定义子级上下文菜单的菜单项集合
+/// </summary>
 public interface IContextMenuItemProvider
 {
+    /// <summary>
+    /// 创建用作于子级的上下文菜单的子菜单项集合
+    /// </summary>
+    /// <returns>返回已创建的子菜单项集合</returns>
     IEnumerable<CreatedContextMenuItem> CreateSubItems();
 }
