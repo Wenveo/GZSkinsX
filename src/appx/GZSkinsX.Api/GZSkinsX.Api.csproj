@@ -59,8 +59,6 @@
     <Compile Include="Game\GameRegion.cs" />
     <Compile Include="Game\IGameData.cs" />
     <Compile Include="Game\IGameService.cs" />
-    <Compile Include="Buffers\FontIconPool%27T.cs" />
-    <Compile Include="Buffers\FontIconSourcePool%27T.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Logging\LogLevel.cs" />
