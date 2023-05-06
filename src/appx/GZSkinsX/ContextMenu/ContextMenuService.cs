@@ -286,9 +286,10 @@ internal sealed class ContextMenuService : IContextMenuService
         {
             CreateSubItems(groups, menuFlyout.Items);
             ContextMenuFlyoutHelper.SetCoerceValueCallback(menuFlyout, coerceValueCallback);
+
+            menuFlyout.Opening += OnOpening;
         }
 
-        menuFlyout.Opening += OnOpening;
         return menuFlyout;
     }
 
