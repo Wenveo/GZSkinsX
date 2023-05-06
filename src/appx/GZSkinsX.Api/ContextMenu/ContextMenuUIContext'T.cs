@@ -9,14 +9,14 @@ namespace GZSkinsX.Api.ContextMenu;
 
 public class ContextMenuUIContext<T1, T2> : ContextMenuUIContext, IContextMenuUIContext<T1, T2>
 {
-    public new T1 UIObject => (T1)base.UIObject;
+    public new T1 UIObject => ((T1)base.UIObject)!;
 
-    public new T2 Parameter => (T2)base.Parameter;
+    public new T2 Parameter => ((T2)base.Parameter)!;
 
-    T1 IContextMenuUIContext<T1, T2>.UIObject => (T1)base.UIObject;
+    T1 IContextMenuUIContext<T1, T2>.UIObject => ((T1)base.UIObject)!;
 
-    T2 IContextMenuUIContext<T1, T2>.Parameter => (T2)base.Parameter;
+    T2 IContextMenuUIContext<T1, T2>.Parameter => ((T2)base.Parameter)!;
 
     public ContextMenuUIContext(T1 uiObject, T2 parameter)
-        : base(uiObject, parameter) { }
+        : base(uiObject!, parameter!) { }
 }
