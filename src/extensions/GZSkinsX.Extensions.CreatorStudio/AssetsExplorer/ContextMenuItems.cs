@@ -26,7 +26,7 @@ internal static class MenuItemConstants
     public const string GORUP_C = "2,F159A31B-546F-40C8-B4FE-095DB990DC5C";
 }
 
-[Shared, ExportMenuItem]
+[Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(
     OwnerGuid = MenuItemConstants.TREEVIEW_GUID,
     Guid = "391D2605-30A2-4CA4-B2CB-ECFE7C23837B",
@@ -41,7 +41,7 @@ internal sealed class OpenInNewTab : ContextMenuItemBase
     }
 }
 
-[Shared, ExportMenuItem]
+[Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(
     OwnerGuid = MenuItemConstants.TREEVIEW_GUID,
     Guid = "A9FAA7AB-AFF5-4385-918E-764D704E8B18",
@@ -56,7 +56,7 @@ internal sealed class TestItemA : ContextMenuItemBase
     }
 }
 
-[Shared, ExportMenuItem]
+[Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(
     OwnerGuid = "A9FAA7AB-AFF5-4385-918E-764D704E8B18",
     Guid = "DC7498CD-FB77-4F5F-97C2-09CA468384BC",
@@ -71,7 +71,7 @@ internal sealed class TestItemB : ContextToggleMenuItemBase
     }
 }
 
-[Shared, ExportMenuItem]
+[Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(
     OwnerGuid = "A9FAA7AB-AFF5-4385-918E-764D704E8B18",
     Guid = "BB3A3C48-5F1B-47F0-8838-9489182DA36A",
@@ -93,7 +93,7 @@ internal sealed class TestItemC : ContextRadioMenuItemBase
     }
 }
 
-[Shared, ExportMenuItem]
+[Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(
     OwnerGuid = MenuItemConstants.TREEVIEW_GUID,
     Guid = "B3A8FA22-06AE-4148-9F4F-77ED218B9DDB",
@@ -130,7 +130,7 @@ internal sealed class TestSubItems : ContextMenuItemBase, IContextMenuItemProvid
     }
 }
 
-[Shared, ExportMenuItem]
+[Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(
     OwnerGuid = "68E71E76-FB79-45E2-B093-9FE6D8D7BA7C",
     Guid = "94546174-7BB4-46C7-9214-2BE072356F47")]

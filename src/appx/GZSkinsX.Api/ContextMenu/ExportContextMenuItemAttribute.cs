@@ -14,11 +14,11 @@ namespace GZSkinsX.Api.ContextMenu;
 /// 声明当前类以 <see cref="IContextMenuItem"/> 类型导出
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportMenuItemAttribute : ExportAttribute
+public sealed class ExportContextMenuItemAttribute : ExportAttribute
 {
     /// <summary>
-    /// 初始化 <see cref="ExportMenuItemAttribute"/> 的新实例，并以 <see cref="IContextMenuItem"/> 类型导出
+    /// 初始化 <see cref="ExportContextMenuItemAttribute"/> 的新实例，并以 <see cref="IContextMenuItem"/> 类型导出
     /// </summary>
-    public ExportMenuItemAttribute()
+    public ExportContextMenuItemAttribute()
         : base(typeof(IContextMenuItem)) { }
 }

@@ -33,7 +33,7 @@
     <Compile Include="ContextMenu\IContextRadioMenuItem.cs" />
     <Compile Include="ContextMenu\IContextToggleMenuItem.cs" />
     <Compile Include="ContextMenu\ContextToggleMenuItemBase.cs" />
-    <Compile Include="ContextMenu\ExportMenuItemAttribute.cs" />
+    <Compile Include="ContextMenu\ExportContextMenuItemAttribute.cs" />
     <Compile Include="ContextMenu\IContextMenuService.cs" />
     <Compile Include="ContextMenu\IContextMenuItem.cs" />
     <Compile Include="ContextMenu\IContextMenuUIContext%27T.cs" />
