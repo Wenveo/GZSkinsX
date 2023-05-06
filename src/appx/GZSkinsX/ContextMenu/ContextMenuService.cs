@@ -109,6 +109,13 @@ internal sealed class ContextMenuService : IContextMenuService
         }
     }
 
+    private void SetCommonUIProperties(MenuFlyoutItemBase uiObject, IContextMenuItem menuItem)
+    {
+        var hotKey = menuItem.HotKey;
+        if (hotKey is not null)
+            uiObject.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+    }
+
     private MenuFlyoutItem CreateMenuItem(IContextMenuItem menuItem)
     {
         var menuFlyoutItem = new MenuFlyoutItem
@@ -118,9 +125,7 @@ internal sealed class ContextMenuService : IContextMenuService
             DataContext = menuItem
         };
 
-        var hotKey = menuItem.HotKey;
-        if (hotKey is not null)
-            menuFlyoutItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+        SetCommonUIProperties(menuFlyoutItem, menuItem);
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
@@ -142,9 +147,7 @@ internal sealed class ContextMenuService : IContextMenuService
             DataContext = menuItem
         };
 
-        var hotKey = menuItem.HotKey;
-        if (hotKey is not null)
-            menuFlyoutSubItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+        SetCommonUIProperties(menuFlyoutSubItem, menuItem);
 
         return menuFlyoutSubItem;
     }
@@ -158,9 +161,7 @@ internal sealed class ContextMenuService : IContextMenuService
             DataContext = toggleMenuItem
         };
 
-        var hotKey = toggleMenuItem.HotKey;
-        if (hotKey is not null)
-            toggleMenuFlyoutItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+        SetCommonUIProperties(toggleMenuFlyoutItem, toggleMenuItem);
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
@@ -186,9 +187,7 @@ internal sealed class ContextMenuService : IContextMenuService
             DataContext = radioMenuItem,
         };
 
-        var hotKey = radioMenuItem.HotKey;
-        if (hotKey is not null)
-            radioMenuFlyoutItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+        SetCommonUIProperties(radioMenuFlyoutItem, radioMenuItem);
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
