@@ -14,6 +14,7 @@ using System.Linq;
 
 using GZSkinsX.Api.ContextMenu;
 using GZSkinsX.Api.Helpers;
+using GZSkinsX.Api.Utilities;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml;
@@ -274,7 +275,7 @@ internal sealed class ContextMenuService : IContextMenuService
                 var menuItem = (IContextMenuItem)item.DataContext;
 
                 item.IsEnabled = menuItem.IsEnabled(uiContext);
-                item.Visibility = Bool2Visibility(menuItem.IsVisible(uiContext));
+                item.Visibility = BoolToVisibilityConvert.ToVisibility(menuItem.IsVisible(uiContext));
 
                 if (item is MenuFlyoutItem menuFlyoutItem)
                 {
@@ -328,10 +329,5 @@ internal sealed class ContextMenuService : IContextMenuService
         }
 
         return menuFlyout;
-    }
-
-    private static Visibility Bool2Visibility(bool value)
-    {
-        return value ? Visibility.Visible : Visibility.Collapsed;
     }
 }
