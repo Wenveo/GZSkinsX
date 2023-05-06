@@ -25,6 +25,16 @@ public static class BoolToVisibilityConvert
     }
 
     /// <summary>
+    /// 将 <see cref="Visibility"/> 类型的值转换为 <see cref="bool"/> 类型
+    /// </summary>
+    /// <param name="value">需要转换的值</param>
+    /// <returns>如果传入的值为 <see cref="Visibility.Collapsed"/> 则返回 true，否则返回 false </returns>
+    public static bool ToBoolean2(Visibility value)
+    {
+        return value == Visibility.Collapsed;
+    }
+
+    /// <summary>
     /// 将 <see cref="bool"/> 类型的值转换为 <see cref="Visibility"/> 类型
     /// </summary>
     /// <param name="value">需要转换的值</param>
@@ -32,5 +42,15 @@ public static class BoolToVisibilityConvert
     public static Visibility ToVisibility(bool value)
     {
         return value ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    /// <summary>
+    /// 将 <see cref="bool"/> 类型的值转换为 <see cref="Visibility"/> 类型
+    /// </summary>
+    /// <param name="value">需要转换的值</param>
+    /// <returns>如果传入的值为 true 则返回 <see cref="Visibility.Collapsed"/>，否则返回 <see cref="Visibility.Visible"/> </returns>
+    public static Visibility ToVisibility2(bool value)
+    {
+        return value ? Visibility.Collapsed : Visibility.Visible;
     }
 }
