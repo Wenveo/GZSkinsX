@@ -41,5 +41,5 @@ public abstract class ContextToggleMenuItemBase : IContextToggleMenuItem
     public virtual void OnExecute(IContextMenuUIContext context) { }
 
     /// <inheritdoc/>
-    public virtual void OnToggle(bool newValue, IContextMenuUIContext context) { }
+    public virtual void OnClick(bool newValue, IContextMenuUIContext context) { }
 }

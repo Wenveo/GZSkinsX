@@ -212,7 +212,7 @@ internal sealed class ContextMenuService : IContextMenuService
             var item = (IContextToggleMenuItem)self.DataContext;
 
             var uiContext = (IContextMenuUIContext)self.Tag;
-            item.OnToggle(self.IsChecked, uiContext);
+            item.OnClick(self.IsChecked, uiContext);
             item.OnExecute(uiContext);
         }
 

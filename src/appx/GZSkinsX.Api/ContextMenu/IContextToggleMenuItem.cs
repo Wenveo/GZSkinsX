@@ -24,7 +24,7 @@ public interface IContextToggleMenuItem : IContextMenuItem
     /// <summary>
     /// 表示菜单项的默认点击行为
     /// </summary>
-    /// <param name="newValue">表示是否为选中状态</param>
+    /// <param name="isChecked">表示是否为选中状态</param>
     /// <param name="context">与当前上下文菜单所关联的 UI 上下文内容</param>
-    void OnToggle(bool newValue, IContextMenuUIContext context);
+    void OnClick(bool isChecked, IContextMenuUIContext context);
 }

@@ -42,8 +42,8 @@ public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuIt
     /// <inheritdoc cref="IContextMenuItem.OnExecute(IContextMenuUIContext)"/>
     public virtual void OnExecute(TContext context) { }
 
-    /// <inheritdoc cref="IContextToggleMenuItem.OnToggle(bool, IContextMenuUIContext)"/>
-    public virtual void OnToggle(bool newValue, TContext context) { }
+    /// <inheritdoc cref="IContextToggleMenuItem.OnClick(bool, IContextMenuUIContext)"/>
+    public virtual void OnClick(bool newValue, TContext context) { }
 
     /// <inheritdoc/>
     void IContextMenuItem.OnExecute(IContextMenuUIContext ctx) => OnExecute((TContext)ctx);
@@ -58,5 +58,5 @@ public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuIt
     bool IContextMenuItem.IsVisible(IContextMenuUIContext ctx) => IsVisible((TContext)ctx);
 
     /// <inheritdoc/>
-    void IContextToggleMenuItem.OnToggle(bool newValue, IContextMenuUIContext context) => OnToggle(newValue, (TContext)context);
+    void IContextToggleMenuItem.OnClick(bool newValue, IContextMenuUIContext context) => OnClick(newValue, (TContext)context);
 }
