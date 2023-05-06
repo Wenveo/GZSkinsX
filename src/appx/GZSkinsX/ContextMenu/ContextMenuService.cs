@@ -13,9 +13,11 @@ using System.Composition;
 using System.Linq;
 
 using GZSkinsX.Api.ContextMenu;
+using GZSkinsX.Api.Helpers;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
@@ -109,8 +111,16 @@ internal sealed class ContextMenuService : IContextMenuService
         }
     }
 
-    private void SetCommonUIProperties(MenuFlyoutItemBase uiObject, IContextMenuItem menuItem)
+    private void SetCommonUIProperties(MenuFlyoutItem uiObject, IContextMenuItem menuItem)
     {
+        var icon = menuItem.Icon;
+        if (icon is not null)
+            uiObject.Icon = icon;
+
+        var header = menuItem.Header;
+        if (header is not null)
+            AutomationProperties.SetName(uiObject, uiObject.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
+
         var hotKey = menuItem.HotKey;
         if (hotKey is not null)
             uiObject.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
@@ -122,15 +132,6 @@ internal sealed class ContextMenuService : IContextMenuService
 
     private MenuFlyoutItem CreateMenuItem(IContextMenuItem menuItem)
     {
-        var menuFlyoutItem = new MenuFlyoutItem
-        {
-            Icon = menuItem.Icon,
-            Text = menuItem.Header,
-            DataContext = menuItem
-        };
-
-        SetCommonUIProperties(menuFlyoutItem, menuItem);
-
         static void OnClick(object sender, RoutedEventArgs e)
         {
             var self = (MenuFlyoutItem)sender;
@@ -138,35 +139,38 @@ internal sealed class ContextMenuService : IContextMenuService
             item.OnExecute((IContextMenuUIContext)self.Tag);
         }
 
+        var menuFlyoutItem = new MenuFlyoutItem { DataContext = menuItem };
+        SetCommonUIProperties(menuFlyoutItem, menuItem);
         menuFlyoutItem.Click += OnClick;
+
         return menuFlyoutItem;
     }
 
     private MenuFlyoutSubItem CreateMenuSubItem(IContextMenuItem menuItem)
     {
-        var menuFlyoutSubItem = new MenuFlyoutSubItem
-        {
-            Icon = menuItem.Icon,
-            Text = menuItem.Header,
-            DataContext = menuItem
-        };
+        var menuFlyoutSubItem = new MenuFlyoutSubItem { DataContext = menuItem };
 
-        SetCommonUIProperties(menuFlyoutSubItem, menuItem);
+        var icon = menuItem.Icon;
+        if (icon is not null)
+            menuFlyoutSubItem.Icon = icon;
+
+        var header = menuItem.Header;
+        if (header is not null)
+            AutomationProperties.SetName(menuFlyoutSubItem, menuFlyoutSubItem.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
+
+        var hotKey = menuItem.HotKey;
+        if (hotKey is not null)
+            menuFlyoutSubItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+
+        var toolTip = menuItem.ToolTip;
+        if (toolTip is not null)
+            ToolTipService.SetToolTip(menuFlyoutSubItem, toolTip);
 
         return menuFlyoutSubItem;
     }
 
     private ToggleMenuFlyoutItem CreateToggleMenuItem(IContextToggleMenuItem toggleMenuItem)
     {
-        var toggleMenuFlyoutItem = new ToggleMenuFlyoutItem
-        {
-            Icon = toggleMenuItem.Icon,
-            Text = toggleMenuItem.Header,
-            DataContext = toggleMenuItem
-        };
-
-        SetCommonUIProperties(toggleMenuFlyoutItem, toggleMenuItem);
-
         static void OnClick(object sender, RoutedEventArgs e)
         {
             var self = (ToggleMenuFlyoutItem)sender;
@@ -177,22 +181,15 @@ internal sealed class ContextMenuService : IContextMenuService
             item.OnExecute(uiContext);
         }
 
+        var toggleMenuFlyoutItem = new ToggleMenuFlyoutItem { DataContext = toggleMenuItem };
+        SetCommonUIProperties(toggleMenuFlyoutItem, toggleMenuItem);
         toggleMenuFlyoutItem.Click += OnClick;
+
         return toggleMenuFlyoutItem;
     }
 
     private MUXC.RadioMenuFlyoutItem CreateRadioMenuItem(IContextRadioMenuItem radioMenuItem)
     {
-        var radioMenuFlyoutItem = new MUXC.RadioMenuFlyoutItem
-        {
-            Icon = radioMenuItem.Icon,
-            Text = radioMenuItem.Header,
-            GroupName = radioMenuItem.GroupName ?? string.Empty,
-            DataContext = radioMenuItem,
-        };
-
-        SetCommonUIProperties(radioMenuFlyoutItem, radioMenuItem);
-
         static void OnClick(object sender, RoutedEventArgs e)
         {
             var self = (MUXC.RadioMenuFlyoutItem)sender;
@@ -203,7 +200,14 @@ internal sealed class ContextMenuService : IContextMenuService
             item.OnExecute(uiContext);
         }
 
+        var radioMenuFlyoutItem = new MUXC.RadioMenuFlyoutItem { DataContext = radioMenuItem };
+        SetCommonUIProperties(radioMenuFlyoutItem, radioMenuItem);
         radioMenuFlyoutItem.Click += OnClick;
+
+        var groupName = radioMenuItem.GroupName;
+        if (groupName is not null)
+            radioMenuFlyoutItem.GroupName = groupName;
+
         return radioMenuFlyoutItem;
     }
 
