@@ -83,7 +83,7 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
     private void InitializeUIObject()
     {
         _treeView.ContextFlyout =
-            _contextMenuService.CreateContextFlyout(MenuItemConstants.TREEVIEW_GUID,
+            _contextMenuService.CreateContextFlyout(MenuItemConstants.TREEVIEW_GUID, null,
             (sender, e) =>
             {
                 var menuFlyout = (MenuFlyout)sender;

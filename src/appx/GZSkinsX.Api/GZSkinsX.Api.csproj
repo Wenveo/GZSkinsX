@@ -23,6 +23,7 @@
     <Compile Include="Appx\IAppxWindow.cs" />
     <Compile Include="Appx\AppxContext.InternalCalls.cs" />
     <Compile Include="ContextMenu\ContextMenuConstants.cs" />
+    <Compile Include="ContextMenu\ContextMenuOptions.cs" />
     <Compile Include="ContextMenu\ContextMenuUIContext%27T.cs" />
     <Compile Include="ContextMenu\ContextRadioMenuItemBase%27T.cs" />
     <Compile Include="ContextMenu\ContextRadioMenuItemBase.cs" />

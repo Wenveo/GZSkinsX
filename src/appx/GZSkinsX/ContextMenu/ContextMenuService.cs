@@ -17,6 +17,7 @@ using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.Utilities;
 using GZSkinsX.DotNet.Diagnostics;
 
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
@@ -313,8 +314,43 @@ internal sealed class ContextMenuService : IContextMenuService
         }
     }
 
+    /// <summary>
+    /// 根据传入的 <see cref="ContextMenuOptions"/> 选项应用至目标 <see cref="MenuFlyout"/> UI 对象
+    /// </summary>
+    private void ApplyOptionsForMenuFlyout(MenuFlyout menuFlyout, ContextMenuOptions options)
+    {
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 1))
+        {
+            menuFlyout.Placement = options.Placement;
+            menuFlyout.MenuFlyoutPresenterStyle = options.MenuFlyoutPresenterStyle;
+        }
+
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 3))
+        {
+            menuFlyout.AllowFocusOnInteraction = options.AllowFocusOnInteraction;
+            menuFlyout.AllowFocusWhenDisabled = options.AllowFocusWhenDisabled;
+            menuFlyout.LightDismissOverlayMode = options.LightDismissOverlayMode;
+        }
+
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 4))
+        {
+            menuFlyout.OverlayInputPassThroughElement = options.OverlayInputPassThroughElement;
+        }
+
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
+        {
+            menuFlyout.AreOpenCloseAnimationsEnabled = options.AreOpenCloseAnimationsEnabled;
+            menuFlyout.ShowMode = options.ShowMode;
+        }
+
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8))
+        {
+            menuFlyout.ShouldConstrainToRootBounds = options.ShouldConstrainToRootBounds;
+        }
+    }
+
     /// <inheritdoc/>
-    public MenuFlyout CreateContextFlyout(string ownerGuidString, CoerceContextMenuUIContextCallback? coerceValueCallback = null)
+    public MenuFlyout CreateContextFlyout(string ownerGuidString, ContextMenuOptions? options, CoerceContextMenuUIContextCallback? coerceValueCallback = null)
     {
         static void OnOpening(object sender, object e)
         {
@@ -378,6 +414,9 @@ internal sealed class ContextMenuService : IContextMenuService
 
             menuFlyout.Opening += OnOpening;
         }
+
+        if (options is not null)
+            ApplyOptionsForMenuFlyout(menuFlyout, options);
 
         return menuFlyout;
     }
