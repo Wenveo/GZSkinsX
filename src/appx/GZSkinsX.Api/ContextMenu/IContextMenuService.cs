@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using System;
+
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.ContextMenu;
@@ -17,11 +19,35 @@ namespace GZSkinsX.Api.ContextMenu;
 public interface IContextMenuService
 {
     /// <summary>
-    /// 通过指定的 <paramref name="ownerGuidString"/> 创建一个新的 <see cref="MenuFlyout"/> 实现
+    /// 通过指定的 <see cref="Guid"/> 字符串值创建一个新的 <see cref="MenuFlyout"/> 实现
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值</param>
+    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例</returns>
+    MenuFlyout CreateContextFlyout(string ownerGuidString);
+
+    /// <summary>
+    /// 通过指定的 <see cref="Guid"/> 字符串值和 <see cref="ContextMenuOptions"/> 上下文菜单选项配置创建一个新的 <see cref="MenuFlyout"/> 实现
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值</param>
+    /// <param name="options">需要应用到 UI 上下文菜单上的属性配置</param>
+    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例</returns>
+    MenuFlyout CreateContextFlyout(string ownerGuidString, ContextMenuOptions options);
+
+    /// <summary>
+    /// 通过指定的 <see cref="Guid"/> 字符串值和 <see cref="CoerceContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的 <see cref="MenuFlyout"/> 实现
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值</param>
+    /// <param name="coerceValueCallback">目标 UI 上下文的回调委托</param>
+    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例</returns>
+    MenuFlyout CreateContextFlyout(string ownerGuidString, CoerceContextMenuUIContextCallback coerceValueCallback);
+
+    /// <summary>
+    /// 通过指定的 <see cref="Guid"/> 字符串值和 <see cref="ContextMenuOptions"/> 上下文菜单选项配置以及 <see cref="CoerceContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的 <see cref="MenuFlyout"/> 实现
     /// </summary>
     /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值</param>
     /// <param name="options">需要应用到 UI 上下文菜单上的属性配置</param>
     /// <param name="coerceValueCallback">目标 UI 上下文的回调委托</param>
     /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例</returns>
-    MenuFlyout CreateContextFlyout(string ownerGuidString, ContextMenuOptions? options, CoerceContextMenuUIContextCallback? coerceValueCallback = null);
+    MenuFlyout CreateContextFlyout(string ownerGuidString, ContextMenuOptions options, CoerceContextMenuUIContextCallback coerceValueCallback);
+
 }
