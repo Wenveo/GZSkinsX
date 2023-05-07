@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using GZSkinsX.Api.ContextMenu;
 
 using Windows.UI.Xaml;
@@ -27,12 +29,12 @@ internal sealed class ContextMenuFlyoutHelper
     /// <summary>
     /// 获取指定对象中的 <see cref="CoerceValueCallbackProperty"/> 附加属性的值
     /// </summary>
-    public static CoerceContextMenuUIContextCallback GetCoerceValueCallback(DependencyObject obj)
+    public static CoerceContextMenuUIContextCallback? GetCoerceValueCallback(DependencyObject obj)
     => (CoerceContextMenuUIContextCallback)obj.GetValue(CoerceValueCallbackProperty);
 
     /// <summary>
     /// 对指定的对象设置 <see cref="CoerceValueCallbackProperty"/> 附加属性的值
     /// </summary>
-    public static void SetCoerceValueCallback(DependencyObject obj, CoerceContextMenuUIContextCallback value)
+    public static void SetCoerceValueCallback(DependencyObject obj, CoerceContextMenuUIContextCallback? value)
     => obj.SetValue(CoerceValueCallbackProperty, value);
 }
