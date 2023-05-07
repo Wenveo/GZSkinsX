@@ -339,7 +339,7 @@ internal sealed class ContextMenuService : IContextMenuService
     /// 内部的创建上下文菜单方法的通用实现
     /// </summary>
     /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值</param>
-    /// <param name="options">需要应用到 UI 上下文菜单上的属性配置</param>
+    /// <param name="options">需要应用到 UI 上下文菜单上的属性配置选项</param>
     /// <param name="coerceValueCallback">目标 UI 上下文的回调委托</param>
     /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例</returns>
     private MenuFlyout CoerceContextMenu(string ownerGuidString, ContextMenuOptions? options = null, CoerceContextMenuUIContextCallback? coerceValueCallback = null)
@@ -413,18 +413,18 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <inheritdoc/>
-    public MenuFlyout CreateContextFlyout(string ownerGuidString)
+    public MenuFlyout CreateContextMenu(string ownerGuidString)
     => CoerceContextMenu(ownerGuidString, null, null);
 
     /// <inheritdoc/>
-    public MenuFlyout CreateContextFlyout(string ownerGuidString, ContextMenuOptions options)
+    public MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuOptions options)
     => CoerceContextMenu(ownerGuidString, options, null);
 
     /// <inheritdoc/>
-    public MenuFlyout CreateContextFlyout(string ownerGuidString, CoerceContextMenuUIContextCallback coerceValueCallback)
+    public MenuFlyout CreateContextMenu(string ownerGuidString, CoerceContextMenuUIContextCallback coerceValueCallback)
     => CoerceContextMenu(ownerGuidString, null, coerceValueCallback);
 
     /// <inheritdoc/>
-    public MenuFlyout CreateContextFlyout(string ownerGuidString, ContextMenuOptions options, CoerceContextMenuUIContextCallback coerceValueCallback)
+    public MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuOptions options, CoerceContextMenuUIContextCallback coerceValueCallback)
     => CoerceContextMenu(ownerGuidString, options, coerceValueCallback);
 }
