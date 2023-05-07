@@ -82,6 +82,7 @@
     <Compile Include="Themes\IThemeService.cs" />
     <Compile Include="Themes\ThemeChangedEventArgs.cs" />
     <Compile Include="Utilities\BoolToVisibilityConvert.cs" />
+    <Compile Include="Utilities\ItemGroupParser.cs" />
     <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
     <Compile Include="WindowManager\IWindowFrame.cs" />
     <Compile Include="WindowManager\IWindowFrameContext.cs" />

@@ -57,20 +57,6 @@ internal sealed class ContextMenuService : IContextMenuService
     /// </summary>
     private void InitializeGroups()
     {
-        static bool ParseGroup(string group, out string name, out double order)
-        {
-            var indexOfSeparator = group.IndexOf(',');
-            if (indexOfSeparator == -1 || !double.TryParse(group[..indexOfSeparator++], out order))
-            {
-                name = string.Empty;
-                order = double.NaN;
-                return false;
-            }
-
-            name = group[indexOfSeparator..];
-            return true;
-        }
-
         var dict = new Dictionary<Guid, Dictionary<string, ContextItemGroupContext>>();
         foreach (var item in _mefItems)
         {
@@ -87,7 +73,7 @@ internal sealed class ContextMenuService : IContextMenuService
                 continue;
 
             var groupString = item.Metadata.Group ?? "-1.7976931348623157E+308,9B6619D4-5486-4F6B-A1E0-3BAC663392F5";
-            b = ParseGroup(groupString, out var groupName, out var groupOrder);
+            b = ItemGroupParser.TryParseGroup(groupString, out var groupName, out var groupOrder);
             Debug2.Assert(b, $"ContextMenuItem: Couldn't parse Group property: '{groupString}'");
             if (!b)
                 continue;
