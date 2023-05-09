@@ -24,7 +24,7 @@ public sealed class CommandItemMetadataAttribute : Attribute
     public string? OwnerGuid { get; set; }
 
     /// <summary>
-    /// 获取和设置该命令项所处在的组
+    /// 获取和设置该命令项所在的分组，格式以 "double,Guid" 形式表示
     /// </summary>
     public string? Group { get; set; }
 

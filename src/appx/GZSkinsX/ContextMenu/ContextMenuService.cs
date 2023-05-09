@@ -162,7 +162,7 @@ internal sealed class ContextMenuService : IContextMenuService
     /// 通过传入的 <see cref="IContextMenuItem"/> 对象创建一个新的 <see cref="MenuFlyoutSubItem"/> 实例
     /// </summary>
     /// <param name="menuItem">传入的上下文菜单项</param>
-    /// <returns>返回已创建的 <see cref="MenuFlyoutSubItem"/> 实例</returns>
+    /// <returns>已创建的 <see cref="MenuFlyoutSubItem"/> 实例</returns>
     private MenuFlyoutSubItem CreateMenuSubItem(IContextMenuItem menuItem)
     {
         var menuFlyoutSubItem = new MenuFlyoutSubItem { DataContext = menuItem };
@@ -190,7 +190,7 @@ internal sealed class ContextMenuService : IContextMenuService
     /// 通过传入的 <see cref="IContextToggleMenuItem"/> 对象创建一个新的 <see cref="ToggleMenuFlyoutItem"/> 实例
     /// </summary>
     /// <param name="toggleMenuItem">传入的上下文菜单项</param>
-    /// <returns>返回已创建的 <see cref="ToggleMenuFlyoutItem"/> 实例</returns>
+    /// <returns>已创建的 <see cref="ToggleMenuFlyoutItem"/> 实例</returns>
     private ToggleMenuFlyoutItem CreateToggleMenuItem(IContextToggleMenuItem toggleMenuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -214,7 +214,7 @@ internal sealed class ContextMenuService : IContextMenuService
     /// 通过传入的 <see cref="IContextRadioMenuItem"/> 对象创建一个新的 <see cref="MUXC.RadioMenuFlyoutItem"/> 实例
     /// </summary>
     /// <param name="radioMenuItem">传入的上下文菜单项</param>
-    /// <returns>返回已创建的 <see cref="MUXC.RadioMenuFlyoutItem"/> 实例</returns>
+    /// <returns>已创建的 <see cref="MUXC.RadioMenuFlyoutItem"/> 实例</returns>
     private MUXC.RadioMenuFlyoutItem CreateRadioMenuItem(IContextRadioMenuItem radioMenuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -243,7 +243,7 @@ internal sealed class ContextMenuService : IContextMenuService
     /// </summary>
     /// <param name="item">传入的上下文菜单项</param>
     /// <param name="metadata">与上下文菜单项相关联的元数据</param>
-    /// <returns>返回已创建的 <see cref="MenuFlyoutItemBase"/> 类型实例</returns>
+    /// <returns>已创建的 <see cref="MenuFlyoutItemBase"/> 类型实例</returns>
     private MenuFlyoutItemBase CreateContextMenuItem(IContextMenuItem item, ContextMenuItemMetadataAttribute metadata)
     {
         if (Guid.TryParse(metadata.Guid, out var guid) &&
