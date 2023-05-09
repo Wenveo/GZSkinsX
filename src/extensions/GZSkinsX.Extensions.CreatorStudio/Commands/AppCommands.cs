@@ -21,7 +21,7 @@ using MUXC = Microsoft.UI.Xaml.Controls;
 namespace GZSkinsX.Extensions.CreatorStudio.Commands;
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_NEW)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_NEW)]
 internal sealed class NewCommand : CommandObjectBase
 {
     public readonly MUXC.DropDownButton dropDownButton;
@@ -60,72 +60,74 @@ internal sealed class NewCommand : CommandObjectBase
             Flyout = menuFlyout,
             Margin = new Thickness(4, 0, 2, 0)
         };
-    }
 
-    public override FrameworkElement GetUIObject() => dropDownButton;
+        UIObject = dropDownButton;
+    }
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
 internal sealed class OpenFileCommand : CommandButtonBase
 {
-    public override string? GetDisplayName() => "Open File";
+    public static int s_count;
 
-    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE197" };
-
-    public override void OnClick(ICommandUIContext ctx)
+    public OpenFileCommand()
     {
+        DisplayName = "Open File";
+        Icon = new SegoeFluentIcon { Glyph = "\uE197" };
+    }
+
+    public override bool IsEnabled()
+    {
+        return s_count % 2 == 0;
     }
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 1)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 1)]
 internal sealed class SaveFileCommand : CommandButtonBase
 {
-    public override string? GetDisplayName() => "Save";
-
-    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE105" };
-
-    public override void OnClick(ICommandUIContext ctx)
+    public SaveFileCommand()
     {
+        DisplayName = "Save";
+        Icon = new SegoeFluentIcon { Glyph = "\uE105" };
+    }
+
+    public override void OnClick(object sender, RoutedEventArgs e)
+    {
+        OpenFileCommand.s_count++;
     }
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 2)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 2)]
 internal sealed class SaveAsFileCommand : CommandButtonBase
 {
-    public override string? GetDisplayName() => "Save As";
-
-    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE792" };
-
-    public override void OnClick(ICommandUIContext ctx)
+    public SaveAsFileCommand()
     {
+        DisplayName = "Save As";
+        Icon = new SegoeFluentIcon { Glyph = "\uE792" };
     }
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]
 internal sealed class UndoCommand : CommandButtonBase
 {
-    public override string? GetDisplayName() => "Undo";
-
-    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A7" };
-
-    public override void OnClick(ICommandUIContext ctx)
+    public UndoCommand()
     {
+        DisplayName = "Undo";
+        Icon = new SegoeFluentIcon { Glyph = "\uE7A7" };
     }
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1)]
 internal sealed class RedoCommand : CommandButtonBase
 {
-    public override string? GetDisplayName() => "Redo";
-
-    public override IconElement? GetIcon() => new SegoeFluentIcon { Glyph = "\uE7A6" };
-
-    public override void OnClick(ICommandUIContext ctx)
+    public RedoCommand()
     {
+        DisplayName = "Redo";
+        Icon = new SegoeFluentIcon { Glyph = "\uE7A6" };
     }
 }

@@ -7,21 +7,28 @@
 
 #nullable enable
 
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
-public interface ICommandToggleButton : ICommandItem
+/// <summary>
+/// 表示可在选中和未选中之间切换的按钮元素
+/// </summary>
+public interface ICommandToggleButton : ICommandButton
 {
-    string? GetDisplayName();
-
-    string? GetToolTip();
-
-    CommandHotKey? GetHotKey();
-
-    IconElement? GetIcon();
-
+    /// <summary>
+    /// 表示该元素是否为选中的状态
+    /// </summary>
+    /// <returns>如果返回 true 则表示为选中状态，否则将表示为未选中的状态</returns>
     bool IsChecked();
 
-    void OnToggle(bool newValue, ICommandUIContext ctx);
+    /// <summary>
+    /// 表示在切换至选中状态中的行为
+    /// </summary>
+    void OnChecked(object sender, RoutedEventArgs e);
+
+    /// <summary>
+    /// 表示在切换至未选中状态中的行为
+    /// </summary>
+    void OnUnchecked(object sender, RoutedEventArgs e);
 }

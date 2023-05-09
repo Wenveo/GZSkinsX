@@ -7,25 +7,21 @@
 
 #nullable enable
 
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
-public abstract class CommandToggleButtonBase : ICommandToggleButton
+/// <summary>
+/// 表示派生自 <see cref="ICommandToggleButton"/> 的抽象基类，并提供基本的接口成员实现
+/// </summary>
+public abstract class CommandToggleButtonBase : CommandButtonBase, ICommandToggleButton
 {
-    public virtual string? GetDisplayName() => null;
-
-    public virtual CommandHotKey? GetHotKey() => null;
-
-    public virtual IconElement? GetIcon() => null;
-
-    public virtual string? GetToolTip() => null;
-
+    /// <inheritdoc/>
     public virtual bool IsChecked() => false;
 
-    public virtual bool IsEnabled() => true;
+    /// <inheritdoc/>
+    public virtual void OnChecked(object sender, RoutedEventArgs e) { }
 
-    public virtual bool IsVisible() => true;
-
-    public abstract void OnToggle(bool newValue, ICommandUIContext ctx);
+    /// <inheritdoc/>
+    public virtual void OnUnchecked(object sender, RoutedEventArgs e) { }
 }

@@ -10,9 +10,15 @@ using System.Composition;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
+/// <summary>
+/// 声明目标类以 <see cref="ICommandItem"/> 类型导出
+/// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportCommandItemAttribute : ExportAttribute
 {
+    /// <summary>
+    /// 初始化 <see cref="ExportCommandItemAttribute"/> 的新实例，并以 <see cref="ICommandItem"/> 类型导出
+    /// </summary>
     public ExportCommandItemAttribute()
         : base(typeof(ICommandItem)) { }
 }

@@ -7,23 +7,34 @@
 
 #nullable enable
 
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
+/// <summary>
+/// 表示派生自 <see cref="ICommandButton"/> 的抽象基类，并提供基本的接口成员实现
+/// </summary>
 public abstract class CommandButtonBase : ICommandButton
 {
-    public virtual string? GetDisplayName() => null;
+    /// <inheritdoc/>
+    public virtual string? DisplayName { get; protected set; }
 
-    public virtual CommandHotKey? GetHotKey() => null;
+    /// <inheritdoc/>
+    public virtual IconElement? Icon { get; protected set; }
 
-    public virtual IconElement? GetIcon() => null;
+    /// <inheritdoc/>
+    public virtual CommandShortcutKey? ShortcutKey { get; protected set; }
 
-    public virtual string? GetToolTip() => null;
+    /// <inheritdoc/>
+    public virtual object? ToolTip { get; protected set; }
 
+    /// <inheritdoc/>
     public virtual bool IsEnabled() => true;
 
+    /// <inheritdoc/>
     public virtual bool IsVisible() => true;
 
-    public abstract void OnClick(ICommandUIContext ctx);
+    /// <inheritdoc/>
+    public virtual void OnClick(object sender, RoutedEventArgs e) { }
 }

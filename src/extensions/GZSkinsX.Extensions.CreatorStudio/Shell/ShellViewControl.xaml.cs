@@ -8,7 +8,6 @@
 #nullable enable
 
 using System;
-using System.Diagnostics;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
@@ -16,8 +15,10 @@ using GZSkinsX.Api.CreatorStudio.Commands;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Extensions.CreatorStudio.Commands;
 
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -30,7 +31,7 @@ public sealed partial class ShellViewControl : Grid
     public static ShellViewControl Instance => s_lazy.Value;
 
     private readonly AssetsExplorerService _assetsExplorerService;
-    private readonly CommandBarService _commandBarService;
+    private readonly ICommandBarService _commandBarService;
     private readonly ShellViewSettings _shellViewSettings;
 
     public bool AssetsExplorerIsVisible => AssetsExplorerHost.Visibility == Visibility.Visible;
@@ -40,7 +41,7 @@ public sealed partial class ShellViewControl : Grid
         var serviceLocator = AppxContext.ServiceLocator;
 
         _assetsExplorerService = (AssetsExplorerService)serviceLocator.Resolve<IAssetsExplorerService>();
-        _commandBarService = (CommandBarService)serviceLocator.Resolve<ICommandBarService>();
+        _commandBarService = serviceLocator.Resolve<ICommandBarService>();
         _shellViewSettings = serviceLocator.Resolve<ShellViewSettings>();
 
         InitializeComponent();
@@ -50,9 +51,18 @@ public sealed partial class ShellViewControl : Grid
 
     private void InitializeUIObject()
     {
-        AssetsExplorerHost.Content = _assetsExplorerService.UIObject;
-        CommandBarHost.Content = _commandBarService.UIObject;
+        var commandBar = _commandBarService.CreateCommandBar(CommandConstants.CREATOR_STUDIO_CB_GUID);
 
+        commandBar.HorizontalAlignment = HorizontalAlignment.Left;
+        commandBar.HorizontalContentAlignment = HorizontalAlignment.Center;
+        commandBar.VerticalContentAlignment = VerticalAlignment.Center;
+        commandBar.DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
+        commandBar.Background = new SolidColorBrush(Colors.Transparent);
+        commandBar.IsOpen = false;
+
+        CommandBarHost.Content = commandBar;
+
+        AssetsExplorerHost.Content = _assetsExplorerService.UIObject;
         AssetsExplorerHost.Visibility = Bool2Visibility(!_shellViewSettings.IsHideAssetsExplorer);
         AssetsExplorerHost.SizeChanged += (_, _) => SaveUIState();
     }

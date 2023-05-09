@@ -19,7 +19,7 @@
     <Compile Include="Commands\CommandBarService.cs" />
     <Compile Include="Commands\CommandItemContext.cs" />
     <Compile Include="Commands\CommandItemGroupContext.cs" />
-    <Compile Include="Commands\CommandUIContext.cs" />
+    <Compile Include="Commands\CommandBarElementHelper.cs" />
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\ShellPage.xaml.cs">

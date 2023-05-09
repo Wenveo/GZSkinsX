@@ -5,15 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Windows.UI.Xaml;
+#nullable enable
 
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
+/// <summary>
+/// 表示派生自 <see cref="ICommandObject"/> 的抽象基类，并提供基本的接口成员实现
+/// </summary>
 public abstract class CommandObjectBase : ICommandObject
 {
-    public abstract FrameworkElement GetUIObject();
-
-    public virtual bool IsEnabled() => true;
-
-    public virtual bool IsVisible() => true;
+    /// <inheritdoc/>
+    public virtual object? UIObject { get; protected set; }
 }

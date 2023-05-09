@@ -11,24 +11,33 @@ using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.Commands;
 
 using Windows.System;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Shell;
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_VIEW, Order = 0d)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_VIEW, Order = 0d)]
 internal sealed class ShowOrHideAssetsExplorerCommand : CommandToggleButtonBase
 {
-    public override string GetDisplayName() => "Assets Explorer";
-
-    public override IconElement GetIcon() => new SegoeFluentIcon { Glyph = "\uE179" };
-
-    public override CommandHotKey GetHotKey() => new() { Key = VirtualKey.E, Modifiers = VirtualKeyModifiers.Control };
-
-    public override bool IsChecked() => ShellViewControl.Instance.AssetsExplorerIsVisible;
-
-    public override void OnToggle(bool newValue, ICommandUIContext ctx)
+    public ShowOrHideAssetsExplorerCommand()
     {
-        ShellViewControl.Instance.ShowOrHideAssetsExplorer(newValue);
+        DisplayName = "Assets Explorer";
+        Icon = new SegoeFluentIcon { Glyph = "\uE179" };
+        ShortcutKey = new(VirtualKey.E, VirtualKeyModifiers.Control);
+    }
+
+    public override bool IsChecked()
+    {
+        return ShellViewControl.Instance.AssetsExplorerIsVisible;
+    }
+
+    public override void OnChecked(object sender, RoutedEventArgs e)
+    {
+        ShellViewControl.Instance.ShowOrHideAssetsExplorer(true);
+    }
+
+    public override void OnUnchecked(object sender, RoutedEventArgs e)
+    {
+        ShellViewControl.Instance.ShowOrHideAssetsExplorer(false);
     }
 }

@@ -7,11 +7,15 @@
 
 #nullable enable
 
-using Windows.UI.Xaml;
-
 namespace GZSkinsX.Api.CreatorStudio.Commands;
 
+/// <summary>
+/// 表示在命令栏中自定义的元素对象
+/// </summary>
 public interface ICommandObject : ICommandItem
 {
-    FrameworkElement GetUIObject();
+    /// <summary>
+    /// 用于显示的 UI 元素对象
+    /// </summary>
+    object? UIObject { get; }
 }
