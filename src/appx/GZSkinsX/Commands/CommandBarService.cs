@@ -13,7 +13,7 @@ using System.Composition;
 using System.Diagnostics;
 using System.Linq;
 
-using GZSkinsX.Api.CreatorStudio.Commands;
+using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.Utilities;
 
@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Commands;
+namespace GZSkinsX.Commands;
 
 /// <inheritdoc cref="ICommandBarService"/>
 [Shared, Export(typeof(ICommandBarService))]

@@ -10,7 +10,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示派生自 <see cref="ICommandButton"/> 的抽象基类，并提供基本的接口成员实现

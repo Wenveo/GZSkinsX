@@ -9,9 +9,9 @@
 
 using System;
 
-using GZSkinsX.Api.CreatorStudio.Commands;
+using GZSkinsX.Api.Commands;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Commands;
+namespace GZSkinsX.Commands;
 
 internal sealed class CommandItemContext
 {

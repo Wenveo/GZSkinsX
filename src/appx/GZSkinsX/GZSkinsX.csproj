@@ -8,6 +8,10 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandBarElementHelper.cs" />
+    <Compile Include="Commands\CommandBarService.cs" />
+    <Compile Include="Commands\CommandItemContext.cs" />
+    <Compile Include="Commands\CommandItemGroupContext.cs" />
     <Compile Include="ContextMenu\ContextItemGroupContext.cs" />
     <Compile Include="ContextMenu\ContextMenuItemContext.cs" />
     <Compile Include="ContextMenu\ContextMenuService.cs" />

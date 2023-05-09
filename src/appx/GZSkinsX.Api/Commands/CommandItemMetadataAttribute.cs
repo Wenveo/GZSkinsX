@@ -10,7 +10,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示命令项的元数据类

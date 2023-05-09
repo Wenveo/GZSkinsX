@@ -7,7 +7,7 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示在命令栏中自定义的元素对象

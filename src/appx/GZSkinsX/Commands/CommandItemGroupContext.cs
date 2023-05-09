@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Commands;
+namespace GZSkinsX.Commands;
 
 internal sealed class CommandItemGroupContext
 {

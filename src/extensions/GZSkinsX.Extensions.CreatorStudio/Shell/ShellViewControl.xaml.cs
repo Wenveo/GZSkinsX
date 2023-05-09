@@ -10,10 +10,9 @@
 using System;
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Api.CreatorStudio.Commands;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Extensions.CreatorStudio.Commands;
 
 using Windows.UI;
 using Windows.UI.Xaml;

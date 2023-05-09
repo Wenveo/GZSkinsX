@@ -9,7 +9,7 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示可在选中和未选中之间切换的按钮元素

@@ -9,8 +9,8 @@
 
 using System.Composition;
 
+using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Commands;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

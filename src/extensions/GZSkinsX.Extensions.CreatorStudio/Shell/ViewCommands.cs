@@ -7,8 +7,8 @@
 
 using System.Composition;
 
+using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Commands;
 
 using Windows.System;
 using Windows.UI.Xaml;

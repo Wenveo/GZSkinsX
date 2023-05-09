@@ -10,7 +10,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Commands;
+namespace GZSkinsX.Commands;
 
 /// <summary>
 /// 表示为 <see cref="ICommandBarElement"/> 的帮助类，用于获取和设置自定义的附加属性

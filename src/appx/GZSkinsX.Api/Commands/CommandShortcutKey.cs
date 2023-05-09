@@ -7,7 +7,7 @@
 
 using Windows.System;
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 用于表示位于命令栏中的命令项所指定的快捷键

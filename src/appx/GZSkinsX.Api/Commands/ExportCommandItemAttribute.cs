@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 声明目标类以 <see cref="ICommandItem"/> 类型导出

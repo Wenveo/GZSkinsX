@@ -7,12 +7,13 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.CreatorStudio.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
-/// 该接口为所有命令项的基接口，所有命令项都应继承于此，并以该接口类型导出
+/// 表示派生自 <see cref="ICommandObject"/> 的抽象基类，并提供基本的接口成员实现
 /// </summary>
-public interface ICommandItem
+public abstract class CommandObjectBase : ICommandObject
 {
-
+    /// <inheritdoc/>
+    public virtual object? UIObject { get; protected set; }
 }
