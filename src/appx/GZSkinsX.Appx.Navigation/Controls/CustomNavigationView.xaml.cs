@@ -10,8 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.Themes;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
@@ -21,19 +23,17 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
+using MUXC = Microsoft.UI.Xaml.Controls;
+
 namespace GZSkinsX.Appx.Navigation.Controls;
 
-public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.NavigationView
+public sealed partial class CustomNavigationView : MUXC.NavigationView
 {
-    private readonly NavigationService _navigationService;
-
     private readonly IAppxTitleBar _appxTitleBar;
     private readonly IThemeService _themeService;
 
-    internal CustomNavigationView(NavigationService navigationService)
+    internal CustomNavigationView()
     {
-        _navigationService = navigationService;
-
         _appxTitleBar = AppxContext.AppxTitleBar;
         _themeService = AppxContext.ThemeService;
 
@@ -111,7 +111,7 @@ public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.Na
             var suggestions = new List<QueryNavigationItem>();
 
             var querySplit = sender.Text.Split(" ");
-            foreach (var item in _navigationService._createdNavItems.Values)
+            foreach (var item in MenuItems.OfType<MUXC.NavigationViewItem>())
             {
                 if (item.SelectsOnInvoked)
                 {
@@ -141,15 +141,16 @@ public sealed partial class CustomNavigationView : Microsoft.UI.Xaml.Controls.Na
             }
 
             sender.ItemsSource = suggestions.Count > 0 ? suggestions
-                : (new string[] { _navigationService.GetLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/MainSearchBox_Query_NotResultsFound") });
+                : (new string[] { ResourceHelper.GetResxLocalizedOrDefault("resx:GZSkinsX.Appx.Navigation/Resources/MainSearchBox_Query_NotResultsFound") });
         }
     }
 
     private async void OnMainSearchBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
     {
-        if (args.ChosenSuggestion is QueryNavigationItem queryNavigationItem)
+        if (args.ChosenSuggestion is QueryNavigationItem)
         {
-            await _navigationService.NavigateCoreAsync(queryNavigationItem.Guid, null, null);
+            await Task.CompletedTask;
+            //await _navigationService.NavigateCoreAsync(queryNavigationItem.Guid, null, null);
         }
     }
 

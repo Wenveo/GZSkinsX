@@ -11,7 +11,7 @@ using System.Composition;
 namespace GZSkinsX.Api.Navigation;
 
 /// <summary>
-/// 声明并将目标类以 <see cref="INavigationItem"/> 类型导出
+/// 声明目标类以 <see cref="INavigationItem"/> 类型导出
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportNavigationItemAttribute : ExportAttribute

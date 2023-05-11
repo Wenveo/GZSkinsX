@@ -9,7 +9,7 @@ using System;
 
 using GZSkinsX.Api.Navigation;
 
-namespace GZSkinsX.Appx.Navigation;
+namespace GZSkinsX.Navigation;
 
 /// <summary>
 /// 用于存储导出的 <see cref="INavigationItem"/> 对象以及上下文数据

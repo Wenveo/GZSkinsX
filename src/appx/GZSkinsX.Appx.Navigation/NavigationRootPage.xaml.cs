@@ -9,6 +9,7 @@
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Navigation;
+using GZSkinsX.Appx.Navigation.Controls;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -22,6 +23,17 @@ namespace GZSkinsX.Appx.Navigation;
 /// </summary>
 public sealed partial class NavigationRootPage : Page
 {
+    private static readonly INavigationViewManager s_navigationViewManager;
+
+    static NavigationRootPage()
+    {
+        var serviceLocator = AppxContext.ServiceLocator;
+        var navigationViewFactory = serviceLocator.Resolve<INavigationViewFactory>();
+        s_navigationViewManager = navigationViewFactory.CreateNavigationViewManager(
+            NavigationConstants.NAVIGATIONROOT_NV_GUID,
+            new CustomNavigationView());
+    }
+
     public NavigationRootPage()
     {
         InitializeComponent();
@@ -29,18 +41,13 @@ public sealed partial class NavigationRootPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        if (AppxContext.ServiceLocator.TryResolve<INavigationService>(out var navigationService))
-        {
-            contentPresenter.Content = ((NavigationService)navigationService)._navigationViewRoot;
-        }
-
+        contentPresenter.Content = s_navigationViewManager.NavigationView;
         base.OnNavigatedTo(e);
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         contentPresenter.Content = null;
-
         base.OnNavigatedFrom(e);
     }
 }

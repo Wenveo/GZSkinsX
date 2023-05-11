@@ -8,8 +8,17 @@
 namespace GZSkinsX.Api.Navigation;
 
 /// <summary>
-/// 
+/// 用于指定导航项在导航视图中的所处的位置
 /// </summary>
-public interface INavigationGroup
+public enum NavigationItemPlacement
 {
+    /// <summary>
+    /// 表示位于默认的集合中 <see cref="Microsoft.UI.Xaml.Controls.NavigationView.MenuItems"/>
+    /// </summary>
+    Default,
+
+    /// <summary>
+    /// 表示位于页脚的集合中 <see cref="Microsoft.UI.Xaml.Controls.NavigationView.FooterMenuItems"/>
+    /// </summary>
+    Footer
 }
