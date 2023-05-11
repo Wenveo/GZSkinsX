@@ -25,11 +25,6 @@ namespace GZSkinsX.WindowManager;
 internal sealed class WindowManagerService : IWindowManagerService
 {
     /// <summary>
-    /// 当前应用程序主窗口
-    /// </summary>
-    private readonly IAppxWindow _appxWindow;
-
-    /// <summary>
     /// 存放所有已导出的 <see cref="IWindowFrame"/> 类型对象
     /// </summary>
     private readonly IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> _viewElements;
@@ -48,9 +43,8 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// 初始化 <see cref="WindowManagerService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public WindowManagerService(IAppxWindow appxWindow, [ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> viewElements)
+    public WindowManagerService([ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> viewElements)
     {
-        _appxWindow = appxWindow;
         _viewElements = viewElements;
 
         _frame = new();
@@ -64,7 +58,8 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// </summary>
     public void InitializeContext()
     {
-        if (_appxWindow.MainWindow.Content is not Frame frame || frame != _frame)
+        var appxWindow = AppxContext.AppxWindow;
+        if (appxWindow.MainWindow.Content is not Frame frame || frame != _frame)
         {
             foreach (var elem in _viewElements)
             {
@@ -88,7 +83,7 @@ internal sealed class WindowManagerService : IWindowManagerService
                 _guidToWindowFrame[guid] = new WindowFrameContext(elem);
             }
 
-            _appxWindow.MainWindow.Content = _frame;
+            appxWindow.MainWindow.Content = _frame;
         }
     }
 

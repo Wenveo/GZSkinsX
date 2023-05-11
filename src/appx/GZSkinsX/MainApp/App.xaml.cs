@@ -48,10 +48,7 @@ public sealed partial class App : Application
                 mergedResourceDictionaries.Add(rsrc);
             }
 
-            if (StartUpClass.CompositionHost.TryGetExport<IWindowManagerService>(out var windowManagerService))
-            {
-                windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
-            }
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
         }
 
         if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)

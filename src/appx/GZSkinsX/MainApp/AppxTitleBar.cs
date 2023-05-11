@@ -20,11 +20,6 @@ namespace GZSkinsX.MainApp;
 internal sealed class AppxTitleBar : IAppxTitleBar
 {
     /// <summary>
-    /// 用于获取当前应用程序主窗口
-    /// </summary>
-    private readonly IAppxWindow _appxWindow;
-
-    /// <summary>
     /// 用于获取和设置是否将内容扩展至标题栏
     /// </summary>
     private readonly CoreApplicationViewTitleBar _coreTitleBar;
@@ -40,13 +35,12 @@ internal sealed class AppxTitleBar : IAppxTitleBar
     /// 初始化 <see cref="AppxTitleBar"/> 的实例
     /// </summary>
     [ImportingConstructor]
-    public AppxTitleBar(IAppxWindow appxWindow)
+    public AppxTitleBar()
     {
-        _appxWindow = appxWindow;
         _coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
     }
 
     /// <inheritdoc/>
     public void SetTitleBar(Windows.UI.Xaml.UIElement? value)
-    => _appxWindow.MainWindow.SetTitleBar(value);
+    => AppxContext.AppxWindow.MainWindow.SetTitleBar(value);
 }

@@ -9,6 +9,7 @@
 
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Logging;
 
@@ -46,12 +47,12 @@ internal sealed class GameService : IGameService
     /// 初始化 <see cref="GameService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public GameService(GameSettings gameSettings, ILoggingService loggingService)
+    public GameService(GameSettings gameSettings)
     {
         _gameSettings = gameSettings;
         _gameData = new GameData();
 
-        _loggingService = loggingService;
+        _loggingService = AppxContext.LoggingService;
     }
 
     /// <inheritdoc/>

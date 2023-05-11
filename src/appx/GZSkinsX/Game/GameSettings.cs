@@ -10,6 +10,7 @@
 using System;
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Settings;
 
@@ -87,9 +88,9 @@ internal sealed class GameSettings
     /// 初始化 <see cref="GameSettings"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public GameSettings(ISettingsService settingsService)
+    public GameSettings()
     {
-        _settingsSection = settingsService.GetOrCreateSection(THE_GUID, SettingsType.Local);
+        _settingsSection = AppxContext.SettingsService.GetOrCreateSection(THE_GUID, SettingsType.Local);
         _rootDirectory = _settingsSection.Attribute<string>(ROOT_DIRECTORY_NAME) ?? string.Empty;
         _currentRegion = _settingsSection.Attribute<GameRegion>(CURRENT_REGION_GUID);
     }
