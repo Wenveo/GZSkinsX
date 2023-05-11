@@ -1,5 +1,5 @@
 ﻿<muxc:NavigationView
-    x:Class="GZSkinsX.Appx.Navigation.Controls.CustomNavigationView"
+    x:Class="GZSkinsX.Appx.NavigationRoot.Controls.CustomNavigationView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
@@ -7,7 +7,7 @@
     xmlns:composition="using:GZSkinsX.Uwp.Composition"
     xmlns:ctrls2="using:GZSkinsX.Api.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:GZSkinsX.Appx.Navigation.Controls"
+    xmlns:local="using:GZSkinsX.Appx.NavigationRoot.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     IsBackButtonVisible="Collapsed"

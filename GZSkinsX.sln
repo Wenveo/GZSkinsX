@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{E6CB98F8-7A2
 		eng\uap.props = eng\uap.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Navigation", "src\appx\GZSkinsX.Appx.Navigation\GZSkinsX.Appx.Navigation.csproj", "{B6A6C8AF-5632-48FC-9A05-7A1163CA3CE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.NavigationRoot", "src\appx\GZSkinsX.Appx.NavigationRoot\GZSkinsX.Appx.NavigationRoot.csproj", "{B6A6C8AF-5632-48FC-9A05-7A1163CA3CE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.AccessCache", "src\appx\GZSkinsX.Appx.AccessCache\GZSkinsX.Appx.AccessCache.csproj", "{E600CF64-92F7-4E1E-99C2-D4245A03E443}"
 EndProject

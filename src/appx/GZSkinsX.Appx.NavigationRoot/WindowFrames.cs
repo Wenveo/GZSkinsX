@@ -9,7 +9,7 @@ using System.Composition;
 
 using GZSkinsX.Api.WindowManager;
 
-namespace GZSkinsX.Appx.Navigation;
+namespace GZSkinsX.Appx.NavigationRoot;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.NavigationRoot_Guid, PageType = typeof(NavigationRootPage))]

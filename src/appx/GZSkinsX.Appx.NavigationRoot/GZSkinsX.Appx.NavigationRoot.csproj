@@ -2,12 +2,12 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{B6A6C8AF-5632-48FC-9A05-7A1163CA3CE9}</ProjectGuid>
-    <RootNamespace>GZSkinsX.Appx.Navigation</RootNamespace>
-    <AssemblyName>GZSkinsX.Appx.Navigation</AssemblyName>
+    <RootNamespace>GZSkinsX.Appx.NavigationRoot</RootNamespace>
+    <AssemblyName>GZSkinsX.Appx.NavigationRoot</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AppxNavigation.cs" />
+    <Compile Include="AppxNavigationRoot.cs" />
     <Compile Include="Controls\CustomNavigationView.xaml.cs">
       <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
@@ -19,7 +19,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowFrames.cs" />
-    <EmbeddedResource Include="Properties\GZSkinsX.Appx.Navigation.rd.xml" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Appx.NavigationRoot.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\CustomNavigationView.xaml">

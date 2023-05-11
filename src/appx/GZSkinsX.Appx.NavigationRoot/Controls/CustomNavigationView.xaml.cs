@@ -25,7 +25,7 @@ using Windows.UI.Xaml.Media;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.Appx.Navigation.Controls;
+namespace GZSkinsX.Appx.NavigationRoot.Controls;
 
 public sealed partial class CustomNavigationView : MUXC.NavigationView
 {
