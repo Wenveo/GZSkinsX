@@ -8,6 +8,8 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AccessCache\FutureAccessService.cs" />
+    <Compile Include="AccessCache\MostRecentlyUsedService.cs" />
     <Compile Include="Commands\CommandBarElementHelper.cs" />
     <Compile Include="Commands\CommandBarService.cs" />
     <Compile Include="Commands\CommandItemContext.cs" />
@@ -133,7 +135,33 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\**\GZSkinsX.Appx.*.csproj" Name="%(Filename)" />
+    <ProjectReference Include="..\GZSkinsX.Appx.Game\GZSkinsX.Appx.Game.csproj">
+      <Name>GZSkinsX.Appx.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.Home\GZSkinsX.Appx.Home.csproj">
+      <Name>GZSkinsX.Appx.Home</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.Mods\GZSkinsX.Appx.Mods.csproj">
+      <Name>GZSkinsX.Appx.Mods</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.MRT\GZSkinsX.Appx.MRT.csproj">
+      <Name>GZSkinsX.Appx.MRT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.NavigationRoot\GZSkinsX.Appx.NavigationRoot.csproj">
+      <Name>GZSkinsX.Appx.NavigationRoot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.Preload\GZSkinsX.Appx.Preload.csproj">
+      <Name>GZSkinsX.Appx.Preload</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.Settings\GZSkinsX.Appx.Settings.csproj">
+      <Name>GZSkinsX.Appx.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
+      <Name>GZSkinsX.Appx.StartUp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Appx.WindowManager\GZSkinsX.Appx.WindowManager.csproj">
+      <Name>GZSkinsX.Appx.WindowManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
   </ItemGroup>
   <ItemGroup>

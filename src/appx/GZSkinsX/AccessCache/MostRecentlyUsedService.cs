@@ -15,19 +15,20 @@ using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Settings;
 using GZSkinsX.DotNet.Diagnostics;
 
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace GZSkinsX.Appx.AccessCache;
+namespace GZSkinsX.AccessCache;
 
-/// <inheritdoc cref="IFutureAccessService"/>
-[Shared, Export(typeof(IFutureAccessService))]
-internal sealed class FutureAccessService : IFutureAccessService
+/// <inheritdoc cref="IMostRecentlyUsedService"/>
+[Shared, Export(typeof(IMostRecentlyUsedService))]
+internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
 {
     /// <summary>
     /// 表示当前设置节点的 <seealso cref="Guid"/> 字符串值
     /// </summary>
-    private const string THE_GUID = "CF1A680D-E800-47E1-ABCF-116D64170C40";
+    private const string THE_GUID = "6A50EFFD-185B-42FC-8509-14BE6EEC74EE";
 
     /// <summary>
     /// 用于存储本地数据的数据节点
@@ -35,24 +36,39 @@ internal sealed class FutureAccessService : IFutureAccessService
     private readonly ISettingsSection _settingsSection;
 
     /// <summary>
-    /// 内部的存储项访问列表定义
+    /// 内部的最近使用 (MRU) 列表定义
     /// </summary>
-    private readonly StorageItemAccessList _futureAccessList;
+    private readonly StorageItemMostRecentlyUsedList _mostRecentlyUsedList;
 
     /// <inheritdoc/>
-    public AccessListEntryView Entries => _futureAccessList.Entries;
+    public AccessListEntryView Entries => _mostRecentlyUsedList.Entries;
 
     /// <inheritdoc/>
-    public uint MaximumItemsAllowed => _futureAccessList.MaximumItemsAllowed;
+    public uint MaximumItemsAllowed => _mostRecentlyUsedList.MaximumItemsAllowed;
+
+    /// <inheritdoc/>
+    public event TypedEventHandler<IMostRecentlyUsedService, ItemRemovedEventArgs>? ItemRemoved;
 
     /// <summary>
-    /// 初始化 <see cref="FutureAccessService"/> 的新实例
+    /// 初始化 <see cref="MostRecentlyUsedService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public FutureAccessService(ISettingsService settingsService)
+    public MostRecentlyUsedService(ISettingsService settingsService)
     {
         _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
-        _futureAccessList = StorageApplicationPermissions.FutureAccessList;
+        _mostRecentlyUsedList = StorageApplicationPermissions.MostRecentlyUsedList;
+        _mostRecentlyUsedList.ItemRemoved += OnItemRemoved;
+    }
+
+    /// <summary>
+    /// 对接口中定义的事件 <seealso cref="IMostRecentlyUsedService.ItemRemoved"/> 进行代理通知
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    private void OnItemRemoved(StorageItemMostRecentlyUsedList sender, ItemRemovedEventArgs args)
+    {
+        // 传递当前服务对象，而不是 MRU 列表，以避免 MRU 列表在外部被使用
+        ItemRemoved?.Invoke(this, args);
     }
 
     /// <inheritdoc/>
@@ -71,12 +87,43 @@ internal sealed class FutureAccessService : IFutureAccessService
         var token = _settingsSection.Attribute<string>(name);
         if (string.IsNullOrEmpty(token))
         {
-            token = _futureAccessList.Add(storageItem, name);
+            token = _mostRecentlyUsedList.Add(storageItem, name);
             _settingsSection.Attribute(name, token);
         }
         else
         {
-            _futureAccessList.AddOrReplace(token, storageItem, name);
+            _mostRecentlyUsedList.AddOrReplace(token, storageItem, name);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="storageItem"></param>
+    /// <param name="name"></param>
+    /// <param name="visibility"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void Add(IStorageItem storageItem, string name, RecentStorageItemVisibility visibility)
+    {
+        if (storageItem is null)
+        {
+            throw new ArgumentNullException(nameof(storageItem));
+        }
+
+        if (string.IsNullOrEmpty(name))
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+
+        var token = _settingsSection.Attribute<string>(name);
+        if (string.IsNullOrEmpty(token))
+        {
+            token = _mostRecentlyUsedList.Add(storageItem, name, visibility);
+            _settingsSection.Attribute(name, token);
+        }
+        else
+        {
+            _mostRecentlyUsedList.AddOrReplace(token, storageItem, name, visibility);
         }
     }
 
@@ -88,13 +135,13 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new ArgumentNullException(nameof(item));
         }
 
-        return _futureAccessList.CheckAccess(item);
+        return _mostRecentlyUsedList.CheckAccess(item);
     }
 
     /// <inheritdoc/>
     public void Clear()
     {
-        _futureAccessList.Clear();
+        _mostRecentlyUsedList.Clear();
     }
 
     /// <inheritdoc/>
@@ -111,7 +158,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             return false;
         }
 
-        return _futureAccessList.ContainsItem(token);
+        return _mostRecentlyUsedList.ContainsItem(token);
     }
 
     /// <inheritdoc/>
@@ -129,7 +176,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new AccessCacheItemNotFoundException(name);
         }
 
-        return await _futureAccessList.GetFileAsync(token);
+        return await _mostRecentlyUsedList.GetFileAsync(token);
     }
 
     /// <inheritdoc/>
@@ -147,7 +194,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new AccessCacheItemNotFoundException(name);
         }
 
-        return await _futureAccessList.GetFileAsync(token, options);
+        return await _mostRecentlyUsedList.GetFileAsync(token, options);
     }
 
     /// <inheritdoc/>
@@ -165,7 +212,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new AccessCacheItemNotFoundException(name);
         }
 
-        return await _futureAccessList.GetFolderAsync(token);
+        return await _mostRecentlyUsedList.GetFolderAsync(token);
     }
 
     /// <inheritdoc/>
@@ -183,7 +230,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new AccessCacheItemNotFoundException(name);
         }
 
-        return await _futureAccessList.GetFolderAsync(token, options);
+        return await _mostRecentlyUsedList.GetFolderAsync(token, options);
     }
 
     /// <inheritdoc/>
@@ -201,7 +248,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new AccessCacheItemNotFoundException(name);
         }
 
-        return await _futureAccessList.GetItemAsync(token);
+        return await _mostRecentlyUsedList.GetItemAsync(token);
     }
 
     /// <inheritdoc/>
@@ -219,7 +266,7 @@ internal sealed class FutureAccessService : IFutureAccessService
             throw new AccessCacheItemNotFoundException(name);
         }
 
-        return await _futureAccessList.GetItemAsync(token, options);
+        return await _mostRecentlyUsedList.GetItemAsync(token, options);
     }
 
     /// <inheritdoc/>
@@ -233,7 +280,7 @@ internal sealed class FutureAccessService : IFutureAccessService
         var token = _settingsSection.Attribute<string>(name);
         if (token is not null)
         {
-            _futureAccessList.Remove(token);
+            _mostRecentlyUsedList.Remove(token);
         }
     }
 }
