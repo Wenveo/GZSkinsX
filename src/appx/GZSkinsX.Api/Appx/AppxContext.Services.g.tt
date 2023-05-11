@@ -22,7 +22,7 @@ public static partial class AppxContext
     var services = new List<string>()
     {
         "global::GZSkinsX.Api.AccessCache.IFutureAccessService",
-        "global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService",
+        "global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedItemService",
         "global::GZSkinsX.Api.Appx.IAppxWindow",
         "global::GZSkinsX.Api.Appx.IAppxTitleBar",
         "global::GZSkinsX.Api.Appx.IAppxTitleBarButton",

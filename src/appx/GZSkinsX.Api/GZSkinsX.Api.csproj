@@ -11,7 +11,7 @@
     <Compile Include="AccessCache\FutureAccessItemConstants.cs" />
     <Compile Include="AccessCache\IAccessCacheService.cs" />
     <Compile Include="AccessCache\IFutureAccessService.cs" />
-    <Compile Include="AccessCache\IMostRecentlyUsedService.cs" />
+    <Compile Include="AccessCache\IMostRecentlyUsedItemService.cs" />
     <Compile Include="Appx\AppxContext.cs" />
     <Compile Include="Appx\AppxContext.Services.g.cs">
       <AutoGen>True</AutoGen>

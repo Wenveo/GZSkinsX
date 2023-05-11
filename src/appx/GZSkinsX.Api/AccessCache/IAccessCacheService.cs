@@ -15,7 +15,7 @@ namespace GZSkinsX.Api.AccessCache;
 
 /// <summary>
 /// 表示对访问的存储项进行缓存管理的服务。该接口为一个通用基本接口，被用于 <seealso cref="IFutureAccessService"/>
-/// 和 <seealso cref="IMostRecentlyUsedService"/>，并且由子类型实现和导出。相反，这个接口则永远不会被实现并导出
+/// 和 <seealso cref="IMostRecentlyUsedItemService"/>，并且由子类型实现和导出。相反，这个接口则永远不会被实现并导出
 /// </summary>
 public interface IAccessCacheService
 {

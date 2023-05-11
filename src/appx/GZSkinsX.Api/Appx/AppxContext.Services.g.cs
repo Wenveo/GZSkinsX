@@ -22,11 +22,11 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedItemService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService MostRecentlyUsedService
+    public static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedItemService MostRecentlyUsedItemService
     {
-        get => CheckAccess(ref s_mostRecentlyUsedService);
+        get => CheckAccess(ref s_mostRecentlyUsedItemService);
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public static partial class AppxContext
     }
     
     private static global::GZSkinsX.Api.AccessCache.IFutureAccessService? s_futureAccessService;
-    private static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService? s_mostRecentlyUsedService;
+    private static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedItemService? s_mostRecentlyUsedItemService;
     private static global::GZSkinsX.Api.Appx.IAppxWindow? s_appxWindow;
     private static global::GZSkinsX.Api.Appx.IAppxTitleBar? s_appxTitleBar;
     private static global::GZSkinsX.Api.Appx.IAppxTitleBarButton? s_appxTitleBarButton;
