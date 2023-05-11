@@ -54,6 +54,30 @@ public static partial class AppxContext
     }
 
     /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Commands.ICommandBarService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.Commands.ICommandBarService CommandBarService
+    {
+        get => CheckAccess(ref s_commandBarService);
+    }
+
+    /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.ContextMenu.IContextMenuService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.ContextMenu.IContextMenuService ContextMenuService
+    {
+        get => CheckAccess(ref s_contextMenuService);
+    }
+
+    /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Game.IGameService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.Game.IGameService GameService
+    {
+        get => CheckAccess(ref s_gameService);
+    }
+
+    /// <summary>
     /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Logging.ILoggingService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Logging.ILoggingService LoggingService
@@ -67,6 +91,14 @@ public static partial class AppxContext
     public static global::GZSkinsX.Api.MRT.IMRTCoreService MRTCoreService
     {
         get => CheckAccess(ref s_mRTCoreService);
+    }
+
+    /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Navigation.INavigationViewFactory"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.Navigation.INavigationViewFactory NavigationViewFactory
+    {
+        get => CheckAccess(ref s_navigationViewFactory);
     }
 
     /// <summary>
@@ -94,6 +126,14 @@ public static partial class AppxContext
     }
 
     /// <summary>
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.WindowManager.IWindowManagerService"/> 对象实例
+    /// </summary>
+    public static global::GZSkinsX.Api.WindowManager.IWindowManagerService WindowManagerService
+    {
+        get => CheckAccess(ref s_windowManagerService);
+    }
+
+    /// <summary>
     /// 检查和获取指定导出类型的成员对象
     /// </summary>
     /// <typeparam name="T">需要获取对象导出类型</typeparam>
@@ -115,9 +155,14 @@ public static partial class AppxContext
     private static global::GZSkinsX.Api.Appx.IAppxWindow? s_appxWindow;
     private static global::GZSkinsX.Api.Appx.IAppxTitleBar? s_appxTitleBar;
     private static global::GZSkinsX.Api.Appx.IAppxTitleBarButton? s_appxTitleBarButton;
+    private static global::GZSkinsX.Api.Commands.ICommandBarService? s_commandBarService;
+    private static global::GZSkinsX.Api.ContextMenu.IContextMenuService? s_contextMenuService;
+    private static global::GZSkinsX.Api.Game.IGameService? s_gameService;
     private static global::GZSkinsX.Api.Logging.ILoggingService? s_loggingService;
     private static global::GZSkinsX.Api.MRT.IMRTCoreService? s_mRTCoreService;
+    private static global::GZSkinsX.Api.Navigation.INavigationViewFactory? s_navigationViewFactory;
     private static global::GZSkinsX.Api.Scripting.IServiceLocator? s_serviceLocator;
     private static global::GZSkinsX.Api.Settings.ISettingsService? s_settingsService;
     private static global::GZSkinsX.Api.Themes.IThemeService? s_themeService;
+    private static global::GZSkinsX.Api.WindowManager.IWindowManagerService? s_windowManagerService;
 }

@@ -26,11 +26,16 @@ public static partial class AppxContext
         "global::GZSkinsX.Api.Appx.IAppxWindow",
         "global::GZSkinsX.Api.Appx.IAppxTitleBar",
         "global::GZSkinsX.Api.Appx.IAppxTitleBarButton",
+        "global::GZSkinsX.Api.Commands.ICommandBarService",
+        "global::GZSkinsX.Api.ContextMenu.IContextMenuService",
+        "global::GZSkinsX.Api.Game.IGameService",
         "global::GZSkinsX.Api.Logging.ILoggingService",
         "global::GZSkinsX.Api.MRT.IMRTCoreService",
+        "global::GZSkinsX.Api.Navigation.INavigationViewFactory",
         "global::GZSkinsX.Api.Scripting.IServiceLocator",
         "global::GZSkinsX.Api.Settings.ISettingsService",
-        "global::GZSkinsX.Api.Themes.IThemeService"
+        "global::GZSkinsX.Api.Themes.IThemeService",
+        "global::GZSkinsX.Api.WindowManager.IWindowManagerService"
     };
 
     var shortNames = new List<string>(services.Count);
