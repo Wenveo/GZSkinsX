@@ -9,7 +9,7 @@ using System;
 
 using GZSkinsX.Api.WindowManager;
 
-namespace GZSkinsX.Appx.WindowManager;
+namespace GZSkinsX.WindowManager;
 
 /// <inheritdoc cref="IWindowFrameContext"/>
 internal sealed class WindowFrameContext : IWindowFrameContext

@@ -49,6 +49,8 @@
     <Compile Include="Themes\AutoThemeTitleBar.cs" />
     <Compile Include="Themes\ThemeService.cs" />
     <Compile Include="Themes\ThemeSettings.cs" />
+    <Compile Include="WindowManager\WindowFrameContext.cs" />
+    <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -156,9 +158,6 @@
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
       <Name>GZSkinsX.Appx.StartUp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.WindowManager\GZSkinsX.Appx.WindowManager.csproj">
-      <Name>GZSkinsX.Appx.WindowManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
   </ItemGroup>

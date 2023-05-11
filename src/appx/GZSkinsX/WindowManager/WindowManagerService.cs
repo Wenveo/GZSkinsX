@@ -18,7 +18,7 @@ using GZSkinsX.Api.WindowManager;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Appx.WindowManager;
+namespace GZSkinsX.WindowManager;
 
 /// <inheritdoc cref="IWindowManagerService"/>
 [Shared, Export(typeof(IWindowManagerService))]
