@@ -30,8 +30,6 @@ partial class StartUpClass
             yield return typeof(global::GZSkinsX.Appx.NavigationRoot.AppxNavigationRoot).Assembly;
             // GZSkinsX.Appx.Preload
             yield return typeof(global::GZSkinsX.Appx.Preload.AppxPreload).Assembly;
-            // GZSkinsX.Appx.Settings
-            yield return typeof(global::GZSkinsX.Appx.Settings.AppxSettings).Assembly;
             // GZSkinsX.Appx.StartUp
             yield return typeof(global::GZSkinsX.Appx.StartUp.AppxStartUp).Assembly;
             // GZSkinsX.Appx.WindowManager

@@ -44,6 +44,8 @@
     <Compile Include="Navigation\NavigationViewManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripting\ServiceLocator.cs" />
+    <Compile Include="Settings\SettingsSection.cs" />
+    <Compile Include="Settings\SettingsService.cs" />
     <Compile Include="Themes\AutoThemeTitleBar.cs" />
     <Compile Include="Themes\ThemeService.cs" />
     <Compile Include="Themes\ThemeSettings.cs" />
@@ -151,9 +153,6 @@
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.Preload\GZSkinsX.Appx.Preload.csproj">
       <Name>GZSkinsX.Appx.Preload</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.Settings\GZSkinsX.Appx.Settings.csproj">
-      <Name>GZSkinsX.Appx.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
       <Name>GZSkinsX.Appx.StartUp</Name>

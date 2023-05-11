@@ -13,7 +13,7 @@ using GZSkinsX.Api.Settings;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Appx.Settings;
+namespace GZSkinsX.Settings;
 
 /// <inheritdoc cref="ISettingsService"/>
 [Shared, Export(typeof(ISettingsService))]
