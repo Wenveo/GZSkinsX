@@ -13,7 +13,7 @@ using GZSkinsX.Api.MRT;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 
-namespace GZSkinsX.Appx.MRT;
+namespace GZSkinsX.MRT;
 
 /// <inheritdoc cref="IMRTCoreService"/>
 [Shared, Export(typeof(IMRTCoreService))]

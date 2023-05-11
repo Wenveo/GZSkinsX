@@ -36,6 +36,8 @@
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
+    <Compile Include="MRT\MRTCoreMap.cs" />
+    <Compile Include="MRT\MRTCoreService.cs" />
     <Compile Include="Navigation\NavigationGroupContext.cs" />
     <Compile Include="Navigation\NavigationItemContext.cs" />
     <Compile Include="Navigation\NavigationViewFactory.cs" />
@@ -143,9 +145,6 @@
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.Mods\GZSkinsX.Appx.Mods.csproj">
       <Name>GZSkinsX.Appx.Mods</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.MRT\GZSkinsX.Appx.MRT.csproj">
-      <Name>GZSkinsX.Appx.MRT</Name>
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.NavigationRoot\GZSkinsX.Appx.NavigationRoot.csproj">
       <Name>GZSkinsX.Appx.NavigationRoot</Name>

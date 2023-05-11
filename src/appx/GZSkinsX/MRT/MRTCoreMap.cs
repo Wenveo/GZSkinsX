@@ -14,7 +14,7 @@ using GZSkinsX.Api.MRT;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 
-namespace GZSkinsX.Appx.MRT;
+namespace GZSkinsX.MRT;
 
 /// <inheritdoc cref="IMRTCoreMap"/>
 internal sealed class MRTCoreMap : IMRTCoreMap
