@@ -12,7 +12,7 @@ using System.Composition;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Logging;
 
-namespace GZSkinsX.Appx.Game;
+namespace GZSkinsX.Game;
 
 /// <inheritdoc cref="IGameService"/>
 [Shared, Export(typeof(IGameService))]

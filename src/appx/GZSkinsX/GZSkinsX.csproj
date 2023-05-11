@@ -18,6 +18,9 @@
     <Compile Include="ContextMenu\ContextMenuItemContext.cs" />
     <Compile Include="ContextMenu\ContextMenuService.cs" />
     <Compile Include="ContextMenu\ContextMenuFlyoutHelper.cs" />
+    <Compile Include="Game\GameData.cs" />
+    <Compile Include="Game\GameService.cs" />
+    <Compile Include="Game\GameSettings.cs" />
     <Compile Include="Logging\LoggerImpl.cs" />
     <Compile Include="MainApp\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -134,9 +137,6 @@
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.Game\GZSkinsX.Appx.Game.csproj">
-      <Name>GZSkinsX.Appx.Game</Name>
     </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.Home\GZSkinsX.Appx.Home.csproj">
       <Name>GZSkinsX.Appx.Home</Name>

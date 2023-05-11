@@ -13,7 +13,7 @@ using System.Composition;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Settings;
 
-namespace GZSkinsX.Appx.Game;
+namespace GZSkinsX.Game;
 
 /// <summary>
 /// 表示用于存储游戏服务的基本数据配置
