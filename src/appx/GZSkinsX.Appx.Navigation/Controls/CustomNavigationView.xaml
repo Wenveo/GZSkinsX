@@ -25,6 +25,14 @@
         <Thickness x:Key="TopNavigationViewTopNavGridMargin">4, 0, 188, 0</Thickness>
         <XamlUICommand x:Name="SwitchThemeCommand" ExecuteRequested="OnSwitchTheme" />
     </muxc:NavigationView.Resources>
+    <muxc:NavigationView.PaneHeader>
+        <TextBlock
+            x:Uid="MainAppx_Title"
+            Margin="14,0,8,0"
+            VerticalAlignment="Center"
+            FontWeight="ExtraBold"
+            IsHitTestVisible="False" />
+    </muxc:NavigationView.PaneHeader>
     <muxc:NavigationView.PaneCustomContent>
         <Grid>
             <Grid.ColumnDefinitions>
