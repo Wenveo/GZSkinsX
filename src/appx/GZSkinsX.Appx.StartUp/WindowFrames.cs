@@ -22,9 +22,8 @@ internal sealed class ExportStartUpFrame : IWindowFrame
 
     public ExportStartUpFrame()
     {
-        var resolver = AppxContext.ServiceLocator;
-        _gameService = resolver.Resolve<IGameService>();
-        _windowManagerService = resolver.Resolve<IWindowManagerService>();
+        _gameService = AppxContext.Resolve<IGameService>();
+        _windowManagerService = AppxContext.Resolve<IWindowManagerService>();
     }
 
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)

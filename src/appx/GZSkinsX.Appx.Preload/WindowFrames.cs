@@ -32,9 +32,8 @@ internal sealed class ExportPreloadFrame : IWindowFrame
 
     public ExportPreloadFrame()
     {
-        var resolver = AppxContext.ServiceLocator;
         _loggingService = AppxContext.LoggingService;
-        _preloadSettings = resolver.Resolve<PreloadSettings>();
+        _preloadSettings = AppxContext.Resolve<PreloadSettings>();
 
         if (Debugger.IsAttached)
         {

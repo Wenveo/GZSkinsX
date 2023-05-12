@@ -62,7 +62,7 @@ public sealed partial class PreloadPage : Page
         var b = await CheckAccess();
         if (b)
         {
-            if (AppxContext.ServiceLocator.TryResolve<IWindowManagerService>(out var windowManagerService))
+            if (AppxContext.TryResolve<IWindowManagerService>(out var windowManagerService))
             {
                 windowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
             }

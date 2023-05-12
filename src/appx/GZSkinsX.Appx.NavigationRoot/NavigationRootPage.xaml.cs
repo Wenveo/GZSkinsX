@@ -28,8 +28,7 @@ public sealed partial class NavigationRootPage : Page
 
     static NavigationRootPage()
     {
-        var serviceLocator = AppxContext.ServiceLocator;
-        var navigationViewFactory = serviceLocator.Resolve<INavigationViewFactory>();
+        var navigationViewFactory = AppxContext.Resolve<INavigationViewFactory>();
         s_navigationViewManager = navigationViewFactory.CreateNavigationViewManager(
             NavigationConstants.NAVIGATIONROOT_NV_GUID,
             new CustomNavigationView());

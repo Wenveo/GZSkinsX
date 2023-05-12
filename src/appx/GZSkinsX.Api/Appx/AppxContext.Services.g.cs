@@ -102,14 +102,6 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Scripting.IServiceLocator"/> 对象实例
-    /// </summary>
-    public static global::GZSkinsX.Api.Scripting.IServiceLocator ServiceLocator
-    {
-        get => CheckAccess(ref s_serviceLocator);
-    }
-
-    /// <summary>
     /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Settings.ISettingsService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Settings.ISettingsService SettingsService
@@ -134,6 +126,28 @@ public static partial class AppxContext
     }
 
     /// <summary>
+    /// 从已加载的所有组件中获取导出的类型实例
+    /// </summary>
+    /// <typeparam name="T">需要获取的类型</typeparam>
+    /// <returns>返回 <typeparamref name="T"/> 的实例</returns>
+    public static T Resolve<T>() where T : class
+    => _compositionHost.GetExport<T>();
+
+    /// <summary>
+    /// 尝试从已加载的所有组件中获取导出的类型实例
+    /// </summary>
+    /// <typeparam name="T">ExportAttribute 中所声明的导出类型</typeparam>
+    /// <param name="value">已获取到的类型实例，但如果获取失败则会返回 default</param>
+    /// <returns>当获取成功时返回 true，否则返回 false</returns>
+    public static bool TryResolve<T>([global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value) where T : class
+    => _compositionHost.TryGetExport<T>(out value);
+
+    /// <summary>
+    /// 用于获取已导出的类型的组件容器
+    /// </summary>
+    private static global::System.Composition.Hosting.CompositionHost? _compositionHost;
+
+    /// <summary>
     /// 检查和获取指定导出类型的成员对象
     /// </summary>
     /// <typeparam name="T">需要获取对象导出类型</typeparam>
@@ -142,12 +156,12 @@ public static partial class AppxContext
     /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化，或找不到指定 <typeparamref name="T"/> 导出类型的对象时发生</exception>
     private static T CheckAccess<T>([global::System.Diagnostics.CodeAnalysis.NotNull] ref T? service) where T : class
     {
-        if (s_serviceLocator is null)
+        if (_compositionHost is null)
         {
             throw new global::System.InvalidOperationException("The main app is not initialized!");
         }
 
-        return service ??= s_serviceLocator.Resolve<T>();
+        return service ??= _compositionHost.GetExport<T>();
     }
     
     private static global::GZSkinsX.Api.AccessCache.IFutureAccessService? s_futureAccessService;
@@ -161,7 +175,6 @@ public static partial class AppxContext
     private static global::GZSkinsX.Api.Logging.ILoggingService? s_loggingService;
     private static global::GZSkinsX.Api.MRT.IMRTCoreService? s_mRTCoreService;
     private static global::GZSkinsX.Api.Navigation.INavigationViewFactory? s_navigationViewFactory;
-    private static global::GZSkinsX.Api.Scripting.IServiceLocator? s_serviceLocator;
     private static global::GZSkinsX.Api.Settings.ISettingsService? s_settingsService;
     private static global::GZSkinsX.Api.Themes.IThemeService? s_themeService;
     private static global::GZSkinsX.Api.WindowManager.IWindowManagerService? s_windowManagerService;

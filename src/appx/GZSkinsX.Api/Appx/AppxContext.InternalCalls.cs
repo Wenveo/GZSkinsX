@@ -6,9 +6,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Composition.Hosting;
 using System.Runtime.CompilerServices;
-
-using GZSkinsX.Api.Scripting;
 
 using Windows.UI.Xaml;
 
@@ -22,25 +21,25 @@ public static partial class AppxContext
     /// 初始化生命周期服务
     /// </summary>
     /// <param name="parmas">应用程序初始化的参数</param>
-    /// <param name="serviceLocator"><seealso cref="IServiceLocator"/> 对象的实例</param>
+    /// <param name="compositionHost"><seealso cref="CompositionHost"/> 对象的实例</param>
     /// <exception cref="ArgumentNullException"><paramref name="parmas"/> 或 <paramref name="serviceLocator"/> 的默认值为空</exception>
-    internal static void InitializeLifetimeService(ApplicationInitializationCallbackParams parmas, IServiceLocator serviceLocator)
+    internal static void InitializeLifetimeService(ApplicationInitializationCallbackParams parmas, CompositionHost compositionHost)
     {
         if (parmas is null)
         {
             throw new ArgumentNullException(nameof(parmas));
         }
 
-        if (serviceLocator is null)
+        if (compositionHost is null)
         {
-            throw new ArgumentNullException(nameof(serviceLocator));
+            throw new ArgumentNullException(nameof(compositionHost));
         }
 
-        if (s_serviceLocator is not null)
+        if (_compositionHost is not null)
         {
             throw new InvalidOperationException("The lifetime service has been initialized!");
         }
 
-        s_serviceLocator = serviceLocator;
+        _compositionHost = compositionHost;
     }
 }

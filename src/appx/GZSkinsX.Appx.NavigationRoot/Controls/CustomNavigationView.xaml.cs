@@ -156,7 +156,7 @@ public sealed partial class CustomNavigationView : MUXC.NavigationView
 
     private void OnSettingsInvoke(XamlUICommand sender, ExecuteRequestedEventArgs args)
     {
-        AppxContext.ServiceLocator.Resolve<IWindowManagerService>().NavigateTo(WindowFrameConstants.Preload_Guid);
+        AppxContext.Resolve<IWindowManagerService>().NavigateTo(WindowFrameConstants.Preload_Guid);
     }
 
     private void OnControlFInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)

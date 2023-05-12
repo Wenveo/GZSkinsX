@@ -37,11 +37,9 @@ public sealed partial class ShellViewControl : Grid
 
     private ShellViewControl()
     {
-        var serviceLocator = AppxContext.ServiceLocator;
-
-        _assetsExplorerService = (AssetsExplorerService)serviceLocator.Resolve<IAssetsExplorerService>();
-        _commandBarService = serviceLocator.Resolve<ICommandBarService>();
-        _shellViewSettings = serviceLocator.Resolve<ShellViewSettings>();
+        _assetsExplorerService = (AssetsExplorerService)AppxContext.Resolve<IAssetsExplorerService>();
+        _commandBarService = AppxContext.Resolve<ICommandBarService>();
+        _shellViewSettings = AppxContext.Resolve<ShellViewSettings>();
 
         InitializeComponent();
         InitializeUIObject();

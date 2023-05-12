@@ -66,8 +66,8 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
     {
         _mrtCoreService = AppxContext.MRTCoreService;
         _futureAccessService = AppxContext.FutureAccessService;
-        _gameService = AppxContext.ServiceLocator.Resolve<IGameService>();
-        _contextMenuService = AppxContext.ServiceLocator.Resolve<IContextMenuService>();
+        _gameService = AppxContext.Resolve<IGameService>();
+        _contextMenuService = AppxContext.Resolve<IContextMenuService>();
 
         _loading = new();
         _rootGrid = new();

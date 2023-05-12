@@ -37,13 +37,11 @@ public sealed partial class StartUpPage : Page
 
     public StartUpPage()
     {
-        var resolver = AppxContext.ServiceLocator;
+        _windowManagerService = AppxContext.Resolve<IWindowManagerService>();
+        _futureAccessService = AppxContext.Resolve<IFutureAccessService>();
+        _gameService = AppxContext.Resolve<IGameService>();
 
-        _windowManagerService = resolver.Resolve<IWindowManagerService>();
-        _futureAccessService = resolver.Resolve<IFutureAccessService>();
-        _gameService = resolver.Resolve<IGameService>();
-
-        var mrtCoreService = resolver.Resolve<IMRTCoreService>();
+        var mrtCoreService = AppxContext.Resolve<IMRTCoreService>();
         _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
 
         InitializeComponent();

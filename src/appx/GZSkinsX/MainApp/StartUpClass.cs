@@ -12,7 +12,6 @@ using System.Diagnostics;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.Scripting;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 
@@ -42,11 +41,6 @@ public sealed partial class StartUpClass
     internal static ExtensionService s_extensionService = null!;
 
     /// <summary>
-    /// 获取内部的 <see cref="IServiceLocator"/> 静态成员实例
-    /// </summary>
-    internal static IServiceLocator s_serviceLocator = null!;
-
-    /// <summary>
     /// 初始化 <see cref="StartUpClass"/> 的静态成员
     /// </summary>
     static StartUpClass()
@@ -72,8 +66,7 @@ public sealed partial class StartUpClass
     {
         await LoggerImpl.Shared.InitializeAsync();
 
-        s_serviceLocator = s_compositionHost.GetExport<IServiceLocator>();
-        AppxContext.InitializeLifetimeService(parms, s_serviceLocator);
+        AppxContext.InitializeLifetimeService(parms, s_compositionHost);
 
         s_extensionService = s_compositionHost.GetExport<ExtensionService>();
         s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
