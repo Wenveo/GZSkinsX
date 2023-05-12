@@ -79,8 +79,8 @@ internal sealed class AppxWindow : IAppxWindow
     {
         Activated -= OnAppLoaded;
 
-        _extensionService.NotifyExtensions(ExtensionEvent.AppLoaded);
-        _extensionService.LoadAutoLoaded(AutoLoadedType.AppLoaded);
+        _extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
+        _extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
         SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequested;
     }
 
@@ -107,7 +107,7 @@ internal sealed class AppxWindow : IAppxWindow
         if (!e.Handled)
         {
             // 优先通知事件，因为有可能会在关闭事件中输出日志
-            _extensionService.NotifyExtensions(ExtensionEvent.AppExit);
+            _extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppExit);
             Closed?.Invoke(this, new EventArgs());
 
             // 关闭日志输出流

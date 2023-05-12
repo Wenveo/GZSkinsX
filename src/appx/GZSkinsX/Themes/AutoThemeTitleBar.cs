@@ -17,9 +17,9 @@ using Windows.UI.Xaml;
 
 namespace GZSkinsX.Themes;
 
-[Shared, ExportAutoLoaded]
-[AutoLoadedMetadata(LoadType = AutoLoadedType.AppLoaded)]
-internal sealed class AutoThemeTitleBar : IAutoLoaded
+[Shared, ExportAdvanceExtension]
+[AdvanceExtensionMetadata(Trigger = AdvanceExtensionTrigger.AppLoaded)]
+internal sealed class AutoThemeTitleBar : IAdvanceExtension
 {
     private readonly IAppxTitleBarButton _appxTitleBarButton;
     private readonly IThemeService _themeService;

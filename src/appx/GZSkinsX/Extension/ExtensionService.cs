@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Logging;
 
@@ -18,20 +19,20 @@ using Windows.UI.Xaml;
 namespace GZSkinsX.Extension;
 
 /// <summary>
-/// 应用程序扩展服务，负责加载和通知已加载的扩展
+/// 应用程序扩展服务，负责加载和通知已枚举的扩展
 /// </summary>
 [Shared, Export]
 internal sealed class ExtensionService
 {
     /// <summary>
-    /// 自动加载的组件集
+    /// 存放已枚举的先行扩展的集合
     /// </summary>
-    private readonly Lazy<IAutoLoaded, AutoLoadedMetadataAttribute>[] _mefAutoLoaded;
+    private readonly Lazy<IAdvanceExtension, AdvanceExtensionMetadataAttribute>[] _mefAdvanceExtensions;
 
     /// <summary>
-    /// 基本组件扩展集
+    /// 存放已枚举的通用扩展的集合
     /// </summary>
-    private readonly Lazy<IExtension, ExtensionMetadataAttribute>[] _extensions;
+    private readonly Lazy<IUniversalExtension, UniversalExtensionMetadataAttribute>[] _mefUniversalExtensions;
 
     /// <summary>
     /// 用于记录日志的日志服务
@@ -39,13 +40,13 @@ internal sealed class ExtensionService
     private readonly ILoggingService _loggingService;
 
     /// <summary>
-    /// 一个用于获取所有扩展实例的迭代器
+    /// 获取所有通用扩展的实例
     /// </summary>
-    public IEnumerable<IExtension> Extensions
+    public IEnumerable<IUniversalExtension> Extensions
     {
         get
         {
-            foreach (var item in _extensions)
+            foreach (var item in _mefUniversalExtensions)
             {
                 yield return item.Value;
             }
@@ -55,28 +56,25 @@ internal sealed class ExtensionService
     /// <summary>
     /// 初始化 <see cref="ExtensionService"/> 的新实例
     /// </summary>
-    /// <param name="mefAutoLoaded">可自动加载的组件集合</param>
-    /// <param name="extensions">应用程序扩展集合</param>
     [ImportingConstructor]
     public ExtensionService(
-        [ImportMany] IEnumerable<Lazy<IAutoLoaded, AutoLoadedMetadataAttribute>> mefAutoLoaded,
-        [ImportMany] IEnumerable<Lazy<IExtension, ExtensionMetadataAttribute>> extensions,
-        ILoggingService loggingService)
+        [ImportMany] IEnumerable<Lazy<IAdvanceExtension, AdvanceExtensionMetadataAttribute>> mefAdvanceExtensions,
+        [ImportMany] IEnumerable<Lazy<IUniversalExtension, UniversalExtensionMetadataAttribute>> mefUniversalExtensions)
     {
-        _mefAutoLoaded = mefAutoLoaded.OrderBy(a => a.Metadata.Order).ToArray();
-        _extensions = extensions.OrderBy(a => a.Metadata.Order).ToArray();
+        _mefAdvanceExtensions = mefAdvanceExtensions.OrderBy(a => a.Metadata.Order).ToArray();
+        _mefUniversalExtensions = mefUniversalExtensions.OrderBy(a => a.Metadata.Order).ToArray();
 
-        _loggingService = loggingService;
+        _loggingService = AppxContext.LoggingService;
         _loggingService.LogAlways("ExtensionService: Initialized successfully.");
     }
 
     /// <summary>
-    /// 获取所有扩展组件中的 <see cref="ResourceDictionary"/> 
+    /// 获取所有通用扩展中声明的资源字典的集合
     /// </summary>
     /// <returns></returns>
     public IEnumerable<ResourceDictionary> GetMergedResourceDictionaries()
     {
-        foreach (var extension in _extensions)
+        foreach (var extension in _mefUniversalExtensions)
         {
             var value = extension.Value;
             foreach (var rsrc in value.MergedResourceDictionaries)
@@ -89,39 +87,33 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// 筛选并加载指定 '加载类型' 的组件实例
+    /// 通过筛选指定触发类型的先行扩展进行加载
     /// </summary>
-    /// <param name="loadType">目标组件加载类型</param>
-    public void LoadAutoLoaded(AutoLoadedType loadType)
+    /// <param name="trigger">指定的触发类型</param>
+    public void LoadAdvanceExtensions(AdvanceExtensionTrigger trigger)
     {
-        foreach (var extension in _mefAutoLoaded)
+        foreach (var extension in _mefAdvanceExtensions)
         {
-            if (extension.Metadata.LoadType == loadType)
+            if (extension.Metadata.Trigger == trigger)
             {
                 _ = extension.Value;
             }
         }
 
-        _loggingService.LogAlways($"ExtensionService: Load all AutoLoaded of type '{loadType}'.");
+        _loggingService.LogAlways($"ExtensionService: Load all AdvanceExtension of type '{trigger}'.");
     }
 
     /// <summary>
-    /// 对应用程序扩展组件进行事件通知
+    /// 对所有的通用扩展进行事件通知
     /// </summary>
     /// <param name="eventType">需要通知的事件类型</param>
-    public void NotifyExtensions(ExtensionEvent eventType)
+    public void NotifyUniversalExtensions(UniversalExtensionEvent eventType)
     {
-        foreach (var extension in _extensions)
+        foreach (var extension in _mefUniversalExtensions)
         {
             extension.Value.OnEvent(eventType);
         }
 
-        _loggingService.LogAlways($"ExtensionService: Notify event '{eventType}' for all extensions.");
-    }
-
-    /// <inheritdoc/>
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(_mefAutoLoaded, _extensions);
+        _loggingService.LogAlways($"ExtensionService: Notify event '{eventType}' for all universal extensions.");
     }
 }

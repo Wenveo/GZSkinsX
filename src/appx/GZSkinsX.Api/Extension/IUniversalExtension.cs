@@ -10,22 +10,22 @@ using System.Collections.Generic;
 namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 应用程序扩展接口，所有的 "应用程序扩展" 都继承于此
+/// 应用程序的通用扩展接口，所有的 "应用程序扩展" 都继承于此
 /// </summary>
-public interface IExtension
+public interface IUniversalExtension
 {
     /// <summary>
-    /// 应用程序扩展的名称
+    /// 表示该通用扩展的名称
     /// </summary>
     string Name { get; }
 
     /// <summary>
-    /// 应用程序扩展的简短描述
+    /// 表示该通用扩展的简短描述
     /// </summary>
     string ShortDescription { get; }
 
     /// <summary>
-    /// 应用程序扩展的版权信息
+    /// 表示该通用扩展的版权信息
     /// </summary>
     string Copyright { get; }
 
@@ -35,8 +35,8 @@ public interface IExtension
     IEnumerable<string> MergedResourceDictionaries { get; }
 
     /// <summary>
-    /// 应用程序扩展事件
+    /// 表示该通用扩展触发的事件
     /// </summary>
     /// <param name="e">触发的事件类型</param>
-    void OnEvent(ExtensionEvent e);
+    void OnEvent(UniversalExtensionEvent e);
 }

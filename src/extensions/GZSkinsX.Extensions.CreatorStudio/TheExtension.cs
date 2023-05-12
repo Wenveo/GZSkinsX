@@ -13,8 +13,8 @@ using GZSkinsX.Api.Extension;
 
 namespace GZSkinsX.Extensions.CreatorStudio;
 
-[Shared, ExportExtension, ExtensionMetadata]
-public class TheExtension : IExtension
+[Shared, ExportUniversalExtension, UniversalExtensionMetadata]
+public class TheExtension : IUniversalExtension
 {
     public string Name => "Creator Studio";
 
@@ -31,7 +31,7 @@ public class TheExtension : IExtension
         }
     }
 
-    public void OnEvent(ExtensionEvent e)
+    public void OnEvent(UniversalExtensionEvent e)
     {
 
     }

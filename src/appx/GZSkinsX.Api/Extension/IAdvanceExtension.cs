@@ -8,8 +8,9 @@
 namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 使用该接口表明为可自动加载的扩展
+/// 使用该接口表明为先行扩展
 /// </summary>
-public interface IAutoLoaded
+public interface IAdvanceExtension
 {
+
 }

@@ -72,14 +72,14 @@ public sealed partial class StartUpClass
     {
         await LoggerImpl.Shared.InitializeAsync();
 
-        s_extensionService = s_compositionHost.GetExport<ExtensionService>();
         s_serviceLocator = s_compositionHost.GetExport<IServiceLocator>();
         AppxContext.InitializeLifetimeService(parms, s_serviceLocator);
 
-        s_extensionService.LoadAutoLoaded(AutoLoadedType.BeforeExtensions);
-        s_extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensions);
-        s_extensionService.NotifyExtensions(ExtensionEvent.Loaded);
-        s_extensionService.LoadAutoLoaded(AutoLoadedType.AfterExtensionsLoaded);
+        s_extensionService = s_compositionHost.GetExport<ExtensionService>();
+        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
+        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
+        s_extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
+        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
     }
 }
 #endif

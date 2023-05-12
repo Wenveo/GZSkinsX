@@ -8,20 +8,27 @@
 namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 应用程序扩展触发的事件类型
+/// 先行扩展的触发类型
 /// </summary>
-public enum ExtensionEvent
+public enum AdvanceExtensionTrigger
 {
     /// <summary>
-    /// 当扩展被加载时发生
+    /// 在加载通用扩展之前
     /// </summary>
-    Loaded,
+    BeforeUniversalExtensions,
+
     /// <summary>
-    /// 当应用加载时发生
+    /// 在加载完通用扩展之后
     /// </summary>
-    AppLoaded,
+    AfterUniversalExtensions,
+
     /// <summary>
-    /// 当应用退出时发生
+    /// 在触发通用扩展的 <see cref="UniversalExtensionEvent.Loaded"/> 事件之后
     /// </summary>
-    AppExit
+    AfterUniversalExtensionsLoaded,
+
+    /// <summary>
+    /// 在应用程序加载时
+    /// </summary>
+    AppLoaded
 }

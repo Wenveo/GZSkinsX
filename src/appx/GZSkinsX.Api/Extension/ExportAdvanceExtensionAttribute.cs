@@ -11,14 +11,14 @@ using System.Composition;
 namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 声明并导出为应用程序扩展
+/// 声明目标类以 <see cref="IAdvanceExtension"/> 类型导出
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportExtensionAttribute : ExportAttribute
+public sealed class ExportAdvanceExtensionAttribute : ExportAttribute
 {
     /// <summary>
-    /// 初始化 <see cref="ExportExtensionAttribute"/> 的新实例，并以 <see cref="IExtension"/> 类型导出
+    /// 初始化 <see cref="ExportAdvanceExtensionAttribute"/> 的新实例，并以 <see cref="IAdvanceExtension"/> 类型导出
     /// </summary>
-    public ExportExtensionAttribute()
-        : base(typeof(IExtension)) { }
+    public ExportAdvanceExtensionAttribute()
+        : base(typeof(IAdvanceExtension)) { }
 }

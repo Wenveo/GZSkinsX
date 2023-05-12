@@ -5,20 +5,25 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
-using System.Composition;
-
 namespace GZSkinsX.Api.Extension;
 
 /// <summary>
-/// 声明并导出为自动加载的扩展
+/// 通用扩展触发的事件类型
 /// </summary>
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportAutoLoadedAttribute : ExportAttribute
+public enum UniversalExtensionEvent
 {
     /// <summary>
-    /// 初始化 <see cref="ExportAutoLoadedAttribute"/> 的新实例，并以 <see cref="IAutoLoaded"/> 类型导出
+    /// 当扩展被加载时发生
     /// </summary>
-    public ExportAutoLoadedAttribute()
-        : base(typeof(IAutoLoaded)) { }
+    Loaded,
+
+    /// <summary>
+    /// 当应用加载时发生
+    /// </summary>
+    AppLoaded,
+
+    /// <summary>
+    /// 当应用退出时发生
+    /// </summary>
+    AppExit
 }
