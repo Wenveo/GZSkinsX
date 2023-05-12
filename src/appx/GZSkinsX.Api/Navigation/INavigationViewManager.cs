@@ -9,11 +9,8 @@
 
 using System;
 
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
-using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.Navigation;
 
@@ -33,14 +30,9 @@ public interface INavigationViewManager
     bool CanGoForward { get; }
 
     /// <summary>
-    /// 表示导航视图的 UI 元素实例
+    /// 表示该 <see cref="INavigationViewManager"/> 中的 UI 对象
     /// </summary>
-    MUXC.NavigationView NavigationView { get; }
-
-    /// <summary>
-    /// 表示为 <see cref="Frame"/> 的 UI 元素实例
-    /// </summary>
-    Frame RootFrame { get; }
+    object UIObject { get; }
 
     /// <summary>
     /// 在导航至目标页面后所触发的事件

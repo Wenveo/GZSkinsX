@@ -56,10 +56,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
     public bool CanGoForward => _rootFrame.CanGoForward;
 
     /// <inheritdoc/>
-    public MUXC.NavigationView NavigationView => _navigationView;
-
-    /// <inheritdoc/>
-    public Frame RootFrame => _rootFrame;
+    public object UIObject => _navigationView;
 
     /// <inheritdoc/>
     public event NavigatedEventHandler? Navigated;
@@ -119,35 +116,29 @@ internal sealed class NavigationViewManager : INavigationViewManager
     }
 
     /// <summary>
-    /// 
+    /// 在导航视图中枚举与指定的 <see cref="Guid"/> 所匹配的项
     /// </summary>
-    /// <param name="items"></param>
-    /// <param name="guid"></param>
-    /// <returns></returns>
-    private MUXC.NavigationViewItem? FindSubNavItem(IEnumerable<object> items, ref Guid guid)
-    {
-        foreach (var item in items.OfType<MUXC.NavigationViewItem>())
-        {
-            if (item.Tag is Guid itemGuid && itemGuid == guid)
-            {
-                return item;
-            }
-
-            var subItem = FindSubNavItem(item.MenuItems, ref guid);
-            if (subItem is not null)
-                return subItem;
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="guid"></param>
-    /// <returns></returns>
+    /// <param name="guid">用于匹配的 <see cref="Guid"/> 值</param>
+    /// <returns>返回查找到的结果，如果未找到相匹配的内容则返回 <see cref="null"/></returns>
     private MUXC.NavigationViewItem? FindNavItem(ref Guid guid)
     {
+        static MUXC.NavigationViewItem? FindSubNavItem(IEnumerable<object> items, ref Guid guid)
+        {
+            foreach (var item in items.OfType<MUXC.NavigationViewItem>())
+            {
+                if (item.Tag is Guid itemGuid && itemGuid == guid)
+                {
+                    return item;
+                }
+
+                var subItem = FindSubNavItem(item.MenuItems, ref guid);
+                if (subItem is not null)
+                    return subItem;
+            }
+
+            return null;
+        }
+
         return FindSubNavItem(_navigationView.MenuItems, ref guid) ?? FindSubNavItem(_navigationView.FooterMenuItems, ref guid);
     }
 
