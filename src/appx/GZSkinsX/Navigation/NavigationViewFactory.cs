@@ -153,7 +153,10 @@ internal sealed class NavigationViewFactory : INavigationViewFactory
             var container = navigationView.MenuItems;
             foreach (var group in itemGroups.Values.Select(group => group.Items.Where(item => item.Metadata.Placement != NavigationItemPlacement.Footer)))
             {
-                if (needSeparator && container.Count > 0)
+                if (!group.Any())
+                    continue;
+
+                if (needSeparator)
                     container.Add(new MUXC.NavigationViewItemSeparator());
                 else
                     needSeparator = true;
@@ -166,7 +169,10 @@ internal sealed class NavigationViewFactory : INavigationViewFactory
             container = navigationView.FooterMenuItems;
             foreach (var group in itemGroups.Values.Select(group => group.Items.Where(item => item.Metadata.Placement == NavigationItemPlacement.Footer)))
             {
-                if (needSeparator && container.Count > 0)
+                if (!group.Any())
+                    continue;
+
+                if (needSeparator)
                     container.Add(new MUXC.NavigationViewItemSeparator());
                 else
                     needSeparator = true;
