@@ -42,7 +42,7 @@ public sealed partial class NavigationRootPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        contentPresenter.Content = s_navigationViewManager.NavigationView;
+        contentPresenter.Content = s_navigationViewManager.UIObject;
         base.OnNavigatedTo(e);
     }
 
