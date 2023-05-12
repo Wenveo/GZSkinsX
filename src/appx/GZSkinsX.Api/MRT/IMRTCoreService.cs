@@ -27,7 +27,6 @@ public interface IMRTCoreService
     /// <param name="files">要添加的包资源索引 (PRI) 文件</param>
     void LoadPriFiles(IEnumerable<IStorageFile> files);
 
-
     /// <summary>
     /// 卸载一个或多个包资源索引 (PRI) 文件
     /// </summary>
