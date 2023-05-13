@@ -17,7 +17,7 @@ namespace GZSkinsX.Extensions.CreatorStudio.Shell;
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_VIEW, Order = 0d)]
-internal sealed class ShowOrHideAssetsExplorerCommand : CommandToggleButtonBase
+internal sealed class ShowOrHideAssetsExplorerCommand : CommandToggleButtonVM
 {
     public ShowOrHideAssetsExplorerCommand()
     {
@@ -26,18 +26,15 @@ internal sealed class ShowOrHideAssetsExplorerCommand : CommandToggleButtonBase
         ShortcutKey = new(VirtualKey.E, VirtualKeyModifiers.Control);
     }
 
-    public override bool IsChecked()
-    {
-        return ShellViewControl.Instance.AssetsExplorerIsVisible;
-    }
-
     public override void OnChecked(object sender, RoutedEventArgs e)
     {
+        base.OnChecked(sender, e);
         ShellViewControl.Instance.ShowOrHideAssetsExplorer(true);
     }
 
     public override void OnUnchecked(object sender, RoutedEventArgs e)
     {
+        base.OnUnchecked(sender, e);
         ShellViewControl.Instance.ShowOrHideAssetsExplorer(false);
     }
 }

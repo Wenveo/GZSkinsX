@@ -17,7 +17,7 @@ namespace GZSkinsX.Api.Commands;
 public abstract class CommandToggleButtonBase : CommandButtonBase, ICommandToggleButton
 {
     /// <inheritdoc/>
-    public virtual bool IsChecked() => false;
+    public virtual bool IsChecked { get; protected set; }
 
     /// <inheritdoc/>
     public virtual void OnChecked(object sender, RoutedEventArgs e) { }

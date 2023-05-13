@@ -10,10 +10,12 @@
   <ItemGroup>
     <Compile Include="AccessCache\FutureAccessService.cs" />
     <Compile Include="AccessCache\MostRecentlyUsedItemService.cs" />
-    <Compile Include="Commands\CommandBarElementHelper.cs" />
     <Compile Include="Commands\CommandBarService.cs" />
     <Compile Include="Commands\CommandItemContext.cs" />
     <Compile Include="Commands\CommandItemGroupContext.cs" />
+    <Compile Include="Commands\Impl\CommandButtonImpl.cs" />
+    <Compile Include="Commands\Impl\CommandObjectImpl.cs" />
+    <Compile Include="Commands\Impl\CommandToggleButtonImpl.cs" />
     <Compile Include="ContextMenu\ContextItemGroupContext.cs" />
     <Compile Include="ContextMenu\ContextMenuItemContext.cs" />
     <Compile Include="ContextMenu\ContextMenuService.cs" />
@@ -165,6 +167,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tabs\" />
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />

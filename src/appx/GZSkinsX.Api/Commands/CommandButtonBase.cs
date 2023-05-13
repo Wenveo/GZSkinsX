@@ -24,16 +24,16 @@ public abstract class CommandButtonBase : ICommandButton
     public virtual IconElement? Icon { get; protected set; }
 
     /// <inheritdoc/>
+    public virtual bool IsEnabled { get; protected set; } = true;
+
+    /// <inheritdoc/>
+    public virtual bool IsVisible { get; protected set; } = true;
+
+    /// <inheritdoc/>
     public virtual CommandShortcutKey? ShortcutKey { get; protected set; }
 
     /// <inheritdoc/>
     public virtual object? ToolTip { get; protected set; }
-
-    /// <inheritdoc/>
-    public virtual bool IsEnabled() => true;
-
-    /// <inheritdoc/>
-    public virtual bool IsVisible() => true;
 
     /// <inheritdoc/>
     public virtual void OnClick(object sender, RoutedEventArgs e) { }

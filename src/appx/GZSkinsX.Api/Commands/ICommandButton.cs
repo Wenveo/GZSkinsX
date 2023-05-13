@@ -28,6 +28,16 @@ public interface ICommandButton : ICommandItem
     IconElement? Icon { get; }
 
     /// <summary>
+    /// 表示是否启用该 UI 元素
+    /// </summary>
+    bool IsEnabled { get; }
+
+    /// <summary>
+    /// 表示该 UI 元素是否可见
+    /// </summary>
+    bool IsVisible { get; }
+
+    /// <summary>
     /// 表示该命令项的快捷键
     /// </summary>
     CommandShortcutKey? ShortcutKey { get; }
@@ -36,18 +46,6 @@ public interface ICommandButton : ICommandItem
     /// 表示该命令项的工具提示
     /// </summary>
     object? ToolTip { get; }
-
-    /// <summary>
-    /// 表示是否启用该 UI 元素
-    /// </summary>
-    /// <returns>如果返回 true 则表示启用 UI 元素，否则将表示禁用此 UI 元素</returns>
-    bool IsEnabled();
-
-    /// <summary>
-    /// 表示该 UI 元素是否可见
-    /// </summary>
-    /// <returns>如果返回 true 则表示可见，否则将表示不可见</returns>
-    bool IsVisible();
 
     /// <summary>
     /// 表示按钮的默认点击行为

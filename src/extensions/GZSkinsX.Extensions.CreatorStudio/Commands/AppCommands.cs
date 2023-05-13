@@ -9,6 +9,7 @@
 
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
 
@@ -65,21 +66,25 @@ internal sealed class NewCommand : CommandObjectBase
     }
 }
 
-[Shared, ExportCommandItem]
+[Shared, ExportCommandItem, Export]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
-internal sealed class OpenFileCommand : CommandButtonBase
+internal sealed class OpenFileCommand : CommandButtonVM
 {
-    public static int s_count;
+    public static OpenFileCommand s_instance = null!;
+
+    public int Count { get; set; }
 
     public OpenFileCommand()
     {
         DisplayName = "Open File";
         Icon = new SegoeFluentIcon { Glyph = "\uE197" };
+
+        s_instance = this;
     }
 
-    public override bool IsEnabled()
+    public void UpdateState()
     {
-        return s_count % 2 == 0;
+        IsEnabled = Count % 2 == 0;
     }
 }
 
@@ -95,7 +100,8 @@ internal sealed class SaveFileCommand : CommandButtonBase
 
     public override void OnClick(object sender, RoutedEventArgs e)
     {
-        OpenFileCommand.s_count++;
+        OpenFileCommand.s_instance.Count++;
+        OpenFileCommand.s_instance.UpdateState();
     }
 }
 
@@ -111,7 +117,7 @@ internal sealed class SaveAsFileCommand : CommandButtonBase
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0, Placement = CommandPlacement.Secondary)]
 internal sealed class UndoCommand : CommandButtonBase
 {
     public UndoCommand()
@@ -122,7 +128,7 @@ internal sealed class UndoCommand : CommandButtonBase
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1, Placement = CommandPlacement.Secondary)]
 internal sealed class RedoCommand : CommandButtonBase
 {
     public RedoCommand()

@@ -19,8 +19,7 @@ public interface ICommandToggleButton : ICommandButton
     /// <summary>
     /// 表示该元素是否为选中的状态
     /// </summary>
-    /// <returns>如果返回 true 则表示为选中状态，否则将表示为未选中的状态</returns>
-    bool IsChecked();
+    bool IsChecked { get; }
 
     /// <summary>
     /// 表示在切换至选中状态中的行为
