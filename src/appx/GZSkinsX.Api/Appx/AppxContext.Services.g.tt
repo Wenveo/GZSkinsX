@@ -67,7 +67,12 @@ public static partial class AppxContext
     /// <typeparam name="T">需要获取的类型</typeparam>
     /// <returns>返回 <typeparamref name="T"/> 的实例</returns>
     public static T Resolve<T>() where T : class
-    => _compositionHost.GetExport<T>();
+    {
+        if (_compositionHost is null)
+            throw new global::System.InvalidOperationException();
+
+        return _compositionHost.GetExport<T>();
+    }
 
     /// <summary>
     /// 尝试从已加载的所有组件中获取导出的类型实例
@@ -76,7 +81,12 @@ public static partial class AppxContext
     /// <param name="value">已获取到的类型实例，但如果获取失败则会返回 default</param>
     /// <returns>当获取成功时返回 true，否则返回 false</returns>
     public static bool TryResolve<T>([global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value) where T : class
-    => _compositionHost.TryGetExport<T>(out value);
+    {
+        if (_compositionHost is null)
+            throw new global::System.InvalidOperationException();
+
+        return _compositionHost.TryGetExport<T>(out value);
+    }
 
     /// <summary>
     /// 用于获取已导出的类型的组件容器
