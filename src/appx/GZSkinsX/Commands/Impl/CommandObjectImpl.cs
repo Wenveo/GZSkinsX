@@ -29,15 +29,23 @@ internal sealed class CommandObjectImpl
 
         _appBarElementContainer = new AppBarElementContainer
         {
-            Content = _commandObject.UIObject,
             VerticalContentAlignment = VerticalAlignment.Center
         };
+
+        _appBarElementContainer.Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        _appBarElementContainer.Loaded -= OnLoaded;
 
         var notifyPropertyChanged = _commandObject as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
         {
             notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
         }
+
+        _appBarElementContainer.Content = _commandObject.UIObject;
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

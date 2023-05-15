@@ -36,6 +36,13 @@ internal sealed class CommandToggleButtonImpl
         _appBarToggleButton.Checked += _commandToggleButton.OnChecked;
         _appBarToggleButton.Unchecked += _commandToggleButton.OnUnchecked;
 
+        _appBarToggleButton.Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    {
+        _appBarToggleButton.Loaded -= OnLoaded;
+
         var notifyPropertyChanged = _commandToggleButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
         {
