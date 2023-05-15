@@ -8,7 +8,6 @@
 #nullable enable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
@@ -16,10 +15,10 @@ using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Api.Tabs;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Uwp.Composition;
 
 using Microsoft.UI.Xaml.Controls;
 
+using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -38,8 +37,6 @@ public sealed partial class ShellViewControl : Grid
     private readonly AssetsExplorerService _assetsExplorerService;
     private readonly ICommandBarService _commandBarService;
     private readonly ShellViewSettings _shellViewSettings;
-    private readonly ITabViewService _tabViewService;
-    private readonly TabView _customTabView;
     private readonly ITabViewManager _tabViewManager;
 
     public bool AssetsExplorerIsVisible => AssetsExplorerHost.Visibility == Visibility.Visible;
@@ -49,18 +46,12 @@ public sealed partial class ShellViewControl : Grid
         _assetsExplorerService = (AssetsExplorerService)AppxContext.Resolve<IAssetsExplorerService>();
         _commandBarService = AppxContext.Resolve<ICommandBarService>();
         _shellViewSettings = AppxContext.Resolve<ShellViewSettings>();
-        _tabViewService = AppxContext.Resolve<ITabViewService>();
 
-        _customTabView = new TabView
-        {
-            VerticalAlignment = VerticalAlignment.Stretch,
-            TabWidthMode = TabViewWidthMode.Equal,
-            IsAddTabButtonVisible = false
-        };
+        var tabViewService = AppxContext.Resolve<ITabViewService>();
+        _tabViewManager = tabViewService.CreateTabViewManager(
+            new TabViewManagerOptions("B0783923-1256-4D56-8286-2F37BF108EE7"));
 
-        _customTabView.TabItemsChanged += OnTabItemsChanged;
-        _tabViewManager = _tabViewService.CreateTabViewManager(
-            new TabViewManagerOptions("B0783923-1256-4D56-8286-2F37BF108EE7"), _customTabView);
+        ((TabView)_tabViewManager.UIObject).TabItemsChanged += OnTabItemsChanged;
 
         InitializeComponent();
         InitializeUIObject();
@@ -92,14 +83,14 @@ public sealed partial class ShellViewControl : Grid
         _tabViewManager.Add(new TestTabContent("CCC.txt"));
     }
 
-    private void OnTabItemsChanged(Microsoft.UI.Xaml.Controls.TabView sender, Windows.Foundation.Collections.IVectorChangedEventArgs args)
+    private void OnTabItemsChanged(TabView sender, IVectorChangedEventArgs args)
     {
         UpdateTabVisible();
     }
 
     private void UpdateTabVisible()
     {
-        if (_customTabView.TabItems.Count > 0)
+        if (((TabView)_tabViewManager.UIObject).TabItems.Count > 0)
         {
             DocumentTabHost.Visibility = Visibility.Visible;
             DocumentTabBackgrondMask.Visibility = Visibility.Collapsed;

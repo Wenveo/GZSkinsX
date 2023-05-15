@@ -16,6 +16,7 @@ using GZSkinsX.Api.Tabs;
 using Microsoft.UI.Xaml.Controls;
 
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 
 namespace GZSkinsX.Tabs;
 
@@ -35,8 +36,10 @@ internal sealed class TabViewService : ITabViewService
     {
         return new TabView
         {
+            IsAddTabButtonVisible = false,
             TabWidthMode = TabViewWidthMode.Equal,
-            VerticalAlignment = VerticalAlignment.Stretch
+            VerticalAlignment = VerticalAlignment.Stretch,
+            KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden
         };
     }
 
