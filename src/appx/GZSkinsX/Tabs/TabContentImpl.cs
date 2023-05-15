@@ -42,6 +42,15 @@ internal sealed class TabContentImpl
 
         if (_owner._options.TabViewItemStyle is not null)
             _tabViewItem.Style = _owner._options.TabViewItemStyle;
+
+        _tabViewItem.Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    {
+        _tabViewItem.Loaded -= OnLoaded;
+
+        UpdateUIState();
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -144,8 +153,6 @@ internal sealed class TabContentImpl
         }
 
         _tabContent.OnAdded();
-
-        UpdateUIState();
     }
 
     internal void InternalOnRemoved()
