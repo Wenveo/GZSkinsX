@@ -54,11 +54,14 @@
         <Grid
             x:Name="DocumentTabBackgrondMask"
             Grid.Column="2"
+            composition:CompositionFactory.UseStandardFadeInOut="True"
+            composition:CompositionFactory.UseStandardReposition="True"
             Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
             Visibility="Collapsed" />
         <ContentPresenter
             x:Name="DocumentTabHost"
             Grid.Column="2"
+            composition:CompositionFactory.UseStandardFadeInOut="True"
             composition:CompositionFactory.UseStandardReposition="True"
             Visibility="Visible" />
     </Grid>

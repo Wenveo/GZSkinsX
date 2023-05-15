@@ -9,7 +9,6 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
 
@@ -117,7 +116,7 @@ internal sealed class SaveAsFileCommand : CommandButtonBase
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0, Placement = CommandPlacement.Secondary)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]
 internal sealed class UndoCommand : CommandButtonBase
 {
     public UndoCommand()
@@ -128,7 +127,7 @@ internal sealed class UndoCommand : CommandButtonBase
 }
 
 [Shared, ExportCommandItem]
-[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1, Placement = CommandPlacement.Secondary)]
+[CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 1)]
 internal sealed class RedoCommand : CommandButtonBase
 {
     public RedoCommand()

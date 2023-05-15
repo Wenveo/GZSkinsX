@@ -162,7 +162,6 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
         _rootGrid.Children.Add(_treeView);
         _rootGrid.Children.Add(_loading);
 
-        CompositionFactory.SetUseStandardFadeInOut(_rootGrid, true);
         CompositionFactory.SetUseStandardReposition(stackPanel, true);
     }
 
