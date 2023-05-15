@@ -22,6 +22,7 @@ using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.Themes;
+using GZSkinsX.Uwp.Composition;
 
 using Windows.UI;
 using Windows.UI.Text;
@@ -160,6 +161,9 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
         _rootGrid.Children.Add(topArea);
         _rootGrid.Children.Add(_treeView);
         _rootGrid.Children.Add(_loading);
+
+        CompositionFactory.SetUseStandardFadeInOut(_rootGrid, true);
+        CompositionFactory.SetUseStandardReposition(stackPanel, true);
     }
 
     private void InitializeEvents()
