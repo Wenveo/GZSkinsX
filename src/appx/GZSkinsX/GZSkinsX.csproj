@@ -47,6 +47,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingsSection.cs" />
     <Compile Include="Settings\SettingsService.cs" />
+    <Compile Include="Tabs\TabContentImpl.cs" />
+    <Compile Include="Tabs\TabViewManager.cs" />
+    <Compile Include="Tabs\TabViewService.cs" />
     <Compile Include="Themes\AutoThemeTitleBar.cs" />
     <Compile Include="Themes\ThemeService.cs" />
     <Compile Include="Themes\ThemeSettings.cs" />
@@ -168,9 +171,7 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tabs\" />
-  </ItemGroup>
+  <ItemGroup />
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

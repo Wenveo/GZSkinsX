@@ -8,11 +8,17 @@
 #nullable enable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
+using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
+using GZSkinsX.Api.Tabs;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
+using GZSkinsX.Uwp.Composition;
+
+using Microsoft.UI.Xaml.Controls;
 
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -32,6 +38,9 @@ public sealed partial class ShellViewControl : Grid
     private readonly AssetsExplorerService _assetsExplorerService;
     private readonly ICommandBarService _commandBarService;
     private readonly ShellViewSettings _shellViewSettings;
+    private readonly ITabViewService _tabViewService;
+    private readonly TabView _customTabView;
+    private readonly ITabViewManager _tabViewManager;
 
     public bool AssetsExplorerIsVisible => AssetsExplorerHost.Visibility == Visibility.Visible;
 
@@ -40,9 +49,22 @@ public sealed partial class ShellViewControl : Grid
         _assetsExplorerService = (AssetsExplorerService)AppxContext.Resolve<IAssetsExplorerService>();
         _commandBarService = AppxContext.Resolve<ICommandBarService>();
         _shellViewSettings = AppxContext.Resolve<ShellViewSettings>();
+        _tabViewService = AppxContext.Resolve<ITabViewService>();
+
+        _customTabView = new TabView
+        {
+            VerticalAlignment = VerticalAlignment.Stretch,
+            TabWidthMode = TabViewWidthMode.Equal,
+            IsAddTabButtonVisible = false
+        };
+
+        _customTabView.TabItemsChanged += OnTabItemsChanged;
+        _tabViewManager = _tabViewService.CreateTabViewManager(
+            new TabViewManagerOptions("B0783923-1256-4D56-8286-2F37BF108EE7"), _customTabView);
 
         InitializeComponent();
         InitializeUIObject();
+        UpdateTabVisible();
         UpdateUIState();
     }
 
@@ -62,6 +84,31 @@ public sealed partial class ShellViewControl : Grid
         AssetsExplorerHost.Content = _assetsExplorerService.UIObject;
         AssetsExplorerHost.Visibility = Bool2Visibility(!_shellViewSettings.IsHideAssetsExplorer);
         AssetsExplorerHost.SizeChanged += (_, _) => SaveUIState();
+
+        DocumentTabHost.Content = _tabViewManager.UIObject;
+
+        _tabViewManager.Add(new TestTabContent("AAA.txt"));
+        _tabViewManager.Add(new TestTabContent("BBB.txt"));
+        _tabViewManager.Add(new TestTabContent("CCC.txt"));
+    }
+
+    private void OnTabItemsChanged(Microsoft.UI.Xaml.Controls.TabView sender, Windows.Foundation.Collections.IVectorChangedEventArgs args)
+    {
+        UpdateTabVisible();
+    }
+
+    private void UpdateTabVisible()
+    {
+        if (_customTabView.TabItems.Count > 0)
+        {
+            DocumentTabHost.Visibility = Visibility.Visible;
+            DocumentTabBackgrondMask.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            DocumentTabHost.Visibility = Visibility.Collapsed;
+            DocumentTabBackgrondMask.Visibility = Visibility.Visible;
+        }
     }
 
     private void UpdateUIState()
@@ -102,5 +149,14 @@ public sealed partial class ShellViewControl : Grid
     private static Visibility Bool2Visibility(bool value)
     {
         return value ? Visibility.Visible : Visibility.Collapsed;
+    }
+}
+
+internal sealed class TestTabContent : TabContentVM
+{
+    public TestTabContent(string name)
+    {
+        Title = name;
+        IconSource = new SegoeFluentIconSource { Glyph = "\xE8A5" };
     }
 }

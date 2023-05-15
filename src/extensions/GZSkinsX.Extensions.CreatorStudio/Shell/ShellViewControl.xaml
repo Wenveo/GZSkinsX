@@ -3,11 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:composition="using:GZSkinsX.Uwp.Composition"
-    xmlns:ctrls2="using:GZSkinsX.Api.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Extensions.CreatorStudio.Shell"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:ui="using:GZSkinsX.Uwp.UI.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -51,32 +49,17 @@
             Background="{ThemeResource TabViewItemHeaderBackgroundSelected}"
             GripperCursor="SizeWestEast"
             GripperForeground="Transparent"
-            ResizeDirection="Columns" />
-        <muxc:TabView
+            ResizeDirection="Columns"
+            Visibility="Collapsed" />
+        <Grid
+            x:Name="DocumentTabBackgrondMask"
             Grid.Column="2"
-            VerticalAlignment="Stretch"
+            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+            Visibility="Collapsed" />
+        <ContentPresenter
+            x:Name="DocumentTabHost"
+            Grid.Column="2"
             composition:CompositionFactory.UseStandardReposition="True"
-            IsAddTabButtonVisible="False">
-            <muxc:TabView.TabItems>
-                <muxc:TabViewItem Header="Aatrox.wad.client">
-                    <muxc:TabViewItem.IconSource>
-                        <ctrls2:SegoeFluentIconSource Glyph="&#xE8A5;" />
-                    </muxc:TabViewItem.IconSource>
-                    <Grid Background="Transparent" />
-                </muxc:TabViewItem>
-                <muxc:TabViewItem Header="Skin20.bin">
-                    <muxc:TabViewItem.IconSource>
-                        <ctrls2:SegoeFluentIconSource Glyph="&#xE8A5;" />
-                    </muxc:TabViewItem.IconSource>
-                    <Border Width="900" Height="900" />
-                </muxc:TabViewItem>
-                <muxc:TabViewItem Header="fontconfig_en_us.txt">
-                    <muxc:TabViewItem.IconSource>
-                        <ctrls2:SegoeFluentIconSource Glyph="&#xE8A5;" />
-                    </muxc:TabViewItem.IconSource>
-                    <Border Width="900" Height="900" />
-                </muxc:TabViewItem>
-            </muxc:TabView.TabItems>
-        </muxc:TabView>
+            Visibility="Visible" />
     </Grid>
 </Grid>

@@ -93,6 +93,14 @@
     <Compile Include="Settings\ISettingsSection.cs" />
     <Compile Include="Settings\ISettingsService.cs" />
     <Compile Include="Settings\SettingsType.cs" />
+    <Compile Include="Tabs\ActiveTabChangedEventArgs.cs" />
+    <Compile Include="Tabs\ITabContent.cs" />
+    <Compile Include="Tabs\ITabViewManager.cs" />
+    <Compile Include="Tabs\ITabViewService.cs" />
+    <Compile Include="Tabs\TabContentBase.cs" />
+    <Compile Include="Tabs\TabContentCloseRequestedEventArgs.cs" />
+    <Compile Include="Tabs\TabContentVM.cs" />
+    <Compile Include="Tabs\TabViewManagerOptions.cs" />
     <Compile Include="Themes\IThemeService.cs" />
     <Compile Include="Themes\ThemeChangedEventArgs.cs" />
     <Compile Include="Utilities\BoolToVisibilityConvert.cs" />
@@ -123,9 +131,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tabs\" />
-  </ItemGroup>
+  <ItemGroup />
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
