@@ -136,7 +136,7 @@ internal sealed class TabViewManager : ITabViewManager
         _mainTabView.TabItems.Add(tabContentImpl.UIObject);
         tabContentImpl.InternalOnAdded();
 
-        CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(tabContent, null));
+        CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(new[] { tabContent }, null));
     }
 
     public void Close(ITabContent tabContent)
@@ -162,7 +162,7 @@ internal sealed class TabViewManager : ITabViewManager
             tabItems.RemoveAt(i);
             tabContentImpl.InternalOnRemoved();
 
-            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContent));
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, new[] { tabContent }));
 
             break;
         }
@@ -175,7 +175,7 @@ internal sealed class TabViewManager : ITabViewManager
         {
             _mainTabView.TabItems.Remove(tabViewItem);
             tabContentImpl.InternalOnRemoved();
-            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContentImpl.Tab));
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, new[] { tabContentImpl.Tab }));
         }
     }
 
@@ -184,7 +184,9 @@ internal sealed class TabViewManager : ITabViewManager
         var activeTab = ActiveTab;
         if (activeTab is not null)
         {
+            var removedItems = new List<ITabContent>();
             var tabItems = _mainTabView.TabItems;
+
             for (var i = 0; i < tabItems.Count; i++)
             {
                 if (tabItems[i] is MUXC.TabViewItem item)
@@ -195,19 +197,23 @@ internal sealed class TabViewManager : ITabViewManager
                             continue;
 
                         tabContentImpl.InternalOnRemoved();
-                        CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContentImpl.Tab));
+                        removedItems.Add(tabContentImpl.Tab);
                     }
                 }
 
                 tabItems.RemoveAt(i--);
                 break;
             }
+
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, removedItems.ToArray()));
         }
     }
 
     public void CloseAllTabs()
     {
+        var removedItems = new List<ITabContent>();
         var tabItems = _mainTabView.TabItems;
+
         for (var i = 0; i < tabItems.Count; i++)
         {
             if (tabItems[i] is not MUXC.TabViewItem item ||
@@ -218,8 +224,10 @@ internal sealed class TabViewManager : ITabViewManager
 
             tabItems.RemoveAt(i--);
             tabContentImpl.InternalOnRemoved();
-            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContentImpl.Tab));
+            removedItems.Add(tabContentImpl.Tab);
         }
+
+        CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, removedItems.ToArray()));
     }
 
     public void SetActiveTab(int index)

@@ -11,13 +11,13 @@ namespace GZSkinsX.Api.Tabs;
 
 public sealed class TabCollectionChangedEventArgs
 {
-    public ITabContent? AddedItem { get; }
+    public ITabContent[]? AddedItems { get; }
 
-    public ITabContent? RemovedItem { get; }
+    public ITabContent[]? RemovedItems { get; }
 
-    public TabCollectionChangedEventArgs(ITabContent? addedItem, ITabContent? removedItem)
+    public TabCollectionChangedEventArgs(ITabContent[]? addedItems, ITabContent[]? removedItems)
     {
-        AddedItem = addedItem;
-        RemovedItem = removedItem;
+        AddedItems = addedItems;
+        RemovedItems = removedItems;
     }
 }
