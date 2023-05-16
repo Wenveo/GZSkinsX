@@ -43,6 +43,8 @@ public abstract class TabContentVM : ObservableObject, ITabContent
 
     public virtual void OnCloseRequested(TabContentCloseRequestedEventArgs args) { }
 
+    public virtual void OnInitialize() { }
+
     public virtual void OnRemoved() { }
 
     protected string? _title;

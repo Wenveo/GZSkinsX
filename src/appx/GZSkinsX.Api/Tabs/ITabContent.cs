@@ -25,5 +25,7 @@ public interface ITabContent
 
     void OnCloseRequested(TabContentCloseRequestedEventArgs args);
 
+    void OnInitialize();
+
     void OnRemoved();
 }

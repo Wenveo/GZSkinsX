@@ -49,7 +49,7 @@ internal sealed class TabContentImpl
     private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
     {
         _tabViewItem.Loaded -= OnLoaded;
-
+        _tabContent.OnInitialize();
         UpdateUIState();
     }
 

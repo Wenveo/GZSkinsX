@@ -25,5 +25,7 @@ public abstract class TabContentBase : ITabContent
 
     public virtual void OnCloseRequested(TabContentCloseRequestedEventArgs args) { }
 
+    public virtual void OnInitialize() { }
+
     public virtual void OnRemoved() { }
 }
