@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Tabs;
 
+using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
@@ -59,6 +60,8 @@ internal sealed class TabViewManager : ITabViewManager
     }
 
     public event EventHandler<ActiveTabChangedEventArgs>? ActiveTabChanged;
+
+    public event TypedEventHandler<ITabViewManager, TabCollectionChangedEventArgs>? CollectionChanged;
 
     public TabViewManager(MUXC.TabView tabView, TabViewManagerOptions options)
     {
@@ -132,6 +135,8 @@ internal sealed class TabViewManager : ITabViewManager
         var tabContentImpl = new TabContentImpl(this, tabContent);
         _mainTabView.TabItems.Add(tabContentImpl.UIObject);
         tabContentImpl.InternalOnAdded();
+
+        CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(tabContent, null));
     }
 
     public void Close(ITabContent tabContent)
@@ -157,6 +162,8 @@ internal sealed class TabViewManager : ITabViewManager
             tabItems.RemoveAt(i);
             tabContentImpl.InternalOnRemoved();
 
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContent));
+
             break;
         }
     }
@@ -168,6 +175,7 @@ internal sealed class TabViewManager : ITabViewManager
         {
             _mainTabView.TabItems.Remove(tabViewItem);
             tabContentImpl.InternalOnRemoved();
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContentImpl.Tab));
         }
     }
 
@@ -185,8 +193,9 @@ internal sealed class TabViewManager : ITabViewManager
                     {
                         if (tabContentImpl.Tab == activeTab)
                             continue;
-                        else
-                            tabContentImpl.InternalOnRemoved();
+
+                        tabContentImpl.InternalOnRemoved();
+                        CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContentImpl.Tab));
                     }
                 }
 
@@ -209,7 +218,18 @@ internal sealed class TabViewManager : ITabViewManager
 
             tabItems.RemoveAt(i--);
             tabContentImpl.InternalOnRemoved();
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, tabContentImpl.Tab));
         }
+    }
+
+    public void SetActiveTab(int index)
+    {
+        if (index < 0 || index > _mainTabView.TabItems.Count)
+        {
+            return;
+        }
+
+        _mainTabView.SelectedIndex = index;
     }
 
     public void SetActiveTab(ITabContent tabContent)

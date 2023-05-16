@@ -10,6 +10,8 @@
 using System;
 using System.Collections.Generic;
 
+using Windows.Foundation;
+
 namespace GZSkinsX.Api.Tabs;
 
 public interface ITabViewManager
@@ -22,6 +24,8 @@ public interface ITabViewManager
 
     event EventHandler<ActiveTabChangedEventArgs>? ActiveTabChanged;
 
+    event TypedEventHandler<ITabViewManager, TabCollectionChangedEventArgs>? CollectionChanged;
+
     void Add(ITabContent tabContent);
 
     void Close(ITabContent tabContent);
@@ -29,6 +33,8 @@ public interface ITabViewManager
     void CloseActiveTab();
 
     void CloseAllButActiveTab();
+
+    void SetActiveTab(int index);
 
     void SetActiveTab(ITabContent tabContent);
 }
