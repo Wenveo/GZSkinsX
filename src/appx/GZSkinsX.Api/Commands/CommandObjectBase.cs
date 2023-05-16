@@ -16,4 +16,7 @@ public abstract class CommandObjectBase : ICommandObject
 {
     /// <inheritdoc/>
     public virtual object? UIObject { get; protected set; }
+
+    /// <inheritdoc/>
+    public virtual void OnInitialize() { }
 }

@@ -38,6 +38,7 @@ internal sealed class CommandObjectImpl
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         _appBarElementContainer.Loaded -= OnLoaded;
+        _commandObject.OnInitialize();
 
         var notifyPropertyChanged = _commandObject as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)

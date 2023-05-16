@@ -42,6 +42,7 @@ internal sealed class CommandToggleButtonImpl
     private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
     {
         _appBarToggleButton.Loaded -= OnLoaded;
+        _commandToggleButton.OnInitialize();
 
         var notifyPropertyChanged = _commandToggleButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)

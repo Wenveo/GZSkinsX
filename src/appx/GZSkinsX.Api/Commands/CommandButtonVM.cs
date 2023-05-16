@@ -62,10 +62,10 @@ public abstract class CommandButtonVM : ObservableObject, ICommandButton
     }
 
     /// <inheritdoc/>
-    public virtual void OnClick(object sender, RoutedEventArgs e)
-    {
+    public virtual void OnClick(object sender, RoutedEventArgs e) { }
 
-    }
+    /// <inheritdoc/>
+    public virtual void OnInitialize() { }
 
     protected string? _displayName;
     protected IconElement? _icon;

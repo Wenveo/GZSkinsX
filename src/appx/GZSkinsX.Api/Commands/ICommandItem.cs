@@ -14,5 +14,8 @@ namespace GZSkinsX.Api.Commands;
 /// </summary>
 public interface ICommandItem
 {
-
+    /// <summary>
+    /// 表示在 UI 初始化时触发的行为
+    /// </summary>
+    void OnInitialize();
 }

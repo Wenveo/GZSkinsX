@@ -39,6 +39,7 @@ internal sealed class CommandButtonImpl
     private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
     {
         _appBarButton.Loaded -= OnLoaded;
+        _commandButton.OnInitialize();
 
         var notifyPropertyChanged = _commandButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)

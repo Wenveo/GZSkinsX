@@ -23,5 +23,8 @@ public abstract class CommandObjectVM : ObservableObject, ICommandObject
         protected set => SetProperty(ref _uiObject, value);
     }
 
+    /// <inheritdoc/>
+    public virtual void OnInitialize() { }
+
     protected object? _uiObject;
 }

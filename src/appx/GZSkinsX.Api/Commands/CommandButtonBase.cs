@@ -37,4 +37,7 @@ public abstract class CommandButtonBase : ICommandButton
 
     /// <inheritdoc/>
     public virtual void OnClick(object sender, RoutedEventArgs e) { }
+
+    /// <inheritdoc/>
+    public virtual void OnInitialize() { }
 }
