@@ -7,7 +7,7 @@
 
 namespace GZSkinsX.Api.Tabs;
 
-public sealed class TabContentCloseRequestedEventArgs
+public sealed class TabContentCloseRequestedEventArgs : System.EventArgs
 {
     public bool Handled { get; set; }
 

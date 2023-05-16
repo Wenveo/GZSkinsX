@@ -9,7 +9,7 @@
 
 namespace GZSkinsX.Api.Tabs;
 
-public sealed class ActiveTabChangedEventArgs
+public sealed class ActiveTabChangedEventArgs : System.EventArgs
 {
     public ITabContent? ActiveTab { get; }
 
