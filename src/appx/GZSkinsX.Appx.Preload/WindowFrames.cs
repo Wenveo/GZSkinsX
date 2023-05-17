@@ -51,7 +51,7 @@ internal sealed class ExportPreloadFrame : IWindowFrame
 
     private void InitializeMainWindow()
     {
-        var minWindowSize = SizeHelper.FromDimensions(720, 480);
+        var minWindowSize = SizeHelper.FromDimensions(1000, 500);
         var appView = ApplicationView.GetForCurrentView();
         appView.SetPreferredMinSize(minWindowSize);
 
