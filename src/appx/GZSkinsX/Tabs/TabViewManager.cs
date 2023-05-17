@@ -82,17 +82,14 @@ internal sealed class TabViewManager : ITabViewManager
 
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (ActiveTabChanged is null)
-            return;
-
         if (_mainTabView.SelectedItem is MUXC.TabViewItem tabViewItem &&
             tabViewItem.DataContext is TabContentImpl tabContentImpl)
         {
-            ActiveTabChanged.Invoke(this, new ActiveTabChangedEventArgs(tabContentImpl.Tab));
+            ActiveTabChanged?.Invoke(this, new ActiveTabChangedEventArgs(tabContentImpl.Tab));
         }
         else
         {
-            ActiveTabChanged.Invoke(this, new ActiveTabChangedEventArgs(null));
+            ActiveTabChanged?.Invoke(this, new ActiveTabChangedEventArgs(null));
         }
     }
 
@@ -105,22 +102,7 @@ internal sealed class TabViewManager : ITabViewManager
 
             if (!args2.Handled)
             {
-                try
-                {
-                    Close(tabContentImpl.Tab);
-                }
-                catch (ArgumentException)
-                {
-                    /// 如果鼠标悬停在关闭按钮上，并且一直连续点左键（类似连点器的操作），就会有小概率触发此异常。
-
-                    /// 因为如果有多个 Tab 存在，在你通过点击关闭按钮将前面的一个 Tab 移除后，
-                    /// 后面的 Tab 则会滑动回之前被移除的 Tab 的位置。
-
-                    /// 那么这时可能某些人无聊（不是我），或者是其它什么的原因，
-                    /// 鼠标就放在关闭按钮上一直左键点击，那前一个 Tab 被移除了下一个就会顶替原来的位置，
-                    /// 然后又点到关闭按钮进行移除的操作，就会有小概率会寄。。
-                    /// 当然这种情况只有在点击关闭按钮时才会发生，其它的 Api 不受影响。
-                }
+                Close(tabContentImpl.Tab);
             }
         }
     }
@@ -135,6 +117,7 @@ internal sealed class TabViewManager : ITabViewManager
         var tabContentImpl = new TabContentImpl(this, tabContent);
         _mainTabView.TabItems.Add(tabContentImpl.UIObject);
         tabContentImpl.InternalOnAdded();
+        _mainTabView.SelectedIndex = _mainTabView.TabItems.Count - 1;
 
         CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(new[] { tabContent }, null));
     }
@@ -147,35 +130,47 @@ internal sealed class TabViewManager : ITabViewManager
         }
 
         var tabItems = _mainTabView.TabItems;
-        for (var i = 0; i < tabItems.Count; i++)
+        var count = tabItems.Count;
+
+        for (var i = 0; i < count; i++)
         {
-            var item = tabItems[i];
-            if (item is not MUXC.TabViewItem tabViewItem)
+            if (tabItems[i] is not MUXC.TabViewItem tab)
                 continue;
 
-            if (tabViewItem.DataContext is not TabContentImpl tabContentImpl ||
-                tabContentImpl.Tab != tabContent)
-            {
+            if (tab.DataContext is not TabContentImpl impl || impl.Tab != tabContent)
                 continue;
+
+            if (i == 0 && count > 1)
+            {
+                /// 如果此时需要被移除的元素正好是处于第 0 位，并且视图中还存在其它的选项卡，
+                /// 那么则需要把当前选择项调整至下一位元素，之后再进行移除的操作。
+                /// 如果不执行此段代码则会在 Remove 时引发 ArgumentException 异常。
+
+                _mainTabView.SelectedIndex = 1;
             }
 
             tabItems.RemoveAt(i);
-            tabContentImpl.InternalOnRemoved();
+            impl.InternalOnRemoved();
 
             CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, new[] { tabContent }));
-
             break;
         }
     }
 
     public void CloseActiveTab()
     {
-        if (_mainTabView.SelectedItem is MUXC.TabViewItem tabViewItem &&
-            tabViewItem.DataContext is TabContentImpl tabContentImpl)
+        if (_mainTabView.SelectedItem is MUXC.TabViewItem tab &&
+            tab.DataContext is TabContentImpl impl)
         {
-            _mainTabView.TabItems.Remove(tabViewItem);
-            tabContentImpl.InternalOnRemoved();
-            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, new[] { tabContentImpl.Tab }));
+            var index = _mainTabView.TabItems.IndexOf(tab);
+
+            _mainTabView.TabItems.RemoveAt(index);
+            impl.InternalOnRemoved();
+
+            CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, new[] { impl.Tab }));
+
+            if (index == 0 && _mainTabView.TabItems.Count > 0)
+                _mainTabView.SelectedIndex = 0;
         }
     }
 
@@ -189,15 +184,15 @@ internal sealed class TabViewManager : ITabViewManager
 
             for (var i = 0; i < tabItems.Count; i++)
             {
-                if (tabItems[i] is MUXC.TabViewItem item)
+                if (tabItems[i] is MUXC.TabViewItem tab)
                 {
-                    if (item.DataContext is TabContentImpl tabContentImpl)
+                    if (tab.DataContext is TabContentImpl impl)
                     {
-                        if (tabContentImpl.Tab == activeTab)
+                        if (impl.Tab == activeTab)
                             continue;
 
-                        tabContentImpl.InternalOnRemoved();
-                        removedItems.Add(tabContentImpl.Tab);
+                        impl.InternalOnRemoved();
+                        removedItems.Add(impl.Tab);
                     }
                 }
 
@@ -216,15 +211,15 @@ internal sealed class TabViewManager : ITabViewManager
 
         for (var i = 0; i < tabItems.Count; i++)
         {
-            if (tabItems[i] is not MUXC.TabViewItem item ||
-                item.DataContext is not TabContentImpl tabContentImpl)
+            if (tabItems[i] is not MUXC.TabViewItem tab ||
+                tab.DataContext is not TabContentImpl impl)
             {
                 continue;
             }
 
             tabItems.RemoveAt(i--);
-            tabContentImpl.InternalOnRemoved();
-            removedItems.Add(tabContentImpl.Tab);
+            impl.InternalOnRemoved();
+            removedItems.Add(impl.Tab);
         }
 
         CollectionChanged?.Invoke(this, new TabCollectionChangedEventArgs(null, removedItems.ToArray()));

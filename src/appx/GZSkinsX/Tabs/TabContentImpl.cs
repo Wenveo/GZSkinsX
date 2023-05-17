@@ -9,48 +9,134 @@
 
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.Tabs;
 
-using Microsoft.UI.Xaml.Controls;
-
+using Windows.UI.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
+
+using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Tabs;
 
 internal sealed class TabContentImpl
 {
+    private sealed class AsyncLoadedUIProvider : IDisposable
+    {
+        private readonly TabContentImpl _impl;
+        private readonly Grid _loadingMask;
+
+        public AsyncLoadedUIProvider(TabContentImpl impl)
+        {
+            _loadingMask = new Grid()
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            var textBlock = new TextBlock
+            {
+                FontSize = 20d,
+                FontWeight = FontWeights.ExtraBold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Text = "Loading"
+            };
+
+            var progressBar = new MUXC.ProgressBar
+            {
+                Height = 24,
+                MinWidth = 200d,
+                IsIndeterminate = true
+            };
+
+            Grid.SetRow(textBlock, 0);
+            Grid.SetRow(progressBar, 1);
+
+            _loadingMask.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            _loadingMask.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            _loadingMask.RowSpacing = 12d;
+
+            _loadingMask.Children.Add(textBlock);
+            _loadingMask.Children.Add(progressBar);
+
+            _impl = impl;
+            _impl._contentPresenter.Content = _loadingMask;
+        }
+
+        public async Task LoadUIAsync()
+        {
+            _impl.Tab.OnInitialize();
+
+            _impl.UpdateTitle();
+            _impl.UpdateIconSource();
+            _impl.UpdateToolTip();
+
+            await _impl.Tab.OnInitializeAsync();
+
+            _impl.UpdateTitle();
+            _impl.UpdateIconSource();
+            _impl.UpdateToolTip();
+        }
+
+        public void Dispose()
+        {
+            _impl._contentPresenter.Content = _impl.Tab.UIObject;
+        }
+    }
+
     private readonly TabViewManager _owner;
     private readonly ITabContent _tabContent;
-    private readonly TabViewItem _tabViewItem;
+    private readonly MUXC.TabViewItem _tabViewItem;
+    private readonly ContentPresenter _contentPresenter;
+    private bool _isInitialized;
 
     public ITabContent Tab => _tabContent;
 
-    public TabViewItem UIObject => _tabViewItem;
+    public MUXC.TabViewItem UIObject => _tabViewItem;
 
     public TabContentImpl(TabViewManager owner, ITabContent tabContent)
     {
         _owner = owner;
         _tabContent = tabContent;
+
+        _contentPresenter = new()
+        {
+            ContentTransitions = new TransitionCollection
+            {
+                new EntranceThemeTransition()
+            }
+        };
+
         _tabViewItem = new()
         {
-            DataContext = this,
-            ContextFlyout = _owner._contextMenu
+            Content = _contentPresenter,
+            ContextFlyout = _owner._contextMenu,
+            DataContext = this
         };
 
         if (_owner._options.TabViewItemStyle is not null)
             _tabViewItem.Style = _owner._options.TabViewItemStyle;
-
-        _tabViewItem.Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+    private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        _tabViewItem.Loaded -= OnLoaded;
-        _tabContent.OnInitialize();
-        UpdateUIState();
+        if (!_isInitialized)
+        {
+            using var provider = new AsyncLoadedUIProvider(this);
+            await provider.LoadUIAsync();
+
+            _isInitialized = true;
+        }
+
+        if (_tabContent is INotifyPropertyChanged notifyPropertyChanged)
+        {
+            notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
+        }
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -126,32 +212,20 @@ internal sealed class TabContentImpl
         var uiOjbect = _tabContent.UIObject;
         if (uiOjbect is null)
         {
-            _tabViewItem.Content = null;
+            _contentPresenter.Content = null;
         }
         else
         {
-            if (uiOjbect != _tabViewItem.Content)
+            if (uiOjbect != _contentPresenter.Content)
             {
-                _tabViewItem.Content = uiOjbect;
+                _contentPresenter.Content = uiOjbect;
             }
         }
     }
 
-    private void UpdateUIState()
-    {
-        UpdateTitle();
-        UpdateIconSource();
-        UpdateToolTip();
-        UpdateUIObject();
-    }
-
     internal void InternalOnAdded()
     {
-        if (_tabContent is INotifyPropertyChanged notifyPropertyChanged)
-        {
-            notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
-        }
-
+        _tabViewItem.Loaded += OnLoaded;
         _tabContent.OnAdded();
     }
 
@@ -162,6 +236,7 @@ internal sealed class TabContentImpl
             notifyPropertyChanged.PropertyChanged -= OnPropertyChanged;
         }
 
+        _tabViewItem.Loaded -= OnLoaded;
         _tabContent.OnRemoved();
     }
 }

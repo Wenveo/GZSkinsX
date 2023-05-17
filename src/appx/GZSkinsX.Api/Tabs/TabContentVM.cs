@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using System.Threading.Tasks;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using Microsoft.UI.Xaml.Controls;
@@ -44,6 +46,8 @@ public abstract class TabContentVM : ObservableObject, ITabContent
     public virtual void OnCloseRequested(TabContentCloseRequestedEventArgs args) { }
 
     public virtual void OnInitialize() { }
+
+    public virtual async Task OnInitializeAsync() { await Task.CompletedTask; }
 
     public virtual void OnRemoved() { }
 

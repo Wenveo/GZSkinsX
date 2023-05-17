@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using System.Threading.Tasks;
+
 using Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.Tabs;
@@ -26,6 +28,8 @@ public abstract class TabContentBase : ITabContent
     public virtual void OnCloseRequested(TabContentCloseRequestedEventArgs args) { }
 
     public virtual void OnInitialize() { }
+
+    public virtual async Task OnInitializeAsync() { await Task.CompletedTask; }
 
     public virtual void OnRemoved() { }
 }
