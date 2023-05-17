@@ -254,8 +254,7 @@ internal sealed class TabViewManager : ITabViewManager
             if (item is not MUXC.TabViewItem tabViewItem)
                 continue;
 
-            var dataContext = tabViewItem.DataContext;
-            if (dataContext is null || dataContext != tabContent)
+            if (tabViewItem.DataContext is not TabContentImpl impl || impl.Tab != tabContent)
                 continue;
 
             _mainTabView.SelectedIndex = i;
