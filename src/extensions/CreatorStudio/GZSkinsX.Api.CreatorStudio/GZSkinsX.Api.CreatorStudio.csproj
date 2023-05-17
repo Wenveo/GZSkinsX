@@ -12,6 +12,16 @@
     <Compile Include="AssetsExplorer\IAssetsExplorerFile.cs" />
     <Compile Include="AssetsExplorer\IAssetsExplorerItem.cs" />
     <Compile Include="AssetsExplorer\IAssetsExplorerService.cs" />
+    <Compile Include="DocumentTabs\ActiveDocumentTabChangedEventArgs.cs" />
+    <Compile Include="DocumentTabs\DocumentItemType.cs" />
+    <Compile Include="DocumentTabs\DocumentTabProviderMetadataAttribute.cs" />
+    <Compile Include="DocumentTabs\ExportDocumentTabProviderAttribute.cs" />
+    <Compile Include="DocumentTabs\DocumentInfo.cs" />
+    <Compile Include="DocumentTabs\IDocumentTabLoader.cs" />
+    <Compile Include="DocumentTabs\IDocumentTabProvider.cs" />
+    <Compile Include="DocumentTabs\IDocumentTabContent.cs" />
+    <Compile Include="DocumentTabs\IDocumentTabService.cs" />
+    <Compile Include="DocumentTabs\DocumentTabCollectionChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.CreatorStudio.rd.xml" />
   </ItemGroup>

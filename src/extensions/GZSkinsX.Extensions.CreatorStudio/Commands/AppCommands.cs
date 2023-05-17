@@ -7,11 +7,16 @@
 
 #nullable enable
 
+using System;
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
+using GZSkinsX.Api.CreatorStudio.DocumentTabs;
+using GZSkinsX.Extensions.CreatorStudio.DocumentTabs;
 
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -69,21 +74,31 @@ internal sealed class NewCommand : CommandObjectBase
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
 internal sealed class OpenFileCommand : CommandButtonVM
 {
-    public static OpenFileCommand s_instance = null!;
-
-    public int Count { get; set; }
+    private readonly DocumentTabService _documentTabService;
+    private readonly IDocumentTabLoader _documentTabLoader;
 
     public OpenFileCommand()
     {
         DisplayName = "Open File";
         Icon = new SegoeFluentIcon { Glyph = "\uE197" };
 
-        s_instance = this;
+        _documentTabService = (DocumentTabService)AppxContext.Resolve<IDocumentTabService>();
+        _documentTabLoader = AppxContext.Resolve<IDocumentTabLoader>();
     }
 
-    public void UpdateState()
+    public override async void OnClick(object sender, RoutedEventArgs e)
     {
-        IsEnabled = Count % 2 == 0;
+        var picker = new FileOpenPicker();
+        foreach (var item in _documentTabService.GetSupportedFileTypes())
+        {
+            picker.FileTypeFilter.Add(item);
+        }
+
+        var files = await picker.PickMultipleFilesAsync();
+        foreach (var file in files)
+        {
+            _documentTabLoader.Load(new DocumentInfo(file));
+        }
     }
 }
 
@@ -95,12 +110,6 @@ internal sealed class SaveFileCommand : CommandButtonBase
     {
         DisplayName = "Save";
         Icon = new SegoeFluentIcon { Glyph = "\uE105" };
-    }
-
-    public override void OnClick(object sender, RoutedEventArgs e)
-    {
-        OpenFileCommand.s_instance.Count++;
-        OpenFileCommand.s_instance.UpdateState();
     }
 }
 

@@ -8,17 +8,15 @@
 #nullable enable
 
 using System;
+using System.Linq;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
-using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Api.Tabs;
+using GZSkinsX.Api.CreatorStudio.DocumentTabs;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
+using GZSkinsX.Extensions.CreatorStudio.DocumentTabs;
 
-using Microsoft.UI.Xaml.Controls;
-
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -37,7 +35,7 @@ public sealed partial class ShellViewControl : Grid
     private readonly AssetsExplorerService _assetsExplorerService;
     private readonly ICommandBarService _commandBarService;
     private readonly ShellViewSettings _shellViewSettings;
-    private readonly ITabViewManager _tabViewManager;
+    private readonly DocumentTabService _documentTabService;
 
     public bool AssetsExplorerIsVisible => AssetsExplorerHost.Visibility == Visibility.Visible;
 
@@ -47,11 +45,8 @@ public sealed partial class ShellViewControl : Grid
         _commandBarService = AppxContext.Resolve<ICommandBarService>();
         _shellViewSettings = AppxContext.Resolve<ShellViewSettings>();
 
-        var tabViewService = AppxContext.Resolve<ITabViewService>();
-        _tabViewManager = tabViewService.CreateTabViewManager(
-            new TabViewManagerOptions("B0783923-1256-4D56-8286-2F37BF108EE7"));
-
-        ((TabView)_tabViewManager.UIObject).TabItemsChanged += OnTabItemsChanged;
+        _documentTabService = (DocumentTabService)AppxContext.Resolve<IDocumentTabService>();
+        _documentTabService.CollectionChanged += OnCollectionChanged;
 
         InitializeComponent();
         InitializeUIObject();
@@ -76,21 +71,17 @@ public sealed partial class ShellViewControl : Grid
         AssetsExplorerHost.Visibility = Bool2Visibility(!_shellViewSettings.IsHideAssetsExplorer);
         AssetsExplorerHost.SizeChanged += (_, _) => SaveUIState();
 
-        DocumentTabHost.Content = _tabViewManager.UIObject;
-
-        _tabViewManager.Add(new TestTabContent("AAA.txt"));
-        _tabViewManager.Add(new TestTabContent("BBB.txt"));
-        _tabViewManager.Add(new TestTabContent("CCC.txt"));
+        DocumentTabHost.Content = _documentTabService.UIObject;
     }
 
-    private void OnTabItemsChanged(TabView sender, IVectorChangedEventArgs args)
+    private void OnCollectionChanged(IDocumentTabService sender, DocumentTabCollectionChangedEventArgs args)
     {
         UpdateTabVisible();
     }
 
     private void UpdateTabVisible()
     {
-        if (((TabView)_tabViewManager.UIObject).TabItems.Count > 0)
+        if (_documentTabService.AllDocumentTabs.Any())
         {
             DocumentTabHost.Visibility = Visibility.Visible;
             DocumentTabBackgrondMask.Visibility = Visibility.Collapsed;
@@ -140,14 +131,5 @@ public sealed partial class ShellViewControl : Grid
     private static Visibility Bool2Visibility(bool value)
     {
         return value ? Visibility.Visible : Visibility.Collapsed;
-    }
-}
-
-internal sealed class TestTabContent : TabContentVM
-{
-    public TestTabContent(string name)
-    {
-        Title = name;
-        IconSource = new SegoeFluentIconSource { Glyph = "\xE8A5" };
     }
 }
