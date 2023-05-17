@@ -7,8 +7,8 @@
 
 namespace GZSkinsX.Api.CreatorStudio.DocumentTabs;
 
-public enum DocumentItemType
+public enum DocumentDataType
 {
     File,
-    InMemory
+    RawData
 }

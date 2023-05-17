@@ -21,7 +21,7 @@ public sealed class DocumentInfo
 
     public string FileType { get; }
 
-    public DocumentItemType Type { get; }
+    public DocumentDataType Type { get; }
 
     public DocumentInfo(StorageFile file)
     {
@@ -37,6 +37,6 @@ public sealed class DocumentInfo
         Data = data;
         FullPath = fullPath;
         FileType = fileType;
-        Type = DocumentItemType.InMemory;
+        Type = DocumentDataType.RawData;
     }
 }

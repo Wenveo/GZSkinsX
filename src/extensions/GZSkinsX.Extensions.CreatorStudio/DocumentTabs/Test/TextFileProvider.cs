@@ -50,7 +50,7 @@ internal sealed class TextFileProvider : IDocumentTabProvider
         {
             var run = new Run
             {
-                Text = _documentInfo.Type == DocumentItemType.File
+                Text = _documentInfo.Type == DocumentDataType.File
                 ? await FileIO.ReadTextAsync((StorageFile)_documentInfo.Data)
                 : Encoding.UTF8.GetString((byte[])_documentInfo.Data)
             };

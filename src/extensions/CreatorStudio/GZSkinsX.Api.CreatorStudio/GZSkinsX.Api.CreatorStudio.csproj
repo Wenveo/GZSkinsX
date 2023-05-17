@@ -13,7 +13,7 @@
     <Compile Include="AssetsExplorer\IAssetsExplorerItem.cs" />
     <Compile Include="AssetsExplorer\IAssetsExplorerService.cs" />
     <Compile Include="DocumentTabs\ActiveDocumentTabChangedEventArgs.cs" />
-    <Compile Include="DocumentTabs\DocumentItemType.cs" />
+    <Compile Include="DocumentTabs\DocumentDataType.cs" />
     <Compile Include="DocumentTabs\DocumentTabProviderMetadataAttribute.cs" />
     <Compile Include="DocumentTabs\ExportDocumentTabProviderAttribute.cs" />
     <Compile Include="DocumentTabs\DocumentInfo.cs" />
