@@ -202,27 +202,6 @@ internal sealed class DocumentTabService : IDocumentTabService
         }
     }
 
-    private int IndexOf(IDocument document)
-    {
-        var tabItems = _mainTabView.TabItems;
-        var count = tabItems.Count;
-        var left = document.Key;
-
-        for (var i = 0; i < count; i++)
-        {
-            if (tabItems[i] is not MUXC.TabViewItem item)
-                continue;
-
-            if (item.DataContext is not DocumentTabContext context)
-                continue;
-
-            if (context._doc.Key == left)
-                return i;
-        }
-
-        return -1;
-    }
-
     public void Close(IDocumentTab tab)
     {
         if (tab is null)
@@ -289,9 +268,25 @@ internal sealed class DocumentTabService : IDocumentTabService
     public void CloseAllTabs()
     {
         _documentService.Clear();
-        if (_mainTabView.TabItems.Count != 0)
+
+        if (_mainTabView.TabItems.Count > 0)
         {
-            _mainTabView.TabItems.Clear();
+            var tabItems = _mainTabView.TabItems;
+            var count = tabItems.Count;
+
+            for (var i = 0; i < count; i++)
+            {
+                if (tabItems[i] is MUXC.TabViewItem item)
+                {
+                    if (item.DataContext is DocumentTabContext context)
+                    {
+                        /// ???
+                        context.InternalOnRemoved();
+                    }
+                }
+
+                tabItems.RemoveAt(i--);
+            }
         }
     }
 

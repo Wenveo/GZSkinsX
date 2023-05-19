@@ -30,6 +30,8 @@ public interface IDocumentTabService
 
     void CloseAllButActiveTab();
 
+    void CloseAllTabs();
+
     void SetActiveTab(int index);
 
     void SetActiveTab(IDocumentTab tab);
