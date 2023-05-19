@@ -29,6 +29,7 @@
     <Compile Include="Documents\DocumentProviderService.cs" />
     <Compile Include="Documents\DocumentService.cs" />
     <Compile Include="Documents\SupportedDocumentType.cs" />
+    <Compile Include="Documents\Tabs\DocumentTabMenuItems.cs" />
     <Compile Include="Documents\Tabs\DocumentTabProviderContext.cs" />
     <Compile Include="Documents\Tabs\DocumentTabService.cs" />
     <Compile Include="Documents\Tabs\DocumentTabContext.cs" />

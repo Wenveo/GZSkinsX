@@ -21,7 +21,9 @@
     <Compile Include="Documents\IDocumentService.cs" />
     <Compile Include="Documents\Tabs\ActiveDocumentTabChangedEventArgs.cs" />
     <Compile Include="Documents\Tabs\DocumentTabBase.cs" />
+    <Compile Include="Documents\Tabs\DocumentTabConstants.cs" />
     <Compile Include="Documents\Tabs\DocumentTabProviderMetadataAttribute.cs" />
+    <Compile Include="Documents\Tabs\DocumentTabContextMenuUIContext.cs" />
     <Compile Include="Documents\Tabs\DocumentTabVM.cs" />
     <Compile Include="Documents\Tabs\ExportDocumentTabProviderAttribute.cs" />
     <Compile Include="Documents\Tabs\IDocumentTab.cs" />
