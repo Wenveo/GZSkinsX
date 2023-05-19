@@ -128,9 +128,9 @@ internal sealed class ContextMenuService : IContextMenuService
         if (header is not null)
             AutomationProperties.SetName(uiObject, uiObject.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
 
-        var hotKey = menuItem.ShortcutKey;
-        if (hotKey is not null)
-            uiObject.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+        var shortcutKey = menuItem.ShortcutKey;
+        if (shortcutKey is not null)
+            uiObject.KeyboardAccelerators.Add(shortcutKey);
 
         var toolTip = menuItem.ToolTip;
         if (toolTip is not null)
@@ -175,9 +175,9 @@ internal sealed class ContextMenuService : IContextMenuService
         if (header is not null)
             AutomationProperties.SetName(menuFlyoutSubItem, menuFlyoutSubItem.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
 
-        var hotKey = menuItem.ShortcutKey;
-        if (hotKey is not null)
-            menuFlyoutSubItem.KeyboardAccelerators.Add(new() { Key = hotKey.Key, Modifiers = hotKey.Modifiers });
+        var shortcutKey = menuItem.ShortcutKey;
+        if (shortcutKey is not null)
+            menuFlyoutSubItem.KeyboardAccelerators.Add(shortcutKey);
 
         var toolTip = menuItem.ToolTip;
         if (toolTip is not null)

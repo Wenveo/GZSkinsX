@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using GZSkinsX.Api.Controls;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -40,7 +42,7 @@ public interface ICommandButton : ICommandItem
     /// <summary>
     /// 表示该命令项的快捷键
     /// </summary>
-    CommandShortcutKey? ShortcutKey { get; }
+    ShortcutKey? ShortcutKey { get; }
 
     /// <summary>
     /// 表示该命令项的工具提示

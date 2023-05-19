@@ -16,7 +16,6 @@ using GZSkinsX.Api.Utilities;
 
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace GZSkinsX.Commands.Impl;
 
@@ -146,11 +145,7 @@ internal sealed class CommandButtonImpl
             else
             {
                 collection.Clear();
-                collection.Add(new KeyboardAccelerator
-                {
-                    Key = shortcutKey.Key,
-                    Modifiers = shortcutKey.Modifiers
-                });
+                collection.Add(shortcutKey);
             }
         }
         else

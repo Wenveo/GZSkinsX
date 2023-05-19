@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using GZSkinsX.Api.Controls;
+
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.ContextMenu;
@@ -25,7 +27,7 @@ public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuIt
     public IconElement? Icon { get; protected set; }
 
     /// <inheritdoc/>
-    public ContextMenuItemShortcutKey? ShortcutKey { get; protected set; }
+    public ShortcutKey? ShortcutKey { get; protected set; }
 
     /// <inheritdoc/>
     public object? ToolTip { get; protected set; }

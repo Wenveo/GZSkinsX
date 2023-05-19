@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using GZSkinsX.Api.Controls;
+
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.ContextMenu;
@@ -29,7 +31,7 @@ public interface IContextMenuItem
     /// <summary>
     /// 获取与菜单项所绑定的快捷键
     /// </summary>
-    ContextMenuItemShortcutKey? ShortcutKey { get; }
+    ShortcutKey? ShortcutKey { get; }
 
     /// <summary>
     /// 获取与菜单项所关联的提示信息

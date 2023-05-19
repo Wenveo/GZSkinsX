@@ -7,6 +7,8 @@
 
 #nullable enable
 
+using GZSkinsX.Api.Controls;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -30,7 +32,7 @@ public abstract class CommandButtonBase : ICommandButton
     public virtual bool IsVisible { get; protected set; } = true;
 
     /// <inheritdoc/>
-    public virtual CommandShortcutKey? ShortcutKey { get; protected set; }
+    public virtual ShortcutKey? ShortcutKey { get; protected set; }
 
     /// <inheritdoc/>
     public virtual object? ToolTip { get; protected set; }

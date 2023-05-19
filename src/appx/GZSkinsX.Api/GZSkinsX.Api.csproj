@@ -29,7 +29,6 @@
     <Compile Include="Commands\CommandObjectBase.cs" />
     <Compile Include="Commands\CommandObjectVM.cs" />
     <Compile Include="Commands\CommandPlacement.cs" />
-    <Compile Include="Commands\CommandShortcutKey.cs" />
     <Compile Include="Commands\CommandToggleButtonBase.cs" />
     <Compile Include="Commands\CommandToggleButtonVM.cs" />
     <Compile Include="Commands\ExportCommandItemAttribute.cs" />
@@ -57,13 +56,13 @@
     <Compile Include="ContextMenu\IContextMenuUIContext.cs" />
     <Compile Include="ContextMenu\ContextMenuItemBase%27T.cs" />
     <Compile Include="ContextMenu\ContextMenuItemBase.cs" />
-    <Compile Include="ContextMenu\ContextMenuItemShortcutKey.cs" />
     <Compile Include="ContextMenu\ContextMenuItemMetadataAttribute.cs" />
     <Compile Include="ContextMenu\ContextMenuUIContext.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />
     <Compile Include="Controls\SegoeFluentIconSource.cs" />
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
     <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
+    <Compile Include="Controls\ShortcutKey.cs" />
     <Compile Include="Controls\StaticFontFamilys.cs" />
     <Compile Include="Extension\AdvanceExtensionMetadataAttribute.cs" />
     <Compile Include="Extension\AdvanceExtensionTrigger.cs" />

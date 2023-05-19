@@ -154,6 +154,5 @@ internal sealed class CommandBarService : ICommandBarService
     }
 
     /// <inheritdoc/>
-    public CommandBar CreateCommandBar(string ownerGuidString)
-    => CoreceCommandBar(ownerGuidString);
+    public CommandBar CreateCommandBar(string ownerGuidString) => CoreceCommandBar(ownerGuidString);
 }

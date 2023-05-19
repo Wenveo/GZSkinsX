@@ -9,6 +9,8 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
+using GZSkinsX.Api.Controls;
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -48,7 +50,7 @@ public abstract class CommandButtonVM : ObservableObject, ICommandButton
     }
 
     /// <inheritdoc/>
-    public virtual CommandShortcutKey? ShortcutKey
+    public virtual ShortcutKey? ShortcutKey
     {
         get => _shortCutKey;
         protected set => SetProperty(ref _shortCutKey, value);
@@ -71,6 +73,6 @@ public abstract class CommandButtonVM : ObservableObject, ICommandButton
     protected IconElement? _icon;
     protected bool _isEnabled = true;
     protected bool _isVisible = true;
-    protected CommandShortcutKey? _shortCutKey;
+    protected ShortcutKey? _shortCutKey;
     protected object? _toolTip;
 }
