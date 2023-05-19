@@ -28,7 +28,7 @@ public interface IDocumentTabService
 
     void CloseActiveTab();
 
-    void CloseAllButActiveTab();
+    void CloseAllButThis(IDocumentTab tab);
 
     void CloseAllTabs();
 

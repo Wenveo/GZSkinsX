@@ -12,12 +12,15 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.ContextMenu;
 using GZSkinsX.Api.CreatorStudio.Documents;
 using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
 
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
@@ -33,7 +36,30 @@ internal sealed class DocumentTabService : IDocumentTabService
     private readonly Dictionary<Guid, DocumentTabProviderContext> _typedToProvider;
 
     private readonly MUXC.TabView _mainTabView;
-    private readonly MenuFlyout _contextMenu;
+    private MenuFlyout? _contextMenu;
+
+    internal MenuFlyout SafeContextMenu
+    {
+        get
+        {
+            _contextMenu ??= AppxContext.ContextMenuService.CreateContextMenu(
+                    DocumentTabConstants.DOCUMENT_TAB_CM_GUID,
+                    new ContextMenuOptions { Placement = FlyoutPlacementMode.Bottom },
+                    (sender, e) =>
+                    {
+                        if (sender is MenuFlyout menuFlyout &&
+                            menuFlyout.Target is MUXC.TabViewItem tabViewItem &&
+                            tabViewItem.DataContext is DocumentTabContext context)
+                        {
+                            return new DocumentTabContextMenuUIContext(tabViewItem, context._tab);
+                        }
+
+                        return new DocumentTabContextMenuUIContext(null, null);
+                    });
+
+            return _contextMenu;
+        }
+    }
 
     public object UIObject => _mainTabView;
 
@@ -88,8 +114,6 @@ internal sealed class DocumentTabService : IDocumentTabService
         _mainTabView.SelectionChanged += OnSelectionChanged;
         _mainTabView.TabCloseRequested += OnTabCloseRequested;
 
-        _contextMenu = new MenuFlyout();
-
         _tabProviders = tabProviders;
         _documentService = documentService;
         _documentService.CollectionChanged += OnDocumentCollectionChanged;
@@ -124,7 +148,7 @@ internal sealed class DocumentTabService : IDocumentTabService
                 if (_typedToProvider.TryGetValue(doc.Info.TypedGuid, out var providerContext))
                 {
                     var createdTab = providerContext.Value.Create(doc);
-                    var tabContext = new DocumentTabContext(doc, createdTab, _contextMenu);
+                    var tabContext = new DocumentTabContext(doc, createdTab, SafeContextMenu);
 
                     _mainTabView.TabItems.Add(tabContext.UIObject);
                     tabContext.InternalOnAdded();
@@ -237,32 +261,33 @@ internal sealed class DocumentTabService : IDocumentTabService
         }
     }
 
-    public void CloseAllButActiveTab()
+    public void CloseAllButThis(IDocumentTab tab)
     {
-        var activeTab = ActiveTab;
-        if (activeTab is not null)
+        if (tab is null)
         {
-            var removedKeys = new List<IDocumentKey>();
-            var tabItems = _mainTabView.TabItems;
-            var count = tabItems.Count;
-
-            for (var i = 0; i < count; i++)
-            {
-                if (tabItems[i] is not MUXC.TabViewItem item)
-                    continue;
-
-                if (item.DataContext is not DocumentTabContext context)
-                    continue;
-
-                if (context._tab == activeTab)
-                    continue;
-
-                removedKeys.Add(context._doc.Key);
-                break;
-            }
-
-            _documentService.Remove(removedKeys);
+            throw new ArgumentNullException(nameof(tab));
         }
+
+        var removedKeys = new List<IDocumentKey>();
+        var tabItems = _mainTabView.TabItems;
+        var count = tabItems.Count;
+
+        for (var i = 0; i < count; i++)
+        {
+            if (tabItems[i] is not MUXC.TabViewItem item)
+                continue;
+
+            if (item.DataContext is not DocumentTabContext context)
+                continue;
+
+            if (context._tab == tab)
+                continue;
+
+            removedKeys.Add(context._doc.Key);
+            break;
+        }
+
+        _documentService.Remove(removedKeys);
     }
 
     public void CloseAllTabs()
