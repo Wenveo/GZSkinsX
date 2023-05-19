@@ -22,14 +22,14 @@ namespace GZSkinsX.Extensions.CreatorStudio.Documents;
 [Shared, Export(typeof(IDocumentService))]
 internal sealed class DocumentService : IDocumentService
 {
-    private readonly DocumentProviderService _documentProviderService;
+    private readonly IDocumentProviderService _documentProviderService;
     private readonly List<IDocument> _documents;
     private readonly ReaderWriterLockSlim _lock;
 
     public event TypedEventHandler<IDocumentService, DocumentCollectionChangedEventArgs>? CollectionChanged;
 
     [ImportingConstructor]
-    public DocumentService(DocumentProviderService documentProviderService)
+    public DocumentService(IDocumentProviderService documentProviderService)
     {
         _documentProviderService = documentProviderService;
         _documents = new();

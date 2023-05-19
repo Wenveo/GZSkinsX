@@ -14,7 +14,6 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Extensions.CreatorStudio.Documents;
 
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -60,7 +59,7 @@ internal sealed class NewCommand : CommandObjectBase
 
         newFileMenuItem.Click += async (_, _) =>
         {
-            var dialog = new ContentDialog { Title = "New File"};
+            var dialog = new ContentDialog { Title = "New File" };
             dialog.Content = new NewFileView(dialog);
 
             await dialog.ShowAsync();
@@ -84,7 +83,7 @@ internal sealed class NewCommand : CommandObjectBase
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
 internal sealed class OpenFileCommand : CommandButtonVM
 {
-    private DocumentProviderService? _documentProviderService;
+    private IDocumentProviderService? _documentProviderService;
     private IDocumentService? _documentService;
 
     public OpenFileCommand()
@@ -95,7 +94,7 @@ internal sealed class OpenFileCommand : CommandButtonVM
 
     public override async void OnClick(object sender, RoutedEventArgs e)
     {
-        _documentProviderService ??= AppxContext.Resolve<DocumentProviderService>();
+        _documentProviderService ??= AppxContext.Resolve<IDocumentProviderService>();
         _documentService ??= AppxContext.Resolve<IDocumentService>();
 
         var picker = new FileOpenPicker();

@@ -17,6 +17,7 @@
     <Compile Include="Documents\IDocument.cs" />
     <Compile Include="Documents\IDocumentKey.cs" />
     <Compile Include="Documents\IDocumentProvider.cs" />
+    <Compile Include="Documents\IDocumentProviderService.cs" />
     <Compile Include="Documents\IDocumentService.cs" />
     <Compile Include="Documents\Tabs\ActiveDocumentTabChangedEventArgs.cs" />
     <Compile Include="Documents\Tabs\DocumentTabBase.cs" />

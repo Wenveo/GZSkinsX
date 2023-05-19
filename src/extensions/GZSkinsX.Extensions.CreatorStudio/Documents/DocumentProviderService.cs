@@ -17,8 +17,8 @@ using GZSkinsX.Api.CreatorStudio.Documents;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Documents;
 
-[Shared, Export(typeof(DocumentProviderService))]
-internal sealed class DocumentProviderService
+[Shared, Export(typeof(IDocumentProviderService))]
+internal sealed class DocumentProviderService : IDocumentProviderService
 {
     private readonly IEnumerable<Lazy<IDocumentProvider, DocumentProviderMetadataAttribute>> _mefProviders;
     private readonly Dictionary<Guid, DocumentProviderContext> _typedToProvider;
@@ -26,7 +26,7 @@ internal sealed class DocumentProviderService
     private IEnumerable<SupportedDocumentType>? _allSupportedDocumentTypes;
     private IEnumerable<string>? _allSuppportedExtensions;
 
-    public IEnumerable<SupportedDocumentType> AllSupportedDocumentTypes
+    private IEnumerable<SupportedDocumentType> SafeAllSupportedDocumentTypes
     {
         get => _allSupportedDocumentTypes ??= GetAllSuppportedDocumentTypes();
     }
@@ -94,7 +94,7 @@ internal sealed class DocumentProviderService
 
     public IEnumerable<string> GetAllSuppportedExtensions()
     {
-        foreach (var item in AllSupportedDocumentTypes)
+        foreach (var item in SafeAllSupportedDocumentTypes)
         {
             foreach (var ext in item.SupportedExtensions)
             {
@@ -105,7 +105,7 @@ internal sealed class DocumentProviderService
 
     public bool TryGetTypedGuid(string fileType, out Guid typedGuid)
     {
-        foreach (var documentType in AllSupportedDocumentTypes)
+        foreach (var documentType in SafeAllSupportedDocumentTypes)
         {
             var item = documentType.SupportedExtensions.FirstOrDefault(
                 a => StringComparer.OrdinalIgnoreCase.Equals(a, fileType));
