@@ -13,8 +13,8 @@ using System.Composition;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.DocumentTabs;
-using GZSkinsX.Extensions.CreatorStudio.DocumentTabs;
+using GZSkinsX.Api.CreatorStudio.Documents;
+using GZSkinsX.Extensions.CreatorStudio.Documents;
 
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -52,12 +52,22 @@ internal sealed class NewCommand : CommandObjectBase
         stackPanel.Children.Add(iconElement);
         stackPanel.Children.Add(header);
 
-        var menuFlyout = new MenuFlyout { Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft };
-        menuFlyout.Items.Add(new MenuFlyoutItem
+        var newFileMenuItem = new MenuFlyoutItem
         {
             Text = "File",
             Icon = new SegoeFluentIcon { Glyph = "\uE8A5" }
-        });
+        };
+
+        newFileMenuItem.Click += async (_, _) =>
+        {
+            var dialog = new ContentDialog { Title = "New File"};
+            dialog.Content = new NewFileView(dialog);
+
+            await dialog.ShowAsync();
+        };
+
+        var menuFlyout = new MenuFlyout { Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft };
+        menuFlyout.Items.Add(newFileMenuItem);
 
         dropDownButton = new MUXC.DropDownButton
         {
@@ -74,22 +84,22 @@ internal sealed class NewCommand : CommandObjectBase
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]
 internal sealed class OpenFileCommand : CommandButtonVM
 {
-    private readonly DocumentTabService _documentTabService;
-    private readonly IDocumentTabLoader _documentTabLoader;
+    private DocumentProviderService? _documentProviderService;
+    private IDocumentService? _documentService;
 
     public OpenFileCommand()
     {
         DisplayName = "Open File";
         Icon = new SegoeFluentIcon { Glyph = "\uE197" };
-
-        _documentTabService = (DocumentTabService)AppxContext.Resolve<IDocumentTabService>();
-        _documentTabLoader = AppxContext.Resolve<IDocumentTabLoader>();
     }
 
     public override async void OnClick(object sender, RoutedEventArgs e)
     {
+        _documentProviderService ??= AppxContext.Resolve<DocumentProviderService>();
+        _documentService ??= AppxContext.Resolve<IDocumentService>();
+
         var picker = new FileOpenPicker();
-        foreach (var item in _documentTabService.GetSupportedFileTypes())
+        foreach (var item in _documentProviderService.AllSuppportedExtensions)
         {
             picker.FileTypeFilter.Add(item);
         }
@@ -97,7 +107,15 @@ internal sealed class OpenFileCommand : CommandButtonVM
         var files = await picker.PickMultipleFilesAsync();
         foreach (var file in files)
         {
-            _documentTabLoader.Load(new DocumentInfo(file));
+            if (_documentProviderService.TryGetTypedGuid(file.FileType, out var typedGuid))
+            {
+                var document = _documentService.CreateDocument(DocumentInfo.CreateFromFile(file, typedGuid));
+
+                if (document is not null)
+                {
+                    _documentService.GetOrAdd(document);
+                }
+            }
         }
     }
 }

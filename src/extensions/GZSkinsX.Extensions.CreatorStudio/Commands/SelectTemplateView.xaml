@@ -1,0 +1,83 @@
+﻿<UserControl
+    x:Class="GZSkinsX.Extensions.CreatorStudio.Commands.SelectTemplateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls2="using:GZSkinsX.Api.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Extensions.CreatorStudio.Commands"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="24">
+        <Grid.Transitions>
+            <TransitionCollection>
+                <PopupThemeTransition FromHorizontalOffset="-200" FromVerticalOffset="0" />
+            </TransitionCollection>
+        </Grid.Transitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListView
+            x:Name="TemplateView"
+            Grid.Row="0"
+            Padding="8"
+            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+            CornerRadius="8"
+            SelectionChanged="TemplateView_SelectionChanged">
+            <ListViewItem>
+                <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Viewbox
+                            Width="16"
+                            Height="16"
+                            Margin="12,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                            <ctrls2:SegoeFluentIcon Glyph="&#xF000;" />
+                        </Viewbox>
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="{ThemeResource TopNavigationViewItemContentPresenterMargin}"
+                            VerticalAlignment="Center"
+                            AutomationProperties.AccessibilityView="Raw"
+                            Text="Text File"
+                            TextWrapping="NoWrap" />
+                    </Grid>
+                </StackPanel>
+            </ListViewItem>
+        </ListView>
+
+        <Grid
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                Width="80"
+                Click="CancelButton_Click"
+                Content="Cancel" />
+            <Button
+                x:Name="NextButton"
+                Grid.Column="1"
+                Width="80"
+                Click="NextButton_Click"
+                Content="Next"
+                IsEnabled="False"
+                Style="{ThemeResource AccentButtonStyle}" />
+        </Grid>
+    </Grid>
+</UserControl>

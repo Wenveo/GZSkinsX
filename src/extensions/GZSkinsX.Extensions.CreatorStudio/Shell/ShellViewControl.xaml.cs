@@ -13,9 +13,9 @@ using System.Linq;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Api.CreatorStudio.DocumentTabs;
+using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Extensions.CreatorStudio.DocumentTabs;
+using GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
 
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -81,7 +81,7 @@ public sealed partial class ShellViewControl : Grid
 
     private void UpdateTabVisible()
     {
-        if (_documentTabService.AllDocumentTabs.Any())
+        if (_documentTabService.DocumentTabs.Any())
         {
             DocumentTabHost.Visibility = Visibility.Visible;
             DocumentTabBackgrondMask.Visibility = Visibility.Collapsed;
