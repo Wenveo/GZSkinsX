@@ -7,6 +7,7 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="TextSaverProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubModule.cs" />
     <Compile Include="TextDocument.cs" />
@@ -14,6 +15,7 @@
     <Compile Include="TextDocumentTab.cs" />
     <Compile Include="TextDocumentTabContent.cs" />
     <Compile Include="TextDocumentTabProvider.cs" />
+    <Compile Include="TextSaver.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Extensions.CreatorStudio.Text.rd.xml" />
   </ItemGroup>
   <ItemGroup>

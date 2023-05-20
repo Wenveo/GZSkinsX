@@ -33,6 +33,8 @@
     <Compile Include="Documents\Tabs\DocumentTabProviderContext.cs" />
     <Compile Include="Documents\Tabs\DocumentTabService.cs" />
     <Compile Include="Documents\Tabs\DocumentTabContext.cs" />
+    <Compile Include="Documents\Tabs\SaveService.cs" />
+    <Compile Include="Documents\Tabs\TabSaverProviderContext.cs" />
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\ShellPage.xaml.cs">

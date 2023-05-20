@@ -26,6 +26,7 @@
     <Compile Include="Documents\Tabs\DocumentTabContextMenuUIContext.cs" />
     <Compile Include="Documents\Tabs\DocumentTabVM.cs" />
     <Compile Include="Documents\Tabs\ExportDocumentTabProviderAttribute.cs" />
+    <Compile Include="Documents\Tabs\ExportTabSaverProviderAttribute.cs" />
     <Compile Include="Documents\Tabs\IDocumentTab.cs" />
     <Compile Include="Documents\Tabs\IDocumentTabContent.cs" />
     <Compile Include="Documents\Tabs\IDocumentTabContent2.cs" />
@@ -40,6 +41,10 @@
     <Compile Include="Documents\ExportDocumentProviderAttribute.cs" />
     <Compile Include="Documents\DocumentInfo.cs" />
     <Compile Include="Documents\FilePathKey.cs" />
+    <Compile Include="Documents\Tabs\ISaveService.cs" />
+    <Compile Include="Documents\Tabs\ITabSaver.cs" />
+    <Compile Include="Documents\Tabs\ITabSaverProvider.cs" />
+    <Compile Include="Documents\Tabs\TabSaverProviderMetadataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.CreatorStudio.rd.xml" />
   </ItemGroup>

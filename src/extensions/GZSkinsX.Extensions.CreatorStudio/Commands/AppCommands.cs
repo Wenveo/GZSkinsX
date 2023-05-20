@@ -14,6 +14,7 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Controls;
 using GZSkinsX.Api.CreatorStudio.Documents;
+using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
 
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -121,23 +122,61 @@ internal sealed class OpenFileCommand : CommandButtonVM
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 1)]
-internal sealed class SaveFileCommand : CommandButtonBase
+internal sealed class SaveFileCommand : CommandButtonVM
 {
-    public SaveFileCommand()
+    private readonly IDocumentTabService _documentTabService;
+    private readonly ISaveService _saveService;
+
+    [ImportingConstructor]
+    public SaveFileCommand(IDocumentTabService documentTabService, ISaveService saveService)
     {
-        DisplayName = "Save";
-        Icon = new SegoeFluentIcon { Glyph = "\uE105" };
+        _displayName = "Save";
+        _icon = new SegoeFluentIcon { Glyph = "\uE105" };
+        _isEnabled = false;
+
+        _saveService = saveService;
+        _documentTabService = documentTabService;
+        _documentTabService.ActiveTabChanged += OnActiveTabChanged;
+    }
+
+    private void OnActiveTabChanged(object sender, ActiveDocumentTabChangedEventArgs e)
+    {
+        IsEnabled = _saveService.CanSave(e.ActiveTab);
+    }
+
+    public override void OnClick(object sender, RoutedEventArgs e)
+    {
+        _saveService.Save(_documentTabService.ActiveTab);
     }
 }
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 2)]
-internal sealed class SaveAsFileCommand : CommandButtonBase
+internal sealed class SaveAsFileCommand : CommandButtonVM
 {
-    public SaveAsFileCommand()
+    private readonly IDocumentTabService _documentTabService;
+    private readonly ISaveService _saveService;
+
+    [ImportingConstructor]
+    public SaveAsFileCommand(IDocumentTabService documentTabService, ISaveService saveService)
     {
-        DisplayName = "Save As";
-        Icon = new SegoeFluentIcon { Glyph = "\uE792" };
+        _displayName = "Save As";
+        _icon = new SegoeFluentIcon { Glyph = "\uE792" };
+        _isEnabled = false;
+
+        _saveService = saveService;
+        _documentTabService = documentTabService;
+        _documentTabService.ActiveTabChanged += OnActiveTabChanged;
+    }
+
+    private void OnActiveTabChanged(object sender, ActiveDocumentTabChangedEventArgs e)
+    {
+        IsEnabled = _saveService.CanSave(e.ActiveTab);
+    }
+
+    public override void OnClick(object sender, RoutedEventArgs e)
+    {
+        _saveService.SaveAs(_documentTabService.ActiveTab);
     }
 }
 
