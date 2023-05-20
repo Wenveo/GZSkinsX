@@ -13,6 +13,8 @@ namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
 
 public interface IDocumentTab
 {
+    IDocument Document { get; }
+
     IDocumentTabContent? Content { get; }
 
     IconSource? IconSource { get; }

@@ -17,6 +17,8 @@ internal sealed class TextDocumentTab : DocumentTabVM
 {
     private readonly IDocument _document;
 
+    public override IDocument Document => _document;
+
     public TextDocumentTab(IDocument document)
     {
         _document = document;

@@ -15,6 +15,8 @@ namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
 
 public abstract class DocumentTabVM : ObservableObject, IDocumentTab
 {
+    public abstract IDocument Document { get; }
+
     public virtual IDocumentTabContent? Content
     {
         get => _content;

@@ -148,7 +148,7 @@ internal sealed class DocumentTabService : IDocumentTabService
                 if (_typedToProvider.TryGetValue(doc.Info.TypedGuid, out var providerContext))
                 {
                     var createdTab = providerContext.Value.Create(doc);
-                    var tabContext = new DocumentTabContext(doc, createdTab, SafeContextMenu);
+                    var tabContext = new DocumentTabContext(createdTab, SafeContextMenu);
 
                     _mainTabView.TabItems.Add(tabContext.UIObject);
                     tabContext.InternalOnAdded();
@@ -175,7 +175,7 @@ internal sealed class DocumentTabService : IDocumentTabService
                     if (item.DataContext is not DocumentTabContext context)
                         continue;
 
-                    if (context._doc.Key.Equals(doc.Key))
+                    if (context._tab.Document.Key.Equals(doc.Key))
                     {
                         if (i == 0 && count > 1)
                         {
@@ -221,7 +221,7 @@ internal sealed class DocumentTabService : IDocumentTabService
 
             if (!args2.Handled)
             {
-                _documentService.Remove(context._doc.Key);
+                _documentService.Remove(context._tab.Document.Key);
             }
         }
     }
@@ -247,7 +247,7 @@ internal sealed class DocumentTabService : IDocumentTabService
             if (context._tab != tab)
                 continue;
 
-            _documentService.Remove(context._doc.Key);
+            _documentService.Remove(context._tab.Document.Key);
             break;
         }
     }
@@ -257,7 +257,7 @@ internal sealed class DocumentTabService : IDocumentTabService
         if (_mainTabView.SelectedItem is MUXC.TabViewItem item &&
             item.DataContext is DocumentTabContext context)
         {
-            _documentService.Remove(context._doc.Key);
+            _documentService.Remove(context._tab.Document.Key);
         }
     }
 
@@ -283,7 +283,7 @@ internal sealed class DocumentTabService : IDocumentTabService
             if (context._tab == tab)
                 continue;
 
-            removedKeys.Add(context._doc.Key);
+            removedKeys.Add(context._tab.Document.Key);
             break;
         }
 

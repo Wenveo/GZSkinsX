@@ -11,7 +11,6 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.CreatorStudio.Documents;
 using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
 using GZSkinsX.Api.Helpers;
 
@@ -94,8 +93,6 @@ internal sealed class DocumentTabContext
     }
 
     internal readonly IDocumentTab _tab;
-    internal readonly IDocument _doc;
-
     private readonly MUXC.TabViewItem _tabViewItem;
     private readonly WUXC.ContentPresenter _contentPresenter;
 
@@ -103,9 +100,8 @@ internal sealed class DocumentTabContext
 
     public MUXC.TabViewItem UIObject => _tabViewItem;
 
-    public DocumentTabContext(IDocument doc, IDocumentTab tab, WUXC.MenuFlyout menuFlyout)
+    public DocumentTabContext(IDocumentTab tab, WUXC.MenuFlyout menuFlyout)
     {
-        _doc = doc;
         _tab = tab;
 
         _contentPresenter = new()
