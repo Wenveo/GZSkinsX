@@ -12,9 +12,10 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.WindowManager;
 
+using Windows.ApplicationModel;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -33,33 +34,39 @@ public sealed partial class PreloadPage : Page
         _mrtCoreMap = mainResourceMap.GetSubtree("GZSkinsX.Appx.Preload/Resources");
 
         InitializeComponent();
+        Loaded += OnLoaded;
     }
 
-    private void ShowCrashMessage(string message)
+    private async Task<bool> CheckFileSystemAccessAsync()
     {
-        DefaultContent.Visibility = Visibility.Collapsed;
-        CrashContent.Visibility = Visibility.Visible;
+        try
+        {
+            var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        CrashTextHost.Text = message;
+            /// 如果以下这段代码成功执行，则表示可访问，否则将会抛出异常
+            await StorageFolder.GetFolderFromPathAsync(userProfile);
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
-    private async Task<bool> CheckAccess()
+    private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        DefaultContent.Visibility = Visibility.Visible;
-        CrashContent.Visibility = Visibility.Collapsed;
+        var b = await CheckFileSystemAccessAsync();
+        if (!b)
+        {
+            await new ContentDialog
+            {
+                Title = "请求文件系统访问权限",
+                Content = new RequestFileSystemAccessView()
+            }.ShowAsync();
+        }
 
-        // 此处应为检查程序完整性的代码，现在
-        // 临时使用延迟实现加载过程的等待效果
-        var random = new Random();
-        var next = random.Next(1000, 1500);
-
-        await Task.Delay(next);
-        return true;
-    }
-
-    private async Task OnNavigateToImpl()
-    {
-        var b = await CheckAccess();
+        b = await Package.Current.VerifyContentIntegrityAsync();
         if (b)
         {
             if (AppxContext.TryResolve<IWindowManagerService>(out var windowManagerService))
@@ -82,8 +89,11 @@ public sealed partial class PreloadPage : Page
         }
     }
 
-    protected override async void OnNavigatedTo(NavigationEventArgs e)
+    private void ShowCrashMessage(string message)
     {
-        await OnNavigateToImpl();
+        DefaultContent.Visibility = Visibility.Collapsed;
+        CrashContent.Visibility = Visibility.Visible;
+
+        CrashTextHost.Text = message;
     }
 }
