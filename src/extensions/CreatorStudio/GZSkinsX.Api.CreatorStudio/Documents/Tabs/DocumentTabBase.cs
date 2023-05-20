@@ -15,7 +15,7 @@ public abstract class DocumentTabBase : IDocumentTab
 {
     public abstract IDocument Document { get; }
 
-    public IDocumentTabContent? Content { get; protected set; }
+    public abstract IDocumentTabContent Content { get; }
 
     public IconSource? IconSource { get; protected set; }
 

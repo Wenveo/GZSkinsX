@@ -15,17 +15,17 @@ namespace GZSkinsX.Extensions.CreatorStudio.Text;
 
 internal sealed class TextDocumentTab : DocumentTabVM
 {
-    private readonly IDocument _document;
+    public override IDocument Document { get; }
 
-    public override IDocument Document => _document;
+    public override IDocumentTabContent Content { get; }
 
     public TextDocumentTab(IDocument document)
     {
-        _document = document;
+        Document = document;
+        Content = new TextDocumentTabContent(document);
 
-        _title = _document.FileName;
-        _toolTip = _document.Info.FullPath;
+        _title = document.FileName;
+        _toolTip = document.Info.FullPath;
         _iconSource = new SegoeFluentIconSource { Glyph = "\xE8A5" };
-        _content = new TextDocumentTabContent(document);
     }
 }

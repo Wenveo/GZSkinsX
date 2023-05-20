@@ -15,7 +15,7 @@ public interface IDocumentTab
 {
     IDocument Document { get; }
 
-    IDocumentTabContent? Content { get; }
+    IDocumentTabContent Content { get; }
 
     IconSource? IconSource { get; }
 

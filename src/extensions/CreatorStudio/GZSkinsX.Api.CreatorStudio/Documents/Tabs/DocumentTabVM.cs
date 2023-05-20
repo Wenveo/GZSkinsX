@@ -17,11 +17,7 @@ public abstract class DocumentTabVM : ObservableObject, IDocumentTab
 {
     public abstract IDocument Document { get; }
 
-    public virtual IDocumentTabContent? Content
-    {
-        get => _content;
-        protected set => SetProperty(ref _content, value);
-    }
+    public abstract IDocumentTabContent Content { get; }
 
     public virtual IconSource? IconSource
     {
@@ -47,7 +43,6 @@ public abstract class DocumentTabVM : ObservableObject, IDocumentTab
 
     public virtual void OnRemoved() { }
 
-    protected IDocumentTabContent? _content;
     protected IconSource? _iconSource;
     protected string? _title;
     protected object? _toolTip;
