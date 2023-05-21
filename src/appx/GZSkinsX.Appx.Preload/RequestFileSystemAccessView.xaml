@@ -42,7 +42,7 @@
 
             <RichTextBlock Margin="0,4,0,0" HorizontalAlignment="Right">
                 <Paragraph FontWeight="ExtraBold">在对该应用授予文件系统访问权限后</Paragraph>
-                <Paragraph FontWeight="ExtraBold" TextAlignment="Right">程序将会自动关闭，重新打开即可。</Paragraph>
+                <Paragraph FontWeight="ExtraBold" TextAlignment="Right">程序将会被强制关闭，重新打开即可</Paragraph>
             </RichTextBlock>
         </StackPanel>
     </Grid>
