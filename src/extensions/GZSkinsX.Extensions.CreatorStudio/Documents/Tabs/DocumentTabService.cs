@@ -143,20 +143,49 @@ internal sealed class DocumentTabService : IDocumentTabService
         if (args.EventType == DocumentCollectionEventType.Add)
         {
             var addedItems = new List<IDocumentTab>();
-            foreach (var doc in args.Documents)
-            {
-                if (_typedToProvider.TryGetValue(doc.Info.TypedGuid, out var providerContext))
-                {
-                    var createdTab = providerContext.Value.Create(doc);
-                    var tabContext = new DocumentTabContext(createdTab, SafeContextMenu);
 
-                    _mainTabView.TabItems.Add(tabContext.UIObject);
-                    tabContext.InternalOnAdded();
-                    addedItems.Add(createdTab);
+            var lastItemIndex = -1;
+            for (var i = 0; i < args.Documents.Length; i++)
+            {
+                var doc = args.Documents[i];
+
+                var hasItem = false;
+                for (var j = 0; j < _mainTabView.TabItems.Count; j++)
+                {
+                    var item = _mainTabView.TabItems[j];
+                    if (item is not MUXC.TabViewItem tabViewItem)
+                        continue;
+
+                    if (tabViewItem.DataContext is not DocumentTabContext context)
+                        continue;
+
+                    if (context._tab.Document.Key.Equals(doc.Key))
+                    {
+                        hasItem = true;
+                        if (i == args.Documents.Length - 1)
+                        {
+                            lastItemIndex = j;
+                        }
+
+                        break;
+                    }
+                }
+
+                if (!hasItem)
+                {
+                    if (_typedToProvider.TryGetValue(doc.Info.TypedGuid, out var providerContext))
+                    {
+                        var createdTab = providerContext.Value.Create(doc);
+                        var tabContext = new DocumentTabContext(createdTab, SafeContextMenu);
+
+                        _mainTabView.TabItems.Add(tabContext.UIObject);
+                        tabContext.InternalOnAdded();
+                        addedItems.Add(createdTab);
+                    }
                 }
             }
 
-            _mainTabView.SelectedIndex = _mainTabView.TabItems.Count - 1;
+            _mainTabView.SelectedIndex = lastItemIndex == -1 ? _mainTabView.TabItems.Count - 1 : lastItemIndex;
             CollectionChanged?.Invoke(this, new DocumentTabCollectionChangedEventArgs(addedItems.ToArray(), null));
         }
         else
