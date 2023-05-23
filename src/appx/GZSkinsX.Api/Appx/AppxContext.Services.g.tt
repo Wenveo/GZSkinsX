@@ -102,12 +102,17 @@ public static partial class AppxContext
     /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化，或找不到指定 <typeparamref name="T"/> 导出类型的对象时发生</exception>
     private static T CheckAccess<T>([global::System.Diagnostics.CodeAnalysis.NotNull] ref T? service) where T : class
     {
-        if (_compositionHost is null)
+        if (service is null)
         {
-            throw new global::System.InvalidOperationException("The main app is not initialized!");
+            if (_compositionHost is null)
+            {
+                throw new global::System.InvalidOperationException("The main app is not initialized!");
+            }
+
+            service = _compositionHost.GetExport<T>();
         }
 
-        return service ??= _compositionHost.GetExport<T>();
+        return service;
     }
     
 <#
