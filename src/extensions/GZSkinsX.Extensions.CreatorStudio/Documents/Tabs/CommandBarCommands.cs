@@ -108,7 +108,16 @@ internal sealed class UndoCommand : CommandButtonVM
 
     public override void OnClick(object sender, RoutedEventArgs e)
     {
-        _undoManager?.Undo();
+        if (_undoManager is not null)
+        {
+            _undoManager.Undo();
+
+            IsEnabled = _undoManager.CanUndo;
+        }
+        else
+        {
+            IsEnabled = false;
+        }
     }
 }
 
@@ -141,6 +150,15 @@ internal sealed class RedoCommand : CommandButtonVM
 
     public override void OnClick(object sender, RoutedEventArgs e)
     {
-        _undoManager?.Redo();
+        if (_undoManager is not null)
+        {
+            _undoManager.Redo();
+
+            IsEnabled = _undoManager.CanRedo;
+        }
+        else
+        {
+            IsEnabled = false;
+        }
     }
 }
