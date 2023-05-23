@@ -8,6 +8,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Composition;
 using System.IO;
@@ -264,26 +265,33 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
 
     private async Task InitializeAssetsExplorerAsync()
     {
-        var rootDirectory = new DirectoryInfo(_gameService.RootDirectory);
+        var dataPath = Path.Combine(_gameService.GameData.GameDirectory, "DATA");
+        var pluginsPath = Path.Combine(_gameService.GameData.LCUDirectory, "Plugins");
 
-        var dataFolder = Path.Combine(_gameService.GameData.GameDirectory, "DATA").ToLower();
-        var pluginsFolder = Path.Combine(_gameService.GameData.LCUDirectory, "Plugins").ToLower();
+        IEnumerable<FileInfo>? allFiles = null;
 
-        var allFiles = rootDirectory.EnumerateFiles("*", SearchOption.AllDirectories)
-            .Where(file =>
-            {
-                var fullPath = file.FullName.ToLower();
-                return fullPath.Contains(dataFolder) || fullPath.Contains(pluginsFolder);
-            })
-            .OrderBy(file => file.FullName);
+        if (Directory.Exists(dataPath))
+        {
+            allFiles = new DirectoryInfo(dataPath).EnumerateFiles(string.Empty, SearchOption.AllDirectories);
+        }
 
-        var filteredFiles = allFiles.Where(a => IsSupportedFileType(a.Extension));
-        var rootPathLength = rootDirectory.FullName.Length + 1; // + DirectorySeparatorChar
+        if (Directory.Exists(pluginsPath))
+        {
+            var subFiles = new DirectoryInfo(pluginsPath).EnumerateFiles(string.Empty, SearchOption.AllDirectories);
+            allFiles = allFiles is not null ? allFiles.Union(subFiles) : subFiles;
+        }
 
-        _rootContainer = new AssetsExplorerContainer(rootDirectory);
+        _rootContainer = new AssetsExplorerContainer(new(_gameService.RootDirectory));
+
+        if (allFiles is null)
+        {
+            return;
+        }
+
+        var prefixLength = _gameService.RootDirectory.Length + 1;
         foreach (var item in allFiles)
         {
-            var parts = item.FullName[rootPathLength..].Split(Path.DirectorySeparatorChar);
+            var parts = item.FullName[prefixLength..].Split(Path.DirectorySeparatorChar);
             var currentContainer = _rootContainer;
 
             for (var i = 0; i < parts.Length - 1; i++)
@@ -307,20 +315,20 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
             currentContainer.AddChild(new AssetsExplorerFile(item));
         }
 
-        void LoadNodesFromContainer(AssetsExplorerContainer rootConatiner)
-        {
-            _treeView.RootNodes.Clear();
-            foreach (var subContainers in rootConatiner.Children.OfType<AssetsExplorerContainer>())
-                _treeView.RootNodes.Add(CreateItemFromContainer(subContainers));
-
-            foreach (var subFile in rootConatiner.Children.OfType<AssetsExplorerFile>())
-                _treeView.RootNodes.Add(CreateItemFromFile(subFile));
-        }
-
         if (_treeView.Dispatcher.HasThreadAccess)
             LoadNodesFromContainer(_rootContainer);
         else
             await _treeView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => LoadNodesFromContainer(_rootContainer));
+    }
+
+    private void LoadNodesFromContainer(AssetsExplorerContainer rootConatiner)
+    {
+        _treeView.RootNodes.Clear();
+        foreach (var subContainers in rootConatiner.Children.OfType<AssetsExplorerContainer>())
+            _treeView.RootNodes.Add(CreateItemFromContainer(subContainers));
+
+        foreach (var subFile in rootConatiner.Children.OfType<AssetsExplorerFile>())
+            _treeView.RootNodes.Add(CreateItemFromFile(subFile));
     }
 
     private MUXC.TreeViewNode CreateItemFromContainer(AssetsExplorerContainer container)
@@ -343,12 +351,6 @@ internal sealed class AssetsExplorerService : IAssetsExplorerService
         AutomationProperties.SetName(treeViewNode, item.Name);
         return treeViewNode;
     }
-
-    private static bool IsSupportedFileType(string fileNameWithExtension) => fileNameWithExtension switch
-    {
-        ".cfg" or ".ini" or ".json" or ".yaml" or ".wad" or ".client" => true,
-        _ => false
-    };
 
     private static SolidColorBrush GetLoadingBackground(ElementTheme actualTheme)
     {
