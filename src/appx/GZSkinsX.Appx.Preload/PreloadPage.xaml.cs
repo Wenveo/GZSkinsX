@@ -56,17 +56,7 @@ public sealed partial class PreloadPage : Page
 
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        var b = await CheckFileSystemAccessAsync();
-        if (!b)
-        {
-            await new ContentDialog
-            {
-                Title = "请求文件系统访问权限",
-                Content = new RequestFileSystemAccessView()
-            }.ShowAsync();
-        }
-
-        b = await Package.Current.VerifyContentIntegrityAsync();
+        var b = await Package.Current.VerifyContentIntegrityAsync();
         if (b)
         {
             if (AppxContext.TryResolve<IWindowManagerService>(out var windowManagerService))
