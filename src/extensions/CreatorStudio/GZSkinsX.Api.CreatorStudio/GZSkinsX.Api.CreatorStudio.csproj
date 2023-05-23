@@ -30,6 +30,7 @@
     <Compile Include="Documents\Tabs\IDocumentTab.cs" />
     <Compile Include="Documents\Tabs\IDocumentTabContent.cs" />
     <Compile Include="Documents\Tabs\IDocumentTabContent2.cs" />
+    <Compile Include="Documents\Tabs\IDocumentTabContent3.cs" />
     <Compile Include="Documents\Tabs\IDocumentTabProvider.cs" />
     <Compile Include="Documents\Tabs\IDocumentTabService.cs" />
     <Compile Include="Documents\Tabs\DocumentTabCollectionChangedEventArgs.cs" />
@@ -44,6 +45,9 @@
     <Compile Include="Documents\Tabs\ISaveService.cs" />
     <Compile Include="Documents\Tabs\ITabSaver.cs" />
     <Compile Include="Documents\Tabs\ITabSaverProvider.cs" />
+    <Compile Include="Documents\Tabs\IUndoManager.cs" />
+    <Compile Include="Documents\Tabs\IUndoCommand.cs" />
+    <Compile Include="Documents\Tabs\IUndoManagerFactory.cs" />
     <Compile Include="Documents\Tabs\TabSaverProviderMetadataAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\GZSkinsX.Api.CreatorStudio.rd.xml" />
