@@ -9,9 +9,9 @@ using System;
 using System.Composition;
 
 using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.Api.CreatorStudio.Documents.Undo;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
 
 [Shared, Export(typeof(IUndoManagerFactory))]
 internal sealed class UndoManagerFactory : IUndoManagerFactory

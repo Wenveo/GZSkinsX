@@ -11,9 +11,9 @@ using System;
 using System.Collections.Generic;
 
 using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.Api.CreatorStudio.Documents.Undo;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
 
 internal sealed class UndoManager : IUndoManager, IEquatable<UndoManager>
 {

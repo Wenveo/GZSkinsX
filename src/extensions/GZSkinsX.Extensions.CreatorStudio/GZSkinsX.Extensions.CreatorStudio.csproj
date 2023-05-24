@@ -36,8 +36,9 @@
     <Compile Include="Documents\Tabs\DocumentTabContext.cs" />
     <Compile Include="Documents\Tabs\SaveService.cs" />
     <Compile Include="Documents\Tabs\TabSaverProviderContext.cs" />
-    <Compile Include="Documents\Tabs\UndoManager.cs" />
-    <Compile Include="Documents\Tabs\UndoManagerFactory.cs" />
+    <Compile Include="Documents\Undo\CommandBarCommands.cs" />
+    <Compile Include="Documents\Undo\UndoManager.cs" />
+    <Compile Include="Documents\Undo\UndoManagerFactory.cs" />
     <Compile Include="ExportNavigationItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\ShellPage.xaml.cs">
