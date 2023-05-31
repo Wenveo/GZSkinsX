@@ -73,6 +73,10 @@
       <Project>{162de1fb-3cf4-48cd-be91-3dc44b6facb2}</Project>
       <Name>GZSkinsX.Extensions.CreatorStudio.Text</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CreatorStudio\GZSkinsX.Extensions.CreatorStudio.Wad\GZSkinsX.Extensions.CreatorStudio.Wad.csproj">
+      <Project>{316543f3-bed9-4736-a321-21bdf1a9241e}</Project>
+      <Name>GZSkinsX.Extensions.CreatorStudio.Wad</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="AssetsExplorer\TreeViewNodeItemTemplate.xaml">

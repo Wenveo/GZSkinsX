@@ -39,6 +39,7 @@ public class TheExtension : IUniversalExtension
     public static IEnumerable<Assembly> GetSubModules()
     {
         yield return typeof(GZSkinsX.Extensions.CreatorStudio.Text.SubModule).Assembly;
+        yield return typeof(GZSkinsX.Extensions.CreatorStudio.Wad.SubModule).Assembly;
         yield break;
     }
 }
