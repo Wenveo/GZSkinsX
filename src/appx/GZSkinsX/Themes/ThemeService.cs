@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 using GZSkinsX.SDK.Appx;
 using GZSkinsX.SDK.Themes;
-using GZSkinsX.Uwp.UI.Toolkit.Extensions;
+using GZSkinsX.SDK.Toolkit;
 
 using Windows.System;
 using Windows.UI.ViewManagement;

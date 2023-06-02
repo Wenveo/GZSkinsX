@@ -16,7 +16,7 @@ using GZSkinsX.SDK.Helpers;
 using GZSkinsX.SDK.Navigation;
 using GZSkinsX.SDK.Themes;
 using GZSkinsX.SDK.WindowManager;
-using GZSkinsX.DotNet.Diagnostics;
+using GZSkinsX.SDK.Diagnostics;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

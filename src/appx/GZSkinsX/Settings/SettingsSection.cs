@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 using GZSkinsX.SDK.Settings;
-using GZSkinsX.DotNet.Diagnostics;
+using GZSkinsX.SDK.Diagnostics;
 
 using Windows.Storage;
 

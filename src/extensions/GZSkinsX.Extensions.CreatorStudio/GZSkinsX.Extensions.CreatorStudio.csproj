@@ -86,14 +86,6 @@
       <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
       <Name>GZSkinsX.SDK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.Composition\GZSkinsX.Uwp.Composition.csproj">
-      <Project>{7182d367-4984-4a8f-98bd-e276c98ad095}</Project>
-      <Name>GZSkinsX.Uwp.Composition</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.UI\GZSkinsX.Uwp.UI.csproj">
-      <Project>{8884efb7-02b2-4dd3-85bc-48d95ee21804}</Project>
-      <Name>GZSkinsX.Uwp.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\NewDocument\NewFileView.xaml">

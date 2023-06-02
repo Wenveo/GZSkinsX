@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 using GZSkinsX.SDK.AccessCache;
 using GZSkinsX.SDK.Settings;
-using GZSkinsX.DotNet.Diagnostics;
+using GZSkinsX.SDK.Diagnostics;
 
 using Windows.Foundation;
 using Windows.Storage;

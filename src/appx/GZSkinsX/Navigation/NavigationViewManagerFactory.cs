@@ -13,7 +13,7 @@ using System.Linq;
 using GZSkinsX.SDK.Helpers;
 using GZSkinsX.SDK.Navigation;
 using GZSkinsX.SDK.Utilities;
-using GZSkinsX.DotNet.Diagnostics;
+using GZSkinsX.SDK.Diagnostics;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 

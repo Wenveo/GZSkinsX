@@ -43,12 +43,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GZSkinsX.Uwp.UI.Toolkit\GZSkinsX.Uwp.UI.Toolkit.csproj">
-      <Project>{8ff44d52-4886-489a-950c-9da5ad62b90e}</Project>
-      <Name>GZSkinsX.Uwp.UI.Toolkit</Name>
-    </ProjectReference>
-  </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

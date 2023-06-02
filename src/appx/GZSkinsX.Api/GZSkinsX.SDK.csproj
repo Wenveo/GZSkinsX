@@ -37,6 +37,18 @@
     <Compile Include="Commands\ICommandItem.cs" />
     <Compile Include="Commands\ICommandObject.cs" />
     <Compile Include="Commands\ICommandToggleButton.cs" />
+    <Compile Include="Composition\CompositionExtensions.CompositionAnimation.cs" />
+    <Compile Include="Composition\CompositionExtensions.CompositionObject.cs" />
+    <Compile Include="Composition\CompositionExtensions.CompositionPropetrySet.cs" />
+    <Compile Include="Composition\CompositionExtensions.Compositor.cs" />
+    <Compile Include="Composition\CompositionExtensions.FrameworkElement.cs" />
+    <Compile Include="Composition\CompositionExtensions.KeyFrameAnimation.cs" />
+    <Compile Include="Composition\CompositionExtensions.UIElement.cs" />
+    <Compile Include="Composition\CompositionExtensions.Visual.cs" />
+    <Compile Include="Composition\CompositionFactory.cs" />
+    <Compile Include="Composition\CompositionFactory.Properties.cs" />
+    <Compile Include="Composition\CompositionFactory.PropertyChangedCallbacks.cs" />
+    <Compile Include="Composition\CompositionObjectPool.cs" />
     <Compile Include="ContextMenu\ContextMenuConstants.cs" />
     <Compile Include="ContextMenu\ContextMenuOptions.cs" />
     <Compile Include="ContextMenu\ContextMenuUIContext%27T.cs" />
@@ -58,12 +70,28 @@
     <Compile Include="ContextMenu\ContextMenuItemBase.cs" />
     <Compile Include="ContextMenu\ContextMenuItemMetadataAttribute.cs" />
     <Compile Include="ContextMenu\ContextMenuUIContext.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Data.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Events.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Helper.cs" />
+    <Compile Include="Controls\GridSplitter\GridSplitter.Options.cs" />
+    <Compile Include="Controls\GridSplitter\GripperHoverWrapper.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />
     <Compile Include="Controls\SegoeFluentIconSource.cs" />
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
     <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
+    <Compile Include="Controls\SettingsCard\SettingsCard.cs" />
+    <Compile Include="Controls\SettingsCard\SettingsCard.Properties.cs" />
+    <Compile Include="Controls\SettingsCard\SettingsCardAutomationPeer.cs" />
+    <Compile Include="Controls\SettingsExpander\SettingsExpander.cs" />
+    <Compile Include="Controls\SettingsExpander\SettingsExpander.Events.cs" />
+    <Compile Include="Controls\SettingsExpander\SettingsExpander.ItemsControl.cs" />
+    <Compile Include="Controls\SettingsExpander\SettingsExpander.Properties.cs" />
+    <Compile Include="Controls\SettingsExpander\SettingsExpanderAutomationPeer.cs" />
+    <Compile Include="Controls\SettingsExpander\SettingsExpanderItemStyleSelector.cs" />
     <Compile Include="Controls\ShortcutKey.cs" />
     <Compile Include="Controls\StaticFontFamilys.cs" />
+    <Compile Include="Diagnostics\Debug2.cs" />
     <Compile Include="Extension\AdvanceExtensionMetadataAttribute.cs" />
     <Compile Include="Extension\AdvanceExtensionTrigger.cs" />
     <Compile Include="Extension\ExportAdvanceExtensionAttribute.cs" />
@@ -75,7 +103,11 @@
     <Compile Include="Game\GameRegion.cs" />
     <Compile Include="Game\IGameData.cs" />
     <Compile Include="Game\IGameService.cs" />
+    <Compile Include="Toolkit\Extensions\DispatcherQueueExtensions.cs" />
+    <Compile Include="Toolkit\Helpers\ResourceDictionaryExtensions.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Toolkit\Helpers\StyleExtensions.cs" />
+    <Compile Include="Toolkit\Helpers\WeakEventListener.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="MRT\IMRTCoreMap.cs" />
@@ -94,6 +126,9 @@
     <Compile Include="Settings\SettingsType.cs" />
     <Compile Include="Themes\IThemeService.cs" />
     <Compile Include="Themes\ThemeChangedEventArgs.cs" />
+    <Compile Include="Toolkit\Triggers\ControlSizeTrigger.cs" />
+    <Compile Include="Toolkit\Triggers\IsEqualStateTrigger.cs" />
+    <Compile Include="Toolkit\Triggers\IsNullOrEmptyStateTrigger.cs" />
     <Compile Include="Utilities\BoolToVisibilityConvert.cs" />
     <Compile Include="Utilities\ItemGroupParser.cs" />
     <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
@@ -122,7 +157,24 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Controls\GridSplitter\GridSplitter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SettingsCard\SettingsCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SettingsExpander\SettingsExpander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

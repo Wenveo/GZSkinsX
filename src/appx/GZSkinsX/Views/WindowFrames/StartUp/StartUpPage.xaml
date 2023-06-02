@@ -2,7 +2,7 @@
     x:Class="GZSkinsX.Views.WindowFrames.StartUp.StartUpPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:composition="using:GZSkinsX.Uwp.Composition"
+    xmlns:composition="using:GZSkinsX.SDK.Composition"
     xmlns:ctrls2="using:GZSkinsX.SDK.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Views.WindowFrames.StartUp"

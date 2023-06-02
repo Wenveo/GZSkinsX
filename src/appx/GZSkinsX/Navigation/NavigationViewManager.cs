@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using GZSkinsX.SDK.Navigation;
-using GZSkinsX.DotNet.Diagnostics;
+using GZSkinsX.SDK.Diagnostics;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;

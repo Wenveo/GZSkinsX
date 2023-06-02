@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///GZSkinsX.SDK/Controls/GridSplitter/GridSplitter.xaml" />
+        <ResourceDictionary Source="ms-appx:///GZSkinsX.SDK/Controls/SettingsCard/SettingsCard.xaml" />
+        <ResourceDictionary Source="ms-appx:///GZSkinsX.SDK/Controls/SettingsExpander/SettingsExpander.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
