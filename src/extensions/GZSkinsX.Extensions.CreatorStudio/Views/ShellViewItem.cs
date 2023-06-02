@@ -19,7 +19,7 @@ namespace GZSkinsX.Extensions.CreatorStudio.Views;
 
 [Shared, ExportNavigationItem]
 [NavigationItemMetadata(OwnerGuid = NavigationConstants.NAVIGATIONROOT_NV_GUID, Group = NavigationConstants.GROUP_NAVIGATIONROOT_NV_DEVTOOLS, Order = 0,
-    Guid = "F1698DF7-F971-4558-A07B-27B019DDB239", Header = "resx:GZSkinsX.Extensions.CreatorStudio/Resources/NavItem_Header", PageType = typeof(ShellPage))]
+    Guid = "F1698DF7-F971-4558-A07B-27B019DDB239", Header = "resx:GZSkinsX.Extensions.CreatorStudio/Resources/NavigationViewItem_CreatorStudio_Header", PageType = typeof(ShellPage))]
 internal sealed class ShellViewItem : INavigationItem
 {
     public IconElement Icon => new SegoeFluentIcon { Glyph = "\uEB3C" };

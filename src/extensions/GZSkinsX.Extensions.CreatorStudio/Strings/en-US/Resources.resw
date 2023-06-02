@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NavItem_Header" xml:space="preserve">
-    <value>创作者工作室</value>
+  <data name="NavigationViewItem_CreatorStudio_Header" xml:space="preserve">
+    <value>Creator Studio</value>
   </data>
 </root>
