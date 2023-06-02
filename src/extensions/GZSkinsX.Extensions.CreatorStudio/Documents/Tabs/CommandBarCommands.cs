@@ -85,12 +85,22 @@ internal sealed class SaveFileCommand : CommandButtonVM
 
     private void OnActiveTabChanged(object sender, ActiveDocumentTabChangedEventArgs e)
     {
-        IsEnabled = _saveService.CanSave(e.ActiveTab);
+        if (e.ActiveTab is not null)
+        {
+            IsEnabled = _saveService.CanSave(e.ActiveTab);
+        }
+        else
+        {
+            IsEnabled = false;
+        }
     }
 
     public override void OnClick(object sender, RoutedEventArgs e)
     {
-        _saveService.Save(_documentTabService.ActiveTab);
+        if (_documentTabService.ActiveTab is not null)
+        {
+            _saveService.Save(_documentTabService.ActiveTab);
+        }
     }
 }
 
@@ -115,11 +125,21 @@ internal sealed class SaveAsFileCommand : CommandButtonVM
 
     private void OnActiveTabChanged(object sender, ActiveDocumentTabChangedEventArgs e)
     {
-        IsEnabled = _saveService.CanSave(e.ActiveTab);
+        if (e.ActiveTab is not null)
+        {
+            IsEnabled = _saveService.CanSave(e.ActiveTab);
+        }
+        else
+        {
+            IsEnabled = false;
+        }
     }
 
     public override void OnClick(object sender, RoutedEventArgs e)
     {
-        _saveService.SaveAs(_documentTabService.ActiveTab);
+        if (_documentTabService.ActiveTab is not null)
+        {
+            _saveService.SaveAs(_documentTabService.ActiveTab);
+        }
     }
 }
