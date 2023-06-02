@@ -19,9 +19,9 @@ using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Navigation;
 
-/// <inheritdoc cref="INavigationViewFactory"/>
-[Shared, Export(typeof(INavigationViewFactory))]
-internal sealed class NavigationViewFactory : INavigationViewFactory
+/// <inheritdoc cref="INavigationViewManagerFactory"/>
+[Shared, Export(typeof(INavigationViewManagerFactory))]
+internal sealed class NavigationViewManagerFactory : INavigationViewManagerFactory
 {
     /// <summary>
     /// 存放所有已导出的 <see cref="INavigationItem"/> 对象实例
@@ -34,7 +34,7 @@ internal sealed class NavigationViewFactory : INavigationViewFactory
     private readonly Dictionary<Guid, Dictionary<string, NavigationGroupContext>> _guidToGroups;
 
     [ImportingConstructor]
-    public NavigationViewFactory([ImportMany] IEnumerable<Lazy<INavigationItem, NavigationItemMetadataAttribute>> mefNavItems)
+    public NavigationViewManagerFactory([ImportMany] IEnumerable<Lazy<INavigationItem, NavigationItemMetadataAttribute>> mefNavItems)
     {
         _mefNavItems = mefNavItems;
         _guidToGroups = new();

@@ -42,7 +42,7 @@
     <Compile Include="MRT\MRTCoreService.cs" />
     <Compile Include="Navigation\NavigationGroupContext.cs" />
     <Compile Include="Navigation\NavigationItemContext.cs" />
-    <Compile Include="Navigation\NavigationViewFactory.cs" />
+    <Compile Include="Navigation\NavigationViewManagerFactory.cs" />
     <Compile Include="Navigation\NavigationViewManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingsSection.cs" />

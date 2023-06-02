@@ -12,7 +12,7 @@ namespace GZSkinsX.Api.Navigation;
 /// <summary>
 /// 导航视图工厂的接口定义，提供枚举导航项以创建 <see cref="INavigationViewManager"/> 的能力
 /// </summary>
-public interface INavigationViewFactory
+public interface INavigationViewManagerFactory
 {
     /// <summary>
     /// 通过指定的 <see cref="System.Guid"/> 字符串值创建一个新的 <see cref="INavigationViewManager"/> 实现

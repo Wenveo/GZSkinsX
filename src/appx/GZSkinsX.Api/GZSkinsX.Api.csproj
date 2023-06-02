@@ -83,7 +83,7 @@
     <Compile Include="MRT\MRTCoreConstants.cs" />
     <Compile Include="Navigation\ExportNavigationItemAttribute.cs" />
     <Compile Include="Navigation\INavigationItem.cs" />
-    <Compile Include="Navigation\INavigationViewFactory.cs" />
+    <Compile Include="Navigation\INavigationViewManagerFactory.cs" />
     <Compile Include="Navigation\INavigationViewManager.cs" />
     <Compile Include="Navigation\NavigationConstants.cs" />
     <Compile Include="Navigation\NavigationItemMetadataAttribute.cs" />

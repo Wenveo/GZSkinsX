@@ -94,9 +94,9 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Navigation.INavigationViewFactory"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Navigation.INavigationViewFactory NavigationViewFactory
+    public static global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory NavigationViewFactory
     {
         get => CheckAccess(ref s_navigationViewFactory);
     }
@@ -189,7 +189,7 @@ public static partial class AppxContext
     private static global::GZSkinsX.Api.Game.IGameService? s_gameService;
     private static global::GZSkinsX.Api.Logging.ILoggingService? s_loggingService;
     private static global::GZSkinsX.Api.MRT.IMRTCoreService? s_mRTCoreService;
-    private static global::GZSkinsX.Api.Navigation.INavigationViewFactory? s_navigationViewFactory;
+    private static global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory? s_navigationViewFactory;
     private static global::GZSkinsX.Api.Settings.ISettingsService? s_settingsService;
     private static global::GZSkinsX.Api.Themes.IThemeService? s_themeService;
     private static global::GZSkinsX.Api.WindowManager.IWindowManagerService? s_windowManagerService;
