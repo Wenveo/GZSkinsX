@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents;
+namespace GZSkinsX.SDK.CreatorStudio.Documents;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportDocumentProviderAttribute : ExportAttribute

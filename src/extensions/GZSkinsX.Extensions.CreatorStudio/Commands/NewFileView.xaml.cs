@@ -7,8 +7,8 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.CreatorStudio.Documents;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.CreatorStudio.Documents;
 
 using Windows.UI.Xaml.Controls;
 

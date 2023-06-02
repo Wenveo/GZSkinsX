@@ -9,11 +9,11 @@
 
 using System;
 
-using GZSkinsX.Api.AccessCache;
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Game;
-using GZSkinsX.Api.Helpers;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.AccessCache;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Game;
+using GZSkinsX.SDK.Helpers;
+using GZSkinsX.SDK.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Storage.Pickers;

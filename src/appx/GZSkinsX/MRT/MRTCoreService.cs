@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Composition;
 
-using GZSkinsX.Api.MRT;
+using GZSkinsX.SDK.MRT;
 
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;

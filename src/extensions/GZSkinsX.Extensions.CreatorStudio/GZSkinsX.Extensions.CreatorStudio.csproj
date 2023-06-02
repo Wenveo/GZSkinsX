@@ -53,9 +53,9 @@
     <EmbeddedResource Include="Properties\GZSkinsX.Extensions.CreatorStudio.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\appx\GZSkinsX.Api\GZSkinsX.Api.csproj">
+    <ProjectReference Include="..\..\appx\GZSkinsX.Api\GZSkinsX.SDK.csproj">
       <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
-      <Name>GZSkinsX.Api</Name>
+      <Name>GZSkinsX.SDK</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.Composition\GZSkinsX.Uwp.Composition.csproj">
       <Project>{7182d367-4984-4a8f-98bd-e276c98ad095}</Project>

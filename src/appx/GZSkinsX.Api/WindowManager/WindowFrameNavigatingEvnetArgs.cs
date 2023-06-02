@@ -9,7 +9,7 @@
 
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.SDK.WindowManager;
 
 /// <summary>
 /// 表示在 <see cref="IWindowManagerService"/> 中进行导航时所用到的事件参数

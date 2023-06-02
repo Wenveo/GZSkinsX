@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Api.MRT;
+namespace GZSkinsX.SDK.MRT;
 
 /// <summary>
 /// 提供对应用程序资源映射和本地化资源的访问权限

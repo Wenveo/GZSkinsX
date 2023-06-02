@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.Logging;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Extension;
+using GZSkinsX.SDK.Logging;
 
 using Windows.UI.Xaml;
 

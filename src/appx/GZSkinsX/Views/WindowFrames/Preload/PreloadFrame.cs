@@ -11,9 +11,9 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Logging;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Logging;
+using GZSkinsX.SDK.WindowManager;
 
 using Windows.Foundation;
 using Windows.Foundation.Metadata;

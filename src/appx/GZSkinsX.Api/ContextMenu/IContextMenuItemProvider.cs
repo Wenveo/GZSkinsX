@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 提供用于实现菜单项的自定义子级上下文菜单的菜单项集合

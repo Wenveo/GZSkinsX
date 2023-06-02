@@ -11,7 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public abstract class DocumentTabVM : ObservableObject, IDocumentTab
 {

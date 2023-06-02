@@ -9,10 +9,10 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Commands;
-using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
-using GZSkinsX.Api.CreatorStudio.Documents.Undo;
+using GZSkinsX.SDK.Commands;
+using GZSkinsX.SDK.Controls;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.CreatorStudio.Documents.Undo;
 
 using Windows.System;
 using Windows.UI.Xaml;

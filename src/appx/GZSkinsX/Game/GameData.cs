@@ -11,7 +11,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-using GZSkinsX.Api.Game;
+using GZSkinsX.SDK.Game;
 
 namespace GZSkinsX.Game;
 

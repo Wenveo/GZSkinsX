@@ -5,7 +5,7 @@
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:composition="using:GZSkinsX.Uwp.Composition"
-    xmlns:ctrls2="using:GZSkinsX.Api.Controls"
+    xmlns:ctrls2="using:GZSkinsX.SDK.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Views.WindowFrames.NavigationRoot"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

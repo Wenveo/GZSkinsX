@@ -9,7 +9,7 @@
 
 using System;
 
-namespace GZSkinsX.Api.Settings;
+namespace GZSkinsX.SDK.Settings;
 
 /// <summary>
 /// 表示位于程序设置中的子节点配置

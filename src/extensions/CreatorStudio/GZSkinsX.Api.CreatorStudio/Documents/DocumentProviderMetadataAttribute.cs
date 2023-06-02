@@ -10,7 +10,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents;
+namespace GZSkinsX.SDK.CreatorStudio.Documents;
 
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class DocumentProviderMetadataAttribute : Attribute

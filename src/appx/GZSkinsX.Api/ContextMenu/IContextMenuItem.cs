@@ -7,11 +7,11 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Controls;
+using GZSkinsX.SDK.Controls;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示上下文菜单中的菜单项，所有导出的上下文菜单项都继承于此接口

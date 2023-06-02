@@ -171,9 +171,9 @@
       <Project>{8ff44d52-4886-489a-950c-9da5ad62b90e}</Project>
       <Name>GZSkinsX.Uwp.UI.Toolkit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
+    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.SDK.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
-      <Name>GZSkinsX.Api</Name>
+      <Name>GZSkinsX.SDK</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
   </ItemGroup>

@@ -9,7 +9,7 @@ using System;
 
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.SDK.WindowManager;
 
 /// <summary>
 /// 提供对当前应用程序主窗口中的页面的切换/导航的能力

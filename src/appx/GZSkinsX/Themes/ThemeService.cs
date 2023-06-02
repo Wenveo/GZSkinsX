@@ -11,8 +11,8 @@ using System;
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Themes;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Themes;
 using GZSkinsX.Uwp.UI.Toolkit.Extensions;
 
 using Windows.System;

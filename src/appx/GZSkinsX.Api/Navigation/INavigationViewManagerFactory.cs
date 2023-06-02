@@ -7,7 +7,7 @@
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.Navigation;
+namespace GZSkinsX.SDK.Navigation;
 
 /// <summary>
 /// 导航视图工厂的接口定义，提供枚举导航项以创建 <see cref="INavigationViewManager"/> 的能力

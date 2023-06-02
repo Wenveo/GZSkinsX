@@ -10,8 +10,8 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Extension;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 

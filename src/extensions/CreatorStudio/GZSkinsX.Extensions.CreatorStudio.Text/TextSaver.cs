@@ -11,8 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.CreatorStudio.Documents;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 using Windows.Storage;
 using Windows.Storage.Pickers;

@@ -7,7 +7,7 @@
 
 using System;
 
-using GZSkinsX.Api.Navigation;
+using GZSkinsX.SDK.Navigation;
 
 namespace GZSkinsX.Navigation;
 

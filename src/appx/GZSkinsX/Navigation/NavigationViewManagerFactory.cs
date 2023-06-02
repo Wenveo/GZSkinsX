@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 
-using GZSkinsX.Api.Helpers;
-using GZSkinsX.Api.Navigation;
-using GZSkinsX.Api.Utilities;
+using GZSkinsX.SDK.Helpers;
+using GZSkinsX.SDK.Navigation;
+using GZSkinsX.SDK.Utilities;
 using GZSkinsX.DotNet.Diagnostics;
 
 using MUXC = Microsoft.UI.Xaml.Controls;

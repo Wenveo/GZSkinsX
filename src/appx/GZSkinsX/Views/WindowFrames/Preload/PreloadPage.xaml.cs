@@ -7,9 +7,9 @@
 
 using System;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Helpers;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Helpers;
+using GZSkinsX.SDK.WindowManager;
 
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;

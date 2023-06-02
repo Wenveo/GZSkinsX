@@ -7,7 +7,7 @@
 
 using System;
 
-namespace GZSkinsX.Api.AccessCache;
+namespace GZSkinsX.SDK.AccessCache;
 
 /// <summary>
 /// 

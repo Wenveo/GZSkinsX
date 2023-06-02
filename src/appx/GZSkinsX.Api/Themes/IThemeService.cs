@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Api.Themes;
+namespace GZSkinsX.SDK.Themes;
 
 /// <summary>
 /// 表示应用程序的主题服务，并提供对主题的访问和设置

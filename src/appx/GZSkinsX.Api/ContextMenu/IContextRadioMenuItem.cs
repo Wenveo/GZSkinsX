@@ -7,7 +7,7 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示与其组中其他单选菜单项互斥的菜单项

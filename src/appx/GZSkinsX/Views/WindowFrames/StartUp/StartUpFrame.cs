@@ -7,9 +7,9 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Game;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Game;
+using GZSkinsX.SDK.WindowManager;
 
 namespace GZSkinsX.Views.WindowFrames.StartUp;
 

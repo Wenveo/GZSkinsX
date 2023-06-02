@@ -9,118 +9,118 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.Appx;
+namespace GZSkinsX.SDK.Appx;
 
 public static partial class AppxContext
 {
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.AccessCache.IFutureAccessService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.AccessCache.IFutureAccessService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.AccessCache.IFutureAccessService FutureAccessService
+    public static global::GZSkinsX.SDK.AccessCache.IFutureAccessService FutureAccessService
     {
         get => CheckAccess(ref s_futureAccessService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.AccessCache.IMostRecentlyUsedService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService MostRecentlyUsedItemService
+    public static global::GZSkinsX.SDK.AccessCache.IMostRecentlyUsedService MostRecentlyUsedItemService
     {
         get => CheckAccess(ref s_mostRecentlyUsedItemService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxWindow"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Appx.IAppxWindow"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Appx.IAppxWindow AppxWindow
+    public static global::GZSkinsX.SDK.Appx.IAppxWindow AppxWindow
     {
         get => CheckAccess(ref s_appxWindow);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBar"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Appx.IAppxTitleBar"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Appx.IAppxTitleBar AppxTitleBar
+    public static global::GZSkinsX.SDK.Appx.IAppxTitleBar AppxTitleBar
     {
         get => CheckAccess(ref s_appxTitleBar);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBarButton"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Appx.IAppxTitleBarButton"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Appx.IAppxTitleBarButton AppxTitleBarButton
+    public static global::GZSkinsX.SDK.Appx.IAppxTitleBarButton AppxTitleBarButton
     {
         get => CheckAccess(ref s_appxTitleBarButton);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Commands.ICommandBarService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Commands.ICommandBarService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Commands.ICommandBarService CommandBarService
+    public static global::GZSkinsX.SDK.Commands.ICommandBarService CommandBarService
     {
         get => CheckAccess(ref s_commandBarService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.ContextMenu.IContextMenuService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.ContextMenu.IContextMenuService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.ContextMenu.IContextMenuService ContextMenuService
+    public static global::GZSkinsX.SDK.ContextMenu.IContextMenuService ContextMenuService
     {
         get => CheckAccess(ref s_contextMenuService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Game.IGameService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Game.IGameService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Game.IGameService GameService
+    public static global::GZSkinsX.SDK.Game.IGameService GameService
     {
         get => CheckAccess(ref s_gameService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Logging.ILoggingService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Logging.ILoggingService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Logging.ILoggingService LoggingService
+    public static global::GZSkinsX.SDK.Logging.ILoggingService LoggingService
     {
         get => CheckAccess(ref s_loggingService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.MRT.IMRTCoreService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.MRT.IMRTCoreService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.MRT.IMRTCoreService MRTCoreService
+    public static global::GZSkinsX.SDK.MRT.IMRTCoreService MRTCoreService
     {
         get => CheckAccess(ref s_mRTCoreService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Navigation.INavigationViewManagerFactory"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory NavigationViewFactory
+    public static global::GZSkinsX.SDK.Navigation.INavigationViewManagerFactory NavigationViewFactory
     {
         get => CheckAccess(ref s_navigationViewFactory);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Settings.ISettingsService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Settings.ISettingsService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Settings.ISettingsService SettingsService
+    public static global::GZSkinsX.SDK.Settings.ISettingsService SettingsService
     {
         get => CheckAccess(ref s_settingsService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Themes.IThemeService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.Themes.IThemeService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.Themes.IThemeService ThemeService
+    public static global::GZSkinsX.SDK.Themes.IThemeService ThemeService
     {
         get => CheckAccess(ref s_themeService);
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.WindowManager.IWindowManagerService"/> 对象实例
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.SDK.WindowManager.IWindowManagerService"/> 对象实例
     /// </summary>
-    public static global::GZSkinsX.Api.WindowManager.IWindowManagerService WindowManagerService
+    public static global::GZSkinsX.SDK.WindowManager.IWindowManagerService WindowManagerService
     {
         get => CheckAccess(ref s_windowManagerService);
     }
@@ -179,18 +179,18 @@ public static partial class AppxContext
         return service;
     }
     
-    private static global::GZSkinsX.Api.AccessCache.IFutureAccessService? s_futureAccessService;
-    private static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService? s_mostRecentlyUsedItemService;
-    private static global::GZSkinsX.Api.Appx.IAppxWindow? s_appxWindow;
-    private static global::GZSkinsX.Api.Appx.IAppxTitleBar? s_appxTitleBar;
-    private static global::GZSkinsX.Api.Appx.IAppxTitleBarButton? s_appxTitleBarButton;
-    private static global::GZSkinsX.Api.Commands.ICommandBarService? s_commandBarService;
-    private static global::GZSkinsX.Api.ContextMenu.IContextMenuService? s_contextMenuService;
-    private static global::GZSkinsX.Api.Game.IGameService? s_gameService;
-    private static global::GZSkinsX.Api.Logging.ILoggingService? s_loggingService;
-    private static global::GZSkinsX.Api.MRT.IMRTCoreService? s_mRTCoreService;
-    private static global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory? s_navigationViewFactory;
-    private static global::GZSkinsX.Api.Settings.ISettingsService? s_settingsService;
-    private static global::GZSkinsX.Api.Themes.IThemeService? s_themeService;
-    private static global::GZSkinsX.Api.WindowManager.IWindowManagerService? s_windowManagerService;
+    private static global::GZSkinsX.SDK.AccessCache.IFutureAccessService? s_futureAccessService;
+    private static global::GZSkinsX.SDK.AccessCache.IMostRecentlyUsedService? s_mostRecentlyUsedItemService;
+    private static global::GZSkinsX.SDK.Appx.IAppxWindow? s_appxWindow;
+    private static global::GZSkinsX.SDK.Appx.IAppxTitleBar? s_appxTitleBar;
+    private static global::GZSkinsX.SDK.Appx.IAppxTitleBarButton? s_appxTitleBarButton;
+    private static global::GZSkinsX.SDK.Commands.ICommandBarService? s_commandBarService;
+    private static global::GZSkinsX.SDK.ContextMenu.IContextMenuService? s_contextMenuService;
+    private static global::GZSkinsX.SDK.Game.IGameService? s_gameService;
+    private static global::GZSkinsX.SDK.Logging.ILoggingService? s_loggingService;
+    private static global::GZSkinsX.SDK.MRT.IMRTCoreService? s_mRTCoreService;
+    private static global::GZSkinsX.SDK.Navigation.INavigationViewManagerFactory? s_navigationViewFactory;
+    private static global::GZSkinsX.SDK.Settings.ISettingsService? s_settingsService;
+    private static global::GZSkinsX.SDK.Themes.IThemeService? s_themeService;
+    private static global::GZSkinsX.SDK.WindowManager.IWindowManagerService? s_windowManagerService;
 }

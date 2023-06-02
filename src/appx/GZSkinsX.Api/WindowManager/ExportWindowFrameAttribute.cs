@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.SDK.WindowManager;
 
 /// <summary>
 /// 声明并将目标类以 <see cref="IWindowFrame"/> 类型导出

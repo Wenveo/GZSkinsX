@@ -13,7 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示在创建上下文菜单时可选的配置类

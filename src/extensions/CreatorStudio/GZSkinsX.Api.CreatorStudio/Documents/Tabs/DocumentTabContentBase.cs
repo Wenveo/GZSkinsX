@@ -9,7 +9,7 @@
 
 using System.Threading.Tasks;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public abstract class DocumentTabContentBase : IDocumentTabContent, IDocumentTabContent2
 {

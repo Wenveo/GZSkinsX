@@ -7,11 +7,11 @@
 
 #nullable enable
 
-using GZSkinsX.Api.ContextMenu;
+using GZSkinsX.SDK.ContextMenu;
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public sealed class DocumentTabContextMenuUIContext : ContextMenuUIContext<TabViewItem?, IDocumentTab?>
 {

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.SDK.WindowManager;
 
 /// <summary>
 /// 表示存放页面元素相关的元数据的静态类

@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.Extension;
+namespace GZSkinsX.SDK.Extension;
 
 /// <summary>
 /// 声明目标类以 <see cref="IAdvanceExtension"/> 类型导出

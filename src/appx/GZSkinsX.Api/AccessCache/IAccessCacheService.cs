@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace GZSkinsX.Api.AccessCache;
+namespace GZSkinsX.SDK.AccessCache;
 
 /// <summary>
 /// 表示对访问的存储项进行缓存管理的服务。该接口为一个通用基本接口，被用于 <seealso cref="IFutureAccessService"/>

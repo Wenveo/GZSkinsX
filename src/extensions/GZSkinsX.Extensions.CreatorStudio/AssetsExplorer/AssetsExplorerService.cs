@@ -15,14 +15,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.AccessCache;
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.ContextMenu;
-using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Api.Game;
-using GZSkinsX.Api.MRT;
-using GZSkinsX.Api.Themes;
+using GZSkinsX.SDK.AccessCache;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.SDK.Controls;
+using GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
+using GZSkinsX.SDK.Game;
+using GZSkinsX.SDK.MRT;
+using GZSkinsX.SDK.Themes;
 using GZSkinsX.Uwp.Composition;
 
 using Windows.UI;

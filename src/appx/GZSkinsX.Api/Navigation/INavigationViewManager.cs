@@ -12,7 +12,7 @@ using System;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace GZSkinsX.Api.Navigation;
+namespace GZSkinsX.SDK.Navigation;
 
 /// <summary>
 /// 表示对导航视图的抽象管理，并提供针对导航项的导航功能实现

@@ -13,7 +13,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Api.Appx;
+namespace GZSkinsX.SDK.Appx;
 
 /// <summary>
 /// 提供应用程序主窗口的事件，以及窗口管理相关的 Api

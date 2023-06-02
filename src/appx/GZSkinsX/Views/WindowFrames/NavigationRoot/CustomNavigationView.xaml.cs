@@ -11,11 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Helpers;
-using GZSkinsX.Api.Navigation;
-using GZSkinsX.Api.Themes;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Helpers;
+using GZSkinsX.SDK.Navigation;
+using GZSkinsX.SDK.Themes;
+using GZSkinsX.SDK.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml;

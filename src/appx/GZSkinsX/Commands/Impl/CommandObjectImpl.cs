@@ -9,7 +9,7 @@
 
 using System.ComponentModel;
 
-using GZSkinsX.Api.Commands;
+using GZSkinsX.SDK.Commands;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

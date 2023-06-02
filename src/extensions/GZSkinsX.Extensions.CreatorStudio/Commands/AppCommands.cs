@@ -10,10 +10,10 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Commands;
-using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Documents;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Commands;
+using GZSkinsX.SDK.Controls;
+using GZSkinsX.SDK.CreatorStudio.Documents;
 
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;

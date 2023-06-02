@@ -7,11 +7,11 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Controls;
+using GZSkinsX.SDK.Controls;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示派生自 <see cref="IContextRadioMenuItem"/> 的抽象基类，并提供基本的接口成员实现

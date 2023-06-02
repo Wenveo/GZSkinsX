@@ -9,9 +9,9 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Commands;
-using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.Commands;
+using GZSkinsX.SDK.Controls;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 using Windows.System;
 using Windows.UI.Xaml;

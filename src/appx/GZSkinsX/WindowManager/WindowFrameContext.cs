@@ -7,7 +7,7 @@
 
 using System;
 
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.WindowManager;
 
 namespace GZSkinsX.WindowManager;
 

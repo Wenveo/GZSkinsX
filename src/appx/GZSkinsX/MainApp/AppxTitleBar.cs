@@ -9,7 +9,7 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
+using GZSkinsX.SDK.Appx;
 
 using Windows.ApplicationModel.Core;
 

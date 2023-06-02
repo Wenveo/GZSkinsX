@@ -5,9 +5,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Api.CreatorStudio.Documents.Undo;
+using GZSkinsX.SDK.CreatorStudio.Documents.Undo;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public interface IDocumentTabContent3
 {

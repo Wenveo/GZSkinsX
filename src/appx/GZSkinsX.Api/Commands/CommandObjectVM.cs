@@ -9,7 +9,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace GZSkinsX.Api.Commands;
+namespace GZSkinsX.SDK.Commands;
 
 /// <summary>
 /// 表示派生自 <see cref="ICommandObject"/> 的抽象类，提供从接口成员到 UI 属性的双向绑定支持

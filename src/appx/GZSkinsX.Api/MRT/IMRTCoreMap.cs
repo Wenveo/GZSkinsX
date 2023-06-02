@@ -8,7 +8,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace GZSkinsX.Api.MRT;
+namespace GZSkinsX.SDK.MRT;
 
 /// <summary>
 /// 相关资源的集合，通常用于获取本地化资源内容

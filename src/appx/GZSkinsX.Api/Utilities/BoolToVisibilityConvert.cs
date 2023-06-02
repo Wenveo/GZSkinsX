@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Api.Utilities;
+namespace GZSkinsX.SDK.Utilities;
 
 /// <summary>
 /// 提供对 <see cref="bool"/> 和 <see cref="Visibility"/> 类型相互转换的能力

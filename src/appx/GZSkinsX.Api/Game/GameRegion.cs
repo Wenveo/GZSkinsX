@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Game;
+namespace GZSkinsX.SDK.Game;
 
 /// <summary>
 /// 表示英雄联盟游戏的区域/服务器

@@ -7,12 +7,12 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Controls;
+using GZSkinsX.SDK.Controls;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.Commands;
+namespace GZSkinsX.SDK.Commands;
 
 /// <summary>
 /// 表示派生自 <see cref="ICommandButton"/> 的抽象基类，并提供基本的接口成员实现

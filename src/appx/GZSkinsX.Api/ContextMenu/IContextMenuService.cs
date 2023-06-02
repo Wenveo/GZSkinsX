@@ -11,7 +11,7 @@ using System;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示上下文菜单的基本服务，并提供创建上下文菜单的能力

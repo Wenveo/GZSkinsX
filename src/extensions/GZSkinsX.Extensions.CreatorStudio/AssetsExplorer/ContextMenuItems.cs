@@ -10,8 +10,8 @@
 using System.Collections.Generic;
 using System.Composition;
 
-using GZSkinsX.Api.ContextMenu;
-using GZSkinsX.Api.Controls;
+using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.SDK.Controls;
 
 using Windows.System;
 

@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.MRT;
+namespace GZSkinsX.SDK.MRT;
 
 /// <summary>
 /// 提供与部分资源子集相关联的资源标识符访问

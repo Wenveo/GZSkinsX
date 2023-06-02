@@ -1,7 +1,7 @@
 ﻿using Windows.System;
 using Windows.UI.Xaml.Input;
 
-namespace GZSkinsX.Api.Controls;
+namespace GZSkinsX.SDK.Controls;
 
 /// <summary>
 /// 用于用于 UI 对象所指定的快捷键

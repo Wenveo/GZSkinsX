@@ -9,9 +9,9 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.ContextMenu;
-using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.SDK.Controls;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 using Windows.System;
 

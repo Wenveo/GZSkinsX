@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Reflection;
 
-using GZSkinsX.Api.Extension;
+using GZSkinsX.SDK.Extension;
 
 namespace GZSkinsX.Extensions.CreatorStudio;
 

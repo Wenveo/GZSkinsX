@@ -13,8 +13,8 @@ using System.Composition;
 using System.Diagnostics;
 using System.Linq;
 
-using GZSkinsX.Api.Commands;
-using GZSkinsX.Api.Utilities;
+using GZSkinsX.SDK.Commands;
+using GZSkinsX.SDK.Utilities;
 using GZSkinsX.Commands.Impl;
 
 using Windows.Foundation.Collections;

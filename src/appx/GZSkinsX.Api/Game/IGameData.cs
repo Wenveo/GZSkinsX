@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Game;
+namespace GZSkinsX.SDK.Game;
 
 /// <summary>
 /// 表示 "英雄联盟" 游戏的基本目录路径信息

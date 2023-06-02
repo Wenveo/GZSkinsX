@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Logging;
+namespace GZSkinsX.SDK.Logging;
 
 /// <summary>
 /// 基础日志服务，可通过此将记录内容实时输出至本地

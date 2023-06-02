@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.Navigation;
+namespace GZSkinsX.SDK.Navigation;
 
 /// <summary>
 /// 声明目标类以 <see cref="INavigationItem"/> 类型导出

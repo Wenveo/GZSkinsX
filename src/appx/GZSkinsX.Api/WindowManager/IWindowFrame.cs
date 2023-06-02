@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.WindowManager;
+namespace GZSkinsX.SDK.WindowManager;
 
 /// <summary>
 /// 表示位于应用程序主窗口中的页面元素，通常被用于在主窗口进行页面切换

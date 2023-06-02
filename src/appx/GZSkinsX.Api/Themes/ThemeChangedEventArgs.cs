@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Api.Themes;
+namespace GZSkinsX.SDK.Themes;
 
 /// <summary>
 /// 应用程序的 UI 主题更改时的事件参数

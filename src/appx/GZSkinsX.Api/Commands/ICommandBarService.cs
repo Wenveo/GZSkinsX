@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.Commands;
+namespace GZSkinsX.SDK.Commands;
 
 /// <summary>
 /// 提供用于枚举和创建命令栏的的基本功能实现

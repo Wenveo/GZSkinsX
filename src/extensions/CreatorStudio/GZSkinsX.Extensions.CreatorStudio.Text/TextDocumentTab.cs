@@ -7,9 +7,9 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Controls;
-using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.Controls;
+using GZSkinsX.SDK.CreatorStudio.Documents;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Text;
 

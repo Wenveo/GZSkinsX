@@ -10,10 +10,10 @@
 using System;
 using System.Linq;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Commands;
-using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Commands;
+using GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 using GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
 

@@ -7,9 +7,9 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.Themes;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Extension;
+using GZSkinsX.SDK.Themes;
 
 using Windows.System;
 using Windows.UI;

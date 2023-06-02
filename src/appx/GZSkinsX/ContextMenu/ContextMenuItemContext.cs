@@ -7,7 +7,7 @@
 
 using System;
 
-using GZSkinsX.Api.ContextMenu;
+using GZSkinsX.SDK.ContextMenu;
 
 namespace GZSkinsX.ContextMenu;
 

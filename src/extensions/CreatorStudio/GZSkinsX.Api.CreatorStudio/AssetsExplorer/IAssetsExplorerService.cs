@@ -9,7 +9,7 @@
 
 using System;
 
-namespace GZSkinsX.Api.CreatorStudio.AssetsExplorer;
+namespace GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
 
 public interface IAssetsExplorerService
 {

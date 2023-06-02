@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace GZSkinsX.Api.Extension;
+namespace GZSkinsX.SDK.Extension;
 
 /// <summary>
 /// 应用程序的通用扩展接口，所有的 "应用程序扩展" 都继承于此

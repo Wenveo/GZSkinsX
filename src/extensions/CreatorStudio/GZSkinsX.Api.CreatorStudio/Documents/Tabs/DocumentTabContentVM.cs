@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public abstract class DocumentTabContentVM : ObservableObject, IDocumentTabContent, IDocumentTabContent2
 {

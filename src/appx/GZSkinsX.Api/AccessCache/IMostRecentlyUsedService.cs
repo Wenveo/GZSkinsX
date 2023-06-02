@@ -13,7 +13,7 @@ using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace GZSkinsX.Api.AccessCache;
+namespace GZSkinsX.SDK.AccessCache;
 
 /// <summary>
 /// 提供对最近使用 (MRU) 的存储项列表进行管理，可跟踪用户最近访问的 (文件和文件夹)

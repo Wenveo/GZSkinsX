@@ -9,12 +9,12 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using GZSkinsX.Api.Controls;
+using GZSkinsX.SDK.Controls;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.Commands;
+namespace GZSkinsX.SDK.Commands;
 
 /// <summary>
 /// 表示派生自 <see cref="ICommandButton"/> 的抽象类，提供从接口成员到 UI 属性的双向绑定支持

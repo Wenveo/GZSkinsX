@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Api.Navigation;
+namespace GZSkinsX.SDK.Navigation;
 
 /// <summary>
 /// 表示存放导航项相关的元数据静态类

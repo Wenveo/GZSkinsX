@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.ContextMenu;
-using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.SDK.CreatorStudio.Documents;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 using Windows.Foundation;
 using Windows.UI.Xaml;

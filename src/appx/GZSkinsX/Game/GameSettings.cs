@@ -10,9 +10,9 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Game;
-using GZSkinsX.Api.Settings;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Game;
+using GZSkinsX.SDK.Settings;
 
 namespace GZSkinsX.Game;
 

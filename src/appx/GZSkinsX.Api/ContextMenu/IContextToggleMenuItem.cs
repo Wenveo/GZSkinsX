@@ -7,7 +7,7 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示可以在选中和未选中两种状态之间切换的菜单项

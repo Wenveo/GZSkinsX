@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.Navigation;
+using GZSkinsX.SDK.Navigation;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.UI.Xaml.Controls;

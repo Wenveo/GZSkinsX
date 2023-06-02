@@ -21,7 +21,7 @@ partial class StartUpClass
             // Self Assembly
             yield return typeof(global::GZSkinsX.MainApp.App).Assembly;
             // GZSkinsX.Api
-            yield return typeof(global::GZSkinsX.Api.Appx.IAppxWindow).Assembly;
+            yield return typeof(global::GZSkinsX.SDK.Appx.IAppxWindow).Assembly;
         }
 
         // Extensions

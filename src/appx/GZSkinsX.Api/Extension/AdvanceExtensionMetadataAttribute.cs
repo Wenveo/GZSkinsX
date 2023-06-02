@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.Extension;
+namespace GZSkinsX.SDK.Extension;
 
 /// <summary>
 /// 表示先行扩展的元数据类

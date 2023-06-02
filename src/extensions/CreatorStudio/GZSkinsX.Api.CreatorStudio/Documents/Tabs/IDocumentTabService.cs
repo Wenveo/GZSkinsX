@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 using Windows.Foundation;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public interface IDocumentTabService
 {

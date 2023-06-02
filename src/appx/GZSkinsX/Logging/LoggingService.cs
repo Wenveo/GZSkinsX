@@ -10,7 +10,7 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.Api.Logging;
+using GZSkinsX.SDK.Logging;
 
 namespace GZSkinsX.Logging;
 

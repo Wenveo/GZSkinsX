@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace GZSkinsX.Api.CreatorStudio.AssetsExplorer;
+namespace GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
 
 public interface IAssetsExplorerContainer : IAssetsExplorerItem
 {

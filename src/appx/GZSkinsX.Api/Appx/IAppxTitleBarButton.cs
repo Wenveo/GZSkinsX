@@ -7,7 +7,7 @@
 
 using Windows.UI;
 
-namespace GZSkinsX.Api.Appx;
+namespace GZSkinsX.SDK.Appx;
 
 /// <summary>
 /// 表示应用程序中的标题栏按钮

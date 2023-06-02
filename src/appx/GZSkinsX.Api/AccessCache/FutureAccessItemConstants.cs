@@ -5,9 +5,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Api.Game;
+using GZSkinsX.SDK.Game;
 
-namespace GZSkinsX.Api.AccessCache;
+namespace GZSkinsX.SDK.AccessCache;
 
 /// <summary>
 /// 表示存放访问项相关名称的静态类

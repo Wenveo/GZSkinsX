@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace GZSkinsX.Api.Navigation;
+namespace GZSkinsX.SDK.Navigation;
 
 /// <summary>
 /// 表示为导航视图中的导航项，该接口为最基本的接口定义

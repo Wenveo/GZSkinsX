@@ -10,10 +10,10 @@
 using System;
 using System.Collections.Generic;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.MRT;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.MRT;
 
-namespace GZSkinsX.Api.Helpers;
+namespace GZSkinsX.SDK.Helpers;
 
 /// <summary>
 /// 提供快速获取本地化资源的帮助类

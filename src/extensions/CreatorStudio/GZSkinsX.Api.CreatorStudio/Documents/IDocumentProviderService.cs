@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents;
+namespace GZSkinsX.SDK.CreatorStudio.Documents;
 
 public interface IDocumentProviderService
 {

@@ -7,7 +7,7 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public sealed class ActiveDocumentTabChangedEventArgs : System.EventArgs
 {

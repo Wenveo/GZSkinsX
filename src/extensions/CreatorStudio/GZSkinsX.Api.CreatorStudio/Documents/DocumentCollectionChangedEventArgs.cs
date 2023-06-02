@@ -7,7 +7,7 @@
 
 using System;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents;
+namespace GZSkinsX.SDK.CreatorStudio.Documents;
 
 public sealed class DocumentCollectionChangedEventArgs : EventArgs
 {

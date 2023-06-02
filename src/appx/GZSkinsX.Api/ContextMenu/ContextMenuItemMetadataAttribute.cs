@@ -10,7 +10,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.ContextMenu;
+namespace GZSkinsX.SDK.ContextMenu;
 
 /// <summary>
 /// 表示上下文菜单项的元数据类

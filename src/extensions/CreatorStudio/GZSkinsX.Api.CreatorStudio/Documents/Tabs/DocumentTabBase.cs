@@ -9,7 +9,7 @@
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public abstract class DocumentTabBase : IDocumentTab
 {

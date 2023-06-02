@@ -13,7 +13,7 @@ using System.Composition;
 using System.Diagnostics;
 using System.Linq;
 
-using GZSkinsX.Api.CreatorStudio.Documents;
+using GZSkinsX.SDK.CreatorStudio.Documents;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Documents;
 

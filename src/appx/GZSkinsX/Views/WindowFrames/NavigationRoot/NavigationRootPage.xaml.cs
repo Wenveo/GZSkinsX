@@ -7,8 +7,8 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Navigation;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Navigation;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;

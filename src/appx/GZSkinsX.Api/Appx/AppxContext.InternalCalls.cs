@@ -13,7 +13,7 @@ using Windows.UI.Xaml;
 
 [assembly: InternalsVisibleTo("GZSkinsX")]
 
-namespace GZSkinsX.Api.Appx;
+namespace GZSkinsX.SDK.Appx;
 
 public static partial class AppxContext
 {

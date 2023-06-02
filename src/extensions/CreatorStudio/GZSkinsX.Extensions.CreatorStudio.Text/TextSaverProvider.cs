@@ -7,7 +7,7 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Text;
 

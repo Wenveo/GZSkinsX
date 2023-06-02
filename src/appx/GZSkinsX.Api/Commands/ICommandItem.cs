@@ -7,7 +7,7 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.Commands;
+namespace GZSkinsX.SDK.Commands;
 
 /// <summary>
 /// 该接口为所有命令项的基接口，所有命令项都应继承于此，并以该接口类型导出

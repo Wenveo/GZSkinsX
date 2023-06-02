@@ -7,7 +7,7 @@
 
 using System.Threading.Tasks;
 
-namespace GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 
 public interface IDocumentTabContent2
 {

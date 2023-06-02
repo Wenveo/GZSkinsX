@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.WindowManager;
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.WindowManager;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;

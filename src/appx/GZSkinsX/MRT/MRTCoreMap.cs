@@ -9,7 +9,7 @@ using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.MRT;
+using GZSkinsX.SDK.MRT;
 
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;

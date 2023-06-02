@@ -10,7 +10,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.Api.Navigation;
+namespace GZSkinsX.SDK.Navigation;
 
 /// <summary>
 /// 表示导航项的元数据类

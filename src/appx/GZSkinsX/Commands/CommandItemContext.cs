@@ -9,7 +9,7 @@
 
 using System;
 
-using GZSkinsX.Api.Commands;
+using GZSkinsX.SDK.Commands;
 
 namespace GZSkinsX.Commands;
 

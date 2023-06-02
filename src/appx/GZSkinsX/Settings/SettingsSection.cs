@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-using GZSkinsX.Api.Settings;
+using GZSkinsX.SDK.Settings;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Storage;

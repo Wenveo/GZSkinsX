@@ -10,8 +10,8 @@
 using System.IO;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Tabs;
+using GZSkinsX.SDK.CreatorStudio.Documents;
+using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
 using GZSkinsX.Extensions.CreatorStudio.Wad.Parser;
 using GZSkinsX.Extensions.CreatorStudio.Wad.Views;
 

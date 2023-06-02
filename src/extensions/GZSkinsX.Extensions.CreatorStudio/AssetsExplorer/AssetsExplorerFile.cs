@@ -7,7 +7,7 @@
 
 using System.IO;
 
-using GZSkinsX.Api.CreatorStudio.AssetsExplorer;
+using GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
 
 namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
 

@@ -7,7 +7,7 @@
 
 #nullable enable
 
-namespace GZSkinsX.Api.Appx;
+namespace GZSkinsX.SDK.Appx;
 
 /// <summary>
 /// 提供对当前窗口标题栏管理的能力

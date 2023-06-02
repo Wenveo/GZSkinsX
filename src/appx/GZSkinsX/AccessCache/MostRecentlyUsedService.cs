@@ -11,8 +11,8 @@ using System;
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.Api.AccessCache;
-using GZSkinsX.Api.Settings;
+using GZSkinsX.SDK.AccessCache;
+using GZSkinsX.SDK.Settings;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Foundation;

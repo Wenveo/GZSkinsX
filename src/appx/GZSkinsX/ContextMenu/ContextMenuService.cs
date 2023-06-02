@@ -12,9 +12,9 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 
-using GZSkinsX.Api.ContextMenu;
-using GZSkinsX.Api.Helpers;
-using GZSkinsX.Api.Utilities;
+using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.SDK.Helpers;
+using GZSkinsX.SDK.Utilities;
 using GZSkinsX.DotNet.Diagnostics;
 
 using Windows.Foundation.Metadata;

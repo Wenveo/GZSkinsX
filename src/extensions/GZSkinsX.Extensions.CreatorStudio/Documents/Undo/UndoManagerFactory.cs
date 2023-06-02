@@ -8,8 +8,8 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.Api.CreatorStudio.Documents;
-using GZSkinsX.Api.CreatorStudio.Documents.Undo;
+using GZSkinsX.SDK.CreatorStudio.Documents;
+using GZSkinsX.SDK.CreatorStudio.Documents.Undo;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
 
