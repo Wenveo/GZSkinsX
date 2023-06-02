@@ -27,11 +27,6 @@
     <Compile Include="MainApp\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainApp\StartUpClass.g.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StartUpClass.g.tt</DependentUpon>
-    </Compile>
     <Compile Include="Extension\ExtensionService.cs" />
     <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="MainApp\StartUpClass.cs" />
@@ -88,10 +83,6 @@
   <ItemGroup>
     <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
     <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
-    <None Include="MainApp\StartUpClass.g.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>StartUpClass.g.cs</LastGenOutput>
-    </None>
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-125.png" />
     <Content Include="Assets\BadgeLogo.scale-150.png" />
@@ -166,9 +157,6 @@
     <ProjectReference Include="..\..\extensions\GZSkinsX.Extensions.CreatorStudio\GZSkinsX.Extensions.CreatorStudio.csproj">
       <Name>GZSkinsX.Extensions.CreatorStudio</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="MainApp\App.xaml">

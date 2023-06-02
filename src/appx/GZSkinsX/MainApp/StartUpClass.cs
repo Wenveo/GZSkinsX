@@ -7,13 +7,16 @@
 
 #nullable enable
 
+using System.Collections.Generic;
 using System.Composition.Hosting;
 using System.Diagnostics;
+using System.Reflection;
+
+using GZSkinsX.Extension;
+using GZSkinsX.Logging;
 
 using GZSkinsX.SDK.Appx;
 using GZSkinsX.SDK.Extension;
-using GZSkinsX.Extension;
-using GZSkinsX.Logging;
 
 using Windows.UI.Xaml;
 
@@ -73,6 +76,27 @@ public sealed partial class StartUpClass
         s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
         s_extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
         s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
+    }
+
+
+    /// <summary>
+    /// 获取当前 Appx 引用程序集
+    /// </summary>
+    private static IEnumerable<Assembly> GetAssemblies()
+    {
+        // Main Appx
+        {
+            // Self Assembly
+            yield return typeof(App).Assembly;
+            // GZSkinsX.Api
+            yield return typeof(IAppxWindow).Assembly;
+        }
+
+        // Extensions
+        {
+            // GZSkinsX.Extensions.CreatorStudio
+            yield return typeof(Extensions.CreatorStudio.TheExtension).Assembly;
+        }
     }
 }
 #endif
