@@ -50,6 +50,11 @@
     <Compile Include="Themes\AutoThemeTitleBar.cs" />
     <Compile Include="Themes\ThemeService.cs" />
     <Compile Include="Themes\ThemeSettings.cs" />
+    <Compile Include="Views\Preload\PreloadFrame.cs" />
+    <Compile Include="Views\Preload\PreloadPage.xaml.cs">
+      <DependentUpon>PreloadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preload\PreloadSettings.cs" />
     <Compile Include="WindowManager\WindowFrameContext.cs" />
     <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
@@ -123,6 +128,8 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.HashCode">
@@ -151,9 +158,6 @@
     <ProjectReference Include="..\GZSkinsX.Appx.NavigationRoot\GZSkinsX.Appx.NavigationRoot.csproj">
       <Name>GZSkinsX.Appx.NavigationRoot</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.Preload\GZSkinsX.Appx.Preload.csproj">
-      <Name>GZSkinsX.Appx.Preload</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
       <Name>GZSkinsX.Appx.StartUp</Name>
     </ProjectReference>
@@ -168,7 +172,12 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Views\Preload\PreloadPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

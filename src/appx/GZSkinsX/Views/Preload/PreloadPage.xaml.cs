@@ -6,20 +6,18 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.MRT;
 using GZSkinsX.Api.WindowManager;
 
 using Windows.ApplicationModel;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace GZSkinsX.Appx.Preload;
+namespace GZSkinsX.Views.Preload;
 
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
@@ -31,27 +29,10 @@ public sealed partial class PreloadPage : Page
     public PreloadPage()
     {
         var mainResourceMap = AppxContext.MRTCoreService.MainResourceMap;
-        _mrtCoreMap = mainResourceMap.GetSubtree("GZSkinsX.Appx.Preload/Resources");
+        _mrtCoreMap = mainResourceMap.GetSubtree("GZSkinsX/Strings");
 
         InitializeComponent();
         Loaded += OnLoaded;
-    }
-
-    private async Task<bool> CheckFileSystemAccessAsync()
-    {
-        try
-        {
-            var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
-            /// 如果以下这段代码成功执行，则表示可访问，否则将会抛出异常
-            await StorageFolder.GetFolderFromPathAsync(userProfile);
-
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
     }
 
     private async void OnLoaded(object sender, RoutedEventArgs e)

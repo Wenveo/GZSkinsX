@@ -1,4 +1,4 @@
-// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -21,7 +21,7 @@ using Windows.Globalization;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Appx.Preload;
+namespace GZSkinsX.Views.Preload;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
