@@ -55,6 +55,10 @@
       <DependentUpon>PreloadPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preload\PreloadSettings.cs" />
+    <Compile Include="Views\StartUp\StartUpFrame.cs" />
+    <Compile Include="Views\StartUp\StartUpPage.xaml.cs">
+      <DependentUpon>StartUpPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowManager\WindowFrameContext.cs" />
     <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
@@ -141,6 +145,10 @@
       <Project>{ca4bc5e8-390c-4751-8d38-7d75d25633a3}</Project>
       <Name>GZSkinsX.DotNet.Diagnostics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.Composition\GZSkinsX.Uwp.Composition.csproj">
+      <Project>{7182d367-4984-4a8f-98bd-e276c98ad095}</Project>
+      <Name>GZSkinsX.Uwp.Composition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\libraries\GZSkinsX.Uwp.UI.Toolkit\GZSkinsX.Uwp.UI.Toolkit.csproj">
       <Project>{8ff44d52-4886-489a-950c-9da5ad62b90e}</Project>
       <Name>GZSkinsX.Uwp.UI.Toolkit</Name>
@@ -158,9 +166,6 @@
     <ProjectReference Include="..\GZSkinsX.Appx.NavigationRoot\GZSkinsX.Appx.NavigationRoot.csproj">
       <Name>GZSkinsX.Appx.NavigationRoot</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.StartUp\GZSkinsX.Appx.StartUp.csproj">
-      <Name>GZSkinsX.Appx.StartUp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +182,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StartUp\StartUpPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

@@ -11,16 +11,16 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.WindowManager;
 
-namespace GZSkinsX.Appx.StartUp;
+namespace GZSkinsX.Views.StartUp;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
-internal sealed class ExportStartUpFrame : IWindowFrame
+internal sealed class StartUpFrame : IWindowFrame
 {
     private readonly IGameService _gameService;
     private readonly IWindowManagerService _windowManagerService;
 
-    public ExportStartUpFrame()
+    public StartUpFrame()
     {
         _gameService = AppxContext.Resolve<IGameService>();
         _windowManagerService = AppxContext.Resolve<IWindowManagerService>();

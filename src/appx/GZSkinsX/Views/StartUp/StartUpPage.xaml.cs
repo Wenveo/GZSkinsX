@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace GZSkinsX.Appx.StartUp;
+namespace GZSkinsX.Views.StartUp;
 
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
@@ -37,12 +37,12 @@ public sealed partial class StartUpPage : Page
 
     public StartUpPage()
     {
-        _windowManagerService = AppxContext.Resolve<IWindowManagerService>();
-        _futureAccessService = AppxContext.Resolve<IFutureAccessService>();
-        _gameService = AppxContext.Resolve<IGameService>();
+        _windowManagerService = AppxContext.WindowManagerService;
+        _futureAccessService = AppxContext.FutureAccessService;
+        _gameService = AppxContext.GameService;
 
-        var mrtCoreService = AppxContext.Resolve<IMRTCoreService>();
-        _mrtCoreMap = mrtCoreService.MainResourceMap.GetSubtree(MRTCoreConstants.Appx_StartUp);
+        var mainResourceMap = AppxContext.MRTCoreService.MainResourceMap;
+        _mrtCoreMap = mainResourceMap.GetSubtree("Resources");
 
         InitializeComponent();
     }
@@ -53,24 +53,24 @@ public sealed partial class StartUpPage : Page
 
         // 设置标题
         var resTitle = _mrtCoreMap.GetString(isInvalid
-            ? "Appx_StartUp_Initialize_Invalid_Title"
-            : "Appx_StartUp_Initialize_Default_Title");
-        Appx_StartUp_Initialize_Title.Text = resTitle;
+            ? "StartUp_Initialize_Invalid_Title"
+            : "StartUp_Initialize_Default_Title");
+        StartUp_Initialize_Title.Text = resTitle;
 
         // 添加游戏区域枚举的本地化字符串至选择器列表
-        var riotRes = _mrtCoreMap.GetString("Appx_StartUp_Initialize_Region_Riot");
-        Appx_StartUp_Initialize_Region_Selector.Items.Add(riotRes);
+        var riotRes = _mrtCoreMap.GetString("StartUp_Initialize_Region_Riot");
+        StartUp_Initialize_Region_Selector.Items.Add(riotRes);
 
-        var tencentRes = _mrtCoreMap.GetString("Appx_StartUp_Initialize_Region_Tencent");
-        Appx_StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
+        var tencentRes = _mrtCoreMap.GetString("StartUp_Initialize_Region_Tencent");
+        StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
 
         base.OnNavigatedTo(e);
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
-        Appx_StartUp_Initialize_Title.Text = string.Empty;
-        Appx_StartUp_Initialize_Region_Selector.Items.Clear();
+        StartUp_Initialize_Title.Text = string.Empty;
+        StartUp_Initialize_Region_Selector.Items.Clear();
         base.OnNavigatedFrom(e);
     }
 
@@ -81,14 +81,14 @@ public sealed partial class StartUpPage : Page
         {
             _futureAccessService.Add(folder, FutureAccessItemConstants.Game_Directory_Name);
 
-            Appx_StartUp_Initialize_Directory_TextBox.Text = folder.Path;
+            StartUp_Initialize_Directory_TextBox.Text = folder.Path;
         }
     }
 
     private void ShowErrorMessage(string errorMsg)
     {
-        Appx_StartUp_Initialize_Error_InfoBar.Title = errorMsg;
-        Appx_StartUp_Initialize_Error_InfoBar.IsOpen = true;
+        StartUp_Initialize_Error_InfoBar.Title = errorMsg;
+        StartUp_Initialize_Error_InfoBar.IsOpen = true;
     }
 
     private void OnOK(object sender, RoutedEventArgs e)
@@ -97,23 +97,23 @@ public sealed partial class StartUpPage : Page
         Debug2.Assert(_mrtCoreMap is not null);
         Debug2.Assert(_windowManagerService is not null);
 
-        var directoryPath = Appx_StartUp_Initialize_Directory_TextBox.Text;
+        var directoryPath = StartUp_Initialize_Directory_TextBox.Text;
         if (string.IsNullOrEmpty(directoryPath))
         {
-            ShowErrorMessage(_mrtCoreMap.GetString("Appx_StartUp_Error_Directory_Null"));
+            ShowErrorMessage(_mrtCoreMap.GetString("StartUp_Error_Directory_Null"));
             return;
         }
 
-        var selector = Appx_StartUp_Initialize_Region_Selector;
+        var selector = StartUp_Initialize_Region_Selector;
         if (selector.SelectedIndex is -1)
         {
-            ShowErrorMessage(_mrtCoreMap.GetString("Appx_StartUp_Error_Region_Null"));
+            ShowErrorMessage(_mrtCoreMap.GetString("StartUp_Error_Region_Null"));
             return;
         }
 
         if (!_gameService.TryUpdate(directoryPath, (GameRegion)(selector.SelectedIndex + 1)))
         {
-            ShowErrorMessage(_mrtCoreMap.GetString("Appx_StartUp_Error_Directory_Invalid"));
+            ShowErrorMessage(_mrtCoreMap.GetString("StartUp_Error_Directory_Invalid"));
             return;
         }
 

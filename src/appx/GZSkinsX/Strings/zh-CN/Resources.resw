@@ -129,4 +129,46 @@
   <data name="Crash_Failed_To_Find_Component" xml:space="preserve">
     <value>灾难性故障：找不到组件 IID='{0}'。</value>
   </data>
+  <data name="StartUp_Error_Directory_Invalid" xml:space="preserve">
+    <value>选择的游戏目录无效，请重新选择！</value>
+  </data>
+  <data name="StartUp_Error_Directory_Null" xml:space="preserve">
+    <value>游戏目录不能为空！</value>
+  </data>
+  <data name="StartUp_Error_Region_Null" xml:space="preserve">
+    <value>请设置游戏区域！</value>
+  </data>
+  <data name="StartUp_Initialize_Default_Title" xml:space="preserve">
+    <value>设置游戏基本信息</value>
+  </data>
+  <data name="StartUp_Initialize_Directory_Browser.Content" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="StartUp_Initialize_Directory_Subtitle.Text" xml:space="preserve">
+    <value>选择英雄联盟游戏所在的文件夹</value>
+  </data>
+  <data name="StartUp_Initialize_Directory_Title.Text" xml:space="preserve">
+    <value>游戏目录</value>
+  </data>
+  <data name="StartUp_Initialize_Invalid_Title" xml:space="preserve">
+    <value>检查到无效的游戏目录，请重新设置</value>
+  </data>
+  <data name="StartUp_Initialize_OKButton.Content" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Helper.ToolTipService.ToolTip" xml:space="preserve">
+    <value>除中国内地以外的地区都由拳头游戏 (Riot Games) 官方运营（这里简称拳头服，也可称作官方/直营服）,而中国内地则是由腾讯游戏独家代理运营。（马服）</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Riot" xml:space="preserve">
+    <value>拳头服</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Subtitle.Text" xml:space="preserve">
+    <value>设置游戏所在的区域/服务器</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Tencent" xml:space="preserve">
+    <value>腾讯服</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Title.Text" xml:space="preserve">
+    <value>区域</value>
+  </data>
 </root>
