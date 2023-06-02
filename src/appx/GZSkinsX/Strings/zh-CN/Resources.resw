@@ -123,6 +123,24 @@
   <data name="Appx_Preload_Loading_Title.Text" xml:space="preserve">
     <value>正在加载中</value>
   </data>
+  <data name="NavigationRoot_MainSearchBox.PlaceholderText" xml:space="preserve">
+    <value>查找导航项</value>
+  </data>
+  <data name="NavigationRoot_MainSearchBox_Query_NotResultsFound" xml:space="preserve">
+    <value>未找到匹配的项</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Settings.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Theme_Dark.Text" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Theme_Default.Text" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Theme_Light.Text" xml:space="preserve">
+    <value>浅色</value>
+  </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
   </data>

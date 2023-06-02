@@ -120,6 +120,24 @@
   <data name="AppName" xml:space="preserve">
     <value>Gezi</value>
   </data>
+  <data name="NavigationRoot_MainSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="NavigationRoot_MainSearchBox_Query_NotResultsFound" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Theme_Dark.Text" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Theme_Default.Text" xml:space="preserve">
+    <value>Windows Default</value>
+  </data>
+  <data name="NavigationRoot_ThemeMenu_Theme_Light.Text" xml:space="preserve">
+    <value>Light</value>
+  </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>Catastrophic failure: The application is missing core components or has been compromised.</value>
   </data>

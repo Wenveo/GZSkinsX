@@ -26,8 +26,6 @@ partial class StartUpClass
             yield return typeof(global::GZSkinsX.Appx.Home.AppxHome).Assembly;
             // GZSkinsX.Appx.Mods
             yield return typeof(global::GZSkinsX.Appx.Mods.AppxMods).Assembly;
-            // GZSkinsX.Appx.NavigationRoot
-            yield return typeof(global::GZSkinsX.Appx.NavigationRoot.AppxNavigationRoot).Assembly;
         }
 
         // Extensions
