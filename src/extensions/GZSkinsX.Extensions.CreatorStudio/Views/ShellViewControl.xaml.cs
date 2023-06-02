@@ -10,12 +10,10 @@
 using System;
 using System.Linq;
 
+using GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
 using GZSkinsX.SDK.Appx;
 using GZSkinsX.SDK.Commands;
-using GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
 using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
-using GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
-using GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
 
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -24,7 +22,7 @@ using Windows.UI.Xaml.Media;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace GZSkinsX.Extensions.CreatorStudio.Shell;
+namespace GZSkinsX.Extensions.CreatorStudio.Views;
 
 public sealed partial class ShellViewControl : Grid
 {
@@ -32,7 +30,6 @@ public sealed partial class ShellViewControl : Grid
 
     public static ShellViewControl Instance => s_lazy.Value;
 
-    private readonly AssetsExplorerService _assetsExplorerService;
     private readonly ICommandBarService _commandBarService;
     private readonly ShellViewSettings _shellViewSettings;
     private readonly DocumentTabService _documentTabService;
@@ -41,7 +38,6 @@ public sealed partial class ShellViewControl : Grid
 
     private ShellViewControl()
     {
-        _assetsExplorerService = (AssetsExplorerService)AppxContext.Resolve<IAssetsExplorerService>();
         _commandBarService = AppxContext.Resolve<ICommandBarService>();
         _shellViewSettings = AppxContext.Resolve<ShellViewSettings>();
 
@@ -67,7 +63,6 @@ public sealed partial class ShellViewControl : Grid
 
         CommandBarHost.Content = commandBar;
 
-        AssetsExplorerHost.Content = _assetsExplorerService.UIObject;
         AssetsExplorerHost.Visibility = Bool2Visibility(!_shellViewSettings.IsHideAssetsExplorer);
         AssetsExplorerHost.SizeChanged += (_, _) => SaveUIState();
 

@@ -10,7 +10,7 @@ using System.Composition;
 using GZSkinsX.SDK.Appx;
 using GZSkinsX.SDK.Settings;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Shell;
+namespace GZSkinsX.Extensions.CreatorStudio.Views;
 
 [Shared, Export]
 internal sealed class ShellViewSettings

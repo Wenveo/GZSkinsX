@@ -11,17 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-using GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
+namespace GZSkinsX.Extensions.CreatorStudio.Models.AssetsExplorer;
 
-namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
-
-internal sealed class AssetsExplorerContainer : AssetsExplorerItem, IAssetsExplorerContainer
+internal sealed class AssetsExplorerContainer : AssetsExplorerItem
 {
     public DirectoryInfo DirectoryInfo { get; }
 
     public List<AssetsExplorerItem> Children { get; }
-
-    IEnumerable<IAssetsExplorerItem> IAssetsExplorerContainer.Children => Children;
 
     public AssetsExplorerContainer(DirectoryInfo directoryInfo) : base(directoryInfo.Name, "\uF12B")
     {

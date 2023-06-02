@@ -13,7 +13,7 @@ using GZSkinsX.SDK.Controls;
 using Windows.System;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Shell;
+namespace GZSkinsX.Extensions.CreatorStudio.Views;
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_VIEW, Order = 0d)]

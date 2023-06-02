@@ -5,18 +5,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System.IO;
+namespace GZSkinsX.Extensions.CreatorStudio.Models.AssetsExplorer;
 
-using GZSkinsX.SDK.CreatorStudio.AssetsExplorer;
-
-namespace GZSkinsX.Extensions.CreatorStudio.AssetsExplorer;
-
-internal sealed class AssetsExplorerFile : AssetsExplorerItem, IAssetsExplorerFile
+internal abstract class AssetsExplorerItem
 {
-    public FileInfo FileInfo { get; }
+    public string Name { get; }
 
-    public AssetsExplorerFile(FileInfo fileInfo) : base(fileInfo.Name, "\uE130")
+    public string Glyph { get; }
+
+    public AssetsExplorerItem(string name, string glyph)
     {
-        FileInfo = fileInfo;
+        Name = name;
+        Glyph = glyph;
     }
 }
