@@ -10,10 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Helpers;
+using GZSkinsX.Api.Navigation;
 using GZSkinsX.Api.Themes;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
@@ -29,6 +29,7 @@ namespace GZSkinsX.Views.NavigationRoot;
 
 public sealed partial class CustomNavigationView : MUXC.NavigationView
 {
+    private INavigationViewManager? _navigationViewManager;
     private readonly IAppxTitleBar _appxTitleBar;
     private readonly IThemeService _themeService;
 
@@ -41,6 +42,11 @@ public sealed partial class CustomNavigationView : MUXC.NavigationView
 
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
+    }
+
+    internal void Setup(INavigationViewManager navigationViewManager)
+    {
+        _navigationViewManager = navigationViewManager;
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -142,17 +148,21 @@ public sealed partial class CustomNavigationView : MUXC.NavigationView
                 }
             }
 
-            sender.ItemsSource = suggestions.Count > 0 ? suggestions
-                : (new string[] { ResourceHelper.GetLocalized("Resources/NavigationRoot_MainSearchBox_Query_NotResultsFound") });
+            if (suggestions.Count == 0)
+            {
+                suggestions.Add(QueryNavigationItem.Empty);
+            }
+
+            sender.ItemsSource = suggestions;
         }
     }
 
-    private async void OnMainSearchBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    private void OnMainSearchBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
     {
-        if (args.ChosenSuggestion is QueryNavigationItem)
+        if (args.ChosenSuggestion is QueryNavigationItem item && item != QueryNavigationItem.Empty)
         {
-            await Task.CompletedTask;
-            //await _navigationService.NavigateCoreAsync(queryNavigationItem.Guid, null, null);
+            Debug2.Assert(_navigationViewManager is not null);
+            _navigationViewManager.NavigateTo(item.Guid);
         }
     }
 
@@ -195,4 +205,8 @@ public sealed partial class CustomNavigationView : MUXC.NavigationView
 internal record class QueryNavigationItem(string Title, string Glyph, FontFamily FontFamily, Guid Guid)
 {
     public override string ToString() => Title;
+
+    public static QueryNavigationItem Empty = new(
+        ResourceHelper.GetLocalized("Resources/NavigationRoot_MainSearchBox_Query_NotResultsFound"),
+        string.Empty, FontFamily.XamlAutoFontFamily, Guid.Empty);
 }

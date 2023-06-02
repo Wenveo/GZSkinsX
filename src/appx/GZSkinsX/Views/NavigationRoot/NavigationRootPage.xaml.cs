@@ -26,10 +26,11 @@ public sealed partial class NavigationRootPage : Page
 
     static NavigationRootPage()
     {
-        var navigationViewFactory = AppxContext.Resolve<INavigationViewFactory>();
-        s_navigationViewManager = navigationViewFactory.CreateNavigationViewManager(
-            NavigationConstants.NAVIGATIONROOT_NV_GUID,
-            new CustomNavigationView());
+        var customNavigationView = new CustomNavigationView();
+        s_navigationViewManager = AppxContext.NavigationViewFactory.CreateNavigationViewManager(
+            NavigationConstants.NAVIGATIONROOT_NV_GUID, customNavigationView);
+
+        customNavigationView.Setup(s_navigationViewManager);
     }
 
     public NavigationRootPage()
