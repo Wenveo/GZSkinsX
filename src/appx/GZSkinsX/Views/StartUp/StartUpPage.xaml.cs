@@ -12,7 +12,7 @@ using System;
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
-using GZSkinsX.Api.MRT;
+using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.WindowManager;
 using GZSkinsX.DotNet.Diagnostics;
 
@@ -33,16 +33,12 @@ public sealed partial class StartUpPage : Page
     private readonly IWindowManagerService _windowManagerService;
     private readonly IFutureAccessService _futureAccessService;
     private readonly IGameService _gameService;
-    private readonly IMRTCoreMap _mrtCoreMap;
 
     public StartUpPage()
     {
         _windowManagerService = AppxContext.WindowManagerService;
         _futureAccessService = AppxContext.FutureAccessService;
         _gameService = AppxContext.GameService;
-
-        var mainResourceMap = AppxContext.MRTCoreService.MainResourceMap;
-        _mrtCoreMap = mainResourceMap.GetSubtree("Resources");
 
         InitializeComponent();
     }
@@ -52,17 +48,17 @@ public sealed partial class StartUpPage : Page
         var isInvalid = e.Parameter is bool b && b;
 
         // 设置标题
-        var resTitle = _mrtCoreMap.GetString(isInvalid
-            ? "StartUp_Initialize_Invalid_Title"
-            : "StartUp_Initialize_Default_Title");
-        StartUp_Initialize_Title.Text = resTitle;
+        var localizedTitle = ResourceHelper.GetLocalized(isInvalid
+            ? "Resources/StartUp_Initialize_Invalid_Title"
+            : "Resources/StartUp_Initialize_Default_Title");
+        StartUp_Initialize_Title.Text = localizedTitle;
 
         // 添加游戏区域枚举的本地化字符串至选择器列表
-        var riotRes = _mrtCoreMap.GetString("StartUp_Initialize_Region_Riot");
-        StartUp_Initialize_Region_Selector.Items.Add(riotRes);
+        var riot = ResourceHelper.GetLocalized("Resources/StartUp_Initialize_Region_Riot");
+        StartUp_Initialize_Region_Selector.Items.Add(riot);
 
-        var tencentRes = _mrtCoreMap.GetString("StartUp_Initialize_Region_Tencent");
-        StartUp_Initialize_Region_Selector.Items.Add(tencentRes);
+        var tencent = ResourceHelper.GetLocalized("Resources/StartUp_Initialize_Region_Tencent");
+        StartUp_Initialize_Region_Selector.Items.Add(tencent);
 
         base.OnNavigatedTo(e);
     }
@@ -94,26 +90,25 @@ public sealed partial class StartUpPage : Page
     private void OnOK(object sender, RoutedEventArgs e)
     {
         Debug2.Assert(_gameService is not null);
-        Debug2.Assert(_mrtCoreMap is not null);
         Debug2.Assert(_windowManagerService is not null);
 
         var directoryPath = StartUp_Initialize_Directory_TextBox.Text;
         if (string.IsNullOrEmpty(directoryPath))
         {
-            ShowErrorMessage(_mrtCoreMap.GetString("StartUp_Error_Directory_Null"));
+            ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Null"));
             return;
         }
 
         var selector = StartUp_Initialize_Region_Selector;
         if (selector.SelectedIndex is -1)
         {
-            ShowErrorMessage(_mrtCoreMap.GetString("StartUp_Error_Region_Null"));
+            ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Region_Null"));
             return;
         }
 
         if (!_gameService.TryUpdate(directoryPath, (GameRegion)(selector.SelectedIndex + 1)))
         {
-            ShowErrorMessage(_mrtCoreMap.GetString("StartUp_Error_Directory_Invalid"));
+            ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Invalid"));
             return;
         }
 

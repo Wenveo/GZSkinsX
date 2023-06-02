@@ -8,7 +8,7 @@
 using System;
 
 using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.MRT;
+using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.WindowManager;
 
 using Windows.ApplicationModel;
@@ -24,13 +24,8 @@ namespace GZSkinsX.Views.Preload;
 /// </summary>
 public sealed partial class PreloadPage : Page
 {
-    private readonly IMRTCoreMap _mrtCoreMap;
-
     public PreloadPage()
     {
-        var mainResourceMap = AppxContext.MRTCoreService.MainResourceMap;
-        _mrtCoreMap = mainResourceMap.GetSubtree("Resources");
-
         InitializeComponent();
         Loaded += OnLoaded;
     }
@@ -44,7 +39,7 @@ public sealed partial class PreloadPage : Page
         }
         else
         {
-            ShowCrashMessage(_mrtCoreMap.GetString("Preload_Crash_Failed_To_Verify_Content_Integrity"));
+            ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
             AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
         }
     }
