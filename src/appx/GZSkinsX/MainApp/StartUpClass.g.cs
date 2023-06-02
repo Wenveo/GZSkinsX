@@ -28,13 +28,6 @@ partial class StartUpClass
         {
             // GZSkinsX.Extensions.CreatorStudio
             yield return typeof(global::GZSkinsX.Extensions.CreatorStudio.TheExtension).Assembly;
-            {
-                // SubModules of GZSkinsX.Extensions.CreatorStudio
-                foreach (var g__creatorStudio__subModule in global::GZSkinsX.Extensions.CreatorStudio.TheExtension.GetSubModules())
-                {
-                    yield return g__creatorStudio__subModule;
-                }
-            }
         }
     }
 }

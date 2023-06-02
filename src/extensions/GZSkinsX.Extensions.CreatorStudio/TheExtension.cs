@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Composition;
-using System.Reflection;
 
 using GZSkinsX.SDK.Extension;
 
@@ -26,7 +25,6 @@ public class TheExtension : IUniversalExtension
     {
         get
         {
-            //yield return "Styles/TabViewFluent.xaml";
             yield break;
         }
     }
@@ -34,12 +32,5 @@ public class TheExtension : IUniversalExtension
     public void OnEvent(UniversalExtensionEvent e)
     {
 
-    }
-
-    public static IEnumerable<Assembly> GetSubModules()
-    {
-        yield return typeof(GZSkinsX.Extensions.CreatorStudio.Text.SubModule).Assembly;
-        yield return typeof(GZSkinsX.Extensions.CreatorStudio.Wad.SubModule).Assembly;
-        yield break;
     }
 }

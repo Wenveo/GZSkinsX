@@ -9,10 +9,11 @@
 
 using System.Composition;
 
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs.UndoRedo;
+
 using GZSkinsX.SDK.Commands;
 using GZSkinsX.SDK.Controls;
-using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
-using GZSkinsX.SDK.CreatorStudio.Documents.Undo;
 
 using Windows.System;
 using Windows.UI.Xaml;

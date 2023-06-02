@@ -11,7 +11,8 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
+
 using GZSkinsX.SDK.Helpers;
 
 using Windows.UI.Text;

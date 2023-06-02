@@ -175,7 +175,9 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.SDK</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
+    <ProjectReference Include="..\..\extensions\GZSkinsX.Extensions.CreatorStudio\GZSkinsX.Extensions.CreatorStudio.csproj">
+      <Name>GZSkinsX.Extensions.CreatorStudio</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

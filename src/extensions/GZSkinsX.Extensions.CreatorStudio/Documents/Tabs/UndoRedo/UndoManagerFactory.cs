@@ -8,8 +8,8 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.SDK.CreatorStudio.Documents;
-using GZSkinsX.SDK.CreatorStudio.Documents.Undo;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs.UndoRedo;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
 

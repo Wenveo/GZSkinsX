@@ -7,7 +7,7 @@
 
 using System;
 
-using GZSkinsX.SDK.CreatorStudio.Documents;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Documents;
 

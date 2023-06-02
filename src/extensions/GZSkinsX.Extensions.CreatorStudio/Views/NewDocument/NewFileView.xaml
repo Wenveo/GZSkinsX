@@ -1,22 +1,16 @@
 ﻿<UserControl
-    x:Class="GZSkinsX.Extensions.CreatorStudio.Commands.SelectTemplateView"
+    x:Class="GZSkinsX.Extensions.CreatorStudio.Views.NewDocument.NewFileView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctrls2="using:GZSkinsX.SDK.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:GZSkinsX.Extensions.CreatorStudio.Commands"
+    xmlns:local="using:GZSkinsX.Extensions.CreatorStudio.Views.NewDocument"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
 
     <Grid RowSpacing="24">
-        <Grid.Transitions>
-            <TransitionCollection>
-                <PopupThemeTransition FromHorizontalOffset="-200" FromVerticalOffset="0" />
-            </TransitionCollection>
-        </Grid.Transitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -27,8 +21,7 @@
             Grid.Row="0"
             Padding="8"
             Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
-            CornerRadius="8"
-            SelectionChanged="TemplateView_SelectionChanged">
+            CornerRadius="8">
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Grid>
@@ -64,18 +57,18 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-
             <Button
+                x:Name="CancelButton"
                 Grid.Column="0"
                 Width="80"
-                Click="CancelButton_Click"
+                Click="OnCancel"
                 Content="Cancel" />
             <Button
-                x:Name="NextButton"
+                x:Name="OkayButton"
                 Grid.Column="1"
                 Width="80"
-                Click="NextButton_Click"
-                Content="Next"
+                Click="OnOkay"
+                Content="Okay"
                 IsEnabled="False"
                 Style="{ThemeResource AccentButtonStyle}" />
         </Grid>

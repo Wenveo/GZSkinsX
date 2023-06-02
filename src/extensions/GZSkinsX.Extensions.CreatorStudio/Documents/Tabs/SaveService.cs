@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
-using GZSkinsX.SDK.CreatorStudio.Documents;
-using GZSkinsX.SDK.CreatorStudio.Documents.Tabs;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
+using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
 
