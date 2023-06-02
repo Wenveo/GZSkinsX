@@ -29,7 +29,7 @@ public sealed partial class PreloadPage : Page
     public PreloadPage()
     {
         var mainResourceMap = AppxContext.MRTCoreService.MainResourceMap;
-        _mrtCoreMap = mainResourceMap.GetSubtree("GZSkinsX/Strings");
+        _mrtCoreMap = mainResourceMap.GetSubtree("Resources");
 
         InitializeComponent();
         Loaded += OnLoaded;
@@ -40,23 +40,12 @@ public sealed partial class PreloadPage : Page
         var b = await Package.Current.VerifyContentIntegrityAsync();
         if (b)
         {
-            if (AppxContext.TryResolve<IWindowManagerService>(out var windowManagerService))
-            {
-                windowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
-            }
-            else
-            {
-                // 不应执行至此，但保留一段代码以显示错误
-                var guid = typeof(IWindowManagerService).GUID;
-
-                ShowCrashMessage(string.Format(_mrtCoreMap.GetString("Crash_Failed_To_Find_Component"), guid));
-                AppxContext.LoggingService.LogError($"AppxPreload: Failed to find component IID: {{{guid}}}.");
-            }
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
         }
         else
         {
-            ShowCrashMessage(_mrtCoreMap.GetString("Crash_Failed_To_Check_Access"));
-            AppxContext.LoggingService.LogError($"AppxPreload: Failed to check access.");
+            ShowCrashMessage(_mrtCoreMap.GetString("Preload_Crash_Failed_To_Verify_Content_Integrity"));
+            AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
         }
     }
 

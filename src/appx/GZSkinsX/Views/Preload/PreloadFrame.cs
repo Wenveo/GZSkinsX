@@ -25,12 +25,12 @@ namespace GZSkinsX.Views.Preload;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
-internal sealed class ExportPreloadFrame : IWindowFrame
+internal sealed class PreloadFrame : IWindowFrame
 {
     private readonly ILoggingService _loggingService;
     private readonly PreloadSettings _preloadSettings;
 
-    public ExportPreloadFrame()
+    public PreloadFrame()
     {
         _loggingService = AppxContext.LoggingService;
         _preloadSettings = AppxContext.Resolve<PreloadSettings>();
