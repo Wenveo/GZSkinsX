@@ -92,10 +92,10 @@ internal sealed class GameData : IGameData
 
             /// File.Exists 在这里不适用，且无法正确判断，因此只能通过获取文件列表进行判定
             if (gameDirectoryInfo.GetFiles(GAME_EXECUTE_NAME).Any(
-                a => StringComparer.Ordinal.Equals(a.FullName, gameExecutePath))
+                a => StringComparer.OrdinalIgnoreCase.Equals(a.FullName, gameExecutePath))
                 &&
                 lcuDirectoryInfo.GetFiles(LCU_EXECUTE_NAME).Any(
-                b => StringComparer.Ordinal.Equals(b.FullName, lcuExecutePath)))
+                b => StringComparer.OrdinalIgnoreCase.Equals(b.FullName, lcuExecutePath)))
             {
                 GameDirectory = gameDirectory;
                 GameExecutePath = gameExecutePath;
