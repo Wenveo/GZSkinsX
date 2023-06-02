@@ -10,7 +10,7 @@ using System.Composition;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Settings;
 
-namespace GZSkinsX.Views.Preload;
+namespace GZSkinsX.Views.WindowFrames.Preload;
 
 [Shared, Export]
 internal sealed class PreloadSettings

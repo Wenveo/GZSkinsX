@@ -11,7 +11,7 @@ using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.WindowManager;
 
-namespace GZSkinsX.Views.StartUp;
+namespace GZSkinsX.Views.WindowFrames.StartUp;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]

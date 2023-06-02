@@ -21,7 +21,7 @@ using Windows.Globalization;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Views.Preload;
+namespace GZSkinsX.Views.WindowFrames.Preload;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]

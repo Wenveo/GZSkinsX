@@ -50,23 +50,23 @@
     <Compile Include="Themes\AutoThemeTitleBar.cs" />
     <Compile Include="Themes\ThemeService.cs" />
     <Compile Include="Themes\ThemeSettings.cs" />
-    <Compile Include="Views\NavigationRoot\CustomNavigationView.xaml.cs">
+    <Compile Include="Views\WindowFrames\NavigationRoot\CustomNavigationView.xaml.cs">
       <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NavigationRoot\CustomTitleBar.xaml.cs">
+    <Compile Include="Views\WindowFrames\NavigationRoot\CustomTitleBar.xaml.cs">
       <DependentUpon>CustomTitleBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NavigationRoot\NavigationRootPage.xaml.cs">
+    <Compile Include="Views\WindowFrames\NavigationRoot\NavigationRootPage.xaml.cs">
       <DependentUpon>NavigationRootPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NavigationRoot\NavigationRootFrames.cs" />
-    <Compile Include="Views\Preload\PreloadFrame.cs" />
-    <Compile Include="Views\Preload\PreloadPage.xaml.cs">
+    <Compile Include="Views\WindowFrames\NavigationRoot\NavigationRootFrames.cs" />
+    <Compile Include="Views\WindowFrames\Preload\PreloadFrame.cs" />
+    <Compile Include="Views\WindowFrames\Preload\PreloadPage.xaml.cs">
       <DependentUpon>PreloadPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preload\PreloadSettings.cs" />
-    <Compile Include="Views\StartUp\StartUpFrame.cs" />
-    <Compile Include="Views\StartUp\StartUpPage.xaml.cs">
+    <Compile Include="Views\WindowFrames\Preload\PreloadSettings.cs" />
+    <Compile Include="Views\WindowFrames\StartUp\StartUpFrame.cs" />
+    <Compile Include="Views\WindowFrames\StartUp\StartUpPage.xaml.cs">
       <DependentUpon>StartUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowManager\WindowFrameContext.cs" />
@@ -185,23 +185,23 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\NavigationRoot\CustomNavigationView.xaml">
+    <Page Include="Views\WindowFrames\NavigationRoot\CustomNavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\NavigationRoot\CustomTitleBar.xaml">
+    <Page Include="Views\WindowFrames\NavigationRoot\CustomTitleBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\NavigationRoot\NavigationRootPage.xaml">
+    <Page Include="Views\WindowFrames\NavigationRoot\NavigationRootPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Preload\PreloadPage.xaml">
+    <Page Include="Views\WindowFrames\Preload\PreloadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StartUp\StartUpPage.xaml">
+    <Page Include="Views\WindowFrames\StartUp\StartUpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
