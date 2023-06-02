@@ -141,6 +141,12 @@
   <data name="NavigationRoot_ThemeMenu_Theme_Light.Text" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="NavigationViewItem_Home_Header" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="NavigationViewItem_Mods_Header" xml:space="preserve">
+    <value>模组</value>
+  </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
   </data>

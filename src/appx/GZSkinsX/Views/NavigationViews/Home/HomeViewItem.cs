@@ -14,12 +14,12 @@ using GZSkinsX.Api.Navigation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace GZSkinsX.Appx.Home;
+namespace GZSkinsX.Views.NavigationViews.Home;
 
 [Shared, ExportNavigationItem]
 [NavigationItemMetadata(OwnerGuid = NavigationConstants.NAVIGATIONROOT_NV_GUID, Group = NavigationConstants.GROUP_NAVIGATIONROOT_NV_MAIN, Order = 0,
-    Guid = "CEF94E82-AA3D-4D0B-84BD-3B01671B7165", Header = "resx:Resources/NavigationViewItem_Home_Header", PageType = typeof(HomeView))]
-internal sealed class ExportHomeNavigationItem : INavigationItem
+    Guid = "CEF94E82-AA3D-4D0B-84BD-3B01671B7165", Header = "resx:Resources/NavigationViewItem_Home_Header", PageType = typeof(HomePage))]
+internal sealed class HomeViewItem : INavigationItem
 {
     public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE10F" };
 

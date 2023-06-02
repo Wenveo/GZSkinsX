@@ -138,6 +138,12 @@
   <data name="NavigationRoot_ThemeMenu_Theme_Light.Text" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="NavigationViewItem_Home_Header" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="NavigationViewItem_Mods_Header" xml:space="preserve">
+    <value>Mods</value>
+  </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>Catastrophic failure: The application is missing core components or has been compromised.</value>
   </data>

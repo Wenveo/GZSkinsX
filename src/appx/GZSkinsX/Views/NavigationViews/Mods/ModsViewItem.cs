@@ -14,14 +14,14 @@ using GZSkinsX.Api.Navigation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace GZSkinsX.Appx.Home;
+namespace GZSkinsX.Views.NavigationViews.Mods;
 
 [Shared, ExportNavigationItem]
-[NavigationItemMetadata(OwnerGuid = NavigationConstants.NAVIGATIONROOT_NV_GUID, Group = NavigationConstants.GROUP_NAVIGATIONROOT_NV_MAIN, Order = 0,
-    Guid = "CEF94E82-AA3D-4D0B-84BD-3B01671B7165", Header = "resx:Resources/NavigationViewItem_Home_Header", PageType = typeof(HomeView))]
-internal sealed class ExportHomeNavigationItem : INavigationItem
+[NavigationItemMetadata(OwnerGuid = NavigationConstants.NAVIGATIONROOT_NV_GUID, Group = NavigationConstants.GROUP_NAVIGATIONROOT_NV_MAIN, Order = 10,
+    Guid = "6ADAA585-3915-4689-A1E3-7418FD3055CD", Header = "resx:Resources/NavigationViewItem_Mods_Header", PageType = typeof(ModsPage))]
+internal sealed class ModsViewItem : INavigationItem
 {
-    public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE10F" };
+    public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE74C" };
 
     public async Task OnNavigatedFromAsync()
     {

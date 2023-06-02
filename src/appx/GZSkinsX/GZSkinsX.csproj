@@ -50,6 +50,14 @@
     <Compile Include="Themes\AutoThemeTitleBar.cs" />
     <Compile Include="Themes\ThemeService.cs" />
     <Compile Include="Themes\ThemeSettings.cs" />
+    <Compile Include="Views\NavigationViews\Home\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NavigationViews\Home\HomeViewItem.cs" />
+    <Compile Include="Views\NavigationViews\Mods\ModsViewItem.cs" />
+    <Compile Include="Views\NavigationViews\Mods\ModsPage.xaml.cs">
+      <DependentUpon>ModsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WindowFrames\NavigationRoot\CustomNavigationView.xaml.cs">
       <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
@@ -167,12 +175,6 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.Home\GZSkinsX.Appx.Home.csproj">
-      <Name>GZSkinsX.Appx.Home</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GZSkinsX.Appx.Mods\GZSkinsX.Appx.Mods.csproj">
-      <Name>GZSkinsX.Appx.Mods</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\extensions\**\GZSkinsX.Extensions.*.csproj" Name="%(Filename)" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +187,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\NavigationViews\Home\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NavigationViews\Mods\ModsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\WindowFrames\NavigationRoot\CustomNavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
