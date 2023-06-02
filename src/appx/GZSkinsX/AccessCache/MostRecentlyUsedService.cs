@@ -21,9 +21,9 @@ using Windows.Storage.AccessCache;
 
 namespace GZSkinsX.AccessCache;
 
-/// <inheritdoc cref="IMostRecentlyUsedItemService"/>
-[Shared, Export(typeof(IMostRecentlyUsedItemService))]
-internal sealed class MostRecentlyUsedItemService : IMostRecentlyUsedItemService
+/// <inheritdoc cref="IMostRecentlyUsedService"/>
+[Shared, Export(typeof(IMostRecentlyUsedService))]
+internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
 {
     /// <summary>
     /// 表示当前设置节点的 <seealso cref="Guid"/> 字符串值
@@ -47,13 +47,13 @@ internal sealed class MostRecentlyUsedItemService : IMostRecentlyUsedItemService
     public uint MaximumItemsAllowed => _mostRecentlyUsedList.MaximumItemsAllowed;
 
     /// <inheritdoc/>
-    public event TypedEventHandler<IMostRecentlyUsedItemService, ItemRemovedEventArgs>? ItemRemoved;
+    public event TypedEventHandler<IMostRecentlyUsedService, ItemRemovedEventArgs>? ItemRemoved;
 
     /// <summary>
-    /// 初始化 <see cref="MostRecentlyUsedItemService"/> 的新实例
+    /// 初始化 <see cref="MostRecentlyUsedService"/> 的新实例
     /// </summary>
     [ImportingConstructor]
-    public MostRecentlyUsedItemService(ISettingsService settingsService)
+    public MostRecentlyUsedService(ISettingsService settingsService)
     {
         _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
         _mostRecentlyUsedList = StorageApplicationPermissions.MostRecentlyUsedList;
@@ -61,7 +61,7 @@ internal sealed class MostRecentlyUsedItemService : IMostRecentlyUsedItemService
     }
 
     /// <summary>
-    /// 对接口中定义的事件 <seealso cref="IMostRecentlyUsedItemService.ItemRemoved"/> 进行代理通知
+    /// 对接口中定义的事件 <seealso cref="IMostRecentlyUsedService.ItemRemoved"/> 进行代理通知
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>

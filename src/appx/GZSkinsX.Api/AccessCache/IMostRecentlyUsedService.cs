@@ -18,12 +18,12 @@ namespace GZSkinsX.Api.AccessCache;
 /// <summary>
 /// 提供对最近使用 (MRU) 的存储项列表进行管理，可跟踪用户最近访问的 (文件和文件夹)
 /// </summary>
-public interface IMostRecentlyUsedItemService : IAccessCacheService
+public interface IMostRecentlyUsedService : IAccessCacheService
 {
     /// <summary>
     /// 从最近使用的 (MRU) 列表中删除存储项时触发
     /// </summary>
-    event TypedEventHandler<IMostRecentlyUsedItemService, ItemRemovedEventArgs>? ItemRemoved;
+    event TypedEventHandler<IMostRecentlyUsedService, ItemRemovedEventArgs>? ItemRemoved;
 
     /// <summary>
     /// 将新的存储项和关联的名称添加到最近使用的 (MRU) 列表中，指定其可见性范围

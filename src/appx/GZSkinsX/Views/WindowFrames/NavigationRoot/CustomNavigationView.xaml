@@ -51,7 +51,6 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 composition:CompositionFactory.UseStandardReposition="True"
-                BorderThickness="0"
                 IsTextScaleFactorEnabled="True"
                 KeyboardAcceleratorPlacementMode="Hidden"
                 QuerySubmitted="OnMainSearchBoxQuerySubmitted"
