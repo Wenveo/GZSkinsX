@@ -145,11 +145,6 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.HashCode">
-      <Version>1.1.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.SDK.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.SDK</Name>
