@@ -7,10 +7,13 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Composition.Hosting;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
@@ -28,6 +31,11 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 public sealed partial class StartUpClass
 {
+    /// <summary>
+    /// 用于保证应用程序生命周期服务的初始化和访问的同步锁
+    /// </summary>
+    private static readonly AutoResetEvent s_synchronouslock;
+
     /// <summary>
     /// 当前组件容器的宿主实例
     /// </summary>
@@ -48,6 +56,7 @@ public sealed partial class StartUpClass
     /// </summary>
     static StartUpClass()
     {
+        s_synchronouslock = new AutoResetEvent(false);
         var configuration = new ContainerConfiguration();
         configuration.WithAssemblies(GetAssemblies());
         s_compositionHost = configuration.CreateContainer();
@@ -56,16 +65,27 @@ public sealed partial class StartUpClass
     [DebuggerNonUserCode]
     public static void Main(string[] args)
     {
-        Application.Start((p) => InitializeServices(p, new App()));
+        Application.Start((p) =>
+        {
+            new App();
+
+            Task.Factory.StartNew(() =>
+            {
+                InitializeServices(p);
+            }).Wait();
+
+            /// 阻塞当前应用程序主线程
+            /// 等待生命周期服务初始化
+            s_synchronouslock.WaitOne();
+        });
     }
 
     /// <summary>
     /// 加载和初始化应用程序的基本服务
     /// </summary>
     /// <param name="parms">应用程序初始化时的参数</param>
-    /// <param name="mainApp">用于初始化的应用程序</param>
     [DebuggerNonUserCode]
-    private static async void InitializeServices(ApplicationInitializationCallbackParams parms, App mainApp)
+    private static async void InitializeServices(ApplicationInitializationCallbackParams parms)
     {
         await LoggerImpl.Shared.InitializeAsync();
 
@@ -76,6 +96,8 @@ public sealed partial class StartUpClass
         s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
         s_extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
         s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
+
+        s_synchronouslock.Set();
     }
 
 

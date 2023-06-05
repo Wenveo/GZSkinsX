@@ -11,6 +11,8 @@ using GZSkinsX.SDK.WindowManager;
 using Microsoft.UI.Xaml.Controls;
 
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -31,44 +33,56 @@ public sealed partial class App : Application
     }
 
     /// <summary>
+    /// Invoked when the application creates a window.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnWindowCreated(WindowCreatedEventArgs args)
+    {
+        var appxWindow = AppxContext.AppxWindow;
+        if (appxWindow.MainWindow == args.Window)
+        {
+            if (appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
+            {
+                // 合并扩展组件的资源字典至主程序内
+                var xamlControlsResources = Resources = new XamlControlsResources();
+                var mergedResourceDictionaries = xamlControlsResources.MergedDictionaries;
+                foreach (var rsrc in StartUpClass.s_extensionService.GetMergedResourceDictionaries())
+                {
+                    mergedResourceDictionaries.Add(rsrc);
+                }
+
+                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+            }
+
+            if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
+            {
+                var themeService = AppxContext.ThemeService;
+                frameworkElement.RequestedTheme = themeService.CurrentTheme;
+            }
+
+            ((AppxWindow)appxWindow).OnAppLoaded();
+        }
+
+        base.OnWindowCreated(args);
+    }
+
+    /// <summary>
     /// Invoked when the application is launched normally by the end user.  Other entry points
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs e)
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        var appxWindow = AppxContext.AppxWindow;
-        if (appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
+        if (args.PrelaunchActivated == false)
         {
-            // 合并扩展组件的资源字典至主程序内
-            var xamlControlsResources = Resources = new XamlControlsResources();
-            var mergedResourceDictionaries = xamlControlsResources.MergedDictionaries;
-            foreach (var rsrc in StartUpClass.s_extensionService.GetMergedResourceDictionaries())
+            if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
             {
-                mergedResourceDictionaries.Add(rsrc);
+                CoreApplication.EnablePrelaunch(true);
             }
 
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+            AppxContext.AppxWindow.Activate();
         }
 
-        if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
-        {
-            var themeService = AppxContext.ThemeService;
-            frameworkElement.RequestedTheme = themeService.CurrentTheme;
-        }
-
-        if (e.PrelaunchActivated == false)
-        {
-            // 如果启用了 Prelaunch 就可能会跳过 StartUpClass 里的 InitializeServices，
-            // 从而导致上面的 "var appxWindow = AppxContext.AppxWindow;" 这段代码触发异常。
-            // 目前暂时不做这个处理，并注释掉以下代码。
-
-            //if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
-            //{
-            //    CoreApplication.EnablePrelaunch(true);
-            //}
-
-            appxWindow.Activate();
-        }
+        base.OnLaunched(args);
     }
 }

@@ -10,10 +10,11 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Extension;
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
+
+using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Extension;
 
 using Windows.UI.Core;
 using Windows.UI.Core.Preview;
@@ -68,17 +69,13 @@ internal sealed class AppxWindow : IAppxWindow
 
         _shellWindow = Window.Current;
         _shellWindow.Activated += OnActivated;
-
-        Activated += OnAppLoaded;
     }
 
     /// <summary>
     /// 负责对已加载的应用程序扩展通知 AppLoaded 事件
     /// </summary>
-    private void OnAppLoaded(object? sender, WindowActivatedEventArgs e)
+    internal void OnAppLoaded()
     {
-        Activated -= OnAppLoaded;
-
         _extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
         _extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
         SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequested;
