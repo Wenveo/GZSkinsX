@@ -25,7 +25,5 @@ public abstract class DocumentTabBase : IDocumentTab
 
     public virtual void OnAdded() { }
 
-    public virtual void OnCloseRequested(DocumentTabCloseRequestedEventArgs args) { }
-
     public virtual void OnRemoved() { }
 }

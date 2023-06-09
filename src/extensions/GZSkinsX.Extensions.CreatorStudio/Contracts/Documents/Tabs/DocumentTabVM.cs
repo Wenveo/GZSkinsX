@@ -39,8 +39,6 @@ public abstract class DocumentTabVM : ObservableObject, IDocumentTab
 
     public virtual void OnAdded() { }
 
-    public virtual void OnCloseRequested(DocumentTabCloseRequestedEventArgs args) { }
-
     public virtual void OnRemoved() { }
 
     protected IconSource? _iconSource;

@@ -21,7 +21,6 @@
     <Compile Include="Contracts\Documents\IDocumentService.cs" />
     <Compile Include="Contracts\Documents\Tabs\ActiveDocumentTabChangedEventArgs.cs" />
     <Compile Include="Contracts\Documents\Tabs\DocumentTabBase.cs" />
-    <Compile Include="Contracts\Documents\Tabs\DocumentTabCloseRequestedEventArgs.cs" />
     <Compile Include="Contracts\Documents\Tabs\DocumentTabCollectionChangedEventArgs.cs" />
     <Compile Include="Contracts\Documents\Tabs\DocumentTabConstants.cs" />
     <Compile Include="Contracts\Documents\Tabs\DocumentTabContentBase.cs" />

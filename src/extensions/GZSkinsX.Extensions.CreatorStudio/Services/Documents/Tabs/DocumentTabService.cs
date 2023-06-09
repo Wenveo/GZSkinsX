@@ -246,13 +246,7 @@ internal sealed class DocumentTabService : IDocumentTabService
     {
         if (args.Tab.DataContext is DocumentTabContext context)
         {
-            var args2 = new DocumentTabCloseRequestedEventArgs();
-            context._tab.OnCloseRequested(args2);
-
-            if (!args2.Handled)
-            {
-                _documentService.Remove(context._tab.Document.Key);
-            }
+            _documentService.Remove(context._tab.Document.Key);
         }
     }
 

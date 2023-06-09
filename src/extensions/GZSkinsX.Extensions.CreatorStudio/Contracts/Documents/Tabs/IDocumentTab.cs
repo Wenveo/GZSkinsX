@@ -25,7 +25,5 @@ public interface IDocumentTab
 
     void OnAdded();
 
-    void OnCloseRequested(DocumentTabCloseRequestedEventArgs args);
-
     void OnRemoved();
 }
