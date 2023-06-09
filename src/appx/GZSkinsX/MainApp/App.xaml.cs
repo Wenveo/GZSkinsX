@@ -24,6 +24,11 @@ namespace GZSkinsX.MainApp;
 public sealed partial class App : Application
 {
     /// <summary>
+    /// 用于表示应用程序主窗口是否已加载完毕
+    /// </summary>
+    private bool _isAppLoaded;
+
+    /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
     /// </summary>
@@ -59,8 +64,6 @@ public sealed partial class App : Application
                 var themeService = AppxContext.ThemeService;
                 frameworkElement.RequestedTheme = themeService.CurrentTheme;
             }
-
-            ((AppxWindow)appxWindow).OnAppLoaded();
         }
 
         base.OnWindowCreated(args);
@@ -73,6 +76,14 @@ public sealed partial class App : Application
     /// <param name="e">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        var appxWindow = AppxContext.AppxWindow;
+
+        if (_isAppLoaded is false)
+        {
+            _isAppLoaded = true;
+            ((AppxWindow)appxWindow).OnAppLoaded();
+        }
+
         if (args.PrelaunchActivated == false)
         {
             if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
@@ -80,7 +91,7 @@ public sealed partial class App : Application
                 CoreApplication.EnablePrelaunch(true);
             }
 
-            AppxContext.AppxWindow.Activate();
+            appxWindow.Activate();
         }
 
         base.OnLaunched(args);
