@@ -18,7 +18,7 @@ using System.Text;
 using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Buffers;
 
-namespace GZSkinsX.Extensions.CreatorStudio.IO.Wad;
+namespace GZSkinsX.Extensions.CreatorStudio.Core.IO.Wad;
 
 internal sealed class WadFile : IDisposable
 {

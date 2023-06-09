@@ -10,7 +10,7 @@
 using System;
 using System.IO;
 
-namespace GZSkinsX.Extensions.CreatorStudio.IO.Wad;
+namespace GZSkinsX.Extensions.CreatorStudio.Core.IO.Wad;
 
 internal sealed class WadFileChunk : IEquatable<WadFileChunk>
 {

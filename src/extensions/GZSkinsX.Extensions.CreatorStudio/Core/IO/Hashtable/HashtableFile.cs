@@ -23,7 +23,7 @@ using CommunityToolkit.HighPerformance.Buffers;
 
 using GZSkinsX.SDK.Diagnostics;
 
-namespace GZSkinsX.Extensions.CreatorStudio.IO.Hashtable;
+namespace GZSkinsX.Extensions.CreatorStudio.Core.IO.Hashtable;
 
 internal sealed class HashtableFile : IDisposable
 {

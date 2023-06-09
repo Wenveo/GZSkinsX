@@ -44,11 +44,11 @@
     <Compile Include="Contracts\Documents\Tabs\UndoRedo\IUndoCommand.cs" />
     <Compile Include="Contracts\Documents\Tabs\UndoRedo\IUndoManager.cs" />
     <Compile Include="Contracts\Documents\Tabs\UndoRedo\IUndoManagerFactory.cs" />
-    <Compile Include="IO\Hashtable\HashtableFile.cs" />
-    <Compile Include="IO\Wad\WadFile.cs" />
-    <Compile Include="IO\Wad\WadFileChunk.cs" />
-    <Compile Include="IO\Wad\WadFileChunkType.cs" />
-    <Compile Include="IO\Wad\WadFileSubChunkInfo.cs" />
+    <Compile Include="Core\IO\Hashtable\HashtableFile.cs" />
+    <Compile Include="Core\IO\Wad\WadFile.cs" />
+    <Compile Include="Core\IO\Wad\WadFileChunk.cs" />
+    <Compile Include="Core\IO\Wad\WadFileChunkType.cs" />
+    <Compile Include="Core\IO\Wad\WadFileSubChunkInfo.cs" />
     <Compile Include="Models\AssetsExplorer\AssetsExplorerContainer.cs" />
     <Compile Include="Models\AssetsExplorer\AssetsExplorerFile.cs" />
     <Compile Include="Models\AssetsExplorer\AssetsExplorerItem.cs" />
