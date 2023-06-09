@@ -13,9 +13,9 @@ using System.Composition;
 using System.Linq;
 
 using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.SDK.Diagnostics;
 using GZSkinsX.SDK.Helpers;
 using GZSkinsX.SDK.Utilities;
-using GZSkinsX.SDK.Diagnostics;
 
 using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;

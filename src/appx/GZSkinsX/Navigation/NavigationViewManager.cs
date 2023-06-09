@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.Navigation;
 using GZSkinsX.SDK.Diagnostics;
+using GZSkinsX.SDK.Navigation;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;

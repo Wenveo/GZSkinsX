@@ -11,10 +11,10 @@ using System;
 
 using GZSkinsX.SDK.AccessCache;
 using GZSkinsX.SDK.Appx;
+using GZSkinsX.SDK.Diagnostics;
 using GZSkinsX.SDK.Game;
 using GZSkinsX.SDK.Helpers;
 using GZSkinsX.SDK.WindowManager;
-using GZSkinsX.SDK.Diagnostics;
 
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
