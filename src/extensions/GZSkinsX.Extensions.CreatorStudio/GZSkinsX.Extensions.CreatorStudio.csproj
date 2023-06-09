@@ -45,6 +45,10 @@
     <Compile Include="Contracts\Documents\Tabs\UndoRedo\IUndoManager.cs" />
     <Compile Include="Contracts\Documents\Tabs\UndoRedo\IUndoManagerFactory.cs" />
     <Compile Include="IO\Hashtable\HashtableFile.cs" />
+    <Compile Include="IO\Wad\WadFile.cs" />
+    <Compile Include="IO\Wad\WadFileChunk.cs" />
+    <Compile Include="IO\Wad\WadFileChunkType.cs" />
+    <Compile Include="IO\Wad\WadFileSubChunkInfo.cs" />
     <Compile Include="Models\AssetsExplorer\AssetsExplorerContainer.cs" />
     <Compile Include="Models\AssetsExplorer\AssetsExplorerFile.cs" />
     <Compile Include="Models\AssetsExplorer\AssetsExplorerItem.cs" />
@@ -118,6 +122,9 @@
     </PackageReference>
     <PackageReference Include="System.IO.Hashing">
       <Version>8.0.0-preview.4.23259.5</Version>
+    </PackageReference>
+    <PackageReference Include="ZstdNet">
+      <Version>1.4.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
