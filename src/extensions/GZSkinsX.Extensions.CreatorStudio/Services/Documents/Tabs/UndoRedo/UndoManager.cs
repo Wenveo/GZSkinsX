@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs.UndoRedo;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Undo;
 
 internal sealed class UndoManager : IUndoManager, IEquatable<UndoManager>
 {

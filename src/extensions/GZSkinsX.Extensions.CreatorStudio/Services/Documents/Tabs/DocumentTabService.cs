@@ -26,7 +26,7 @@ using Windows.UI.Xaml.Input;
 
 using MUXC = Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 [Shared, Export(typeof(IDocumentTabService))]
 internal sealed class DocumentTabService : IDocumentTabService

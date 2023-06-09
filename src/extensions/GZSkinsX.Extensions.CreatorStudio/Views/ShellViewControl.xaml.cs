@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
-using GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+using GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 using GZSkinsX.SDK.Appx;
 using GZSkinsX.SDK.Commands;

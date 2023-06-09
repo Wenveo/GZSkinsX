@@ -18,7 +18,7 @@ using GZSkinsX.SDK.Controls;
 using Windows.System;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Undo;
 
 [Shared, ExportCommandItem]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_EDIT, Order = 0)]

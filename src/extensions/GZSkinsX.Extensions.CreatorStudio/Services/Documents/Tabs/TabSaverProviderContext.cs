@@ -9,7 +9,7 @@ using System;
 
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 internal sealed class TabSaverProviderContext
 {

@@ -21,7 +21,7 @@ using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 [Shared, ExportCommandItem, Export]
 [CommandItemMetadata(OwnerGuid = CommandConstants.CREATOR_STUDIO_CB_GUID, Group = CommandConstants.GROUP_CREATORSTUDIO_CB_MAIN_FILE, Order = 0)]

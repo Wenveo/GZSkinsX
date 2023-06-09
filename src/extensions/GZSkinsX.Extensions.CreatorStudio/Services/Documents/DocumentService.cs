@@ -17,7 +17,7 @@ using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 
 using Windows.Foundation;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents;
 
 [Shared, Export(typeof(IDocumentService))]
 internal sealed class DocumentService : IDocumentService

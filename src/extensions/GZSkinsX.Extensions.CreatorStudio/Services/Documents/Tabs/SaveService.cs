@@ -15,7 +15,7 @@ using System.Diagnostics;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 [Shared, Export(typeof(ISaveService))]
 internal sealed class SaveService : ISaveService

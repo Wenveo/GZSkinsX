@@ -23,7 +23,7 @@ using Windows.UI.Xaml.Media.Animation;
 using MUXC = Microsoft.UI.Xaml.Controls;
 using WUXC = Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 internal sealed class DocumentTabContext
 {

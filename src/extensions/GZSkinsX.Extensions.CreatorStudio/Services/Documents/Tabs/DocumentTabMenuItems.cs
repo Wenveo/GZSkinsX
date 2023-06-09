@@ -16,7 +16,7 @@ using GZSkinsX.SDK.Controls;
 
 using Windows.System;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Tabs;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
 [Shared, ExportContextMenuItem]
 [ContextMenuItemMetadata(OwnerGuid = DocumentTabConstants.DOCUMENT_TAB_CM_GUID, Order = 10d,

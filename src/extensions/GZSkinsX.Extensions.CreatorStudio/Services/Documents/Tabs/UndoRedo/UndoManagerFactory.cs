@@ -11,7 +11,7 @@ using System.Composition;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs.UndoRedo;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents.Undo;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents.Undo;
 
 [Shared, Export(typeof(IUndoManagerFactory))]
 internal sealed class UndoManagerFactory : IUndoManagerFactory

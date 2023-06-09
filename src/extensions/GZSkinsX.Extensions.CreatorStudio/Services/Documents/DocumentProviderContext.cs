@@ -9,7 +9,7 @@ using System;
 
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 
-namespace GZSkinsX.Extensions.CreatorStudio.Documents;
+namespace GZSkinsX.Extensions.CreatorStudio.Services.Documents;
 
 internal sealed class DocumentProviderContext
 {
