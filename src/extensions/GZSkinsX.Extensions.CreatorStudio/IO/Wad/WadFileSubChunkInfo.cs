@@ -7,7 +7,7 @@
 
 namespace GZSkinsX.Extensions.CreatorStudio.IO.Wad;
 
-public readonly struct WadFileSubChunkInfo
+internal readonly struct WadFileSubChunkInfo
 {
     public int CompressedSize { get; }
 
