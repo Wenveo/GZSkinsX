@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "GZSkinsX (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "GZSkinsX (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
