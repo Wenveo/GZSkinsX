@@ -5,6 +5,7 @@ VisualStudioVersion = 17.7.33808.371
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0DAF2797-A566-4ED5-8F4A-FF6837E590B5}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE.txt = LICENSE.txt
@@ -16,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{5A53A2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Appx", "Appx", "{FC08A7E5-AAF0-43CF-AFE3-C0E0E74F6EFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Api", "src\appx\GZSkinsX.Api\GZSkinsX.Api.csproj", "{05BE36EC-C4C1-4EBD-9858-D4C3A8F3D51B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Api", "src\appx\GZSkinsX.Api\GZSkinsX.Api.csproj", "{05BE36EC-C4C1-4EBD-9858-D4C3A8F3D51B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX", "src\appx\GZSkinsX\GZSkinsX.csproj", "{E1563DFB-F705-4F86-B77E-ED82F40939A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX", "src\appx\GZSkinsX\GZSkinsX.csproj", "{E1563DFB-F705-4F86-B77E-ED82F40939A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
