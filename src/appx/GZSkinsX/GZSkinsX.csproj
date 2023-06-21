@@ -14,6 +14,16 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <!--<WindowsPackageType>None</WindowsPackageType>-->
   </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Page Remove="MainApp\App.xaml"/>
+    <ApplicationDefinition Include="MainApp\App.xaml" />
+    <Manifest Include="$(ApplicationManifest)"/>
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj" />
