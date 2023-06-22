@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GZSkinsX.Api.MRT;
 
@@ -15,7 +16,12 @@ namespace GZSkinsX.Api.MRT;
 public interface IMRTCoreMap
 {
     /// <summary>
-    /// 获取默认上下文中与指定的资源标识符所匹配的本地化资源
+    /// 获取当前资源图中所包含的资源的总数
+    /// </summary>
+    uint ResourceCount { get; }
+
+    /// <summary>
+    /// 在当前资源图中获取与指定的资源标识符所匹配的本地化资源
     /// </summary>
     /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
     /// <returns>与标识符符合的本地化资源的字节数组数据</returns>
@@ -23,7 +29,7 @@ public interface IMRTCoreMap
     byte[] GetBytes(string resourceKey);
 
     /// <summary>
-    /// 获取默认上下文中与指定的资源标识符所匹配的本地化资源
+    /// 在当前资源图中获取与指定的资源标识符所匹配的本地化资源
     /// </summary>
     /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
     /// <returns>与标识符符合的本地化资源的字符串内容</returns>
@@ -31,10 +37,34 @@ public interface IMRTCoreMap
     string GetString(string resourceKey);
 
     /// <summary>
-    /// 从当前默认上下文中获取特定的资源子集
+    /// 在当前资源图中获取特定的资源子集
     /// </summary>
     /// <param name="reference">用于标识新子树根的资源映射标识符</param>
-    /// <returns>子树 <seealso cref="IMRTCoreMap"/></returns>
+    /// <returns>与标识符所符合的子树资源图</returns>
     /// <exception cref="ArgumentNullException"><paramref name="reference"/> 上声明的默认值为 null</exception>
     IMRTCoreMap GetSubtree(string reference);
+
+    /// <summary>
+    /// 尝试当前资源图中获取与指定的资源标识符所匹配的本地化资源
+    /// </summary>
+    /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
+    /// <param name="bytes">已获取到的与标识符符合的本地化资源的字节数组数据</param>
+    /// <returns>如果在当前资源图中找到匹配的本地化资源则返回 true，否则返回 false</returns>
+    bool TryGetBytes(string resourceKey, [NotNullWhen(true)] out byte[]? bytes);
+
+    /// <summary>
+    /// 尝试当前资源图中获取与指定的资源标识符所匹配的本地化资源
+    /// </summary>
+    /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
+    /// <param name="value">已获取到的与标识符符合的本地化资源的字符串内容</param>
+    /// <returns>如果在当前资源图中找到匹配的本地化资源则返回 true，否则返回 false</returns>
+    bool TryGetString(string resourceKey, [NotNullWhen(true)] out string? value);
+
+    /// <summary>
+    /// 尝试在当前资源图中获取特定的资源子集
+    /// </summary>
+    /// <param name="reference">用于标识新子树根的资源映射标识符</param>
+    /// <param name="mrtCoreMap">已获取到的与标识符所符合的子树资源图</param>
+    /// <returns>如果在当前资源图中找到匹配的资源子集则返回 true，否则返回 false</returns>
+    bool TryGetSubtree(string reference, [NotNullWhen(true)] out IMRTCoreMap? mrtCoreMap);
 }

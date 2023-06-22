@@ -5,8 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.MRT;
 
 using Microsoft.Windows.ApplicationModel.Resources;
@@ -37,5 +39,21 @@ internal sealed class MRTCoreService : IMRTCoreService
     {
         _resourceManager = new ResourceManager();
         _mainResourceMap = new MRTCoreMap(_resourceManager.MainResourceMap);
+
+        _resourceManager.ResourceNotFound += OnResourceNotFound;
+    }
+
+    private void OnResourceNotFound(ResourceManager sender, ResourceNotFoundEventArgs args)
+    {
+        AppxContext.LoggingService.LogError($"MRTCoreService: The specific resource was not found '{args.Name}'.");
+    }
+
+    /// <inheritdoc/>
+    public IMRTCoreMap CreateMRTCoreMap(string priFile)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(priFile);
+
+        var resourceManager = new ResourceManager(priFile);
+        return new MRTCoreMap(resourceManager.MainResourceMap);
     }
 }

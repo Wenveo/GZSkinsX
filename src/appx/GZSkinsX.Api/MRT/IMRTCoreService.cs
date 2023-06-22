@@ -13,7 +13,14 @@ namespace GZSkinsX.Api.MRT;
 public interface IMRTCoreService
 {
     /// <summary>
-    /// 获取与当前正在运行的应用程序的主包关联的 <seealso cref="IMRTCoreMap"/>
+    /// 获取与当前正在运行的应用程序的主包所关联的 <seealso cref="IMRTCoreMap"/> 资源图实例
     /// </summary>
     IMRTCoreMap MainResourceMap { get; }
+
+    /// <summary>
+    /// 根据指定的包资源索引 (PRI) 文件创建 <seealso cref="IMRTCoreMap"/> 资源图实例
+    /// </summary>
+    /// <param name="priFile">要载入的包资源索引 (PRI) 文件</param>
+    /// <returns>返回已创建的 <seealso cref="IMRTCoreMap"/> 资源图实例</returns>
+    IMRTCoreMap CreateMRTCoreMap(string priFile);
 }
