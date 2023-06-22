@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Threading.Tasks;
 
 namespace GZSkinsX.Api.MRT;
 
@@ -21,7 +20,7 @@ public interface IMRTCoreMap
     /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
     /// <returns>与标识符符合的本地化资源的字节数组数据</returns>
     /// <exception cref="ArgumentNullException"><paramref name="resourceKey"/> 上声明的默认值为 null</exception>
-    Task<byte[]> GetBytesAsync(string resourceKey);
+    byte[] GetBytes(string resourceKey);
 
     /// <summary>
     /// 获取默认上下文中与指定的资源标识符所匹配的本地化资源
