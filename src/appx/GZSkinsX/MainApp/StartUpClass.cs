@@ -44,6 +44,8 @@ internal static partial class StartUpClass
 
                 new App();
             });
+
+            LoggerImpl.Shared.CloseOutputStream();
         }
 
         return 0;
