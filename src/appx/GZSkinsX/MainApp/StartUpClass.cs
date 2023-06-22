@@ -10,7 +10,10 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+using GZSkinsX.Logging;
+
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 
 namespace GZSkinsX.MainApp;
@@ -27,10 +30,13 @@ internal static partial class StartUpClass
         XamlCheckProcessRequirements();
         WinRT.ComWrappersSupport.InitializeComWrappers();
 
-        var isRedirect = await DecideRedirection();
-        if (!isRedirect)
+        if (!await DecideRedirection())
         {
-            Microsoft.UI.Xaml.Application.Start((p) =>
+            /// 在应用程序启动之前进行日志器的初始化操作
+            /// 这样能够大幅减少日志器的初始化所需的时间
+            await LoggerImpl.Shared.InitializeAsync();
+
+            Application.Start((p) =>
             {
                 SynchronizationContext.SetSynchronizationContext(
                     new DispatcherQueueSynchronizationContext(
