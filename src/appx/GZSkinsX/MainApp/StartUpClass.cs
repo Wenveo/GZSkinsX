@@ -37,14 +37,19 @@ internal static partial class StartUpClass
     private static readonly CompositionHost s_compositionHost;
 
     /// <summary>
-    /// 获取内部的 <see cref="global::System.Composition.Hosting.CompositionHost"/> 公开实现
+    /// 获取内部的 <see cref="System.Composition.Hosting.CompositionHost"/> 公开实现
     /// </summary>
     public static CompositionHost CompositionHost => s_compositionHost;
 
     /// <summary>
-    /// 获取内部的 <see cref="ExtensionService"/> 静态成员实例
+    /// 当前扩展服务的实例，只有在生命周期初始化完成后才会被赋值
     /// </summary>
-    internal static ExtensionService s_extensionService = null!;
+    private static ExtensionService s_extensionService = null!;
+
+    /// <summary>
+    /// 获取内部的 <see cref="Extension.ExtensionService"/> 静态成员实例
+    /// </summary>
+    public static ExtensionService ExtensionService => s_extensionService;
 
     /// <summary>
     /// 初始化 <see cref="StartUpClass"/> 的静态成员

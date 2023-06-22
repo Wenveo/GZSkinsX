@@ -15,7 +15,7 @@ public interface IAppxTitleBar
     /// <summary>
     /// 获取和设置是否将当前窗口中的内容视图扩展至标题栏
     /// </summary>
-    bool ExtendViewIntoTitleBar { get; set; }
+    bool ExtendsContentIntoTitleBar { get; set; }
 
     /// <summary>
     /// 设置当前窗口标题栏的界面元素
