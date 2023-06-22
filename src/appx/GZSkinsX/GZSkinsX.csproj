@@ -12,7 +12,6 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <!--<WindowsPackageType>None</WindowsPackageType>-->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -20,9 +19,9 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Page Remove="MainApp\App.xaml"/>
+    <Page Remove="MainApp\App.xaml" />
     <ApplicationDefinition Include="MainApp\App.xaml" />
-    <Manifest Include="$(ApplicationManifest)"/>
+    <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
   
   <ItemGroup>
