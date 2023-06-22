@@ -6,10 +6,16 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Collections.Generic;
+using System.Composition.Hosting;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
+using GZSkinsX.Extension;
 using GZSkinsX.Logging;
 
 using Microsoft.UI.Dispatching;
@@ -24,6 +30,31 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 internal static partial class StartUpClass
 {
+    /// <summary>
+    /// 当前组件容器的宿主实例
+    /// </summary>
+    private static readonly CompositionHost s_compositionHost;
+
+    /// <summary>
+    /// 获取内部的 <see cref="global::System.Composition.Hosting.CompositionHost"/> 公开实现
+    /// </summary>
+    public static CompositionHost CompositionHost => s_compositionHost;
+
+    /// <summary>
+    /// 获取内部的 <see cref="ExtensionService"/> 静态成员实例
+    /// </summary>
+    internal static ExtensionService s_extensionService = null!;
+
+    /// <summary>
+    /// 初始化 <see cref="StartUpClass"/> 的静态成员
+    /// </summary>
+    static StartUpClass()
+    {
+        var configuration = new ContainerConfiguration();
+        configuration.WithAssemblies(GetAssemblies());
+        s_compositionHost = configuration.CreateContainer();
+    }
+
     [STAThread]
     private static async Task<int> Main(string[] args)
     {
@@ -42,13 +73,35 @@ internal static partial class StartUpClass
                     new DispatcherQueueSynchronizationContext(
                         DispatcherQueue.GetForCurrentThread()));
 
-                new App();
+                InitializeLifetimeService(p, new App());
             });
 
             LoggerImpl.Shared.CloseOutputStream();
         }
 
         return 0;
+    }
+
+    private static void InitializeLifetimeService(ApplicationInitializationCallbackParams parms, App mainApp)
+    {
+        AppxContext.InitializeLifetimeService(parms, s_compositionHost);
+
+        s_extensionService = s_compositionHost.GetExport<ExtensionService>();
+        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
+        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
+        s_extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
+        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
+    }
+
+    private static IEnumerable<Assembly> GetAssemblies()
+    {
+        // Main Appx
+        {
+            // Self Assembly
+            yield return typeof(App).Assembly;
+            // GZSkinsX.Api
+            yield return typeof(IAppxWindow).Assembly;
+        }
     }
 
     private static async Task<bool> DecideRedirection()
