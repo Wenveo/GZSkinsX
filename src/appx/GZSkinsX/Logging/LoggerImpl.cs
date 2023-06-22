@@ -62,7 +62,7 @@ internal sealed class LoggerImpl
                     CreationCollisionOption.ReplaceExisting);
 
             var stream = await _loggingFile.OpenStreamForWriteAsync();
-            _logWriter = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
+            _logWriter = new StreamWriter(stream, new UTF8Encoding(false)) { AutoFlush = true };
         }
     }
 
@@ -87,9 +87,7 @@ internal sealed class LoggerImpl
         {
             if (_logWriter is not null)
             {
-                _logWriter.Close();
                 _logWriter.Dispose();
-
                 _logWriter = null;
             }
         }
