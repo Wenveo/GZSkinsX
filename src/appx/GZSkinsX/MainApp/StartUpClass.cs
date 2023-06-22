@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Composition.Hosting;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -101,6 +102,22 @@ internal static partial class StartUpClass
             yield return typeof(App).Assembly;
             // GZSkinsX.Api
             yield return typeof(IAppxWindow).Assembly;
+        }
+
+        Assembly asm;
+        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory, "GZSkinsX.Appx.*.dll"))
+        {
+            try
+            {
+                asm = Assembly.LoadFile(filePath);
+            }
+            catch (Exception e)
+            {
+                AppxContext.LoggingService.LogError($"Failed to load extension assembly: '{filePath}'. Message = '{e.Message}'");
+                continue;
+            }
+
+            yield return asm;
         }
     }
 
