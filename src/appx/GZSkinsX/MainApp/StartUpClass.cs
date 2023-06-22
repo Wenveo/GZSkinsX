@@ -30,7 +30,7 @@ internal static partial class StartUpClass
         XamlCheckProcessRequirements();
         WinRT.ComWrappersSupport.InitializeComWrappers();
 
-        if (!await DecideRedirection())
+        if (EnsureWindowsApp() && !await DecideRedirection())
         {
             /// 在应用程序启动之前进行日志器的初始化操作
             /// 这样能够大幅减少日志器的初始化所需的时间
@@ -65,7 +65,17 @@ internal static partial class StartUpClass
         return !mainInstance.IsCurrent;
     }
 
+    private static unsafe bool EnsureWindowsApp()
+    {
+        var length = 0;
+        return GetCurrentPackageFullName(ref length, null) != 15700L;
+    }
+
     [LibraryImport("Microsoft.ui.xaml.dll")]
     private static partial void XamlCheckProcessRequirements();
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    private static unsafe partial int GetCurrentPackageFullName(
+        ref int packageFullNameLength, char* packageFullName);
 }
 #endif
