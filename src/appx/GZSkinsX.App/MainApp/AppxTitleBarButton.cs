@@ -29,7 +29,7 @@ internal sealed class AppxTitleBarButton : IAppxTitleBarButton
     /// </summary>
     public AppxTitleBarButton()
     {
-        _titleBar = AppxContext.AppxWindow.MainAppWindow.TitleBar;
+        _titleBar = App.MainWindow.AppWindow.TitleBar;
     }
 
     /// <inheritdoc/>
