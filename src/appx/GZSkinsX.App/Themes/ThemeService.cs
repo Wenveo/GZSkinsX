@@ -79,18 +79,18 @@ internal sealed class ThemeService : IThemeService
     {
         _dispatcherQueue.EnqueueAsync(() =>
         {
-            if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement && CurrentTheme != frameworkElement.ActualTheme)
+            if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
-                CurrentTheme = frameworkElement.RequestedTheme;
                 ActualTheme = frameworkElement.ActualTheme;
-
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, frameworkElement.RequestedTheme));
+                CurrentTheme = frameworkElement.RequestedTheme;
             }
             else
             {
-                var currentAppTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(currentAppTheme, ElementTheme.Default));
+                ActualTheme = Application.Current.RequestedTheme == default ? ElementTheme.Light : ElementTheme.Dark;
+                CurrentTheme = ElementTheme.Default;
             }
+
+            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ActualTheme, CurrentTheme));
         });
     }
 
