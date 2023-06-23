@@ -53,8 +53,6 @@ internal sealed class AppxWindow : IAppxWindow
             var extensionService = StartUpClass.ExtensionService;
             extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
             extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
-
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
         });
     }
 

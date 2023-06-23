@@ -6,8 +6,10 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.WindowManager;
 
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,5 +39,10 @@ public partial class App : Application
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         AppxContext.AppxWindow.Activate();
+
+        if (MainWindow.Content is not Frame frame || frame.Content is null)
+        {
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+        }
     }
 }
