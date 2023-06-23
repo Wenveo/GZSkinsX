@@ -9,17 +9,118 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 
+using Microsoft.UI.Windowing;
+
+using Windows.UI;
+
 namespace GZSkinsX.MainApp;
 
 /// <see cref="IAppxTitleBar"/>
 [Shared, Export(typeof(IAppxTitleBar))]
 internal sealed class AppxTitleBar : IAppxTitleBar
 {
+    /// <summary>
+    /// 当前应用程序主视图的标题栏
+    /// </summary>
+    private readonly AppWindowTitleBar _titleBar;
+
+    /// <summary>
+    /// 初始化 <see cref="AppxTitleBarButton"/> 的新实例
+    /// </summary>
+    public AppxTitleBar()
+    {
+        _titleBar = App.MainWindow.AppWindow.TitleBar;
+    }
+
     /// <inheritdoc/>
     public bool ExtendsContentIntoTitleBar
     {
-        get => App.MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar;
-        set => App.MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = value;
+        get => _titleBar.ExtendsContentIntoTitleBar;
+        set => _titleBar.ExtendsContentIntoTitleBar = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? InactiveForegroundColor
+    {
+        get => _titleBar.InactiveForegroundColor;
+        set => _titleBar.InactiveForegroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? InactiveBackgroundColor
+    {
+        get => _titleBar.InactiveBackgroundColor;
+        set => _titleBar.InactiveBackgroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ForegroundColor
+    {
+        get => _titleBar.ForegroundColor;
+        set => _titleBar.ForegroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonPressedForegroundColor
+    {
+        get => _titleBar.ButtonPressedForegroundColor;
+        set => _titleBar.ButtonPressedForegroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonPressedBackgroundColor
+    {
+        get => _titleBar.ButtonPressedBackgroundColor;
+        set => _titleBar.ButtonPressedBackgroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonInactiveForegroundColor
+    {
+        get => _titleBar.ButtonInactiveForegroundColor;
+        set => _titleBar.ButtonInactiveForegroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonInactiveBackgroundColor
+    {
+        get => _titleBar.ButtonInactiveBackgroundColor;
+        set => _titleBar.ButtonInactiveBackgroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonHoverForegroundColor
+    {
+        get => _titleBar.ButtonHoverForegroundColor;
+        set => _titleBar.ButtonHoverForegroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonHoverBackgroundColor
+    {
+        get => _titleBar.ButtonHoverBackgroundColor;
+        set => _titleBar.ButtonHoverBackgroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonForegroundColor
+    {
+        get => _titleBar.ButtonForegroundColor;
+        set => _titleBar.ButtonForegroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? ButtonBackgroundColor
+    {
+        get => _titleBar.ButtonBackgroundColor;
+        set => _titleBar.ButtonBackgroundColor = value;
+    }
+
+    /// <inheritdoc/>
+    public Color? BackgroundColor
+    {
+        get => _titleBar.BackgroundColor;
+        set => _titleBar.BackgroundColor = value;
     }
 
     /// <inheritdoc/>

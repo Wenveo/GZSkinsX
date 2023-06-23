@@ -22,13 +22,17 @@ namespace GZSkinsX.Themes;
 [AdvanceExtensionMetadata(Trigger = AdvanceExtensionTrigger.AppLoaded)]
 internal sealed class AutoThemeTitleBar : IAdvanceExtension
 {
-    private readonly IAppxTitleBarButton _appxTitleBarButton;
+    private readonly IAppxTitleBar _appxTitleBar;
     private readonly IThemeService _themeService;
 
     public AutoThemeTitleBar()
     {
         AppxContext.AppxWindow.MainWindow.SystemBackdrop = new MicaBackdrop();
-        _appxTitleBarButton = AppxContext.AppxTitleBarButton;
+
+        _appxTitleBar = AppxContext.AppxTitleBar;
+        _appxTitleBar.ButtonBackgroundColor = Colors.Transparent;
+        _appxTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        _appxTitleBar.ExtendsContentIntoTitleBar = true;
 
         _themeService = AppxContext.ThemeService;
         _themeService.ThemeChanged += OnThemeChanged;
@@ -48,6 +52,6 @@ internal sealed class AutoThemeTitleBar : IAdvanceExtension
 
     private void OnThemeChangedImpl(ElementTheme newTheme)
     {
-        _appxTitleBarButton.ButtonForegroundColor = newTheme == ElementTheme.Light ? Colors.Black : Colors.White;
+        _appxTitleBar.ButtonForegroundColor = newTheme == ElementTheme.Light ? Colors.Black : Colors.White;
     }
 }
