@@ -32,33 +32,38 @@ namespace GZSkinsX.MainApp;
 internal static partial class StartUpClass
 {
     /// <summary>
-    /// 当前组件容器的宿主实例
+    /// 当前组件容器的宿主的懒加载对象
     /// </summary>
-    private static readonly CompositionHost s_compositionHost;
+    private static readonly Lazy<CompositionHost> s_lazy_compositionHost;
 
     /// <summary>
     /// 获取内部的 <see cref="System.Composition.Hosting.CompositionHost"/> 公开实现
     /// </summary>
-    public static CompositionHost CompositionHost => s_compositionHost;
+    public static CompositionHost CompositionHost => s_lazy_compositionHost.Value;
 
     /// <summary>
-    /// 当前扩展服务的实例，只有在生命周期初始化完成后才会被赋值
+    /// 当前扩展服务的懒加载对象
     /// </summary>
-    private static ExtensionService s_extensionService = null!;
+    private static Lazy<ExtensionService> s_lazy_extensionService;
 
     /// <summary>
     /// 获取内部的 <see cref="Extension.ExtensionService"/> 静态成员实例
     /// </summary>
-    public static ExtensionService ExtensionService => s_extensionService;
+    public static ExtensionService ExtensionService => s_lazy_extensionService.Value;
 
     /// <summary>
     /// 初始化 <see cref="StartUpClass"/> 的静态成员
     /// </summary>
     static StartUpClass()
     {
-        var configuration = new ContainerConfiguration();
-        configuration.WithAssemblies(GetAssemblies());
-        s_compositionHost = configuration.CreateContainer();
+        s_lazy_compositionHost = new(() =>
+        {
+            var configuration = new ContainerConfiguration();
+            configuration.WithAssemblies(GetAssemblies());
+            return configuration.CreateContainer();
+        });
+
+        s_lazy_extensionService = new(s_lazy_compositionHost.Value.GetExport<ExtensionService>);
     }
 
     [STAThread]
@@ -79,24 +84,21 @@ internal static partial class StartUpClass
                     new DispatcherQueueSynchronizationContext(
                         DispatcherQueue.GetForCurrentThread()));
 
-                InitializeLifetimeService(p, new App());
+                AppxContext.InitializeLifetimeService(p, CompositionHost);
+
+                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
+                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
+
+                new App();
+
+                ExtensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
+                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
             });
 
             LoggerImpl.Shared.CloseOutputStream();
         }
 
         return 0;
-    }
-
-    private static void InitializeLifetimeService(ApplicationInitializationCallbackParams parms, App mainApp)
-    {
-        AppxContext.InitializeLifetimeService(parms, s_compositionHost);
-
-        s_extensionService = s_compositionHost.GetExport<ExtensionService>();
-        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
-        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
-        s_extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
-        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
     }
 
     private static IEnumerable<Assembly> GetAssemblies()
