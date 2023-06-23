@@ -14,7 +14,6 @@ using GZSkinsX.Api.Themes;
 using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
 
 namespace GZSkinsX.Themes;
 
@@ -27,8 +26,6 @@ internal sealed class AutoThemeTitleBar : IAdvanceExtension
 
     public AutoThemeTitleBar()
     {
-        AppxContext.AppxWindow.MainWindow.SystemBackdrop = new MicaBackdrop();
-
         _appxTitleBar = AppxContext.AppxTitleBar;
         _appxTitleBar.ButtonBackgroundColor = Colors.Transparent;
         _appxTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;

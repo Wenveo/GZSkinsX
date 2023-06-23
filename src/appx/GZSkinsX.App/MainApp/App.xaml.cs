@@ -10,6 +10,7 @@ using GZSkinsX.Api.WindowManager;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,7 +22,7 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 public partial class App : Application
 {
-    public static Window MainWindow { get; } = new Window();
+    public static Window MainWindow { get; } = new Window { SystemBackdrop = new MicaBackdrop() };
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
