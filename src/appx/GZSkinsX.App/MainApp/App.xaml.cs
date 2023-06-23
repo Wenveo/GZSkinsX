@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
 
 using Microsoft.UI.Xaml;
 
@@ -28,20 +27,7 @@ public partial class App : Application
     /// </summary>
     public App()
     {
-        MainWindow.VisibilityChanged += OnVisibilityChanged;
         InitializeComponent();
-    }
-
-    private void OnVisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
-    {
-        if (args.Visible)
-        {
-            MainWindow.VisibilityChanged -= OnVisibilityChanged;
-
-            var extensionService = StartUpClass.ExtensionService;
-            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
-            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
-        }
     }
 
     /// <summary>
