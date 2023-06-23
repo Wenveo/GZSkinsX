@@ -22,7 +22,7 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 public partial class App : Application
 {
-    public static Window MainWindow { get; } = new Window { SystemBackdrop = new MicaBackdrop() };
+    public static Window MainWindow { get; } = new MicaWindow(default, true);
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
