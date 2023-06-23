@@ -6,13 +6,10 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Composition;
-using System.Diagnostics;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
-
-using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.Views.WindowFrames.Preload;
 

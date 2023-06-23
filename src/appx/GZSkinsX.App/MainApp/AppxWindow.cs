@@ -10,7 +10,6 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
-using GZSkinsX.Api.WindowManager;
 
 using Microsoft.UI.Xaml;
 
