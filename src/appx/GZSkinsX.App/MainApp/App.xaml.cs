@@ -44,5 +44,10 @@ public partial class App : Application
         {
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
         }
+
+        if (MainWindow.Content is FrameworkElement frameworkElement)
+        {
+            frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
+        }
     }
 }
