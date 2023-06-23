@@ -17,9 +17,9 @@ using Microsoft.UI.Xaml.Media;
 
 namespace GZSkinsX.MainApp;
 
-internal sealed class MicaWindow : Window
+internal sealed class ShellWindow : Window
 {
-    public MicaWindow(MicaKind kind, bool extendsContentIntoTitleBar)
+    public ShellWindow(MicaKind kind, bool extendsContentIntoTitleBar)
     {
         SystemBackdrop = new MicaBackdrop { Kind = kind };
         AppWindow.TitleBar.ExtendsContentIntoTitleBar = extendsContentIntoTitleBar;
