@@ -196,37 +196,40 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterReadLock();
         try
         {
-            if (!_nameToSectionDict.TryGetValue(name, out var settingsSection))
+            if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
             {
-                _lockSlim.EnterUpgradeableReadLock();
-                try
-                {
-                    if (!_container.Containers.TryGetValue(name, out var container))
-                    {
-                        container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
-                    }
-
-                    _lockSlim.EnterWriteLock();
-                    try
-                    {
-                        _nameToSectionDict.Add(name, settingsSection = new(container, Type));
-                    }
-                    finally
-                    {
-                        _lockSlim.ExitWriteLock();
-                    }
-                }
-                finally
-                {
-                    _lockSlim.ExitUpgradeableReadLock();
-                }
+                return settingsSection;
             }
-
-            return settingsSection;
         }
         finally
         {
             _lockSlim.ExitReadLock();
+        }
+
+        _lockSlim.EnterUpgradeableReadLock();
+        try
+        {
+            if (!_container.Containers.TryGetValue(name, out var container))
+            {
+                container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
+            }
+
+            _lockSlim.EnterWriteLock();
+            try
+            {
+                var settingsSection2 = new SettingsSection(container, Type);
+                _nameToSectionDict.Add(name, settingsSection2);
+
+                return settingsSection2;
+            }
+            finally
+            {
+                _lockSlim.ExitWriteLock();
+            }
+        }
+        finally
+        {
+            _lockSlim.ExitUpgradeableReadLock();
         }
     }
 
