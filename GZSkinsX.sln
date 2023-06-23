@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Appx", "Appx", "{FC08A7E5-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Api", "src\appx\GZSkinsX.Api\GZSkinsX.Api.csproj", "{05BE36EC-C4C1-4EBD-9858-D4C3A8F3D51B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX", "src\appx\GZSkinsX\GZSkinsX.csproj", "{E1563DFB-F705-4F86-B77E-ED82F40939A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.App", "src\appx\GZSkinsX.App\GZSkinsX.App.csproj", "{E1563DFB-F705-4F86-B77E-ED82F40939A4}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "GZSkinsX (Package)", "src\appx\GZSkinsX (Package)\GZSkinsX (Package).wapproj", "{39614B79-6101-4BA5-AA9B-4DC61CF28925}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "GZSkinsX.App (Package)", "src\appx\GZSkinsX.App (Package)\GZSkinsX.App (Package).wapproj", "{39614B79-6101-4BA5-AA9B-4DC61CF28925}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

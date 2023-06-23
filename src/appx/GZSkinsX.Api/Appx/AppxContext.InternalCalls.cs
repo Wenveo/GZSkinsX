@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 using Microsoft.UI.Xaml;
 
-[assembly: InternalsVisibleTo("GZSkinsX")]
+[assembly: InternalsVisibleTo("GZSkinsX.App")]
 
 namespace GZSkinsX.Api.Appx;
 
