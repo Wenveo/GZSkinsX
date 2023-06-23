@@ -28,11 +28,6 @@ public interface IThemeService
     ElementTheme CurrentTheme { get; }
 
     /// <summary>
-    /// 表示当前是否为高对比度主题
-    /// </summary>
-    bool IsHighContrast { get; }
-
-    /// <summary>
     /// UI 主题更改事件，在跟随系统主题更改或手动切换时触发
     /// </summary>
     event EventHandler<ThemeChangedEventArgs>? ThemeChanged;

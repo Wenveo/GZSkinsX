@@ -25,17 +25,11 @@ public sealed class ThemeChangedEventArgs : System.EventArgs
     public ElementTheme CurrentTheme { get; }
 
     /// <summary>
-    /// 表示是否为高对比度主题
-    /// </summary>
-    public bool IsHighContrast { get; }
-
-    /// <summary>
     /// 初始化 <see cref="ThemeChangedEventArgs"/> 的新实例
     /// </summary>
-    public ThemeChangedEventArgs(ElementTheme actualTheme, ElementTheme currentTheme, bool isHighContrast)
+    public ThemeChangedEventArgs(ElementTheme actualTheme, ElementTheme currentTheme)
     {
         ActualTheme = actualTheme;
         CurrentTheme = currentTheme;
-        IsHighContrast = isHighContrast;
     }
 }
