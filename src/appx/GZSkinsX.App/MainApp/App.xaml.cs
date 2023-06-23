@@ -28,7 +28,20 @@ public partial class App : Application
     /// </summary>
     public App()
     {
+        MainWindow.VisibilityChanged += OnVisibilityChanged;
         InitializeComponent();
+    }
+
+    private void OnVisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
+    {
+        if (args.Visible)
+        {
+            MainWindow.VisibilityChanged -= OnVisibilityChanged;
+
+            var extensionService = StartUpClass.ExtensionService;
+            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
+            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
+        }
     }
 
     /// <summary>
@@ -37,17 +50,6 @@ public partial class App : Application
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        if (!_isAppLoaded)
-        {
-            var extensionService = StartUpClass.ExtensionService;
-            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
-            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
-
-            _isAppLoaded = true;
-        }
-
         AppxContext.AppxWindow.Activate();
     }
-
-    private bool _isAppLoaded;
 }
