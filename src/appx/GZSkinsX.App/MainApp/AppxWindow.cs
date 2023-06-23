@@ -10,11 +10,7 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-
-using WinRT.Interop;
 
 namespace GZSkinsX.MainApp;
 
@@ -24,14 +20,6 @@ namespace GZSkinsX.MainApp;
 [Shared, Export(typeof(IAppxWindow))]
 internal sealed class AppxWindow : IAppxWindow
 {
-    /// <summary>
-    /// 当前应用内容的系统托管容器
-    /// </summary>
-    private readonly AppWindow _shellAppWindow;
-
-    /// <inheritdoc/>
-    public AppWindow MainAppWindow => _shellAppWindow;
-
     /// <summary>
     /// 当前应用程序主窗口实例
     /// </summary>
@@ -57,10 +45,6 @@ internal sealed class AppxWindow : IAppxWindow
         _shellWindow = App.MainWindow;
         _shellWindow.Activated += OnActivated;
         _shellWindow.Closed += OnClosed;
-
-        var hWnd = WindowNative.GetWindowHandle(_shellWindow);
-        var wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-        _shellAppWindow = AppWindow.GetFromWindowId(wndId);
     }
 
     /// <summary>

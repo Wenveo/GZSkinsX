@@ -7,7 +7,6 @@
 
 using System;
 
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 namespace GZSkinsX.Api.Appx;
@@ -17,11 +16,6 @@ namespace GZSkinsX.Api.Appx;
 /// </summary>
 public interface IAppxWindow
 {
-    /// <summary>
-    /// 表示应用内容的系统托管容器
-    /// </summary>
-    AppWindow MainAppWindow { get; }
-
     /// <summary>
     /// 当前应用程序主窗口
     /// </summary>
