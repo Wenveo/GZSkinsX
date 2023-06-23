@@ -10,6 +10,7 @@ using System.Composition;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
+using GZSkinsX.Api.WindowManager;
 
 using Microsoft.UI.Xaml;
 
@@ -46,19 +47,15 @@ internal sealed class AppxWindow : IAppxWindow
         _shellWindow = App.MainWindow;
         _shellWindow.Activated += OnActivated;
         _shellWindow.Closed += OnClosed;
-        _shellWindow.VisibilityChanged += OnVisibilityChanged;
-    }
 
-    private void OnVisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
-    {
-        if (args.Visible)
+        _shellWindow.DispatcherQueue.TryEnqueue(() =>
         {
-            _shellWindow.VisibilityChanged -= OnVisibilityChanged;
-
             var extensionService = StartUpClass.ExtensionService;
-            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
             extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
-        }
+            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
+
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+        });
     }
 
     /// <summary>
