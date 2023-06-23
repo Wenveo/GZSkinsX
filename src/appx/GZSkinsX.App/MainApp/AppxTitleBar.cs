@@ -18,8 +18,8 @@ internal sealed class AppxTitleBar : IAppxTitleBar
     /// <inheritdoc/>
     public bool ExtendsContentIntoTitleBar
     {
-        get => App.MainWindow.ExtendsContentIntoTitleBar;
-        set => App.MainWindow.ExtendsContentIntoTitleBar = value;
+        get => App.MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar;
+        set => App.MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = value;
     }
 
     /// <inheritdoc/>
