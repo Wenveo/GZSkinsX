@@ -86,6 +86,11 @@ internal sealed class ThemeService : IThemeService
 
                 ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, frameworkElement.RequestedTheme));
             }
+            else
+            {
+                var currentAppTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(currentAppTheme, ElementTheme.Default));
+            }
         });
     }
 
