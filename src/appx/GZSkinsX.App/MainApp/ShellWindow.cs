@@ -45,24 +45,22 @@ internal sealed class ShellWindow : Window
 
     private void OnRendered(object? sender, RenderedEventArgs e)
     {
-        /// 渲染到第 3 帧才显示出 UI 元素，3 帧之前还是黑屏
+        /// 渲染到第 2 帧才显示出 UI 元素，2 帧之前还是黑屏
         /// 但未在其它版本的操作系统中测试过，因此该内容仅为参考
-        if (++_renderCount < 2)
+        if (++_renderCount is 2)
         {
-            return;
-        }
+            CompositionTarget.Rendered -= OnRendered;
 
-        CompositionTarget.Rendered -= OnRendered;
+            var extensionService = StartUpClass.ExtensionService;
+            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
+            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
 
-        var extensionService = StartUpClass.ExtensionService;
-        extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
-        extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
 
-        AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
-
-        if (Content is FrameworkElement frameworkElement)
-        {
-            frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
+            if (Content is FrameworkElement frameworkElement)
+            {
+                frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
+            }
         }
     }
 
