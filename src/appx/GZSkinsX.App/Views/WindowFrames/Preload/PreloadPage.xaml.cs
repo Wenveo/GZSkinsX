@@ -6,6 +6,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Helpers;
@@ -14,6 +16,7 @@ using GZSkinsX.MainApp;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 
 using Windows.ApplicationModel;
 
@@ -26,44 +29,47 @@ namespace GZSkinsX.Views.WindowFrames.Preload;
 /// </summary>
 public sealed partial class PreloadPage : Page
 {
-    private static bool s_isInitialize;
+    private sealed class UniversalExtensionResources : ResourceDictionary
+    {
+        public UniversalExtensionResources()
+        {
+            foreach (var rsrc in StartUpClass.ExtensionService.GetMergedResourceDictionaries())
+            {
+                MergedDictionaries.Add(rsrc);
+            }
+        }
+    }
 
     public PreloadPage()
     {
         InitializeComponent();
-        Loaded += OnLoaded;
     }
 
-    private async void OnLoaded(object sender, RoutedEventArgs e)
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        var b = await Package.Current.VerifyContentIntegrityAsync();
-        if (b)
+        DispatcherQueue.TryEnqueue(async () =>
         {
-            if (!s_isInitialize)
+            await Task.Delay(200);
+
+            var b = await Package.Current.VerifyContentIntegrityAsync();
+            if (b)
             {
-                MergeResourceDictionaries();
-                s_isInitialize = true;
+                if (Application.Current.Resources.MergedDictionaries.FirstOrDefault(
+                    rsrc => rsrc.GetType() == typeof(UniversalExtensionResources)) is null)
+                {
+                    Application.Current.Resources.MergedDictionaries.Add(new UniversalExtensionResources());
+                }
+
+                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
             }
+            else
+            {
+                ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
+                AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
+            }
+        });
 
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
-        }
-        else
-        {
-            ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
-            AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
-        }
-    }
-
-    private static void MergeResourceDictionaries()
-    {
-        var resourceDictionary = new ResourceDictionary();
-        var mergedResourceDictionaries = resourceDictionary.MergedDictionaries;
-        foreach (var rsrc in StartUpClass.ExtensionService.GetMergedResourceDictionaries())
-        {
-            mergedResourceDictionaries.Add(rsrc);
-        }
-
-        Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
+        base.OnNavigatedTo(e);
     }
 
     private void ShowCrashMessage(string message)
