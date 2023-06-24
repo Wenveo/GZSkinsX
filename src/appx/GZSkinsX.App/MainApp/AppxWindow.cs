@@ -9,7 +9,6 @@ using System;
 using System.Composition;
 
 using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
 
 using Microsoft.UI.Xaml;
 
@@ -46,13 +45,6 @@ internal sealed class AppxWindow : IAppxWindow
         _shellWindow = App.MainWindow;
         _shellWindow.Activated += OnActivated;
         _shellWindow.Closed += OnClosed;
-
-        _shellWindow.DispatcherQueue.TryEnqueue(() =>
-        {
-            var extensionService = StartUpClass.ExtensionService;
-            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
-            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
-        });
     }
 
     /// <summary>

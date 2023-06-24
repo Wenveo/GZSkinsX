@@ -10,6 +10,7 @@ using System;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.WindowManager;
+using GZSkinsX.MainApp;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -25,6 +26,8 @@ namespace GZSkinsX.Views.WindowFrames.Preload;
 /// </summary>
 public sealed partial class PreloadPage : Page
 {
+    private static bool s_isInitialize;
+
     public PreloadPage()
     {
         InitializeComponent();
@@ -36,6 +39,12 @@ public sealed partial class PreloadPage : Page
         var b = await Package.Current.VerifyContentIntegrityAsync();
         if (b)
         {
+            if (!s_isInitialize)
+            {
+                MergeResourceDictionaries();
+                s_isInitialize = true;
+            }
+
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
         }
         else
@@ -43,6 +52,18 @@ public sealed partial class PreloadPage : Page
             ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
             AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
         }
+    }
+
+    private static void MergeResourceDictionaries()
+    {
+        var resourceDictionary = new ResourceDictionary();
+        var mergedResourceDictionaries = resourceDictionary.MergedDictionaries;
+        foreach (var rsrc in StartUpClass.ExtensionService.GetMergedResourceDictionaries())
+        {
+            mergedResourceDictionaries.Add(rsrc);
+        }
+
+        Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
     }
 
     private void ShowCrashMessage(string message)

@@ -40,29 +40,9 @@ public partial class App : Application
     {
         AppxContext.AppxWindow.Activate();
 
-        if (_commonResourceDictionary is null)
-        {
-            _commonResourceDictionary = new ResourceDictionary();
-
-            var mergedResourceDictionaries = _commonResourceDictionary.MergedDictionaries;
-            foreach (var rsrc in StartUpClass.ExtensionService.GetMergedResourceDictionaries())
-            {
-                mergedResourceDictionaries.Add(rsrc);
-            }
-
-            Resources.MergedDictionaries.Add(_commonResourceDictionary);
-        }
-
-        if (MainWindow.Content is not Frame frame || frame.Content is null)
-        {
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
-        }
-
         if (MainWindow.Content is FrameworkElement frameworkElement)
         {
             frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
         }
     }
-
-    private ResourceDictionary? _commonResourceDictionary;
 }
