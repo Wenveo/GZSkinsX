@@ -7,8 +7,6 @@
 
 using System.Composition;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
 
 namespace GZSkinsX.Views.WindowFrames.Preload;
@@ -17,33 +15,10 @@ namespace GZSkinsX.Views.WindowFrames.Preload;
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
 internal sealed partial class PreloadFrame : IWindowFrame
 {
-    private readonly ILoggingService _loggingService;
-    private readonly PreloadSettings _preloadSettings;
-
-    public PreloadFrame()
-    {
-        _loggingService = AppxContext.LoggingService;
-        _preloadSettings = AppxContext.Resolve<PreloadSettings>();
-
-        InitializeMainWindow();
-    }
-
     /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
         return true;
-    }
-
-    private void InitializeMainWindow()
-    {
-        AppxContext.AppxWindow.MainWindow.AppWindow.Resize(new(1200, 600));
-
-        if (_preloadSettings.IsInitialize is false)
-        {
-            _preloadSettings.IsInitialize = true;
-        }
-
-        _loggingService.LogDebug($"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
     }
 }
 
