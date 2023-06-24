@@ -86,11 +86,10 @@ internal static partial class StartUpClass
 
                 AppxContext.InitializeLifetimeService(p, CompositionHost);
 
-                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
-                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
-
                 new App();
 
+                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
+                ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
                 ExtensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
                 ExtensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
             });
