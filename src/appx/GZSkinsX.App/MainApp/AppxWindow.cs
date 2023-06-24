@@ -12,6 +12,8 @@ using GZSkinsX.Api.Appx;
 
 using Microsoft.UI.Xaml;
 
+using WinRT.Interop;
+
 namespace GZSkinsX.MainApp;
 
 /// <summary>
@@ -27,6 +29,9 @@ internal sealed class AppxWindow : IAppxWindow
 
     /// <inheritdoc/>
     public Window MainWindow => _shellWindow;
+
+    /// <inheritdoc/>
+    public nint MainWindowHandle { get; }
 
     /// <inheritdoc/>
     public event EventHandler<WindowActivatedEventArgs>? Activated;
@@ -45,6 +50,8 @@ internal sealed class AppxWindow : IAppxWindow
         _shellWindow = App.MainWindow;
         _shellWindow.Activated += OnActivated;
         _shellWindow.Closed += OnClosed;
+
+        MainWindowHandle = WindowNative.GetWindowHandle(_shellWindow);
     }
 
     /// <summary>

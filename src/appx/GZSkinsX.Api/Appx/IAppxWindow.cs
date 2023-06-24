@@ -22,6 +22,11 @@ public interface IAppxWindow
     Window MainWindow { get; }
 
     /// <summary>
+    /// 当前应用程序主窗口的句柄
+    /// </summary>
+    nint MainWindowHandle { get; }
+
+    /// <summary>
     /// 激活当前应用程序主窗口
     /// </summary>
     void Activate();
