@@ -17,10 +17,10 @@ internal static class StaticFontFamilys
     /// <summary>
     /// See <see href="https://learn.microsoft.com/zh-cn/windows/apps/design/style/segoe-ui-symbol-font"/>
     /// </summary>
-    public static readonly FontFamily SegoeFluentIcons = new("/Assets/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons");
+    public static readonly FontFamily SegoeFluentIcons = new("ms-appx:////Assets/Fonts/Segoe Fluent Icons.ttf#Segoe Fluent Icons");
 
     /// <summary>
     /// See <see href="https://learn.microsoft.com/zh-cn/windows/apps/design/style/segoe-fluent-icons-font"/>
     /// </summary>
-    public static readonly FontFamily SegoeMDL2Assets = new("/Assets/Fonts/Segoe MDL2 Assets.ttf#Segoe MDL2 Assets");
+    public static readonly FontFamily SegoeMDL2Assets = new("ms-appx:////Assets/Fonts/Segoe MDL2 Assets.ttf#Segoe MDL2 Assets");
 }
