@@ -36,7 +36,7 @@ internal sealed partial class PreloadFrame : IWindowFrame
 
     private void InitializeMainWindow()
     {
-        AppxContext.AppxWindow.MainWindow.AppWindow.Resize(new(1000, 500));
+        AppxContext.AppxWindow.MainWindow.AppWindow.Resize(new(1200, 600));
 
         if (_preloadSettings.IsInitialize is false)
         {
