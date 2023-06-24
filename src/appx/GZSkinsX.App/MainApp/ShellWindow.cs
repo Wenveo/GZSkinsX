@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
@@ -18,10 +19,18 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
+
+using WinRT.Interop;
+
 namespace GZSkinsX.MainApp;
 
 internal sealed class ShellWindow : Window
 {
+    private ShellWindowSettings WindowSettigns { get; }
+
     public ShellWindow(MicaKind kind, bool extendsContentIntoTitleBar)
     {
         SystemBackdrop = new MicaBackdrop { Kind = kind };
@@ -29,6 +38,22 @@ internal sealed class ShellWindow : Window
 
         AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+        WindowSettigns = AppxContext.Resolve<ShellWindowSettings>();
+        if (WindowSettigns.RestoreWindowPosition)
+        {
+            AppWindow.MoveAndResize(new(WindowSettigns.X_Axis, WindowSettigns.Y_Axis,
+                WindowSettigns.WindowWidth, WindowSettigns.WindowHeight));
+        }
+        else
+        {
+            AppWindow.Resize(new(1200, 600));
+        }
+
+        if (WindowSettigns.IsMaximized)
+        {
+            ((OverlappedPresenter)AppWindow.Presenter).Maximize();
+        }
 
         DispatcherQueue.TryEnqueue(() =>
         {
@@ -38,7 +63,46 @@ internal sealed class ShellWindow : Window
             UpdateButtonForegroundColor(themeService.ActualTheme);
         });
 
+        AppWindow.Destroying += OnDestroying;
         CompositionTarget.Rendered += OnRendered;
+    }
+
+    private void OnDestroying(AppWindow sender, object args)
+    {
+        if (((OverlappedPresenter)sender.Presenter).State is OverlappedPresenterState.Maximized)
+        {
+            var windowPlacement = new WINDOWPLACEMENT
+            {
+                length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
+                showCmd = SHOW_WINDOW_CMD.SW_NORMAL
+            };
+
+            if (PInvoke.GetWindowPlacement((HWND)WindowNative.GetWindowHandle(this), ref windowPlacement))
+            {
+                WindowSettigns.X_Axis = windowPlacement.rcNormalPosition.X;
+                WindowSettigns.Y_Axis = windowPlacement.rcNormalPosition.Y;
+                WindowSettigns.WindowHeight = windowPlacement.rcNormalPosition.Height;
+                WindowSettigns.WindowWidth = windowPlacement.rcNormalPosition.Width;
+
+                WindowSettigns.RestoreWindowPosition = true;
+            }
+            else
+            {
+                WindowSettigns.RestoreWindowPosition = false;
+            }
+
+            WindowSettigns.IsMaximized = true;
+        }
+        else
+        {
+            WindowSettigns.X_Axis = sender.Position.X;
+            WindowSettigns.Y_Axis = sender.Position.Y;
+            WindowSettigns.WindowHeight = sender.Size.Height;
+            WindowSettigns.WindowWidth = sender.Size.Width;
+
+            WindowSettigns.IsMaximized = false;
+            WindowSettigns.RestoreWindowPosition = true;
+        }
     }
 
     private int _renderCount;
