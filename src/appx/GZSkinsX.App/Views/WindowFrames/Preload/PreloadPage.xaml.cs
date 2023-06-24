@@ -16,7 +16,6 @@ using GZSkinsX.MainApp;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 
 using Windows.ApplicationModel;
 
@@ -43,33 +42,29 @@ public sealed partial class PreloadPage : Page
     public PreloadPage()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        DispatcherQueue.TryEnqueue(async () =>
+        await Task.Delay(200);
+
+        var b = await Package.Current.VerifyContentIntegrityAsync();
+        if (b)
         {
-            await Task.Delay(200);
-
-            var b = await Package.Current.VerifyContentIntegrityAsync();
-            if (b)
+            if (Application.Current.Resources.MergedDictionaries.FirstOrDefault(
+                rsrc => rsrc.GetType() == typeof(UniversalExtensionResources)) is null)
             {
-                if (Application.Current.Resources.MergedDictionaries.FirstOrDefault(
-                    rsrc => rsrc.GetType() == typeof(UniversalExtensionResources)) is null)
-                {
-                    Application.Current.Resources.MergedDictionaries.Add(new UniversalExtensionResources());
-                }
-
-                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+                Application.Current.Resources.MergedDictionaries.Add(new UniversalExtensionResources());
             }
-            else
-            {
-                ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
-                AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
-            }
-        });
 
-        base.OnNavigatedTo(e);
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+        }
+        else
+        {
+            ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
+            AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
+        }
     }
 
     private void ShowCrashMessage(string message)
