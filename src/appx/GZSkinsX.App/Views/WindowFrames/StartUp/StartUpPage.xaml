@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Views.WindowFrames.StartUp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    UseLayoutRounding="True"
     mc:Ignorable="d">
     <Grid
         x:Name="RootGrid"
@@ -81,14 +82,23 @@
             Orientation="Horizontal"
             Spacing="12">
             <ComboBox x:Name="StartUp_Initialize_Region_Selector" MinWidth="100" />
-            <InfoBadge
+            <Border
                 x:Name="StartUp_Initialize_Region_Helper"
-                Padding="0,4,0,2"
+                MinWidth="{ThemeResource InfoBadgeMinWidth}"
+                MinHeight="{ThemeResource InfoBadgeMinHeight}"
+                MaxHeight="{ThemeResource InfoBadgeMaxHeight}"
+                Padding="0,2"
+                Background="{ThemeResource InfoBadgeBackground}"
+                CornerRadius="8"
+                IsTabStop="False"
                 ToolTipService.Placement="Mouse">
-                <InfoBadge.IconSource>
-                    <ctrls2:SegoeFluentIconSource Glyph="&#xE897;" />
-                </InfoBadge.IconSource>
-            </InfoBadge>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    <ctrls2:SegoeFluentIcon
+                        Margin="{ThemeResource IconInfoBadgeFontIconMargin}"
+                        Foreground="{ThemeResource InfoBadgeForeground}"
+                        Glyph="&#xE897;" />
+                </Viewbox>
+            </Border>
         </StackPanel>
         <Button
             x:Uid="StartUp_Initialize_OKButton"
