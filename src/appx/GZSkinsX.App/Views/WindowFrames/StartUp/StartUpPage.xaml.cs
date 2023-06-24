@@ -70,7 +70,10 @@ public sealed partial class StartUpPage : Page
 
     private async void OnBrowser(object sender, RoutedEventArgs e)
     {
-        var folder = await new FolderPicker().PickSingleFolderAsync();
+        var folderPicker = new FolderPicker().InitializeWindowHandle();
+        folderPicker.FileTypeFilter.Add("*");
+
+        var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
             StartUp_Initialize_Directory_TextBox.Text = folder.Path;
