@@ -35,6 +35,7 @@ internal sealed class ShellWindow : Window
     {
         SystemBackdrop = new MicaBackdrop { Kind = kind };
         AppWindow.TitleBar.ExtendsContentIntoTitleBar = extendsContentIntoTitleBar;
+        AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
 
         AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
