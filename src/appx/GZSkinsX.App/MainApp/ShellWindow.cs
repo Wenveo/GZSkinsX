@@ -105,26 +105,19 @@ internal sealed class ShellWindow : Window
         }
     }
 
-    private int _renderCount;
-
     private void OnRendered(object? sender, RenderedEventArgs e)
     {
-        /// 渲染到第 2 帧才显示出 UI 元素，2 帧之前还是黑屏
-        /// 但未在其它版本的操作系统中测试过，因此该内容仅为参考
-        if (++_renderCount is 2)
+        CompositionTarget.Rendered -= OnRendered;
+
+        var extensionService = StartUpClass.ExtensionService;
+        extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
+        extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
+
+        AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+
+        if (Content is FrameworkElement frameworkElement)
         {
-            CompositionTarget.Rendered -= OnRendered;
-
-            var extensionService = StartUpClass.ExtensionService;
-            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
-            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
-
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
-
-            if (Content is FrameworkElement frameworkElement)
-            {
-                frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
-            }
+            frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
         }
     }
 
