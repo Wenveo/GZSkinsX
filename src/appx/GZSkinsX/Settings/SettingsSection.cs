@@ -10,8 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
-using GZSkinsX.Api.Diagnostics;
 using GZSkinsX.Api.Settings;
 
 using Windows.Storage;
@@ -29,7 +31,7 @@ internal sealed class SettingsSection : ISettingsSection
     /// <summary>
     /// 线程锁对象，以保证在多线程下资源的同步访问
     /// </summary>
-    private readonly object _lockObj;
+    private readonly ReaderWriterLockSlim _lockSlim;
 
     /// <summary>
     /// 内部定义的 UWP 中的配置容器
@@ -48,7 +50,7 @@ internal sealed class SettingsSection : ISettingsSection
     /// <param name="container"></param>
     public SettingsSection(ApplicationDataContainer container, SettingsType settingsType)
     {
-        _lockObj = new();
+        _lockSlim = new();
         _container = container;
         _nameToSectionDict = new Dictionary<string, SettingsSection>();
         foreach (var item in container.Containers)
@@ -63,52 +65,50 @@ internal sealed class SettingsSection : ISettingsSection
     /// <inheritdoc/>
     public string? Attribute(string key)
     {
-        Debug2.Assert(_container is not null);
-        if (_container is null)
-            throw new InvalidOperationException();
-        if (key == null)
-            throw new ArgumentNullException(nameof(key));
+        ThrowIfConatinerIsNull(_container);
 
-        object? value;
-        lock (_lockObj)
+        _lockSlim.EnterReadLock();
+        try
         {
-            if (!_container.Values.TryGetValue(key, out value))
+            if (_container.Values.TryGetValue(key, out var value))
             {
-                return default;
+                return (string?)value;
             }
         }
+        finally
+        {
+            _lockSlim.ExitReadLock();
+        }
 
-        return (string?)value;
+        return default;
     }
 
     /// <inheritdoc/>
     public TValue? Attribute<TValue>(string key)
     {
-        Debug2.Assert(_container is not null);
-        if (_container is null)
-            throw new InvalidOperationException();
-        if (key == null)
-            throw new ArgumentNullException(nameof(key));
+        ThrowIfConatinerIsNull(_container);
 
-        object? value;
-        lock (_lockObj)
-        {
-            if (!_container.Values.TryGetValue(key, out value))
-            {
-                return default;
-            }
-        }
-
-        var c = TypeDescriptor.GetConverter(typeof(TValue));
+        _lockSlim.EnterReadLock();
         try
         {
-            return (TValue?)c.ConvertFromInvariantString((string)value);
+            if (_container.Values.TryGetValue(key, out var value))
+            {
+                var c = TypeDescriptor.GetConverter(typeof(TValue));
+                try
+                {
+                    return (TValue?)c.ConvertFromInvariantString((string)value);
+                }
+                catch (FormatException)
+                {
+                }
+                catch (NotSupportedException)
+                {
+                }
+            }
         }
-        catch (FormatException)
+        finally
         {
-        }
-        catch (NotSupportedException)
-        {
+            _lockSlim.ExitReadLock();
         }
 
         return default;
@@ -117,33 +117,46 @@ internal sealed class SettingsSection : ISettingsSection
     /// <inheritdoc/>
     public void Attribute<TValue>(string key, TValue value)
     {
-        Debug2.Assert(_container is not null);
-        if (_container is null)
-            throw new InvalidOperationException();
-        if (key == null)
-            throw new ArgumentNullException(nameof(key));
-        if (value == null)
-            throw new ArgumentNullException(nameof(value));
+        ThrowIfConatinerIsNull(_container);
 
-        var c = TypeDescriptor.GetConverter(typeof(TValue));
-        var stringValue = c.ConvertToInvariantString(value);
+        _lockSlim.EnterUpgradeableReadLock();
+        try
+        {
+            var c = TypeDescriptor.GetConverter(typeof(TValue));
+            var stringValue = c.ConvertToInvariantString(value);
 
-        lock (_lockObj)
-            _container.Values[key] = stringValue;
+            _lockSlim.EnterWriteLock();
+            try
+            {
+                _container.Values[key] = stringValue;
+            }
+            finally
+            {
+                _lockSlim.ExitWriteLock();
+            }
+        }
+        finally
+        {
+            _lockSlim.ExitUpgradeableReadLock();
+        }
     }
 
     /// <inheritdoc/>
     public bool Delete(string key)
     {
-        Debug2.Assert(_container is not null);
-        if (_container is null)
-            throw new InvalidOperationException();
-        if (key == null)
-            throw new ArgumentNullException(nameof(key));
+        ThrowIfConatinerIsNull(_container);
 
         bool b;
-        lock (_lockObj)
+
+        _lockSlim.EnterUpgradeableReadLock();
+        try
+        {
             b = _container.Values.Remove(key);
+        }
+        finally
+        {
+            _lockSlim.ExitUpgradeableReadLock();
+        }
 
         return b;
     }
@@ -151,45 +164,85 @@ internal sealed class SettingsSection : ISettingsSection
     /// <inheritdoc/>
     public void DeleteSection(string name)
     {
-        if (_container is null)
-        {
-            return;
-        }
+        ThrowIfConatinerIsNull(_container);
 
-        lock (_lockObj)
+        _lockSlim.EnterUpgradeableReadLock();
+        try
         {
             if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
             {
-                settingsSection._container = null;
-                _container.DeleteContainer(name);
-                _nameToSectionDict.Remove(name);
+                _lockSlim.EnterWriteLock();
+                try
+                {
+                    settingsSection._container = null;
+                    _container.DeleteContainer(name);
+                    _ = _nameToSectionDict.Remove(name);
+                }
+                finally
+                {
+                    _lockSlim.ExitWriteLock();
+                }
             }
+        }
+        finally
+        {
+            _lockSlim.ExitUpgradeableReadLock();
         }
     }
 
     /// <inheritdoc/>
     public ISettingsSection GetOrCreateSection(string name)
     {
-        Debug2.Assert(_container is not null);
-        if (_container is null)
-            throw new InvalidOperationException();
-        if (name == null)
-            throw new ArgumentNullException(nameof(name));
+        ThrowIfConatinerIsNull(_container);
 
-        SettingsSection? settingsSection;
-        lock (_lockObj)
+        _lockSlim.EnterReadLock();
+        try
         {
-            if (!_nameToSectionDict.TryGetValue(name, out settingsSection))
+            if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
             {
-                if (!_container.Containers.TryGetValue(name, out var container))
-                {
-                    container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
-                }
-
-                _nameToSectionDict.Add(name, settingsSection = new(container, Type));
+                return settingsSection;
             }
         }
+        finally
+        {
+            _lockSlim.ExitReadLock();
+        }
 
-        return settingsSection;
+        _lockSlim.EnterUpgradeableReadLock();
+        try
+        {
+            if (!_container.Containers.TryGetValue(name, out var container))
+            {
+                container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
+            }
+
+            _lockSlim.EnterWriteLock();
+            try
+            {
+                var settingsSection2 = new SettingsSection(container, Type);
+                _nameToSectionDict.Add(name, settingsSection2);
+
+                return settingsSection2;
+            }
+            finally
+            {
+                _lockSlim.ExitWriteLock();
+            }
+        }
+        finally
+        {
+            _lockSlim.ExitUpgradeableReadLock();
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void ThrowIfConatinerIsNull([NotNull] ApplicationDataContainer? container)
+    {
+        if (container is not null)
+        {
+            return;
+        }
+
+        throw new InvalidOperationException("The container has been deleted. Invalid operation!");
     }
 }
