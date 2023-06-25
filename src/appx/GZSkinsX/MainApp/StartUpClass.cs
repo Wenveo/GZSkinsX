@@ -113,12 +113,6 @@ public sealed partial class StartUpClass
             // GZSkinsX.Api
             yield return typeof(IAppxWindow).Assembly;
         }
-
-        // Extensions
-        {
-            // GZSkinsX.Extensions.CreatorStudio
-            yield return typeof(Extensions.CreatorStudio.TheExtension).Assembly;
-        }
     }
 }
 #endif

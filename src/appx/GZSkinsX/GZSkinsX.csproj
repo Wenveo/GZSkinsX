@@ -149,9 +149,6 @@
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
       <Name>GZSkinsX.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\extensions\GZSkinsX.Extensions.CreatorStudio\GZSkinsX.Extensions.CreatorStudio.csproj">
-      <Name>GZSkinsX.Extensions.CreatorStudio</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="MainApp\App.xaml">
