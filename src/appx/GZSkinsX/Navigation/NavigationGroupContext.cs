@@ -12,30 +12,20 @@ namespace GZSkinsX.Navigation;
 /// <summary>
 /// 用于存储导航项的组的上下文信息
 /// </summary>
-internal sealed class NavigationGroupContext
+internal sealed class NavigationGroupContext(string name, double order)
 {
     /// <summary>
     /// 获取该分组的名称
     /// </summary>
-    public string Name { get; }
+    public string Name { get; } = name;
 
     /// <summary>
     /// 获取该分组的排序顺序
     /// </summary>
-    public double Order { get; }
+    public double Order { get; } = order;
 
     /// <summary>
     /// 获取该组中的子导航项
     /// </summary>
-    public List<NavigationItemContext> Items { get; }
-
-    /// <summary>
-    /// 初始化 <see cref="NavigationGroupContext"/> 的新实例
-    /// </summary>
-    public NavigationGroupContext(string name, double order)
-    {
-        Name = name;
-        Order = order;
-        Items = new List<NavigationItemContext>();
-    }
+    public List<NavigationItemContext> Items { get; } = new List<NavigationItemContext>();
 }

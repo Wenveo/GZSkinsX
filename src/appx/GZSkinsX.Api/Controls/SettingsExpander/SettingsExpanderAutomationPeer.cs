@@ -13,16 +13,8 @@ namespace GZSkinsX.Api.Controls;
 /// <summary>
 /// AutomationPeer for SettingsExpander
 /// </summary>
-public sealed class SettingsExpanderAutomationPeer : FrameworkElementAutomationPeer
+public sealed class SettingsExpanderAutomationPeer(SettingsExpander owner) : FrameworkElementAutomationPeer(owner)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SettingsExpander"/> class.
-    /// </summary>
-    /// <param name="owner">SettingsExpander</param>
-    public SettingsExpanderAutomationPeer(SettingsExpander owner)
-        : base(owner)
-    {
-    }
 
     /// <summary>
     /// Gets the control type for the element that is associated with the UI Automation peer.

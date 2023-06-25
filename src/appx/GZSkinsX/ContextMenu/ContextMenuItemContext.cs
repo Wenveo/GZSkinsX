@@ -14,12 +14,12 @@ namespace GZSkinsX.ContextMenu;
 /// <summary>
 /// 用于存储导出的 <see cref="IContextMenuItem"/> 对象以及 <see cref="ContextMenuItemMetadataAttribute"/> 元数据
 /// </summary>
-internal sealed class ContextMenuItemContext
+internal sealed class ContextMenuItemContext(Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> lazy)
 {
     /// <summary>
     /// 当前上下文中的懒加载对象
     /// </summary>
-    private readonly Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> _lazy;
+    private readonly Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> _lazy = lazy;
 
     /// <summary>
     /// 获取当前上下文的 <see cref="IContextMenuItem"/> 对象
@@ -30,12 +30,4 @@ internal sealed class ContextMenuItemContext
     /// 获取当前上下文的 <see cref="ContextMenuItemMetadataAttribute"/> 元数据
     /// </summary>
     public ContextMenuItemMetadataAttribute Metadata => _lazy.Metadata;
-
-    /// <summary>
-    /// 初始化 <see cref="ContextMenuItemContext"/> 的新实例
-    /// </summary>
-    public ContextMenuItemContext(Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> lazy)
-    {
-        _lazy = lazy;
-    }
 }

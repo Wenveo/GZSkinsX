@@ -17,20 +17,12 @@ using Windows.Storage;
 namespace GZSkinsX.MRT;
 
 /// <inheritdoc cref="IMRTCoreMap"/>
-internal sealed class MRTCoreMap : IMRTCoreMap
+internal sealed class MRTCoreMap(ResourceMap resourceMap) : IMRTCoreMap
 {
     /// <summary>
     /// 用于获取本地化资源内容的资源表
     /// </summary>
-    private readonly ResourceMap _resourceMap;
-
-    /// <summary>
-    /// 初始化 <see cref="MRTCoreMap"/> 的新实例
-    /// </summary>
-    public MRTCoreMap(ResourceMap resourceMap)
-    {
-        _resourceMap = resourceMap;
-    }
+    private readonly ResourceMap _resourceMap = resourceMap;
 
     /// <inheritdoc/>
     public async Task<byte[]> GetBytesAsync(string resourceKey)

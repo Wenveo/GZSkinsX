@@ -12,16 +12,8 @@ namespace GZSkinsX.Api.Controls;
 /// <summary>
 /// AutomationPeer for SettingsCard
 /// </summary>
-public class SettingsCardAutomationPeer : FrameworkElementAutomationPeer
+public class SettingsCardAutomationPeer(SettingsCard owner) : FrameworkElementAutomationPeer(owner)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SettingsCard"/> class.
-    /// </summary>
-    /// <param name="owner">SettingsCard</param>
-    public SettingsCardAutomationPeer(SettingsCard owner)
-        : base(owner)
-    {
-    }
 
     /// <summary>
     /// Gets the control type for the element that is associated with the UI Automation peer.

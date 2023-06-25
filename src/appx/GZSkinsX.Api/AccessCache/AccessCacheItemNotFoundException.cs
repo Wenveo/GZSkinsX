@@ -9,17 +9,6 @@ using System;
 
 namespace GZSkinsX.Api.AccessCache;
 
-/// <summary>
-/// 
-/// </summary>
-public sealed class AccessCacheItemNotFoundException : Exception
+public sealed class AccessCacheItemNotFoundException(string itemName) : Exception($"No item with a matching name was found in the stored list: {itemName}")
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="itemName"></param>
-    public AccessCacheItemNotFoundException(string itemName)
-        : base($"No item with a matching name was found in the stored list: {itemName}")
-    {
-    }
 }

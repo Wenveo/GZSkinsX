@@ -12,24 +12,16 @@ using GZSkinsX.Api.WindowManager;
 namespace GZSkinsX.WindowManager;
 
 /// <inheritdoc cref="IWindowFrameContext"/>
-internal sealed class WindowFrameContext : IWindowFrameContext
+internal sealed class WindowFrameContext(Lazy<IWindowFrame, WindowFrameMetadataAttribute> lazy) : IWindowFrameContext
 {
     /// <summary>
     /// 当前上下文中的懒加载对象
     /// </summary>
-    private readonly Lazy<IWindowFrame, WindowFrameMetadataAttribute> _lazy;
+    private readonly Lazy<IWindowFrame, WindowFrameMetadataAttribute> _lazy = lazy;
 
     /// <inheritdoc/>
     public IWindowFrame Value => _lazy.Value;
 
     /// <inheritdoc/>
     public WindowFrameMetadataAttribute Metadata => _lazy.Metadata;
-
-    /// <summary>
-    /// 初始化 <see cref="WindowFrameContext"/> 的新实例
-    /// </summary>
-    public WindowFrameContext(Lazy<IWindowFrame, WindowFrameMetadataAttribute> lazy)
-    {
-        _lazy = lazy;
-    }
 }

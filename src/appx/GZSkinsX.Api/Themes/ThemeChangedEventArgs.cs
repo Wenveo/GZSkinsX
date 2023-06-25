@@ -12,30 +12,20 @@ namespace GZSkinsX.Api.Themes;
 /// <summary>
 /// 应用程序的 UI 主题更改时的事件参数
 /// </summary>
-public sealed class ThemeChangedEventArgs : System.EventArgs
+public sealed class ThemeChangedEventArgs(ElementTheme actualTheme, ElementTheme currentTheme, bool isHighContrast) : System.EventArgs
 {
     /// <summary>
     /// 获取当前应用程序中的 UI 元素的实际主题
     /// </summary>
-    public ElementTheme ActualTheme { get; }
+    public ElementTheme ActualTheme { get; } = actualTheme;
 
     /// <summary>
     /// 获取当前应用程序中的 UI 的元素主题
     /// </summary>
-    public ElementTheme CurrentTheme { get; }
+    public ElementTheme CurrentTheme { get; } = currentTheme;
 
     /// <summary>
     /// 表示是否为高对比度主题
     /// </summary>
-    public bool IsHighContrast { get; }
-
-    /// <summary>
-    /// 初始化 <see cref="ThemeChangedEventArgs"/> 的新实例
-    /// </summary>
-    public ThemeChangedEventArgs(ElementTheme actualTheme, ElementTheme currentTheme, bool isHighContrast)
-    {
-        ActualTheme = actualTheme;
-        CurrentTheme = currentTheme;
-        IsHighContrast = isHighContrast;
-    }
+    public bool IsHighContrast { get; } = isHighContrast;
 }

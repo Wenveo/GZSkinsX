@@ -22,7 +22,8 @@ namespace GZSkinsX.AccessCache;
 
 /// <inheritdoc cref="IFutureAccessService"/>
 [Shared, Export(typeof(IFutureAccessService))]
-internal sealed class FutureAccessService : IFutureAccessService
+[method: ImportingConstructor]
+internal sealed class FutureAccessService(ISettingsService settingsService) : IFutureAccessService
 {
     /// <summary>
     /// 表示当前设置节点的 <seealso cref="Guid"/> 字符串值
@@ -32,28 +33,18 @@ internal sealed class FutureAccessService : IFutureAccessService
     /// <summary>
     /// 用于存储本地数据的数据节点
     /// </summary>
-    private readonly ISettingsSection _settingsSection;
+    private readonly ISettingsSection _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
 
     /// <summary>
     /// 内部的存储项访问列表定义
     /// </summary>
-    private readonly StorageItemAccessList _futureAccessList;
+    private readonly StorageItemAccessList _futureAccessList = StorageApplicationPermissions.FutureAccessList;
 
     /// <inheritdoc/>
     public AccessListEntryView Entries => _futureAccessList.Entries;
 
     /// <inheritdoc/>
     public uint MaximumItemsAllowed => _futureAccessList.MaximumItemsAllowed;
-
-    /// <summary>
-    /// 初始化 <see cref="FutureAccessService"/> 的新实例
-    /// </summary>
-    [ImportingConstructor]
-    public FutureAccessService(ISettingsService settingsService)
-    {
-        _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
-        _futureAccessList = StorageApplicationPermissions.FutureAccessList;
-    }
 
     /// <inheritdoc/>
     public void Add(IStorageItem storageItem, string name)

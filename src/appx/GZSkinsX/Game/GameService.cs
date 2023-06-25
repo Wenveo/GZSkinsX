@@ -17,22 +17,23 @@ namespace GZSkinsX.Game;
 
 /// <inheritdoc cref="IGameService"/>
 [Shared, Export(typeof(IGameService))]
-internal sealed class GameService : IGameService
+[method: ImportingConstructor]
+internal sealed class GameService(GameSettings gameSettings) : IGameService
 {
     /// <summary>
     /// 用于存储以及更新配置
     /// </summary>
-    private readonly GameSettings _gameSettings;
+    private readonly GameSettings _gameSettings = gameSettings;
 
     /// <summary>
     /// 当前内部游戏数据实例
     /// </summary>
-    private readonly GameData _gameData;
+    private readonly GameData _gameData = new GameData();
 
     /// <summary>
     /// 用于记录日志的日志服务
     /// </summary>
-    private readonly ILoggingService _loggingService;
+    private readonly ILoggingService _loggingService = AppxContext.LoggingService;
 
     /// <inheritdoc/>
     public GameRegion CurrentRegion => _gameSettings.CurrentRegion;
@@ -42,18 +43,6 @@ internal sealed class GameService : IGameService
 
     /// <inheritdoc/>
     public string RootDirectory => _gameSettings.RootDirectory;
-
-    /// <summary>
-    /// 初始化 <see cref="GameService"/> 的新实例
-    /// </summary>
-    [ImportingConstructor]
-    public GameService(GameSettings gameSettings)
-    {
-        _gameSettings = gameSettings;
-        _gameData = new GameData();
-
-        _loggingService = AppxContext.LoggingService;
-    }
 
     /// <inheritdoc/>
     public bool TryUpdate(string rootDirectory, GameRegion region)
