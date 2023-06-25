@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 
@@ -12,51 +14,25 @@ using Windows.UI.Composition;
 
 namespace GZSkinsX.Api.Composition;
 
-/// <summary>
-///
-/// </summary>
-public sealed class CompositionObjectPool
+internal sealed class CompositionObjectPool
 {
-    /// <summary>
-    ///
-    /// </summary>
     private static readonly Lazy<CompositionObjectPool> s_lazy = new(() => new CompositionObjectPool());
 
-    /// <summary>
-    ///
-    /// </summary>
     public static CompositionObjectPool Shared => s_lazy.Value;
 
-    /// <summary>
-    ///
-    /// </summary>
     private readonly Dictionary<Compositor, Dictionary<string, WeakReference<CompositionObject>>> _objCache;
 
-    /// <summary>
-    ///
-    /// </summary>
     private readonly object _lockObj;
 
-    /// <summary>
-    ///
-    /// </summary>
     private CompositionObjectPool()
     {
         _lockObj = new();
         _objCache = new();
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="compositor"></param>
-    /// <param name="key"></param>
-    /// <param name="create"></param>
-    /// <returns></returns>
     public T GetCached<T>(Compositor c, string key, Func<T> create) where T : CompositionObject
     {
-        CompositionObject value;
+        CompositionObject? value;
         lock (_lockObj)
         {
             if (_objCache.TryGetValue(c, out var dic) is false)
@@ -82,16 +58,6 @@ public sealed class CompositionObjectPool
         return (T)value;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="c"></param>
-    /// <param name="key"></param>
-    /// <param name="create"></param>
-    /// <returns></returns>
-    public T GetCached<T>(CompositionObject c, string key, Func<T> create) where T : CompositionObject
-    {
-        return GetCached(c.Compositor, key, create);
-    }
+    public T GetCached<T>(CompositionObject c, string key, Func<T> create)
+        where T : CompositionObject => GetCached(c.Compositor, key, create);
 }

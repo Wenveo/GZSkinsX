@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -16,71 +16,27 @@ using Windows.Foundation.Metadata;
 using Windows.UI.Composition;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Core.Direct;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 
 namespace GZSkinsX.Api.Composition;
 
-/// <summary>
-///
-/// </summary>
 public partial class CompositionFactory
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public const string TRANSLATION = "Translation";
+#pragma warning disable format
+    public const string TRANSLATION             = "Translation";
+    public const string STARTING_VALUE          = "this.StartingValue";
+    public const string FINAL_VALUE             = "this.FinalValue";
+    public const double DefaultOffsetDuration   = 0.325;
+    public const int    DEFAULT_STAGGER_MS      = 83;
+#pragma warning restore format
 
-    /// <summary>
-    ///
-    /// </summary>
-    public const string STARTING_VALUE = "this.StartingValue";
-
-    /// <summary>
-    ///
-    /// </summary>
-    public const string FINAL_VALUE = "this.FinalValue";
-
-    /// <summary>
-    ///
-    /// </summary>
-    public const double DefaultOffsetDuration = 0.325;
-
-    /// <summary>
-    ///
-    /// </summary>
-    public const int DEFAULT_STAGGER_MS = 83;
-
-    /// <summary>
-    ///
-    /// </summary>
     private static string CENTRE_EXPRESSION =>
         $"({nameof(Vector3)}(this.Target.{nameof(Visual.Size)}.{nameof(Vector2.X)} * {{0}}f, " +
         $"this.Target.{nameof(Visual.Size)}.{nameof(Vector2.Y)} * {{1}}f, 0f))";
 
-    /// <summary>
-    ///
-    /// </summary>
-    public static UISettings UISettings { get; }
+    public static UISettings UISettings { get; } = new UISettings();
 
-    /// <summary>
-    ///
-    /// </summary>
-    static CompositionFactory()
-    {
-        UISettings = new UISettings();
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="from"></param>
-    /// <param name="delayMs"></param>
-    /// <param name="durationMs"></param>
-    /// <returns></returns>
     public static ICompositionAnimationBase CreateEntranceAnimation(UIElement target, Vector3 from, int delayMs, int durationMs = 1000)
     {
         var key = $"CEA{from.X}{from.Y}{delayMs}{durationMs}";
@@ -88,7 +44,7 @@ public partial class CompositionFactory
 
         return c.GetCached(key, () =>
         {
-            TimeSpan delay = TimeSpan.FromMilliseconds(delayMs);
+            var delay = TimeSpan.FromMilliseconds(delayMs);
             var e = c.GetCachedEntranceEase();
             var t = c.CreateVector3KeyFrameAnimation()
                 .SetTarget(TRANSLATION)
@@ -103,15 +59,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="c"></param>
-    /// <param name="to"></param>
-    /// <param name="from"></param>
-    /// <param name="durationMs"></param>
-    /// <param name="delayMs"></param>
-    /// <returns></returns>
     public static CompositionAnimation CreateFade(Compositor c, float to, float? from, int durationMs, int delayMs = 0)
     {
         var key = $"SFade{to}{from}{durationMs}{delayMs}";
@@ -132,11 +79,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
     public static ICompositionAnimationBase CreateScaleAnimation(Compositor c)
     {
         return c.GetCached("ScaleAni", () =>
@@ -148,11 +90,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
-    /// <returns></returns>
     public static Vector3KeyFrameAnimation CreateSlideIn(UIElement e)
     {
         var v = e.EnableTranslation(true).GetElementVisual();
@@ -164,13 +101,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
     public static Vector3KeyFrameAnimation CreateSlideOut(UIElement e, float x, float y)
     {
         var v = e.EnableTranslation(true).GetElementVisual();
@@ -183,11 +113,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
-    /// <returns></returns>
     public static Vector3KeyFrameAnimation CreateSlideOutX(UIElement e)
     {
         var v = e.EnableTranslation(true).GetElementVisual();
@@ -200,11 +125,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
-    /// <returns></returns>
     public static Vector3KeyFrameAnimation CreateSlideOutY(UIElement e)
     {
         var v = e.EnableTranslation(true).GetElementVisual();
@@ -217,31 +137,14 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
     public static void DisableStandardFadeInOut(UIElement e)
     {
         e.SetHideAnimation(null);
         e.SetShowAnimation(null);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="f"></param>
-    public static void DisableStandardReposition(UIElement e)
-    {
-        e.GetElementVisual().ImplicitAnimations?.Remove(nameof(Visual.Offset));
-    }
+    public static void DisableStandardReposition(UIElement e) => e.GetElementVisual().ImplicitAnimations?.Remove(nameof(Visual.Offset));
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="v"></param>
-    /// <param name="duration"></param>
-    /// <returns></returns>
     public static Visual EnableStandardTranslation(Visual v, double? duration = null)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -257,15 +160,10 @@ public partial class CompositionFactory
                     .SetDuration(duration ?? DefaultOffsetDuration);
         });
 
-        v.Properties.SetImplicitAnimation(TRANSLATION, o);
+        _ = v.Properties.SetImplicitAnimation(TRANSLATION, o);
         return v;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="c"></param>
-    /// <returns></returns>
     public static ImplicitAnimationCollection GetRepositionCollection(Compositor c)
     {
         return c.GetCached("RepoColl", () =>
@@ -282,14 +180,6 @@ public partial class CompositionFactory
         });
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="delayMs"></param>
-    /// <param name="fromOffsetY"></param>
-    /// <param name="fromOffsetX"></param>
-    /// <param name="durationMs"></param>
     public static void PlayEntrance(UIElement target, int delayMs = 0, int fromOffsetY = 40, int fromOffsetX = 0, int durationMs = 1000)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -301,15 +191,6 @@ public partial class CompositionFactory
         target.GetElementVisual().StartAnimationGroup(animation);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="targets"></param>
-    /// <param name="delayMs"></param>
-    /// <param name="fromOffsetY"></param>
-    /// <param name="fromOffsetX"></param>
-    /// <param name="durationMs"></param>
-    /// <param name="staggerMs"></param>
     public static void PlayEntrance(List<UIElement> targets, int delayMs = 0, int fromOffsetY = 40, int fromOffsetX = 0, int durationMs = 1000, int staggerMs = 83)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -327,10 +208,6 @@ public partial class CompositionFactory
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
     public static void PlayFullHeightSlideUpEntrance(FrameworkElement target)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -350,12 +227,6 @@ public partial class CompositionFactory
         v.StartAnimationGroup(t);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
     public static void PlayScaleEntrance(FrameworkElement target, float from, float to)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -366,7 +237,7 @@ public partial class CompositionFactory
         var v = target.GetElementVisual();
         if (target.Tag is null)
         {
-            StartCentering(v);
+            _ = StartCentering(v);
             target.Tag = target;
         }
 
@@ -381,10 +252,6 @@ public partial class CompositionFactory
         v.StartAnimationGroup(g);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="sender"></param>
     public static void PlayStandardEntrance(FrameworkElement element)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -396,49 +263,16 @@ public partial class CompositionFactory
             CreateEntranceAnimation(element, new Vector3(100, 0, 0), 200));
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
-    /// <param name="xamlDirect"></param>
-    public static void PokeUIElementZIndex(UIElement e, XamlDirect? xamlDirect = null)
-    {
-        if (xamlDirect != null)
-        {
-            var o = xamlDirect.GetXamlDirectObject(e);
-            var i = xamlDirect.GetInt32Property(o, XamlPropertyIndex.Canvas_ZIndex);
-            xamlDirect.SetInt32Property(o, XamlPropertyIndex.Canvas_ZIndex, i + 1);
-            xamlDirect.SetInt32Property(o, XamlPropertyIndex.Canvas_ZIndex, i);
-        }
-        else
-        {
-            var index = Canvas.GetZIndex(e);
-            Canvas.SetZIndex(e, index + 1);
-            Canvas.SetZIndex(e, index);
-        }
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="size"></param>
     public static void SetCornerRadius(UIElement target, float size)
     {
         var vis = target.GetElementVisual();
         var rec = vis.Compositor.CreateRoundedRectangleGeometry();
         rec.CornerRadius = new(size);
-        rec.LinkShapeSize(vis);
+        _ = rec.LinkShapeSize(vis);
         var clip = vis.Compositor.CreateGeometricClip(rec);
         vis.Clip = clip;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="background"></param>
-    /// <param name="children"></param>
-    /// <param name="container"></param>
     public static void SetDropInOut(FrameworkElement background, IList<FrameworkElement> children, FrameworkElement? container = null)
     {
         if (background is null || children.Count == 0)
@@ -514,11 +348,6 @@ public partial class CompositionFactory
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
-    /// <param name="t"></param>
     private static void SetOpacityTransition(FrameworkElement e, TimeSpan t)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -534,19 +363,14 @@ public partial class CompositionFactory
             ani.InsertExpressionKeyFrame(1, FINAL_VALUE, c.CreateLinearEasingFunction());
             ani.Duration = t;
 
-            e.SetImplicitAnimation(nameof(Visual.Opacity), ani);
+            _ = e.SetImplicitAnimation(nameof(Visual.Opacity), ani);
         }
         else
         {
-            e.SetImplicitAnimation(nameof(Visual.Opacity), null);
+            _ = e.SetImplicitAnimation(nameof(Visual.Opacity), null);
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="args"></param>
     public static void SetStandardEntrance(FrameworkElement sender, object args)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -558,10 +382,6 @@ public partial class CompositionFactory
             e.SetShowAnimation(CreateEntranceAnimation(e, new Vector3(100, 0, 0), 200));
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
     public static void SetStandardFadeInOut(UIElement e, int durationMs = 300)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -574,10 +394,6 @@ public partial class CompositionFactory
         e.SetShowAnimation(CreateFade(v.Compositor, 1, null, durationMs));
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
     public static void SetStandardReposition(UIElement e)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -594,15 +410,9 @@ public partial class CompositionFactory
                     .SetDuration(DefaultOffsetDuration);
         });
 
-        v.SetImplicitAnimation(nameof(Visual.Offset), value);
+        _ = v.SetImplicitAnimation(nameof(Visual.Offset), value);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="depth"></param>
-    /// <param name="recievers"></param>
     public static void SetThemeShadow(UIElement target, float depth, params UIElement[] recievers)
     {
         if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 8) is false)
@@ -638,10 +448,6 @@ public partial class CompositionFactory
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="e"></param>
     public static void SetupOverlayPanelAnimation(UIElement e)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -664,13 +470,6 @@ public partial class CompositionFactory
         e.SetShowAnimation(CreateEntranceAnimation(e, new Vector3(0, 200, 0), 0, 550));
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="v"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <returns></returns>
     public static ExpressionAnimation StartCentering(Visual v, float x = 0.5f, float y = 0.5f)
     {
         v.StopAnimation(nameof(Visual.CenterPoint));
@@ -688,11 +487,6 @@ public partial class CompositionFactory
         return e;
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="barElements"></param>
-    /// <param name="contentElements"></param>
     public static void StartStartUpAnimation(List<FrameworkElement> barElements, List<UIElement> contentElements)
     {
         if (UISettings.AnimationsEnabled is false)
@@ -725,12 +519,6 @@ public partial class CompositionFactory
         PlayEntrance(contentElements, 200);
     }
 
-    /// <summary>
-    /// Creates the detault Forward composition animation
-    /// </summary>
-    /// <param name="outElement"></param>
-    /// <param name="inElement"></param>
-    /// <returns></returns>
     public static void StartCompositionExpoZoomForwardTransition(FrameworkElement outElement, FrameworkElement inElement)
     {
         if (UISettings.AnimationsEnabled is false)
