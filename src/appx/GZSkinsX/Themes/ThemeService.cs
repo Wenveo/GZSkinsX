@@ -76,9 +76,8 @@ internal sealed class ThemeService : IThemeService
         _accessible.HighContrastChanged += OnHighContrastChanged;
         _settings.ColorValuesChanged += OnColorValuesChanged;
 
-        ActualTheme = CurrentTheme is not ElementTheme.Default
-            ? CurrentTheme
-            : Application.Current.RequestedTheme == ApplicationTheme.Light
+        ActualTheme = CurrentTheme is not ElementTheme.Default ? CurrentTheme
+            : Application.Current.RequestedTheme is ApplicationTheme.Light
                 ? ElementTheme.Light : ElementTheme.Dark;
     }
 
@@ -96,8 +95,7 @@ internal sealed class ThemeService : IThemeService
     {
         _dispatcherQueue.EnqueueAsync(() =>
         {
-            if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement &&
-            (CurrentTheme != frameworkElement.ActualTheme || IsHighContrast != _accessible.HighContrast))
+            if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 if (_accessible.HighContrast && _accessible.HighContrastScheme.IndexOf("white", StringComparison.OrdinalIgnoreCase) != -1)
                 {
@@ -106,7 +104,6 @@ internal sealed class ThemeService : IThemeService
                     CurrentTheme = ElementTheme.Light;
                     ActualTheme = ElementTheme.Light;
 
-                    ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ElementTheme.Light, ElementTheme.Light, IsHighContrast));
                 }
                 else
                 {
@@ -114,31 +111,35 @@ internal sealed class ThemeService : IThemeService
                     IsHighContrast = _accessible.HighContrast;
                     CurrentTheme = frameworkElement.RequestedTheme;
                     ActualTheme = frameworkElement.ActualTheme;
-
-                    ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, frameworkElement.RequestedTheme, IsHighContrast));
                 }
             }
+            else
+            {
+                ActualTheme = Application.Current.RequestedTheme == default ? ElementTheme.Light : ElementTheme.Dark;
+                CurrentTheme = ElementTheme.Default;
+            }
+
+            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ActualTheme, CurrentTheme, IsHighContrast));
         });
     }
 
     /// <inheritdoc/>
-    public async Task<bool> SetElementThemeAsync(ElementTheme newTheme)
+    public async Task SetElementThemeAsync(ElementTheme newTheme)
     {
-        var result = await _dispatcherQueue.EnqueueAsync(() =>
+        await _dispatcherQueue.EnqueueAsync(() =>
         {
+            CurrentTheme = newTheme;
             if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = newTheme;
                 ActualTheme = frameworkElement.ActualTheme;
-                CurrentTheme = newTheme;
-
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(frameworkElement.ActualTheme, newTheme, IsHighContrast));
-                return true;
+            }
+            else
+            {
+                ActualTheme = Application.Current.RequestedTheme == default ? ElementTheme.Light : ElementTheme.Dark;
             }
 
-            return false;
+            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ActualTheme, CurrentTheme, IsHighContrast));
         });
-
-        return result;
     }
 }

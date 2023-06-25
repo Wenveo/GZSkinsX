@@ -44,5 +44,5 @@ public interface IThemeService
     /// </summary>
     /// <param name="newTheme">新的 UI 主题</param>
     /// <returns>当成功应用主题后返回 true，否则返回 false</returns>
-    Task<bool> SetElementThemeAsync(ElementTheme newTheme);
+    Task SetElementThemeAsync(ElementTheme newTheme);
 }
