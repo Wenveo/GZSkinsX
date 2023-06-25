@@ -10,7 +10,7 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.SDK.Logging;
+using GZSkinsX.Api.Logging;
 
 namespace GZSkinsX.Logging;
 
@@ -30,12 +30,12 @@ internal sealed class LoggingService : ILoggingService
 #pragma warning restore format
 
     /// <summary>
-    /// ÄÚ²¿ÈÕÖ¾Æ÷Ä¬ÈÏÊµÏÖ
+    /// å†…éƒ¨æ—¥å¿—å™¨é»˜è®¤å®ç°
     /// </summary>
     private readonly LoggerImpl _logger;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="LoggingService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="LoggingService"/> çš„æ–°å®ä¾‹
     /// </summary>
     public LoggingService()
     {

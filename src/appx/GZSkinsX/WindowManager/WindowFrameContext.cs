@@ -7,7 +7,7 @@
 
 using System;
 
-using GZSkinsX.SDK.WindowManager;
+using GZSkinsX.Api.WindowManager;
 
 namespace GZSkinsX.WindowManager;
 
@@ -15,7 +15,7 @@ namespace GZSkinsX.WindowManager;
 internal sealed class WindowFrameContext : IWindowFrameContext
 {
     /// <summary>
-    /// µ±Ç°ÉÏÏÂÎÄÖĞµÄÀÁ¼ÓÔØ¶ÔÏó
+    /// å½“å‰ä¸Šä¸‹æ–‡ä¸­çš„æ‡’åŠ è½½å¯¹è±¡
     /// </summary>
     private readonly Lazy<IWindowFrame, WindowFrameMetadataAttribute> _lazy;
 
@@ -26,7 +26,7 @@ internal sealed class WindowFrameContext : IWindowFrameContext
     public WindowFrameMetadataAttribute Metadata => _lazy.Metadata;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="WindowFrameContext"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="WindowFrameContext"/> çš„æ–°å®ä¾‹
     /// </summary>
     public WindowFrameContext(Lazy<IWindowFrame, WindowFrameMetadataAttribute> lazy)
     {

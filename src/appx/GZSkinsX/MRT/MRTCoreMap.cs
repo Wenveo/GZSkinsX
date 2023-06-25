@@ -9,7 +9,7 @@ using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.MRT;
+using GZSkinsX.Api.MRT;
 
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
@@ -20,12 +20,12 @@ namespace GZSkinsX.MRT;
 internal sealed class MRTCoreMap : IMRTCoreMap
 {
     /// <summary>
-    /// ÓÃÓÚ»ñÈ¡±¾µØ»¯×ÊÔ´ÄÚÈİµÄ×ÊÔ´±í
+    /// ç”¨äºè·å–æœ¬åœ°åŒ–èµ„æºå†…å®¹çš„èµ„æºè¡¨
     /// </summary>
     private readonly ResourceMap _resourceMap;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="MRTCoreMap"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="MRTCoreMap"/> çš„æ–°å®ä¾‹
     /// </summary>
     public MRTCoreMap(ResourceMap resourceMap)
     {

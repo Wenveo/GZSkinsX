@@ -10,7 +10,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 /// <summary>
 /// <see cref="StyleSelector"/> used by <see cref="SettingsExpander"/> to choose the proper <see cref="SettingsCard"/> container style (clickable or not).

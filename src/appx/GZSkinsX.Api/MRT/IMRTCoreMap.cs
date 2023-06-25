@@ -8,34 +8,34 @@
 using System;
 using System.Threading.Tasks;
 
-namespace GZSkinsX.SDK.MRT;
+namespace GZSkinsX.Api.MRT;
 
 /// <summary>
-/// �����Դ�ļ��ϣ�ͨ�����ڻ�ȡ���ػ���Դ����
+/// 相关资源的集合，通常用于获取本地化资源内容
 /// </summary>
 public interface IMRTCoreMap
 {
     /// <summary>
-    /// ��ȡĬ������������ָ������Դ��ʶ����ƥ��ı��ػ���Դ
+    /// 获取默认上下文中与指定的资源标识符所匹配的本地化资源
     /// </summary>
-    /// <param name="resourceKey">ָ��Ϊ���ƻ����õ���Դ��ʶ��</param>
-    /// <returns>���ʶ�����ϵı��ػ���Դ���ֽ���������</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="resourceKey"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
+    /// <returns>与标识符符合的本地化资源的字节数组数据</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="resourceKey"/> 上声明的默认值为 null</exception>
     Task<byte[]> GetBytesAsync(string resourceKey);
 
     /// <summary>
-    /// ��ȡĬ������������ָ������Դ��ʶ����ƥ��ı��ػ���Դ
+    /// 获取默认上下文中与指定的资源标识符所匹配的本地化资源
     /// </summary>
-    /// <param name="resourceKey">ָ��Ϊ���ƻ����õ���Դ��ʶ��</param>
-    /// <returns>���ʶ�����ϵı��ػ���Դ���ַ�������</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="resourceKey"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="resourceKey">指定为名称或引用的资源标识符</param>
+    /// <returns>与标识符符合的本地化资源的字符串内容</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="resourceKey"/> 上声明的默认值为 null</exception>
     string GetString(string resourceKey);
 
     /// <summary>
-    /// �ӵ�ǰĬ���������л�ȡ�ض�����Դ�Ӽ�
+    /// 从当前默认上下文中获取特定的资源子集
     /// </summary>
-    /// <param name="reference">���ڱ�ʶ������������Դӳ���ʶ��</param>
-    /// <returns>���� <seealso cref="IMRTCoreMap"/></returns>
-    /// <exception cref="ArgumentNullException"><paramref name="reference"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="reference">用于标识新子树根的资源映射标识符</param>
+    /// <returns>子树 <seealso cref="IMRTCoreMap"/></returns>
+    /// <exception cref="ArgumentNullException"><paramref name="reference"/> 上声明的默认值为 null</exception>
     IMRTCoreMap GetSubtree(string reference);
 }

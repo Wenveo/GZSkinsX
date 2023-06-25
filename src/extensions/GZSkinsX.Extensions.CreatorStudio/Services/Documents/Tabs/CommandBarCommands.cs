@@ -13,9 +13,9 @@ using System.Composition;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Commands;
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Commands;
+using GZSkinsX.Api.Controls;
 
 using Windows.Storage.Pickers;
 using Windows.System;

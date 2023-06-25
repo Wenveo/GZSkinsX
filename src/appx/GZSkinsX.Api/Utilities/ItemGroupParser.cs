@@ -5,20 +5,20 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.Utilities;
+namespace GZSkinsX.Api.Utilities;
 
 /// <summary>
-/// Ìá¹©½âÎöÒÔÌØ¶¨¸ñÊ½±íÊ¾×éµÄ×Ö·û´®ÖµµÄÄÜÁ¦
+/// æä¾›è§£æä»¥ç‰¹å®šæ ¼å¼è¡¨ç¤ºç»„çš„å­—ç¬¦ä¸²å€¼çš„èƒ½åŠ›
 /// </summary>
 public static class ItemGroupParser
 {
     /// <summary>
-    /// Í¨¹ı½âÎöÒÔÌØ¶¨¸ñÊ½±íÊ¾×éµÄ×Ö·û´®ÖµÀ´»ñÈ¡Óë×éÏà¹ØµÄÔªÊı¾İĞÅÏ¢
+    /// é€šè¿‡è§£æä»¥ç‰¹å®šæ ¼å¼è¡¨ç¤ºç»„çš„å­—ç¬¦ä¸²å€¼æ¥è·å–ä¸ç»„ç›¸å…³çš„å…ƒæ•°æ®ä¿¡æ¯
     /// </summary>
-    /// <param name="group">ÒÔÌØ¶¨¸ñÊ½±íÊ¾×éµÄ×Ö·û´®Öµ</param>
-    /// <param name="name">Í¨¹ı½âÎö»ñµÃµÄ×éÃû¡£Èç¹û½âÎöÊ§°ÜÔò±íÊ¾Îª <see cref="string.Empty"/></param>
-    /// <param name="order">Í¨¹ı½âÎö»ñµÃµÄ×éµÄÅÅĞòË³Ğò¡£Èç¹û½âÎöÊ§°ÜÔò±íÊ¾Îª <see cref="double.NaN"/></param>
-    /// <returns>Èç¹û½âÎö³É¹¦ºóÔò»á·µ»Ø <see cref="true"/>£¬·ñÔò½«·µ»Ø <see cref="false"/></returns>
+    /// <param name="group">ä»¥ç‰¹å®šæ ¼å¼è¡¨ç¤ºç»„çš„å­—ç¬¦ä¸²å€¼</param>
+    /// <param name="name">é€šè¿‡è§£æè·å¾—çš„ç»„åã€‚å¦‚æœè§£æå¤±è´¥åˆ™è¡¨ç¤ºä¸º <see cref="string.Empty"/></param>
+    /// <param name="order">é€šè¿‡è§£æè·å¾—çš„ç»„çš„æ’åºé¡ºåºã€‚å¦‚æœè§£æå¤±è´¥åˆ™è¡¨ç¤ºä¸º <see cref="double.NaN"/></param>
+    /// <returns>å¦‚æœè§£ææˆåŠŸååˆ™ä¼šè¿”å› <see cref="true"/>ï¼Œå¦åˆ™å°†è¿”å› <see cref="false"/></returns>
     public static bool TryParseGroup(string group, out string name, out double order)
     {
         var indexOfSeparator = group.IndexOf(',');

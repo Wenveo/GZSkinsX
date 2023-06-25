@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -11,9 +11,9 @@ using System;
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Themes;
-using GZSkinsX.SDK.Toolkit;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Themes;
+using GZSkinsX.Api.Toolkit;
 
 using Windows.System;
 using Windows.UI.ViewManagement;
@@ -31,7 +31,7 @@ internal sealed class ThemeService : IThemeService
     private readonly ThemeSettings _themeSettings;
 
     /// <summary>
-    /// 当前线程的调度队列，用于访问和同步 UI 属性 
+    /// 当前线程的调度队列，用于访问和同步 UI 属性
     /// </summary>
     private readonly DispatcherQueue _dispatcherQueue;
 

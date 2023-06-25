@@ -9,7 +9,7 @@
 
 using System;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 public partial class SettingsExpander
 {

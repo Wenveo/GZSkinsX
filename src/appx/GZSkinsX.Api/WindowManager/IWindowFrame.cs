@@ -5,17 +5,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// ±íÊ¾Î»ÓÚÓ¦ÓÃ³ÌĞòÖ÷´°¿ÚÖĞµÄÒ³ÃæÔªËØ£¬Í¨³£±»ÓÃÓÚÔÚÖ÷´°¿Ú½øĞĞÒ³ÃæÇĞ»»
+/// è¡¨ç¤ºä½äºåº”ç”¨ç¨‹åºä¸»çª—å£ä¸­çš„é¡µé¢å…ƒç´ ï¼Œé€šå¸¸è¢«ç”¨äºåœ¨ä¸»çª—å£è¿›è¡Œé¡µé¢åˆ‡æ¢
 /// </summary>
 public interface IWindowFrame
 {
     /// <summary>
-    /// »ñÈ¡µ±Ç° <see cref="IWindowFrame"/> ÊÇ·ñ¿ÉÒÔ½øĞĞµ¼º½
+    /// è·å–å½“å‰ <see cref="IWindowFrame"/> æ˜¯å¦å¯ä»¥è¿›è¡Œå¯¼èˆª
     /// </summary>
-    /// <param name="args">½øÈëµ¼º½Ê±µÄÊÂ¼ş²ÎÊı</param>
-    /// <returns>Èç¹û¿ÉÒÔµ¼º½ÖÁÄ¿±ê <see cref="IWindowFrame"/> Ôò·µ»Ø true£¬·ñÔò·µ»Ø false</returns>
+    /// <param name="args">è¿›å…¥å¯¼èˆªæ—¶çš„äº‹ä»¶å‚æ•°</param>
+    /// <returns>å¦‚æœå¯ä»¥å¯¼èˆªè‡³ç›®æ ‡ <see cref="IWindowFrame"/> åˆ™è¿”å› trueï¼Œå¦åˆ™è¿”å› false</returns>
     bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args);
 }

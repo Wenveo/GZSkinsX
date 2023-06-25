@@ -5,13 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÅÉÉú×Ô <see cref="IContextMenuUIContext"/> µÄ»ù±¾ÊµÏÖ£¬¿ÉÍ¨¹ı·ºĞÍÉèÖÃÉÏÏÂÎÄÖĞµÄ³ÉÔ±ÀàĞÍ
+/// è¡¨ç¤ºæ´¾ç”Ÿè‡ª <see cref="IContextMenuUIContext"/> çš„åŸºæœ¬å®ç°ï¼Œå¯é€šè¿‡æ³›å‹è®¾ç½®ä¸Šä¸‹æ–‡ä¸­çš„æˆå‘˜ç±»å‹
 /// </summary>
-/// <typeparam name="T1">Ö¸¶¨ <see cref="UIObject"/> µÄÀàĞÍ</typeparam>
-/// <typeparam name="T2">Ö¸¶¨ <see cref="Parameter"/> µÄÀàĞÍ</typeparam>
+/// <typeparam name="T1">æŒ‡å®š <see cref="UIObject"/> çš„ç±»å‹</typeparam>
+/// <typeparam name="T2">æŒ‡å®š <see cref="Parameter"/> çš„ç±»å‹</typeparam>
 public class ContextMenuUIContext<T1, T2> : ContextMenuUIContext, IContextMenuUIContext<T1, T2>
 {
     /// <inheritdoc cref="IContextMenuUIContext{T1, T2}.UIObject"/>
@@ -27,10 +27,10 @@ public class ContextMenuUIContext<T1, T2> : ContextMenuUIContext, IContextMenuUI
     T2 IContextMenuUIContext<T1, T2>.Parameter => ((T2)base.Parameter)!;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ContextMenuUIContext{T1, T2}"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="ContextMenuUIContext{T1, T2}"/> çš„æ–°å®ä¾‹
     /// </summary>
-    /// <param name="uiObject">Ö¸¶¨µ±Ç° UI ÉÏÏÂÎÄÖĞµÄ UI ¶ÔÏó</param>
-    /// <param name="parameter">Ö¸¶¨µ±Ç° UI ÉÏÏÂÎÄÖĞµÄ²ÎÊı</param>
+    /// <param name="uiObject">æŒ‡å®šå½“å‰ UI ä¸Šä¸‹æ–‡ä¸­çš„ UI å¯¹è±¡</param>
+    /// <param name="parameter">æŒ‡å®šå½“å‰ UI ä¸Šä¸‹æ–‡ä¸­çš„å‚æ•°</param>
     public ContextMenuUIContext(T1 uiObject, T2 parameter)
         : base(uiObject!, parameter!) { }
 }

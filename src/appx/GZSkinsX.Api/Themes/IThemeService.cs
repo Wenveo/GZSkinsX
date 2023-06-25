@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Themes;
+namespace GZSkinsX.Api.Themes;
 
 /// <summary>
 /// 表示应用程序的主题服务，并提供对主题的访问和设置

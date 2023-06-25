@@ -11,8 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-using GZSkinsX.SDK.Diagnostics;
-using GZSkinsX.SDK.Settings;
+using GZSkinsX.Api.Diagnostics;
+using GZSkinsX.Api.Settings;
 
 using Windows.Storage;
 
@@ -22,17 +22,17 @@ namespace GZSkinsX.Settings;
 internal sealed class SettingsSection : ISettingsSection
 {
     /// <summary>
-    /// ÓÃÓÚ´æ´¢×Ó½ÚµãÅäÖÃµÄ×Öµä£¬²¢Ê¹ÓÃ×Ó½ÚµãÅäÖÃµÄÃû³Æµ±×÷ÖµµÄ¼ü
+    /// ç”¨äºå­˜å‚¨å­èŠ‚ç‚¹é…ç½®çš„å­—å…¸ï¼Œå¹¶ä½¿ç”¨å­èŠ‚ç‚¹é…ç½®çš„åç§°å½“ä½œå€¼çš„é”®
     /// </summary>
     private readonly Dictionary<string, SettingsSection> _nameToSectionDict;
 
     /// <summary>
-    /// Ïß³ÌËø¶ÔÏó£¬ÒÔ±£Ö¤ÔÚ¶àÏß³ÌÏÂ×ÊÔ´µÄÍ¬²½·ÃÎÊ
+    /// çº¿ç¨‹é”å¯¹è±¡ï¼Œä»¥ä¿è¯åœ¨å¤šçº¿ç¨‹ä¸‹èµ„æºçš„åŒæ­¥è®¿é—®
     /// </summary>
     private readonly object _lockObj;
 
     /// <summary>
-    /// ÄÚ²¿¶¨ÒåµÄ UWP ÖĞµÄÅäÖÃÈİÆ÷
+    /// å†…éƒ¨å®šä¹‰çš„ UWP ä¸­çš„é…ç½®å®¹å™¨
     /// </summary>
     private ApplicationDataContainer? _container;
 
@@ -43,7 +43,7 @@ internal sealed class SettingsSection : ISettingsSection
     public SettingsType Type { get; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="SettingsSection"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="SettingsSection"/> çš„æ–°å®ä¾‹
     /// </summary>
     /// <param name="container"></param>
     public SettingsSection(ApplicationDataContainer container, SettingsType settingsType)

@@ -5,19 +5,19 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.Settings;
+namespace GZSkinsX.Api.Settings;
 
 /// <summary>
-/// 表示子节点配置的类型
+/// 琛ㄧず瀛愯妭鐐归厤缃殑绫诲瀷
 /// </summary>
 public enum SettingsType
 {
     /// <summary>
-    /// 表示为本地数据类型的配置
+    /// 琛ㄧず涓烘湰鍦版暟鎹被鍨嬬殑閰嶇疆
     /// </summary>
     Local,
     /// <summary>
-    /// 表示为漫游数据类型的配置
+    /// 琛ㄧず涓烘极娓告暟鎹被鍨嬬殑閰嶇疆
     /// </summary>
     Roaming
 }

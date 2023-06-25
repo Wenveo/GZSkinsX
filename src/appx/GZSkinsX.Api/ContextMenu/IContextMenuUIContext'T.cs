@@ -5,13 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ÓÃÓÚ±íÊ¾ÉÏÏÂÎÄ²Ëµ¥ÖĞËù¹ØÁªµÄ UI ÉÏÏÂÎÄ
+/// ç”¨äºè¡¨ç¤ºä¸Šä¸‹æ–‡èœå•ä¸­æ‰€å…³è”çš„ UI ä¸Šä¸‹æ–‡
 /// </summary>
-/// <typeparam name="T1">Ö¸¶¨ <see cref="UIObject"/> µÄÀàĞÍ</typeparam>
-/// <typeparam name="T2">Ö¸¶¨ <see cref="Parameter"/> µÄÀàĞÍ</typeparam>
+/// <typeparam name="T1">æŒ‡å®š <see cref="UIObject"/> çš„ç±»å‹</typeparam>
+/// <typeparam name="T2">æŒ‡å®š <see cref="Parameter"/> çš„ç±»å‹</typeparam>
 public interface IContextMenuUIContext<T1, T2> : IContextMenuUIContext
 {
     /// <inheritdoc cref="IContextMenuUIContext.UIObject"/>

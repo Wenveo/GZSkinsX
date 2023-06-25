@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Toolkit;
+namespace GZSkinsX.Api.Toolkit;
 
 // Adapted from https://github.com/rudyhuyn/XamlPlus
 internal static class ResourceDictionaryExtensions

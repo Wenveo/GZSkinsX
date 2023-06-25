@@ -5,20 +5,20 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// ÓÃÓÚ´æ´¢µ¼³öµÄ <see cref="IWindowFrame"/> ¶ÔÏóÒÔ¼°ÉÏÏÂÎÄÊı¾İ
+/// ç”¨äºå­˜å‚¨å¯¼å‡ºçš„ <see cref="IWindowFrame"/> å¯¹è±¡ä»¥åŠä¸Šä¸‹æ–‡æ•°æ®
 /// </summary>
 public interface IWindowFrameContext
 {
     /// <summary>
-    /// »ñÈ¡µ±Ç°ÉÏÏÂÎÄµÄ <see cref="IWindowFrame"/> ¶ÔÏó
+    /// è·å–å½“å‰ä¸Šä¸‹æ–‡çš„ <see cref="IWindowFrame"/> å¯¹è±¡
     /// </summary>
     IWindowFrame Value { get; }
 
     /// <summary>
-    /// »ñÈ¡µ±Ç°ÉÏÏÂÎÄµÄ <see cref="WindowFrameMetadataAttribute"/> ÔªÊı¾İ
+    /// è·å–å½“å‰ä¸Šä¸‹æ–‡çš„ <see cref="WindowFrameMetadataAttribute"/> å…ƒæ•°æ®
     /// </summary>
     WindowFrameMetadataAttribute Metadata { get; }
 }

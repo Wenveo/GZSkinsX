@@ -5,17 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.SDK.Game;
-
-namespace GZSkinsX.SDK.AccessCache;
+namespace GZSkinsX.Api.AccessCache;
 
 /// <summary>
-/// ±íÊ¾´æ·Å·ÃÎÊÏîÏà¹ØÃû³ÆµÄ¾²Ì¬Àà
+/// è¡¨ç¤ºå­˜æ”¾è®¿é—®é¡¹ç›¸å…³åç§°çš„é™æ€ç±»
 /// </summary>
 public static class FutureAccessItemConstants
 {
     /// <summary>
-    /// ±íÊ¾ <see cref="IGameService.RootDirectory"/> ÔÚ·ÃÎÊÏî´æ´¢ÁĞ±íÖĞËù¹ØÁªµÄÃû³Æ
+    /// è¡¨ç¤º <see cref="IGameService.RootDirectory"/> åœ¨è®¿é—®é¡¹å­˜å‚¨åˆ—è¡¨ä¸­æ‰€å…³è”çš„åç§°
     /// </summary>
     public static readonly string Game_Directory_Name = "GameDirectory";
 }

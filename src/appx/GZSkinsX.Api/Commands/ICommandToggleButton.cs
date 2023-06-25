@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,7 +9,7 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示可在选中和未选中之间切换的按钮元素

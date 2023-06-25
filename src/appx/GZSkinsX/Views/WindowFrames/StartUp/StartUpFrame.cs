@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,9 +7,9 @@
 
 using System.Composition;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Game;
-using GZSkinsX.SDK.WindowManager;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Game;
+using GZSkinsX.Api.WindowManager;
 
 namespace GZSkinsX.Views.WindowFrames.StartUp;
 

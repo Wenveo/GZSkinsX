@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -9,7 +9,7 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace GZSkinsX.SDK.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示派生自 <see cref="ICommandObject"/> 的抽象类，提供从接口成员到 UI 属性的双向绑定支持

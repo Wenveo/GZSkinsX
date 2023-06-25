@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.SDK.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 声明目标类以 <see cref="ICommandItem"/> 类型导出

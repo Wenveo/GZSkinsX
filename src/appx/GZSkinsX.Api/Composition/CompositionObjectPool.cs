@@ -10,35 +10,35 @@ using System.Collections.Generic;
 
 using Windows.UI.Composition;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public sealed class CompositionObjectPool
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private static readonly Lazy<CompositionObjectPool> s_lazy = new(() => new CompositionObjectPool());
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static CompositionObjectPool Shared => s_lazy.Value;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private readonly Dictionary<Compositor, Dictionary<string, WeakReference<CompositionObject>>> _objCache;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private readonly object _lockObj;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private CompositionObjectPool()
     {
@@ -47,7 +47,7 @@ public sealed class CompositionObjectPool
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="compositor"></param>
@@ -83,7 +83,7 @@ public sealed class CompositionObjectPool
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="c"></param>

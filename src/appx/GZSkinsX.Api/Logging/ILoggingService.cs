@@ -5,47 +5,47 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.Logging;
+namespace GZSkinsX.Api.Logging;
 
 /// <summary>
-/// ������־���񣬿�ͨ���˽���¼����ʵʱ���������
+/// 基础日志服务，可通过此将记录内容实时输出至本地
 /// </summary>
 public interface ILoggingService
 {
     /// <summary>
-    /// ���ó�����־��Ϣ��ʽ��д�����Ϣ
+    /// 设置常规日志消息格式并写入该消息
     /// </summary>
-    /// <param name="message">Ҫд�����־��Ϣ�ַ���</param>
+    /// <param name="message">要写入的日志消息字符串</param>
     void LogAlways(string message);
 
     /// <summary>
-    /// ���õ�����־��Ϣ��ʽ��д�����Ϣ
+    /// 设置调试日志消息格式并写入该消息
     /// </summary>
-    /// <param name="message">Ҫд�����־��Ϣ�ַ���</param>
+    /// <param name="message">要写入的日志消息字符串</param>
     void LogDebug(string message);
 
     /// <summary>
-    /// ���ô�����־��Ϣ��ʽ��д�����Ϣ
+    /// 设置错误日志消息格式并写入该消息
     /// </summary>
-    /// <param name="message">Ҫд�����־��Ϣ�ַ���</param>
+    /// <param name="message">要写入的日志消息字符串</param>
     void LogError(string message);
 
     /// <summary>
-    /// ����ִ�гɹ�����־��Ϣ��ʽ��д�����Ϣ
+    /// 设置执行成功的日志消息格式并写入该消息
     /// </summary>
-    /// <param name="message">Ҫд�����־��Ϣ�ַ���</param>
+    /// <param name="message">要写入的日志消息字符串</param>
     void LogOkay(string message);
 
     /// <summary>
-    /// ���þ�����־��Ϣ��ʽ��д�����Ϣ
+    /// 设置警告日志消息格式并写入该消息
     /// </summary>
-    /// <param name="message">Ҫд�����־��Ϣ�ַ���</param>
+    /// <param name="message">要写入的日志消息字符串</param>
     void LogWarning(string message);
 
     /// <summary>
-    /// ��ָ������־����������־��Ϣ��ʽ��д�����Ϣ
+    /// 在指定的日志级别设置日志消息格式并写入该消息
     /// </summary>
-    /// <param name="level">���ڴ˼�����д����</param>
-    /// <param name="message">Ҫд�����־��Ϣ�ַ���</param>
+    /// <param name="level">将在此级别上写入项</param>
+    /// <param name="message">要写入的日志消息字符串</param>
     void Log(LogLevel level, string message);
 }

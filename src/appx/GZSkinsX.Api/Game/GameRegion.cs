@@ -5,23 +5,23 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.Game;
+namespace GZSkinsX.Api.Game;
 
 /// <summary>
-/// ±íÊ¾Ó¢ÐÛÁªÃËÓÎÏ·µÄÇøÓò/·þÎñÆ÷
+/// è¡¨ç¤ºè‹±é›„è”ç›Ÿæ¸¸æˆçš„åŒºåŸŸ/æœåŠ¡å™¨
 /// </summary>
 public enum GameRegion
 {
     /// <summary>
-    /// ±íÊ¾Î´ÖªµÄÇøÓò/·þÎñÆ÷£¬Ö»ÓÐÔÚÎ´ÉèÖÃ¾ßÌåµÄÇøÓòÊ±²ÅÊ¹ÓÃ
+    /// è¡¨ç¤ºæœªçŸ¥çš„åŒºåŸŸ/æœåŠ¡å™¨ï¼Œåªæœ‰åœ¨æœªè®¾ç½®å…·ä½“çš„åŒºåŸŸæ—¶æ‰ä½¿ç”¨
     /// </summary>
     Unknown,
     /// <summary>
-    /// È­Í·ÓÎÏ·Ö±Óª·þÎñÆ÷ (¹Ù·þ)£¬³ý´óÂ½·þÒÔÍâµÄËùÓÐµØÇø¶¼ÊÇÓÉÈ­Í·ÓÎÏ·¹ÜÀí
+    /// æ‹³å¤´æ¸¸æˆç›´è¥æœåŠ¡å™¨ (å®˜æœ)ï¼Œé™¤å¤§é™†æœä»¥å¤–çš„æ‰€æœ‰åœ°åŒºéƒ½æ˜¯ç”±æ‹³å¤´æ¸¸æˆç®¡ç†
     /// </summary>
     Riot,
     /// <summary>
-    /// ¹ú·þ (Âí·þ) ËùÔÚµÄ·þÎñÆ÷£¬ÓÉÌÚÑ¶ÓÎÏ·ÔËÓª
+    /// å›½æœ (é©¬æœ) æ‰€åœ¨çš„æœåŠ¡å™¨ï¼Œç”±è…¾è®¯æ¸¸æˆè¿è¥
     /// </summary>
     Tencent
 }

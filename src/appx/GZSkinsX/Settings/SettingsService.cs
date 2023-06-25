@@ -9,7 +9,7 @@
 
 using System.Composition;
 
-using GZSkinsX.SDK.Settings;
+using GZSkinsX.Api.Settings;
 
 using Windows.Storage;
 
@@ -20,22 +20,22 @@ namespace GZSkinsX.Settings;
 internal sealed class SettingsService : ISettingsService
 {
     /// <summary>
-    /// ÓÃÓÚ´æ´¢±¾µØÊı¾İµÄÅäÖÃ½Úµã
+    /// ç”¨äºå­˜å‚¨æœ¬åœ°æ•°æ®çš„é…ç½®èŠ‚ç‚¹
     /// </summary>
     private readonly SettingsSection _localSettingsSection;
 
     /// <summary>
-    /// ÓÃÓÚ´æ´¢ÂşÓÎÊı¾İµÄÅäÖÃ½Úµã
+    /// ç”¨äºå­˜å‚¨æ¼«æ¸¸æ•°æ®çš„é…ç½®èŠ‚ç‚¹
     /// </summary>
     private readonly SettingsSection _roamingSettingsSection;
 
     /// <summary>
-    /// Ïß³ÌËø¶ÔÏó£¬ÒÔ±£Ö¤ÔÚ¶àÏß³ÌÏÂ×ÊÔ´µÄÍ¬²½·ÃÎÊ
+    /// çº¿ç¨‹é”å¯¹è±¡ï¼Œä»¥ä¿è¯åœ¨å¤šçº¿ç¨‹ä¸‹èµ„æºçš„åŒæ­¥è®¿é—®
     /// </summary>
     private readonly object _lockObj;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="SettingsService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="SettingsService"/> çš„æ–°å®ä¾‹
     /// </summary>
     public SettingsService()
     {

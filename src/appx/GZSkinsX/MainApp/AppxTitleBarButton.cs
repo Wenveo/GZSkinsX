@@ -7,7 +7,7 @@
 
 using System.Composition;
 
-using GZSkinsX.SDK.Appx;
+using GZSkinsX.Api.Appx;
 
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -19,12 +19,12 @@ namespace GZSkinsX.MainApp;
 internal sealed class AppxTitleBarButton : IAppxTitleBarButton
 {
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòÖ÷ÊÓÍ¼µÄ±êÌâÀ¸
+    /// å½“å‰åº”ç”¨ç¨‹åºä¸»è§†å›¾çš„æ ‡é¢˜æ 
     /// </summary>
     private readonly ApplicationViewTitleBar _titleBar;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="AppxTitleBarButton"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="AppxTitleBarButton"/> çš„æ–°å®ä¾‹
     /// </summary>
     public AppxTitleBarButton()
     {

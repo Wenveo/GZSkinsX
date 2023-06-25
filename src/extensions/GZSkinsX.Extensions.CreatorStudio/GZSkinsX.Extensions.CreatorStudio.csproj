@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{F37B1768-E78B-414D-86FD-4BDD72EDFAD8}</ProjectGuid>
@@ -86,9 +86,9 @@
     <EmbeddedResource Include="Properties\GZSkinsX.Extensions.CreatorStudio.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\appx\GZSkinsX.Api\GZSkinsX.SDK.csproj">
+    <ProjectReference Include="..\..\appx\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4C946033-B0F2-43FF-8644-7892E2A58C53}</Project>
-      <Name>GZSkinsX.SDK</Name>
+      <Name>GZSkinsX.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

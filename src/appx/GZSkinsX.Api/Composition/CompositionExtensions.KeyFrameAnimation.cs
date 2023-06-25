@@ -14,12 +14,12 @@ using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -34,7 +34,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -49,7 +49,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -63,7 +63,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -77,7 +77,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -91,7 +91,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -105,7 +105,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -119,7 +119,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -133,7 +133,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -147,7 +147,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -161,7 +161,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -175,7 +175,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -189,7 +189,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -203,7 +203,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -218,7 +218,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -233,7 +233,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -249,7 +249,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -263,7 +263,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -277,7 +277,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="animation"></param>
     /// <param name="normalizedProgressKey"></param>
@@ -291,7 +291,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -306,7 +306,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -321,7 +321,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -334,7 +334,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -347,7 +347,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -360,7 +360,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -373,7 +373,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -388,7 +388,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -401,7 +401,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>
@@ -414,7 +414,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="animation"></param>

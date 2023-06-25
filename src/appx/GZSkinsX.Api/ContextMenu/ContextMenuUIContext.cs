@@ -5,10 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÅÉÉú×Ô <see cref="IContextMenuUIContext"/> µÄÄ¬ÈÏÊµÏÖ
+/// è¡¨ç¤ºæ´¾ç”Ÿè‡ª <see cref="IContextMenuUIContext"/> çš„é»˜è®¤å®ç°
 /// </summary>
 public class ContextMenuUIContext : IContextMenuUIContext
 {
@@ -19,10 +19,10 @@ public class ContextMenuUIContext : IContextMenuUIContext
     public object Parameter { get; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ContextMenuUIContext"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="ContextMenuUIContext"/> çš„æ–°å®ä¾‹
     /// </summary>
-    /// <param name="uiObject">Ö¸¶¨µ±Ç° UI ÉÏÏÂÎÄÖĞµÄ UI ¶ÔÏó</param>
-    /// <param name="parameter">Ö¸¶¨µ±Ç° UI ÉÏÏÂÎÄÖĞµÄ²ÎÊı</param>
+    /// <param name="uiObject">æŒ‡å®šå½“å‰ UI ä¸Šä¸‹æ–‡ä¸­çš„ UI å¯¹è±¡</param>
+    /// <param name="parameter">æŒ‡å®šå½“å‰ UI ä¸Šä¸‹æ–‡ä¸­çš„å‚æ•°</param>
     public ContextMenuUIContext(object uiObject, object parameter)
     {
         UIObject = uiObject;

@@ -10,12 +10,12 @@
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="path"></param>

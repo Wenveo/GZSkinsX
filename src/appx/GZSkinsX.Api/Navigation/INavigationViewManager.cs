@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -12,7 +12,7 @@ using System;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace GZSkinsX.SDK.Navigation;
+namespace GZSkinsX.Api.Navigation;
 
 /// <summary>
 /// 表示对导航视图的抽象管理，并提供针对导航项的导航功能实现

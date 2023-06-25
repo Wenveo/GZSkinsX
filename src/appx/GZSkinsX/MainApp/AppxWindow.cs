@@ -10,11 +10,11 @@
 using System;
 using System.Composition;
 
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
+
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
-
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Extension;
 
 using Windows.UI.Core;
 using Windows.UI.Core.Preview;
@@ -24,23 +24,23 @@ using Windows.UI.Xaml;
 namespace GZSkinsX.MainApp;
 
 /// <summary>
-/// Ö÷³ÌĞòÓ¦ÓÃ´°¿ÚÀà£¬ÓÃÓÚ¹ÜÀí¡¢´´½¨¡¢ÒÔ¼°×¢²áÖ÷´°¿Ú
+/// ä¸»ç¨‹åºåº”ç”¨çª—å£ç±»ï¼Œç”¨äºç®¡ç†ã€åˆ›å»ºã€ä»¥åŠæ³¨å†Œä¸»çª—å£
 /// </summary>
 [Shared, Export(typeof(IAppxWindow))]
 internal sealed class AppxWindow : IAppxWindow
 {
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòµÄÀ©Õ¹·şÎñ£¬Ö÷ÒªÓÃÓÚÔÚ OnAppLoaded ÊÂ¼şÖĞ¶ÔÒÑ¼ÓÔØµÄÀ©Õ¹½øĞĞÍ¨Öª AppLoaded ÊÂ¼ş
+    /// å½“å‰åº”ç”¨ç¨‹åºçš„æ‰©å±•æœåŠ¡ï¼Œä¸»è¦ç”¨äºåœ¨ OnAppLoaded äº‹ä»¶ä¸­å¯¹å·²åŠ è½½çš„æ‰©å±•è¿›è¡Œé€šçŸ¥ AppLoaded äº‹ä»¶
     /// </summary>
     private readonly ExtensionService _extensionService;
 
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃÖ÷ÊÓÍ¼ÊµÀı
+    /// å½“å‰åº”ç”¨ä¸»è§†å›¾å®ä¾‹
     /// </summary>
     private readonly ApplicationView _currentAppView;
 
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòÖ÷´°¿ÚÊµÀı
+    /// å½“å‰åº”ç”¨ç¨‹åºä¸»çª—å£å®ä¾‹
     /// </summary>
     private readonly Window _shellWindow;
 
@@ -60,7 +60,7 @@ internal sealed class AppxWindow : IAppxWindow
     public event EventHandler? Closed;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="AppxWindow"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="AppxWindow"/> çš„æ–°å®ä¾‹
     /// </summary>
     public AppxWindow()
     {
@@ -72,7 +72,7 @@ internal sealed class AppxWindow : IAppxWindow
     }
 
     /// <summary>
-    /// ¸ºÔğ¶ÔÒÑ¼ÓÔØµÄÓ¦ÓÃ³ÌĞòÀ©Õ¹Í¨Öª AppLoaded ÊÂ¼ş
+    /// è´Ÿè´£å¯¹å·²åŠ è½½çš„åº”ç”¨ç¨‹åºæ‰©å±•é€šçŸ¥ AppLoaded äº‹ä»¶
     /// </summary>
     internal void OnAppLoaded()
     {
@@ -82,7 +82,7 @@ internal sealed class AppxWindow : IAppxWindow
     }
 
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòÖ÷´°¿ÚµÄ¼¤»îÊÂ¼ş
+    /// å½“å‰åº”ç”¨ç¨‹åºä¸»çª—å£çš„æ¿€æ´»äº‹ä»¶
     /// </summary>
     private void OnActivated(object sender, WindowActivatedEventArgs args)
     {
@@ -97,17 +97,17 @@ internal sealed class AppxWindow : IAppxWindow
     }
 
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòÖ÷´°¿ÚµÄ¹Ø±ÕÊÂ¼ş
+    /// å½“å‰åº”ç”¨ç¨‹åºä¸»çª—å£çš„å…³é—­äº‹ä»¶
     /// </summary>
     private void OnCloseRequested(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
     {
         if (!e.Handled)
         {
-            // ÓÅÏÈÍ¨ÖªÊÂ¼ş£¬ÒòÎªÓĞ¿ÉÄÜ»áÔÚ¹Ø±ÕÊÂ¼şÖĞÊä³öÈÕÖ¾
+            // ä¼˜å…ˆé€šçŸ¥äº‹ä»¶ï¼Œå› ä¸ºæœ‰å¯èƒ½ä¼šåœ¨å…³é—­äº‹ä»¶ä¸­è¾“å‡ºæ—¥å¿—
             _extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppExit);
             Closed?.Invoke(this, new EventArgs());
 
-            // ¹Ø±ÕÈÕÖ¾Êä³öÁ÷
+            // å…³é—­æ—¥å¿—è¾“å‡ºæµ
             LoggerImpl.Shared.CloseOutputStream();
         }
     }

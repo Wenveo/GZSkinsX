@@ -11,15 +11,15 @@ using System;
 
 using Windows.ApplicationModel;
 
-namespace GZSkinsX.SDK.Appx;
+namespace GZSkinsX.Api.Appx;
 
 /// <summary>
-/// µ±Ç° Appx Ó¦ÓÃµÄÉÏÏÂÎÄ
+/// å½“å‰ Appx åº”ç”¨çš„ä¸Šä¸‹æ–‡
 /// </summary>
 public static partial class AppxContext
 {
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="AppxContext"/> µÄ¾²Ì¬³ÉÔ±
+    /// åˆå§‹åŒ– <see cref="AppxContext"/> çš„é™æ€æˆå‘˜
     /// </summary>
     static AppxContext()
     {
@@ -28,12 +28,12 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// »ñÈ¡µ±Ç°Ó¦ÓÃ³ÌĞò¸ùÄ¿Â¼
+    /// è·å–å½“å‰åº”ç”¨ç¨‹åºæ ¹ç›®å½•
     /// </summary>
     public static string AppxDirectory { get; }
 
     /// <summary>
-    /// »ñÈ¡µ±Ç°Ó¦ÓÃ³ÌĞò°æ±¾
+    /// è·å–å½“å‰åº”ç”¨ç¨‹åºç‰ˆæœ¬
     /// </summary>
     public static Version AppxVersion { get; }
 }

@@ -12,7 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 //// Implement properties for ItemsControl like behavior.
 public partial class SettingsExpander

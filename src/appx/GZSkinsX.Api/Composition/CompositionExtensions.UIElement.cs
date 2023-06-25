@@ -16,12 +16,12 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Shapes;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
@@ -34,7 +34,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
@@ -44,7 +44,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="x"></param>
@@ -57,7 +57,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="defaultTranslation"></param>
@@ -82,7 +82,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="enable"></param>
@@ -94,7 +94,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
@@ -107,7 +107,7 @@ public static partial class CompositionExtensions
     };
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="linkSize"></param>
@@ -129,7 +129,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
@@ -137,7 +137,7 @@ public static partial class CompositionExtensions
      => ElementCompositionPreview.GetElementVisual(element);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="elements"></param>
@@ -151,7 +151,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="scrollViewer"></param>
     /// <returns></returns>
@@ -161,7 +161,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>
@@ -171,7 +171,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="element"></param>
@@ -184,7 +184,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="animation"></param>
@@ -194,7 +194,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="animation"></param>
@@ -204,7 +204,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <param name="value"></param>
@@ -216,7 +216,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="element"></param>
     /// <returns></returns>

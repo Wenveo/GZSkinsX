@@ -13,7 +13,7 @@ using System.Globalization;
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Toolkit;
+namespace GZSkinsX.Api.Toolkit;
 
 /// <summary>
 /// Enables a state if the value is equal to another value

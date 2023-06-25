@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Composition;
 
-using GZSkinsX.SDK.Extension;
+using GZSkinsX.Api.Extension;
 
 namespace GZSkinsX.Extensions.CreatorStudio;
 

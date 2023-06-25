@@ -13,45 +13,45 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Appx;
+namespace GZSkinsX.Api.Appx;
 
 /// <summary>
-/// Ìá¹©Ó¦ÓÃ³ÌĞòÖ÷´°¿ÚµÄÊÂ¼ş£¬ÒÔ¼°´°¿Ú¹ÜÀíÏà¹ØµÄ Api
+/// æä¾›åº”ç”¨ç¨‹åºä¸»çª—å£çš„äº‹ä»¶ï¼Œä»¥åŠçª—å£ç®¡ç†ç›¸å…³çš„ Api
 /// </summary>
 public interface IAppxWindow
 {
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòÖ÷ÊÓÍ¼
+    /// å½“å‰åº”ç”¨ç¨‹åºä¸»è§†å›¾
     /// </summary>
     ApplicationView ApplicationView { get; }
 
     /// <summary>
-    /// µ±Ç°Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú
+    /// å½“å‰åº”ç”¨ç¨‹åºä¸»çª—å£
     /// </summary>
     Window MainWindow { get; }
 
     /// <summary>
-    /// ¼¤»îµ±Ç°Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú
+    /// æ¿€æ´»å½“å‰åº”ç”¨ç¨‹åºä¸»çª—å£
     /// </summary>
     void Activate();
 
     /// <summary>
-    /// ¹Ø±Õµ±Ç°Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú
+    /// å…³é—­å½“å‰åº”ç”¨ç¨‹åºä¸»çª—å£
     /// </summary>
     void Close();
 
     /// <summary>
-    /// µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú±»¼¤»îÊ±´¥·¢
+    /// å½“åº”ç”¨ç¨‹åºä¸»çª—å£è¢«æ¿€æ´»æ—¶è§¦å‘
     /// </summary>
     event EventHandler<WindowActivatedEventArgs>? Activated;
 
     /// <summary>
-    /// µ±Ó¦ÓÃ³ÌĞòÖ÷´°¿Ú±»ÖÃÎªºóÌ¨´°¿ÚÊ±´¥·¢
+    /// å½“åº”ç”¨ç¨‹åºä¸»çª—å£è¢«ç½®ä¸ºåå°çª—å£æ—¶è§¦å‘
     /// </summary>
     event EventHandler<WindowActivatedEventArgs>? Deactivated;
 
     /// <summary>
-    /// ÔÚÓ¦ÓÃ³ÌĞòÖ÷´°¿Ú¹Ø±ÕÖ®ºó´¥·¢
+    /// åœ¨åº”ç”¨ç¨‹åºä¸»çª—å£å…³é—­ä¹‹åè§¦å‘
     /// </summary>
     event EventHandler? Closed;
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,7 +7,7 @@
 
 using System;
 
-using GZSkinsX.SDK.Navigation;
+using GZSkinsX.Api.Navigation;
 
 namespace GZSkinsX.Navigation;
 

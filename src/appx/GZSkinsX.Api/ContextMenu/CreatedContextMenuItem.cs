@@ -9,31 +9,31 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÎªÍ¨¹ı×Ô¶¨Òå´´½¨µÄÉÏÏÂÎÄ²Ëµ¥Ïî
+/// è¡¨ç¤ºä¸ºé€šè¿‡è‡ªå®šä¹‰åˆ›å»ºçš„ä¸Šä¸‹æ–‡èœå•é¡¹
 /// </summary>
 public readonly struct CreatedContextMenuItem
 {
     /// <summary>
-    /// »ñÈ¡¸ÃÉÏÏÂÎÄ²Ëµ¥ÏîµÄÔªÊı¾İ
+    /// è·å–è¯¥ä¸Šä¸‹æ–‡èœå•é¡¹çš„å…ƒæ•°æ®
     /// </summary>
     public ContextMenuItemMetadataAttribute? Metadata { get; }
 
     /// <summary>
-    /// »ñÈ¡¸ÃÉÏÏÂÎÄ²Ëµ¥Ïî
+    /// è·å–è¯¥ä¸Šä¸‹æ–‡èœå•é¡¹
     /// </summary>
     public IContextMenuItem? ContextMenuItem { get; }
 
     /// <summary>
-    /// ÓÃÓÚ±íÊ¾µ±Ç°½á¹¹ÌåÖĞµÄ³ÉÔ±ÊÇ·ñÎ´¾­¹ı¹¹Ôìº¯Êı¸³ÖµÇÒÄÚÈİÎª¿Õ
+    /// ç”¨äºè¡¨ç¤ºå½“å‰ç»“æ„ä½“ä¸­çš„æˆå‘˜æ˜¯å¦æœªç»è¿‡æ„é€ å‡½æ•°èµ‹å€¼ä¸”å†…å®¹ä¸ºç©º
     /// </summary>
     [MemberNotNullWhen(false, nameof(Metadata), nameof(ContextMenuItem))]
     public bool IsEmpty { get; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="CreatedContextMenuItem"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="CreatedContextMenuItem"/> çš„æ–°å®ä¾‹
     /// </summary>
     public CreatedContextMenuItem()
     {
@@ -41,10 +41,10 @@ public readonly struct CreatedContextMenuItem
     }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="CreatedContextMenuItem"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="CreatedContextMenuItem"/> çš„æ–°å®ä¾‹
     /// </summary>
-    /// <param name="metadata">ÓëÉÏÏÂÎÄ²Ëµ¥ÏîËù¹ØÁªµÄÔªÊı¾İ</param>
-    /// <param name="contextMenuItem">ÉÏÏÂÎÄ²Ëµ¥ÏîµÄÅÉÉúÊµÏÖµÄÊµÀı</param>
+    /// <param name="metadata">ä¸ä¸Šä¸‹æ–‡èœå•é¡¹æ‰€å…³è”çš„å…ƒæ•°æ®</param>
+    /// <param name="contextMenuItem">ä¸Šä¸‹æ–‡èœå•é¡¹çš„æ´¾ç”Ÿå®ç°çš„å®ä¾‹</param>
     public CreatedContextMenuItem(ContextMenuItemMetadataAttribute metadata, IContextMenuItem contextMenuItem)
     {
         Metadata = metadata;

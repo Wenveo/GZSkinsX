@@ -15,11 +15,11 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
+
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
-
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Extension;
 
 using Windows.UI.Xaml;
 
@@ -27,32 +27,32 @@ namespace GZSkinsX.MainApp;
 
 #if DISABLE_XAML_GENERATED_MAIN
 /// <summary>
-/// ×Ô¶¨ÒåµÄ³ÌĞòÆô¶¯Àà
+/// è‡ªå®šä¹‰çš„ç¨‹åºå¯åŠ¨ç±»
 /// </summary>
 public sealed partial class StartUpClass
 {
     /// <summary>
-    /// ÓÃÓÚ±£Ö¤Ó¦ÓÃ³ÌĞòÉúÃüÖÜÆÚ·şÎñµÄ³õÊ¼»¯ºÍ·ÃÎÊµÄÍ¬²½Ëø
+    /// ç”¨äºä¿è¯åº”ç”¨ç¨‹åºç”Ÿå‘½å‘¨æœŸæœåŠ¡çš„åˆå§‹åŒ–å’Œè®¿é—®çš„åŒæ­¥é”
     /// </summary>
     private static readonly AutoResetEvent s_synchronouslock;
 
     /// <summary>
-    /// µ±Ç°×é¼şÈİÆ÷µÄËŞÖ÷ÊµÀı
+    /// å½“å‰ç»„ä»¶å®¹å™¨çš„å®¿ä¸»å®ä¾‹
     /// </summary>
     private static readonly CompositionHost s_compositionHost;
 
     /// <summary>
-    /// »ñÈ¡ÄÚ²¿µÄ <see cref="global::System.Composition.Hosting.CompositionHost"/> ¹«¿ªÊµÏÖ
+    /// è·å–å†…éƒ¨çš„ <see cref="global::System.Composition.Hosting.CompositionHost"/> å…¬å¼€å®ç°
     /// </summary>
     public static CompositionHost CompositionHost => s_compositionHost;
 
     /// <summary>
-    /// »ñÈ¡ÄÚ²¿µÄ <see cref="ExtensionService"/> ¾²Ì¬³ÉÔ±ÊµÀı
+    /// è·å–å†…éƒ¨çš„ <see cref="ExtensionService"/> é™æ€æˆå‘˜å®ä¾‹
     /// </summary>
     internal static ExtensionService s_extensionService = null!;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="StartUpClass"/> µÄ¾²Ì¬³ÉÔ±
+    /// åˆå§‹åŒ– <see cref="StartUpClass"/> çš„é™æ€æˆå‘˜
     /// </summary>
     static StartUpClass()
     {
@@ -74,16 +74,16 @@ public sealed partial class StartUpClass
                 InitializeServices(p);
             }).Wait();
 
-            /// ×èÈûµ±Ç°Ó¦ÓÃ³ÌĞòÖ÷Ïß³Ì
-            /// µÈ´ıÉúÃüÖÜÆÚ·şÎñ³õÊ¼»¯
+            /// é˜»å¡å½“å‰åº”ç”¨ç¨‹åºä¸»çº¿ç¨‹
+            /// ç­‰å¾…ç”Ÿå‘½å‘¨æœŸæœåŠ¡åˆå§‹åŒ–
             s_synchronouslock.WaitOne();
         });
     }
 
     /// <summary>
-    /// ¼ÓÔØºÍ³õÊ¼»¯Ó¦ÓÃ³ÌĞòµÄ»ù±¾·şÎñ
+    /// åŠ è½½å’Œåˆå§‹åŒ–åº”ç”¨ç¨‹åºçš„åŸºæœ¬æœåŠ¡
     /// </summary>
-    /// <param name="parms">Ó¦ÓÃ³ÌĞò³õÊ¼»¯Ê±µÄ²ÎÊı</param>
+    /// <param name="parms">åº”ç”¨ç¨‹åºåˆå§‹åŒ–æ—¶çš„å‚æ•°</param>
     [DebuggerNonUserCode]
     private static async void InitializeServices(ApplicationInitializationCallbackParams parms)
     {
@@ -102,7 +102,7 @@ public sealed partial class StartUpClass
 
 
     /// <summary>
-    /// »ñÈ¡µ±Ç° Appx ÒıÓÃ³ÌĞò¼¯
+    /// è·å–å½“å‰ Appx å¼•ç”¨ç¨‹åºé›†
     /// </summary>
     private static IEnumerable<Assembly> GetAssemblies()
     {

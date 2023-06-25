@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.Diagnostics;
-using GZSkinsX.SDK.Navigation;
+using GZSkinsX.Api.Diagnostics;
+using GZSkinsX.Api.Navigation;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;

@@ -21,7 +21,7 @@ using CommunityToolkit.Diagnostics;
 using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Buffers;
 
-using GZSkinsX.SDK.Diagnostics;
+using GZSkinsX.Api.Diagnostics;
 
 namespace GZSkinsX.Extensions.CreatorStudio.Core.IO.Hashtable;
 

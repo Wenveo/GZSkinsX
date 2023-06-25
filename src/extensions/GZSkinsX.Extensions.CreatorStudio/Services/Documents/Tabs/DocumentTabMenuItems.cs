@@ -11,8 +11,8 @@ using System.Composition;
 
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
-using GZSkinsX.SDK.ContextMenu;
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.ContextMenu;
+using GZSkinsX.Api.Controls;
 
 using Windows.System;
 

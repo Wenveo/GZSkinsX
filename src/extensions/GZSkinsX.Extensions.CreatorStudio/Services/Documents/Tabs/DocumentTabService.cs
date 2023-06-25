@@ -15,8 +15,8 @@ using System.Diagnostics;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.ContextMenu;
 
 using Windows.Foundation;
 using Windows.UI.Xaml;

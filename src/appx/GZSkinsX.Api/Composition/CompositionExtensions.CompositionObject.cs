@@ -11,12 +11,12 @@ using System;
 
 using Windows.UI.Composition;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -27,7 +27,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
@@ -37,7 +37,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -48,7 +48,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -59,7 +59,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -70,7 +70,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -81,7 +81,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -92,7 +92,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -103,7 +103,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="targetProperty"></param>
@@ -114,7 +114,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="c"></param>
@@ -127,7 +127,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="obj"></param>
@@ -140,7 +140,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="obj"></param>
@@ -164,7 +164,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="animation"></param>
@@ -180,7 +180,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="animation"></param>
@@ -190,7 +190,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="animation"></param>
@@ -206,7 +206,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="obj"></param>

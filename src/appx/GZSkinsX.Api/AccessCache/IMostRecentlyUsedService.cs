@@ -13,24 +13,24 @@ using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace GZSkinsX.SDK.AccessCache;
+namespace GZSkinsX.Api.AccessCache;
 
 /// <summary>
-/// �ṩ�����ʹ�� (MRU) �Ĵ洢���б����й������ɸ����û�������ʵ� (�ļ����ļ���)
+/// 提供对最近使用 (MRU) 的存储项列表进行管理，可跟踪用户最近访问的 (文件和文件夹)
 /// </summary>
 public interface IMostRecentlyUsedService : IAccessCacheService
 {
     /// <summary>
-    /// �����ʹ�õ� (MRU) �б���ɾ���洢��ʱ����
+    /// 从最近使用的 (MRU) 列表中删除存储项时触发
     /// </summary>
     event TypedEventHandler<IMostRecentlyUsedService, ItemRemovedEventArgs>? ItemRemoved;
 
     /// <summary>
-    /// ���µĴ洢��͹������������ӵ����ʹ�õ� (MRU) �б��У�ָ����ɼ��Է�Χ
+    /// 将新的存储项和关联的名称添加到最近使用的 (MRU) 列表中，指定其可见性范围
     /// </summary>
-    /// <param name="storageItem">Ҫ���ӵĴ洢��</param>
-    /// <param name="name">Ҫ��洢�����������</param>
-    /// <param name="visibility">�б��д洢��ɼ��Եķ�Χ</param>
-    /// <exception cref="ArgumentNullException"><paramref name="name"/> �� <paramref name="storageItem"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="storageItem">要添加的存储项</param>
+    /// <param name="name">要与存储项关联的名称</param>
+    /// <param name="visibility">列表中存储项可见性的范围</param>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> 或 <paramref name="storageItem"/> 上声明的默认值为 null</exception>
     void Add(IStorageItem storageItem, string name, RecentStorageItemVisibility visibility);
 }

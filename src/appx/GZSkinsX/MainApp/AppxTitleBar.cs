@@ -9,7 +9,7 @@
 
 using System.Composition;
 
-using GZSkinsX.SDK.Appx;
+using GZSkinsX.Api.Appx;
 
 using Windows.ApplicationModel.Core;
 
@@ -20,7 +20,7 @@ namespace GZSkinsX.MainApp;
 internal sealed class AppxTitleBar : IAppxTitleBar
 {
     /// <summary>
-    /// ÓÃÓÚ»ñÈ¡ºÍÉèÖÃÊÇ·ñ½«ÄÚÈİÀ©Õ¹ÖÁ±êÌâÀ¸
+    /// ç”¨äºè·å–å’Œè®¾ç½®æ˜¯å¦å°†å†…å®¹æ‰©å±•è‡³æ ‡é¢˜æ 
     /// </summary>
     private readonly CoreApplicationViewTitleBar _coreTitleBar;
 
@@ -32,7 +32,7 @@ internal sealed class AppxTitleBar : IAppxTitleBar
     }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="AppxTitleBar"/> µÄÊµÀı
+    /// åˆå§‹åŒ– <see cref="AppxTitleBar"/> çš„å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public AppxTitleBar()

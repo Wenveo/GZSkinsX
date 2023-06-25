@@ -10,27 +10,27 @@ using System.Collections.Generic;
 namespace GZSkinsX.ContextMenu;
 
 /// <summary>
-/// ÓÃÓÚ´æ´¢×Ó²Ëµ¥ÏîµÄ×éµÄÉÏÏÂÎÄĞÅÏ¢
+/// ç”¨äºå­˜å‚¨å­èœå•é¡¹çš„ç»„çš„ä¸Šä¸‹æ–‡ä¿¡æ¯
 /// </summary>
 internal sealed class ContextItemGroupContext
 {
     /// <summary>
-    /// »ñÈ¡¸Ã×éµÄÃû³Æ
+    /// è·å–è¯¥ç»„çš„åç§°
     /// </summary>
     public string Name { get; }
 
     /// <summary>
-    /// »ñÈ¡¸Ã×éµÄÅÅĞòË³Ğò
+    /// è·å–è¯¥ç»„çš„æ’åºé¡ºåº
     /// </summary>
     public double Order { get; }
 
     /// <summary>
-    /// »ñÈ¡¸Ã×éÖĞµÄ×Ó²Ëµ¥Ïî
+    /// è·å–è¯¥ç»„ä¸­çš„å­èœå•é¡¹
     /// </summary>
     public List<ContextMenuItemContext> Items { get; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ContextItemGroupContext"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="ContextItemGroupContext"/> çš„æ–°å®ä¾‹
     /// </summary>
     public ContextItemGroupContext(string name, double order)
     {

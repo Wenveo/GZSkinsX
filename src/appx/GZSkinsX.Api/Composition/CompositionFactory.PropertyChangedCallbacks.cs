@@ -11,7 +11,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public partial class CompositionFactory
 {

@@ -5,10 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// 表示存放上下文菜单项相关的元数据静态类
+/// 琛ㄧず瀛樻斁涓婁笅鏂囪彍鍗曢」鐩稿叧鐨勫厓鏁版嵁闈欐�佺被
 /// </summary>
 public static class ContextMenuConstants
 {

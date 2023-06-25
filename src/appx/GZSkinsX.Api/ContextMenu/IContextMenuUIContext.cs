@@ -5,20 +5,20 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// сцсз╠Мй╬иообнд╡к╣╔жпкЫ╧ьа╙╣д UI иообнд
+/// Г■╗Д╨▌Х║╗Г╓╨Д╦┼Д╦▀Ф√┤Х▐°Е█∙Д╦╜Ф┴─Е┘ЁХ│■Г └ UI Д╦┼Д╦▀Ф√┤
 /// </summary>
 public interface IContextMenuUIContext
 {
     /// <summary>
-    /// ╩Ях║╣╠г╟ UI иообнджп╣д UI ╤тоС
+    /// Х▌╥Е▐√Е╫⌠Е┴█ UI Д╦┼Д╦▀Ф√┤Д╦╜Г └ UI Е╞╧Х╠║
     /// </summary>
     object UIObject { get; }
 
     /// <summary>
-    /// ╩Ях║╣╠г╟ UI иообнджп╣д╡нйЩ
+    /// Х▌╥Е▐√Е╫⌠Е┴█ UI Д╦┼Д╦▀Ф√┤Д╦╜Г └Е▐┌Ф∙╟
     /// </summary>
     object Parameter { get; }
 }

@@ -11,7 +11,7 @@ using System.Collections.Specialized;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Toolkit;
+namespace GZSkinsX.Api.Toolkit;
 
 /// <summary>
 /// Enables a state if an Object is <c>null</c> or a String/IEnumerable is empty

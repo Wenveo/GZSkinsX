@@ -11,9 +11,9 @@ using System;
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.AccessCache;
-using GZSkinsX.SDK.Diagnostics;
-using GZSkinsX.SDK.Settings;
+using GZSkinsX.Api.AccessCache;
+using GZSkinsX.Api.Diagnostics;
+using GZSkinsX.Api.Settings;
 
 using Windows.Foundation;
 using Windows.Storage;
@@ -26,17 +26,17 @@ namespace GZSkinsX.AccessCache;
 internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
 {
     /// <summary>
-    /// ±íÊ¾µ±Ç°ÉèÖÃ½ÚµãµÄ <seealso cref="Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºå½“å‰è®¾ç½®èŠ‚ç‚¹çš„ <seealso cref="Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     private const string THE_GUID = "6A50EFFD-185B-42FC-8509-14BE6EEC74EE";
 
     /// <summary>
-    /// ÓÃÓÚ´æ´¢±¾µØÊı¾İµÄÊı¾İ½Úµã
+    /// ç”¨äºå­˜å‚¨æœ¬åœ°æ•°æ®çš„æ•°æ®èŠ‚ç‚¹
     /// </summary>
     private readonly ISettingsSection _settingsSection;
 
     /// <summary>
-    /// ÄÚ²¿µÄ×î½üÊ¹ÓÃ (MRU) ÁĞ±í¶¨Òå
+    /// å†…éƒ¨çš„æœ€è¿‘ä½¿ç”¨ (MRU) åˆ—è¡¨å®šä¹‰
     /// </summary>
     private readonly StorageItemMostRecentlyUsedList _mostRecentlyUsedList;
 
@@ -50,7 +50,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     public event TypedEventHandler<IMostRecentlyUsedService, ItemRemovedEventArgs>? ItemRemoved;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="MostRecentlyUsedService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="MostRecentlyUsedService"/> çš„æ–°å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public MostRecentlyUsedService(ISettingsService settingsService)
@@ -61,13 +61,13 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     }
 
     /// <summary>
-    /// ¶Ô½Ó¿ÚÖĞ¶¨ÒåµÄÊÂ¼ş <seealso cref="IMostRecentlyUsedService.ItemRemoved"/> ½øĞĞ´úÀíÍ¨Öª
+    /// å¯¹æ¥å£ä¸­å®šä¹‰çš„äº‹ä»¶ <seealso cref="IMostRecentlyUsedService.ItemRemoved"/> è¿›è¡Œä»£ç†é€šçŸ¥
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
     private void OnItemRemoved(StorageItemMostRecentlyUsedList sender, ItemRemovedEventArgs args)
     {
-        // ´«µİµ±Ç°·şÎñ¶ÔÏó£¬¶ø²»ÊÇ MRU ÁĞ±í£¬ÒÔ±ÜÃâ MRU ÁĞ±íÔÚÍâ²¿±»Ê¹ÓÃ
+        // ä¼ é€’å½“å‰æœåŠ¡å¯¹è±¡ï¼Œè€Œä¸æ˜¯ MRU åˆ—è¡¨ï¼Œä»¥é¿å… MRU åˆ—è¡¨åœ¨å¤–éƒ¨è¢«ä½¿ç”¨
         ItemRemoved?.Invoke(this, args);
     }
 
@@ -97,7 +97,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="storageItem"></param>
     /// <param name="name"></param>

@@ -13,16 +13,16 @@ using Windows.UI.Xaml;
 
 [assembly: InternalsVisibleTo("GZSkinsX")]
 
-namespace GZSkinsX.SDK.Appx;
+namespace GZSkinsX.Api.Appx;
 
 public static partial class AppxContext
 {
     /// <summary>
-    /// ³õÊ¼»¯ÉúÃüÖÜÆÚ·şÎñ
+    /// åˆå§‹åŒ–ç”Ÿå‘½å‘¨æœŸæœåŠ¡
     /// </summary>
-    /// <param name="parmas">Ó¦ÓÃ³ÌĞò³õÊ¼»¯µÄ²ÎÊı</param>
-    /// <param name="compositionHost"><seealso cref="CompositionHost"/> ¶ÔÏóµÄÊµÀı</param>
-    /// <exception cref="ArgumentNullException"><paramref name="parmas"/> »ò <paramref name="serviceLocator"/> µÄÄ¬ÈÏÖµÎª¿Õ</exception>
+    /// <param name="parmas">åº”ç”¨ç¨‹åºåˆå§‹åŒ–çš„å‚æ•°</param>
+    /// <param name="compositionHost"><seealso cref="CompositionHost"/> å¯¹è±¡çš„å®ä¾‹</param>
+    /// <exception cref="ArgumentNullException"><paramref name="parmas"/> æˆ– <paramref name="serviceLocator"/> çš„é»˜è®¤å€¼ä¸ºç©º</exception>
     internal static void InitializeLifetimeService(ApplicationInitializationCallbackParams parmas, CompositionHost compositionHost)
     {
         if (parmas is null)

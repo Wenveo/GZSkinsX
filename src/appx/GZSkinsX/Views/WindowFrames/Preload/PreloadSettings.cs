@@ -7,8 +7,8 @@
 
 using System.Composition;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Settings;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Settings;
 
 namespace GZSkinsX.Views.WindowFrames.Preload;
 

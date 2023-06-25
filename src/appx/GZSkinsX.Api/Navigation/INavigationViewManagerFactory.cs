@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,7 +7,7 @@
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.Navigation;
+namespace GZSkinsX.Api.Navigation;
 
 /// <summary>
 /// 导航视图工厂的接口定义，提供枚举导航项以创建 <see cref="INavigationViewManager"/> 的能力

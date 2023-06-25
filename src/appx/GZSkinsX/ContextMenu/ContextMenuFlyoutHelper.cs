@@ -7,7 +7,7 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.Api.ContextMenu;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,25 +15,25 @@ using Windows.UI.Xaml.Controls;
 namespace GZSkinsX.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾Îª <see cref="MenuFlyout"/> µÄ°ïÖúÀà£¬ÓÃÓÚ»ñÈ¡ºÍÉèÖÃ×Ô¶¨ÒåµÄ¸½¼ÓÊôĞÔ
+/// è¡¨ç¤ºä¸º <see cref="MenuFlyout"/> çš„å¸®åŠ©ç±»ï¼Œç”¨äºè·å–å’Œè®¾ç½®è‡ªå®šä¹‰çš„é™„åŠ å±æ€§
 /// </summary>
 internal sealed class ContextMenuFlyoutHelper
 {
     /// <summary>
-    /// ¶¨Òå CoerceValueCallback µÄ¸½¼ÓÒÀÀµÊôĞÔ
+    /// å®šä¹‰ CoerceValueCallback çš„é™„åŠ ä¾èµ–å±æ€§
     /// </summary>
     public static readonly DependencyProperty CoerceValueCallbackProperty =
         DependencyProperty.RegisterAttached("CoerceValueCallback", typeof(CoerceContextMenuUIContextCallback),
             typeof(ContextMenuFlyoutHelper), new PropertyMetadata(null));
 
     /// <summary>
-    /// »ñÈ¡Ö¸¶¨¶ÔÏóÖĞµÄ <see cref="CoerceValueCallbackProperty"/> ¸½¼ÓÊôĞÔµÄÖµ
+    /// è·å–æŒ‡å®šå¯¹è±¡ä¸­çš„ <see cref="CoerceValueCallbackProperty"/> é™„åŠ å±æ€§çš„å€¼
     /// </summary>
     public static CoerceContextMenuUIContextCallback? GetCoerceValueCallback(DependencyObject obj)
     => (CoerceContextMenuUIContextCallback)obj.GetValue(CoerceValueCallbackProperty);
 
     /// <summary>
-    /// ¶ÔÖ¸¶¨µÄ¶ÔÏóÉèÖÃ <see cref="CoerceValueCallbackProperty"/> ¸½¼ÓÊôĞÔµÄÖµ
+    /// å¯¹æŒ‡å®šçš„å¯¹è±¡è®¾ç½® <see cref="CoerceValueCallbackProperty"/> é™„åŠ å±æ€§çš„å€¼
     /// </summary>
     public static void SetCoerceValueCallback(DependencyObject obj, CoerceContextMenuUIContextCallback? value)
     => obj.SetValue(CoerceValueCallbackProperty, value);

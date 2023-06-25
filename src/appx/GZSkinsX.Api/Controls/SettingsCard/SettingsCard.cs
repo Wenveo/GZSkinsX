@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 [TemplatePart(Name = ActionIconPresenter, Type = typeof(ContentControl))]
 [TemplatePart(Name = HeaderPresenter, Type = typeof(ContentPresenter))]

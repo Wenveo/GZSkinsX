@@ -7,7 +7,7 @@
 
 using System.Composition;
 
-using GZSkinsX.SDK.WindowManager;
+using GZSkinsX.Api.WindowManager;
 
 namespace GZSkinsX.Views.WindowFrames.NavigationRoot;
 

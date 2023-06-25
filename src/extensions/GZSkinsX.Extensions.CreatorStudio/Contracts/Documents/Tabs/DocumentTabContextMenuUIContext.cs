@@ -7,7 +7,7 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.Api.ContextMenu;
 
 using Microsoft.UI.Xaml.Controls;
 

@@ -145,9 +145,9 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.SDK.csproj">
+    <ProjectReference Include="..\GZSkinsX.Api\GZSkinsX.Api.csproj">
       <Project>{4c946033-b0f2-43ff-8644-7892e2a58c53}</Project>
-      <Name>GZSkinsX.SDK</Name>
+      <Name>GZSkinsX.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\extensions\GZSkinsX.Extensions.CreatorStudio\GZSkinsX.Extensions.CreatorStudio.csproj">
       <Name>GZSkinsX.Extensions.CreatorStudio</Name>

@@ -10,28 +10,28 @@
 using System;
 using System.Collections.Generic;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.MRT;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.MRT;
 
-namespace GZSkinsX.SDK.Helpers;
+namespace GZSkinsX.Api.Helpers;
 
 /// <summary>
-/// Ìá¹©¿ìËÙ»ñÈ¡±¾µØ»¯×ÊÔ´µÄ°ïÖúÀà
+/// æä¾›å¿«é€Ÿè·å–æœ¬åœ°åŒ–èµ„æºçš„å¸®åŠ©ç±»
 /// </summary>
 public static class ResourceHelper
 {
     /// <summary>
-    /// ÓÃÓÚ»ñÈ¡±¾µØ»¯×ÊÔ´µÄÄÚ²¿ <see cref="IMRTCoreMap"/> ³ÉÔ±¶ÔÏó
+    /// ç”¨äºè·å–æœ¬åœ°åŒ–èµ„æºçš„å†…éƒ¨ <see cref="IMRTCoreMap"/> æˆå‘˜å¯¹è±¡
     /// </summary>
     private static readonly IMRTCoreMap s_mrtCoreMap;
 
     /// <summary>
-    /// ÓÃÓÚ»º´æ±¾µØ»¯×ÊÔ´µÄ×Öµä
+    /// ç”¨äºç¼“å­˜æœ¬åœ°åŒ–èµ„æºçš„å­—å…¸
     /// </summary>
     private static readonly Dictionary<string, WeakReference> s_resxCache;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ResourceHelper"/> µÄ¾²Ì¬³ÉÔ±
+    /// åˆå§‹åŒ– <see cref="ResourceHelper"/> çš„é™æ€æˆå‘˜
     /// </summary>
     static ResourceHelper()
     {
@@ -40,10 +40,10 @@ public static class ResourceHelper
     }
 
     /// <summary>
-    /// ¸ù¾İ´«ÈëµÄ×ÊÔ´¼üµÄÃû³ÆÒÔ»ñÈ¡±¾µØ»¯×ÊÔ´
+    /// æ ¹æ®ä¼ å…¥çš„èµ„æºé”®çš„åç§°ä»¥è·å–æœ¬åœ°åŒ–èµ„æº
     /// </summary>
-    /// <param name="resourceKey">ĞèÒª»ñÈ¡µÄ±¾µØ»¯µÄ×ÊÔ´µÄ¼ü</param>
-    /// <returns>·µ»Ø»ñÈ¡µ½µÄ±¾µØ»¯µÄ×ÊÔ´</returns>
+    /// <param name="resourceKey">éœ€è¦è·å–çš„æœ¬åœ°åŒ–çš„èµ„æºçš„é”®</param>
+    /// <returns>è¿”å›è·å–åˆ°çš„æœ¬åœ°åŒ–çš„èµ„æº</returns>
     public static string GetLocalized(string resourceKey)
     {
         string? result;
@@ -63,10 +63,10 @@ public static class ResourceHelper
     }
 
     /// <summary>
-    /// ¸ù¾İ´«Èë¾ßÓĞÌØ¶¨µÄ±êÊ¶·ûµÄ×ÊÔ´¼üµÄÃû³ÆÒÔ»ñÈ¡±¾µØ»¯×ÊÔ´
+    /// æ ¹æ®ä¼ å…¥å…·æœ‰ç‰¹å®šçš„æ ‡è¯†ç¬¦çš„èµ„æºé”®çš„åç§°ä»¥è·å–æœ¬åœ°åŒ–èµ„æº
     /// </summary>
-    /// <param name="resourceKey">ĞèÒª»ñÈ¡µÄ±¾µØ»¯µÄ×ÊÔ´µÄ¼ü</param>
-    /// <returns>Èç¹û´«ÈëµÄ <paramref name="resourceKey"/> °üº¬ÌØ¶¨µÄ±êÊ¶·ûÔò»á»ñÈ¡±¾µØ»¯µÄ×ÊÔ´£¬·ñÔò½«»á·µ»ØÔ­¶ÔÏó</returns>
+    /// <param name="resourceKey">éœ€è¦è·å–çš„æœ¬åœ°åŒ–çš„èµ„æºçš„é”®</param>
+    /// <returns>å¦‚æœä¼ å…¥çš„ <paramref name="resourceKey"/> åŒ…å«ç‰¹å®šçš„æ ‡è¯†ç¬¦åˆ™ä¼šè·å–æœ¬åœ°åŒ–çš„èµ„æºï¼Œå¦åˆ™å°†ä¼šè¿”å›åŸå¯¹è±¡</returns>
     public static string GetResxLocalizedOrDefault(string resourceKey)
     {
         if (resourceKey.StartsWith("resx:"))

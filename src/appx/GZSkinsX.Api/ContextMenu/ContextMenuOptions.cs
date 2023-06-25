@@ -13,70 +13,70 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÔÚ´´½¨ÉÏÏÂÎÄ²Ëµ¥Ê±¿ÉÑ¡µÄÅäÖÃÀà
+/// è¡¨ç¤ºåœ¨åˆ›å»ºä¸Šä¸‹æ–‡èœå•æ—¶å¯é€‰çš„é…ç½®ç±»
 /// </summary>
 [ContractVersion(typeof(UniversalApiContract), 65536u)]
 public sealed class ContextMenuOptions
 {
     /// <summary>
-    /// ±íÊ¾µ±ÓÃ»§ÓëÔªËØ½»»¥Ê±ÊÇ·ñ×Ô¶¯»ñÈ¡½¹µã¡£
+    /// è¡¨ç¤ºå½“ç”¨æˆ·ä¸å…ƒç´ äº¤äº’æ—¶æ˜¯å¦è‡ªåŠ¨è·å–ç„¦ç‚¹ã€‚
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 196608u)]
     public bool AllowFocusOnInteraction { get; set; }
 
     /// <summary>
-    /// ±íÊ¾¿Ø¼şÔÚ½ûÓÃÊ±ÊÇ·ñ¿ÉÒÔ½ÓÊÕ½¹µã
+    /// è¡¨ç¤ºæ§ä»¶åœ¨ç¦ç”¨æ—¶æ˜¯å¦å¯ä»¥æ¥æ”¶ç„¦ç‚¹
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 196608u)]
     public bool AllowFocusWhenDisabled { get; set; }
 
     /// <summary>
-    /// ±íÊ¾ÔÚ¸¡³ö¿Ø¼ş´ò¿ª»ò¹Ø±ÕÊ±ÊÇ·ñ²¥·Å¶¯»­
+    /// è¡¨ç¤ºåœ¨æµ®å‡ºæ§ä»¶æ‰“å¼€æˆ–å…³é—­æ—¶æ˜¯å¦æ’­æ”¾åŠ¨ç”»
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 458752u)]
     public bool AreOpenCloseAnimationsEnabled { get; set; }
 
     /// <summary>
-    /// ±íÊ¾ÊÇ·ñ½« Ç³É«Ïû³ı UI Íâ²¿µÄÇøÓò±ä°µ
+    /// è¡¨ç¤ºæ˜¯å¦å°† æµ…è‰²æ¶ˆé™¤ UI å¤–éƒ¨çš„åŒºåŸŸå˜æš—
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 196608u)]
     public LightDismissOverlayMode LightDismissOverlayMode { get; set; }
 
     /// <summary>
-    /// ÉèÖÃÔÚ³ÊÏÖ MenuFlyout Ê±Ê¹ÓÃµÄÑùÊ½
+    /// è®¾ç½®åœ¨å‘ˆç° MenuFlyout æ—¶ä½¿ç”¨çš„æ ·å¼
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 65536u)]
     public Style? MenuFlyoutPresenterStyle { get; set; }
 
     /// <summary>
-    /// ÉèÖÃÒ»¸öÔªËØ£¬¸ÃÔªËØÓ¦½ÓÊÕÖ¸ÕëÊäÈëÊÂ¼ş£¬¼´Ê¹¸¡³ö¿Ø¼ş¸²¸ÇÖ®ÏÂÒ²ÊÇÈç´Ë
+    /// è®¾ç½®ä¸€ä¸ªå…ƒç´ ï¼Œè¯¥å…ƒç´ åº”æ¥æ”¶æŒ‡é’ˆè¾“å…¥äº‹ä»¶ï¼Œå³ä½¿æµ®å‡ºæ§ä»¶è¦†ç›–ä¹‹ä¸‹ä¹Ÿæ˜¯å¦‚æ­¤
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 262144u)]
     public DependencyObject? OverlayInputPassThroughElement { get; set; }
 
     /// <summary>
-    /// ÉèÖÃÒªÓÃÓÚ¸¡³ö¿Ø¼şµÄÄ¬ÈÏÎ»ÖÃ£¬Ïà¶ÔÓÚÆä·ÅÖÃÄ¿±ê
+    /// è®¾ç½®è¦ç”¨äºæµ®å‡ºæ§ä»¶çš„é»˜è®¤ä½ç½®ï¼Œç›¸å¯¹äºå…¶æ”¾ç½®ç›®æ ‡
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 65536u)]
     public FlyoutPlacementMode Placement { get; set; }
 
     /// <summary>
-    /// ±íÊ¾ÊÇ·ñÓ¦ÔÚ XAML ¸ùµÄ±ß½çÄÚÏÔÊ¾¸¡³ö¿Ø¼ş
+    /// è¡¨ç¤ºæ˜¯å¦åº”åœ¨ XAML æ ¹çš„è¾¹ç•Œå†…æ˜¾ç¤ºæµ®å‡ºæ§ä»¶
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 524288u)]
     public bool ShouldConstrainToRootBounds { get; set; }
 
     /// <summary>
-    /// ±íÊ¾¸¡³ö¿Ø¼şÔÚÏÔÊ¾Ê±µÄĞĞÎª·½Ê½
+    /// è¡¨ç¤ºæµ®å‡ºæ§ä»¶åœ¨æ˜¾ç¤ºæ—¶çš„è¡Œä¸ºæ–¹å¼
     /// </summary>
     [ContractVersion(typeof(UniversalApiContract), 458752u)]
     public FlyoutShowMode ShowMode { get; set; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ContextMenuOptions"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="ContextMenuOptions"/> çš„æ–°å®ä¾‹
     /// </summary>
     public ContextMenuOptions()
     {

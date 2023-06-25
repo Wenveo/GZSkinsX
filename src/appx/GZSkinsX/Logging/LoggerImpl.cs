@@ -17,32 +17,32 @@ using Windows.Storage;
 namespace GZSkinsX.Logging;
 
 /// <summary>
-/// Ó¦ÓÃ³ÌĞòµÄÄ¬ÈÏÈÕÖ¾Æ÷µÄÊµÏÖÀà
+/// åº”ç”¨ç¨‹åºçš„é»˜è®¤æ—¥å¿—å™¨çš„å®ç°ç±»
 /// </summary>
 internal sealed class LoggerImpl
 {
     /// <summary>
-    /// ÓÃÓÚ»ñÈ¡ÈÕÖ¾Æ÷ÊµÀıµÄÀÁ¼ÓÔØÈİÆ÷
+    /// ç”¨äºè·å–æ—¥å¿—å™¨å®ä¾‹çš„æ‡’åŠ è½½å®¹å™¨
     /// </summary>
     private static readonly Lazy<LoggerImpl> s_lazy = new(() => new());
 
     /// <summary>
-    /// »ñÈ¡È«¾Ö¾²Ì¬¹²ÏíµÄÄ¬ÈÏÈÕÖ¾Æ÷µÄÊµÀı
+    /// è·å–å…¨å±€é™æ€å…±äº«çš„é»˜è®¤æ—¥å¿—å™¨çš„å®ä¾‹
     /// </summary>
     public static LoggerImpl Shared => s_lazy.Value;
 
     /// <summary>
-    /// ÓÃÓÚ±£Ö¤¶àÏß³ÌÏÂÍ¬²½¼ÇÂ¼µÄÏß³ÌËø¶ÔÏó
+    /// ç”¨äºä¿è¯å¤šçº¿ç¨‹ä¸‹åŒæ­¥è®°å½•çš„çº¿ç¨‹é”å¯¹è±¡
     /// </summary>
     private readonly object _lockObj;
 
     /// <summary>
-    /// ÈÕÖ¾ÎÄ¼şµÄÊä³öÁ÷£¬Ö»ÓĞ±»³õÊ¼»¯ºó²Å¿ÉÊ¹ÓÃ
+    /// æ—¥å¿—æ–‡ä»¶çš„è¾“å‡ºæµï¼Œåªæœ‰è¢«åˆå§‹åŒ–åæ‰å¯ä½¿ç”¨
     /// </summary>
     private StreamWriter? _logWriter;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="LoggerImpl"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="LoggerImpl"/> çš„æ–°å®ä¾‹
     /// </summary>
     private LoggerImpl()
     {
@@ -50,7 +50,7 @@ internal sealed class LoggerImpl
     }
 
     /// <summary>
-    /// ³õÊ¼»¯µ±Ç°ÈÕÖ¾Æ÷µÄÎÄ¼şÊä³öÁ÷
+    /// åˆå§‹åŒ–å½“å‰æ—¥å¿—å™¨çš„æ–‡ä»¶è¾“å‡ºæµ
     /// </summary>
     public async Task InitializeAsync()
     {
@@ -69,9 +69,9 @@ internal sealed class LoggerImpl
     }
 
     /// <summary>
-    /// ½«ĞèÒª¼ÇÂ¼µÄÄÚÈİÊä³öÖÁÈÕÖ¾ÎÄ¼şÁ÷
+    /// å°†éœ€è¦è®°å½•çš„å†…å®¹è¾“å‡ºè‡³æ—¥å¿—æ–‡ä»¶æµ
     /// </summary>
-    /// <param name="message">Òª¼ÇÂ¼µÄÄÚÈİ</param>
+    /// <param name="message">è¦è®°å½•çš„å†…å®¹</param>
     public void Log(string message)
     {
         lock (_lockObj)
@@ -81,7 +81,7 @@ internal sealed class LoggerImpl
     }
 
     /// <summary>
-    /// ¹Ø±ÕºÍÊÍ·Åµ±Ç°ÈÕÖ¾Êä³öÁ÷
+    /// å…³é—­å’Œé‡Šæ”¾å½“å‰æ—¥å¿—è¾“å‡ºæµ
     /// </summary>
     public void CloseOutputStream()
     {

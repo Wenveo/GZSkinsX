@@ -10,37 +10,37 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Extension;
-using GZSkinsX.SDK.Logging;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
+using GZSkinsX.Api.Logging;
 
 using Windows.UI.Xaml;
 
 namespace GZSkinsX.Extension;
 
 /// <summary>
-/// Ó¦ÓÃ³ÌĞòÀ©Õ¹·şÎñ£¬¸ºÔğ¼ÓÔØºÍÍ¨ÖªÒÑÃ¶¾ÙµÄÀ©Õ¹
+/// åº”ç”¨ç¨‹åºæ‰©å±•æœåŠ¡ï¼Œè´Ÿè´£åŠ è½½å’Œé€šçŸ¥å·²æšä¸¾çš„æ‰©å±•
 /// </summary>
 [Shared, Export]
 internal sealed class ExtensionService
 {
     /// <summary>
-    /// ´æ·ÅÒÑÃ¶¾ÙµÄÏÈĞĞÀ©Õ¹µÄ¼¯ºÏ
+    /// å­˜æ”¾å·²æšä¸¾çš„å…ˆè¡Œæ‰©å±•çš„é›†åˆ
     /// </summary>
     private readonly Lazy<IAdvanceExtension, AdvanceExtensionMetadataAttribute>[] _mefAdvanceExtensions;
 
     /// <summary>
-    /// ´æ·ÅÒÑÃ¶¾ÙµÄÍ¨ÓÃÀ©Õ¹µÄ¼¯ºÏ
+    /// å­˜æ”¾å·²æšä¸¾çš„é€šç”¨æ‰©å±•çš„é›†åˆ
     /// </summary>
     private readonly Lazy<IUniversalExtension, UniversalExtensionMetadataAttribute>[] _mefUniversalExtensions;
 
     /// <summary>
-    /// ÓÃÓÚ¼ÇÂ¼ÈÕÖ¾µÄÈÕÖ¾·şÎñ
+    /// ç”¨äºè®°å½•æ—¥å¿—çš„æ—¥å¿—æœåŠ¡
     /// </summary>
     private readonly ILoggingService _loggingService;
 
     /// <summary>
-    /// »ñÈ¡ËùÓĞÍ¨ÓÃÀ©Õ¹µÄÊµÀı
+    /// è·å–æ‰€æœ‰é€šç”¨æ‰©å±•çš„å®ä¾‹
     /// </summary>
     public IEnumerable<IUniversalExtension> Extensions
     {
@@ -54,7 +54,7 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ExtensionService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="ExtensionService"/> çš„æ–°å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public ExtensionService(
@@ -69,7 +69,7 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// »ñÈ¡ËùÓĞÍ¨ÓÃÀ©Õ¹ÖĞÉùÃ÷µÄ×ÊÔ´×ÖµäµÄ¼¯ºÏ
+    /// è·å–æ‰€æœ‰é€šç”¨æ‰©å±•ä¸­å£°æ˜çš„èµ„æºå­—å…¸çš„é›†åˆ
     /// </summary>
     /// <returns></returns>
     public IEnumerable<ResourceDictionary> GetMergedResourceDictionaries()
@@ -87,9 +87,9 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// Í¨¹ıÉ¸Ñ¡Ö¸¶¨´¥·¢ÀàĞÍµÄÏÈĞĞÀ©Õ¹½øĞĞ¼ÓÔØ
+    /// é€šè¿‡ç­›é€‰æŒ‡å®šè§¦å‘ç±»å‹çš„å…ˆè¡Œæ‰©å±•è¿›è¡ŒåŠ è½½
     /// </summary>
-    /// <param name="trigger">Ö¸¶¨µÄ´¥·¢ÀàĞÍ</param>
+    /// <param name="trigger">æŒ‡å®šçš„è§¦å‘ç±»å‹</param>
     public void LoadAdvanceExtensions(AdvanceExtensionTrigger trigger)
     {
         foreach (var extension in _mefAdvanceExtensions)
@@ -104,9 +104,9 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// ¶ÔËùÓĞµÄÍ¨ÓÃÀ©Õ¹½øĞĞÊÂ¼şÍ¨Öª
+    /// å¯¹æ‰€æœ‰çš„é€šç”¨æ‰©å±•è¿›è¡Œäº‹ä»¶é€šçŸ¥
     /// </summary>
-    /// <param name="eventType">ĞèÒªÍ¨ÖªµÄÊÂ¼şÀàĞÍ</param>
+    /// <param name="eventType">éœ€è¦é€šçŸ¥çš„äº‹ä»¶ç±»å‹</param>
     public void NotifyUniversalExtensions(UniversalExtensionEvent eventType)
     {
         foreach (var extension in _mefUniversalExtensions)

@@ -7,24 +7,24 @@
 
 #nullable enable
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ╠Мй╬©ирттзя║жп╨мн╢я║жпа╫жжв╢л╛ж╝╪Дгп╩╩╣д╡к╣╔оН
+/// Х║╗Г╓╨Е▐╞Д╩╔Е°╗И─┴Д╦╜Е▓▄Ф°╙И─┴Д╦╜Д╦╓Г╖█Г┼╤Ф─│Д╧▀И≈╢Е┬┤Ф█╒Г └Х▐°Е█∙И║╧
 /// </summary>
 public interface IContextToggleMenuItem : IContextMenuItem
 {
     /// <summary>
-    /// м╗╧Щ╣╠г╟ UI иообндеп╤о╣╠г╟╡к╣╔оНйг╥Ян╙я║жпв╢л╛
+    /// И─ Х©┤Е╫⌠Е┴█ UI Д╦┼Д╦▀Ф√┤Е┬╓Ф√╜Е╫⌠Е┴█Х▐°Е█∙И║╧Ф≤╞Е░╕Д╦╨И─┴Д╦╜Г┼╤Ф─│
     /// </summary>
-    /// <param name="context">сК╣╠г╟иообнд╡к╣╔кЫ╧ьа╙╣д UI иообнддзхщ</param>
-    /// <returns>хГ╧Ш╥╣╩ь true тР╠Мй╬н╙я║жпв╢л╛ё╛╥ЯтР╫╚╠Мй╬н╙н╢я║жп╣дв╢л╛</returns>
+    /// <param name="context">Д╦▌Е╫⌠Е┴█Д╦┼Д╦▀Ф√┤Х▐°Е█∙Ф┴─Е┘ЁХ│■Г └ UI Д╦┼Д╦▀Ф√┤Е├┘Е╝╧</param>
+    /// <returns>Е╕┌Ф·°Х©■Е⌡· true Е┬≥Х║╗Г╓╨Д╦╨И─┴Д╦╜Г┼╤Ф─│О╪▄Е░╕Е┬≥Е╟├Х║╗Г╓╨Д╦╨Ф°╙И─┴Д╦╜Г └Г┼╤Ф─│</returns>
     bool IsChecked(IContextMenuUIContext context);
 
     /// <summary>
-    /// ╠Мй╬╡к╣╔оН╣дд╛хо╣Ц╩Вппн╙
+    /// Х║╗Г╓╨Х▐°Е█∙И║╧Г └И╩≤Х╝╓Г┌╧Е┤╩Х║▄Д╦╨
     /// </summary>
-    /// <param name="isChecked">╠Мй╬йг╥Ян╙я║жпв╢л╛</param>
-    /// <param name="context">сК╣╠г╟иообнд╡к╣╔кЫ╧ьа╙╣д UI иообнддзхщ</param>
+    /// <param name="isChecked">Х║╗Г╓╨Ф≤╞Е░╕Д╦╨И─┴Д╦╜Г┼╤Ф─│</param>
+    /// <param name="context">Д╦▌Е╫⌠Е┴█Д╦┼Д╦▀Ф√┤Х▐°Е█∙Ф┴─Е┘ЁХ│■Г └ UI Д╦┼Д╦▀Ф√┤Е├┘Е╝╧</param>
     void OnClick(bool isChecked, IContextMenuUIContext context);
 }

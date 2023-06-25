@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.WindowManager;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.WindowManager;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -25,22 +25,22 @@ namespace GZSkinsX.WindowManager;
 internal sealed class WindowManagerService : IWindowManagerService
 {
     /// <summary>
-    /// ´æ·ÅËùÓĞÒÑµ¼³öµÄ <see cref="IWindowFrame"/> ÀàĞÍ¶ÔÏó
+    /// å­˜æ”¾æ‰€æœ‰å·²å¯¼å‡ºçš„ <see cref="IWindowFrame"/> ç±»å‹å¯¹è±¡
     /// </summary>
     private readonly IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> _viewElements;
 
     /// <summary>
-    /// Ê¹ÓÃ <see cref="Guid"/> ×÷Îª Key ²¢´æ´¢ËùÓĞ <see cref="IWindowFrame"/> ÉÏÏÂÎÄ¶ÔÏó
+    /// ä½¿ç”¨ <see cref="Guid"/> ä½œä¸º Key å¹¶å­˜å‚¨æ‰€æœ‰ <see cref="IWindowFrame"/> ä¸Šä¸‹æ–‡å¯¹è±¡
     /// </summary>
     private readonly Dictionary<Guid, WindowFrameContext> _guidToWindowFrame;
 
     /// <summary>
-    /// ÓÃÓÚµ¼º½µÄÄÚ²¿¶¨Òå¿Ø¼ş
+    /// ç”¨äºå¯¼èˆªçš„å†…éƒ¨å®šä¹‰æ§ä»¶
     /// </summary>
     private readonly Frame _frame;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="WindowManagerService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="WindowManagerService"/> çš„æ–°å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public WindowManagerService([ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> viewElements)
@@ -54,7 +54,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     }
 
     /// <summary>
-    /// ³õÊ¼»¯ÉÏÏÂÎÄ¶ÔÏó
+    /// åˆå§‹åŒ–ä¸Šä¸‹æ–‡å¯¹è±¡
     /// </summary>
     public void InitializeContext()
     {

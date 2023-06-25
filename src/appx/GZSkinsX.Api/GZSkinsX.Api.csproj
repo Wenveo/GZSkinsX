@@ -2,8 +2,8 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{4C946033-B0F2-43FF-8644-7892E2A58C53}</ProjectGuid>
-    <RootNamespace>GZSkinsX.SDK</RootNamespace>
-    <AssemblyName>GZSkinsX.SDK</AssemblyName>
+    <RootNamespace>GZSkinsX.Api</RootNamespace>
+    <AssemblyName>GZSkinsX.Api</AssemblyName>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
@@ -138,7 +138,7 @@
     <Compile Include="WindowManager\WindowFrameConstants.cs" />
     <Compile Include="WindowManager\WindowFrameMetadataAttribute.cs" />
     <Compile Include="WindowManager\WindowFrameNavigatingEvnetArgs.cs" />
-    <EmbeddedResource Include="Properties\GZSkinsX.SDK.rd.xml" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Api.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Diagnostics">

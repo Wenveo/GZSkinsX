@@ -7,16 +7,16 @@
 
 using System.Collections.Generic;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// 提供用于实现菜单项的自定义子级上下文菜单的菜单项集合
+/// 鎻愪緵鐢ㄤ簬瀹炵幇鑿滃崟椤圭殑鑷畾涔夊瓙绾т笂涓嬫枃鑿滃崟鐨勮彍鍗曢」闆嗗悎
 /// </summary>
 public interface IContextMenuItemProvider
 {
     /// <summary>
-    /// 创建用作于子级的上下文菜单的子菜单项集合
+    /// 鍒涘缓鐢ㄤ綔浜庡瓙绾х殑涓婁笅鏂囪彍鍗曠殑瀛愯彍鍗曢」闆嗗悎
     /// </summary>
-    /// <returns>返回已创建的子菜单项集合</returns>
+    /// <returns>杩斿洖宸插垱寤虹殑瀛愯彍鍗曢」闆嗗悎</returns>
     IEnumerable<CreatedContextMenuItem> CreateSubItems();
 }

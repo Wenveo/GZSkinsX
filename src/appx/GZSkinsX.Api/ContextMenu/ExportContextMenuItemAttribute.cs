@@ -8,16 +8,16 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ÉùÃ÷Ä¿±êÀàÒÔ <see cref="IContextMenuItem"/> ÀàĞÍµ¼³ö
+/// å£°æ˜ç›®æ ‡ç±»ä»¥ <see cref="IContextMenuItem"/> ç±»å‹å¯¼å‡º
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportContextMenuItemAttribute : ExportAttribute
 {
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ExportContextMenuItemAttribute"/> µÄĞÂÊµÀı£¬²¢ÒÔ <see cref="IContextMenuItem"/> ÀàĞÍµ¼³ö
+    /// åˆå§‹åŒ– <see cref="ExportContextMenuItemAttribute"/> çš„æ–°å®ä¾‹ï¼Œå¹¶ä»¥ <see cref="IContextMenuItem"/> ç±»å‹å¯¼å‡º
     /// </summary>
     public ExportContextMenuItemAttribute()
         : base(typeof(IContextMenuItem)) { }

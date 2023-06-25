@@ -10,50 +10,50 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Game;
-using GZSkinsX.SDK.Settings;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Game;
+using GZSkinsX.Api.Settings;
 
 namespace GZSkinsX.Game;
 
 /// <summary>
-/// ±íÊ¾ÓÃÓÚ´æ´¢ÓÎÏ··şÎñµÄ»ù±¾Êı¾İÅäÖÃ
+/// è¡¨ç¤ºç”¨äºå­˜å‚¨æ¸¸æˆæœåŠ¡çš„åŸºæœ¬æ•°æ®é…ç½®
 /// </summary>
 [Shared, Export]
 internal sealed class GameSettings
 {
     /// <summary>
-    /// ±íÊ¾µ±Ç°ÉèÖÃ½ÚµãµÄ <seealso cref="Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºå½“å‰è®¾ç½®èŠ‚ç‚¹çš„ <seealso cref="Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     private const string THE_GUID = "BFEEF60A-222B-422C-B459-83FC27E84290";
 
     /// <summary>
-    /// ÓÃÓÚ´æ´¢ÓÎÏ·¸ùÄ¿Â¼ÖµµÄ¼ü×Ö·û´®³£Á¿
+    /// ç”¨äºå­˜å‚¨æ¸¸æˆæ ¹ç›®å½•å€¼çš„é”®å­—ç¬¦ä¸²å¸¸é‡
     /// </summary>
     private const string ROOT_DIRECTORY_NAME = "RootDirectory";
 
     /// <summary>
-    /// ÓÃÓÚ´æ´¢µ±Ç°ÓÎÏ·ÇøÓòµÄ¼ü×Ö·û´®³£Á¿
+    /// ç”¨äºå­˜å‚¨å½“å‰æ¸¸æˆåŒºåŸŸçš„é”®å­—ç¬¦ä¸²å¸¸é‡
     /// </summary>
     private const string CURRENT_REGION_GUID = "CurrentRegion";
 
     /// <summary>
-    /// ÓÃÓÚ´æ´¢±¾µØÊı¾İµÄÊı¾İ½Úµã
+    /// ç”¨äºå­˜å‚¨æœ¬åœ°æ•°æ®çš„æ•°æ®èŠ‚ç‚¹
     /// </summary>
     private readonly ISettingsSection _settingsSection;
 
     /// <summary>
-    /// ±íÊ¾µ±Ç°ÓÎÏ·µÄ¸ùÄ¿Â¼µÄ×Ö¶Î
+    /// è¡¨ç¤ºå½“å‰æ¸¸æˆçš„æ ¹ç›®å½•çš„å­—æ®µ
     /// </summary>
     private string _rootDirectory;
 
     /// <summary>
-    /// ±íÊ¾µ±Ç°ÓÎÏ·ÇøÓòµÄ×Ö¶Î
+    /// è¡¨ç¤ºå½“å‰æ¸¸æˆåŒºåŸŸçš„å­—æ®µ
     /// </summary>
     private GameRegion _currentRegion;
 
     /// <summary>
-    /// »ñÈ¡»òÉèÖÃµ±Ç°ÓÎÏ·µÄ¸ùÄ¿Â¼
+    /// è·å–æˆ–è®¾ç½®å½“å‰æ¸¸æˆçš„æ ¹ç›®å½•
     /// </summary>
     public string RootDirectory
     {
@@ -69,7 +69,7 @@ internal sealed class GameSettings
     }
 
     /// <summary>
-    /// »ñÈ¡»òÉèÖÃµ±Ç°ÓÎÏ·ËùÔÚµÄÇøÓò
+    /// è·å–æˆ–è®¾ç½®å½“å‰æ¸¸æˆæ‰€åœ¨çš„åŒºåŸŸ
     /// </summary>
     public GameRegion CurrentRegion
     {
@@ -85,7 +85,7 @@ internal sealed class GameSettings
     }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="GameSettings"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="GameSettings"/> çš„æ–°å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public GameSettings()

@@ -10,31 +10,31 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÉÏÏÂÎÄ²Ëµ¥ÏîµÄÔªÊı¾İÀà
+/// è¡¨ç¤ºä¸Šä¸‹æ–‡èœå•é¡¹çš„å…ƒæ•°æ®ç±»
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ContextMenuItemMetadataAttribute : Attribute
 {
     /// <summary>
-    /// ±íÊ¾¸Ã²Ëµ¥ÏîµÄ <see cref="System.Guid"/> ×Ö·û´®Öµ£¬¸ÃÖµ¾ßÓĞÎ¨Ò»ĞÔ
+    /// è¡¨ç¤ºè¯¥èœå•é¡¹çš„ <see cref="System.Guid"/> å­—ç¬¦ä¸²å€¼ï¼Œè¯¥å€¼å…·æœ‰å”¯ä¸€æ€§
     /// </summary>
     public string? Guid { get; set; }
 
     /// <summary>
-    /// ±íÊ¾¸Ã²Ëµ¥ÏîËù¹éÊôµÄ¸¸²Ëµ¥ÏîµÄ <see cref="System.Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºè¯¥èœå•é¡¹æ‰€å½’å±çš„çˆ¶èœå•é¡¹çš„ <see cref="System.Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     public string? OwnerGuid { get; set; }
 
     /// <summary>
-    /// ±íÊ¾¸Ã²Ëµ¥ÏîËùÔÚµÄ·Ö×é£¬¸ñÊ½ÒÔ "double,Guid" ĞÎÊ½±íÊ¾
+    /// è¡¨ç¤ºè¯¥èœå•é¡¹æ‰€åœ¨çš„åˆ†ç»„ï¼Œæ ¼å¼ä»¥ "double,Guid" å½¢å¼è¡¨ç¤º
     /// </summary>
     public string? Group { get; set; }
 
     /// <summary>
-    /// ±íÊ¾¸Ã²Ëµ¥ÏîÎ»ÓÚ·Ö×éÖĞµÄÅÅĞòË³Ğò
+    /// è¡¨ç¤ºè¯¥èœå•é¡¹ä½äºåˆ†ç»„ä¸­çš„æ’åºé¡ºåº
     /// </summary>
     public double Order { get; set; }
 }

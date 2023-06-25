@@ -10,17 +10,17 @@ using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private static string LINKED_SIZE_EXPRESSION { get; } = $"{nameof(Visual)}.{nameof(Visual.Size)}";
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="sourceVisual"></param>
     /// <returns></returns>
@@ -32,7 +32,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="targetVisual"></param>
@@ -45,7 +45,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="targetVisual"></param>
@@ -58,7 +58,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="targetVisual"></param>
@@ -71,7 +71,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <returns></returns>
@@ -82,7 +82,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <param name="x"></param>
@@ -95,7 +95,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <param name="vector"></param>
@@ -107,7 +107,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <returns></returns>
@@ -117,7 +117,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <param name="axis"></param>
@@ -129,7 +129,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <param name="x"></param>
@@ -143,7 +143,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <param name="x"></param>
@@ -156,7 +156,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <param name="translation"></param>
@@ -168,7 +168,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="visual"></param>
     /// <returns></returns>

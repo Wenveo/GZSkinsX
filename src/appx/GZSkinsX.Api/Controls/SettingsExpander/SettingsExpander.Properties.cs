@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 [ContentProperty(Name = nameof(Content))]
 public partial class SettingsExpander
@@ -66,7 +66,7 @@ public partial class SettingsExpander
             new PropertyMetadata(defaultValue: false, (d, e) => ((SettingsExpander)d).OnIsExpandedPropertyChanged((bool)e.OldValue, (bool)e.NewValue)));
 
     /// <summary>
-    /// 
+    ///
     /// <summary>
     /// Gets or sets the Header.
     /// </summary>

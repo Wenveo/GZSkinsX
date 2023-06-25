@@ -11,13 +11,13 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 [Bindable]
 public partial class CompositionFactory
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty CenterProperty =
         DependencyProperty.RegisterAttached("Center", typeof(Point),
@@ -30,7 +30,7 @@ public partial class CompositionFactory
     => obj.SetValue(CenterProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty CornerRadiusProperty =
         DependencyProperty.RegisterAttached("CornerRadius", typeof(double),
@@ -43,7 +43,7 @@ public partial class CompositionFactory
     => obj.SetValue(CornerRadiusProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty EnableBounceScaleProperty =
         DependencyProperty.RegisterAttached("EnableBounceScale", typeof(bool),
@@ -56,7 +56,7 @@ public partial class CompositionFactory
     => obj.SetValue(EnableBounceScaleProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty OpacityDurationProperty =
         DependencyProperty.RegisterAttached("OpacityDuration", typeof(Duration),
@@ -69,7 +69,7 @@ public partial class CompositionFactory
     => obj.SetValue(OpacityDurationProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty ScaleProperty =
         DependencyProperty.RegisterAttached("Scale", typeof(Point),
@@ -82,7 +82,7 @@ public partial class CompositionFactory
     => obj.SetValue(ScaleProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty TranslationProperty =
         DependencyProperty.RegisterAttached("Translation", typeof(Point),
@@ -95,7 +95,7 @@ public partial class CompositionFactory
     => obj.SetValue(TranslationProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty UseStandardRepositionProperty =
         DependencyProperty.RegisterAttached("UseStandardReposition", typeof(bool),
@@ -107,7 +107,7 @@ public partial class CompositionFactory
     => obj.SetValue(UseStandardRepositionProperty, value);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static readonly DependencyProperty UseStandardFadeInOutProperty =
         DependencyProperty.RegisterAttached("UseStandardFadeInOut", typeof(bool),

@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 提供用于枚举和创建命令栏的的基本功能实现

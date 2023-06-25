@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 
-using GZSkinsX.SDK.ContextMenu;
-using GZSkinsX.SDK.Diagnostics;
-using GZSkinsX.SDK.Helpers;
-using GZSkinsX.SDK.Utilities;
+using GZSkinsX.Api.ContextMenu;
+using GZSkinsX.Api.Diagnostics;
+using GZSkinsX.Api.Helpers;
+using GZSkinsX.Api.Utilities;
 
 using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
@@ -31,17 +31,17 @@ namespace GZSkinsX.ContextMenu;
 internal sealed class ContextMenuService : IContextMenuService
 {
     /// <summary>
-    /// ÓÃÓÚ´æ·ÅËùÓĞÒÑÃ¶¾ÙµÄ <see cref="IContextMenuItem"/> ²Ëµ¥ÏîºÍ <see cref="ContextMenuItemMetadataAttribute"/> ÔªÊı¾İµÄ¼¯ºÏ
+    /// ç”¨äºå­˜æ”¾æ‰€æœ‰å·²æšä¸¾çš„ <see cref="IContextMenuItem"/> èœå•é¡¹å’Œ <see cref="ContextMenuItemMetadataAttribute"/> å…ƒæ•°æ®çš„é›†åˆ
     /// </summary>
     private readonly IEnumerable<Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute>> _mefItems;
 
     /// <summary>
-    /// ÓÃÓÚ´æ·ÅËùÓĞÒÑĞòÁĞ»¯ºóµÄ×é£¬²¢ÒÔ <see cref="System.Guid">OwnerGuid</see> ×÷Îª¼ü
+    /// ç”¨äºå­˜æ”¾æ‰€æœ‰å·²åºåˆ—åŒ–åçš„ç»„ï¼Œå¹¶ä»¥ <see cref="System.Guid">OwnerGuid</see> ä½œä¸ºé”®
     /// </summary>
     private readonly Dictionary<Guid, Dictionary<string, ContextItemGroupContext>> _guidToGroups;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ContextMenuService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="ContextMenuService"/> çš„æ–°å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public ContextMenuService([ImportMany] IEnumerable<Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute>> mefItems)
@@ -53,7 +53,7 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ıÃ¶¾ÙËùÓĞµÄ²Ëµ¥ÏîºÍÔªÊı¾İµÄ¼¯ºÏ½øĞĞĞòÁĞ»¯²¢·Ö×é
+    /// é€šè¿‡æšä¸¾æ‰€æœ‰çš„èœå•é¡¹å’Œå…ƒæ•°æ®çš„é›†åˆè¿›è¡Œåºåˆ—åŒ–å¹¶åˆ†ç»„
     /// </summary>
     private void InitializeGroups()
     {
@@ -114,10 +114,10 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ı´«ÈëµÄ <see cref="IContextMenuItem"/> ÉÏÏÂÎÄ²Ëµ¥Ïî²¢ÎªÖ¸¶¨µÄ <see cref="MenuFlyoutItem"/> ÉèÖÃÍ¨ÓÃµÄ UI ÊôĞÔ
+    /// é€šè¿‡ä¼ å…¥çš„ <see cref="IContextMenuItem"/> ä¸Šä¸‹æ–‡èœå•é¡¹å¹¶ä¸ºæŒ‡å®šçš„ <see cref="MenuFlyoutItem"/> è®¾ç½®é€šç”¨çš„ UI å±æ€§
     /// </summary>
-    /// <param name="uiObject">ĞèÒªÉèÖÃ UI ÊôĞÔµÄ¶ÔÏó</param>
-    /// <param name="menuItem">´«ÈëµÄÉÏÏÂÎÄ²Ëµ¥Ïî</param>
+    /// <param name="uiObject">éœ€è¦è®¾ç½® UI å±æ€§çš„å¯¹è±¡</param>
+    /// <param name="menuItem">ä¼ å…¥çš„ä¸Šä¸‹æ–‡èœå•é¡¹</param>
     private void SetCommonUIProperties(MenuFlyoutItem uiObject, IContextMenuItem menuItem)
     {
         var icon = menuItem.Icon;
@@ -138,10 +138,10 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ı´«ÈëµÄ <see cref="IContextMenuItem"/> ¶ÔÏó´´½¨Ò»¸öĞÂµÄ <see cref="MenuFlyoutItem"/> ÊµÀı
+    /// é€šè¿‡ä¼ å…¥çš„ <see cref="IContextMenuItem"/> å¯¹è±¡åˆ›å»ºä¸€ä¸ªæ–°çš„ <see cref="MenuFlyoutItem"/> å®ä¾‹
     /// </summary>
-    /// <param name="menuItem">´«ÈëµÄÉÏÏÂÎÄ²Ëµ¥Ïî</param>
-    /// <returns>·µ»ØÒÑ´´½¨µÄ <see cref="MenuFlyoutItem"/> ÊµÀı</returns>
+    /// <param name="menuItem">ä¼ å…¥çš„ä¸Šä¸‹æ–‡èœå•é¡¹</param>
+    /// <returns>è¿”å›å·²åˆ›å»ºçš„ <see cref="MenuFlyoutItem"/> å®ä¾‹</returns>
     private MenuFlyoutItem CreateMenuItem(IContextMenuItem menuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -159,10 +159,10 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ı´«ÈëµÄ <see cref="IContextMenuItem"/> ¶ÔÏó´´½¨Ò»¸öĞÂµÄ <see cref="MenuFlyoutSubItem"/> ÊµÀı
+    /// é€šè¿‡ä¼ å…¥çš„ <see cref="IContextMenuItem"/> å¯¹è±¡åˆ›å»ºä¸€ä¸ªæ–°çš„ <see cref="MenuFlyoutSubItem"/> å®ä¾‹
     /// </summary>
-    /// <param name="menuItem">´«ÈëµÄÉÏÏÂÎÄ²Ëµ¥Ïî</param>
-    /// <returns>ÒÑ´´½¨µÄ <see cref="MenuFlyoutSubItem"/> ÊµÀı</returns>
+    /// <param name="menuItem">ä¼ å…¥çš„ä¸Šä¸‹æ–‡èœå•é¡¹</param>
+    /// <returns>å·²åˆ›å»ºçš„ <see cref="MenuFlyoutSubItem"/> å®ä¾‹</returns>
     private MenuFlyoutSubItem CreateMenuSubItem(IContextMenuItem menuItem)
     {
         var menuFlyoutSubItem = new MenuFlyoutSubItem { DataContext = menuItem };
@@ -187,10 +187,10 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ı´«ÈëµÄ <see cref="IContextToggleMenuItem"/> ¶ÔÏó´´½¨Ò»¸öĞÂµÄ <see cref="ToggleMenuFlyoutItem"/> ÊµÀı
+    /// é€šè¿‡ä¼ å…¥çš„ <see cref="IContextToggleMenuItem"/> å¯¹è±¡åˆ›å»ºä¸€ä¸ªæ–°çš„ <see cref="ToggleMenuFlyoutItem"/> å®ä¾‹
     /// </summary>
-    /// <param name="toggleMenuItem">´«ÈëµÄÉÏÏÂÎÄ²Ëµ¥Ïî</param>
-    /// <returns>ÒÑ´´½¨µÄ <see cref="ToggleMenuFlyoutItem"/> ÊµÀı</returns>
+    /// <param name="toggleMenuItem">ä¼ å…¥çš„ä¸Šä¸‹æ–‡èœå•é¡¹</param>
+    /// <returns>å·²åˆ›å»ºçš„ <see cref="ToggleMenuFlyoutItem"/> å®ä¾‹</returns>
     private ToggleMenuFlyoutItem CreateToggleMenuItem(IContextToggleMenuItem toggleMenuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -211,10 +211,10 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ı´«ÈëµÄ <see cref="IContextRadioMenuItem"/> ¶ÔÏó´´½¨Ò»¸öĞÂµÄ <see cref="MUXC.RadioMenuFlyoutItem"/> ÊµÀı
+    /// é€šè¿‡ä¼ å…¥çš„ <see cref="IContextRadioMenuItem"/> å¯¹è±¡åˆ›å»ºä¸€ä¸ªæ–°çš„ <see cref="MUXC.RadioMenuFlyoutItem"/> å®ä¾‹
     /// </summary>
-    /// <param name="radioMenuItem">´«ÈëµÄÉÏÏÂÎÄ²Ëµ¥Ïî</param>
-    /// <returns>ÒÑ´´½¨µÄ <see cref="MUXC.RadioMenuFlyoutItem"/> ÊµÀı</returns>
+    /// <param name="radioMenuItem">ä¼ å…¥çš„ä¸Šä¸‹æ–‡èœå•é¡¹</param>
+    /// <returns>å·²åˆ›å»ºçš„ <see cref="MUXC.RadioMenuFlyoutItem"/> å®ä¾‹</returns>
     private MUXC.RadioMenuFlyoutItem CreateRadioMenuItem(IContextRadioMenuItem radioMenuItem)
     {
         static void OnClick(object sender, RoutedEventArgs e)
@@ -239,11 +239,11 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ı´«ÈëµÄ <see cref="IContextMenuItem"/> ¶ÔÏóºÍ <see cref="ContextMenuItemMetadataAttribute"/> ÔªÊı¾İ´´½¨Ò»¸öĞÂµÄ <see cref="MenuFlyoutItemBase"/> ÀàĞÍÊµÀı
+    /// é€šè¿‡ä¼ å…¥çš„ <see cref="IContextMenuItem"/> å¯¹è±¡å’Œ <see cref="ContextMenuItemMetadataAttribute"/> å…ƒæ•°æ®åˆ›å»ºä¸€ä¸ªæ–°çš„ <see cref="MenuFlyoutItemBase"/> ç±»å‹å®ä¾‹
     /// </summary>
-    /// <param name="item">´«ÈëµÄÉÏÏÂÎÄ²Ëµ¥Ïî</param>
-    /// <param name="metadata">ÓëÉÏÏÂÎÄ²Ëµ¥ÏîÏà¹ØÁªµÄÔªÊı¾İ</param>
-    /// <returns>ÒÑ´´½¨µÄ <see cref="MenuFlyoutItemBase"/> ÀàĞÍÊµÀı</returns>
+    /// <param name="item">ä¼ å…¥çš„ä¸Šä¸‹æ–‡èœå•é¡¹</param>
+    /// <param name="metadata">ä¸ä¸Šä¸‹æ–‡èœå•é¡¹ç›¸å…³è”çš„å…ƒæ•°æ®</param>
+    /// <returns>å·²åˆ›å»ºçš„ <see cref="MenuFlyoutItemBase"/> ç±»å‹å®ä¾‹</returns>
     private MenuFlyoutItemBase CreateContextMenuItem(IContextMenuItem item, ContextMenuItemMetadataAttribute metadata)
     {
         if (Guid.TryParse(metadata.Guid, out var guid) &&
@@ -281,10 +281,10 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// Í¨¹ıÃ¶¾ÙµÄ <see cref="ContextItemGroupContext"/> ×éµÄ¼¯ºÏÖĞµÄ×ÓÏî£¬ÒÔ¶ÔÄ¿±êÁĞ±í <paramref name="collection"/> ´´½¨ºÍÌí¼Ó UI ×ÓÔªËØ
+    /// é€šè¿‡æšä¸¾çš„ <see cref="ContextItemGroupContext"/> ç»„çš„é›†åˆä¸­çš„å­é¡¹ï¼Œä»¥å¯¹ç›®æ ‡åˆ—è¡¨ <paramref name="collection"/> åˆ›å»ºå’Œæ·»åŠ  UI å­å…ƒç´ 
     /// </summary>
-    /// <param name="groups">ÓÃÓÚ´´½¨ UI ×ÓÔªËØµÄ×éµÄ¼¯ºÏ</param>
-    /// <param name="collection">ÓÃÓÚ½«ÒÑ´´½¨µÄ UI ×ÓÔªËØµÄÌí¼ÓÖÁÄ¿±ê¼¯ºÏµÄÁĞ±í</param>
+    /// <param name="groups">ç”¨äºåˆ›å»º UI å­å…ƒç´ çš„ç»„çš„é›†åˆ</param>
+    /// <param name="collection">ç”¨äºå°†å·²åˆ›å»ºçš„ UI å­å…ƒç´ çš„æ·»åŠ è‡³ç›®æ ‡é›†åˆçš„åˆ—è¡¨</param>
     private void CreateMenuSubItems(Dictionary<string, ContextItemGroupContext> groups, IList<MenuFlyoutItemBase> collection)
     {
         var needSeparator = false;
@@ -301,7 +301,7 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// ¸ù¾İ´«ÈëµÄ <see cref="ContextMenuOptions"/> ÅäÖÃÑ¡ÏîÓ¦ÓÃÖÁÄ¿±ê <see cref="MenuFlyout"/> UI ¶ÔÏó
+    /// æ ¹æ®ä¼ å…¥çš„ <see cref="ContextMenuOptions"/> é…ç½®é€‰é¡¹åº”ç”¨è‡³ç›®æ ‡ <see cref="MenuFlyout"/> UI å¯¹è±¡
     /// </summary>
     private void ApplyOptionsForMenuFlyout(MenuFlyout menuFlyout, ContextMenuOptions options)
     {
@@ -336,12 +336,12 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// ÄÚ²¿µÄ´´½¨ÉÏÏÂÎÄ²Ëµ¥·½·¨µÄÍ¨ÓÃÊµÏÖ
+    /// å†…éƒ¨çš„åˆ›å»ºä¸Šä¸‹æ–‡èœå•æ–¹æ³•çš„é€šç”¨å®ç°
     /// </summary>
-    /// <param name="ownerGuidString">×Ó²Ëµ¥ÏîËù¹éÊôµÄ <see cref="System.Guid"/> ×Ö·û´®Öµ</param>
-    /// <param name="options">ĞèÒªÓ¦ÓÃµ½ UI ÉÏÏÂÎÄ²Ëµ¥ÉÏµÄÊôĞÔÅäÖÃÑ¡Ïî</param>
-    /// <param name="coerceValueCallback">Ä¿±ê UI ÉÏÏÂÎÄµÄ»Øµ÷Î¯ÍĞ</param>
-    /// <returns>ÒÑ´´½¨µÄ <see cref="MenuFlyout"/> ÀàĞÍÊµÀı</returns>
+    /// <param name="ownerGuidString">å­èœå•é¡¹æ‰€å½’å±çš„ <see cref="System.Guid"/> å­—ç¬¦ä¸²å€¼</param>
+    /// <param name="options">éœ€è¦åº”ç”¨åˆ° UI ä¸Šä¸‹æ–‡èœå•ä¸Šçš„å±æ€§é…ç½®é€‰é¡¹</param>
+    /// <param name="coerceValueCallback">ç›®æ ‡ UI ä¸Šä¸‹æ–‡çš„å›è°ƒå§”æ‰˜</param>
+    /// <returns>å·²åˆ›å»ºçš„ <see cref="MenuFlyout"/> ç±»å‹å®ä¾‹</returns>
     private MenuFlyout CoreceContextMenu(string ownerGuidString, ContextMenuOptions? options = null, CoerceContextMenuUIContextCallback? coerceValueCallback = null)
     {
         static void OnOpening(object sender, object e)

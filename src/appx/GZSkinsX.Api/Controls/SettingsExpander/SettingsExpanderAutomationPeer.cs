@@ -8,7 +8,7 @@
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 /// <summary>
 /// AutomationPeer for SettingsExpander

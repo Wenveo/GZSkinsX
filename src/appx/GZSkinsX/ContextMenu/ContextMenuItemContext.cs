@@ -7,32 +7,32 @@
 
 using System;
 
-using GZSkinsX.SDK.ContextMenu;
+using GZSkinsX.Api.ContextMenu;
 
 namespace GZSkinsX.ContextMenu;
 
 /// <summary>
-/// сцсз╢Ф╢╒╣╪ЁЖ╣д <see cref="IContextMenuItem"/> ╤тоСрт╪╟ <see cref="ContextMenuItemMetadataAttribute"/> т╙йЩ╬щ
+/// Г■╗Д╨▌Е╜≤Е┌╗Е╞╪Е┤╨Г └ <see cref="IContextMenuItem"/> Е╞╧Х╠║Д╩╔Е▐┼ <see cref="ContextMenuItemMetadataAttribute"/> Е┘┐Ф∙╟Ф█╝
 /// </summary>
 internal sealed class ContextMenuItemContext
 {
     /// <summary>
-    /// ╣╠г╟иообнджп╣дюа╪сть╤тоС
+    /// Е╫⌠Е┴█Д╦┼Д╦▀Ф√┤Д╦╜Г └Ф┤▓Е┼═Х╫╫Е╞╧Х╠║
     /// </summary>
     private readonly Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> _lazy;
 
     /// <summary>
-    /// ╩Ях║╣╠г╟иообнд╣д <see cref="IContextMenuItem"/> ╤тоС
+    /// Х▌╥Е▐√Е╫⌠Е┴█Д╦┼Д╦▀Ф√┤Г └ <see cref="IContextMenuItem"/> Е╞╧Х╠║
     /// </summary>
     public IContextMenuItem Value => _lazy.Value;
 
     /// <summary>
-    /// ╩Ях║╣╠г╟иообнд╣д <see cref="ContextMenuItemMetadataAttribute"/> т╙йЩ╬щ
+    /// Х▌╥Е▐√Е╫⌠Е┴█Д╦┼Д╦▀Ф√┤Г └ <see cref="ContextMenuItemMetadataAttribute"/> Е┘┐Ф∙╟Ф█╝
     /// </summary>
     public ContextMenuItemMetadataAttribute Metadata => _lazy.Metadata;
 
     /// <summary>
-    /// ЁУй╪╩╞ <see cref="ContextMenuItemContext"/> ╣дпбй╣юЩ
+    /// Е┬²Е╖▀Е▄√ <see cref="ContextMenuItemContext"/> Г └Ф√╟Е╝·Д╬▀
     /// </summary>
     public ContextMenuItemContext(Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> lazy)
     {

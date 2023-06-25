@@ -7,82 +7,82 @@
 
 using Windows.UI;
 
-namespace GZSkinsX.SDK.Appx;
+namespace GZSkinsX.Api.Appx;
 
 /// <summary>
-/// ��ʾӦ�ó����еı�������ť
+/// 表示应用程序中的标题栏按钮
 /// </summary>
 public interface IAppxTitleBarButton
 {
     /// <summary>
-    /// ��ȡ�����ñ�����ǰ��ɫ���ڷǻ״̬ʱ����ɫ��
+    /// 获取或设置标题栏前景色处于非活动状态时的颜色。
     /// </summary>
-    /// <returns>�ǻʱ������ǰ������ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>非活动时标题栏前景的颜色。(See <see cref="Color"/>)</returns>
     Color? InactiveForegroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ñ������ǻʱ�ı�����ɫ��
+    /// 获取或设置标题栏非活动时的背景颜色。
     /// </summary>
-    /// <returns>�ǻʱ��������������ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>非活动时标题栏背景的颜色。(See <see cref="Color"/>)</returns>
     Color? InactiveBackgroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ñ�����ǰ������ɫ��
+    /// 获取或设置标题栏前景的颜色。
     /// </summary>
-    /// <returns>������ǰ������ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>标题栏前景的颜色。(See <see cref="Color"/>)</returns>
     Color? ForegroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ð��±�������ťʱ��ǰ��ɫ��
+    /// 获取或设置按下标题栏按钮时的前景色。
     /// </summary>
-    /// <returns>���±�������ťʱ��ǰ��ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>按下标题栏按钮时的前景色。(See <see cref="Color"/>)</returns>
     Color? ButtonPressedForegroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ð��±�������ťʱ�ı�����ɫ��
+    /// 获取或设置按下标题栏按钮时的背景颜色。
     /// </summary>
-    /// <returns>���±�������ťʱ�ı�����ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>按下标题栏按钮时的背景颜色。(See <see cref="Color"/>)</returns>
     Color? ButtonPressedBackgroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ô��ڷǻ״̬ʱ��������ť��ǰ��ɫ��
+    /// 获取或设置处于非活动状态时标题栏按钮的前景色。
     /// </summary>
-    /// <returns>��������ť���ڷǻ״̬ʱ��ǰ��ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>标题栏按钮处于非活动状态时的前景色。(See <see cref="Color"/>)</returns>
     Color? ButtonInactiveForegroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ô��ڷǻ״̬ʱ��������ť�ı�����ɫ��
+    /// 获取或设置处于非活动状态时标题栏按钮的背景颜色。
     /// </summary>
-    /// <returns>��������ť���ڷǻ״̬ʱ�ı�����ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>标题栏按钮处于非活动状态时的背景颜色。(See <see cref="Color"/>)</returns>
     Color? ButtonInactiveBackgroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ������ָ��λ�ڱ�������ť�Ϸ�ʱ��ǰ��ɫ��
+    /// 获取或设置指针位于标题栏按钮上方时的前景色。
     /// </summary>
-    /// <returns>��ָ��λ�ڱ�������ť�Ϸ�ʱ���ð�ť��ǰ��ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>当指针位于标题栏按钮上方时，该按钮的前景色。(See <see cref="Color"/>)</returns>
     Color? ButtonHoverForegroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ������ָ��λ�ڱ�������ť�Ϸ�ʱ�ı�����ɫ��
+    /// 获取或设置指针位于标题栏按钮上方时的背景颜色。
     /// </summary>
-    /// <returns>��ָ���ڱ�������ť��ʱ�����ı�����ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>当指针在标题栏按钮上时，它的背景颜色。(See <see cref="Color"/>)</returns>
     Color? ButtonHoverBackgroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ñ�������ť��ǰ��ɫ��
+    /// 获取或设置标题栏按钮的前景色。
     /// </summary>
-    /// <returns>��������ť��ǰ��ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>标题栏按钮的前景色。(See <see cref="Color"/>)</returns>
     Color? ButtonForegroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ñ�������ť�ı�����ɫ��
+    /// 获取或设置标题栏按钮的背景颜色。
     /// </summary>
-    /// <returns>��������ť�ı�����ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>标题栏按钮的背景颜色。(See <see cref="Color"/>)</returns>
     Color? ButtonBackgroundColor { get; set; }
 
     /// <summary>
-    /// ��ȡ�����ñ�������������ɫ��
+    /// 获取或设置标题栏背景的颜色。
     /// </summary>
-    /// <returns>��������������ɫ��(See <see cref="Color"/>)</returns>
+    /// <returns>标题栏背景的颜色。(See <see cref="Color"/>)</returns>
     Color? BackgroundColor { get; set; }
 }

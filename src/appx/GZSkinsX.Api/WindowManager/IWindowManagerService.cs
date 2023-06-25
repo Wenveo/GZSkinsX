@@ -9,52 +9,52 @@ using System;
 
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// �ṩ�Ե�ǰӦ�ó����������е�ҳ����л�/����������
+/// 提供对当前应用程序主窗口中的页面的切换/导航的能力
 /// </summary>
 public interface IWindowManagerService
 {
     /// <summary>
-    /// ���������ʶ��ƥ���ָ��ҳ��
+    /// 导航到与标识符匹配的指定页面
     /// </summary>
-    /// <param name="guidString">��ͼ����� <see cref="Guid"/> ���ַ���ֵ</param>
+    /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值</param>
     void NavigateTo(string guidString);
 
     /// <summary>
-    /// ���������ʶ��ƥ���ָ��ҳ�棬�����ݵ�������
+    /// 导航到与标识符匹配的指定页面，并传递导航参数
     /// </summary>
-    /// <param name="guidString">��ͼ����� <see cref="Guid"/> ���ַ���ֵ</param>
-    /// <param name="parameter">���ݸ�Ŀ��ҳ��Ĳ���</param>
+    /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值</param>
+    /// <param name="parameter">传递给目标页面的参数</param>
     void NavigateTo(string guidString, object parameter);
 
     /// <summary>
-    /// ���������ʶ��ƥ���ָ��ҳ�棬�����ݵ���������ָ������ҳ���л�Ч��
+    /// 导航到与标识符匹配的指定页面，并传递导航参数和指定导航页面切换效果
     /// </summary>
-    /// <param name="guidString">��ͼ����� <see cref="Guid"/> ���ַ���ֵ</param>
-    /// <param name="parameter">���ݸ�Ŀ��ҳ��Ĳ���</param>
+    /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值</param>
+    /// <param name="parameter">传递给目标页面的参数</param>
     /// <param name="infoOverride"></param>
     void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride);
 
     /// <summary>
-    /// ���������ʶ��ƥ���ָ��ҳ��
+    /// 导航到与标识符匹配的指定页面
     /// </summary>
-    /// <param name="frameGuid">��ͼ����� <see cref="Guid"/> ֵ</param>
+    /// <param name="frameGuid">视图对象的 <see cref="Guid"/> 值</param>
     void NavigateTo(Guid frameGuid);
 
     /// <summary>
-    /// ���������ʶ��ƥ���ָ��ҳ�棬�����ݵ�������
+    /// 导航到与标识符匹配的指定页面，并传递导航参数
     /// </summary>
-    /// <param name="frameGuid">��ͼ����� <see cref="Guid"/> ֵ</param>
-    /// <param name="parameter">���ݸ�Ŀ��ҳ��Ĳ���</param>
+    /// <param name="frameGuid">视图对象的 <see cref="Guid"/> 值</param>
+    /// <param name="parameter">传递给目标页面的参数</param>
     void NavigateTo(Guid frameGuid, object parameter);
 
     /// <summary>
-    /// ���������ʶ��ƥ���ָ��ҳ�棬�����ݵ���������ָ������ҳ���л�Ч��
+    /// 导航到与标识符匹配的指定页面，并传递导航参数和指定导航页面切换效果
     /// </summary>
-    /// <param name="frameGuid">��ͼ����� <see cref="Guid"/> ֵ</param>
-    /// <param name="parameter">���ݸ�Ŀ��ҳ��Ĳ���</param>
+    /// <param name="frameGuid">视图对象的 <see cref="Guid"/> 值</param>
+    /// <param name="parameter">传递给目标页面的参数</param>
     /// <param name="infoOverride"></param>
     void NavigateTo(Guid frameGuid, object parameter, NavigationTransitionInfo infoOverride);
 }

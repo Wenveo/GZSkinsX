@@ -9,30 +9,30 @@
 
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// ±íÊ¾ÔÚ <see cref="IWindowManagerService"/> ÖĞ½øĞĞµ¼º½Ê±ËùÓÃµ½µÄÊÂ¼ş²ÎÊı
+/// è¡¨ç¤ºåœ¨ <see cref="IWindowManagerService"/> ä¸­è¿›è¡Œå¯¼èˆªæ—¶æ‰€ç”¨åˆ°çš„äº‹ä»¶å‚æ•°
 /// </summary>
 public sealed class WindowFrameNavigatingEvnetArgs
 {
     /// <summary>
-    /// »ñÈ¡µ±Ç°µ¼º½¶ÔÏóµÄÉÏÏÂÎÄĞÅÏ¢
+    /// è·å–å½“å‰å¯¼èˆªå¯¹è±¡çš„ä¸Šä¸‹æ–‡ä¿¡æ¯
     /// </summary>
     public IWindowFrameContext Context { get; }
 
     /// <summary>
-    /// »ñÈ¡ºÍÉèÖÃµ¼º½ÖÁÄ¿±êÒ³ÃæËù´«µİµÄ²ÎÊı
+    /// è·å–å’Œè®¾ç½®å¯¼èˆªè‡³ç›®æ ‡é¡µé¢æ‰€ä¼ é€’çš„å‚æ•°
     /// </summary>
     public object? Parameter { get; set; }
 
     /// <summary>
-    /// »ñÈ¡ºÍÉèÖÃÔÚµ¼º½Ê±ÓÃÓÚÒ³Ãæ¹ı¶ÉµÄÇĞ»»¶¯»­²ÎÊı
+    /// è·å–å’Œè®¾ç½®åœ¨å¯¼èˆªæ—¶ç”¨äºé¡µé¢è¿‡æ¸¡çš„åˆ‡æ¢åŠ¨ç”»å‚æ•°
     /// </summary>
     public NavigationTransitionInfo? NavigationTransitionInfo { get; set; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="WindowFrameNavigatingEvnetArgs"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="WindowFrameNavigatingEvnetArgs"/> çš„æ–°å®ä¾‹
     /// </summary>
     public WindowFrameNavigatingEvnetArgs(
         IWindowFrameContext context, object? parameter,

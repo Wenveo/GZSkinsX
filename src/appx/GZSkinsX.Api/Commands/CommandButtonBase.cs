@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,12 +7,12 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.Controls;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.Commands;
+namespace GZSkinsX.Api.Commands;
 
 /// <summary>
 /// 表示派生自 <see cref="ICommandButton"/> 的抽象基类，并提供基本的接口成员实现

@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
 using Windows.System;
 
-namespace GZSkinsX.SDK.Toolkit;
+namespace GZSkinsX.Api.Toolkit;
 
 /// <summary>
 /// Helpers for executing code in a <see cref="DispatcherQueue"/>.

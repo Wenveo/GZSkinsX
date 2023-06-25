@@ -7,14 +7,14 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.Controls;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÅÉÉú×Ô <see cref="IContextRadioMenuItem"/> µÄ³éÏó»ùÀà£¬²¢Ìá¹©»ù±¾µÄ½Ó¿Ú³ÉÔ±ÊµÏÖ
+/// è¡¨ç¤ºæ´¾ç”Ÿè‡ª <see cref="IContextRadioMenuItem"/> çš„æŠ½è±¡åŸºç±»ï¼Œå¹¶æä¾›åŸºæœ¬çš„æ¥å£æˆå‘˜å®ç°
 /// </summary>
 public abstract class ContextRadioMenuItemBase : IContextRadioMenuItem
 {

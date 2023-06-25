@@ -9,7 +9,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 /// <summary>
 /// Represents the control that redistributes space between columns or rows of a Grid control.

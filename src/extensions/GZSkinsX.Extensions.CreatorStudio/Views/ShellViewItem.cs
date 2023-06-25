@@ -8,8 +8,8 @@
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.Controls;
-using GZSkinsX.SDK.Navigation;
+using GZSkinsX.Api.Controls;
+using GZSkinsX.Api.Navigation;
 
 using Windows.UI.Xaml.Controls;
 

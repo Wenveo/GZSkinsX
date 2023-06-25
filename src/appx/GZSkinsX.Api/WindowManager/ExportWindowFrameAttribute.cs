@@ -8,16 +8,16 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// ÉùÃ÷²¢½«Ä¿±êÀàÒÔ <see cref="IWindowFrame"/> ÀàĞÍµ¼³ö
+/// å£°æ˜å¹¶å°†ç›®æ ‡ç±»ä»¥ <see cref="IWindowFrame"/> ç±»å‹å¯¼å‡º
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ExportWindowFrameAttribute : ExportAttribute
 {
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="ExportWindowFrameAttribute"/> µÄĞÂÊµÀı£¬²¢ÒÔ <see cref="IWindowFrame"/> ÀàĞÍµ¼³ö
+    /// åˆå§‹åŒ– <see cref="ExportWindowFrameAttribute"/> çš„æ–°å®ä¾‹ï¼Œå¹¶ä»¥ <see cref="IWindowFrame"/> ç±»å‹å¯¼å‡º
     /// </summary>
     public ExportWindowFrameAttribute()
         : base(typeof(IWindowFrame)) { }

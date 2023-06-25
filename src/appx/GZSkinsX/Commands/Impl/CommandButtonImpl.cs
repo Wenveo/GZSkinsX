@@ -10,9 +10,9 @@
 using System;
 using System.ComponentModel;
 
-using GZSkinsX.SDK.Commands;
-using GZSkinsX.SDK.Helpers;
-using GZSkinsX.SDK.Utilities;
+using GZSkinsX.Api.Commands;
+using GZSkinsX.Api.Helpers;
+using GZSkinsX.Api.Utilities;
 
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;

@@ -10,8 +10,8 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.SDK.Commands;
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.Commands;
+using GZSkinsX.Api.Controls;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

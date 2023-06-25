@@ -7,21 +7,23 @@
 
 #nullable enable
 
-namespace GZSkinsX.SDK.Appx;
+using GZSkinsX;
+
+namespace GZSkinsX.Api.Appx;
 
 /// <summary>
-/// Ìá¹©¶Ôµ±Ç°´°¿Ú±êÌâÀ¸¹ÜÀíµÄÄÜÁ¦
+/// æä¾›å¯¹å½“å‰çª—å£æ ‡é¢˜æ ç®¡ç†çš„èƒ½åŠ›
 /// </summary>
 public interface IAppxTitleBar
 {
     /// <summary>
-    /// »ñÈ¡ºÍÉèÖÃÊÇ·ñ½«µ±Ç°´°¿ÚÖÐµÄÄÚÈÝÊÓÍ¼À©Õ¹ÖÁ±êÌâÀ¸
+    /// èŽ·å–å’Œè®¾ç½®æ˜¯å¦å°†å½“å‰çª—å£ä¸­çš„å†…å®¹è§†å›¾æ‰©å±•è‡³æ ‡é¢˜æ 
     /// </summary>
     bool ExtendViewIntoTitleBar { get; set; }
 
     /// <summary>
-    /// ÉèÖÃµ±Ç°´°¿Ú±êÌâÀ¸µÄ½çÃæÔªËØ
+    /// è®¾ç½®å½“å‰çª—å£æ ‡é¢˜æ çš„ç•Œé¢å…ƒç´ 
     /// </summary>
-    /// <param name="value">ÐèÒªÉèÎª±êÌâÀ¸µÄ UI ÔªËØ</param>
+    /// <param name="value">éœ€è¦è®¾ä¸ºæ ‡é¢˜æ çš„ UI å…ƒç´ </param>
     void SetTitleBar(Windows.UI.Xaml.UIElement? value);
 }

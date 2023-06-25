@@ -15,9 +15,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using GZSkinsX.Extensions.CreatorStudio.Models.AssetsExplorer;
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.ContextMenu;
-using GZSkinsX.SDK.Game;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.ContextMenu;
+using GZSkinsX.Api.Game;
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;

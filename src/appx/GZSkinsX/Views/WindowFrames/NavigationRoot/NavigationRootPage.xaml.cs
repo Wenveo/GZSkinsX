@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,8 +7,8 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Navigation;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Navigation;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -27,7 +27,7 @@ public sealed partial class NavigationRootPage : Page
     static NavigationRootPage()
     {
         var customNavigationView = new CustomNavigationView();
-        s_navigationViewManager = AppxContext.NavigationViewFactory.CreateNavigationViewManager(
+        s_navigationViewManager = AppxContext.NavigationViewManagerFactory.CreateNavigationViewManager(
             NavigationConstants.NAVIGATIONROOT_NV_GUID, customNavigationView);
 
         customNavigationView.Setup(s_navigationViewManager);

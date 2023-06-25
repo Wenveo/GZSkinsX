@@ -13,8 +13,8 @@ using System.Linq;
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 using GZSkinsX.Extensions.CreatorStudio.Services.Documents.Tabs;
 
-using GZSkinsX.SDK.Appx;
-using GZSkinsX.SDK.Commands;
+using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Commands;
 
 using Windows.UI;
 using Windows.UI.Xaml;

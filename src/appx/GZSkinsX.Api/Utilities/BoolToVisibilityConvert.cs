@@ -7,48 +7,48 @@
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Utilities;
+namespace GZSkinsX.Api.Utilities;
 
 /// <summary>
-/// Ìá¹©¶Ô <see cref="bool"/> ºÍ <see cref="Visibility"/> ÀàĞÍÏà»¥×ª»»µÄÄÜÁ¦
+/// æä¾›å¯¹ <see cref="bool"/> å’Œ <see cref="Visibility"/> ç±»å‹ç›¸äº’è½¬æ¢çš„èƒ½åŠ›
 /// </summary>
 public static class BoolToVisibilityConvert
 {
     /// <summary>
-    /// ½« <see cref="Visibility"/> ÀàĞÍµÄÖµ×ª»»Îª <see cref="bool"/> ÀàĞÍ
+    /// å°† <see cref="Visibility"/> ç±»å‹çš„å€¼è½¬æ¢ä¸º <see cref="bool"/> ç±»å‹
     /// </summary>
-    /// <param name="value">ĞèÒª×ª»»µÄÖµ</param>
-    /// <returns>Èç¹û´«ÈëµÄÖµÎª <see cref="Visibility.Visible"/> Ôò·µ»Ø true£¬·ñÔò·µ»Ø false </returns>
+    /// <param name="value">éœ€è¦è½¬æ¢çš„å€¼</param>
+    /// <returns>å¦‚æœä¼ å…¥çš„å€¼ä¸º <see cref="Visibility.Visible"/> åˆ™è¿”å› trueï¼Œå¦åˆ™è¿”å› false </returns>
     public static bool ToBoolean(Visibility value)
     {
         return value == Visibility.Visible;
     }
 
     /// <summary>
-    /// ½« <see cref="Visibility"/> ÀàĞÍµÄÖµ×ª»»Îª <see cref="bool"/> ÀàĞÍ
+    /// å°† <see cref="Visibility"/> ç±»å‹çš„å€¼è½¬æ¢ä¸º <see cref="bool"/> ç±»å‹
     /// </summary>
-    /// <param name="value">ĞèÒª×ª»»µÄÖµ</param>
-    /// <returns>Èç¹û´«ÈëµÄÖµÎª <see cref="Visibility.Collapsed"/> Ôò·µ»Ø true£¬·ñÔò·µ»Ø false </returns>
+    /// <param name="value">éœ€è¦è½¬æ¢çš„å€¼</param>
+    /// <returns>å¦‚æœä¼ å…¥çš„å€¼ä¸º <see cref="Visibility.Collapsed"/> åˆ™è¿”å› trueï¼Œå¦åˆ™è¿”å› false </returns>
     public static bool ToBoolean2(Visibility value)
     {
         return value == Visibility.Collapsed;
     }
 
     /// <summary>
-    /// ½« <see cref="bool"/> ÀàĞÍµÄÖµ×ª»»Îª <see cref="Visibility"/> ÀàĞÍ
+    /// å°† <see cref="bool"/> ç±»å‹çš„å€¼è½¬æ¢ä¸º <see cref="Visibility"/> ç±»å‹
     /// </summary>
-    /// <param name="value">ĞèÒª×ª»»µÄÖµ</param>
-    /// <returns>Èç¹û´«ÈëµÄÖµÎª true Ôò·µ»Ø <see cref="Visibility.Visible"/>£¬·ñÔò·µ»Ø <see cref="Visibility.Collapsed"/> </returns>
+    /// <param name="value">éœ€è¦è½¬æ¢çš„å€¼</param>
+    /// <returns>å¦‚æœä¼ å…¥çš„å€¼ä¸º true åˆ™è¿”å› <see cref="Visibility.Visible"/>ï¼Œå¦åˆ™è¿”å› <see cref="Visibility.Collapsed"/> </returns>
     public static Visibility ToVisibility(bool value)
     {
         return value ? Visibility.Visible : Visibility.Collapsed;
     }
 
     /// <summary>
-    /// ½« <see cref="bool"/> ÀàĞÍµÄÖµ×ª»»Îª <see cref="Visibility"/> ÀàĞÍ
+    /// å°† <see cref="bool"/> ç±»å‹çš„å€¼è½¬æ¢ä¸º <see cref="Visibility"/> ç±»å‹
     /// </summary>
-    /// <param name="value">ĞèÒª×ª»»µÄÖµ</param>
-    /// <returns>Èç¹û´«ÈëµÄÖµÎª true Ôò·µ»Ø <see cref="Visibility.Collapsed"/>£¬·ñÔò·µ»Ø <see cref="Visibility.Visible"/> </returns>
+    /// <param name="value">éœ€è¦è½¬æ¢çš„å€¼</param>
+    /// <returns>å¦‚æœä¼ å…¥çš„å€¼ä¸º true åˆ™è¿”å› <see cref="Visibility.Collapsed"/>ï¼Œå¦åˆ™è¿”å› <see cref="Visibility.Visible"/> </returns>
     public static Visibility ToVisibility2(bool value)
     {
         return value ? Visibility.Collapsed : Visibility.Visible;

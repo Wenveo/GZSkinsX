@@ -5,12 +5,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ╠Мй╬сцвВ╩ь╣В╣д╥╫╥╗ё╛сцсзжьпб╪фкЦиообнд╡к╣╔жп╣д UI иообнддзхщ
+/// Х║╗Г╓╨Г■╗Д╫°Е⌡·Х╟┐Г └Ф√╧ФЁ∙О╪▄Г■╗Д╨▌И┤█Ф√╟Х╝║Г╝≈Д╦┼Д╦▀Ф√┤Х▐°Е█∙Д╦╜Г └ UI Д╦┼Д╦▀Ф√┤Е├┘Е╝╧
 /// </summary>
-/// <param name="sender">╦циообнд╡к╣╔╣д UI ╤тоС</param>
-/// <param name="e">╦циообнд╡к╣╔╢Р©╙й╠кЫ╢╚хК╣д╡нйЩ</param>
-/// <returns>╥╣╩ьжьпб╪фкЦ╧Щ╣диообнддзхщ</returns>
+/// <param name="sender">Х╞╔Д╦┼Д╦▀Ф√┤Х▐°Е█∙Г └ UI Е╞╧Х╠║</param>
+/// <param name="e">Х╞╔Д╦┼Д╦▀Ф√┤Х▐°Е█∙Ф┴⌠Е╪─Ф≈╤Ф┴─Д╪═Е┘╔Г └Е▐┌Ф∙╟</param>
+/// <returns>Х©■Е⌡·И┤█Ф√╟Х╝║Г╝≈Х©┤Г └Д╦┼Д╦▀Ф√┤Е├┘Е╝╧</returns>
 public delegate IContextMenuUIContext CoerceContextMenuUIContextCallback(object sender, object e);

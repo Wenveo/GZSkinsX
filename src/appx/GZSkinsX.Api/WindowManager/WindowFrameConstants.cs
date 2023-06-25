@@ -7,25 +7,25 @@
 
 using System;
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// ±íÊ¾´æ·ÅÒ³ÃæÔªËØÏà¹ØµÄÔªÊı¾İµÄ¾²Ì¬Àà
+/// è¡¨ç¤ºå­˜æ”¾é¡µé¢å…ƒç´ ç›¸å…³çš„å…ƒæ•°æ®çš„é™æ€ç±»
 /// </summary>
 public static class WindowFrameConstants
 {
     /// <summary>
-    /// ±íÊ¾Ô¤¼ÓÔØÒ³µÄ <seealso cref="Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºé¢„åŠ è½½é¡µçš„ <seealso cref="Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     public const string Preload_Guid = "1D72AF65-7BDD-44AC-9EFC-D6454F95A4B9";
 
     /// <summary>
-    /// ±íÊ¾Æô¶¯Ò³µÄ <seealso cref="Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºå¯åŠ¨é¡µçš„ <seealso cref="Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     public const string StartUp_Guid = "1C3A5F43-5383-4B87-A365-1D1610B92060";
 
     /// <summary>
-    /// ±íÊ¾µ¼º½Ò³µÄ <seealso cref="Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºå¯¼èˆªé¡µçš„ <seealso cref="Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     public const string NavigationRoot_Guid = "95FF48E7-E179-4DA5-8F41-1923B7F22963";
 }

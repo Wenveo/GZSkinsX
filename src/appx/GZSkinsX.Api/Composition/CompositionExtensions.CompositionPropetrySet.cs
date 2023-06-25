@@ -10,12 +10,12 @@ using System.Numerics;
 using Windows.UI;
 using Windows.UI.Composition;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -28,7 +28,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -41,7 +41,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -54,7 +54,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -67,7 +67,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -80,7 +80,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -93,7 +93,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -106,7 +106,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>
@@ -119,7 +119,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="set"></param>
     /// <param name="name"></param>

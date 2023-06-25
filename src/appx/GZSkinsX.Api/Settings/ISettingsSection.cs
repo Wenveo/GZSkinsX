@@ -9,73 +9,73 @@
 
 using System;
 
-namespace GZSkinsX.SDK.Settings;
+namespace GZSkinsX.Api.Settings;
 
 /// <summary>
-/// ��ʾλ�ڳ��������е��ӽڵ�����
+/// 表示位于程序设置中的子节点配置
 /// </summary>
 public interface ISettingsSection
 {
     /// <summary>
-    /// ��ǰ���ýڵ������
+    /// 当前配置节点的名称
     /// </summary>
     string Name { get; }
 
     /// <summary>
-    /// ��ǰ���ýڵ������
+    /// 当前配置节点的类型
     /// </summary>
     SettingsType Type { get; }
 
     /// <summary>
-    /// ��ȡ��ָ���ļ�������ֵ
+    /// 获取与指定的键关联的值
     /// </summary>
-    /// <param name="key">Ҫ��ȡ��ֵ�ļ�</param>
-    /// <returns>��ָ���ļ��������ֵ</returns>
-    /// <exception cref="InvalidOperationException">��ǰ�����ѱ��ͷŻ�ɾ��</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="key"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="key">要获取的值的键</param>
+    /// <returns>与指定的键相关联的值</returns>
+    /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="key"/> 上声明的默认值为 null</exception>
     string? Attribute(string key);
 
     /// <summary>
-    /// ��ȡ��ָ���ļ�������ֵ
+    /// 获取与指定的键关联的值
     /// </summary>
-    /// <typeparam name="TValue">ָ��ֵ������</typeparam>
-    /// <param name="key">Ҫ��ȡ��ֵ�ļ�</param>
-    /// <returns>��ָ���ļ�ƥ���Ԫ��</returns>
-    /// <exception cref="InvalidOperationException">��ǰ�����ѱ��ͷŻ�ɾ��</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="key"/> ��������Ĭ��ֵΪ null</exception>
+    /// <typeparam name="TValue">指定值的类型</typeparam>
+    /// <param name="key">要获取的值的键</param>
+    /// <returns>与指定的键匹配的元素</returns>
+    /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="key"/> 上声明的默认值为 null</exception>
     TValue? Attribute<TValue>(string key);
 
     /// <summary>
-    /// ������ָ���ļ�������ֵ
+    /// 设置与指定的键关联的值
     /// </summary>
-    /// <typeparam name="TValue">ָ��ֵ������</typeparam>
-    /// <param name="key">Ҫ���õ�ֵ�ļ�</param>
-    /// <param name="value">Ҫ���õļ���ֵ</param>
-    /// <exception cref="InvalidOperationException">��ǰ�����ѱ��ͷŻ�ɾ��</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="key"/> �� <paramref name="value"/> ��������Ĭ��ֵΪ null</exception>
+    /// <typeparam name="TValue">指定值的类型</typeparam>
+    /// <param name="key">要设置的值的键</param>
+    /// <param name="value">要设置的键的值</param>
+    /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="key"/> 或 <paramref name="value"/> 上声明的默认值为 null</exception>
     void Attribute<TValue>(string key, TValue value);
 
     /// <summary>
-    /// �ӵ�ǰ�ڵ���ɾ����ָ���ļ�ƥ���Ԫ��
+    /// 从当前节点中删除与指定的键匹配的元素
     /// </summary>
-    /// <param name="key">Ҫɾ����Ԫ�صļ�</param>
-    /// <returns>����ڸýڵ��гɹ��ҵ���Ԫ�ز�ɾ���򷵻� true�����򷵻� false</returns>
-    /// <exception cref="InvalidOperationException">��ǰ�����ѱ��ͷŻ�ɾ��</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="key"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="key">要删除的元素的键</param>
+    /// <returns>如果在该节点中成功找到该元素并删除则返回 true，否则返回 false</returns>
+    /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="key"/> 上声明的默认值为 null</exception>
     bool Delete(string key);
 
     /// <summary>
-    /// �ӵ�ǰ�ڵ���ɾ����ָ��������ƥ����ӽڵ�����
+    /// 从当前节点中删除与指定的名称匹配的子节点配置
     /// </summary>
-    /// <param name="name">Ҫɾ�����ӽڵ����õ�����</param>
+    /// <param name="name">要删除的子节点配置的名称</param>
     void DeleteSection(string name);
 
     /// <summary>
-    /// �ӵ�ǰ�ڵ��л�ȡ�򴴽���ָ��������ƥ����ӽڵ�����
+    /// 从当前节点中获取或创建与指定的名称匹配的子节点配置
     /// </summary>
-    /// <param name="name">Ҫ��ȡ���ӽڵ����õ�����</param>
-    /// <returns>����ҵ�ƥ���Ԫ����᷵�ظö��󣻷��򽫻ᴴ��һ���µ��ӽڵ�����</returns>
-    /// <exception cref="InvalidOperationException">��ǰ�����ѱ��ͷŻ�ɾ��</exception>
-    /// <exception cref="ArgumentNullException"><paramref name="name"/> ��������Ĭ��ֵΪ null</exception>
+    /// <param name="name">要获取的子节点配置的名称</param>
+    /// <returns>如果找到匹配的元素则会返回该对象；否则将会创建一个新的子节点配置</returns>
+    /// <exception cref="InvalidOperationException">当前对象已被释放或删除</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="name"/> 上声明的默认值为 null</exception>
     ISettingsSection GetOrCreateSection(string name);
 }

@@ -5,15 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.MRT;
+namespace GZSkinsX.Api.MRT;
 
 /// <summary>
-/// 提供与部分资源子集相关联的资源标识符访问
+/// 鎻愪緵涓庨儴鍒嗚祫婧愬瓙闆嗙浉鍏宠仈鐨勮祫婧愭爣璇嗙璁块棶
 /// </summary>
 public static class MRTCoreConstants
 {
     /// <summary>
-    /// 表示子集 AppxStartUp 的资源标识符
+    /// 琛ㄧず瀛愰泦 AppxStartUp 鐨勮祫婧愭爣璇嗙
     /// </summary>
     public const string Appx_StartUp = "GZSkinsX.Appx.StartUp/Resources";
 }

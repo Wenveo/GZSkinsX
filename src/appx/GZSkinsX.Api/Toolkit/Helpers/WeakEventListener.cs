@@ -9,7 +9,7 @@
 
 using System;
 
-namespace GZSkinsX.SDK.Toolkit;
+namespace GZSkinsX.Api.Toolkit;
 
 /// <summary>
 /// Implements a weak event listener that allows the owner to be garbage

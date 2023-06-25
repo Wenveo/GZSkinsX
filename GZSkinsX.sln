@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX", "src\appx\GZSkinsX\GZSkinsX.csproj", "{CCD6CA11-A092-4F22-9976-A804AC0CA819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.SDK", "src\appx\GZSkinsX.Api\GZSkinsX.SDK.csproj", "{4C946033-B0F2-43FF-8644-7892E2A58C53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Api", "src\appx\GZSkinsX.Api\GZSkinsX.Api.csproj", "{4C946033-B0F2-43FF-8644-7892E2A58C53}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{E6CB98F8-7A29-4173-B1FC-068D719AF557}"
 	ProjectSection(SolutionItems) = preProject

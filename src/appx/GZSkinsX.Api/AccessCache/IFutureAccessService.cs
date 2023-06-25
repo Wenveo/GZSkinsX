@@ -5,10 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.SDK.AccessCache;
+namespace GZSkinsX.Api.AccessCache;
 
 /// <summary>
-/// Ìá¹©¶Ô·ÃÎÊµÄ´æ´¢ÏîÁĞ±í½øĞĞ¹ÜÀí£¬ÒÔ±ãÓÚ¶Ô´æ´¢Ïî½øĞĞ¸ßĞ§·ÃÎÊ
+/// æä¾›å¯¹è®¿é—®çš„å­˜å‚¨é¡¹åˆ—è¡¨è¿›è¡Œç®¡ç†ï¼Œä»¥ä¾¿äºå¯¹å­˜å‚¨é¡¹è¿›è¡Œé«˜æ•ˆè®¿é—®
 /// </summary>
 public interface IFutureAccessService : IAccessCacheService
 {

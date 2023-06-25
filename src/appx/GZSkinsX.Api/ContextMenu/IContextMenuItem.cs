@@ -1,4 +1,4 @@
-﻿// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
+// Copyright 2022 - 2023 GZSkins, Inc. All rights reserved.
 // Licensed under the Mozilla Public License, Version 2.0 (the "License.txt").
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,11 +7,11 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.Controls;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
 /// 表示上下文菜单中的菜单项，所有导出的上下文菜单项都继承于此接口

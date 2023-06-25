@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml.Automation.Peers;
 
-namespace GZSkinsX.SDK.Controls;
+namespace GZSkinsX.Api.Controls;
 
 /// <summary>
 /// AutomationPeer for SettingsCard

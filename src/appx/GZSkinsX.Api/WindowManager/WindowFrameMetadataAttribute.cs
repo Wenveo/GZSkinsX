@@ -8,21 +8,21 @@
 using System;
 using System.Composition;
 
-namespace GZSkinsX.SDK.WindowManager;
+namespace GZSkinsX.Api.WindowManager;
 
 /// <summary>
-/// ÓÃÓÚµ¼³öµÄÒ³ÃæÔªËØµÄÔªÊı¾İ
+/// ç”¨äºå¯¼å‡ºçš„é¡µé¢å…ƒç´ çš„å…ƒæ•°æ®
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class WindowFrameMetadataAttribute : Attribute
 {
     /// <summary>
-    /// ÉùÃ÷µ±Ç°Ò³ÃæÔªËØµÄ±êÊ¶·û£¬¸ÃÖµ¾ßÓĞÎ¨Ò»ĞÔ
+    /// å£°æ˜å½“å‰é¡µé¢å…ƒç´ çš„æ ‡è¯†ç¬¦ï¼Œè¯¥å€¼å…·æœ‰å”¯ä¸€æ€§
     /// </summary>
     public required string Guid { get; set; }
 
     /// <summary>
-    /// ÓÃÓÚµ¼º½µÄÄ¿±êÒ³ÃæÀàĞÍ£¬¸ÃÒ³ÃæÀàĞÍ±ØĞëÎª <see cref="Windows.UI.Xaml.Controls.Page"/>£¬ÇÒ²»ÄÜÎª¿Õ
+    /// ç”¨äºå¯¼èˆªçš„ç›®æ ‡é¡µé¢ç±»å‹ï¼Œè¯¥é¡µé¢ç±»å‹å¿…é¡»ä¸º <see cref="Windows.UI.Xaml.Controls.Page"/>ï¼Œä¸”ä¸èƒ½ä¸ºç©º
     /// </summary>
     public required Type PageType { get; set; }
 }

@@ -11,42 +11,42 @@ using System;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ╠Мй╬иообнд╡к╣╔╣д╩Ы╠╬╥ЧнЯё╛╡╒лА╧╘╢╢╫╗иообнд╡к╣╔╣ддэа╕
+/// Х║╗Г╓╨Д╦┼Д╦▀Ф√┤Х▐°Е█∙Г └Е÷╨Ф°╛Ф°█Е┼║О╪▄Е╧╤Ф▐░Д╬⌡Е┬⌡Е╩╨Д╦┼Д╦▀Ф√┤Х▐°Е█∙Г └Х┐╫Е┼⌡
 /// </summary>
 public interface IContextMenuService
 {
     /// <summary>
-    /// м╗╧Щж╦╤╗╣д <see cref="Guid"/> вж╥Ш╢╝ж╣╢╢╫╗р╩╦Жпб╣д <see cref="MenuFlyout"/> й╣ож
+    /// И─ Х©┤Ф▄┤Е╝ Г └ <see cref="Guid"/> Е╜≈Г╛╕Д╦╡Е─╪Е┬⌡Е╩╨Д╦─Д╦╙Ф√╟Г └ <see cref="MenuFlyout"/> Е╝·Г▌╟
     /// </summary>
-    /// <param name="ownerGuidString">вс╡к╣╔оНкЫ╧ИйТ╣д <see cref="System.Guid"/> вж╥Ш╢╝ж╣</param>
-    /// <returns>ря╢╢╫╗╣д <see cref="MenuFlyout"/> юЮпмй╣юЩ</returns>
+    /// <param name="ownerGuidString">Е╜░Х▐°Е█∙И║╧Ф┴─Е╫▓Е╠·Г └ <see cref="System.Guid"/> Е╜≈Г╛╕Д╦╡Е─╪</param>
+    /// <returns>Е╥╡Е┬⌡Е╩╨Г └ <see cref="MenuFlyout"/> Г╠╩Е·▀Е╝·Д╬▀</returns>
     MenuFlyout CreateContextMenu(string ownerGuidString);
 
     /// <summary>
-    /// м╗╧Щж╦╤╗╣д <see cref="Guid"/> вж╥Ш╢╝ж╣╨м <see cref="ContextMenuOptions"/> иообнд╡к╣╔я║оНеДжц╢╢╫╗р╩╦Жпб╣д <see cref="MenuFlyout"/> й╣ож
+    /// И─ Х©┤Ф▄┤Е╝ Г └ <see cref="Guid"/> Е╜≈Г╛╕Д╦╡Е─╪Е▓▄ <see cref="ContextMenuOptions"/> Д╦┼Д╦▀Ф√┤Х▐°Е█∙И─┴И║╧И┘█Г╫╝Е┬⌡Е╩╨Д╦─Д╦╙Ф√╟Г └ <see cref="MenuFlyout"/> Е╝·Г▌╟
     /// </summary>
-    /// <param name="ownerGuidString">вс╡к╣╔оНкЫ╧ИйТ╣д <see cref="System.Guid"/> вж╥Ш╢╝ж╣</param>
-    /// <param name="options">пХр╙с╕сц╣╫ UI иообнд╡к╣╔ио╣дйТптеДжця║оН</param>
-    /// <returns>ря╢╢╫╗╣д <see cref="MenuFlyout"/> юЮпмй╣юЩ</returns>
+    /// <param name="ownerGuidString">Е╜░Х▐°Е█∙И║╧Ф┴─Е╫▓Е╠·Г └ <see cref="System.Guid"/> Е╜≈Г╛╕Д╦╡Е─╪</param>
+    /// <param name="options">И°─Х╕│Е╨■Г■╗Е┬╟ UI Д╦┼Д╦▀Ф√┤Х▐°Е█∙Д╦┼Г └Е╠·Ф─╖И┘█Г╫╝И─┴И║╧</param>
+    /// <returns>Е╥╡Е┬⌡Е╩╨Г └ <see cref="MenuFlyout"/> Г╠╩Е·▀Е╝·Д╬▀</returns>
     MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuOptions options);
 
     /// <summary>
-    /// м╗╧Щж╦╤╗╣д <see cref="Guid"/> вж╥Ш╢╝ж╣╨м <see cref="CoerceContextMenuUIContextCallback"/> UI иообнд╣д╩ь╣Вн╞мп╢╢╫╗р╩╦Жпб╣д <see cref="MenuFlyout"/> й╣ож
+    /// И─ Х©┤Ф▄┤Е╝ Г └ <see cref="Guid"/> Е╜≈Г╛╕Д╦╡Е─╪Е▓▄ <see cref="CoerceContextMenuUIContextCallback"/> UI Д╦┼Д╦▀Ф√┤Г └Е⌡·Х╟┐Е╖■Ф┴≤Е┬⌡Е╩╨Д╦─Д╦╙Ф√╟Г └ <see cref="MenuFlyout"/> Е╝·Г▌╟
     /// </summary>
-    /// <param name="ownerGuidString">вс╡к╣╔оНкЫ╧ИйТ╣д <see cref="System.Guid"/> вж╥Ш╢╝ж╣</param>
-    /// <param name="coerceValueCallback">д©╠Й UI иообнд╣д╩ь╣Вн╞мп</param>
-    /// <returns>ря╢╢╫╗╣д <see cref="MenuFlyout"/> юЮпмй╣юЩ</returns>
+    /// <param name="ownerGuidString">Е╜░Х▐°Е█∙И║╧Ф┴─Е╫▓Е╠·Г └ <see cref="System.Guid"/> Е╜≈Г╛╕Д╦╡Е─╪</param>
+    /// <param name="coerceValueCallback">Г⌡╝Ф═┤ UI Д╦┼Д╦▀Ф√┤Г └Е⌡·Х╟┐Е╖■Ф┴≤</param>
+    /// <returns>Е╥╡Е┬⌡Е╩╨Г └ <see cref="MenuFlyout"/> Г╠╩Е·▀Е╝·Д╬▀</returns>
     MenuFlyout CreateContextMenu(string ownerGuidString, CoerceContextMenuUIContextCallback coerceValueCallback);
 
     /// <summary>
-    /// м╗╧Щж╦╤╗╣д <see cref="Guid"/> вж╥Ш╢╝ж╣╨м <see cref="ContextMenuOptions"/> иообнд╡к╣╔я║оНеДжцрт╪╟ <see cref="CoerceContextMenuUIContextCallback"/> UI иообнд╣д╩ь╣Вн╞мп╢╢╫╗р╩╦Жпб╣д <see cref="MenuFlyout"/> й╣ож
+    /// И─ Х©┤Ф▄┤Е╝ Г └ <see cref="Guid"/> Е╜≈Г╛╕Д╦╡Е─╪Е▓▄ <see cref="ContextMenuOptions"/> Д╦┼Д╦▀Ф√┤Х▐°Е█∙И─┴И║╧И┘█Г╫╝Д╩╔Е▐┼ <see cref="CoerceContextMenuUIContextCallback"/> UI Д╦┼Д╦▀Ф√┤Г └Е⌡·Х╟┐Е╖■Ф┴≤Е┬⌡Е╩╨Д╦─Д╦╙Ф√╟Г └ <see cref="MenuFlyout"/> Е╝·Г▌╟
     /// </summary>
-    /// <param name="ownerGuidString">вс╡к╣╔оНкЫ╧ИйТ╣д <see cref="System.Guid"/> вж╥Ш╢╝ж╣</param>
-    /// <param name="options">пХр╙с╕сц╣╫ UI иообнд╡к╣╔ио╣дйТптеДжця║оН</param>
-    /// <param name="coerceValueCallback">д©╠Й UI иообнд╣д╩ь╣Вн╞мп</param>
-    /// <returns>ря╢╢╫╗╣д <see cref="MenuFlyout"/> юЮпмй╣юЩ</returns>
+    /// <param name="ownerGuidString">Е╜░Х▐°Е█∙И║╧Ф┴─Е╫▓Е╠·Г └ <see cref="System.Guid"/> Е╜≈Г╛╕Д╦╡Е─╪</param>
+    /// <param name="options">И°─Х╕│Е╨■Г■╗Е┬╟ UI Д╦┼Д╦▀Ф√┤Х▐°Е█∙Д╦┼Г └Е╠·Ф─╖И┘█Г╫╝И─┴И║╧</param>
+    /// <param name="coerceValueCallback">Г⌡╝Ф═┤ UI Д╦┼Д╦▀Ф√┤Г └Е⌡·Х╟┐Е╖■Ф┴≤</param>
+    /// <returns>Е╥╡Е┬⌡Е╩╨Г └ <see cref="MenuFlyout"/> Г╠╩Е·▀Е╝·Д╬▀</returns>
     MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuOptions options, CoerceContextMenuUIContextCallback coerceValueCallback);
 }

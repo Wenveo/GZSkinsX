@@ -7,16 +7,16 @@
 
 #nullable enable
 
-using GZSkinsX.SDK.Controls;
+using GZSkinsX.Api.Controls;
 
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.SDK.ContextMenu;
+namespace GZSkinsX.Api.ContextMenu;
 
 /// <summary>
-/// ±íÊ¾ÅÉÉú×Ô <see cref="IContextToggleMenuItem"/> µÄ³éÏó»ùÀà£¬²¢Ìá¹©»ù±¾µÄ½Ó¿Ú³ÉÔ±ÊµÏÖ
+/// è¡¨ç¤ºæ´¾ç”Ÿè‡ª <see cref="IContextToggleMenuItem"/> çš„æŠ½è±¡åŸºç±»ï¼Œå¹¶æä¾›åŸºæœ¬çš„æ¥å£æˆå‘˜å®ç°
 /// </summary>
-/// <typeparam name="TContext">Ä¿±ê UI ÉÏÏÂÎÄµÄ²ÎÊıÀàĞÍ</typeparam>
+/// <typeparam name="TContext">ç›®æ ‡ UI ä¸Šä¸‹æ–‡çš„å‚æ•°ç±»å‹</typeparam>
 public abstract class ContextToggleMenuItemBase<TContext> : IContextToggleMenuItem
     where TContext : IContextMenuUIContext
 {

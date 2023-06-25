@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Extensions.CreatorStudio.Contracts.Documents.Tabs;
 
-using GZSkinsX.SDK.Helpers;
+using GZSkinsX.Api.Helpers;
 
 using Windows.UI.Text;
 using Windows.UI.Xaml;

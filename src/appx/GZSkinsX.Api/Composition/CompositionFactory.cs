@@ -21,52 +21,52 @@ using Windows.UI.Xaml.Core.Direct;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public partial class CompositionFactory
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public const string TRANSLATION = "Translation";
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public const string STARTING_VALUE = "this.StartingValue";
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public const string FINAL_VALUE = "this.FinalValue";
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public const double DefaultOffsetDuration = 0.325;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public const int DEFAULT_STAGGER_MS = 83;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private static string CENTRE_EXPRESSION =>
         $"({nameof(Vector3)}(this.Target.{nameof(Visual.Size)}.{nameof(Vector2.X)} * {{0}}f, " +
         $"this.Target.{nameof(Visual.Size)}.{nameof(Vector2.Y)} * {{1}}f, 0f))";
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static UISettings UISettings { get; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     static CompositionFactory()
     {
@@ -74,7 +74,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="target"></param>
     /// <param name="from"></param>
@@ -104,7 +104,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <param name="to"></param>
@@ -133,7 +133,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
@@ -149,7 +149,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     /// <returns></returns>
@@ -165,7 +165,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     /// <param name="x"></param>
@@ -184,7 +184,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     /// <returns></returns>
@@ -201,7 +201,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     /// <returns></returns>
@@ -218,7 +218,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     public static void DisableStandardFadeInOut(UIElement e)
@@ -228,7 +228,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="f"></param>
     public static void DisableStandardReposition(UIElement e)
@@ -237,7 +237,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="v"></param>
     /// <param name="duration"></param>
@@ -262,7 +262,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
@@ -283,7 +283,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="target"></param>
     /// <param name="delayMs"></param>
@@ -302,7 +302,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="targets"></param>
     /// <param name="delayMs"></param>
@@ -328,7 +328,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="target"></param>
     public static void PlayFullHeightSlideUpEntrance(FrameworkElement target)
@@ -351,7 +351,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="target"></param>
     /// <param name="from"></param>
@@ -382,7 +382,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="sender"></param>
     public static void PlayStandardEntrance(FrameworkElement element)
@@ -397,7 +397,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     /// <param name="xamlDirect"></param>
@@ -419,7 +419,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="target"></param>
     /// <param name="size"></param>
@@ -434,7 +434,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="background"></param>
     /// <param name="children"></param>
@@ -515,7 +515,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     /// <param name="t"></param>
@@ -543,7 +543,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="args"></param>
@@ -559,7 +559,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     public static void SetStandardFadeInOut(UIElement e, int durationMs = 300)
@@ -575,7 +575,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     public static void SetStandardReposition(UIElement e)
@@ -598,7 +598,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="target"></param>
     /// <param name="depth"></param>
@@ -639,7 +639,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="e"></param>
     public static void SetupOverlayPanelAnimation(UIElement e)
@@ -665,7 +665,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="v"></param>
     /// <param name="x"></param>
@@ -689,7 +689,7 @@ public partial class CompositionFactory
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="barElements"></param>
     /// <param name="contentElements"></param>

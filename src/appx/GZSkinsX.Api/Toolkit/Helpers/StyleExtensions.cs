@@ -9,7 +9,7 @@ using System.Linq;
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.SDK.Toolkit;
+namespace GZSkinsX.Api.Toolkit;
 
 // Adapted from https://github.com/rudyhuyn/XamlPlus
 public static partial class StyleExtensions

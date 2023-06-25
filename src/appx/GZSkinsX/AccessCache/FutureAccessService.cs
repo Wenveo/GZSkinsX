@@ -11,9 +11,9 @@ using System;
 using System.Composition;
 using System.Threading.Tasks;
 
-using GZSkinsX.SDK.AccessCache;
-using GZSkinsX.SDK.Diagnostics;
-using GZSkinsX.SDK.Settings;
+using GZSkinsX.Api.AccessCache;
+using GZSkinsX.Api.Diagnostics;
+using GZSkinsX.Api.Settings;
 
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -25,17 +25,17 @@ namespace GZSkinsX.AccessCache;
 internal sealed class FutureAccessService : IFutureAccessService
 {
     /// <summary>
-    /// ±íÊ¾µ±Ç°ÉèÖÃ½ÚµãµÄ <seealso cref="Guid"/> ×Ö·û´®Öµ
+    /// è¡¨ç¤ºå½“å‰è®¾ç½®èŠ‚ç‚¹çš„ <seealso cref="Guid"/> å­—ç¬¦ä¸²å€¼
     /// </summary>
     private const string THE_GUID = "CF1A680D-E800-47E1-ABCF-116D64170C40";
 
     /// <summary>
-    /// ÓÃÓÚ´æ´¢±¾µØÊı¾İµÄÊı¾İ½Úµã
+    /// ç”¨äºå­˜å‚¨æœ¬åœ°æ•°æ®çš„æ•°æ®èŠ‚ç‚¹
     /// </summary>
     private readonly ISettingsSection _settingsSection;
 
     /// <summary>
-    /// ÄÚ²¿µÄ´æ´¢Ïî·ÃÎÊÁĞ±í¶¨Òå
+    /// å†…éƒ¨çš„å­˜å‚¨é¡¹è®¿é—®åˆ—è¡¨å®šä¹‰
     /// </summary>
     private readonly StorageItemAccessList _futureAccessList;
 
@@ -46,7 +46,7 @@ internal sealed class FutureAccessService : IFutureAccessService
     public uint MaximumItemsAllowed => _futureAccessList.MaximumItemsAllowed;
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="FutureAccessService"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="FutureAccessService"/> çš„æ–°å®ä¾‹
     /// </summary>
     [ImportingConstructor]
     public FutureAccessService(ISettingsService settingsService)

@@ -11,12 +11,12 @@ using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.SDK.Composition;
+namespace GZSkinsX.Api.Composition;
 
 public static partial class CompositionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <param name="animations"></param>
@@ -33,7 +33,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <param name="x1"></param>
@@ -47,7 +47,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <param name="spline"></param>
@@ -58,7 +58,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>
@@ -68,7 +68,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="compositor"></param>
@@ -81,7 +81,7 @@ public static partial class CompositionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="c"></param>
     /// <returns></returns>

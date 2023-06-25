@@ -11,7 +11,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-using GZSkinsX.SDK.Game;
+using GZSkinsX.Api.Game;
 
 namespace GZSkinsX.Game;
 
@@ -19,22 +19,22 @@ namespace GZSkinsX.Game;
 internal sealed class GameData : IGameData
 {
     /// <summary>
-    /// ±íÊ¾ Game ÎÄ¼ş¼ĞµÄµÄÃû³Æ£¬¸ÃÃû³ÆÊ¼ÖÕÎªÒ»¸ö¹Ì¶¨Öµ
+    /// è¡¨ç¤º Game æ–‡ä»¶å¤¹çš„çš„åç§°ï¼Œè¯¥åç§°å§‹ç»ˆä¸ºä¸€ä¸ªå›ºå®šå€¼
     /// </summary>
     private const string GAME_DIRECTORY_NAME = "Game";
 
     /// <summary>
-    /// ±íÊ¾ LOL ÓÎÏ·³ÌĞòµÄµÄÎÄ¼şÃû³Æ£¬¸ÃÃû³ÆÊ¼ÖÕÎªÒ»¸ö¹Ì¶¨Öµ
+    /// è¡¨ç¤º LOL æ¸¸æˆç¨‹åºçš„çš„æ–‡ä»¶åç§°ï¼Œè¯¥åç§°å§‹ç»ˆä¸ºä¸€ä¸ªå›ºå®šå€¼
     /// </summary>
     private const string GAME_EXECUTE_NAME = "League of Legends.exe";
 
     /// <summary>
-    /// ±íÊ¾ LCU ÎÄ¼ş¼ĞµÄÃû³Æ£¬¸ÃÃû³ÆÊ¼ÖÕÎªÒ»¸ö¹Ì¶¨Öµ
+    /// è¡¨ç¤º LCU æ–‡ä»¶å¤¹çš„åç§°ï¼Œè¯¥åç§°å§‹ç»ˆä¸ºä¸€ä¸ªå›ºå®šå€¼
     /// </summary>
     private const string LCU_DIRECTORY_NAME = "LeagueClient";
 
     /// <summary>
-    /// ±íÊ¾ LCU ¿Í»§¶Ë³ÌĞòµÄÎÄ¼şÃû³Æ£¬¸ÃÃû³ÆÊ¼ÖÕÎªÒ»¸ö¹Ì¶¨Öµ
+    /// è¡¨ç¤º LCU å®¢æˆ·ç«¯ç¨‹åºçš„æ–‡ä»¶åç§°ï¼Œè¯¥åç§°å§‹ç»ˆä¸ºä¸€ä¸ªå›ºå®šå€¼
     /// </summary>
     private const string LCU_EXECUTE_NAME = "LeagueClient.exe";
 
@@ -51,7 +51,7 @@ internal sealed class GameData : IGameData
     public string LCUExecutePath { get; private set; }
 
     /// <summary>
-    /// ³õÊ¼»¯ <see cref="GameData"/> µÄĞÂÊµÀı
+    /// åˆå§‹åŒ– <see cref="GameData"/> çš„æ–°å®ä¾‹
     /// </summary>
     public GameData()
     {
@@ -62,16 +62,16 @@ internal sealed class GameData : IGameData
     }
 
     /// <summary>
-    /// ³¢ÊÔ´Ó´«ÈëÖ¸¶¨µÄÓÎÏ·Ä¿Â¼ÒÔ¼°ÇøÓòÀ´¸üĞÂµ±Ç°ÓÎÏ·Êı¾İµÄ»ù±¾Â·¾¶ĞÅÏ¢
+    /// å°è¯•ä»ä¼ å…¥æŒ‡å®šçš„æ¸¸æˆç›®å½•ä»¥åŠåŒºåŸŸæ¥æ›´æ–°å½“å‰æ¸¸æˆæ•°æ®çš„åŸºæœ¬è·¯å¾„ä¿¡æ¯
     /// </summary>
-    /// <param name="rootDirectory">ÓÎÏ·µÄ¸ùÄ¿Â¼ÎÄ¼ş¼Ğ</param>
-    /// <param name="region">ÓÎÏ·ËùÔÚµÄÇøÓò·şÎñÆ÷</param>
-    /// <returns>ÔÚ³É¹¦¸üĞÂÊı¾İÊ±·µ»Ø true£¬·ñÔò·µ»Ø false</returns>
+    /// <param name="rootDirectory">æ¸¸æˆçš„æ ¹ç›®å½•æ–‡ä»¶å¤¹</param>
+    /// <param name="region">æ¸¸æˆæ‰€åœ¨çš„åŒºåŸŸæœåŠ¡å™¨</param>
+    /// <returns>åœ¨æˆåŠŸæ›´æ–°æ•°æ®æ—¶è¿”å› trueï¼Œå¦åˆ™è¿”å› false</returns>
     public bool TryUpdate(string rootDirectory, GameRegion region)
     {
         if (Directory.Exists(rootDirectory) && region != GameRegion.Unknown)
         {
-            /// ¶¨Òå»ù±¾µÄÎÄ¼ş»òÎÄ¼ş¼ĞÂ·¾¶
+            /// å®šä¹‰åŸºæœ¬çš„æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹è·¯å¾„
             var gameDirectory = Path.Combine(rootDirectory, GAME_DIRECTORY_NAME);
             var gameExecutePath = Path.Combine(gameDirectory, GAME_EXECUTE_NAME);
 
@@ -80,17 +80,17 @@ internal sealed class GameData : IGameData
                 : Path.Combine(rootDirectory, LCU_DIRECTORY_NAME);
             var lcuExecutePath = Path.Combine(lcuDirectory, LCU_EXECUTE_NAME);
 
-            /// ÕâÀïÓÃ DirectoryInfo »ñÈ¡ÎÄ¼ş¼ĞĞÅÏ¢²¢ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+            /// è¿™é‡Œç”¨ DirectoryInfo è·å–æ–‡ä»¶å¤¹ä¿¡æ¯å¹¶åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
             var gameDirectoryInfo = new DirectoryInfo(gameDirectory);
             var lcuDirectoryInfo = new DirectoryInfo(lcuDirectory);
 
-            /// ÓÅÏÈÅĞ¶ÏÎÄ¼ş¼ĞÊÇ·ñ´æÔÚ
+            /// ä¼˜å…ˆåˆ¤æ–­æ–‡ä»¶å¤¹æ˜¯å¦å­˜åœ¨
             if (gameDirectoryInfo.Exists is false || lcuDirectoryInfo.Exists is false)
             {
                 return false;
             }
 
-            /// File.Exists ÔÚÕâÀï²»ÊÊÓÃ£¬ÇÒÎŞ·¨ÕıÈ·ÅĞ¶Ï£¬Òò´ËÖ»ÄÜÍ¨¹ı»ñÈ¡ÎÄ¼şÁĞ±í½øĞĞÅĞ¶¨
+            /// File.Exists åœ¨è¿™é‡Œä¸é€‚ç”¨ï¼Œä¸”æ— æ³•æ­£ç¡®åˆ¤æ–­ï¼Œå› æ­¤åªèƒ½é€šè¿‡è·å–æ–‡ä»¶åˆ—è¡¨è¿›è¡Œåˆ¤å®š
             if (gameDirectoryInfo.GetFiles(GAME_EXECUTE_NAME).Any(
                 a => StringComparer.OrdinalIgnoreCase.Equals(a.FullName, gameExecutePath))
                 &&
