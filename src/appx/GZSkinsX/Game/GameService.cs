@@ -28,7 +28,7 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     /// <summary>
     /// 当前内部游戏数据实例
     /// </summary>
-    private readonly GameData _gameData = new GameData();
+    private readonly GameData _gameData = new();
 
     /// <summary>
     /// 用于记录日志的日志服务

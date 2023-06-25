@@ -16,7 +16,6 @@ public enum CommandPlacement
     /// 表示位于命令栏中主要的集合，默认为展示的状态
     /// </summary>
     Primary,
-
     /// <summary>
     /// 表示位于命令栏中次要的集合，默认为收缩的状态
     /// </summary>

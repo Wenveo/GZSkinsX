@@ -16,7 +16,6 @@ public enum NavigationItemPlacement
     /// 表示位于默认的集合中 <see cref="Microsoft.UI.Xaml.Controls.NavigationView.MenuItems"/>
     /// </summary>
     Default,
-
     /// <summary>
     /// 表示位于页脚的集合中 <see cref="Microsoft.UI.Xaml.Controls.NavigationView.FooterMenuItems"/>
     /// </summary>
