@@ -10,7 +10,7 @@ using Windows.UI.Xaml;
 namespace GZSkinsX.Api.Utilities;
 
 /// <summary>
-/// 提供对 <see cref="bool"/> 和 <see cref="Visibility"/> 类型相互转换的能力
+/// 表示提供对 <see cref="bool"/> 和 <see cref="Visibility"/> 类型进行相互转换的转换器
 /// </summary>
 public static class BoolToVisibilityConvert
 {

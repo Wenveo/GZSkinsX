@@ -8,22 +8,22 @@
 namespace GZSkinsX.Api.Game;
 
 /// <summary>
-///
+/// 表示提供对游戏基本信息的获取，但不包含具体的游戏内容
 /// </summary>
 public interface IGameService
 {
     /// <summary>
-    ///
+    /// 表示当前游戏的区域/服务器
     /// </summary>
     GameRegion CurrentRegion { get; }
 
     /// <summary>
-    ///
+    /// 获取有关游戏的基本信息数据
     /// </summary>
     IGameData GameData { get; }
 
     /// <summary>
-    ///
+    /// 获取当前游戏的根目录路径
     /// </summary>
     string RootDirectory { get; }
 

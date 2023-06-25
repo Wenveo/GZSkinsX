@@ -8,7 +8,7 @@
 namespace GZSkinsX.Api.Utilities;
 
 /// <summary>
-/// 提供解析以特定格式表示组的字符串值的能力
+/// 提供用于对特定格式的表示组的字符串值进行解析的方法
 /// </summary>
 public static class ItemGroupParser
 {
