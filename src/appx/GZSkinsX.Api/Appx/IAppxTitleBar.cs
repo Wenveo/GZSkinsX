@@ -7,8 +7,6 @@
 
 #nullable enable
 
-using GZSkinsX;
-
 namespace GZSkinsX.Api.Appx;
 
 /// <summary>

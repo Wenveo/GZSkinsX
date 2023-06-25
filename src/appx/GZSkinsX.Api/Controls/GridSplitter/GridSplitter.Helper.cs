@@ -182,23 +182,15 @@ public partial class GridSplitter
 
         if (direction == GridResizeDirection.Auto)
         {
-            // When HorizontalAlignment is Left, Right or Center, resize Columns
-            if (HorizontalAlignment != HorizontalAlignment.Stretch)
-            {
-                direction = GridResizeDirection.Columns;
-            }
+            direction = HorizontalAlignment is not HorizontalAlignment.Stretch
+                // When HorizontalAlignment is Left, Right or Center, resize Columns
+                ? GridResizeDirection.Columns
 
-            // When VerticalAlignment is Top, Bottom or Center, resize Rows
-            else if (VerticalAlignment != VerticalAlignment.Stretch)
-            {
-                direction = GridResizeDirection.Rows;
-            }
+                // When VerticalAlignment is Top, Bottom or Center, resize Rows
+                : VerticalAlignment is not VerticalAlignment.Stretch ? GridResizeDirection.Rows
 
-            // Check Width vs Height
-            else
-            {
-                direction = ActualWidth <= ActualHeight ? GridResizeDirection.Columns : GridResizeDirection.Rows;
-            }
+                // Check Width vs Height
+                : ActualWidth <= ActualHeight ? GridResizeDirection.Columns : GridResizeDirection.Rows;
         }
 
         return direction;
@@ -211,26 +203,19 @@ public partial class GridSplitter
 
         if (resizeBehavior == GridResizeBehavior.BasedOnAlignment)
         {
-            if (_resizeDirection == GridResizeDirection.Columns)
-            {
-                resizeBehavior = HorizontalAlignment switch
+            resizeBehavior = _resizeDirection == GridResizeDirection.Columns
+                ? HorizontalAlignment switch
                 {
                     HorizontalAlignment.Left => GridResizeBehavior.PreviousAndCurrent,
                     HorizontalAlignment.Right => GridResizeBehavior.CurrentAndNext,
                     _ => GridResizeBehavior.PreviousAndNext,
-                };
-            }
-
-            // resize direction is vertical
-            else
-            {
-                resizeBehavior = VerticalAlignment switch
+                }
+                : VerticalAlignment switch
                 {
                     VerticalAlignment.Top => GridResizeBehavior.PreviousAndCurrent,
                     VerticalAlignment.Bottom => GridResizeBehavior.CurrentAndNext,
                     _ => GridResizeBehavior.PreviousAndNext,
                 };
-            }
         }
 
         return resizeBehavior;

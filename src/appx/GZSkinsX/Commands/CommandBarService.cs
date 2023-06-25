@@ -13,10 +13,9 @@ using System.Composition;
 using System.Diagnostics;
 using System.Linq;
 
-using GZSkinsX.Commands.Impl;
-
 using GZSkinsX.Api.Commands;
 using GZSkinsX.Api.Utilities;
+using GZSkinsX.Commands.Impl;
 
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Controls;

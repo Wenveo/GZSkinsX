@@ -100,7 +100,6 @@ public sealed partial class StartUpClass
         s_synchronouslock.Set();
     }
 
-
     /// <summary>
     /// 获取当前 Appx 引用程序集
     /// </summary>
