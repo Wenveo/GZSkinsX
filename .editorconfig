@@ -7,6 +7,7 @@ root = true
 # A newline ending every file
 # Use 4 spaces as indentation
 [*]
+charset = utf-8
 insert_final_newline = true
 indent_style = space
 indent_size = 4
@@ -169,9 +170,6 @@ indent_brace_style = Allman
 # Xml project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,nativeproj,locproj}]
 indent_size = 2
-
-[*.{csproj,vbproj,proj,nativeproj,locproj}]
-charset = utf-8
 
 # Xml build files
 [*.builds]
