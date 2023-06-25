@@ -14,7 +14,7 @@ namespace GZSkinsX.Api.Appx;
 public static partial class AppxContext
 {
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.AccessCache.IFutureAccessService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.AccessCache.IFutureAccessService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.AccessCache.IFutureAccessService FutureAccessService
     {
@@ -22,7 +22,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService MostRecentlyUsedService
     {
@@ -30,7 +30,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Appx.IAppxWindow"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxWindow"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Appx.IAppxWindow AppxWindow
     {
@@ -38,7 +38,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBar"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBar"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Appx.IAppxTitleBar AppxTitleBar
     {
@@ -46,7 +46,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBarButton"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBarButton"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Appx.IAppxTitleBarButton AppxTitleBarButton
     {
@@ -54,7 +54,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Commands.ICommandBarService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Commands.ICommandBarService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Commands.ICommandBarService CommandBarService
     {
@@ -62,7 +62,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.ContextMenu.IContextMenuService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.ContextMenu.IContextMenuService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.ContextMenu.IContextMenuService ContextMenuService
     {
@@ -70,7 +70,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Game.IGameService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Game.IGameService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Game.IGameService GameService
     {
@@ -78,7 +78,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Logging.ILoggingService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Logging.ILoggingService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Logging.ILoggingService LoggingService
     {
@@ -86,7 +86,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.MRT.IMRTCoreService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.MRT.IMRTCoreService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.MRT.IMRTCoreService MRTCoreService
     {
@@ -94,7 +94,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Navigation.INavigationViewManagerFactory NavigationViewManagerFactory
     {
@@ -102,7 +102,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Settings.ISettingsService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Settings.ISettingsService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Settings.ISettingsService SettingsService
     {
@@ -110,7 +110,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.Themes.IThemeService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Themes.IThemeService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Themes.IThemeService ThemeService
     {
@@ -118,7 +118,7 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ????????? <see cref="global::GZSkinsX.Api.WindowManager.IWindowManagerService"/> ????
+    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.WindowManager.IWindowManagerService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.WindowManager.IWindowManagerService WindowManagerService
     {
@@ -126,10 +126,10 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ???????????????????
+    /// 从已加载的所有组件中获取导出的类型实例
     /// </summary>
-    /// <typeparam name="T">???????</typeparam>
-    /// <returns>?? <typeparamref name="T"/> ???</returns>
+    /// <typeparam name="T">需要获取的类型</typeparam>
+    /// <returns>返回 <typeparamref name="T"/> 的实例</returns>
     public static T Resolve<T>() where T : class
     {
         if (_compositionHost is null)
@@ -139,11 +139,11 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ?????????????????????
+    /// 尝试从已加载的所有组件中获取导出的类型实例
     /// </summary>
-    /// <typeparam name="T">ExportAttribute ?????????</typeparam>
-    /// <param name="value">?????????,??????????? default</param>
-    /// <returns>???????? true,???? false</returns>
+    /// <typeparam name="T">ExportAttribute 中所声明的导出类型</typeparam>
+    /// <param name="value">已获取到的类型实例，但如果获取失败则会返回 default</param>
+    /// <returns>当获取成功时返回 true，否则返回 false</returns>
     public static bool TryResolve<T>([global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value) where T : class
     {
         if (_compositionHost is null)
@@ -153,17 +153,17 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// ???????????????
+    /// 用于获取已导出的类型的组件容器
     /// </summary>
     private static global::System.Composition.Hosting.CompositionHost? _compositionHost;
 
     /// <summary>
-    /// ????????????????
+    /// 检查和获取指定导出类型的成员对象
     /// </summary>
-    /// <typeparam name="T">??????????</typeparam>
-    /// <param name="service">?????????</param>
-    /// <returns>??????? <typeparamref name="T"/> ??????</returns>
-    /// <exception cref="global::System.InvalidOperationException">?????????,?????? <typeparamref name="T"/> ??????????</exception>
+    /// <typeparam name="T">需要获取对象导出类型</typeparam>
+    /// <param name="service">需要检查的成员对象</param>
+    /// <returns>已获取的非空的 <typeparamref name="T"/> 类型对象实例</returns>
+    /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化，或找不到指定 <typeparamref name="T"/> 导出类型的对象时发生</exception>
     private static T CheckAccess<T>([global::System.Diagnostics.CodeAnalysis.NotNull] ref T? service) where T : class
     {
         if (service is null)
