@@ -9,22 +9,22 @@
 
 using System.Collections.Generic;
 
-using Microsoft.UI.Xaml.Controls;
-
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 
+using MUXC = Microsoft.UI.Xaml.Controls;
+
 namespace GZSkinsX.Api.Controls;
 
 //// Note: ItemsRepeater will request all the available horizontal space: https://github.com/microsoft/microsoft-ui-xaml/issues/3842
-[TemplatePart(Name = PART_ItemsRepeater, Type = typeof(ItemsRepeater))]
-public sealed partial class SettingsExpander : Control
+[TemplatePart(Name = PART_ItemsRepeater, Type = typeof(MUXC.ItemsRepeater))]
+public partial class SettingsExpander : Control
 {
     private const string PART_ItemsRepeater = "PART_ItemsRepeater";
 
-    private ItemsRepeater? _itemsRepeater;
+    private MUXC.ItemsRepeater? _itemsRepeater;
 
     /// <summary>
     /// The SettingsExpander is a collapsable control to host multiple SettingsCards.
@@ -46,7 +46,7 @@ public sealed partial class SettingsExpander : Control
             _itemsRepeater.ElementPrepared -= ItemsRepeater_ElementPrepared;
         }
 
-        _itemsRepeater = GetTemplateChild(PART_ItemsRepeater) as ItemsRepeater;
+        _itemsRepeater = GetTemplateChild(PART_ItemsRepeater) as MUXC.ItemsRepeater;
 
         if (_itemsRepeater != null)
         {

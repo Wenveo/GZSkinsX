@@ -7,10 +7,10 @@
 
 using System.Collections.Generic;
 
-using Microsoft.UI.Xaml.Controls;
-
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+
+using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Api.Controls;
 
@@ -35,14 +35,14 @@ public partial class SettingsExpander
     public static readonly DependencyProperty ItemsSourceProperty =
         DependencyProperty.Register(nameof(ItemsSource), typeof(object), typeof(SettingsExpander), new PropertyMetadata(null, OnItemsConnectedPropertyChanged));
 
-    public DataTemplate ItemTemplate
+    public object ItemTemplate
     {
-        get => (DataTemplate)GetValue(ItemTemplateProperty);
+        get => GetValue(ItemTemplateProperty);
         set => SetValue(ItemTemplateProperty, value);
     }
 
     public static readonly DependencyProperty ItemTemplateProperty =
-        DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(SettingsExpander), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(ItemTemplate), typeof(object), typeof(SettingsExpander), new PropertyMetadata(null));
 
     public StyleSelector ItemContainerStyleSelector
     {
@@ -65,7 +65,7 @@ public partial class SettingsExpander
         }
     }
 
-    private void ItemsRepeater_ElementPrepared(ItemsRepeater sender, ItemsRepeaterElementPreparedEventArgs args)
+    private void ItemsRepeater_ElementPrepared(MUXC.ItemsRepeater sender, MUXC.ItemsRepeaterElementPreparedEventArgs args)
     {
         if (ItemContainerStyleSelector != null &&
             args.Element is FrameworkElement element &&

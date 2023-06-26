@@ -14,7 +14,6 @@ namespace GZSkinsX.Api.Controls;
 /// </summary>
 public class SettingsCardAutomationPeer(SettingsCard owner) : FrameworkElementAutomationPeer(owner)
 {
-
     /// <summary>
     /// Gets the control type for the element that is associated with the UI Automation peer.
     /// </summary>
@@ -31,10 +30,6 @@ public class SettingsCardAutomationPeer(SettingsCard owner) : FrameworkElementAu
     /// <returns>The string that contains the name.</returns>
     protected override string GetClassNameCore()
     {
-        var classNameCore = Owner.GetType().Name;
-#if DEBUG_AUTOMATION
-            System.Diagnostics.Debug.WriteLine("SettingsCardAutomationPeer.GetClassNameCore returns " + classNameCore);
-#endif
-        return classNameCore;
+        return Owner.GetType().Name;
     }
 }
