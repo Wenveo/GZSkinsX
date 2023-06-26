@@ -104,7 +104,6 @@ internal sealed class ThemeService : IThemeService
                     IsHighContrast = false;
                     CurrentTheme = ElementTheme.Light;
                     ActualTheme = ElementTheme.Light;
-
                 }
                 else
                 {
