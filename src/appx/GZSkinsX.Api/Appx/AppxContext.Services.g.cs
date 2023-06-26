@@ -46,14 +46,6 @@ public static partial class AppxContext
     }
 
     /// <summary>
-    /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Appx.IAppxTitleBarButton"/> 对象实例
-    /// </summary>
-    public static global::GZSkinsX.Api.Appx.IAppxTitleBarButton AppxTitleBarButton
-    {
-        get => CheckAccess(ref s_appxTitleBarButton);
-    }
-
-    /// <summary>
     /// 获取全局静态共享的 <see cref="global::GZSkinsX.Api.Commands.ICommandBarService"/> 对象实例
     /// </summary>
     public static global::GZSkinsX.Api.Commands.ICommandBarService CommandBarService
@@ -183,7 +175,6 @@ public static partial class AppxContext
     private static global::GZSkinsX.Api.AccessCache.IMostRecentlyUsedService? s_mostRecentlyUsedService;
     private static global::GZSkinsX.Api.Appx.IAppxWindow? s_appxWindow;
     private static global::GZSkinsX.Api.Appx.IAppxTitleBar? s_appxTitleBar;
-    private static global::GZSkinsX.Api.Appx.IAppxTitleBarButton? s_appxTitleBarButton;
     private static global::GZSkinsX.Api.Commands.ICommandBarService? s_commandBarService;
     private static global::GZSkinsX.Api.ContextMenu.IContextMenuService? s_contextMenuService;
     private static global::GZSkinsX.Api.Game.IGameService? s_gameService;

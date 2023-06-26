@@ -20,7 +20,6 @@
       <DependentUpon>AppxContext.Services.g.tt</DependentUpon>
     </Compile>
     <Compile Include="Appx\IAppxTitleBar.cs" />
-    <Compile Include="Appx\IAppxTitleBarButton.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
     <Compile Include="Appx\AppxContext.InternalCalls.cs" />
     <Compile Include="Commands\CommandButtonBase.cs" />

@@ -31,7 +31,6 @@
     <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="MainApp\StartUpClass.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
-    <Compile Include="MainApp\AppxTitleBarButton.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="MRT\MRTCoreMap.cs" />
     <Compile Include="MRT\MRTCoreService.cs" />
