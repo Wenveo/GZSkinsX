@@ -92,9 +92,9 @@ internal sealed class ThemeService : IThemeService
         UpdateProperties();
     }
 
-    private void UpdateProperties()
+    private async void UpdateProperties()
     {
-        _dispatcherQueue.EnqueueAsync(() =>
+        await _dispatcherQueue.EnqueueAsync(() =>
         {
             if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
