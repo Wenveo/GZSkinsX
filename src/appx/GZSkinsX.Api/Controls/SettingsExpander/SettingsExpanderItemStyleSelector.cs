@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -18,12 +20,12 @@ public class SettingsExpanderItemStyleSelector : StyleSelector
     /// <summary>
     /// Gets or sets the default <see cref="Style"/>.
     /// </summary>
-    public Style DefaultStyle { get; set; }
+    public Style? DefaultStyle { get; set; }
 
     /// <summary>
     /// Gets or sets the <see cref="Style"/> when clickable.
     /// </summary>
-    public Style ClickableStyle { get; set; }
+    public Style? ClickableStyle { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SettingsExpanderItemStyleSelector"/> class.
@@ -33,7 +35,7 @@ public class SettingsExpanderItemStyleSelector : StyleSelector
     }
 
     /// <inheritdoc/>
-    protected override Style SelectStyleCore(object item, DependencyObject container)
+    protected override Style? SelectStyleCore(object item, DependencyObject container)
     {
         if (container is SettingsCard card && card.IsClickEnabled)
         {
