@@ -27,6 +27,7 @@ internal sealed class AutoThemeTitleBar : IAdvanceExtension
     public AutoThemeTitleBar()
     {
         _appxTitleBar = AppxContext.AppxTitleBar;
+        _appxTitleBar.ExtendViewIntoTitleBar = true;
         _appxTitleBar.ButtonBackgroundColor = Colors.Transparent;
         _appxTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
