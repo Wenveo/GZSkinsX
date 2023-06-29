@@ -84,6 +84,8 @@
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Mods\IModsService.cs" />
+    <Compile Include="Mods\WGZModInfo.cs" />
     <Compile Include="MRT\IMRTCoreMap.cs" />
     <Compile Include="MRT\IMRTCoreService.cs" />
     <Compile Include="MRT\MRTCoreConstants.cs" />

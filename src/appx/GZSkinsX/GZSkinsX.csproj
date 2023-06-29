@@ -6,6 +6,7 @@
     <AssemblyName>GZSkinsX</AssemblyName>
     <OutputType>AppContainerExe</OutputType>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AccessCache\FutureAccessService.cs" />
@@ -20,6 +21,7 @@
     <Compile Include="ContextMenu\ContextMenuItemContext.cs" />
     <Compile Include="ContextMenu\ContextMenuService.cs" />
     <Compile Include="ContextMenu\ContextMenuFlyoutHelper.cs" />
+    <Compile Include="Mods\WGZModHelper.cs" />
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameService.cs" />
     <Compile Include="Game\GameSettings.cs" />
@@ -32,6 +34,7 @@
     <Compile Include="MainApp\StartUpClass.cs" />
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
+    <Compile Include="Mods\ModsService.cs" />
     <Compile Include="MRT\MRTCoreMap.cs" />
     <Compile Include="MRT\MRTCoreService.cs" />
     <Compile Include="Navigation\NavigationGroupContext.cs" />
@@ -185,7 +188,11 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="GZSkinsX.Kernel">
+      <Version>0.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
