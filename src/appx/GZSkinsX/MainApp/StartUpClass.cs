@@ -16,7 +16,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
 
 using GZSkinsX.Extension;
 using GZSkinsX.Logging;
@@ -92,11 +91,6 @@ public sealed partial class StartUpClass
         AppxContext.InitializeLifetimeService(parms, s_compositionHost);
 
         s_extensionService = s_compositionHost.GetExport<ExtensionService>();
-        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
-        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
-        s_extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
-        s_extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
-
         s_synchronouslock.Set();
     }
 

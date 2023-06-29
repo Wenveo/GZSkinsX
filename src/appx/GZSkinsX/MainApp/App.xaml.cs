@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.WindowManager;
 
 using Microsoft.UI.Xaml.Controls;
@@ -24,11 +25,6 @@ namespace GZSkinsX.MainApp;
 public sealed partial class App : Application
 {
     /// <summary>
-    /// 用于表示应用程序主窗口是否已加载完毕
-    /// </summary>
-    private bool _isAppLoaded;
-
-    /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
     /// </summary>
@@ -46,6 +42,9 @@ public sealed partial class App : Application
         var appxWindow = AppxContext.AppxWindow;
         if (appxWindow.MainWindow == args.Window)
         {
+            var extensionService = StartUpClass.s_extensionService;
+            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
+
             if (appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
             {
                 // 合并扩展组件的资源字典至主程序内
@@ -64,6 +63,10 @@ public sealed partial class App : Application
                 var themeService = AppxContext.ThemeService;
                 frameworkElement.RequestedTheme = themeService.CurrentTheme;
             }
+
+            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
+            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
+            extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
         }
 
         base.OnWindowCreated(args);
@@ -76,14 +79,6 @@ public sealed partial class App : Application
     /// <param name="e">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        var appxWindow = AppxContext.AppxWindow;
-
-        if (_isAppLoaded is false)
-        {
-            _isAppLoaded = true;
-            ((AppxWindow)appxWindow).OnAppLoaded();
-        }
-
         if (args.PrelaunchActivated == false)
         {
             if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
@@ -91,7 +86,7 @@ public sealed partial class App : Application
                 CoreApplication.EnablePrelaunch(true);
             }
 
-            appxWindow.Activate();
+            AppxContext.AppxWindow.Activate();
         }
 
         base.OnLaunched(args);

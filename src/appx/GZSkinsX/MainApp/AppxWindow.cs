@@ -69,18 +69,20 @@ internal sealed class AppxWindow : IAppxWindow
 
         _shellWindow = Window.Current;
         _shellWindow.Activated += OnActivated;
+        _shellWindow.VisibilityChanged += OnVisibilityChanged;
     }
 
     /// <summary>
     /// 负责对已加载的应用程序扩展通知 AppLoaded 事件
     /// </summary>
-    internal void OnAppLoaded()
+    private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs e)
     {
+        _shellWindow.VisibilityChanged -= OnVisibilityChanged;
+
         _extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
         _extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AppLoaded);
         SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequested;
     }
-
     /// <summary>
     /// 当前应用程序主窗口的激活事件
     /// </summary>
