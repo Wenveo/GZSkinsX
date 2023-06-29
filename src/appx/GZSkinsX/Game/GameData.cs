@@ -60,7 +60,7 @@ internal sealed class GameData : IGameData
     /// <returns>在成功更新数据时返回 true，否则返回 false</returns>
     [MemberNotNullWhen(true, nameof(LCUFolder), nameof(LCUExecuteFile))]
     [MemberNotNullWhen(true, nameof(GameFolder), nameof(GameExecuteFile))]
-    public async Task<bool> TryUpdateAsync(StorageFolder rootFolder, GameRegion region)
+    public async Task<bool> TryUpdateAsync(StorageFolder? rootFolder, GameRegion region)
     {
         if (rootFolder is not null && region is not GameRegion.Unknown)
         {

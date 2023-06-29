@@ -41,5 +41,5 @@ public interface IGameService
     /// <param name="region">游戏所在的区域服务器</param>
     /// <returns>在成功更新数据时返回 true，否则返回 false</returns>
     [MemberNotNullWhen(true, nameof(RootFolder))]
-    Task<bool> TryUpdateAsync(StorageFolder rootFolder, GameRegion region);
+    Task<bool> TryUpdateAsync(StorageFolder? rootFolder, GameRegion region);
 }

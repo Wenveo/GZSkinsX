@@ -55,7 +55,7 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     public StorageFolder? RootFolder { get; private set; }
 
     /// <inheritdoc/>
-    public async Task<bool> TryUpdateAsync(StorageFolder rootFolder, GameRegion region)
+    public async Task<bool> TryUpdateAsync(StorageFolder? rootFolder, GameRegion region)
     {
         if (await _gameData.TryUpdateAsync(rootFolder, region))
         {
