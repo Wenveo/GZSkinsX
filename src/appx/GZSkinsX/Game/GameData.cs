@@ -8,10 +8,12 @@
 #nullable enable
 
 using System;
-using System.IO;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Game;
+
+using Windows.Storage;
 
 namespace GZSkinsX.Game;
 
@@ -26,7 +28,7 @@ internal sealed class GameData : IGameData
     /// <summary>
     /// 表示 LOL 游戏程序的的文件名称，该名称始终为一个固定值
     /// </summary>
-    private const string GAME_EXECUTE_NAME = "League of Legends.exe";
+    private const string GAME_EXECUTE_File_NAME = "League of Legends.exe";
 
     /// <summary>
     /// 表示 LCU 文件夹的名称，该名称始终为一个固定值
@@ -36,30 +38,19 @@ internal sealed class GameData : IGameData
     /// <summary>
     /// 表示 LCU 客户端程序的文件名称，该名称始终为一个固定值
     /// </summary>
-    private const string LCU_EXECUTE_NAME = "LeagueClient.exe";
+    private const string LCU_EXECUTE_File_NAME = "LeagueClient.exe";
 
     /// <inheritdoc/>
-    public string GameDirectory { get; private set; }
+    public StorageFolder? GameFolder { get; private set; }
 
     /// <inheritdoc/>
-    public string GameExecutePath { get; private set; }
+    public StorageFile? GameExecuteFile { get; private set; }
 
     /// <inheritdoc/>
-    public string LCUDirectory { get; private set; }
+    public StorageFolder? LCUFolder { get; private set; }
 
     /// <inheritdoc/>
-    public string LCUExecutePath { get; private set; }
-
-    /// <summary>
-    /// 初始化 <see cref="GameData"/> 的新实例
-    /// </summary>
-    public GameData()
-    {
-        GameDirectory = string.Empty;
-        GameExecutePath = string.Empty;
-        LCUDirectory = string.Empty;
-        LCUExecutePath = string.Empty;
-    }
+    public StorageFile? LCUExecuteFile { get; private set; }
 
     /// <summary>
     /// 尝试从传入指定的游戏目录以及区域来更新当前游戏数据的基本路径信息
@@ -67,43 +58,52 @@ internal sealed class GameData : IGameData
     /// <param name="rootDirectory">游戏的根目录文件夹</param>
     /// <param name="region">游戏所在的区域服务器</param>
     /// <returns>在成功更新数据时返回 true，否则返回 false</returns>
-    public bool TryUpdate(string rootDirectory, GameRegion region)
+    [MemberNotNullWhen(true, nameof(LCUFolder), nameof(LCUExecuteFile))]
+    [MemberNotNullWhen(true, nameof(GameFolder), nameof(GameExecuteFile))]
+    public async Task<bool> TryUpdateAsync(StorageFolder rootFolder, GameRegion region)
     {
-        if (Directory.Exists(rootDirectory) && region != GameRegion.Unknown)
+        if (rootFolder is not null && region is not GameRegion.Unknown)
         {
-            /// 定义基本的文件或文件夹路径
-            var gameDirectory = Path.Combine(rootDirectory, GAME_DIRECTORY_NAME);
-            var gameExecutePath = Path.Combine(gameDirectory, GAME_EXECUTE_NAME);
+            IStorageItem gameFolder, lcuFolder, gameExecuteFile, lcuExecuteFile;
 
-            var lcuDirectory = region == GameRegion.Riot
-                ? rootDirectory
-                : Path.Combine(rootDirectory, LCU_DIRECTORY_NAME);
-            var lcuExecutePath = Path.Combine(lcuDirectory, LCU_EXECUTE_NAME);
-
-            /// 这里用 DirectoryInfo 获取文件夹信息并判断文件是否存在
-            var gameDirectoryInfo = new DirectoryInfo(gameDirectory);
-            var lcuDirectoryInfo = new DirectoryInfo(lcuDirectory);
-
-            /// 优先判断文件夹是否存在
-            if (gameDirectoryInfo.Exists is false || lcuDirectoryInfo.Exists is false)
+            gameFolder = await rootFolder.TryGetItemAsync(GAME_DIRECTORY_NAME);
+            if (gameFolder is null || !gameFolder.IsOfType(StorageItemTypes.Folder))
             {
                 return false;
             }
 
-            /// File.Exists 在这里不适用，且无法正确判断，因此只能通过获取文件列表进行判定
-            if (gameDirectoryInfo.GetFiles(GAME_EXECUTE_NAME).Any(
-                a => StringComparer.OrdinalIgnoreCase.Equals(a.FullName, gameExecutePath))
-                &&
-                lcuDirectoryInfo.GetFiles(LCU_EXECUTE_NAME).Any(
-                b => StringComparer.OrdinalIgnoreCase.Equals(b.FullName, lcuExecutePath)))
+            if (region is GameRegion.Riot)
             {
-                GameDirectory = gameDirectory;
-                GameExecutePath = gameExecutePath;
-                LCUDirectory = lcuDirectory;
-                LCUExecutePath = lcuExecutePath;
-
-                return true;
+                lcuFolder = rootFolder;
             }
+            else
+            {
+                lcuFolder = await rootFolder.TryGetItemAsync(LCU_DIRECTORY_NAME);
+                if (lcuFolder is null || !lcuFolder.IsOfType(StorageItemTypes.Folder))
+                {
+                    return false;
+                }
+            }
+
+            gameExecuteFile = await ((StorageFolder)gameFolder).TryGetItemAsync(GAME_EXECUTE_File_NAME);
+            if (gameExecuteFile is null || !gameExecuteFile.IsOfType(StorageItemTypes.File))
+            {
+                return false;
+            }
+
+            lcuExecuteFile = await ((StorageFolder)lcuFolder).TryGetItemAsync(LCU_EXECUTE_File_NAME);
+            if (lcuExecuteFile is null || !lcuExecuteFile.IsOfType(StorageItemTypes.File))
+            {
+                return false;
+            }
+
+            GameFolder = (StorageFolder)gameFolder;
+            GameExecuteFile = (StorageFile)gameExecuteFile;
+
+            LCUFolder = (StorageFolder)lcuFolder;
+            LCUExecuteFile = (StorageFile)lcuExecuteFile;
+
+            return true;
         }
 
         return false;

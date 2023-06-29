@@ -13,7 +13,7 @@ namespace GZSkinsX.Api.AccessCache;
 public static class FutureAccessItemConstants
 {
     /// <summary>
-    /// 表示 <see cref="IGameService.RootDirectory"/> 在访问项存储列表中所关联的名称
+    /// 表示 <see cref="Game.IGameService.RootFolder"/> 在访问项存储列表中所关联的名称
     /// </summary>
-    public static readonly string Game_Directory_Name = "GameDirectory";
+    public static readonly string Game_RootFolder_Name = "Game_RootFolder";
 }

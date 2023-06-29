@@ -9,13 +9,13 @@
 
 using System;
 
-using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Diagnostics;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.WindowManager;
 
+using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,13 +31,13 @@ namespace GZSkinsX.Views.WindowFrames.StartUp;
 public sealed partial class StartUpPage : Page
 {
     private readonly IWindowManagerService _windowManagerService;
-    private readonly IFutureAccessService _futureAccessService;
     private readonly IGameService _gameService;
+
+    private StorageFolder? _selectedFolder;
 
     public StartUpPage()
     {
         _windowManagerService = AppxContext.WindowManagerService;
-        _futureAccessService = AppxContext.FutureAccessService;
         _gameService = AppxContext.GameService;
 
         InitializeComponent();
@@ -75,8 +75,7 @@ public sealed partial class StartUpPage : Page
         var folder = await new FolderPicker().PickSingleFolderAsync();
         if (folder is not null)
         {
-            _futureAccessService.Add(folder, FutureAccessItemConstants.Game_Directory_Name);
-
+            _selectedFolder = folder;
             StartUp_Initialize_Directory_TextBox.Text = folder.Path;
         }
     }
@@ -87,13 +86,13 @@ public sealed partial class StartUpPage : Page
         StartUp_Initialize_Error_InfoBar.IsOpen = true;
     }
 
-    private void OnOK(object sender, RoutedEventArgs e)
+    private async void OnOK(object sender, RoutedEventArgs e)
     {
         Debug2.Assert(_gameService is not null);
         Debug2.Assert(_windowManagerService is not null);
 
         var directoryPath = StartUp_Initialize_Directory_TextBox.Text;
-        if (string.IsNullOrEmpty(directoryPath))
+        if (_selectedFolder is null || string.IsNullOrEmpty(directoryPath))
         {
             ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Null"));
             return;
@@ -106,7 +105,7 @@ public sealed partial class StartUpPage : Page
             return;
         }
 
-        if (!_gameService.TryUpdate(directoryPath, (GameRegion)(selector.SelectedIndex + 1)))
+        if (await _gameService.TryUpdateAsync(_selectedFolder, (GameRegion)(selector.SelectedIndex + 1)) is false)
         {
             ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Invalid"));
             return;

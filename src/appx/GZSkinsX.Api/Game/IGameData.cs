@@ -5,6 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
+using Windows.Storage;
+
 namespace GZSkinsX.Api.Game;
 
 /// <summary>
@@ -13,22 +17,22 @@ namespace GZSkinsX.Api.Game;
 public interface IGameData
 {
     /// <summary>
-    /// 英雄联盟游戏程序所在的目录
+    /// 英雄联盟游戏程序所在的文件夹
     /// </summary>
-    string GameDirectory { get; }
+    StorageFolder? GameFolder { get; }
 
     /// <summary>
-    /// 英雄联盟游戏程序的可执行文件路径
+    /// 英雄联盟游戏程序的可执行文件
     /// </summary>
-    string GameExecutePath { get; }
+    StorageFile? GameExecuteFile { get; }
 
     /// <summary>
-    /// 英雄联盟客户端 (LCU) 所在的目录
+    /// 英雄联盟客户端 (LCU) 所在的文件夹
     /// </summary>
-    string LCUDirectory { get; }
+    StorageFolder? LCUFolder { get; }
 
     /// <summary>
-    /// 英雄联盟客户端 (LCU) 的可执行文件路径
+    /// 英雄联盟客户端 (LCU) 的可执行文件
     /// </summary>
-    string LCUExecutePath { get; }
+    StorageFile? LCUExecuteFile { get; }
 }

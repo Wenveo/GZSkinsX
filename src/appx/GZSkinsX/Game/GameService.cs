@@ -8,10 +8,15 @@
 #nullable enable
 
 using System.Composition;
+using System.Threading.Tasks;
 
+using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
+using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Logging;
+
+using Windows.Storage;
 
 namespace GZSkinsX.Game;
 
@@ -35,6 +40,11 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     /// </summary>
     private readonly ILoggingService _loggingService = AppxContext.LoggingService;
 
+    /// <summary>
+    /// 用于管理未来访问的文件/文件夹项的服务
+    /// </summary>
+    private readonly IFutureAccessService _futureAccessService = AppxContext.FutureAccessService;
+
     /// <inheritdoc/>
     public GameRegion CurrentRegion => _gameSettings.CurrentRegion;
 
@@ -42,21 +52,35 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     public IGameData GameData => _gameData;
 
     /// <inheritdoc/>
-    public string RootDirectory => _gameSettings.RootDirectory;
+    public StorageFolder? RootFolder { get; private set; }
 
     /// <inheritdoc/>
-    public bool TryUpdate(string rootDirectory, GameRegion region)
+    public async Task<bool> TryUpdateAsync(StorageFolder rootFolder, GameRegion region)
     {
-        if (_gameData.TryUpdate(rootDirectory, region))
+        if (await _gameData.TryUpdateAsync(rootFolder, region))
         {
-            _gameSettings.RootDirectory = rootDirectory;
+            _futureAccessService.TryRemove(FutureAccessItemConstants.Game_RootFolder_Name);
+            _futureAccessService.Add(rootFolder, FutureAccessItemConstants.Game_RootFolder_Name);
+
+            RootFolder = rootFolder;
             _gameSettings.CurrentRegion = region;
 
-            _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootDirectory} /p:GameRegion={region}");
+            _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootFolder.Path} /p:GameRegion={region}");
             return true;
         }
 
-        _loggingService.LogWarning($"GameService: Failed to update game data /p:RootDirectory={rootDirectory} /p:GameRegion={region}");
+        var path = rootFolder is not null ? rootFolder.Path : "<null>";
+        _loggingService.LogWarning($"GameService: Failed to update game data /p:RootDirectory={path} /p:GameRegion={region}");
         return false;
+    }
+
+    [ExportAdvanceExtension, AdvanceExtensionMetadata]
+    private sealed class AutoInitialize : IAdvanceExtension
+    {
+        [ImportingConstructor]
+        public AutoInitialize(IGameService gameService)
+        {
+            ((GameService)gameService).RootFolder = AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name).GetAwaiter().GetResult();
+        }
     }
 }

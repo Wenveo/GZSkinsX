@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Composition;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
@@ -15,20 +16,25 @@ namespace GZSkinsX.Views.WindowFrames.StartUp;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
-internal sealed class StartUpFrame : IWindowFrame
+internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 {
-    private readonly IGameService _gameService;
     private readonly IWindowManagerService _windowManagerService;
+    private readonly IGameService _gameService;
 
     public StartUpFrame()
     {
-        _gameService = AppxContext.Resolve<IGameService>();
-        _windowManagerService = AppxContext.Resolve<IWindowManagerService>();
+        _windowManagerService = AppxContext.WindowManagerService;
+        _gameService = AppxContext.GameService;
     }
 
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        if (_gameService.TryUpdate(_gameService.RootDirectory, _gameService.CurrentRegion))
+        return false;
+    }
+
+    public async Task<bool> CanNavigateToAsync(WindowFrameNavigatingEvnetArgs args)
+    {
+        if (await _gameService.TryUpdateAsync(_gameService.RootFolder, _gameService.CurrentRegion))
         {
             _windowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
             return false;
@@ -36,8 +42,7 @@ internal sealed class StartUpFrame : IWindowFrame
         else
         {
             // IsInvalid
-            args.Parameter = _gameService.CurrentRegion != GameRegion.Unknown ||
-                string.IsNullOrEmpty(_gameService.RootDirectory) is false;
+            args.Parameter = _gameService.CurrentRegion is not GameRegion.Unknown;
 
             return true;
         }
