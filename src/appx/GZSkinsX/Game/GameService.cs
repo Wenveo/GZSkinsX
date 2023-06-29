@@ -60,12 +60,12 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
         if (await _gameData.TryUpdateAsync(rootFolder, region))
         {
             _futureAccessService.TryRemove(FutureAccessItemConstants.Game_RootFolder_Name);
-            _futureAccessService.Add(rootFolder, FutureAccessItemConstants.Game_RootFolder_Name);
+            _futureAccessService.Add(rootFolder!, FutureAccessItemConstants.Game_RootFolder_Name);
 
             RootFolder = rootFolder;
             _gameSettings.CurrentRegion = region;
 
-            _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootFolder.Path} /p:GameRegion={region}");
+            _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootFolder!.Path} /p:GameRegion={region}");
             return true;
         }
 

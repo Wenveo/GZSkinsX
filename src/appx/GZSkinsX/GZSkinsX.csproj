@@ -51,6 +51,7 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NavigationViews\Home\HomeViewItem.cs" />
+    <Compile Include="Views\NavigationViews\Home\HomeViewModel.cs" />
     <Compile Include="Views\NavigationViews\Mods\ModsViewItem.cs" />
     <Compile Include="Views\NavigationViews\Mods\ModsPage.xaml.cs">
       <DependentUpon>ModsPage.xaml</DependentUpon>
