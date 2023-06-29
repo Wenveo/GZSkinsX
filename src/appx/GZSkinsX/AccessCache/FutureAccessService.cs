@@ -227,4 +227,114 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
             _futureAccessList.Remove(token);
         }
     }
+
+    /// <inheritdoc/>
+    public async Task<StorageFile?> TryGetFileAsync(string name)
+    {
+        try
+        {
+            var file = await _futureAccessList.GetFileAsync(
+                _settingsSection.Attribute<string>(name));
+
+            return file;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public async Task<StorageFile?> TryGetFileAsync(string name, AccessCacheOptions options)
+    {
+        try
+        {
+            var file = await _futureAccessList.GetFileAsync(
+                _settingsSection.Attribute<string>(name), options);
+
+            return file;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public async Task<StorageFolder?> TryGetFolderAsync(string name)
+    {
+        try
+        {
+            var folder = await _futureAccessList.GetFolderAsync(
+                _settingsSection.Attribute<string>(name));
+
+            return folder;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public async Task<StorageFolder?> TryGetFolderAsync(string name, AccessCacheOptions options)
+    {
+        try
+        {
+            var folder = await _futureAccessList.GetFolderAsync(
+                _settingsSection.Attribute<string>(name), options);
+
+            return folder;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public async Task<IStorageItem?> TryGetItemAsync(string name)
+    {
+        try
+        {
+            var item = await _futureAccessList.GetItemAsync(
+                _settingsSection.Attribute<string>(name));
+
+            return item;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public async Task<IStorageItem?> TryGetItemAsync(string name, AccessCacheOptions options)
+    {
+        try
+        {
+            var item = await _futureAccessList.GetItemAsync(
+                _settingsSection.Attribute<string>(name), options);
+
+            return item;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
+    public bool TryRemove(string name)
+    {
+        try
+        {
+            _futureAccessList.Remove(_settingsSection.Attribute<string>(name));
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

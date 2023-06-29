@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System;
 using System.Threading.Tasks;
 
@@ -100,7 +102,7 @@ public interface IAccessCacheService
     /// 从列表中检索指定的项 (例如文件或文件夹)
     /// </summary>
     /// <param name="name">要检索的项的名称</param>
-    /// <returns>此方法成功完成后，它将返回与指定标记关联的项 (类型 <see cref="IStorageItem"/>)</returns>
+    /// <returns>此方法成功完成后，它将返回与指定标记关联的项 (<see cref="IStorageItem"/>)</returns>
     /// <exception cref="ArgumentNullException"><paramref name="name"/> 上声明的默认值为 null</exception>
     /// <exception cref="AccessCacheItemNotFoundException">未在列表中检索到与名称关联的 <see cref="IStorageItem"/></exception>
     Task<IStorageItem> GetItemAsync(string name);
@@ -110,7 +112,7 @@ public interface IAccessCacheService
     /// </summary>
     /// <param name="name">要检索的项的名称</param>
     /// <param name="options">描述应用访问项时要使用的行为的枚举值。</param>
-    /// <returns>此方法成功完成后，它将返回与指定标记关联的项 (类型 <see cref="IStorageItem"/>)</returns>
+    /// <returns>此方法成功完成后，它将返回与指定标记关联的项 (<see cref="IStorageItem"/>)</returns>
     /// <exception cref="ArgumentNullException"><paramref name="name"/> 上声明的默认值为 null</exception>
     /// <exception cref="AccessCacheItemNotFoundException">未在列表中检索到与名称关联的 <see cref="IStorageItem"/></exception>
     Task<IStorageItem> GetItemAsync(string name, AccessCacheOptions options);
@@ -121,4 +123,56 @@ public interface IAccessCacheService
     /// <param name="name">要删除的存储项的令牌名称</param>
     /// <exception cref="ArgumentNullException"><paramref name="name"/> 上声明的默认值为 null</exception>
     void Remove(string name);
+
+    /// <summary>
+    /// 尝试从列表中检索指定的 <see cref="StorageFile"/>
+    /// </summary>
+    /// <param name="name">要检索的 <see cref="StorageFile"/> 的名称</param>
+    /// <returns>如果此方法成功完成后，将返回与指定名称关联的 <see cref="StorageFile"/>，否则将返回 null</returns>
+    Task<StorageFile?> TryGetFileAsync(string name);
+
+    /// <summary>
+    /// 尝试使用指定的选项从列表中检索指定的 <see cref="StorageFile"/>
+    /// </summary>
+    /// <param name="name">要检索的 <see cref="StorageFile"/> 的名称</param>
+    /// <param name="options">描述应用访问项时要使用的行为的枚举值。</param>
+    /// <returns>如果此方法成功完成后，将返回与指定名称关联的 <see cref="StorageFile"/>，否则将返回 null</returns>
+    Task<StorageFile?> TryGetFileAsync(string name, AccessCacheOptions options);
+
+    /// <summary>
+    /// 尝试从列表中检索指定的 <see cref="StorageFolder"/>
+    /// </summary>
+    /// <param name="name">要检索的 <see cref="StorageFolder"/> 的名称</param>
+    /// <returns>如果此方法成功完成后，它将返回与指定名称关联的 <see cref="StorageFolder"/>，否则将返回 null</returns>
+    Task<StorageFolder?> TryGetFolderAsync(string name);
+
+    /// <summary>
+    /// 尝试使用指定的选项从列表中检索指定的 <see cref="StorageFolder"/>
+    /// </summary>
+    /// <param name="name">要检索的 <see cref="StorageFolder"/> 的名称</param>
+    /// <param name="options">枚举值，该值描述应用访问项目时要使用的行为</param>
+    /// <returns>如果此方法成功完成后，它将返回与指定名称关联的 <see cref="StorageFolder"/>，否则将返回 null</returns>
+    Task<StorageFolder?> TryGetFolderAsync(string name, AccessCacheOptions options);
+
+    /// <summary>
+    /// 尝试从列表中检索指定的项 (例如文件或文件夹)
+    /// </summary>
+    /// <param name="name">要检索的项的名称</param>
+    /// <returns>如果此方法成功完成后，它将返回与指定标记关联的项 (<see cref="IStorageItem"/>)，否则将返回 null</returns>
+    Task<IStorageItem?> TryGetItemAsync(string name);
+
+    /// <summary>
+    /// 尝试使用指定的选项从列表中检索指定的项 (例如文件或文件夹)
+    /// </summary>
+    /// <param name="name">要检索的项的名称</param>
+    /// <param name="options">描述应用访问项时要使用的行为的枚举值。</param>
+    /// <returns>如果此方法成功完成后，它将返回与指定标记关联的项 (<see cref="IStorageItem"/>)，否则将返回 null</returns>
+    Task<IStorageItem?> TryGetItemAsync(string name, AccessCacheOptions options);
+
+    /// <summary>
+    /// 尝试从访问列表中删除指定的存储项
+    /// </summary>
+    /// <param name="name">要删除的存储项的令牌名称</param>
+    /// <returns>如果成功将与指定标记关联的项移除则返回 true，否则返回 false</returns>
+    bool TryRemove(string name);
 }
