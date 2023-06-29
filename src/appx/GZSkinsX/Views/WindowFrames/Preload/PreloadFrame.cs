@@ -8,16 +8,12 @@
 using System;
 using System.Composition;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
 
-using Windows.Foundation;
 using Windows.Foundation.Metadata;
-using Windows.Globalization;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
@@ -58,9 +54,9 @@ internal sealed class PreloadFrame : IWindowFrame
         if (_preloadSettings.IsInitialize is false)
         {
             // Set Default Language
-            var cultureId = GetUserDefaultUILanguage();
+            /*var cultureId = GetUserDefaultUILanguage();
             var cultureInfo = CultureInfo.GetCultureInfo(cultureId);
-            ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;
+            ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;*/
 
             if (appView.TryResizeView(minWindowSize))
             {
@@ -91,8 +87,8 @@ internal sealed class PreloadFrame : IWindowFrame
         _loggingService.LogDebug($"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
     }
 
-    [ContractVersion(typeof(UniversalApiContract), 65536u)]
-    [DllImport("api-ms-win-core-localization-obsolete-l1-2-0.dll", CharSet = CharSet.Auto)]
-    private static extern ushort GetUserDefaultUILanguage();
+    //[ContractVersion(typeof(UniversalApiContract), 65536u)]
+    //[DllImport("api-ms-win-core-localization-obsolete-l1-2-0.dll", CharSet = CharSet.Auto)]
+    //private static extern ushort GetUserDefaultUILanguage();
 }
 
