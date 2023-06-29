@@ -132,7 +132,7 @@ internal sealed class WindowManagerService : IWindowManagerService
         NavigateCore(frameGuid, parameter, infoOverride);
     }
 
-    private void NavigateCore(Guid frameGuid, object? parameter, NavigationTransitionInfo? infoOverride)
+    private async void NavigateCore(Guid frameGuid, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         if (_guidToWindowFrame.TryGetValue(frameGuid, out var context) is false)
         {
@@ -142,7 +142,11 @@ internal sealed class WindowManagerService : IWindowManagerService
         var windowFrame = context.Value;
         var args = new WindowFrameNavigatingEvnetArgs(context, parameter, infoOverride);
 
-        if (windowFrame.CanNavigateTo(args))
+        var b = windowFrame is IWindowFrame2 windowFrame2
+            ? await windowFrame2.CanNavigateToAsync(args)
+            : windowFrame.CanNavigateTo(args);
+
+        if (b)
         {
             if (_frame.Navigate(context.Metadata.PageType, args.Parameter,
                 args.NavigationTransitionInfo ?? new DrillInNavigationTransitionInfo()))

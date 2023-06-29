@@ -106,6 +106,7 @@
     <Compile Include="Utilities\ItemGroupParser.cs" />
     <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
     <Compile Include="WindowManager\IWindowFrame.cs" />
+    <Compile Include="WindowManager\IWindowFrame2.cs" />
     <Compile Include="WindowManager\IWindowFrameContext.cs" />
     <Compile Include="WindowManager\IWindowManagerService.cs" />
     <Compile Include="WindowManager\WindowFrameConstants.cs" />
