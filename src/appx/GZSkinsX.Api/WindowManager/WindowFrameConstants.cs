@@ -15,6 +15,11 @@ namespace GZSkinsX.Api.WindowManager;
 public static class WindowFrameConstants
 {
     /// <summary>
+    /// 表示索引页的 <seealso cref="Guid"/> 字符串值
+    /// </summary>
+    public const string Index_Guid = "D1E8EAD9-F18C-4BAD-9846-E97A27390A93";
+
+    /// <summary>
     /// 表示启动页的 <seealso cref="Guid"/> 字符串值
     /// </summary>
     public const string StartUp_Guid = "1C3A5F43-5383-4B87-A365-1D1610B92060";

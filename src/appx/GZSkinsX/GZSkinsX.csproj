@@ -56,6 +56,10 @@
     <Compile Include="Views\NavigationViews\Mods\ModsPage.xaml.cs">
       <DependentUpon>ModsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WindowFrames\Index\IndexFrame.cs" />
+    <Compile Include="Views\WindowFrames\Index\IndexPage.xaml.cs">
+      <DependentUpon>IndexPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WindowFrames\NavigationRoot\CustomNavigationView.xaml.cs">
       <DependentUpon>CustomNavigationView.xaml</DependentUpon>
     </Compile>
@@ -166,6 +170,10 @@
     <Page Include="Views\NavigationViews\Mods\ModsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WindowFrames\Index\IndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WindowFrames\NavigationRoot\CustomNavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>

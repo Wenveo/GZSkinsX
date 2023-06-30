@@ -55,7 +55,7 @@ public sealed partial class App : Application
                     mergedResourceDictionaries.Add(rsrc);
                 }
 
-                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
             }
 
             if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
