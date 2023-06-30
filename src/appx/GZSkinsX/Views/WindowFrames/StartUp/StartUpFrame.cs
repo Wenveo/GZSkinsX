@@ -27,16 +27,18 @@ namespace GZSkinsX.Views.WindowFrames.StartUp;
 internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 {
     private readonly IWindowManagerService _windowManagerService;
+    private readonly StartUpSettings _startUpSettings;
     private readonly ILoggingService _loggingService;
     private readonly IGameService _gameService;
-    private readonly StartUpSettings _startUpSettings;
+    private readonly IAppxWindow _appxWindow;
 
     public StartUpFrame()
     {
-        _windowManagerService = AppxContext.WindowManagerService;
-        _loggingService = AppxContext.LoggingService;
+        _appxWindow = AppxContext.AppxWindow;
         _gameService = AppxContext.GameService;
+        _loggingService = AppxContext.LoggingService;
         _startUpSettings = AppxContext.Resolve<StartUpSettings>();
+        _windowManagerService = AppxContext.WindowManagerService;
 
         if (Debugger.IsAttached)
         {
@@ -85,7 +87,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
                 _loggingService.LogWarning("AppxPreload: Failed to resize the window.");
             }
 
-            _startUpSettings.IsInitialize = true;
+            _appxWindow.Closed += (_, _) => _startUpSettings.IsInitialize = true;
         }
         else
         {
@@ -107,6 +109,11 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
         }
 
         _loggingService.LogDebug($"AppxPreload: IsInitialize = {_startUpSettings.IsInitialize}");
+    }
+
+    private void _appxWindow_Closed(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     //[ContractVersion(typeof(UniversalApiContract), 65536u)]
