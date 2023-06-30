@@ -6,10 +6,12 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Helpers;
 using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Kernel;
 
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
@@ -33,7 +35,9 @@ public sealed partial class PreloadPage : Page
     private async void OnLoaded(object sender, RoutedEventArgs e)
     {
         var b = await Package.Current.VerifyContentIntegrityAsync();
-        if (b)
+        var r = await Task.Run(KernelInterop.InitializeGZXKernelModule);
+
+        if (b && r is 0)
         {
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
         }
