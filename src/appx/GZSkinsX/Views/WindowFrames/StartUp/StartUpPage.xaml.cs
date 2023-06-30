@@ -28,7 +28,7 @@ namespace GZSkinsX.Views.WindowFrames.StartUp;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class StartUpPage : Page
+internal sealed partial class StartUpPage : Page
 {
     private readonly IWindowManagerService _windowManagerService;
     private readonly IGameService _gameService;

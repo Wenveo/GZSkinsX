@@ -28,7 +28,7 @@ namespace GZSkinsX.MainApp;
 /// <summary>
 /// 自定义的程序启动类
 /// </summary>
-public sealed partial class StartUpClass
+internal sealed partial class StartUpClass
 {
     /// <summary>
     /// 用于保证应用程序生命周期服务的初始化和访问的同步锁

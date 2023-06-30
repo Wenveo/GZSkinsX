@@ -7,7 +7,7 @@
 
 namespace GZSkinsX.Views.WindowFrames.NavigationRoot;
 
-public sealed partial class CustomTitleBar : Windows.UI.Xaml.Controls.Grid
+internal sealed partial class CustomTitleBar : Windows.UI.Xaml.Controls.Grid
 {
     public CustomTitleBar()
     {

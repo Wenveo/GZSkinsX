@@ -27,7 +27,7 @@ using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Views.WindowFrames.NavigationRoot;
 
-public sealed partial class CustomNavigationView : MUXC.NavigationView
+internal sealed partial class CustomNavigationView : MUXC.NavigationView
 {
     private INavigationViewManager? _navigationViewManager;
     private readonly IAppxTitleBar _appxTitleBar;
