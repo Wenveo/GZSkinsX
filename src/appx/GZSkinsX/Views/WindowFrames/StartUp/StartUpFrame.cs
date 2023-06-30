@@ -36,7 +36,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
     {
         if (await _gameService.TryUpdateAsync(_gameService.RootFolder, _gameService.CurrentRegion))
         {
-            _windowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
+            _windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             return false;
         }
         else

@@ -35,7 +35,7 @@ public sealed partial class PreloadPage : Page
         var b = await Package.Current.VerifyContentIntegrityAsync();
         if (b)
         {
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.NavigationRoot_Guid);
         }
         else
         {
