@@ -5,17 +5,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
 using System.Composition;
-using System.Diagnostics;
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
-
-using Windows.Foundation.Metadata;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 
 namespace GZSkinsX.Views.WindowFrames.Preload;
 
@@ -23,72 +15,10 @@ namespace GZSkinsX.Views.WindowFrames.Preload;
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
 internal sealed class PreloadFrame : IWindowFrame
 {
-    private readonly ILoggingService _loggingService;
-    private readonly PreloadSettings _preloadSettings;
-
-    public PreloadFrame()
-    {
-        _loggingService = AppxContext.LoggingService;
-        _preloadSettings = AppxContext.Resolve<PreloadSettings>();
-
-        if (Debugger.IsAttached)
-        {
-            Application.Current.DebugSettings.EnableFrameRateCounter = true;
-        }
-
-        InitializeMainWindow();
-    }
-
     /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
         return true;
     }
-
-    private void InitializeMainWindow()
-    {
-        var minWindowSize = SizeHelper.FromDimensions(1000, 500);
-        var appView = ApplicationView.GetForCurrentView();
-        appView.SetPreferredMinSize(minWindowSize);
-
-        if (_preloadSettings.IsInitialize is false)
-        {
-            // Set Default Language
-            /*var cultureId = GetUserDefaultUILanguage();
-            var cultureInfo = CultureInfo.GetCultureInfo(cultureId);
-            ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;*/
-
-            if (appView.TryResizeView(minWindowSize))
-            {
-                _loggingService.LogWarning("AppxPreload: Failed to resize the window.");
-            }
-
-            _preloadSettings.IsInitialize = true;
-        }
-        else
-        {
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
-        }
-
-        if (!ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons")) // PC Family
-        {
-            // Disable the system view activation policy during the first launch of the app
-            // only for PC family devices and not for phone family devices
-            try
-            {
-                ApplicationViewSwitcher.DisableSystemViewActivationPolicy();
-            }
-            catch (Exception)
-            {
-                // Log that DisableSystemViewActionPolicy didn't work
-            }
-        }
-
-        _loggingService.LogDebug($"AppxPreload: IsInitialize = {_preloadSettings.IsInitialize}");
-    }
-
-    //[ContractVersion(typeof(UniversalApiContract), 65536u)]
-    //[DllImport("api-ms-win-core-localization-obsolete-l1-2-0.dll", CharSet = CharSet.Auto)]
-    //private static extern ushort GetUserDefaultUILanguage();
 }
 

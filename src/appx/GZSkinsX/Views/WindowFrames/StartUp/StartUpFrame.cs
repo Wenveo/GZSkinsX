@@ -5,12 +5,20 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
 using System.Composition;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Game;
+using GZSkinsX.Api.Logging;
 using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Views.WindowFrames.Preload;
+
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace GZSkinsX.Views.WindowFrames.StartUp;
 
@@ -19,12 +27,23 @@ namespace GZSkinsX.Views.WindowFrames.StartUp;
 internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 {
     private readonly IWindowManagerService _windowManagerService;
+    private readonly ILoggingService _loggingService;
     private readonly IGameService _gameService;
+    private readonly StartUpSettings _startUpSettings;
 
     public StartUpFrame()
     {
         _windowManagerService = AppxContext.WindowManagerService;
+        _loggingService = AppxContext.LoggingService;
         _gameService = AppxContext.GameService;
+        _startUpSettings = AppxContext.Resolve<StartUpSettings>();
+
+        if (Debugger.IsAttached)
+        {
+            Application.Current.DebugSettings.EnableFrameRateCounter = true;
+        }
+
+        InitializeMainWindow();
     }
 
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
@@ -47,5 +66,51 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
             return true;
         }
     }
+
+    private void InitializeMainWindow()
+    {
+        var minWindowSize = SizeHelper.FromDimensions(1000, 500);
+        var appView = ApplicationView.GetForCurrentView();
+        appView.SetPreferredMinSize(minWindowSize);
+
+        if (_startUpSettings.IsInitialize is false)
+        {
+            // Set Default Language
+            /*var cultureId = GetUserDefaultUILanguage();
+            var cultureInfo = CultureInfo.GetCultureInfo(cultureId);
+            ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;*/
+
+            if (appView.TryResizeView(minWindowSize) is false)
+            {
+                _loggingService.LogWarning("AppxPreload: Failed to resize the window.");
+            }
+
+            _startUpSettings.IsInitialize = true;
+        }
+        else
+        {
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+        }
+
+        if (!ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons")) // PC Family
+        {
+            // Disable the system view activation policy during the first launch of the app
+            // only for PC family devices and not for phone family devices
+            try
+            {
+                ApplicationViewSwitcher.DisableSystemViewActivationPolicy();
+            }
+            catch (Exception)
+            {
+                // Log that DisableSystemViewActionPolicy didn't work
+            }
+        }
+
+        _loggingService.LogDebug($"AppxPreload: IsInitialize = {_startUpSettings.IsInitialize}");
+    }
+
+    //[ContractVersion(typeof(UniversalApiContract), 65536u)]
+    //[DllImport("api-ms-win-core-localization-obsolete-l1-2-0.dll", CharSet = CharSet.Auto)]
+    //private static extern ushort GetUserDefaultUILanguage();
 }
 

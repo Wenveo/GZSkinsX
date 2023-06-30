@@ -13,9 +13,9 @@ using GZSkinsX.Api.Settings;
 namespace GZSkinsX.Views.WindowFrames.Preload;
 
 [Shared, Export]
-internal sealed class PreloadSettings
+internal sealed class StartUpSettings
 {
-    private const string THE_GUID = "F4523D71-8866-4241-9F5B-D56D850BD878";
+    private const string THE_GUID = "09A5FCC5-4B0C-4476-8401-59EEBFB19213";
     private const string ISINITIALIZE_NAME = "IsInitialize";
 
     private readonly ISettingsSection _settingsSection;
@@ -26,7 +26,7 @@ internal sealed class PreloadSettings
         set => _settingsSection.Attribute(ISINITIALIZE_NAME, value);
     }
 
-    public PreloadSettings()
+    public StartUpSettings()
     {
         _settingsSection = AppxContext.SettingsService.GetOrCreateSection(THE_GUID);
     }

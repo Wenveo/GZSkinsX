@@ -70,7 +70,7 @@
     <Compile Include="Views\WindowFrames\Preload\PreloadPage.xaml.cs">
       <DependentUpon>PreloadPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WindowFrames\Preload\PreloadSettings.cs" />
+    <Compile Include="Views\WindowFrames\StartUp\StartUpSettings.cs" />
     <Compile Include="Views\WindowFrames\StartUp\StartUpFrame.cs" />
     <Compile Include="Views\WindowFrames\StartUp\StartUpPage.xaml.cs">
       <DependentUpon>StartUpPage.xaml</DependentUpon>
