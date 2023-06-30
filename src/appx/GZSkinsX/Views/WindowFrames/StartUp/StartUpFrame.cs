@@ -105,10 +105,5 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 
         _loggingService.LogDebug($"AppxStartUp: IsInitialize = {_startUpSettings.IsInitialize}");
     }
-
-    private void _appxWindow_Closed(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
 }
 
