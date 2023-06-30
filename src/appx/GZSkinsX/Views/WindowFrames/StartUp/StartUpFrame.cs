@@ -77,14 +77,9 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 
         if (_startUpSettings.IsInitialize is false)
         {
-            // Set Default Language
-            /*var cultureId = GetUserDefaultUILanguage();
-            var cultureInfo = CultureInfo.GetCultureInfo(cultureId);
-            ApplicationLanguages.PrimaryLanguageOverride = cultureInfo.Name;*/
-
-            if (appView.TryResizeView(minWindowSize) is false)
+            if (!appView.TryResizeView(minWindowSize))
             {
-                _loggingService.LogWarning("AppxPreload: Failed to resize the window.");
+                _loggingService.LogWarning("AppxStartUp: Failed to resize the window.");
             }
 
             _appxWindow.Closed += (_, _) => _startUpSettings.IsInitialize = true;
@@ -108,16 +103,12 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
             }
         }
 
-        _loggingService.LogDebug($"AppxPreload: IsInitialize = {_startUpSettings.IsInitialize}");
+        _loggingService.LogDebug($"AppxStartUp: IsInitialize = {_startUpSettings.IsInitialize}");
     }
 
     private void _appxWindow_Closed(object sender, EventArgs e)
     {
         throw new NotImplementedException();
     }
-
-    //[ContractVersion(typeof(UniversalApiContract), 65536u)]
-    //[DllImport("api-ms-win-core-localization-obsolete-l1-2-0.dll", CharSet = CharSet.Auto)]
-    //private static extern ushort GetUserDefaultUILanguage();
 }
 
