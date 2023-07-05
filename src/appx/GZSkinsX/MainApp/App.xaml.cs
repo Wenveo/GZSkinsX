@@ -48,8 +48,7 @@ public sealed partial class App : Application
             gameService.RootFolder = await AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name);
         }
 
-        var appxWindow = AppxContext.AppxWindow;
-        if (appxWindow.MainWindow == args.Window)
+        if (AppxContext.AppxWindow.MainWindow == args.Window)
         {
             await InitializeServicesAsync();
 
@@ -64,13 +63,6 @@ public sealed partial class App : Application
             }
 
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
-
-            if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
-            {
-                var themeService = AppxContext.ThemeService;
-                frameworkElement.RequestedTheme = themeService.CurrentTheme;
-            }
-
             extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensions);
             extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
             extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.AfterUniversalExtensionsLoaded);
@@ -86,6 +78,7 @@ public sealed partial class App : Application
     /// <param name="e">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        var appxWindow = AppxContext.AppxWindow;
         if (args.PrelaunchActivated == false)
         {
             if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
@@ -93,7 +86,13 @@ public sealed partial class App : Application
                 CoreApplication.EnablePrelaunch(true);
             }
 
-            AppxContext.AppxWindow.Activate();
+            appxWindow.Activate();
+        }
+
+        if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
+        {
+            var themeService = AppxContext.ThemeService;
+            frameworkElement.RequestedTheme = themeService.CurrentTheme;
         }
 
         base.OnLaunched(args);
