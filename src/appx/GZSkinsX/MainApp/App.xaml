@@ -1,7 +1,18 @@
-﻿<Application
+<Application
     x:Class="GZSkinsX.MainApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" />
+    mc:Ignorable="d">
+    <Application.Resources>
+        <!--  不要在此处添加任何资源，因为永远都不会生效!!  -->
+        <!--  Don't add any resources here, it will never work!!  -->
+
+        <!--  即使在此处定义了资源，那么在进入构造函数时它仍然为空。  -->
+        <!--  Even if the resource is defined here, it will still be empty when entering the constructor.  -->
+
+        <!--  Aboud: https://github.com/microsoft/microsoft-ui-xaml/issues/5406  -->
+        <!--  It doesn't work here. Anyway... <DisableEmbeddedXbf>true</DisableEmbeddedXbf> -->
+    </Application.Resources>
+</Application>
