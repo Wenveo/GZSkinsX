@@ -23,9 +23,10 @@ internal sealed partial class IndexPage : Page
     public IndexPage()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
     {
         AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
     }
