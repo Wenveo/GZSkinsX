@@ -52,7 +52,7 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     public IGameData GameData => _gameData;
 
     /// <inheritdoc/>
-    public StorageFolder? RootFolder { get; private set; }
+    public StorageFolder? RootFolder { get; internal set; }
 
     /// <inheritdoc/>
     public async Task<bool> TryUpdateAsync(StorageFolder? rootFolder, GameRegion region)
@@ -72,15 +72,5 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
         var path = rootFolder is not null ? rootFolder.Path : "<null>";
         _loggingService.LogWarning($"GameService: Failed to update game data /p:RootDirectory={path} /p:GameRegion={region}");
         return false;
-    }
-
-    [ExportAdvanceExtension, AdvanceExtensionMetadata]
-    private sealed class AutoInitialize : IAdvanceExtension
-    {
-        [ImportingConstructor]
-        public AutoInitialize(IGameService gameService)
-        {
-            ((GameService)gameService).RootFolder = AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name).GetAwaiter().GetResult();
-        }
     }
 }

@@ -5,9 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System.Threading.Tasks;
+
+using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.WindowManager;
+using GZSkinsX.Game;
 
 using Microsoft.UI.Xaml.Controls;
 
@@ -15,7 +19,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.MainApp;
 
@@ -37,26 +40,30 @@ public sealed partial class App : Application
     /// Invoked when the application creates a window.
     /// </summary>
     /// <param name="args">Event data for the event.</param>
-    protected override void OnWindowCreated(WindowCreatedEventArgs args)
+    protected override async void OnWindowCreated(WindowCreatedEventArgs args)
     {
+        async static Task InitializeServicesAsync()
+        {
+            var gameService = (GameService)AppxContext.GameService;
+            gameService.RootFolder = await AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name);
+        }
+
         var appxWindow = AppxContext.AppxWindow;
         if (appxWindow.MainWindow == args.Window)
         {
+            await InitializeServicesAsync();
+
             var extensionService = StartUpClass.s_extensionService;
             extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
 
-            if (appxWindow.MainWindow.Content is not Frame frame || frame.Content is null)
+            // 合并扩展组件的资源字典至主程序内
+            var xamlControlsResources = Resources = new XamlControlsResources();
+            foreach (var rsrc in StartUpClass.s_extensionService.GetMergedResourceDictionaries())
             {
-                // 合并扩展组件的资源字典至主程序内
-                var xamlControlsResources = Resources = new XamlControlsResources();
-                var mergedResourceDictionaries = xamlControlsResources.MergedDictionaries;
-                foreach (var rsrc in StartUpClass.s_extensionService.GetMergedResourceDictionaries())
-                {
-                    mergedResourceDictionaries.Add(rsrc);
-                }
-
-                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
+                xamlControlsResources.MergedDictionaries.Add(rsrc);
             }
+
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
 
             if (appxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
