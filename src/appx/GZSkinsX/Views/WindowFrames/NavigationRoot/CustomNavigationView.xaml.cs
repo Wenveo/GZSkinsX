@@ -29,11 +29,16 @@ namespace GZSkinsX.Views.WindowFrames.NavigationRoot;
 
 internal sealed partial class CustomNavigationView : MUXC.NavigationView
 {
-    private INavigationViewManager? _navigationViewManager;
+    private static readonly Lazy<CustomNavigationView> s_lazy = new(() => new());
+
+    public static CustomNavigationView Instance => s_lazy.Value;
+
     private readonly IAppxTitleBar _appxTitleBar;
     private readonly IThemeService _themeService;
 
-    internal CustomNavigationView()
+    public INavigationViewManager NavigationViewManager { get; }
+
+    private CustomNavigationView()
     {
         _appxTitleBar = AppxContext.AppxTitleBar;
         _themeService = AppxContext.ThemeService;
@@ -42,11 +47,9 @@ internal sealed partial class CustomNavigationView : MUXC.NavigationView
 
         Loaded += OnLoaded;
         Unloaded += OnUnloaded;
-    }
 
-    internal void Setup(INavigationViewManager navigationViewManager)
-    {
-        _navigationViewManager = navigationViewManager;
+        NavigationViewManager = AppxContext.NavigationViewManagerFactory
+            .CreateNavigationViewManager(NavigationConstants.NAVIGATIONROOT_NV_GUID, this);
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -161,8 +164,7 @@ internal sealed partial class CustomNavigationView : MUXC.NavigationView
     {
         if (args.ChosenSuggestion is QueryNavigationItem item && item != QueryNavigationItem.Empty)
         {
-            Debug2.Assert(_navigationViewManager is not null);
-            _navigationViewManager.NavigateTo(item.Guid);
+            NavigationViewManager.NavigateTo(item.Guid);
         }
     }
 
@@ -208,5 +210,5 @@ internal record class QueryNavigationItem(string Title, string Glyph, FontFamily
 
     public static QueryNavigationItem Empty = new(
         ResourceHelper.GetLocalized("Resources/NavigationRoot_MainSearchBox_Query_NotResultsFound"),
-        string.Empty, FontFamily.XamlAutoFontFamily, Guid.Empty);
+            string.Empty, FontFamily.XamlAutoFontFamily, Guid.Empty);
 }

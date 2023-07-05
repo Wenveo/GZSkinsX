@@ -7,9 +7,6 @@
 
 #nullable enable
 
-using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Navigation;
-
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -22,17 +19,6 @@ namespace GZSkinsX.Views.WindowFrames.NavigationRoot;
 /// </summary>
 internal sealed partial class NavigationRootPage : Page
 {
-    private static readonly INavigationViewManager s_navigationViewManager;
-
-    static NavigationRootPage()
-    {
-        var customNavigationView = new CustomNavigationView();
-        s_navigationViewManager = AppxContext.NavigationViewManagerFactory.CreateNavigationViewManager(
-            NavigationConstants.NAVIGATIONROOT_NV_GUID, customNavigationView);
-
-        customNavigationView.Setup(s_navigationViewManager);
-    }
-
     public NavigationRootPage()
     {
         InitializeComponent();
@@ -40,7 +26,7 @@ internal sealed partial class NavigationRootPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        contentPresenter.Content = s_navigationViewManager.UIObject;
+        contentPresenter.Content = CustomNavigationView.Instance;
         base.OnNavigatedTo(e);
     }
 
