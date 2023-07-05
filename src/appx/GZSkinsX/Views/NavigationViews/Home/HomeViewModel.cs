@@ -7,47 +7,20 @@
 
 #nullable enable
 
-using System;
-using System.Buffers;
 using System.Threading.Tasks;
 
-using CommunityToolkit.HighPerformance.Buffers;
 using CommunityToolkit.Mvvm.ComponentModel;
-
-using Windows.Storage.Streams;
-using Windows.Web.Http;
 
 namespace GZSkinsX.Views.NavigationViews.Home;
 
 internal sealed partial class HomeViewModel : ObservableObject
 {
-    private const string Lol_news_link = "https://apps.game.qq.com/cmc/zmMcnTargetContentList?r0=jsonp&page=1&num=16&target=24&source=web_pc";
-
-    private readonly HttpClient _httpClient;
-
-    ~HomeViewModel()
-    {
-        _httpClient.Dispose();
-    }
-
     public HomeViewModel()
     {
-        _httpClient = new();
     }
 
     public async Task InitializeAsync()
     {
-        var buffer = await _httpClient.GetBufferAsync(new Uri(Lol_news_link));
-        using var reader = DataReader.FromBuffer(buffer);
-
-        var bytes = ArrayPool<byte>.Shared.Rent((int)buffer.Length);
-        try
-        {
-            reader.ReadBytes(bytes);
-        }
-        finally
-        {
-            ArrayPool<byte>.Shared.Return(bytes);
-        }
+        await Task.CompletedTask;
     }
 }
