@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Diagnostics">
-      <Version>8.2.0</Version>
+      <Version>8.2.1</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.HighPerformance">
       <Version>8.2.1</Version>
