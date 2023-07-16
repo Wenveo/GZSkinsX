@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
-using GZSkinsX.Api.Extension;
 using GZSkinsX.Api.Game;
 using GZSkinsX.Api.Logging;
 
@@ -22,13 +21,12 @@ namespace GZSkinsX.Game;
 
 /// <inheritdoc cref="IGameService"/>
 [Shared, Export(typeof(IGameService))]
-[method: ImportingConstructor]
-internal sealed class GameService(GameSettings gameSettings) : IGameService
+internal sealed class GameService : IGameService
 {
     /// <summary>
     /// 用于存储以及更新配置
     /// </summary>
-    private readonly GameSettings _gameSettings = gameSettings;
+    private readonly GameSettings _gameSettings;
 
     /// <summary>
     /// 当前内部游戏数据实例
@@ -53,6 +51,15 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
 
     /// <inheritdoc/>
     public StorageFolder? RootFolder { get; internal set; }
+
+    /// <summary>
+    /// 初始化 <see cref="GameService"/> 的新实例
+    /// </summary>
+    [method: ImportingConstructor]
+    public GameService(GameSettings gameSettings)
+    {
+        _gameSettings = gameSettings;
+    }
 
     /// <inheritdoc/>
     public async Task<bool> TryUpdateAsync(StorageFolder? rootFolder, GameRegion region)

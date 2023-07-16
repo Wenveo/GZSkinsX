@@ -22,8 +22,7 @@ namespace GZSkinsX.AccessCache;
 
 /// <inheritdoc cref="IFutureAccessService"/>
 [Shared, Export(typeof(IFutureAccessService))]
-[method: ImportingConstructor]
-internal sealed class FutureAccessService(ISettingsService settingsService) : IFutureAccessService
+internal sealed class FutureAccessService : IFutureAccessService
 {
     /// <summary>
     /// 表示当前设置节点的 <seealso cref="Guid"/> 字符串值
@@ -33,7 +32,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     /// <summary>
     /// 用于存储本地数据的数据节点
     /// </summary>
-    private readonly ISettingsSection _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
+    private readonly ISettingsSection _settingsSection;
 
     /// <summary>
     /// 内部的存储项访问列表定义
@@ -45,6 +44,15 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
 
     /// <inheritdoc/>
     public uint MaximumItemsAllowed => _futureAccessList.MaximumItemsAllowed;
+
+    /// <summary>
+    /// 初始化 <see cref="FutureAccessService"/> 的新实例
+    /// </summary>
+    [method: ImportingConstructor]
+    public FutureAccessService(ISettingsService settingsService)
+    {
+        _settingsSection = settingsService.GetOrCreateSection(THE_GUID);
+    }
 
     /// <inheritdoc/>
     public void Add(IStorageItem storageItem, string name)
