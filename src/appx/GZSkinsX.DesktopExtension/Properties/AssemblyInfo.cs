@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GZSkinsX.DesktopExtension")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("GZSkins, Inc.")]
 [assembly: AssemblyProduct("GZSkinsX.DesktopExtension")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
