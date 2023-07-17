@@ -40,9 +40,13 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <PackageReference Include="CommunityToolkit.Labs.AppServices" Version="0.0.3" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DesktopExtensionContext.cs" />
+    <Compile Include="DesktopExtensionMethods.cs" />
+    <Compile Include="IDesktopExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
