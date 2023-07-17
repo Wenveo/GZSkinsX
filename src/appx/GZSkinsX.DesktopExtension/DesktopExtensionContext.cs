@@ -20,15 +20,11 @@ internal sealed class DesktopExtensionContext : ApplicationContext
         _sideCar = new DesktopExtensionMethods();
         _sideCar.ConnectionFailed += OnTerminateProcess;
         _sideCar.ConnectionFailed += OnTerminateProcess;
+        _sideCar.InitializeAppServiceAsync();
     }
 
     private void OnTerminateProcess(object sender, EventArgs e)
     {
         Program.Exit(0);
-    }
-
-    public async Task StartAppService()
-    {
-        await _sideCar.InitializeAppServiceAsync();
     }
 }
