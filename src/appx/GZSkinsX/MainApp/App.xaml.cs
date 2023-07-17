@@ -7,6 +7,8 @@
 
 using System.Threading.Tasks;
 
+using CommunityToolkit.AppServices;
+
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
@@ -27,6 +29,8 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 public sealed partial class App : Application
 {
+    private readonly DesktopExtensionMethods _desktopExtensionMethods = new();
+
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,6 +38,16 @@ public sealed partial class App : Application
     public App()
     {
         InitializeComponent();
+    }
+
+    protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+    {
+        base.OnBackgroundActivated(args);
+
+        if (_desktopExtensionMethods.OnBackgroundActivated(args))
+        {
+            return;
+        }
     }
 
     /// <summary>
@@ -76,7 +90,7 @@ public sealed partial class App : Application
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         var appxWindow = AppxContext.AppxWindow;
         if (args.PrelaunchActivated == false)
@@ -96,5 +110,14 @@ public sealed partial class App : Application
         }
 
         base.OnLaunched(args);
+
+        var val = await _desktopExtensionMethods.SumNumbersAsync(12, 24);
+        var val2 = await _desktopExtensionMethods.SumNumbersAsync(40, 2);
     }
+}
+
+[AppService("GZXDesktopExtension-AppService")]
+internal interface IDesktopExtensionMethods
+{
+    Task<int> SumNumbersAsync(int a, int b);
 }
