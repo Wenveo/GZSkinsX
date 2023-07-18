@@ -111,5 +111,6 @@ public sealed partial class App : Application
         base.OnLaunched(args);
 
         await DesktopExtensionMethods.UpdateMounter();
+        var packageMetadata = await DesktopExtensionMethods.GetMTPackageMetadata();
     }
 }

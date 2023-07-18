@@ -5,13 +5,18 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
+using Windows.Data.Json;
 using Windows.Storage;
 
 namespace GZSkinsX.DesktopExtension;
@@ -21,6 +26,51 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
     internal string MounterRootPath { get; } = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "Mounter");
 
     internal string MounterTempPath { get; } = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "MT_Temp");
+
+    public Task<PackageMetadata?> GetMTPackageMetadata()
+    {
+        var targetFilePath = Path.Combine(MounterRootPath, "_metadata", "package.json");
+        if (File.Exists(targetFilePath))
+        {
+            var rawJsonData = File.ReadAllText(targetFilePath);
+            if (JsonObject.TryParse(rawJsonData, out var packageJsonData))
+            {
+                string GetStringOrEmpty([CallerMemberName] string memberName = "")
+                {
+                    return packageJsonData.TryGetValue(memberName, out var value) ? value.GetString() : string.Empty;
+                }
+
+                List<PackageMetadataStartUpArgs> GetStartUpArgs()
+                {
+                    var collection = new List<PackageMetadataStartUpArgs>();
+                    if (packageJsonData.TryGetValue("StartUpArgs", out var startArgsJsonData))
+                    {
+                        foreach (var item in startArgsJsonData.GetObject())
+                        {
+                            collection.Add(new() { Name = item.Key, Args = item.Value.GetString() });
+                        }
+                    }
+
+                    return collection;
+                }
+
+                var packageMetadata = new PackageMetadata
+                {
+                    Author = GetStringOrEmpty(),
+                    Version = GetStringOrEmpty(),
+                    SettingsFile = GetStringOrEmpty(),
+                    ExecutableFile = GetStringOrEmpty(),
+                    MounterStartUpParm = GetStringOrEmpty(),
+                    MounterStopParm = GetStringOrEmpty(),
+                    StartUpArgs = GetStartUpArgs()
+                };
+
+                return Task.FromResult<PackageMetadata?>(packageMetadata);
+            }
+        }
+
+        return Task.FromResult<PackageMetadata?>(null);
+    }
 
     public Task<bool> CheckUpdateForMounter()
     {
