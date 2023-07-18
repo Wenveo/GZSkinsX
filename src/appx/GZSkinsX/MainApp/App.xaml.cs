@@ -5,6 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 using CommunityToolkit.AppServices;
@@ -46,6 +47,7 @@ public sealed partial class App : Application
 
         if (_desktopExtensionMethods.OnBackgroundActivated(args))
         {
+            _desktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
             return;
         }
     }
@@ -119,6 +121,8 @@ public sealed partial class App : Application
 internal interface IDesktopExtensionMethods
 {
     Task<bool> CheckUpdateForMounter();
+
+    Task SetOwner(int processId);
 
     Task UpdateMounter();
 }

@@ -16,5 +16,7 @@ internal interface IDesktopExtensionMethods
 {
     Task<bool> CheckUpdateForMounter();
 
+    Task SetOwner(int processId);
+
     Task UpdateMounter();
 }

@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
@@ -20,6 +21,22 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
     public Task<bool> CheckUpdateForMounter()
     {
         return Task.FromResult(true);
+    }
+
+    public Task SetOwner(int processId)
+    {
+        try
+        {
+            var owner = Process.GetProcessById(processId);
+            owner.EnableRaisingEvents = true;
+            owner.Exited += (_, _) => Program.Exit(0);
+        }
+        catch
+        {
+
+        }
+
+        return Task.CompletedTask;
     }
 
     public async Task UpdateMounter()
