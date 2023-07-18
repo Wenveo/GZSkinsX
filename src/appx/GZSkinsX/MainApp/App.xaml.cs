@@ -8,8 +8,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-using CommunityToolkit.AppServices;
-
 using GZSkinsX.Api.AccessCache;
 using GZSkinsX.Api.Appx;
 using GZSkinsX.Api.Extension;
@@ -30,7 +28,7 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 public sealed partial class App : Application
 {
-    private readonly DesktopExtensionMethods _desktopExtensionMethods = new();
+    internal DesktopExtension.DesktopExtensionMethods DesktopExtensionMethods { get; } = new();
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -45,10 +43,9 @@ public sealed partial class App : Application
     {
         base.OnBackgroundActivated(args);
 
-        if (_desktopExtensionMethods.OnBackgroundActivated(args))
+        if (DesktopExtensionMethods.OnBackgroundActivated(args))
         {
-            _desktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
-            return;
+            DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
         }
     }
 
@@ -113,16 +110,6 @@ public sealed partial class App : Application
 
         base.OnLaunched(args);
 
-        await _desktopExtensionMethods.UpdateMounter();
+        await DesktopExtensionMethods.UpdateMounter();
     }
-}
-
-[AppService("GZXDesktopExtension-AppService")]
-internal interface IDesktopExtensionMethods
-{
-    Task<bool> CheckUpdateForMounter();
-
-    Task SetOwner(int processId);
-
-    Task UpdateMounter();
 }

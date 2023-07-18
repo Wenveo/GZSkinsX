@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="DesktopExtensionContext.cs" />
     <Compile Include="DesktopExtensionMethods.cs" />
-    <Compile Include="IDesktopExtensionMethods.cs" />
+    <Compile Include="DesktopExtensionContracts.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

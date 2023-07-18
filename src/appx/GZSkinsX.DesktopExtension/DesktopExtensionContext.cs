@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace GZSkinsX.DesktopExtension;

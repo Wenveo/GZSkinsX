@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{CCD6CA11-A092-4F22-9976-A804AC0CA819}</ProjectGuid>
@@ -81,6 +81,9 @@
     </Compile>
     <Compile Include="WindowManager\WindowFrameContext.cs" />
     <Compile Include="WindowManager\WindowManagerService.cs" />
+    <Compile Include="..\GZSkinsX.DesktopExtension\DesktopExtensionContracts.cs" >
+      <Link>DesktopExtensionContracts.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
