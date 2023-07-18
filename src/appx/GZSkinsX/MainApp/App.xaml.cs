@@ -111,13 +111,14 @@ public sealed partial class App : Application
 
         base.OnLaunched(args);
 
-        var val = await _desktopExtensionMethods.SumNumbersAsync(12, 24);
-        var val2 = await _desktopExtensionMethods.SumNumbersAsync(40, 2);
+        await _desktopExtensionMethods.UpdateMounter();
     }
 }
 
 [AppService("GZXDesktopExtension-AppService")]
 internal interface IDesktopExtensionMethods
 {
-    Task<int> SumNumbersAsync(int a, int b);
+    Task<bool> CheckUpdateForMounter();
+
+    Task UpdateMounter();
 }

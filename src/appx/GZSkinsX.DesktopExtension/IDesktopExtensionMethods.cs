@@ -14,5 +14,7 @@ namespace GZSkinsX.DesktopExtension;
 [AppService("GZXDesktopExtension-AppService")]
 internal interface IDesktopExtensionMethods
 {
-    Task<int> SumNumbersAsync(int a, int b);
+    Task<bool> CheckUpdateForMounter();
+
+    Task UpdateMounter();
 }
