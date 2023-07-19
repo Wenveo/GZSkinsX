@@ -49,7 +49,7 @@ sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
             return new PackageMetadata(
                 (string)valueSet["author"], (string)valueSet["version"],
                 (string)valueSet["settingsFile"], (string)valueSet["executableFile"],
-                (string)valueSet["mounterStartUpParm"], (string)valueSet["mounterStopParm"],
+                (string)valueSet["procStartupArgs"], (string)valueSet["procTerminateArgs"],
                 ((string[])valueSet["startUpArgNames"]).Zip((string[])valueSet["startUpArgValues"],
                 (a, b) => new PackageMetadataStartUpArg(a, b)).ToArray());
         }
@@ -80,8 +80,8 @@ sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
                 {            "version",     value.Version            },
                 {       "settingsFile",     value.SettingsFile       },
                 {     "executableFile",     value.ExecutableFile     },
-                { "mounterStartUpParm",     value.ProcStartupArgs },
-                {    "mounterStopParm",     value.ProcTerminateArgs    },
+                {    "procStartupArgs",     value.ProcStartupArgs    },
+                {  "procTerminateArgs",     value.ProcTerminateArgs  },
                 {    "startUpArgNames",     GetStartUpArgNames()     },
                 {   "startUpArgValues",     GetStartUpArgValues()    },
             };
