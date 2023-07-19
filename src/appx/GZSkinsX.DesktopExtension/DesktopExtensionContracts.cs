@@ -26,11 +26,11 @@ internal
 interface IDesktopExtensionMethods
 {
     [return: ValueSetSerializer(typeof(PackageMetadataSerializer))]
-    Task<PackageMetadata> GetMTPackageMetadata();
+    Task<PackageMetadata> GetLocalMTPackageMetadata();
 
-    Task<bool> CheckUpdateForMounter();
+    Task<bool> CheckUpdatesForMounter();
 
-    Task UpdateMounter();
+    Task<bool> TryUpdateMounterAsync();
 
     Task SetOwner(int processId);
 }
@@ -51,7 +51,7 @@ sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
                 (string)valueSet["settingsFile"], (string)valueSet["executableFile"],
                 (string)valueSet["mounterStartUpParm"], (string)valueSet["mounterStopParm"],
                 ((string[])valueSet["startUpArgNames"]).Zip((string[])valueSet["startUpArgValues"],
-                (a, b) => new PackageMetadataStartUpArgs(a, b)).ToArray());
+                (a, b) => new PackageMetadataStartUpArg(a, b)).ToArray());
         }
 
         return PackageMetadata.Empty;
@@ -62,13 +62,13 @@ sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         string[] GetStartUpArgNames()
         {
-            return value.StartUpArgs.Select(a => a.Name).ToArray();
+            return value.OtherStartupArgs.Select(a => a.Name).ToArray();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         string[] GetStartUpArgValues()
         {
-            return value.StartUpArgs.Select(a => a.Value).ToArray();
+            return value.OtherStartupArgs.Select(a => a.Value).ToArray();
         }
 
         if (!value.IsEmpty)
@@ -80,8 +80,8 @@ sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
                 {            "version",     value.Version            },
                 {       "settingsFile",     value.SettingsFile       },
                 {     "executableFile",     value.ExecutableFile     },
-                { "mounterStartUpParm",     value.MounterStartUpParm },
-                {    "mounterStopParm",     value.MounterStopParm    },
+                { "mounterStartUpParm",     value.ProcStartupArgs },
+                {    "mounterStopParm",     value.ProcTerminateArgs    },
                 {    "startUpArgNames",     GetStartUpArgNames()     },
                 {   "startUpArgValues",     GetStartUpArgValues()    },
             };
@@ -109,24 +109,24 @@ readonly struct PackageMetadata
 
     public readonly string ExecutableFile;
 
-    public readonly string MounterStartUpParm;
+    public readonly string ProcStartupArgs;
 
-    public readonly string MounterStopParm;
+    public readonly string ProcTerminateArgs;
 
-    public readonly PackageMetadataStartUpArgs[] StartUpArgs;
+    public readonly PackageMetadataStartUpArg[] OtherStartupArgs;
 
     public readonly bool IsEmpty = true;
 
     public PackageMetadata(string author, string version, string settingsFile, string executableFile,
-        string mounterStartUpParm, string mounterStopParm, PackageMetadataStartUpArgs[] startUpArgs)
+        string procStartupArgs, string procTerminateArgs, PackageMetadataStartUpArg[] otherStartupArgs)
     {
         Author = author;
         Version = version;
         SettingsFile = settingsFile;
         ExecutableFile = executableFile;
-        MounterStartUpParm = mounterStartUpParm;
-        MounterStopParm = mounterStopParm;
-        StartUpArgs = startUpArgs;
+        ProcStartupArgs = procStartupArgs;
+        ProcTerminateArgs = procTerminateArgs;
+        OtherStartupArgs = otherStartupArgs;
         IsEmpty = false;
     }
 }
@@ -136,13 +136,13 @@ public
 #else
 internal
 #endif
-readonly struct PackageMetadataStartUpArgs
+readonly struct PackageMetadataStartUpArg
 {
     public readonly string Name;
 
     public readonly string Value;
 
-    public PackageMetadataStartUpArgs(string name, string value)
+    public PackageMetadataStartUpArg(string name, string value)
     {
         Name = name;
         Value = value;

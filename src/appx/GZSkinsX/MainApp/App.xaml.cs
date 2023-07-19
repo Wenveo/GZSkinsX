@@ -89,7 +89,7 @@ public sealed partial class App : Application
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         var appxWindow = AppxContext.AppxWindow;
         if (args.PrelaunchActivated == false)
@@ -109,8 +109,5 @@ public sealed partial class App : Application
         }
 
         base.OnLaunched(args);
-
-        await DesktopExtensionMethods.UpdateMounter();
-        var packageMetadata = await DesktopExtensionMethods.GetMTPackageMetadata();
     }
 }

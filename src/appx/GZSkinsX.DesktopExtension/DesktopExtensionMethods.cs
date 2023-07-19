@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 using Windows.Data.Json;
@@ -22,76 +23,135 @@ namespace GZSkinsX.DesktopExtension;
 
 internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 {
-    internal string MounterRootPath { get; } = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "Mounter");
-
-    internal string MounterTempPath { get; } = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "MT_Temp");
-
-    public Task<PackageMetadata> GetMTPackageMetadata()
+    private readonly struct PackageManifest
     {
-        var targetFilePath = Path.Combine(MounterRootPath, "_metadata", "package.json");
-        if (File.Exists(targetFilePath))
+        public static readonly PackageManifest Empty = new();
+
+        public readonly string Path;
+
+        public readonly string Version;
+
+        public readonly bool IsEmpty = true;
+
+        public PackageManifest(string path, string version)
         {
-            var rawJsonData = File.ReadAllText(targetFilePath);
-            if (JsonObject.TryParse(rawJsonData, out var packageJsonData))
+            Path = path;
+            Version = version;
+            IsEmpty = false;
+        }
+    }
+
+    public static readonly string MounterRootPath = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "Mounter");
+
+    public static readonly string MounterTempPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "MT_Temp");
+
+    public const string PackageManifestPath = "PackageManifest.json";
+
+    public const string PackageMetadataPath = "_metadata/package.json";
+
+    public static readonly Uri[] Servers = new Uri[]
+    {
+        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/")
+    };
+
+    public Task<PackageMetadata> GetLocalMTPackageMetadata()
+    {
+        var metadataFilePath = Path.Combine(MounterRootPath, PackageMetadataPath);
+        if (File.Exists(metadataFilePath))
+        {
+            try
             {
-                string GetStringOrEmpty(string memberName)
-                {
-                    return packageJsonData.TryGetValue(memberName, out var value) ? value.GetString() : string.Empty;
-                }
-
-                PackageMetadataStartUpArgs[] GetStartUpArgsFromJson(string propertyName)
-                {
-                    if (packageJsonData.TryGetValue(propertyName, out var startArgsJsonData) &&
-                        startArgsJsonData.ValueType is JsonValueType.Array)
-                    {
-                        var collection = new List<PackageMetadataStartUpArgs>();
-                        foreach (var item in startArgsJsonData.GetArray())
-                        {
-                            var startUpArgData = item.GetObject();
-                            if (startUpArgData.TryGetValue("Name", out var name) &&
-                                startUpArgData.TryGetValue("Args", out var value))
-                            {
-                                collection.Add(new(name.GetString(), value.GetString()));
-                            }
-                        }
-
-                        return collection.ToArray();
-                    }
-
-                    return Array.Empty<PackageMetadataStartUpArgs>();
-                }
-
-                var packageMetadata = new PackageMetadata(
-                    GetStringOrEmpty(nameof(PackageMetadata.Author)),
-                    GetStringOrEmpty(nameof(PackageMetadata.Version)),
-                    GetStringOrEmpty(nameof(PackageMetadata.SettingsFile)),
-                    GetStringOrEmpty(nameof(PackageMetadata.ExecutableFile)),
-                    GetStringOrEmpty(nameof(PackageMetadata.MounterStartUpParm)),
-                    GetStringOrEmpty(nameof(PackageMetadata.MounterStopParm)),
-                    GetStartUpArgsFromJson(nameof(PackageMetadata.StartUpArgs)));
-
-                return Task.FromResult(packageMetadata);
+                var metadata = ParseMetadataFromString(File.ReadAllText(metadataFilePath));
+                return Task.FromResult(metadata);
+            }
+            catch
+            {
             }
         }
 
         return Task.FromResult(PackageMetadata.Empty);
     }
 
-    public Task<bool> CheckUpdateForMounter()
+    public async Task<bool> CheckUpdatesForMounter()
     {
-        return Task.FromResult(true);
+        var metadata = await GetLocalMTPackageMetadata();
+        if (metadata.IsEmpty is false)
+        {
+            foreach (var host in Servers)
+            {
+                try
+                {
+                    var packageManifestUri = new Uri(host, PackageManifestPath);
+                    var packageManifest = await DownloadPackageManifestAsync(packageManifestUri);
+
+                    if (StringComparer.Ordinal.Equals(metadata.Version, packageManifest.Version))
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
+
+        return true;
     }
 
-    public async Task UpdateMounter()
+    public async Task<bool> TryUpdateMounterAsync()
     {
-        const string FILE = "http://pan.x1.skn.lol/d/%20PanGZSkinsX/Mounter/MotClientAgent.mtpkg";
+        foreach (var host in Servers)
+        {
+            try
+            {
+                var packageManifestUri = new Uri(host, PackageManifestPath);
+                var packageManifest = await DownloadPackageManifestAsync(packageManifestUri);
 
+                var mtPackageUri = new Uri(host, packageManifest.Path);
+                await DownloadMTPackageAsync(mtPackageUri);
+
+                return true;
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        return false;
+    }
+
+    private static async Task<PackageManifest> DownloadPackageManifestAsync(Uri requestUri)
+    {
+        using var httpClient = new HttpClient();
+
+        var stream = await httpClient.GetStreamAsync(requestUri);
+        using var reader = new StreamReader(stream);
+
+        var rawJsonData = await reader.ReadToEndAsync();
+        if (JsonObject.TryParse(rawJsonData, out var jsonObj))
+        {
+            return new PackageManifest(
+                jsonObj[nameof(PackageManifest.Path)].GetString(),
+                jsonObj[nameof(PackageManifest.Version)].GetString());
+        }
+        else
+        {
+            return PackageManifest.Empty;
+        }
+    }
+
+    private static async Task DownloadMTPackageAsync(Uri requestUri)
+    {
         try
         {
             ClearDirectory(MounterTempPath);
 
+            var metadata = PackageMetadata.Empty;
+
             using (var httpClient = new HttpClient())
-            using (var zipArchive = new ZipArchive(await httpClient.GetStreamAsync(FILE)))
+            using (var zipArchive = new ZipArchive(await httpClient.GetStreamAsync(requestUri)))
             {
                 foreach (var entry in zipArchive.Entries)
                 {
@@ -111,7 +171,26 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
                     using var outputStream = File.Create(outputPath);
 
                     await entryStream.CopyToAsync(outputStream);
+
+                    if (StringComparer.OrdinalIgnoreCase.Equals(entry.FullName, PackageMetadataPath))
+                    {
+                        outputStream.Seek(0L, SeekOrigin.Begin);
+                        metadata = ParseMetadataFromStream(outputStream);
+                    }
                 }
+            }
+
+            if (metadata.IsEmpty)
+            {
+                // ??
+                throw new FileNotFoundException("该包不存在有效的元数据信息！");
+            }
+
+            var previousSettingsFilePath = Path.Combine(MounterRootPath, metadata.SettingsFile);
+            if (File.Exists(previousSettingsFilePath))
+            {
+                var newSettingsFilePath = Path.Combine(MounterTempPath, metadata.SettingsFile);
+                File.Move(previousSettingsFilePath, newSettingsFilePath);
             }
 
             DeleteDirectoryIfExists(MounterRootPath);
@@ -121,6 +200,72 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         {
             // Clean
             DeleteDirectoryIfExists(MounterTempPath);
+        }
+    }
+
+    private static PackageMetadata ParseMetadataFromString(string input)
+    {
+        if (JsonObject.TryParse(input, out var packageJsonData))
+        {
+            string GetStringOrEmpty(string memberName)
+            {
+                return packageJsonData.TryGetValue(memberName, out var value) ? value.GetString() : string.Empty;
+            }
+
+            PackageMetadataStartUpArg[] GetStartUpArgsFromJson(string propertyName)
+            {
+                if (packageJsonData.TryGetValue(propertyName, out var startArgsJsonData) &&
+                    startArgsJsonData.ValueType is JsonValueType.Array)
+                {
+                    var collection = new List<PackageMetadataStartUpArg>();
+                    foreach (var item in startArgsJsonData.GetArray())
+                    {
+                        var startUpArgData = item.GetObject();
+                        if (startUpArgData.TryGetValue("Name", out var name) &&
+                            startUpArgData.TryGetValue("Value", out var value))
+                        {
+                            collection.Add(new(name.GetString(), value.GetString()));
+                        }
+                    }
+
+                    return collection.ToArray();
+                }
+
+                return Array.Empty<PackageMetadataStartUpArg>();
+            }
+
+            var packageMetadata = new PackageMetadata(
+                GetStringOrEmpty(nameof(PackageMetadata.Author)),
+                GetStringOrEmpty(nameof(PackageMetadata.Version)),
+                GetStringOrEmpty(nameof(PackageMetadata.SettingsFile)),
+                GetStringOrEmpty(nameof(PackageMetadata.ExecutableFile)),
+                GetStringOrEmpty(nameof(PackageMetadata.ProcStartupArgs)),
+                GetStringOrEmpty(nameof(PackageMetadata.ProcTerminateArgs)),
+                GetStartUpArgsFromJson(nameof(PackageMetadata.OtherStartupArgs)));
+
+            return packageMetadata;
+        }
+
+        return PackageMetadata.Empty;
+    }
+
+    private static PackageMetadata ParseMetadataFromStream(Stream stream)
+    {
+        using var reader = new StreamReader(stream, Encoding.UTF8, true, 2048, true);
+        return ParseMetadataFromString(reader.ReadToEnd());
+    }
+
+    private static void ClearDirectory(string path)
+    {
+        DeleteDirectoryIfExists(path);
+        Directory.CreateDirectory(path);
+    }
+
+    private static void DeleteDirectoryIfExists(string path)
+    {
+        if (Directory.Exists(path))
+        {
+            Directory.Delete(path, true);
         }
     }
 
@@ -138,19 +283,5 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         }
 
         return Task.CompletedTask;
-    }
-
-    private static void ClearDirectory(string path)
-    {
-        DeleteDirectoryIfExists(path);
-        Directory.CreateDirectory(path);
-    }
-
-    private static void DeleteDirectoryIfExists(string path)
-    {
-        if (Directory.Exists(path))
-        {
-            Directory.Delete(path, true);
-        }
     }
 }
