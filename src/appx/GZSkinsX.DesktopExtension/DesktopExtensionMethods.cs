@@ -13,7 +13,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using Windows.Data.Json;
@@ -27,7 +26,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
     internal string MounterTempPath { get; } = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, "MT_Temp");
 
-    public Task<PackageMetadata?> GetMTPackageMetadata()
+    public Task<PackageMetadata> GetMTPackageMetadata()
     {
         var targetFilePath = Path.Combine(MounterRootPath, "_metadata", "package.json");
         if (File.Exists(targetFilePath))
@@ -35,41 +34,47 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var rawJsonData = File.ReadAllText(targetFilePath);
             if (JsonObject.TryParse(rawJsonData, out var packageJsonData))
             {
-                string GetStringOrEmpty([CallerMemberName] string memberName = "")
+                string GetStringOrEmpty(string memberName)
                 {
                     return packageJsonData.TryGetValue(memberName, out var value) ? value.GetString() : string.Empty;
                 }
 
-                List<PackageMetadataStartUpArgs> GetStartUpArgs()
+                PackageMetadataStartUpArgs[] GetStartUpArgsFromJson(string propertyName)
                 {
-                    var collection = new List<PackageMetadataStartUpArgs>();
-                    if (packageJsonData.TryGetValue("StartUpArgs", out var startArgsJsonData))
+                    if (packageJsonData.TryGetValue(propertyName, out var startArgsJsonData) &&
+                        startArgsJsonData.ValueType is JsonValueType.Array)
                     {
-                        foreach (var item in startArgsJsonData.GetObject())
+                        var collection = new List<PackageMetadataStartUpArgs>();
+                        foreach (var item in startArgsJsonData.GetArray())
                         {
-                            collection.Add(new() { Name = item.Key, Args = item.Value.GetString() });
+                            var startUpArgData = item.GetObject();
+                            if (startUpArgData.TryGetValue("Name", out var name) &&
+                                startUpArgData.TryGetValue("Args", out var value))
+                            {
+                                collection.Add(new(name.GetString(), value.GetString()));
+                            }
                         }
+
+                        return collection.ToArray();
                     }
 
-                    return collection;
+                    return Array.Empty<PackageMetadataStartUpArgs>();
                 }
 
-                var packageMetadata = new PackageMetadata
-                {
-                    Author = GetStringOrEmpty(),
-                    Version = GetStringOrEmpty(),
-                    SettingsFile = GetStringOrEmpty(),
-                    ExecutableFile = GetStringOrEmpty(),
-                    MounterStartUpParm = GetStringOrEmpty(),
-                    MounterStopParm = GetStringOrEmpty(),
-                    StartUpArgs = GetStartUpArgs()
-                };
+                var packageMetadata = new PackageMetadata(
+                    GetStringOrEmpty(nameof(PackageMetadata.Author)),
+                    GetStringOrEmpty(nameof(PackageMetadata.Version)),
+                    GetStringOrEmpty(nameof(PackageMetadata.SettingsFile)),
+                    GetStringOrEmpty(nameof(PackageMetadata.ExecutableFile)),
+                    GetStringOrEmpty(nameof(PackageMetadata.MounterStartUpParm)),
+                    GetStringOrEmpty(nameof(PackageMetadata.MounterStopParm)),
+                    GetStartUpArgsFromJson(nameof(PackageMetadata.StartUpArgs)));
 
-                return Task.FromResult<PackageMetadata?>(packageMetadata);
+                return Task.FromResult(packageMetadata);
             }
         }
 
-        return Task.FromResult<PackageMetadata?>(null);
+        return Task.FromResult(PackageMetadata.Empty);
     }
 
     public Task<bool> CheckUpdateForMounter()

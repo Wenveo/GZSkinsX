@@ -7,7 +7,8 @@
 
 #nullable enable
 
-using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 using CommunityToolkit.AppServices;
@@ -25,7 +26,7 @@ internal
 interface IDesktopExtensionMethods
 {
     [return: ValueSetSerializer(typeof(PackageMetadataSerializer))]
-    Task<PackageMetadata?> GetMTPackageMetadata();
+    Task<PackageMetadata> GetMTPackageMetadata();
 
     Task<bool> CheckUpdateForMounter();
 
@@ -41,28 +42,36 @@ internal
 #endif
 sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
 {
-    PackageMetadata? IValueSetSerializer<PackageMetadata>.Deserialize(ValueSet? valueSet)
+    PackageMetadata IValueSetSerializer<PackageMetadata>.Deserialize(ValueSet? valueSet)
     {
         if (valueSet is not null)
         {
-            return new PackageMetadata()
-            {
-                Author = (string)valueSet["author"],
-                Version = (string)valueSet["version"],
-                SettingsFile = (string)valueSet["settingsFile"],
-                ExecutableFile = (string)valueSet["executableFile"],
-                MounterStartUpParm = (string)valueSet["mounterStartUpParm"],
-                MounterStopParm = (string)valueSet["mounterStopParm"],
-                StartUpArgs = (List<PackageMetadataStartUpArgs>)valueSet["startUpArgs"]
-            };
+            return new PackageMetadata(
+                (string)valueSet["author"], (string)valueSet["version"],
+                (string)valueSet["settingsFile"], (string)valueSet["executableFile"],
+                (string)valueSet["mounterStartUpParm"], (string)valueSet["mounterStopParm"],
+                ((string[])valueSet["startUpArgNames"]).Zip((string[])valueSet["startUpArgValues"],
+                (a, b) => new PackageMetadataStartUpArgs(a, b)).ToArray());
         }
 
-        return null;
+        return PackageMetadata.Empty;
     }
 
-    ValueSet? IValueSetSerializer<PackageMetadata>.Serialize(PackageMetadata? value)
+    ValueSet? IValueSetSerializer<PackageMetadata>.Serialize(PackageMetadata value)
     {
-        if (value is not null)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        string[] GetStartUpArgNames()
+        {
+            return value.StartUpArgs.Select(a => a.Name).ToArray();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        string[] GetStartUpArgValues()
+        {
+            return value.StartUpArgs.Select(a => a.Value).ToArray();
+        }
+
+        if (!value.IsEmpty)
         {
 #pragma warning disable format
             return new ValueSet
@@ -73,7 +82,8 @@ sealed class PackageMetadataSerializer : IValueSetSerializer<PackageMetadata>
                 {     "executableFile",     value.ExecutableFile     },
                 { "mounterStartUpParm",     value.MounterStartUpParm },
                 {    "mounterStopParm",     value.MounterStopParm    },
-                {        "startUpArgs",     value.StartUpArgs        }
+                {    "startUpArgNames",     GetStartUpArgNames()     },
+                {   "startUpArgValues",     GetStartUpArgValues()    },
             };
 #pragma warning restore format
         }
@@ -87,21 +97,38 @@ public
 #else
 internal
 #endif
-sealed class PackageMetadata
+readonly struct PackageMetadata
 {
-    public required string Author { get; init; }
+    public static readonly PackageMetadata Empty = new();
 
-    public required string Version { get; init; }
+    public readonly string Author;
 
-    public required string SettingsFile { get; init; }
+    public readonly string Version;
 
-    public required string ExecutableFile { get; init; }
+    public readonly string SettingsFile;
 
-    public required string MounterStartUpParm { get; init; }
+    public readonly string ExecutableFile;
 
-    public required string MounterStopParm { get; init; }
+    public readonly string MounterStartUpParm;
 
-    public required List<PackageMetadataStartUpArgs> StartUpArgs { get; init; }
+    public readonly string MounterStopParm;
+
+    public readonly PackageMetadataStartUpArgs[] StartUpArgs;
+
+    public readonly bool IsEmpty = true;
+
+    public PackageMetadata(string author, string version, string settingsFile, string executableFile,
+        string mounterStartUpParm, string mounterStopParm, PackageMetadataStartUpArgs[] startUpArgs)
+    {
+        Author = author;
+        Version = version;
+        SettingsFile = settingsFile;
+        ExecutableFile = executableFile;
+        MounterStartUpParm = mounterStartUpParm;
+        MounterStopParm = mounterStopParm;
+        StartUpArgs = startUpArgs;
+        IsEmpty = false;
+    }
 }
 
 #if WINDOWS_UWP
@@ -109,9 +136,15 @@ public
 #else
 internal
 #endif
-sealed class PackageMetadataStartUpArgs
+readonly struct PackageMetadataStartUpArgs
 {
-    public required string Name { get; init; }
+    public readonly string Name;
 
-    public required string Args { get; init; }
+    public readonly string Value;
+
+    public PackageMetadataStartUpArgs(string name, string value)
+    {
+        Name = name;
+        Value = value;
+    }
 }
