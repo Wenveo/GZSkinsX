@@ -31,7 +31,14 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
         public readonly string Version;
 
-        public readonly bool IsEmpty = true;
+        public readonly bool IsEmpty;
+
+        public PackageManifest()
+        {
+            Path = string.Empty;
+            Version = string.Empty;
+            IsEmpty = true;
+        }
 
         public PackageManifest(string path, string version)
         {

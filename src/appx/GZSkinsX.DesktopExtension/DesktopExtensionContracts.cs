@@ -7,6 +7,7 @@
 
 #nullable enable
 
+using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -115,7 +116,19 @@ readonly struct PackageMetadata
 
     public readonly PackageMetadataStartUpArg[] OtherStartupArgs;
 
-    public readonly bool IsEmpty = true;
+    public readonly bool IsEmpty;
+
+    public PackageMetadata()
+    {
+        Author = string.Empty;
+        Version = string.Empty;
+        SettingsFile = string.Empty;
+        ExecutableFile = string.Empty;
+        ProcStartupArgs = string.Empty;
+        ProcTerminateArgs = string.Empty;
+        OtherStartupArgs = Array.Empty<PackageMetadataStartUpArg>();
+        IsEmpty = true;
+    }
 
     public PackageMetadata(string author, string version, string settingsFile, string executableFile,
         string procStartupArgs, string procTerminateArgs, PackageMetadataStartUpArg[] otherStartupArgs)
