@@ -6,41 +6,58 @@
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:GZSkinsX.Views.NavigationViews.Home"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource NavigationViewContentBackground}"
     mc:Ignorable="d">
-    <Grid Padding="20,12,20,12" RowSpacing="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    <ScrollViewer Padding="20">
+        <Grid RowSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <Grid MinHeight="200" ColumnSpacing="20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <labs:Shimmer />
+            <Grid MinHeight="220" ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <labs:Shimmer />
 
-            <labs:Shimmer Grid.Column="1" MinWidth="280" />
+                <labs:Shimmer Grid.Column="1" MinWidth="280" />
+            </Grid>
+
+            <Grid Grid.Row="1" RowSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <labs:Shimmer
+                    Width="80"
+                    Height="32"
+                    HorizontalAlignment="Left" />
+
+                <Grid Grid.Row="1" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <labs:Shimmer Grid.Column="0" />
+                    <labs:Shimmer Grid.Column="1" />
+                    <labs:Shimmer Grid.Column="2" />
+                    <labs:Shimmer Grid.Column="3" />
+                </Grid>
+            </Grid>
         </Grid>
-
-        <StackPanel Grid.Row="1" Spacing="20">
-            <labs:Shimmer
-                Grid.Row="1"
-                Width="80"
-                Height="32"
-                HorizontalAlignment="Left" />
-
-            <StackPanel
-                Grid.Row="2"
-                Orientation="Horizontal"
-                Spacing="20">
-                <labs:Shimmer Width="150" Height="240" />
-                <labs:Shimmer Width="150" Height="240" />
-                <labs:Shimmer Width="150" Height="240" />
-                <labs:Shimmer Width="150" Height="240" />
-                <labs:Shimmer Width="150" Height="240" />
-                <labs:Shimmer Width="150" Height="240" />
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Page>
