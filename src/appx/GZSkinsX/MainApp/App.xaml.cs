@@ -28,7 +28,10 @@ namespace GZSkinsX.MainApp;
 /// </summary>
 public sealed partial class App : Application
 {
-    internal DesktopExtension.DesktopExtensionMethods DesktopExtensionMethods { get; } = new();
+    /// <summary>
+    /// The static member instance of <see cref="DesktopExtension.DesktopExtensionMethods"/>
+    /// </summary>
+    internal static DesktopExtension.DesktopExtensionMethods DesktopExtensionMethods { get; } = new();
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -39,6 +42,9 @@ public sealed partial class App : Application
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Initializes the app service on the host process 
+    /// </summary>
     protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
     {
         base.OnBackgroundActivated(args);
