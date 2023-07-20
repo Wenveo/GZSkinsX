@@ -33,6 +33,8 @@ interface IDesktopExtensionMethods
 
     Task<bool> TryUpdateMounterAsync();
 
+    Task<bool> VerifyLocalMTPackageIntegrityAsync();
+
     Task SetOwner(int processId);
 }
 

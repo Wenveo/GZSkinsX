@@ -8,10 +8,13 @@
 #nullable enable
 
 using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using System.IO.Hashing;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +58,8 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
     public const string PackageManifestPath = "PackageManifest.json";
 
     public const string PackageMetadataPath = "_metadata/package.json";
+
+    public const string PackageBlockMapPath = "_metadata/blockmap.json";
 
     public static readonly Uri[] Servers = new Uri[]
     {
@@ -274,6 +279,48 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         {
             Directory.Delete(path, true);
         }
+    }
+
+    public Task<bool> VerifyLocalMTPackageIntegrityAsync()
+    {
+        var blockmapFilePath = Path.Combine(MounterRootPath, PackageBlockMapPath);
+        if (File.Exists(blockmapFilePath))
+        {
+            try
+            {
+                var rawJsonData = File.ReadAllText(blockmapFilePath);
+                if (JsonObject.TryParse(rawJsonData, out var blockMapJson) &&
+                    blockMapJson.TryGetValue("Blocks", out var blocksArray) &&
+                    blocksArray.ValueType is JsonValueType.Array)
+                {
+                    var blockMap = blocksArray.GetArray().ToFrozenDictionary(
+                        a => ulong.Parse(a.GetObject()["Hash"].GetString(), CultureInfo.InvariantCulture),
+                        b => ulong.Parse(b.GetObject()["Checksum"].GetString(), CultureInfo.InvariantCulture));
+
+
+                    var rootPathLength = MounterRootPath.Length + 1;
+                    var localBlockMap = Directory.EnumerateFiles(MounterRootPath, "*", SearchOption.AllDirectories).ToFrozenDictionary(
+                        a => XxHash64.HashToUInt64(Encoding.UTF8.GetBytes(a[rootPathLength..].Replace('\\', '/'))),
+                        b => XxHash3.HashToUInt64(File.ReadAllBytes(b)));
+
+
+                    foreach (var item in blockMap)
+                    {
+                        if (!localBlockMap.TryGetValue(item.Key, out var checksum) || checksum != item.Value)
+                        {
+                            return Task.FromResult(false);
+                        }
+                    }
+
+                    return Task.FromResult(true);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        return Task.FromResult(false);
     }
 
     public Task SetOwner(int processId)

@@ -37,6 +37,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.Collections.Immutable">
+      <Version>8.0.0-preview.6.23329.7</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Hashing">
+      <Version>8.0.0-preview.6.23329.7</Version>
+    </PackageReference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
