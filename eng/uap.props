@@ -36,6 +36,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <OutputPath>bin\$(Configuration)\$(Platform)\</OutputPath>
   </PropertyGroup>
 
   <!-- FOR BUILD -->
@@ -48,12 +49,10 @@
   <!-- FOR ANYCPU -->
   <PropertyGroup Condition="'$(Configuration)' == 'AnyCPU'">
     <WarningLevel>4</WarningLevel>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <!-- FOR NOT ANYCPU -->
   <PropertyGroup Condition="'$(Configuration)' != 'AnyCPU'">
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <NoWarn>;2008</NoWarn>
   </PropertyGroup>
