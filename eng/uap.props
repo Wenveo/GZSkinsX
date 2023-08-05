@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Import Common Properties -->
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
+  <!-- Define Properties -->
+  <PropertyGroup>
+    <_UWPApp Condition="'$(OutputType)' == 'AppContainerExe'">true</_UWPApp>
+    <_UWPApp Condition="'$(OutputType)' != 'AppContainerExe'">false</_UWPApp>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Application Properties -->
+  <PropertyGroup Condition="'$(_UWPApp)' == 'true'">
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+
+  <!-- Libraries Properties -->
+  <PropertyGroup Condition="'$(_UWPApp)' == 'false'">
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+  </PropertyGroup>
+
+  <!-- Default Properties -->
+  <PropertyGroup>
+    <!-- UWP Project Type Guid (UWP Class Library + Windows (C#)) -->
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <!-- Common UWP Properties -->
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+
+  <!-- FOR BUILD -->
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>$(Platform)</PlatformTarget>
+  </PropertyGroup>
+
+  <!-- FOR ANYCPU -->
+  <PropertyGroup Condition="'$(Configuration)' == 'AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <!-- FOR NOT ANYCPU -->
+  <PropertyGroup Condition="'$(Configuration)' != 'AnyCPU'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>;2008</NoWarn>
+  </PropertyGroup>
+
+  <!-- FOR DEBUG -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <!-- FOR RELEASE -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <UseDotNetNativeToolchain Condition="'$(_UWPApp)' == 'true'">true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+
+  <ItemGroup Label="UAP_Packages">
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.8.5</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0'">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+</Project>
