@@ -19,12 +19,53 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{8F5A2C21-321
 		eng\uap.props = eng\uap.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{D9D545EC-FC14-4764-A345-EBF6A6B264F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.App", "src\GZSkinsX.App\GZSkinsX.App.csproj", "{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|ARM.ActiveCfg = Debug|ARM
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|ARM.Build.0 = Debug|ARM
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|ARM.Deploy.0 = Debug|ARM
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|ARM64.Build.0 = Debug|ARM64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|x64.ActiveCfg = Debug|x64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|x64.Build.0 = Debug|x64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|x64.Deploy.0 = Debug|x64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|x86.ActiveCfg = Debug|x86
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|x86.Build.0 = Debug|x86
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Debug|x86.Deploy.0 = Debug|x86
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|ARM.ActiveCfg = Release|ARM
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|ARM.Build.0 = Release|ARM
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|ARM.Deploy.0 = Release|ARM
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|ARM64.ActiveCfg = Release|ARM64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|ARM64.Build.0 = Release|ARM64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|ARM64.Deploy.0 = Release|ARM64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|x64.ActiveCfg = Release|x64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|x64.Build.0 = Release|x64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|x64.Deploy.0 = Release|x64
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|x86.ActiveCfg = Release|x86
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|x86.Build.0 = Release|x86
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8F5A2C21-3219-4938-AC02-CA4682621FCC} = {F0FC6B6C-E90E-446D-A448-FE21B443EFAF}
+		{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8} = {D9D545EC-FC14-4764-A345-EBF6A6B264F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E782B25F-825D-48AA-97CE-60A31C18A8E8}
