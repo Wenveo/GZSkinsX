@@ -35,7 +35,7 @@ internal sealed partial class StartUpViewModel : ObservableObject
     private StorageFolder? _selectedFolder;
 
     [ObservableProperty]
-    private int _regionsSelectedIndex;
+    private int _regionsSelectedIndex = -1;
 
     [ObservableProperty]
     private ObservableCollection<string> _regions;
@@ -46,8 +46,8 @@ internal sealed partial class StartUpViewModel : ObservableObject
     [ObservableProperty]
     private bool _infoBarIsOpen;
 
-    private readonly IGameService _gameService;
     private readonly IWindowManagerService _windowManagerService;
+    private readonly IGameService _gameService;
 
     public StartUpViewModel()
     {
@@ -88,7 +88,8 @@ internal sealed partial class StartUpViewModel : ObservableObject
             return;
         }
 
-        if (await _gameService.TryUpdateAsync(SelectedFolder, (GameRegion)(RegionsSelectedIndex + 1)) is false)
+        var selectedRegion = (GameRegion)(RegionsSelectedIndex + (IsRiotSupported ? 1 : 2));
+        if (await _gameService.TryUpdateAsync(SelectedFolder, selectedRegion) is false)
         {
             ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Invalid"));
             return;
