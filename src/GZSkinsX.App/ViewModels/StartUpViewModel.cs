@@ -1,0 +1,105 @@
+// Copyright 2023 GZSkins, Inc. All rights reserved.
+// Licensed under the Mozilla Public License, Version 2.0 (the "LICENSE.txt").
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+#nullable enable
+
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Game;
+using GZSkinsX.Contracts.WindowManager;
+using GZSkinsX.Helpers;
+
+using Windows.Storage;
+using Windows.Storage.Pickers;
+
+namespace GZSkinsX.ViewModels;
+
+internal sealed partial class StartUpViewModel : ObservableObject
+{
+    public bool IsRiotSupported { get; }
+#if RIOT_SUPPORTED
+    = true;
+#endif
+
+    [ObservableProperty]
+    private StorageFolder? _selectedFolder;
+
+    [ObservableProperty]
+    private int _regionsSelectedIndex;
+
+    [ObservableProperty]
+    private ObservableCollection<string> _regions;
+
+    [ObservableProperty]
+    private string? _infoBarTitle;
+
+    [ObservableProperty]
+    private bool _infoBarIsOpen;
+
+    private readonly IGameService _gameService;
+    private readonly IWindowManagerService _windowManagerService;
+
+    public StartUpViewModel()
+    {
+        _gameService = AppxContext.GameService;
+        _windowManagerService = AppxContext.WindowManagerService;
+
+        _regions = new ObservableCollection<string>
+        {
+#if RIOT_SUPPORTED
+            ResourceHelper.GetLocalized("Resources/StartUp_Initialize_Region_Riot"),
+#endif
+            ResourceHelper.GetLocalized("Resources/StartUp_Initialize_Region_Tencent")
+        };
+    }
+
+    [RelayCommand]
+    private async Task OnBrowser()
+    {
+        var folder = await new FolderPicker().PickSingleFolderAsync();
+        if (folder is not null)
+        {
+            SelectedFolder = folder;
+        }
+    }
+
+    [RelayCommand]
+    private async Task OnDone()
+    {
+        if (SelectedFolder is null || string.IsNullOrEmpty(SelectedFolder.Path))
+        {
+            ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Null"));
+            return;
+        }
+
+        if (RegionsSelectedIndex is -1)
+        {
+            ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Region_Null"));
+            return;
+        }
+
+        if (await _gameService.TryUpdateAsync(SelectedFolder, (GameRegion)(RegionsSelectedIndex + 1)) is false)
+        {
+            ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Invalid"));
+            return;
+        }
+
+        _windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
+    }
+
+    private void ShowErrorMessage(string msg)
+    {
+        InfoBarTitle = msg;
+        InfoBarIsOpen = true;
+    }
+}

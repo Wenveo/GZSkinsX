@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}</ProjectGuid>
@@ -21,10 +21,86 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Contracts\AccessCache\AccessCacheItemNotFoundException.cs" />
+    <Compile Include="Contracts\AccessCache\FutureAccessItemConstants.cs" />
+    <Compile Include="Contracts\AccessCache\IAccessCacheService.cs" />
+    <Compile Include="Contracts\AccessCache\IFutureAccessService.cs" />
+    <Compile Include="Contracts\AccessCache\IMostRecentlyUsedService.cs" />
+    <Compile Include="Contracts\Appx\AppxContext.cs" />
+    <Compile Include="Contracts\Appx\AppxContext.Services.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppxContext.Services.g.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Contracts\Extension\AdvanceExtensionMetadataAttribute.cs" />
+    <Compile Include="Contracts\Extension\ExportAdvanceExtensionAttribute.cs" />
+    <Compile Include="Contracts\Extension\IAdvanceExtension.cs" />
+    <Compile Include="Contracts\Game\GameRegion.cs" />
+    <Compile Include="Contracts\Game\IGameData.cs" />
+    <Compile Include="Contracts\Game\IGameService.cs" />
+    <Compile Include="Contracts\Logging\ILoggingService.cs" />
+    <Compile Include="Contracts\Logging\LogLevel.cs" />
+    <Compile Include="Contracts\MRTCore\IMRTCoreMap.cs" />
+    <Compile Include="Contracts\MRTCore\IMRTCoreService.cs" />
+    <Compile Include="Contracts\MRTCore\MRTCoreConstants.cs" />
+    <Compile Include="Contracts\Settings\ISettingsSection.cs" />
+    <Compile Include="Contracts\Settings\ISettingsService.cs" />
+    <Compile Include="Contracts\Settings\SettingsType.cs" />
+    <Compile Include="Contracts\Themes\IThemeService.cs" />
+    <Compile Include="Contracts\Themes\ThemeChangedEventArgs.cs" />
+    <Compile Include="Contracts\WindowManager\ExportWindowFrameAttribute.cs" />
+    <Compile Include="Contracts\WindowManager\IWindowFrame.cs" />
+    <Compile Include="Contracts\WindowManager\IWindowFrame2.cs" />
+    <Compile Include="Contracts\WindowManager\IWindowFrameContext.cs" />
+    <Compile Include="Contracts\WindowManager\IWindowManagerService.cs" />
+    <Compile Include="Contracts\WindowManager\WindowFrameConstants.cs" />
+    <Compile Include="Contracts\WindowManager\WindowFrameMetadataAttribute.cs" />
+    <Compile Include="Contracts\WindowManager\WindowFrameNavigatingEvnetArgs.cs" />
+    <Compile Include="Controls\SegoeFluentIcon.cs" />
+    <Compile Include="Controls\SegoeFluentIconSource.cs" />
+    <Compile Include="Controls\SegoeMDL2Assets.cs" />
+    <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
+    <Compile Include="Controls\StaticFontFamilys.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Helpers\TaskExtensions.cs" />
+    <Compile Include="Services\AccessCache\FutureAccessService.cs" />
+    <Compile Include="Services\AccessCache\MostRecentlyUsedService.cs" />
+    <Compile Include="Services\Appx\AppxTitleBar.cs" />
+    <Compile Include="Services\Appx\AppxWindow.cs" />
+    <Compile Include="Contracts\Appx\IAppxTitleBar.cs" />
+    <Compile Include="Contracts\Appx\IAppxWindow.cs" />
+    <Compile Include="Services\Game\GameData.cs" />
+    <Compile Include="Services\Game\GameService.cs" />
+    <Compile Include="Services\Game\GameSettings.cs" />
+    <Compile Include="Services\Logging\LoggerImpl.cs" />
+    <Compile Include="Services\Logging\LoggingService.cs" />
+    <Compile Include="Services\MRTCore\MRTCoreMap.cs" />
+    <Compile Include="Services\MRTCore\MRTCoreService.cs" />
+    <Compile Include="Services\Settings\SettingsSection.cs" />
+    <Compile Include="Services\Settings\SettingsService.cs" />
+    <Compile Include="Services\Themes\AutoThemeTitleBar.cs" />
+    <Compile Include="Services\Themes\ThemeService.cs" />
+    <Compile Include="Services\Themes\ThemeSettings.cs" />
+    <Compile Include="Services\WindowManager\WindowFrameContext.cs" />
+    <Compile Include="Services\WindowManager\WindowManagerService.cs" />
+    <Compile Include="ViewModels\StartUpViewModel.cs" />
+    <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\PreloadViewModel.cs" />
+    <Compile Include="Views\IndexPage.xaml.cs">
+      <DependentUpon>IndexPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\PreloadPage.xaml.cs">
+      <DependentUpon>PreloadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartUpPage.xaml.cs">
+      <DependentUpon>StartUpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WindowFrames.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -69,6 +145,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Contracts\Appx\AppxContext.Services.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -79,14 +159,55 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\IndexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PreloadPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StartUpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Animations">
+      <Version>8.0.230804-preview</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
+      <Version>8.0.230804-preview</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Converters">
+      <Version>8.0.230804-preview</Version>
+    </PackageReference>
+    <PackageReference Include="GZSkinsX.Kernel">
+      <Version>0.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="PolySharp">
+      <Version>1.13.2</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Composition">
+      <Version>7.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->

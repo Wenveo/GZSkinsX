@@ -5,9 +5,22 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
+using System;
+using System.Composition.Hosting;
+using System.Threading.Tasks;
+
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Extension;
+using GZSkinsX.Contracts.WindowManager;
+using GZSkinsX.Services.Game;
+using GZSkinsX.Services.Logging;
+
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX;
 
@@ -17,6 +30,38 @@ namespace GZSkinsX;
 public sealed partial class App : Application
 {
     /// <summary>
+    /// Gets the <see cref="App"/> object for the current application.
+    /// </summary>
+    public static new App Current => (App)Application.Current;
+
+    /// <summary>
+    /// Use the <see cref="Lazy{T}"/> to initialize the services for the current application.
+    /// </summary>
+    private static Lazy<Task> InitializeServiceAsync { get; } = new(async () =>
+    {
+        var configuration = new ContainerConfiguration();
+        configuration.WithAssembly(typeof(App).Assembly);
+
+        var compositionHost = configuration.CreateContainer();
+        AppxContext.InitializeLifetimeService(compositionHost);
+
+        await LoggerImpl.Shared.InitializeAsync();
+
+        await ((IGameService2)AppxContext.GameService).InitializeAsync();
+
+        var windowManagerService = AppxContext.WindowManagerService;
+        windowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
+
+        // Load extensions
+        foreach (var item in compositionHost.GetExports<Lazy<IAdvanceExtension, AdvanceExtensionMetadataAttribute>>())
+        {
+            _ = item.Value;
+        }
+
+        AppxContext.LoggingService.LogAlways("Application: Initialized successfully.");
+    });
+
+    /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
     /// </summary>
@@ -25,40 +70,29 @@ public sealed partial class App : Application
         InitializeComponent();
     }
 
+
     /// <summary>
     /// Invoked when the application is launched normally by the end user.  Other entry points
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs e)
+    protected override async void OnLaunched(LaunchActivatedEventArgs e)
     {
-        // Do not repeat app initialization when the Window already has content,
-        // just ensure that the window is active
-        if (Window.Current.Content is not Frame rootFrame)
-        {
-            // Create a Frame to act as the navigation context and navigate to the first page
-            rootFrame = new Frame();
-
-            if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-            {
-                //TODO: Load state from previously suspended application
-            }
-
-            // Place the frame in the current Window
-            Window.Current.Content = rootFrame;
-        }
-
+        await InitializeServiceAsync.Value;
         if (e.PrelaunchActivated == false)
         {
-            if (rootFrame.Content == null)
+            if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
             {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                CoreApplication.EnablePrelaunch(true);
             }
+
             // Ensure the current window is active
             Window.Current.Activate();
+        }
+
+        if (Window.Current.Content is FrameworkElement frameworkElement)
+        {
+            frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
         }
     }
 }

@@ -5,19 +5,19 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Windows.UI.Xaml.Controls;
+using System;
+using System.Composition;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-namespace GZSkinsX;
+namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
+/// 表示先行扩展的元数据类
 /// </summary>
-internal sealed partial class MainPage : Page
+[MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+public sealed class AdvanceExtensionMetadataAttribute : Attribute
 {
-    public MainPage()
-    {
-        InitializeComponent();
-    }
+    /// <summary>
+    /// 扩展的加载顺序
+    /// </summary>
+    public double Order { get; set; }
 }
