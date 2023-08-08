@@ -145,10 +145,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="Contracts\Appx\AppxContext.Services.g.tt">
+    <None Include="Contracts\Appx\AppxContext.Services.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
-    </Content>
+    </None>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
@@ -207,7 +207,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
+  </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
   <!-- IMPORT COMMON PROPS -->
