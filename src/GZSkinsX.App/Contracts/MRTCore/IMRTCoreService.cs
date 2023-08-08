@@ -17,12 +17,17 @@ namespace GZSkinsX.Contracts.MRTCore;
 public interface IMRTCoreService
 {
     /// <summary>
-    /// 获取与当前正在运行的应用程序的主包关联的 <seealso cref="IMRTCoreMap"/>
+    /// 获取与当前正在运行的应用程序的加载的所有 <seealso cref="IMRTCoreMap"/> 实例
+    /// </summary>
+    IReadOnlyDictionary<string, IMRTCoreMap> AllResourceMaps { get; }
+
+    /// <summary>
+    /// 获取与当前正在运行的应用程序的主包关联的 <seealso cref="IMRTCoreMap"/> 实例
     /// </summary>
     IMRTCoreMap MainResourceMap { get; }
 
     /// <summary>
-    /// 加载一个或多个包资源索引 (PRI) 文件，并将其内容添加到默认资源管理器
+    /// 加载一个或多个包资源索引 (PRI) 文件，并将其内容添加应用程序的资源图表中
     /// </summary>
     /// <param name="files">要添加的包资源索引 (PRI) 文件</param>
     void LoadPriFiles(IEnumerable<IStorageFile> files);
