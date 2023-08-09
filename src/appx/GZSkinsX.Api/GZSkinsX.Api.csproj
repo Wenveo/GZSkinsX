@@ -125,7 +125,7 @@
       <Version>0.0.18</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.Shimmer">
-      <Version>0.1.230802</Version>
+      <Version>0.1.230809</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Labs.Uwp.SizerBase">
       <Version>0.0.4</Version>
