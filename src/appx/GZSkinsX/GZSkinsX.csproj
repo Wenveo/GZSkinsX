@@ -201,7 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.AppServices">
-      <Version>0.1.230802</Version>
+      <Version>0.1.230809</Version>
     </PackageReference>
     <PackageReference Include="GZSkinsX.Kernel">
       <Version>0.0.2</Version>

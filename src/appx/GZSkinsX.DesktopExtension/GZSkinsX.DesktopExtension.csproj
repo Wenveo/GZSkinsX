@@ -53,7 +53,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <PackageReference Include="CommunityToolkit.Labs.AppServices" Version="0.1.230802" />
+    <PackageReference Include="CommunityToolkit.Labs.AppServices" Version="0.1.230809" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.755" />
   </ItemGroup>
   <ItemGroup>
