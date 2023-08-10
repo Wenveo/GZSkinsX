@@ -9,6 +9,7 @@
 
 using System;
 using System.Composition.Hosting;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
@@ -29,6 +30,11 @@ namespace GZSkinsX;
 /// </summary>
 public sealed partial class App : Application
 {
+    /// <summary>
+    /// The static member instance of <see cref="DesktopExtension.DesktopExtensionMethods"/>
+    /// </summary>
+    public static DesktopExtension.DesktopExtensionMethods DesktopExtensionMethods { get; } = new();
+
     /// <summary>
     /// Gets the <see cref="App"/> object for the current application.
     /// </summary>
@@ -70,6 +76,18 @@ public sealed partial class App : Application
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Initializes the app service on the host process 
+    /// </summary>
+    protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+    {
+        base.OnBackgroundActivated(args);
+
+        if (DesktopExtensionMethods.OnBackgroundActivated(args))
+        {
+            DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
+        }
+    }
 
     /// <summary>
     /// Invoked when the application is launched normally by the end user.  Other entry points

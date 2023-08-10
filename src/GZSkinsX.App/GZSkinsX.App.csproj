@@ -21,6 +21,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="..\GZSkinsX.DesktopExtension\DesktopExtensionContracts.cs">
+      <Link>DesktopExtensionContracts.cs</Link>
+    </Compile>
     <Compile Include="Contracts\AccessCache\AccessCacheItemNotFoundException.cs" />
     <Compile Include="Contracts\AccessCache\FutureAccessItemConstants.cs" />
     <Compile Include="Contracts\AccessCache\IAccessCacheService.cs" />
@@ -62,7 +65,9 @@
     <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
     <Compile Include="Controls\StaticFontFamilys.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Helpers\StorageFileHelper.cs" />
     <Compile Include="Helpers\TaskExtensions.cs" />
+    <Compile Include="Markups\LocalizedStringExtension.cs" />
     <Compile Include="Services\AccessCache\FutureAccessService.cs" />
     <Compile Include="Services\AccessCache\MostRecentlyUsedService.cs" />
     <Compile Include="Services\Appx\AppxTitleBar.cs" />
@@ -180,6 +185,9 @@
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Labs.AppServices">
+      <Version>0.0.3</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.1</Version>
     </PackageReference>
@@ -208,10 +216,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
+    <SDKReference Include="WindowsDesktop, Version=10.0.22621.0">
+      <Name>Windows Desktop Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
