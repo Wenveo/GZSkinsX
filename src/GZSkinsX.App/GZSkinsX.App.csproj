@@ -113,6 +113,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
+    <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -189,16 +191,16 @@
       <Version>0.0.3</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
-      <Version>8.2.1</Version>
+      <Version>8.2.2-build.1</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Animations">
-      <Version>8.0.230804-preview</Version>
+      <Version>8.0.230809-preview</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
-      <Version>8.0.230804-preview</Version>
+      <Version>8.0.230809-preview</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Converters">
-      <Version>8.0.230804-preview</Version>
+      <Version>8.0.230809-preview</Version>
     </PackageReference>
     <PackageReference Include="GZSkinsX.Kernel">
       <Version>0.0.2</Version>
@@ -209,7 +211,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="System.Composition">
-      <Version>7.0.0</Version>
+      <Version>8.0.0-preview.7.23375.6</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
