@@ -27,6 +27,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         {
             Arguments = args,
             FileName = executable,
+            UseShellExecute = false,
             Verb = runAs ? "RunAs" : string.Empty,
             WorkingDirectory = Path.GetDirectoryName(executable)
         };
