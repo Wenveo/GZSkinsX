@@ -7,11 +7,15 @@
 
 #nullable enable
 
+using CommunityToolkit.WinUI;
+
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.WindowManager;
+using GZSkinsX.Helpers;
 
-using Windows.UI.Xaml;
+using Windows.System;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,11 +29,13 @@ public sealed partial class IndexPage : Page
     public IndexPage()
     {
         InitializeComponent();
-        Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+        DispatcherQueue.GetForCurrentThread().EnqueueAsync(() =>
+        {
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+        }, DispatcherQueuePriority.Low).FireAndForget();
     }
 }
