@@ -5,6 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -32,14 +33,19 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             WorkingDirectory = Path.GetDirectoryName(executable)
         };
 
+        var taskCompletionSource = new TaskCompletionSource<bool>();
+
         try
         {
-            return Task.FromResult(Process.Start(startInfo) is not null);
+            using var process = Process.Start(startInfo);
+            taskCompletionSource.SetResult(process.Handle != IntPtr.Zero);
         }
-        catch
+        catch (Exception excp)
         {
-            return Task.FromResult(false);
+            taskCompletionSource.SetException(excp);
         }
+
+        return taskCompletionSource.Task;
     }
 
     public Task SetOwner(int processId)
