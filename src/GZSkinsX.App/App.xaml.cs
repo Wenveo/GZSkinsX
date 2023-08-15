@@ -53,8 +53,6 @@ public sealed partial class App : Application
 
         await LoggerImpl.Shared.InitializeAsync();
 
-        await ((IGameService2)AppxContext.GameService).InitializeAsync();
-
         var windowManagerService = AppxContext.WindowManagerService;
         windowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
 

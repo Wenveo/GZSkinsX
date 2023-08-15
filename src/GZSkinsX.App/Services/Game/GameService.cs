@@ -19,19 +19,15 @@ using Windows.Storage;
 
 namespace GZSkinsX.Services.Game;
 
-internal interface IGameService2
-{
-    Task InitializeAsync();
-}
-
 /// <inheritdoc cref="IGameService"/>
 [Shared, Export(typeof(IGameService))]
-internal sealed class GameService : IGameService, IGameService2
+[method: ImportingConstructor]
+internal sealed class GameService(GameSettings gameSettings) : IGameService
 {
     /// <summary>
     /// 用于存储以及更新配置
     /// </summary>
-    private readonly GameSettings _gameSettings;
+    private readonly GameSettings _gameSettings = gameSettings;
 
     /// <summary>
     /// 当前内部游戏数据实例
@@ -55,20 +51,9 @@ internal sealed class GameService : IGameService, IGameService2
     public IGameData GameData => _gameData;
 
     /// <inheritdoc/>
-    public StorageFolder? RootFolder { get; private set; }
-
-    /// <summary>
-    /// 初始化 <see cref="GameService"/> 的新实例
-    /// </summary>
-    [method: ImportingConstructor]
-    public GameService(GameSettings gameSettings)
+    public async Task<StorageFolder?> TryGetRootFolderAsync()
     {
-        _gameSettings = gameSettings;
-    }
-
-    public async Task InitializeAsync()
-    {
-        RootFolder = await AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name);
+        return await AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name);
     }
 
     /// <inheritdoc/>
@@ -76,10 +61,7 @@ internal sealed class GameService : IGameService, IGameService2
     {
         if (await _gameData.TryUpdateAsync(rootFolder, region))
         {
-            _futureAccessService.TryRemove(FutureAccessItemConstants.Game_RootFolder_Name);
             _futureAccessService.Add(rootFolder!, FutureAccessItemConstants.Game_RootFolder_Name);
-
-            RootFolder = rootFolder;
             _gameSettings.CurrentRegion = region;
 
             _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootFolder!.Path} /p:GameRegion={region}");

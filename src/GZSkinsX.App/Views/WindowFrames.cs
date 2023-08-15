@@ -92,7 +92,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 
     public async Task<bool> CanNavigateToAsync(WindowFrameNavigatingEvnetArgs args)
     {
-        if (await _gameService.TryUpdateAsync(_gameService.RootFolder, _gameService.CurrentRegion))
+        if (await _gameService.TryGetRootFolderAsync() is not null)
         {
             _windowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             return false;
