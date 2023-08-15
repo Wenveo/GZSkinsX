@@ -123,6 +123,69 @@
   <data name="AppName" xml:space="preserve">
     <value>格子</value>
   </data>
+  <data name="Main_RunFailedTeachingTip.Title" xml:space="preserve">
+    <value>Oops! 意想不到的事情发生了！</value>
+  </data>
+  <data name="Main_RunFailedTeachingTip_ErrorMessage" xml:space="preserve">
+    <value>错误消息："{0}".</value>
+  </data>
+  <data name="Main_Server_About" xml:space="preserve">
+    <value>技术支持</value>
+  </data>
+  <data name="Main_Server_CheckForUpdates" xml:space="preserve">
+    <value>正在检查更新...</value>
+  </data>
+  <data name="Main_Server_CheckForUpdates2" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="Main_Server_Launch" xml:space="preserve">
+    <value>启动服务</value>
+  </data>
+  <data name="Main_Server_MoreLaunchOptions" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="Main_Server_Terminate" xml:space="preserve">
+    <value>终止服务</value>
+  </data>
+  <data name="Main_Server_UpdateFailed" xml:space="preserve">
+    <value>更新失败</value>
+  </data>
+  <data name="Main_Server_Updating" xml:space="preserve">
+    <value>更新中 {0:F2} %</value>
+  </data>
+  <data name="Main_SettingsMenu_Settings.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Main_SettingsMenu_Theme_Dark.Text" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="Main_SettingsMenu_Theme_Default.Text" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="Main_SettingsMenu_Theme_Light.Text" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="Main_UpdateButServerIsRunningTeachingTip.ActionButtonContent" xml:space="preserve">
+    <value>终止服务并更新</value>
+  </data>
+  <data name="Main_UpdateButServerIsRunningTeachingTip.CloseButtonContent" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Main_UpdateButServerIsRunningTeachingTip.Subtitle" xml:space="preserve">
+    <value>是否要停止服务并更新？</value>
+  </data>
+  <data name="Main_UpdateButServerIsRunningTeachingTip.Title" xml:space="preserve">
+    <value>检测到服务正在运行中</value>
+  </data>
+  <data name="Main_UpdateFailedTeachingTip.Title" xml:space="preserve">
+    <value>在尝试对组件进行更新时失败</value>
+  </data>
+  <data name="Main_UpToDateTeachingTip.Title" xml:space="preserve">
+    <value>已更新至最新版本</value>
+  </data>
+  <data name="Main_UpToDateTeachingTip_CurrentVersion" xml:space="preserve">
+    <value>当前组件版本号 {0}</value>
+  </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
   </data>

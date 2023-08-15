@@ -2,13 +2,289 @@
     x:Class="GZSkinsX.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+    xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:ctrls="using:GZSkinsX.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Views"
+    xmlns:markups="using:GZSkinsX.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:viewModels="using:GZSkinsX.ViewModels"
     mc:Ignorable="d">
-    <Page.DataContext>
-        <viewModels:MainViewModel />
-    </Page.DataContext>
+    <Page.Resources>
+        <XamlUICommand x:Name="SwitchThemeCommand" ExecuteRequested="OnSwitchTheme" />
+    </Page.Resources>
+    <Grid RowSpacing="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="188" />
+            </Grid.ColumnDefinitions>
+            <Border
+                x:Name="AppTitleBar"
+                Grid.ColumnSpan="3"
+                Background="Transparent">
+                <TextBlock
+                    Margin="14,4,0,0"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="{markups:LocalizedString ResourceKey=Resources/AppName}" />
+            </Border>
+
+            <Grid Grid.Column="2" Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".32*" />
+                    <ColumnDefinition
+                        Width="*"
+                        MinWidth="80"
+                        MaxWidth="620" />
+                    <ColumnDefinition Width=".12*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <AutoSuggestBox
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    IsTextScaleFactorEnabled="True"
+                    PlaceholderText="在此列表中搜索...">
+                    <animations:Implicit.Animations>
+                        <animations:OffsetAnimation Duration="0:0:0.420" />
+                    </animations:Implicit.Animations>
+                    <AutoSuggestBox.QueryIcon>
+                        <ctrls:SegoeFluentIcon FontSize="14" Glyph="&#xE11A;" />
+                    </AutoSuggestBox.QueryIcon>
+                </AutoSuggestBox>
+
+                <StackPanel
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <ctrls:LaunchButton
+                        x:Name="MainLaunchButton"
+                        Height="32"
+                        Command="{x:Bind ViewModel.ToggleStateCommand, Mode=OneWay}"
+                        State="{x:Bind ViewModel.MounterLaunchState, Mode=OneWay}">
+                        <ctrls:LaunchButtonStatusContent>
+                            <ctrls:LaunchButtonStatusContent.DefaultContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <ctrls:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
+                                    <TextBlock Margin="8,0,0,0" Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_Launch}" />
+                                </StackPanel>
+                            </ctrls:LaunchButtonStatusContent.DefaultContent>
+                            <ctrls:LaunchButtonStatusContent.RunningContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <ctrls:SegoeFluentIcon FontSize="16" Glyph="&#xEE95;" />
+                                    <TextBlock Margin="8,0,0,0" Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_Terminate}" />
+                                </StackPanel>
+                            </ctrls:LaunchButtonStatusContent.RunningContent>
+                            <ctrls:LaunchButtonStatusContent.CheckUpdatesContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <muxc:ProgressRing
+                                        Width="16"
+                                        Height="16"
+                                        IsIndeterminate="True" />
+                                    <TextBlock Margin="10,0,0,0" Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_CheckForUpdates}" />
+                                </StackPanel>
+                            </ctrls:LaunchButtonStatusContent.CheckUpdatesContent>
+                            <ctrls:LaunchButtonStatusContent.UpdateFailedContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <ctrls:SegoeFluentIcon
+                                        FontSize="16"
+                                        Foreground="{ThemeResource ProgressBarErrorForegroundColor}"
+                                        Glyph="&#xEA6A;" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        Foreground="{ThemeResource ProgressBarErrorForegroundColor}"
+                                        Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_UpdateFailed}" />
+                                </StackPanel>
+                            </ctrls:LaunchButtonStatusContent.UpdateFailedContent>
+                            <ctrls:LaunchButtonStatusContent.UpdatingContent>
+                                <StackPanel Orientation="Horizontal">
+                                    <muxc:ProgressRing
+                                        Width="16"
+                                        Height="16"
+                                        IsIndeterminate="False"
+                                        Value="{x:Bind ViewModel.UpdatingProgress, Mode=OneWay}" />
+                                    <TextBlock Margin="10,0,0,0" DataContext="{x:Bind ViewModel, Mode=OneWay}">
+                                        <TextBlock.Text>
+                                            <Binding
+                                                Converter="{StaticResource StringFormatConverter}"
+                                                ConverterParameter="{markups:LocalizedString ResourceKey=Resources/Main_Server_Updating}"
+                                                Mode="OneWay"
+                                                Path="UpdatingProgress" />
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </ctrls:LaunchButtonStatusContent.UpdatingContent>
+                        </ctrls:LaunchButtonStatusContent>
+                        <ctrls:LaunchButton.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Command="{x:Bind ViewModel.LaunchCommand, Mode=OneWay}"
+                                    IsEnabled="{x:Bind ViewModel.MTCanLaunch, Mode=OneWay}"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_Launch}">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F5" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                    <MenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE768;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSubItem
+                                    x:Name="Main_MoreLaunchOptionsMenuItem"
+                                    IsEnabled="{x:Bind ViewModel.MTCanLaunch, Mode=OneWay}"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_MoreLaunchOptions}"
+                                    Visibility="{x:Bind ViewModel.HasMoreLaunchOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <MenuFlyoutSubItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE712;" />
+                                    </MenuFlyoutSubItem.Icon>
+                                </MenuFlyoutSubItem>
+                                <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.HasMoreLaunchOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                <MenuFlyoutItem
+                                    Command="{x:Bind ViewModel.TerminateCommand, Mode=OneWay}"
+                                    IsEnabled="{x:Bind ViewModel.MTCanTerminate, Mode=OneWay}"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_Terminate}">
+                                    <MenuFlyoutItem.KeyboardAccelerators>
+                                        <KeyboardAccelerator Key="F5" Modifiers="Shift" />
+                                    </MenuFlyoutItem.KeyboardAccelerators>
+                                    <MenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE71A;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.HasMoreLaunchOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
+                                <MenuFlyoutItem
+                                    Command="{x:Bind ViewModel.CheckForUpdatesCommand, Mode=OneWay}"
+                                    IsEnabled="{x:Bind ViewModel.MTCanCheckForUpdate, Mode=OneWay}"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_CheckForUpdates2}">
+                                    <MenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE895;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_About}">
+                                    <MenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE946;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </ctrls:LaunchButton.Flyout>
+                    </ctrls:LaunchButton>
+
+                    <Button
+                        Width="32"
+                        Height="32"
+                        Padding="8">
+                        <muxc:AnimatedIcon>
+                            <muxc:AnimatedIcon.FallbackIconSource>
+                                <ctrls:SegoeFluentIconSource Glyph="&#xE700;" />
+                            </muxc:AnimatedIcon.FallbackIconSource>
+                            <muxc:AnimatedIcon.Source>
+                                <animatedVisuals:AnimatedGlobalNavigationButtonVisualSource />
+                            </muxc:AnimatedIcon.Source>
+                        </muxc:AnimatedIcon>
+                        <Button.Flyout>
+                            <MenuFlyout
+                                x:Name="MainSettingsMenuFlyout"
+                                Windows10version1903:ShouldConstrainToRootBounds="True"
+                                Opening="OnMainSettingsMenuFlyoutOpening"
+                                Placement="Bottom">
+                                <muxc:RadioMenuFlyoutItem
+                                    x:Name="Main_SettingsMenu_Theme_Light"
+                                    x:Uid="Main_SettingsMenu_Theme_Light"
+                                    Command="{x:Bind SwitchThemeCommand}"
+                                    GroupName="ThemeMenu">
+                                    <muxc:RadioMenuFlyoutItem.CommandParameter>
+                                        <ElementTheme>Light</ElementTheme>
+                                    </muxc:RadioMenuFlyoutItem.CommandParameter>
+                                    <muxc:RadioMenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE793;" />
+                                    </muxc:RadioMenuFlyoutItem.Icon>
+                                </muxc:RadioMenuFlyoutItem>
+                                <muxc:RadioMenuFlyoutItem
+                                    x:Name="Main_SettingsMenu_Theme_Dark"
+                                    x:Uid="Main_SettingsMenu_Theme_Dark"
+                                    Command="{x:Bind SwitchThemeCommand}"
+                                    GroupName="ThemeMenu">
+                                    <muxc:RadioMenuFlyoutItem.CommandParameter>
+                                        <ElementTheme>Dark</ElementTheme>
+                                    </muxc:RadioMenuFlyoutItem.CommandParameter>
+                                    <muxc:RadioMenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE708;" />
+                                    </muxc:RadioMenuFlyoutItem.Icon>
+                                </muxc:RadioMenuFlyoutItem>
+                                <muxc:RadioMenuFlyoutItem
+                                    x:Name="Main_SettingsMenu_Theme_Default"
+                                    x:Uid="Main_SettingsMenu_Theme_Default"
+                                    Command="{x:Bind SwitchThemeCommand}"
+                                    GroupName="ThemeMenu">
+                                    <muxc:RadioMenuFlyoutItem.CommandParameter>
+                                        <ElementTheme>Default</ElementTheme>
+                                    </muxc:RadioMenuFlyoutItem.CommandParameter>
+                                    <muxc:RadioMenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE770;" />
+                                    </muxc:RadioMenuFlyoutItem.Icon>
+                                </muxc:RadioMenuFlyoutItem>
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem x:Uid="Main_SettingsMenu_Settings">
+                                    <MenuFlyoutItem.Icon>
+                                        <ctrls:SegoeFluentIcon Glyph="&#xE713;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+
+                <muxc:TeachingTip
+                    x:Uid="Main_RunFailedTeachingTip"
+                    IsOpen="{x:Bind ViewModel.IsShowRunFailedTeachingTip, Mode=OneWay}"
+                    Subtitle="{x:Bind ViewModel.RunFailedTeachingTipContent, Mode=OneWay}"
+                    Target="{x:Bind MainLaunchButton, Mode=OneTime}">
+                    <muxc:TeachingTip.IconSource>
+                        <ctrls:SegoeFluentIconSource Glyph="&#xE783;" />
+                    </muxc:TeachingTip.IconSource>
+                </muxc:TeachingTip>
+
+                <muxc:TeachingTip
+                    x:Uid="Main_UpToDateTeachingTip"
+                    IsLightDismissEnabled="True"
+                    IsOpen="{x:Bind ViewModel.IsShowUpToDateTeachingTip, Mode=OneWay}"
+                    Subtitle="{x:Bind ViewModel.UpToDateTeachingTipContent, Mode=OneWay}"
+                    Target="{x:Bind MainLaunchButton, Mode=OneTime}">
+                    <muxc:TeachingTip.IconSource>
+                        <ctrls:SegoeFluentIconSource Glyph="&#xE73E;" />
+                    </muxc:TeachingTip.IconSource>
+                </muxc:TeachingTip>
+
+                <muxc:TeachingTip
+                    x:Uid="Main_UpdateFailedTeachingTip"
+                    IsOpen="{x:Bind ViewModel.IsShowUpdateFailedTeachingTip, Mode=OneWay}"
+                    Subtitle="{x:Bind ViewModel.UpdateFailedTeachingTipContent, Mode=OneWay}"
+                    Target="{x:Bind MainLaunchButton, Mode=OneTime}">
+                    <muxc:TeachingTip.IconSource>
+                        <ctrls:SegoeFluentIconSource Glyph="&#xEA39;" />
+                    </muxc:TeachingTip.IconSource>
+                </muxc:TeachingTip>
+
+                <muxc:TeachingTip
+                    x:Uid="Main_UpdateButServerIsRunningTeachingTip"
+                    ActionButtonCommand="{x:Bind ViewModel.TerminateAndUpdateCommand, Mode=OneWay}"
+                    IsOpen="{x:Bind ViewModel.IsShowUpdateButServerIsRunningTeachingTip, Mode=OneWay}"
+                    Target="{x:Bind MainLaunchButton, Mode=OneTime}">
+                    <muxc:TeachingTip.IconSource>
+                        <ctrls:SegoeFluentIconSource Glyph="&#xE946;" />
+                    </muxc:TeachingTip.IconSource>
+                </muxc:TeachingTip>
+            </Grid>
+        </Grid>
+    </Grid>
 </Page>

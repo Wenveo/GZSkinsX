@@ -40,7 +40,7 @@ internal sealed partial class PreloadPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         DispatcherQueue.GetForCurrentThread().EnqueueAsync(
-            InitializeAsync, DispatcherQueuePriority.High).FireAndForget();
+            InitializeAsync, DispatcherQueuePriority.Low).FireAndForget();
     }
 
     private async Task InitializeAsync()

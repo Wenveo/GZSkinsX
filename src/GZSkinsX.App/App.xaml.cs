@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Contracts.WindowManager;
-using GZSkinsX.Services.Game;
 using GZSkinsX.Services.Logging;
 
 using Windows.ApplicationModel.Activation;

@@ -43,6 +43,9 @@
     <Compile Include="Contracts\Game\IGameService.cs" />
     <Compile Include="Contracts\Logging\ILoggingService.cs" />
     <Compile Include="Contracts\Logging\LogLevel.cs" />
+    <Compile Include="Contracts\Mounter\IMounterService.cs" />
+    <Compile Include="Contracts\Mounter\MTPackageMetadata.cs" />
+    <Compile Include="Contracts\Mounter\MTPackageMetadataStartUpArgument.cs" />
     <Compile Include="Contracts\MRTCore\IMRTCoreMap.cs" />
     <Compile Include="Contracts\MRTCore\IMRTCoreService.cs" />
     <Compile Include="Contracts\MRTCore\MRTCoreConstants.cs" />
@@ -59,6 +62,10 @@
     <Compile Include="Contracts\WindowManager\WindowFrameConstants.cs" />
     <Compile Include="Contracts\WindowManager\WindowFrameMetadataAttribute.cs" />
     <Compile Include="Contracts\WindowManager\WindowFrameNavigatingEvnetArgs.cs" />
+    <Compile Include="Controls\LaunchButton\LaunchButtonAutomationPeer.cs" />
+    <Compile Include="Controls\LaunchButton\LaunchButton.cs" />
+    <Compile Include="Controls\LaunchButton\LaunchButtonStatusContent.cs" />
+    <Compile Include="Controls\LaunchButton\LaunchButtonStatus.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />
     <Compile Include="Controls\SegoeFluentIconSource.cs" />
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
@@ -79,6 +86,8 @@
     <Compile Include="Services\Game\GameSettings.cs" />
     <Compile Include="Services\Logging\LoggerImpl.cs" />
     <Compile Include="Services\Logging\LoggingService.cs" />
+    <Compile Include="Services\Mounter\MounterService.cs" />
+    <Compile Include="Services\Mounter\MounterSettings.cs" />
     <Compile Include="Services\MRTCore\MRTCoreMap.cs" />
     <Compile Include="Services\MRTCore\MRTCoreService.cs" />
     <Compile Include="Services\Settings\SettingsSection.cs" />
@@ -166,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\LaunchButton\LaunchButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\IndexPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,6 +200,12 @@
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Diagnostics">
+      <Version>8.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.HighPerformance">
+      <Version>8.2.1</Version>
+    </PackageReference>
     <PackageReference Include="CommunityToolkit.Labs.AppServices">
       <Version>0.0.3</Version>
     </PackageReference>
@@ -210,7 +229,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.Collections.Immutable">
+      <Version>8.0.0-preview.7.23375.6</Version>
+    </PackageReference>
     <PackageReference Include="System.Composition">
+      <Version>8.0.0-preview.7.23375.6</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Hashing">
       <Version>8.0.0-preview.7.23375.6</Version>
     </PackageReference>
   </ItemGroup>
