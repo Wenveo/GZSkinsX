@@ -64,7 +64,7 @@ internal sealed partial class MainViewModel : ObservableObject
 
     public bool MTCanTerminate => MounterLaunchState is LaunchButtonStatus.Running;
 
-    public bool MTCanCheckForUpdate => MounterLaunchState is not LaunchButtonStatus.CheckUpdates or LaunchButtonStatus.Updating;
+    public bool MTCanCheckForUpdate => MounterLaunchState is not LaunchButtonStatus.CheckUpdates and not LaunchButtonStatus.Updating;
 
     public IMounterService MounterService { get; }
 

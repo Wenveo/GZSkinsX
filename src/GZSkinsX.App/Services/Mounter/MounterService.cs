@@ -406,28 +406,27 @@ internal sealed class MounterService : IMounterService
         progress?.Report(0.0d);
         using var httpClient = new HttpClient();
 
-        progress?.Report(12.0d);
+        progress?.Report(2.0d);
         var workingDirectory = await GetMounterWorkingDirectoryAsync();
 
-        progress?.Report(26.0d);
+        progress?.Report(4.0d);
 
         var previousMetadata = workingDirectory is null ? MTPackageMetadata.Empty
             : await GetLocalMTPackageMetadataAsync(workingDirectory);
 
-        progress?.Report(48.0d);
+        progress?.Report(9.0d);
         var onlineManifest = await DownloadPackageManifestAsync(httpClient);
 
+        progress?.Report(28.0d);
         if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version) is false)
         {
-            progress?.Report(56.0d);
-
             var destFolder = await DownloadMTPackageAsync(httpClient, new(onlineManifest.Path));
             if (destFolder is null)
             {
                 throw new InvalidOperationException("在尝试下载包时失败。");
             }
 
-            progress?.Report(89.0d);
+            progress?.Report(84.0d);
 
             // New Metadata
             var newMetadata = await GetLocalMTPackageMetadataAsync(destFolder);
@@ -435,7 +434,7 @@ internal sealed class MounterService : IMounterService
             // Copy settings file
             if (workingDirectory is not null && previousMetadata.IsEmpty is false)
             {
-                progress?.Report(95.0d);
+                progress?.Report(92.0d);
 
                 var settingsFilePath = Path.Combine(workingDirectory.Path, previousMetadata.SettingsFile);
                 if (File.Exists(settingsFilePath))
@@ -443,15 +442,15 @@ internal sealed class MounterService : IMounterService
                     File.Copy(settingsFilePath, Path.Combine(destFolder.Path, newMetadata.SettingsFile));
                 }
 
-                progress?.Report(99.0d);
+                progress?.Report(98.0d);
             }
 
             _mounterSettings.WorkingDirectory = destFolder.Name;
         }
 
-        await TryClearDownloadCacheAsync();
-
         progress?.Report(100.0d);
+
+        await TryClearDownloadCacheAsync();
     }
 
     public async Task TryClearDownloadCacheAsync()
