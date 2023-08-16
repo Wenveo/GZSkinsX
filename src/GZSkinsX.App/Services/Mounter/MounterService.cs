@@ -13,11 +13,13 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Composition;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.IO.Hashing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
@@ -483,55 +485,71 @@ internal sealed class MounterService : IMounterService
 
     public async Task LaunchAsync()
     {
+        var workingDirectory = await GetMounterWorkingDirectoryAsync();
+        ThrowIfWorkingDirectoryIsInvalid(workingDirectory);
+
         var localPackageMetadata =
-            await GetLocalMTPackageMetadataAsync(
+            await GetLocalMTPackageMetadataAsync(workingDirectory,
             nameof(MTPackageMetadata.ExecutableFile),
             nameof(MTPackageMetadata.ProcStartupArgs));
 
-        if (localPackageMetadata.IsEmpty is false)
-        {
-            var workingDirectory = await GetMounterWorkingDirectoryAsync();
-            if (workingDirectory is not null)
-            {
-                var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-                await App.DesktopExtensionMethods.ProcessLaunch(executableFile, localPackageMetadata.ProcStartupArgs, true);
-            }
-        }
+        ThrowIfMTPackageMetadataIsEmpty(localPackageMetadata);
+
+        var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
+        await App.DesktopExtensionMethods.ProcessLaunch(executableFile, localPackageMetadata.ProcStartupArgs, true);
     }
 
     public async Task LaunchAsync(string args)
     {
+        var workingDirectory = await GetMounterWorkingDirectoryAsync();
+        ThrowIfWorkingDirectoryIsInvalid(workingDirectory);
+
         var localPackageMetadata =
-            await GetLocalMTPackageMetadataAsync(
+            await GetLocalMTPackageMetadataAsync(workingDirectory,
             nameof(MTPackageMetadata.ExecutableFile));
 
-        if (localPackageMetadata.IsEmpty is false)
-        {
-            var workingDirectory = await GetMounterWorkingDirectoryAsync();
-            if (workingDirectory is not null)
-            {
-                var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-                await App.DesktopExtensionMethods.ProcessLaunch(executableFile, args, true);
-            }
-        }
+        ThrowIfMTPackageMetadataIsEmpty(localPackageMetadata);
+
+        var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
+        await App.DesktopExtensionMethods.ProcessLaunch(executableFile, args, true);
     }
 
     public async Task TerminateAsync()
     {
+        var workingDirectory = await GetMounterWorkingDirectoryAsync();
+        ThrowIfWorkingDirectoryIsInvalid(workingDirectory);
+
         var localPackageMetadata =
-            await GetLocalMTPackageMetadataAsync(
+            await GetLocalMTPackageMetadataAsync(workingDirectory,
             nameof(MTPackageMetadata.ExecutableFile),
             nameof(MTPackageMetadata.ProcTerminateArgs));
 
-        if (localPackageMetadata.IsEmpty is false)
+        ThrowIfMTPackageMetadataIsEmpty(localPackageMetadata);
+
+        var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
+        await App.DesktopExtensionMethods.ProcessLaunch(executableFile, localPackageMetadata.ProcTerminateArgs, true);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void ThrowIfWorkingDirectoryIsInvalid([NotNull] StorageFolder? workingDirectory)
+    {
+        if (workingDirectory is not null)
         {
-            var workingDirectory = await GetMounterWorkingDirectoryAsync();
-            if (workingDirectory is not null)
-            {
-                var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-                await App.DesktopExtensionMethods.ProcessLaunch(executableFile, localPackageMetadata.ProcTerminateArgs, true);
-            }
+            return;
         }
+
+        throw new InvalidOperationException("找不到指定的组件目录，可能是因为目标文件夹已被移动或删除。如果该问题持续存在，请尝试通过更新来修复此问题。");
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void ThrowIfMTPackageMetadataIsEmpty(MTPackageMetadata packageMetadata)
+    {
+        if (packageMetadata.IsEmpty is false)
+        {
+            return;
+        }
+
+        throw new InvalidOperationException("无法找到有效的包元数据信息！");
     }
 
     private readonly struct MTPackageManifest
