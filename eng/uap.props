@@ -36,7 +36,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <OutputPath>bin\$(Configuration)\$(Platform)\</OutputPath>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <!-- FOR BUILD -->
