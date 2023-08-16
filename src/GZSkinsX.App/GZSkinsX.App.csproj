@@ -1,113 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{EEDBD4F3-0568-4EAA-8754-5CBDB1EE12E8}</ProjectGuid>
+    <ProjectGuid>{8836434C-4B07-4670-8034-6294B3E3E8B5}</ProjectGuid>
     <RootNamespace>GZSkinsX</RootNamespace>
     <AssemblyName>GZSkinsX</AssemblyName>
     <OutputType>AppContainerExe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
-    <GenerateTestArtifacts>True</GenerateTestArtifacts>
-    <AppxBundle>Always</AppxBundle>
-    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-    </Compile>
     <Compile Include="..\GZSkinsX.DesktopExtension\DesktopExtensionContracts.cs">
       <Link>DesktopExtensionContracts.cs</Link>
     </Compile>
-    <Compile Include="Contracts\AccessCache\AccessCacheItemNotFoundException.cs" />
-    <Compile Include="Contracts\AccessCache\FutureAccessItemConstants.cs" />
-    <Compile Include="Contracts\AccessCache\IAccessCacheService.cs" />
-    <Compile Include="Contracts\AccessCache\IFutureAccessService.cs" />
-    <Compile Include="Contracts\AccessCache\IMostRecentlyUsedService.cs" />
-    <Compile Include="Contracts\Appx\AppxContext.cs" />
-    <Compile Include="Contracts\Appx\AppxContext.Services.g.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppxContext.Services.g.tt</DependentUpon>
+    <Compile Include="AccessCache\FutureAccessService.cs" />
+    <Compile Include="AccessCache\MostRecentlyUsedService.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Contracts\Extension\AdvanceExtensionMetadataAttribute.cs" />
-    <Compile Include="Contracts\Extension\ExportAdvanceExtensionAttribute.cs" />
-    <Compile Include="Contracts\Extension\IAdvanceExtension.cs" />
-    <Compile Include="Contracts\Game\GameRegion.cs" />
-    <Compile Include="Contracts\Game\IGameData.cs" />
-    <Compile Include="Contracts\Game\IGameService.cs" />
-    <Compile Include="Contracts\Logging\ILoggingService.cs" />
-    <Compile Include="Contracts\Logging\LogLevel.cs" />
-    <Compile Include="Contracts\Mounter\IMounterService.cs" />
-    <Compile Include="Contracts\Mounter\MTPackageMetadata.cs" />
-    <Compile Include="Contracts\Mounter\MTPackageMetadataStartUpArgument.cs" />
-    <Compile Include="Contracts\MRTCore\IMRTCoreMap.cs" />
-    <Compile Include="Contracts\MRTCore\IMRTCoreService.cs" />
-    <Compile Include="Contracts\MRTCore\MRTCoreConstants.cs" />
-    <Compile Include="Contracts\Settings\ISettingsSection.cs" />
-    <Compile Include="Contracts\Settings\ISettingsService.cs" />
-    <Compile Include="Contracts\Settings\SettingsType.cs" />
-    <Compile Include="Contracts\Themes\IThemeService.cs" />
-    <Compile Include="Contracts\Themes\ThemeChangedEventArgs.cs" />
-    <Compile Include="Contracts\WindowManager\ExportWindowFrameAttribute.cs" />
-    <Compile Include="Contracts\WindowManager\IWindowFrame.cs" />
-    <Compile Include="Contracts\WindowManager\IWindowFrame2.cs" />
-    <Compile Include="Contracts\WindowManager\IWindowFrameContext.cs" />
-    <Compile Include="Contracts\WindowManager\IWindowManagerService.cs" />
-    <Compile Include="Contracts\WindowManager\WindowFrameConstants.cs" />
-    <Compile Include="Contracts\WindowManager\WindowFrameMetadataAttribute.cs" />
-    <Compile Include="Contracts\WindowManager\WindowFrameNavigatingEvnetArgs.cs" />
-    <Compile Include="Controls\LaunchButton\LaunchButtonAutomationPeer.cs" />
+    <Compile Include="MainApp\AppxTitleBar.cs" />
+    <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButton.cs" />
-    <Compile Include="Controls\LaunchButton\LaunchButtonStatusContent.cs" />
+    <Compile Include="Controls\LaunchButton\LaunchButtonAutomationPeer.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButtonStatus.cs" />
+    <Compile Include="Controls\LaunchButton\LaunchButtonStatusContent.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />
     <Compile Include="Controls\SegoeFluentIconSource.cs" />
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
     <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
     <Compile Include="Controls\StaticFontFamilys.cs" />
+    <Compile Include="Game\GameData.cs" />
+    <Compile Include="Game\GameService.cs" />
+    <Compile Include="Game\GameSettings.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Helpers\StorageFileHelper.cs" />
     <Compile Include="Helpers\TaskExtensions.cs" />
+    <Compile Include="Logging\LoggerImpl.cs" />
+    <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="Markups\LocalizedStringExtension.cs" />
-    <Compile Include="Services\AccessCache\FutureAccessService.cs" />
-    <Compile Include="Services\AccessCache\MostRecentlyUsedService.cs" />
-    <Compile Include="Services\Appx\AppxTitleBar.cs" />
-    <Compile Include="Services\Appx\AppxWindow.cs" />
-    <Compile Include="Contracts\Appx\IAppxTitleBar.cs" />
-    <Compile Include="Contracts\Appx\IAppxWindow.cs" />
-    <Compile Include="Services\Game\GameData.cs" />
-    <Compile Include="Services\Game\GameService.cs" />
-    <Compile Include="Services\Game\GameSettings.cs" />
-    <Compile Include="Services\Logging\LoggerImpl.cs" />
-    <Compile Include="Services\Logging\LoggingService.cs" />
-    <Compile Include="Services\Mounter\MounterService.cs" />
-    <Compile Include="Services\Mounter\MounterSettings.cs" />
-    <Compile Include="Services\MRTCore\MRTCoreMap.cs" />
-    <Compile Include="Services\MRTCore\MRTCoreService.cs" />
-    <Compile Include="Services\Settings\SettingsSection.cs" />
-    <Compile Include="Services\Settings\SettingsService.cs" />
-    <Compile Include="Services\Themes\AutoThemeTitleBar.cs" />
-    <Compile Include="Services\Themes\ThemeService.cs" />
-    <Compile Include="Services\Themes\ThemeSettings.cs" />
-    <Compile Include="Services\WindowManager\WindowFrameContext.cs" />
-    <Compile Include="Services\WindowManager\WindowManagerService.cs" />
-    <Compile Include="ViewModels\StartUpViewModel.cs" />
+    <Compile Include="Mounter\MounterService.cs" />
+    <Compile Include="Mounter\MounterSettings.cs" />
+    <Compile Include="MRTCore\MRTCoreMap.cs" />
+    <Compile Include="MRTCore\MRTCoreService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\SettingsSection.cs" />
+    <Compile Include="Settings\SettingsService.cs" />
+    <Compile Include="Themes\AutoThemeTitleBar.cs" />
+    <Compile Include="Themes\ThemeService.cs" />
+    <Compile Include="Themes\ThemeSettings.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PreloadViewModel.cs" />
+    <Compile Include="ViewModels\StartUpViewModel.cs" />
     <Compile Include="Views\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\PreloadPage.xaml.cs">
       <DependentUpon>PreloadPage.xaml</DependentUpon>
     </Compile>
@@ -115,6 +65,8 @@
       <DependentUpon>StartUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowFrames.cs" />
+    <Compile Include="WindowManager\WindowFrameContext.cs" />
+    <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -122,15 +74,15 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
-    <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-400.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-125.png" />
     <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png" />
     <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
     <Content Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
@@ -160,15 +112,9 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <None Include="Contracts\Appx\AppxContext.Services.g.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
-    </None>
-    <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -176,71 +122,30 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\LaunchButton\LaunchButton.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\IndexPage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PreloadPage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StartUpPage.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\zh-CN\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Diagnostics">
-      <Version>8.2.1</Version>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.HighPerformance">
-      <Version>8.2.1</Version>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Labs.AppServices">
-      <Version>0.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm">
-      <Version>8.2.2-build.1</Version>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Uwp.Animations">
-      <Version>8.0.230809-preview</Version>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
-      <Version>8.0.230809-preview</Version>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Uwp.Converters">
-      <Version>8.0.230809-preview</Version>
-    </PackageReference>
     <PackageReference Include="GZSkinsX.Kernel">
       <Version>0.0.2</Version>
     </PackageReference>
-    <PackageReference Include="PolySharp">
-      <Version>1.13.2</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="System.Collections.Immutable">
-      <Version>8.0.0-preview.7.23375.6</Version>
-    </PackageReference>
-    <PackageReference Include="System.Composition">
-      <Version>8.0.0-preview.7.23375.6</Version>
-    </PackageReference>
-    <PackageReference Include="System.IO.Hashing">
-      <Version>8.0.0-preview.7.23375.6</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsDesktop, Version=10.0.22621.0">
@@ -253,6 +158,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj">
+      <Project>{5ce3d0a1-77eb-42ed-9a8b-ecd15abef9eb}</Project>
+      <Name>GZSkinsX.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Segoe Fluent Icons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Segoe MDL2 Assets.ttf" />
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />

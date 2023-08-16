@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{5CE3D0A1-77EB-42ED-9A8B-ECD15ABEF9EB}</ProjectGuid>
+    <RootNamespace>GZSkinsX.Contracts</RootNamespace>
+    <AssemblyName>GZSkinsX.Contracts</AssemblyName>
+    <OutputType>Library</OutputType>
+    <PolySharpUsePublicAccessibilityForGeneratedTypes>true</PolySharpUsePublicAccessibilityForGeneratedTypes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AccessCache\AccessCacheItemNotFoundException.cs" />
+    <Compile Include="AccessCache\FutureAccessItemConstants.cs" />
+    <Compile Include="AccessCache\IAccessCacheService.cs" />
+    <Compile Include="AccessCache\IFutureAccessService.cs" />
+    <Compile Include="AccessCache\IMostRecentlyUsedService.cs" />
+    <Compile Include="Appx\AppxContext.cs" />
+    <Compile Include="Appx\AppxContext.InternalCalls.cs" />
+    <Compile Include="Appx\AppxContext.Services.g.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppxContext.Services.g.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Appx\IAppxTitleBar.cs" />
+    <Compile Include="Appx\IAppxWindow.cs" />
+    <Compile Include="Extension\AdvanceExtensionMetadataAttribute.cs" />
+    <Compile Include="Extension\ExportAdvanceExtensionAttribute.cs" />
+    <Compile Include="Extension\IAdvanceExtension.cs" />
+    <Compile Include="Game\GameRegion.cs" />
+    <Compile Include="Game\IGameData.cs" />
+    <Compile Include="Game\IGameService.cs" />
+    <Compile Include="Logging\ILoggingService.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Mounter\IMounterService.cs" />
+    <Compile Include="Mounter\MTPackageMetadata.cs" />
+    <Compile Include="Mounter\MTPackageMetadataStartUpArgument.cs" />
+    <Compile Include="MRTCore\IMRTCoreMap.cs" />
+    <Compile Include="MRTCore\IMRTCoreService.cs" />
+    <Compile Include="MRTCore\MRTCoreConstants.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\ISettingsSection.cs" />
+    <Compile Include="Settings\ISettingsService.cs" />
+    <Compile Include="Settings\SettingsType.cs" />
+    <Compile Include="Themes\IThemeService.cs" />
+    <Compile Include="Themes\ThemeChangedEventArgs.cs" />
+    <Compile Include="WindowManager\ExportWindowFrameAttribute.cs" />
+    <Compile Include="WindowManager\IWindowFrame.cs" />
+    <Compile Include="WindowManager\IWindowFrame2.cs" />
+    <Compile Include="WindowManager\IWindowFrameContext.cs" />
+    <Compile Include="WindowManager\IWindowManagerService.cs" />
+    <Compile Include="WindowManager\WindowFrameConstants.cs" />
+    <Compile Include="WindowManager\WindowFrameMetadataAttribute.cs" />
+    <Compile Include="WindowManager\WindowFrameNavigatingEvnetArgs.cs" />
+    <EmbeddedResource Include="Properties\GZSkinsX.Contracts.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Diagnostics">
+      <Version>8.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.HighPerformance">
+      <Version>8.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Labs.AppServices">
+      <Version>0.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.2-build.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Animations">
+      <Version>8.0.230809-preview</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
+      <Version>8.0.230809-preview</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Uwp.Converters">
+      <Version>8.0.230809-preview</Version>
+    </PackageReference>
+    <PackageReference Include="PolySharp">
+      <Version>1.13.2</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Collections.Immutable">
+      <Version>8.0.0-preview.7.23375.6</Version>
+    </PackageReference>
+    <PackageReference Include="System.Composition">
+      <Version>8.0.0-preview.7.23375.6</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Hashing">
+      <Version>8.0.0-preview.7.23375.6</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Appx\AppxContext.Services.g.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <!-- FOR BUILD -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
+  <!-- IMPORT COMMON PROPS -->
+  <Import Project="..\..\eng\uap.props" />
+</Project>
