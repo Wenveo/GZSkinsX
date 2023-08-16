@@ -25,6 +25,11 @@ namespace GZSkinsX.Game;
 internal sealed class GameService(GameSettings gameSettings) : IGameService
 {
     /// <summary>
+    /// 表示该游戏的根目录在访问项存储列表中所关联的名称
+    /// </summary>
+    private const string GAME_ROOTFOLDER = "Game_RootFolder";
+
+    /// <summary>
     /// 用于存储以及更新配置
     /// </summary>
     private readonly GameSettings _gameSettings = gameSettings;
@@ -53,7 +58,7 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     /// <inheritdoc/>
     public async Task<StorageFolder?> TryGetRootFolderAsync()
     {
-        return await AppxContext.FutureAccessService.TryGetFolderAsync(FutureAccessItemConstants.Game_RootFolder_Name);
+        return await AppxContext.FutureAccessService.TryGetFolderAsync(GAME_ROOTFOLDER);
     }
 
     /// <inheritdoc/>
@@ -61,7 +66,7 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
     {
         if (await _gameData.TryUpdateAsync(rootFolder, region))
         {
-            _futureAccessService.Add(rootFolder!, FutureAccessItemConstants.Game_RootFolder_Name);
+            _futureAccessService.Add(rootFolder!, GAME_ROOTFOLDER);
             _gameSettings.CurrentRegion = region;
 
             _loggingService.LogOkay($"GameService: Update game data successfully /p:RootDirectory={rootFolder!.Path} /p:GameRegion={region}");
