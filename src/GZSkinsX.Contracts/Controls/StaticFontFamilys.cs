@@ -7,7 +7,7 @@
 
 using Windows.UI.Xaml.Media;
 
-namespace GZSkinsX.Controls;
+namespace GZSkinsX.Contracts.Controls;
 
 /// <summary>
 /// 用于存放程序内部中引用的一些字体

@@ -21,14 +21,23 @@
     </Compile>
     <Compile Include="Appx\IAppxTitleBar.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
+    <Compile Include="Controls\SegoeFluentIcon.cs" />
+    <Compile Include="Controls\SegoeFluentIconSource.cs" />
+    <Compile Include="Controls\SegoeMDL2Assets.cs" />
+    <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
+    <Compile Include="Controls\StaticFontFamilys.cs" />
     <Compile Include="Extension\AdvanceExtensionMetadataAttribute.cs" />
     <Compile Include="Extension\ExportAdvanceExtensionAttribute.cs" />
     <Compile Include="Extension\IAdvanceExtension.cs" />
     <Compile Include="Game\GameRegion.cs" />
     <Compile Include="Game\IGameData.cs" />
     <Compile Include="Game\IGameService.cs" />
+    <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Helpers\StorageFileHelper.cs" />
+    <Compile Include="Helpers\TaskExtensions.cs" />
     <Compile Include="Logging\ILoggingService.cs" />
     <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Markups\LocalizedStringExtension.cs" />
     <Compile Include="Mounter\IMounterService.cs" />
     <Compile Include="Mounter\MTPackageMetadata.cs" />
     <Compile Include="Mounter\MTPackageMetadataStartUpArgument.cs" />

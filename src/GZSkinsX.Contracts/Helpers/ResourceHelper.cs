@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.MRTCore;
 
-namespace GZSkinsX.Helpers;
+namespace GZSkinsX.Contracts.Helpers;
 
 /// <summary>
 /// 提供快速获取本地化资源的帮助类

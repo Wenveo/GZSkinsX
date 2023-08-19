@@ -20,15 +20,6 @@
     <Compile Include="Controls\LaunchButton\LaunchButtonAutomationPeer.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButtonStatus.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButtonStatusContent.cs" />
-    <Compile Include="Controls\SegoeFluentIcon.cs" />
-    <Compile Include="Controls\SegoeFluentIconSource.cs" />
-    <Compile Include="Controls\SegoeMDL2Assets.cs" />
-    <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
-    <Compile Include="Controls\StaticFontFamilys.cs" />
-    <Compile Include="Helpers\ResourceHelper.cs" />
-    <Compile Include="Helpers\StorageFileHelper.cs" />
-    <Compile Include="Helpers\TaskExtensions.cs" />
-    <Compile Include="Markups\LocalizedStringExtension.cs" />
     <Compile Include="Mounter\MounterService.cs" />
     <Compile Include="Mounter\MounterSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

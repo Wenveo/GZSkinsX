@@ -7,7 +7,7 @@
 
 #nullable enable
 
-using GZSkinsX.Helpers;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.ViewModels;
 
 using Windows.UI.Xaml.Controls;

@@ -10,7 +10,7 @@
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Helpers;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.ViewModels;
 
 using Windows.System;

@@ -15,9 +15,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Controls;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Mounter;
 using GZSkinsX.Controls;
-using GZSkinsX.Helpers;
 
 using Windows.UI.Xaml.Controls;
 

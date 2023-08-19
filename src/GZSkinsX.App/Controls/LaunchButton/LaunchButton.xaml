@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:ctrls="using:GZSkinsX.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
 
     <Style x:Key="LaunchButtonStyle" TargetType="ctrls:LaunchButton">
@@ -156,7 +157,7 @@
                                         <animatedVisuals:AnimatedChevronDownSmallVisualSource />
                                     </muxc:AnimatedIcon.Source>
                                     <muxc:AnimatedIcon.FallbackIconSource>
-                                        <ctrls:SegoeFluentIconSource
+                                        <ctrls2:SegoeFluentIconSource
                                             FontSize="8"
                                             Glyph="&#xE70D;"
                                             IsTextScaleFactorEnabled="False" />

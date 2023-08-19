@@ -7,14 +7,14 @@
 
 #nullable enable
 
-using GZSkinsX.Helpers;
+using GZSkinsX.Contracts.Helpers;
 
 using Windows.UI.Xaml.Markup;
 
-namespace GZSkinsX.Markups;
+namespace GZSkinsX.Contracts.Markups;
 
 [MarkupExtensionReturnType(ReturnType = typeof(string))]
-internal sealed class LocalizedStringExtension : MarkupExtension
+public sealed class LocalizedStringExtension : MarkupExtension
 {
     public string? ResourceKey { get; set; }
 

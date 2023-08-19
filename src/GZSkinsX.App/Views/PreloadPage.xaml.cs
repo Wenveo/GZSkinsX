@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
-using GZSkinsX.Helpers;
 using GZSkinsX.Kernel;
 
 using Windows.ApplicationModel;

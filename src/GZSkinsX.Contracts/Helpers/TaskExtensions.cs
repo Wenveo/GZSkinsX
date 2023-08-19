@@ -9,9 +9,9 @@
 
 using System.Threading.Tasks;
 
-namespace GZSkinsX.Helpers;
+namespace GZSkinsX.Contracts.Helpers;
 
-internal static class TaskExtensions
+public static class TaskExtensions
 {
     public static void FireAndForget(this Task _)
     {

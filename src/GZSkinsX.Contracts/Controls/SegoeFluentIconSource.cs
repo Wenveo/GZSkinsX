@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Controls;
+namespace GZSkinsX.Contracts.Controls;
 
 /// <summary>
 /// 表示使用了特定的字体中的图标源 <seealso href="https://learn.microsoft.com/zh-cn/windows/apps/design/style/segoe-fluent-icons-font">Segoe Fluent Icon</seealso> 作为字形

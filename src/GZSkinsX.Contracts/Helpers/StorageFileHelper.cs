@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
 
-namespace GZSkinsX.Helpers;
+namespace GZSkinsX.Contracts.Helpers;
 
 // Adapted from https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/Microsoft.Toolkit.Uwp/Helpers/StorageFileHelper.cs
 
 /// <summary>
 /// This class provides static helper methods for <see cref="StorageFile" />.
 /// </summary>
-internal static class StorageFileHelper
+public static class StorageFileHelper
 {
     /// <summary>
     /// Gets a value indicating whether a file exists in the current folder.

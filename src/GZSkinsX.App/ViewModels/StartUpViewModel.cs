@@ -16,8 +16,8 @@ using CommunityToolkit.Mvvm.Input;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Game;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
-using GZSkinsX.Helpers;
 
 using Windows.Storage;
 using Windows.Storage.Pickers;

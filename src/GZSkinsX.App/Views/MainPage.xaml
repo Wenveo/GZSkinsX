@@ -6,9 +6,10 @@
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:animations="using:CommunityToolkit.WinUI.Animations"
     xmlns:ctrls="using:GZSkinsX.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Views"
-    xmlns:markups="using:GZSkinsX.Markups"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
@@ -60,7 +61,7 @@
                         <animations:OffsetAnimation Duration="0:0:0.420" />
                     </animations:Implicit.Animations>
                     <AutoSuggestBox.QueryIcon>
-                        <ctrls:SegoeFluentIcon FontSize="14" Glyph="&#xE11A;" />
+                        <ctrls2:SegoeFluentIcon FontSize="14" Glyph="&#xE11A;" />
                     </AutoSuggestBox.QueryIcon>
                 </AutoSuggestBox>
 
@@ -77,13 +78,13 @@
                         <ctrls:LaunchButtonStatusContent>
                             <ctrls:LaunchButtonStatusContent.DefaultContent>
                                 <StackPanel Orientation="Horizontal">
-                                    <ctrls:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
+                                    <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
                                     <TextBlock Margin="8,0,0,0" Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_Launch}" />
                                 </StackPanel>
                             </ctrls:LaunchButtonStatusContent.DefaultContent>
                             <ctrls:LaunchButtonStatusContent.RunningContent>
                                 <StackPanel Orientation="Horizontal">
-                                    <ctrls:SegoeFluentIcon FontSize="16" Glyph="&#xEE95;" />
+                                    <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xEE95;" />
                                     <TextBlock Margin="8,0,0,0" Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_Terminate}" />
                                 </StackPanel>
                             </ctrls:LaunchButtonStatusContent.RunningContent>
@@ -98,7 +99,7 @@
                             </ctrls:LaunchButtonStatusContent.CheckUpdatesContent>
                             <ctrls:LaunchButtonStatusContent.UpdateFailedContent>
                                 <StackPanel Orientation="Horizontal">
-                                    <ctrls:SegoeFluentIcon
+                                    <ctrls2:SegoeFluentIcon
                                         FontSize="16"
                                         Foreground="{ThemeResource ProgressBarErrorForegroundColor}"
                                         Glyph="&#xEA6A;" />
@@ -137,7 +138,7 @@
                                         <KeyboardAccelerator Key="F5" />
                                     </MenuFlyoutItem.KeyboardAccelerators>
                                     <MenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE768;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE768;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                                 <MenuFlyoutSubItem
@@ -146,7 +147,7 @@
                                     Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_MoreLaunchOptions}"
                                     Visibility="{x:Bind ViewModel.HasMoreLaunchOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <MenuFlyoutSubItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE712;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE712;" />
                                     </MenuFlyoutSubItem.Icon>
                                 </MenuFlyoutSubItem>
                                 <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.HasMoreLaunchOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -158,7 +159,7 @@
                                         <KeyboardAccelerator Key="F5" Modifiers="Shift" />
                                     </MenuFlyoutItem.KeyboardAccelerators>
                                     <MenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE71A;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE71A;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                                 <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.HasMoreLaunchOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
@@ -167,12 +168,12 @@
                                     IsEnabled="{x:Bind ViewModel.MTCanCheckForUpdate, Mode=OneWay}"
                                     Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_CheckForUpdates2}">
                                     <MenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE895;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE895;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                                 <MenuFlyoutItem Text="{markups:LocalizedString ResourceKey=Resources/Main_Server_About}">
                                     <MenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE946;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE946;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -185,7 +186,7 @@
                         Padding="8">
                         <muxc:AnimatedIcon>
                             <muxc:AnimatedIcon.FallbackIconSource>
-                                <ctrls:SegoeFluentIconSource Glyph="&#xE700;" />
+                                <ctrls2:SegoeFluentIconSource Glyph="&#xE700;" />
                             </muxc:AnimatedIcon.FallbackIconSource>
                             <muxc:AnimatedIcon.Source>
                                 <animatedVisuals:AnimatedGlobalNavigationButtonVisualSource />
@@ -206,7 +207,7 @@
                                         <ElementTheme>Light</ElementTheme>
                                     </muxc:RadioMenuFlyoutItem.CommandParameter>
                                     <muxc:RadioMenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE793;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE793;" />
                                     </muxc:RadioMenuFlyoutItem.Icon>
                                 </muxc:RadioMenuFlyoutItem>
                                 <muxc:RadioMenuFlyoutItem
@@ -218,7 +219,7 @@
                                         <ElementTheme>Dark</ElementTheme>
                                     </muxc:RadioMenuFlyoutItem.CommandParameter>
                                     <muxc:RadioMenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE708;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE708;" />
                                     </muxc:RadioMenuFlyoutItem.Icon>
                                 </muxc:RadioMenuFlyoutItem>
                                 <muxc:RadioMenuFlyoutItem
@@ -230,13 +231,13 @@
                                         <ElementTheme>Default</ElementTheme>
                                     </muxc:RadioMenuFlyoutItem.CommandParameter>
                                     <muxc:RadioMenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE770;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE770;" />
                                     </muxc:RadioMenuFlyoutItem.Icon>
                                 </muxc:RadioMenuFlyoutItem>
                                 <MenuFlyoutSeparator />
                                 <MenuFlyoutItem x:Uid="Main_SettingsMenu_Settings">
                                     <MenuFlyoutItem.Icon>
-                                        <ctrls:SegoeFluentIcon Glyph="&#xE713;" />
+                                        <ctrls2:SegoeFluentIcon Glyph="&#xE713;" />
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
@@ -250,7 +251,7 @@
                     Subtitle="{x:Bind ViewModel.RunFailedTeachingTipContent, Mode=OneWay}"
                     Target="{x:Bind MainLaunchButton, Mode=OneTime}">
                     <muxc:TeachingTip.IconSource>
-                        <ctrls:SegoeFluentIconSource Glyph="&#xE783;" />
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE783;" />
                     </muxc:TeachingTip.IconSource>
                 </muxc:TeachingTip>
 
@@ -261,7 +262,7 @@
                     Subtitle="{x:Bind ViewModel.UpToDateTeachingTipContent, Mode=OneWay}"
                     Target="{x:Bind MainLaunchButton, Mode=OneTime}">
                     <muxc:TeachingTip.IconSource>
-                        <ctrls:SegoeFluentIconSource Glyph="&#xE73E;" />
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE73E;" />
                     </muxc:TeachingTip.IconSource>
                 </muxc:TeachingTip>
 
@@ -271,7 +272,7 @@
                     Subtitle="{x:Bind ViewModel.UpdateFailedTeachingTipContent, Mode=OneWay}"
                     Target="{x:Bind MainLaunchButton, Mode=OneTime}">
                     <muxc:TeachingTip.IconSource>
-                        <ctrls:SegoeFluentIconSource Glyph="&#xEA39;" />
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xEA39;" />
                     </muxc:TeachingTip.IconSource>
                 </muxc:TeachingTip>
 
@@ -281,7 +282,7 @@
                     IsOpen="{x:Bind ViewModel.IsShowUpdateButServerIsRunningTeachingTip, Mode=OneWay}"
                     Target="{x:Bind MainLaunchButton, Mode=OneTime}">
                     <muxc:TeachingTip.IconSource>
-                        <ctrls:SegoeFluentIconSource Glyph="&#xE946;" />
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />
                     </muxc:TeachingTip.IconSource>
                 </muxc:TeachingTip>
             </Grid>
