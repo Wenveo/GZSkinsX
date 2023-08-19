@@ -78,7 +78,7 @@ internal sealed partial class MainViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
-        var b = await MounterService.VerifyLocalMTPackageIntegrityAsync();
+        var b = await MounterService.VerifyContentIntegrityAsync();
         if (b is false)
         {
             await OnUpdateAsync();
@@ -150,8 +150,8 @@ internal sealed partial class MainViewModel : ObservableObject
     {
         MounterLaunchState = LaunchButtonStatus.CheckUpdates;
 
-        if (await MounterService.CheckUpdatesAsync() is false &&
-            await MounterService.VerifyLocalMTPackageIntegrityAsync())
+        if (await MounterService.CheckForUpdatesAsync() is false &&
+            await MounterService.VerifyContentIntegrityAsync())
         {
             await UpdateLaunchStateAsync();
             await ShowUpToDateTeachingTipAsync();
@@ -236,7 +236,10 @@ internal sealed partial class MainViewModel : ObservableObject
     {
         HideAllTeachingTips();
 
-        var metadata = await MounterService.GetLocalMTPackageMetadataAsync("Version");
+        var metadata = await MounterService.
+            TryGetCurrentPackageMetadataAsync(
+                nameof(MTPackageMetadata.Version));
+
         if (metadata.IsEmpty)
         {
             UpToDateTeachingTipContent = string.Empty;
@@ -310,7 +313,10 @@ internal sealed partial class MainViewModel : ObservableObject
             return menuFlyoutItem;
         }
 
-        var metadata = await MounterService.GetLocalMTPackageMetadataAsync("OtherStartupArgs");
+        var metadata = await MounterService.
+            TryGetCurrentPackageMetadataAsync(
+                nameof(MTPackageMetadata.OtherStartupArgs));
+
         if (metadata.OtherStartupArgs.Length is not < 1)
         {
             for (var i = 0; i < metadata.OtherStartupArgs.Length; i++)
@@ -327,7 +333,6 @@ internal sealed partial class MainViewModel : ObservableObject
             MoreLaunchOptionsMenuItem.Items.Clear();
         }
     }
-
 
     private async Task ProgressAnimationAsync(double value, CancellationTokenSource tokenSource)
     {
