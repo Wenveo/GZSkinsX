@@ -12,7 +12,7 @@ using System.Composition;
 
 using GZSkinsX.Contracts.Logging;
 
-namespace GZSkinsX.Logging;
+namespace GZSkinsX.Services.Logging;
 
 /// <inheritdoc cref="ILoggingService"/>
 [Shared, Export(typeof(ILoggingService))]

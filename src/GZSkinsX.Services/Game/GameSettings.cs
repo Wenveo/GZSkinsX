@@ -14,7 +14,7 @@ using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Game;
 using GZSkinsX.Contracts.Settings;
 
-namespace GZSkinsX.Game;
+namespace GZSkinsX.Services.Game;
 
 /// <summary>
 /// 表示用于存储游戏服务的基本数据配置

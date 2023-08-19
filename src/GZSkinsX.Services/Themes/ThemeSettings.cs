@@ -12,7 +12,7 @@ using GZSkinsX.Contracts.Settings;
 
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Themes;
+namespace GZSkinsX.Services.Themes;
 
 [Shared, Export]
 internal sealed class ThemeSettings

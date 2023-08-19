@@ -17,7 +17,7 @@ using GZSkinsX.Contracts.Logging;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Game;
+namespace GZSkinsX.Services.Game;
 
 /// <inheritdoc cref="IGameService"/>
 [Shared, Export(typeof(IGameService))]

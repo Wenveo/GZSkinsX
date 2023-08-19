@@ -19,7 +19,7 @@ using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace GZSkinsX.AccessCache;
+namespace GZSkinsX.Services.AccessCache;
 
 /// <inheritdoc cref="IMostRecentlyUsedService"/>
 [Shared, Export(typeof(IMostRecentlyUsedService))]

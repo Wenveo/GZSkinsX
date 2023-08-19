@@ -20,7 +20,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.WindowManager;
+namespace GZSkinsX.Services.WindowManager;
 
 /// <inheritdoc cref="IWindowManagerService"/>
 [Shared, Export(typeof(IWindowManagerService))]

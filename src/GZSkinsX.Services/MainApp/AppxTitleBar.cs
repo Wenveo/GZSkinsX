@@ -16,7 +16,7 @@ using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.MainApp;
+namespace GZSkinsX.Services.MainApp;
 
 /// <see cref="IAppxTitleBar"/>
 [Shared, Export(typeof(IAppxTitleBar))]

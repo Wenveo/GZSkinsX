@@ -9,7 +9,7 @@ using System;
 
 using GZSkinsX.Contracts.WindowManager;
 
-namespace GZSkinsX.WindowManager;
+namespace GZSkinsX.Services.WindowManager;
 
 /// <inheritdoc cref="IWindowFrameContext"/>
 internal sealed class WindowFrameContext(Lazy<IWindowFrame, WindowFrameMetadataAttribute> lazy) : IWindowFrameContext

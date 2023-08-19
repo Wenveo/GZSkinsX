@@ -18,7 +18,7 @@ using GZSkinsX.Contracts.Settings;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace GZSkinsX.AccessCache;
+namespace GZSkinsX.Services.AccessCache;
 
 /// <inheritdoc cref="IFutureAccessService"/>
 [Shared, Export(typeof(IFutureAccessService))]

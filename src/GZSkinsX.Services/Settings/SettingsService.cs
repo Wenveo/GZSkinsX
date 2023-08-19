@@ -13,7 +13,7 @@ using GZSkinsX.Contracts.Settings;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Settings;
+namespace GZSkinsX.Services.Settings;
 
 /// <inheritdoc cref="ISettingsService"/>
 [Shared, Export(typeof(ISettingsService))]

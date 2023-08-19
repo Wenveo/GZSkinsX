@@ -9,12 +9,15 @@
 
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Logging;
+[assembly: InternalsVisibleTo("GZSkinsX")]
+
+namespace GZSkinsX.Services.Logging;
 
 /// <summary>
 /// 应用程序的默认日志器的实现类

@@ -11,14 +11,14 @@ using System;
 using System.Composition;
 
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Logging;
+using GZSkinsX.Services.Logging;
 
 using Windows.UI.Core;
 using Windows.UI.Core.Preview;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.MainApp;
+namespace GZSkinsX.Services.MainApp;
 
 /// <summary>
 /// 主程序应用窗口类，用于管理、创建、以及注册主窗口

@@ -17,7 +17,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Storage;
 
-namespace GZSkinsX.MRTCore;
+namespace GZSkinsX.Services.MRTCore;
 
 /// <inheritdoc cref="IMRTCoreService"/>
 [Shared, Export(typeof(IMRTCoreService))]

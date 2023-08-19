@@ -18,7 +18,7 @@ using GZSkinsX.Contracts.Settings;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Settings;
+namespace GZSkinsX.Services.Settings;
 
 /// <inheritdoc cref="ISettingsSection"/>
 internal sealed class SettingsSection : ISettingsSection

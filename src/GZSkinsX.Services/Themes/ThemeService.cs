@@ -20,7 +20,7 @@ using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Themes;
+namespace GZSkinsX.Services.Themes;
 
 /// <inheritdoc cref="IThemeService"/>
 [Shared, Export(typeof(IThemeService))]

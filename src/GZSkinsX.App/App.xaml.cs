@@ -10,12 +10,12 @@
 using System;
 using System.Composition.Hosting;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Contracts.WindowManager;
-using GZSkinsX.Logging;
 
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -45,12 +45,20 @@ public sealed partial class App : Application
     private static Lazy<Task> InitializeServiceAsync { get; } = new(async () =>
     {
         var configuration = new ContainerConfiguration();
-        configuration.WithAssembly(typeof(App).Assembly);
+        configuration.WithAssemblies(new Assembly[]
+        {
+            // Main Application
+            typeof(App).Assembly,
+            // GZSkinsX.Contracts
+            typeof(AppxContext).Assembly,
+            // GZSkinsX.Services
+            typeof(Services.AppxServices).Assembly
+        });
 
         var compositionHost = configuration.CreateContainer();
         AppxContext.InitializeLifetimeService(compositionHost);
 
-        await LoggerImpl.Shared.InitializeAsync();
+        await Services.Logging.LoggerImpl.Shared.InitializeAsync();
 
         var windowManagerService = AppxContext.WindowManagerService;
         windowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);

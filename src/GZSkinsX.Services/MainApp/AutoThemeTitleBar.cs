@@ -15,7 +15,7 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 
-namespace GZSkinsX.Themes;
+namespace GZSkinsX.Services.MainApp;
 
 [AdvanceExtensionMetadata]
 [Shared, ExportAdvanceExtension]

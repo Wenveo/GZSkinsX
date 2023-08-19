@@ -13,13 +13,9 @@
     <Compile Include="..\GZSkinsX.DesktopExtension\DesktopExtensionContracts.cs">
       <Link>DesktopExtensionContracts.cs</Link>
     </Compile>
-    <Compile Include="AccessCache\FutureAccessService.cs" />
-    <Compile Include="AccessCache\MostRecentlyUsedService.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainApp\AppxTitleBar.cs" />
-    <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButton.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButtonAutomationPeer.cs" />
     <Compile Include="Controls\LaunchButton\LaunchButtonStatus.cs" />
@@ -29,25 +25,13 @@
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
     <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
     <Compile Include="Controls\StaticFontFamilys.cs" />
-    <Compile Include="Game\GameData.cs" />
-    <Compile Include="Game\GameService.cs" />
-    <Compile Include="Game\GameSettings.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Helpers\StorageFileHelper.cs" />
     <Compile Include="Helpers\TaskExtensions.cs" />
-    <Compile Include="Logging\LoggerImpl.cs" />
-    <Compile Include="Logging\LoggingService.cs" />
     <Compile Include="Markups\LocalizedStringExtension.cs" />
     <Compile Include="Mounter\MounterService.cs" />
     <Compile Include="Mounter\MounterSettings.cs" />
-    <Compile Include="MRTCore\MRTCoreMap.cs" />
-    <Compile Include="MRTCore\MRTCoreService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\SettingsSection.cs" />
-    <Compile Include="Settings\SettingsService.cs" />
-    <Compile Include="Themes\AutoThemeTitleBar.cs" />
-    <Compile Include="Themes\ThemeService.cs" />
-    <Compile Include="Themes\ThemeSettings.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PreloadViewModel.cs" />
@@ -65,8 +49,6 @@
       <DependentUpon>StartUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowFrames.cs" />
-    <Compile Include="WindowManager\WindowFrameContext.cs" />
-    <Compile Include="WindowManager\WindowManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -163,6 +145,10 @@
     <ProjectReference Include="..\GZSkinsX.Contracts\GZSkinsX.Contracts.csproj">
       <Project>{5ce3d0a1-77eb-42ed-9a8b-ecd15abef9eb}</Project>
       <Name>GZSkinsX.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GZSkinsX.Services\GZSkinsX.Services.csproj">
+      <Project>{a684ca08-ec5f-4d0f-b600-9aa106e16c80}</Project>
+      <Name>GZSkinsX.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

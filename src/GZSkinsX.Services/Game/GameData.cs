@@ -15,7 +15,7 @@ using GZSkinsX.Contracts.Game;
 
 using Windows.Storage;
 
-namespace GZSkinsX.Game;
+namespace GZSkinsX.Services.Game;
 
 /// <inheritdoc cref="IGameData"/>
 internal sealed class GameData : IGameData
