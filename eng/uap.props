@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Import Common Properties -->
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-
   <!-- Define Properties -->
   <PropertyGroup>
     <_UWPApp Condition="'$(OutputType)' == 'AppContainerExe'">true</_UWPApp>
     <_UWPApp Condition="'$(OutputType)' != 'AppContainerExe'">false</_UWPApp>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP;</DefineConstants>
   </PropertyGroup>
+  
+  <!-- Import Common Properties -->
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
   <!-- Application Properties -->
   <PropertyGroup Condition="'$(_UWPApp)' == 'true'">
@@ -80,7 +80,12 @@
       <Version>2.8.5</Version>
     </PackageReference>
   </ItemGroup>
-
+  
+  <!-- Fix the incorrect reference of library projects. -->
+  <ItemGroup Condition="('$(_UWPApp)' == 'false')">
+    <SDKReference Remove="Microsoft.VCLibs, Version=14.0" />
+  </ItemGroup>
+  
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0'">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
