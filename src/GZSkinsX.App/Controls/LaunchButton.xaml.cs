@@ -130,8 +130,19 @@ internal sealed partial class LaunchButton : UserControl
     {
         await UpdateLaunchStateAsync(CheckForUpdatesState);
 
-        if (await AppxContext.MounterService.CheckForUpdatesAsync() is false &&
-            await AppxContext.MounterService.VerifyContentIntegrityAsync())
+        bool needUpdate;
+        try
+        {
+            needUpdate = await AppxContext.MounterService.CheckForUpdatesAsync();
+        }
+        catch
+        {
+            await UpdateLaunchStateAsync();
+            await ShowFailedToCheckUpdatesTeachingTipAsync();
+            return;
+        }
+
+        if (needUpdate is false && await AppxContext.MounterService.VerifyContentIntegrityAsync())
         {
             await UpdateLaunchStateAsync();
             await ShowUpToDateTeachingTipAsync();
@@ -204,10 +215,20 @@ internal sealed partial class LaunchButton : UserControl
 
     private void HideAllTeachingTips()
     {
+        LaunchButton_FailedToCheckUpdatesTeachingTip.IsOpen = false;
         LaunchButton_RunFailedTeachingTip.IsOpen = false;
         LaunchButton_UpToDateTeachingTip.IsOpen = false;
         LaunchButton_UpdateFailedTeachingTip.IsOpen = false;
-        LaunchButton_UpdateButServerIsRunningTeachingTip.IsOpen = false;
+        LaunchButton_UpdateButIsRunningTeachingTip.IsOpen = false;
+    }
+
+    private async Task ShowFailedToCheckUpdatesTeachingTipAsync()
+    {
+        HideAllTeachingTips();
+
+        LaunchButton_FailedToCheckUpdatesTeachingTip.IsOpen = true;
+
+        await Task.CompletedTask;
     }
 
     private async Task ShowRunFailedTeachingTipAsync(string content)
@@ -255,7 +276,7 @@ internal sealed partial class LaunchButton : UserControl
     {
         HideAllTeachingTips();
 
-        LaunchButton_UpdateButServerIsRunningTeachingTip.IsOpen = true;
+        LaunchButton_UpdateButIsRunningTeachingTip.IsOpen = true;
 
         await Task.CompletedTask;
     }
@@ -416,7 +437,7 @@ internal sealed partial class LaunchButton : UserControl
 
     }
 
-    private async void LaunchButton_UpdateButServerIsRunningTeachingTip_ActionButtonClick(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)
+    private async void LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)
     {
         await OnTerminateAndUpdateAsync();
     }

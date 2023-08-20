@@ -130,6 +130,15 @@
         </ctrls2:MultiStateToggleButton>
 
         <muxc:TeachingTip
+            x:Name="LaunchButton_FailedToCheckUpdatesTeachingTip"
+            x:Uid="LaunchButton_FailedToCheckUpdatesTeachingTip"
+            Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
+            <muxc:TeachingTip.IconSource>
+                <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+
+        <muxc:TeachingTip
             x:Name="LaunchButton_RunFailedTeachingTip"
             x:Uid="LaunchButton_RunFailedTeachingTip"
             Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
@@ -158,9 +167,9 @@
         </muxc:TeachingTip>
 
         <muxc:TeachingTip
-            x:Name="LaunchButton_UpdateButServerIsRunningTeachingTip"
-            x:Uid="LaunchButton_UpdateButServerIsRunningTeachingTip"
-            ActionButtonClick="LaunchButton_UpdateButServerIsRunningTeachingTip_ActionButtonClick"
+            x:Name="LaunchButton_UpdateButIsRunningTeachingTip"
+            x:Uid="LaunchButton_UpdateButIsRunningTeachingTip"
+            ActionButtonClick="LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick"
             Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
             <muxc:TeachingTip.IconSource>
                 <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />

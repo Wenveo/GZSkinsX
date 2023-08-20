@@ -141,6 +141,7 @@ internal sealed class MounterService : IMounterService
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError($"MounterService::CheckForUpdatesAsync -> Failed to check for updates. Exception message: \n\"{excp.Message}\".");
+                throw;
             }
             finally
             {

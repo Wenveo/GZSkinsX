@@ -129,6 +129,12 @@
   <data name="LaunchButton_CheckForUpdats_MenuItem.Text" xml:space="preserve">
     <value>检查更新</value>
   </data>
+  <data name="LaunchButton_FailedToCheckUpdatesTeachingTip.Subtitle" xml:space="preserve">
+    <value>由于某些不可抗拒的因素，未能与主星建立目标连接。</value>
+  </data>
+  <data name="LaunchButton_FailedToCheckUpdatesTeachingTip.Title" xml:space="preserve">
+    <value>服务器罢工了......</value>
+  </data>
   <data name="LaunchButton_Launch_MenuItem.Text" xml:space="preserve">
     <value>启动服务</value>
   </data>
@@ -159,16 +165,16 @@
   <data name="LaunchButton_Terminate_MenuItem.Text" xml:space="preserve">
     <value>终止服务</value>
   </data>
-  <data name="LaunchButton_UpdateButServerIsRunningTeachingTip.ActionButtonContent" xml:space="preserve">
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.ActionButtonContent" xml:space="preserve">
     <value>终止服务并更新</value>
   </data>
-  <data name="LaunchButton_UpdateButServerIsRunningTeachingTip.CloseButtonContent" xml:space="preserve">
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.CloseButtonContent" xml:space="preserve">
     <value>取消</value>
   </data>
-  <data name="LaunchButton_UpdateButServerIsRunningTeachingTip.Subtitle" xml:space="preserve">
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.Subtitle" xml:space="preserve">
     <value>是否要停止服务并更新？</value>
   </data>
-  <data name="LaunchButton_UpdateButServerIsRunningTeachingTip.Title" xml:space="preserve">
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.Title" xml:space="preserve">
     <value>检测到服务正在运行中</value>
   </data>
   <data name="LaunchButton_UpdateFailedTeachingTip.Title" xml:space="preserve">
