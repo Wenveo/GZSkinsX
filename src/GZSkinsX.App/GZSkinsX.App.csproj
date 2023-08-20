@@ -16,10 +16,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LaunchButton\LaunchButton.cs" />
-    <Compile Include="Controls\LaunchButton\LaunchButtonAutomationPeer.cs" />
-    <Compile Include="Controls\LaunchButton\LaunchButtonStatus.cs" />
-    <Compile Include="Controls\LaunchButton\LaunchButtonStatusContent.cs" />
+    <Compile Include="Controls\LaunchButton.xaml.cs">
+      <DependentUpon>LaunchButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mounter\MounterService.cs" />
     <Compile Include="Mounter\MounterSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,9 +93,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\LaunchButton\LaunchButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\LaunchButton.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\IndexPage.xaml">
       <Generator>MSBuild:Compile</Generator>

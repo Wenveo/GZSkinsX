@@ -33,14 +33,11 @@ internal sealed partial class MainPage : Page
     public MainPage()
     {
         InitializeComponent();
-        ViewModel = new(Main_MoreLaunchOptionsMenuItem);
+        ViewModel = new();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        DispatcherQueue.GetForCurrentThread().EnqueueAsync(
-            ViewModel.InitializeAsync, DispatcherQueuePriority.High).FireAndForget();
-
         AppxContext.AppxTitleBar.SetTitleBar(AppTitleBar);
     }
 
