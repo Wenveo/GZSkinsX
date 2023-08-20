@@ -7,13 +7,9 @@
 
 #nullable enable
 
-using CommunityToolkit.WinUI;
-
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.ViewModels;
 
-using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -28,12 +24,11 @@ namespace GZSkinsX.Views;
 /// </summary>
 internal sealed partial class MainPage : Page
 {
-    public MainViewModel ViewModel { get; }
+    public MainViewModel ViewModel { get; } = new();
 
     public MainPage()
     {
         InitializeComponent();
-        ViewModel = new();
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

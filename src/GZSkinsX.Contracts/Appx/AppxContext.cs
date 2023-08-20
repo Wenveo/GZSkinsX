@@ -8,7 +8,6 @@
 #nullable enable
 
 using System;
-using System.Composition.Hosting;
 
 using Windows.ApplicationModel;
 using Windows.Storage;
