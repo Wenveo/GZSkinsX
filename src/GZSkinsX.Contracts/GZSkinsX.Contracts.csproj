@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{5CE3D0A1-77EB-42ED-9A8B-ECD15ABEF9EB}</ProjectGuid>
@@ -21,6 +21,9 @@
     </Compile>
     <Compile Include="Appx\IAppxTitleBar.cs" />
     <Compile Include="Appx\IAppxWindow.cs" />
+    <Compile Include="Controls\MultiStateToggleButton\MultiStateToggleButtonState.cs" />
+    <Compile Include="Controls\MultiStateToggleButton\MultiStateToggleButton.cs" />
+    <Compile Include="Controls\MultiStateToggleButton\MultiStateToggleButtonAutomationPeer.cs" />
     <Compile Include="Controls\SegoeFluentIcon.cs" />
     <Compile Include="Controls\SegoeFluentIconSource.cs" />
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
@@ -105,6 +108,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\MultiStateToggleButton\MultiStateToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <!-- FOR BUILD -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == '$(Configuration)|$(Platform)'" />
