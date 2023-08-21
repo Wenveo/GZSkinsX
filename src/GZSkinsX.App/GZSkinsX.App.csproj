@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GZSkinsX.Kernel">
-      <Version>0.0.2</Version>
+      <Version>0.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
