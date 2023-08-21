@@ -64,44 +64,39 @@ internal sealed class GameData : IGameData
     {
         if (rootFolder is not null && region is not GameRegion.Unknown)
         {
-            IStorageItem gameFolder, lcuFolder, gameExecuteFile, lcuExecuteFile;
-
-            gameFolder = await rootFolder.TryGetItemAsync(GAME_DIRECTORY_NAME);
-            if (gameFolder is null || !gameFolder.IsOfType(StorageItemTypes.Folder))
+            if (await rootFolder.TryGetItemAsync(GAME_DIRECTORY_NAME) is not StorageFolder gameFolder)
             {
                 return false;
             }
 
+            StorageFolder? lcuFolder;
             if (region is GameRegion.Riot)
             {
                 lcuFolder = rootFolder;
             }
             else
             {
-                lcuFolder = await rootFolder.TryGetItemAsync(LCU_DIRECTORY_NAME);
-                if (lcuFolder is null || !lcuFolder.IsOfType(StorageItemTypes.Folder))
+                if ((lcuFolder = await rootFolder.TryGetItemAsync(LCU_DIRECTORY_NAME) as StorageFolder) is null)
                 {
                     return false;
                 }
             }
 
-            gameExecuteFile = await ((StorageFolder)gameFolder).TryGetItemAsync(GAME_EXECUTE_File_NAME);
-            if (gameExecuteFile is null || !gameExecuteFile.IsOfType(StorageItemTypes.File))
+            if (await gameFolder.TryGetItemAsync(GAME_EXECUTE_File_NAME) is not StorageFile gameExecuteFile)
             {
                 return false;
             }
 
-            lcuExecuteFile = await ((StorageFolder)lcuFolder).TryGetItemAsync(LCU_EXECUTE_File_NAME);
-            if (lcuExecuteFile is null || !lcuExecuteFile.IsOfType(StorageItemTypes.File))
+            if (await lcuFolder.TryGetItemAsync(LCU_EXECUTE_File_NAME) is not StorageFile lcuExecuteFile)
             {
                 return false;
             }
 
-            GameFolder = (StorageFolder)gameFolder;
-            GameExecuteFile = (StorageFile)gameExecuteFile;
+            GameFolder = gameFolder;
+            GameExecuteFile = gameExecuteFile;
 
-            LCUFolder = (StorageFolder)lcuFolder;
-            LCUExecuteFile = (StorageFile)lcuExecuteFile;
+            LCUFolder = lcuFolder;
+            LCUExecuteFile = lcuExecuteFile;
 
             return true;
         }

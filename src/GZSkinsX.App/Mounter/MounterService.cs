@@ -267,22 +267,18 @@ internal sealed class MounterService : IMounterService
             return false;
         }
 
-        var metadataFolder = await workingDirectory.TryGetItemAsync("_metadata");
-        if (metadataFolder is null || metadataFolder.IsOfType(StorageItemTypes.Folder) is false)
+        if (await workingDirectory.TryGetItemAsync("_metadata") is not StorageFolder metadataFolder)
         {
             return false;
         }
 
-        var metadataFile = await ((StorageFolder)metadataFolder).TryGetItemAsync("blockmap.json");
-        if (metadataFile is null || metadataFile.IsOfType(StorageItemTypes.File) is false)
+        if (await metadataFolder.TryGetItemAsync("blockmap.json") is not StorageFile metadataFile)
         {
             return false;
         }
 
-        var blockMapContent = await FileIO.ReadTextAsync((IStorageFile)metadataFile);
-        if (JsonObject.TryParse(blockMapContent, out var blockMapJson) is false ||
-            blockMapJson.TryGetValue("Blocks", out var blocksArray) is false ||
-            blocksArray.ValueType is not JsonValueType.Array)
+        if (JsonObject.TryParse(await FileIO.ReadTextAsync(metadataFile), out var blockMapJson) is false ||
+            blockMapJson.TryGetValue("Blocks", out var blocksArray) is false || blocksArray.ValueType is not JsonValueType.Array)
         {
             return false;
         }
