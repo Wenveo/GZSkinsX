@@ -58,8 +58,6 @@ internal sealed partial class LaunchButton : UserControl
                 await UpdateMoreLaunchOptionsAsync();
             }
 
-            MultiStateLaunchButton.IsEnabled = true;
-
             AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
             AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
         }).FireAndForget();
@@ -200,6 +198,7 @@ internal sealed partial class LaunchButton : UserControl
                 }
             }));
 
+            await Task.Delay(800);
             await UpdateLaunchStateAsync();
             await UpdateMoreLaunchOptionsAsync();
             await ShowUpToDateTeachingTipAsync();

@@ -21,7 +21,6 @@
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch"
             Click="MultiStateLaunchButton_Click"
-            IsEnabled="False"
             State="LaunchButton_State_CheckForUpdates">
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Default">
                 <StackPanel Orientation="Horizontal">
