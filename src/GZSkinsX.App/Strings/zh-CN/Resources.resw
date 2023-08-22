@@ -198,19 +198,19 @@
   <data name="Main_SettingsMenu_Theme_Light.Text" xml:space="preserve">
     <value>浅色</value>
   </data>
-  <data name="MyMods_Exception_FailedToReadContent" xml:space="preserve">
+  <data name="MyModsHelper_Exception_FailedToReadContent" xml:space="preserve">
     <value>在读取文件内容时出现了未知的错误，"{0}"。</value>
   </data>
-  <data name="MyMods_Exception_InvalidFileHeader" xml:space="preserve">
+  <data name="MyModsHelper_Exception_InvalidFileHeader" xml:space="preserve">
     <value>无效的文件头标识，"{0}"。</value>
   </data>
-  <data name="MyMods_Exception_ItemIsNotExists" xml:space="preserve">
+  <data name="MyModsHelper_Exception_ItemIsNotExists" xml:space="preserve">
     <value>未在模组文件中找到有效的模组信息，"{0}"。</value>
   </data>
-  <data name="MyMods_Exception_Unknown" xml:space="preserve">
+  <data name="MyModsHelper_Exception_Unknown" xml:space="preserve">
     <value>在读取文件时发生了意料之外的错误，"{0}"。</value>
   </data>
-  <data name="MyMods_Exception_UnsupportedFileVersion" xml:space="preserve">
+  <data name="MyModsHelper_Exception_UnsupportedFileVersion" xml:space="preserve">
     <value>不支持的文件版本，"{0}"。</value>
   </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">

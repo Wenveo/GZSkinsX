@@ -145,11 +145,11 @@ internal static class MyModsHelper
     {
         var format = errorCode switch
         {
-            -1 => "Resources/MyMods_Exception_ItemIsNotExists",
-            -2 => "Resources/MyMods_Exception_FailedToReadContent",
-            -3 => "Resources/MyMods_Exception_InvalidFileHeader",
-            -4 => "Resources/MyMods_Exception_UnsupportedFileVersion",
-            _ => "Resources/MyMods_Exception_Unknown"
+            -1 => "Resources/MyModsHelper_Exception_ItemIsNotExists",
+            -2 => "Resources/MyModsHelper_Exception_FailedToReadContent",
+            -3 => "Resources/MyModsHelper_Exception_InvalidFileHeader",
+            -4 => "Resources/MyModsHelper_Exception_UnsupportedFileVersion",
+            _ => "Resources/MyModsHelper_Exception_Unknown"
         };
 
         var message = string.Format(format, file.Name);
