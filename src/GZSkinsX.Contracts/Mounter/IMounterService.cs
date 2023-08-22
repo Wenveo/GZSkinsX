@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 
 using Windows.Foundation;
+using Windows.Storage;
 
 namespace GZSkinsX.Contracts.Mounter;
 
@@ -40,8 +41,14 @@ public interface IMounterService
     /// 获取当前组件的包元数据信息
     /// </summary>
     /// <param name="filter">筛选并获取指定成员的值，默认为获取所有成员的值</param>
-    /// <returns>如果未找到有效的文件/目录则会抛出异常，否则将返回非空的包元数据信息</returns>
+    /// <returns>如果未找到有效的文件/目录则会抛出异常，否则将返回具体的包元数据信息</returns>
     Task<MTPackageMetadata> GetCurrentPackageMetadataAsync(params string[] filter);
+
+    /// <summary>
+    /// 获取当前挂载服务的工作目录
+    /// </summary>
+    /// <returns>如果未下载/安装服务组件或文件夹不存在时将抛出异常，否则将返回具体的工作目录</returns>
+    Task<StorageFolder> GetMounterWorkingDirectoryAsync();
 
     /// <summary>
     /// 启动挂载服务
@@ -65,6 +72,12 @@ public interface IMounterService
     /// <param name="filter">筛选并获取指定成员的值，默认为获取所有成员的值</param>
     /// <returns>如果未找到有效的文件/目录则会返回 <seealso cref="MTPackageMetadata.Empty"/>，否则将返回非空的包元数据信息</returns>
     Task<MTPackageMetadata> TryGetCurrentPackageMetadataAsync(params string[] filter);
+
+    /// <summary>
+    /// 尝试获取当前挂载服务的工作目录
+    /// </summary>
+    /// <returns>如果未下载/安装服务组件或文件夹不存在时将返回空文件夹，否则将返回非空的工作目录</returns>
+    Task<StorageFolder?> TryGetMounterWorkingDirectoryAsync();
 
     /// <summary>
     /// 从服务器中下载和更新组件。

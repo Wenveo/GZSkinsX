@@ -157,6 +157,12 @@ internal sealed class MounterService : IMounterService
         return await GetLocalMTPackageMetadataAsync(await GetMounterWorkingDirectoryAsync(), filter);
     }
 
+    public async Task<StorageFolder> GetMounterWorkingDirectoryAsync()
+    {
+        var rootFolder = await GetMounterRootFolderAsync();
+        return await rootFolder.GetFolderAsync(_mounterSettings.WorkingDirectory);
+    }
+
     public async Task<bool> GetIsRunningAsync()
     {
         return await App.DesktopExtensionMethods.IsMTRunning();
@@ -209,6 +215,18 @@ internal sealed class MounterService : IMounterService
         catch
         {
             return MTPackageMetadata.Empty;
+        }
+    }
+
+    public async Task<StorageFolder?> TryGetMounterWorkingDirectoryAsync()
+    {
+        try
+        {
+            return await GetMounterWorkingDirectoryAsync();
+        }
+        catch
+        {
+            return null;
         }
     }
 
@@ -368,26 +386,7 @@ internal sealed class MounterService : IMounterService
 
     private async Task<StorageFolder> GetMounterRootFolderAsync()
     {
-        return await GetOrCreateFolderAsync(ApplicationData.Current.RoamingFolder, "Mounter");
-    }
-
-    private async Task<StorageFolder> GetMounterWorkingDirectoryAsync()
-    {
-        var rootFolder = await GetMounterRootFolderAsync();
-        return await rootFolder.GetFolderAsync(_mounterSettings.WorkingDirectory);
-    }
-
-    private async Task<StorageFolder> GetOrCreateFolderAsync(StorageFolder relativeTo, string folderName)
-    {
-        var targetFolder = await relativeTo.TryGetItemAsync(folderName);
-        if (targetFolder is not null && targetFolder.IsOfType(StorageItemTypes.Folder))
-        {
-            return (StorageFolder)targetFolder;
-        }
-        else
-        {
-            return await relativeTo.CreateFolderAsync(folderName);
-        }
+        return await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Mounter", CreationCollisionOption.OpenIfExists);
     }
 
     private MTPackageMetadata ParseMetadataFromString(string input, params string[] filter)
@@ -515,18 +514,6 @@ internal sealed class MounterService : IMounterService
         catch
         {
             return MTPackageMetadata.Empty;
-        }
-    }
-
-    private async Task<StorageFolder?> TryGetMounterWorkingDirectoryAsync()
-    {
-        try
-        {
-            return await GetMounterWorkingDirectoryAsync();
-        }
-        catch
-        {
-            return null;
         }
     }
 
