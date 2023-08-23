@@ -121,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GZSkinsX.Kernel">
-      <Version>0.0.4</Version>
+      <Version>0.0.5</Version>
     </PackageReference>
     <PackageReference Include="System.Text.Json">
       <Version>8.0.0-preview.7.23375.6</Version>

@@ -199,12 +199,13 @@
     <value>浅色</value>
   </data>
   <data name="MyModsHelper_Exception_FailedToReadContent" xml:space="preserve">
+  <data name="MyModsHelper_Exception_CannotToReadContent" xml:space="preserve">
     <value>在读取文件内容时出现了未知的错误，"{0}"。</value>
   </data>
   <data name="MyModsHelper_Exception_InvalidFileHeader" xml:space="preserve">
     <value>无效的文件头标识，"{0}"。</value>
   </data>
-  <data name="MyModsHelper_Exception_ItemIsNotExists" xml:space="preserve">
+  <data name="MyModsHelper_Exception_ItemNotFound" xml:space="preserve">
     <value>未在模组文件中找到有效的模组信息，"{0}"。</value>
   </data>
   <data name="MyModsHelper_Exception_Unknown" xml:space="preserve">

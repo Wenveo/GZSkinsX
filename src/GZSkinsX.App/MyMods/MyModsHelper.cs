@@ -88,8 +88,7 @@ internal static class MyModsHelper
             var ret = KernelInterop.ReadLegacySkinInfo(handle.DangerousGetHandle().ToPointer(), (void**)&rawDataSpan);
             if (ret is not 0)
             {
-                ThrowInvalidOperationExceptionForErrorCode(
-                    ret < -1 && ret > -4 ? ret - 1 : ret, storageFile);
+                ThrowInvalidOperationExceptionForErrorCode(ret, storageFile);
             }
 
             string? name, author, description, datetime;
@@ -141,14 +140,14 @@ internal static class MyModsHelper
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void ThrowInvalidOperationExceptionForErrorCode(int errorCode, StorageFile file)
+    private static void ThrowInvalidOperationExceptionForErrorCode(uint errorCode, StorageFile file)
     {
         var format = errorCode switch
         {
-            -1 => "Resources/MyModsHelper_Exception_ItemIsNotExists",
-            -2 => "Resources/MyModsHelper_Exception_FailedToReadContent",
-            -3 => "Resources/MyModsHelper_Exception_InvalidFileHeader",
-            -4 => "Resources/MyModsHelper_Exception_UnsupportedFileVersion",
+            0x80002000 => "Resources/MyModsHelper_Exception_CannotToReadContent",
+            0x80002002 => "Resources/MyModsHelper_Exception_ItemNotFound",
+            0x80002001 => "Resources/MyModsHelper_Exception_InvalidFileHeader",
+            0x80002003 => "Resources/MyModsHelper_Exception_UnsupportedFileVersion",
             _ => "Resources/MyModsHelper_Exception_Unknown"
         };
 
