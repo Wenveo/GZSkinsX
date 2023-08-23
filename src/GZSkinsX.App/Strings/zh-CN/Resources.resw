@@ -186,6 +186,33 @@
   <data name="LaunchButton_UpToDateTeachingTip_CurrentVersion" xml:space="preserve">
     <value>当前组件版本号 {0}</value>
   </data>
+  <data name="Main_MyMods_Commands_Delete.Label" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Main_MyMods_Commands_DeselectAll.Label" xml:space="preserve">
+    <value>取消选中</value>
+  </data>
+  <data name="Main_MyMods_Commands_Import.Label" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="Main_MyMods_Commands_Import2.Label" xml:space="preserve">
+    <value>导入模组</value>
+  </data>
+  <data name="Main_MyMods_Commands_Install.Label" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="Main_MyMods_Commands_SelectAll.Label" xml:space="preserve">
+    <value>全部选中</value>
+  </data>
+  <data name="Main_MyMods_Commands_Uninstall.Label" xml:space="preserve">
+    <value>卸载</value>
+  </data>
+  <data name="Main_MyMods_SelectedItemsCount" xml:space="preserve">
+    <value>已选择 {0} 项</value>
+  </data>
+  <data name="Main_MyMods_Title.Text" xml:space="preserve">
+    <value>所有模组</value>
+  </data>
   <data name="Main_SettingsMenu_Settings.Text" xml:space="preserve">
     <value>设置</value>
   </data>
@@ -198,7 +225,6 @@
   <data name="Main_SettingsMenu_Theme_Light.Text" xml:space="preserve">
     <value>浅色</value>
   </data>
-  <data name="MyModsHelper_Exception_FailedToReadContent" xml:space="preserve">
   <data name="MyModsHelper_Exception_CannotToReadContent" xml:space="preserve">
     <value>在读取文件内容时出现了未知的错误，"{0}"。</value>
   </data>
@@ -213,6 +239,30 @@
   </data>
   <data name="MyModsHelper_Exception_UnsupportedFileVersion" xml:space="preserve">
     <value>不支持的文件版本，"{0}"。</value>
+  </data>
+  <data name="MyModView_Status_Installed" xml:space="preserve">
+    <value>已安装</value>
+  </data>
+  <data name="MyModView_Status_Uninstalled" xml:space="preserve">
+    <value>未安装</value>
+  </data>
+  <data name="MyModView_Tooltip_Author.Text" xml:space="preserve">
+    <value>作者：</value>
+  </data>
+  <data name="MyModView_Tooltip_DateTime.Text" xml:space="preserve">
+    <value>创建日期：</value>
+  </data>
+  <data name="MyModView_Tooltip_Description.Text" xml:space="preserve">
+    <value>描述：</value>
+  </data>
+  <data name="MyModView_Tooltip_FileName.Text" xml:space="preserve">
+    <value>文件名称：</value>
+  </data>
+  <data name="MyModView_Tooltip_Name.Text" xml:space="preserve">
+    <value>名称：</value>
+  </data>
+  <data name="MyModView_Tooltip_Status.Text" xml:space="preserve">
+    <value>状态：</value>
   </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>

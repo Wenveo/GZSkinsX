@@ -7,9 +7,13 @@
 
 #nullable enable
 
+using CommunityToolkit.WinUI;
+
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.ViewModels;
 
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -33,12 +37,26 @@ internal sealed partial class MainPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        DispatcherQueue.GetForCurrentThread().EnqueueAsync(
+            ViewModel.OnRefreshAsync, DispatcherQueuePriority.Low).FireAndForget();
+
         AppxContext.AppxTitleBar.SetTitleBar(AppTitleBar);
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         AppxContext.AppxTitleBar.SetTitleBar(null);
+    }
+
+    private void MyModsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (MyModsGridView.SelectedItems.Count == 0)
+        {
+            return;
+        }
+
+        var format = ResourceHelper.GetLocalized("Resources/Main_MyMods_SelectedItemsCount");
+        Main_MyMods_Commands_DeselectAll2.Label = string.Format(format, MyModsGridView.SelectedItems.Count);
     }
 
     private void OnMainSettingsMenuFlyoutOpening(object sender, object e)

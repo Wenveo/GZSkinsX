@@ -12,6 +12,7 @@
     xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:myMods="using:GZSkinsX.MyMods"
     mc:Ignorable="d">
     <Page.Resources>
         <XamlUICommand x:Name="SwitchThemeCommand" ExecuteRequested="OnSwitchTheme" />
@@ -29,6 +30,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="188" />
             </Grid.ColumnDefinitions>
+
             <Border
                 x:Name="AppTitleBar"
                 Grid.ColumnSpan="3"
@@ -55,6 +57,7 @@
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
+                    IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}"
                     IsTextScaleFactorEnabled="True"
                     PlaceholderText="在此列表中搜索...">
                     <animations:Implicit.Animations>
@@ -137,6 +140,166 @@
                     </Button>
                 </StackPanel>
             </Grid>
+
         </Grid>
+
+        <Grid
+            Grid.Row="1"
+            Background="{ThemeResource NavigationViewContentBackground}"
+            BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
+            BorderThickness="0,1,0,0">
+            <Grid.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}" Text="刷新">
+                        <MenuFlyoutItem.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </Grid.ContextFlyout>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="24" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="24" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <ctrls2:SegoeFluentIcon
+                        Margin="0,0,6,0"
+                        FontSize="24"
+                        Glyph="&#xE74C;" />
+                    <TextBlock
+                        x:Uid="Main_MyMods_Title"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Bold" />
+                </StackPanel>
+
+                <CommandBar
+                    Grid.Column="3"
+                    DefaultLabelPosition="Right"
+                    IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}">
+                    <CommandBar.Resources>
+                        <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                        <SolidColorBrush x:Key="CommandBarBorderBrushOpen" Color="Transparent" />
+                    </CommandBar.Resources>
+                    <AppBarButton
+                        x:Name="Main_MyMods_Commands_DeselectAll2"
+                        Command="{x:Bind ViewModel.DeselectAllCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView, Mode=OneWay}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE711;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <AppBarButton
+                        x:Uid="Main_MyMods_Commands_Install"
+                        Command="{x:Bind ViewModel.InstallCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems, Mode=OneWay}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE896;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        x:Uid="Main_MyMods_Commands_Uninstall"
+                        Command="{x:Bind ViewModel.UninstallCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems, Mode=OneWay}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xEA39;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        x:Uid="Main_MyMods_Commands_Import"
+                        Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}"
+                        Label="导入"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        x:Uid="Main_MyMods_Commands_Delete"
+                        Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems, Mode=OneWay}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE74D;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        x:Uid="Main_MyMods_Commands_Import2"
+                        Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            x:Uid="Main_MyMods_Commands_SelectAll"
+                            Command="{x:Bind ViewModel.SelectAllCommand, Mode=OneWay}"
+                            CommandParameter="{x:Bind MyModsGridView, Mode=OneWay}">
+                            <AppBarButton.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="A" Modifiers="Control" />
+                            </AppBarButton.KeyboardAccelerators>
+                            <AppBarButton.Icon>
+                                <ctrls2:SegoeFluentIcon Glyph="&#xE8B3;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            x:Uid="Main_MyMods_Commands_DeselectAll"
+                            Command="{x:Bind ViewModel.DeselectAllCommand, Mode=OneWay}"
+                            CommandParameter="{x:Bind MyModsGridView, Mode=OneWay}"
+                            KeyboardAcceleratorTextOverride="Esc, Ctrl+D">
+                            <AppBarButton.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Escape" />
+                                <KeyboardAccelerator Key="D" Modifiers="Control" />
+                            </AppBarButton.KeyboardAccelerators>
+                            <AppBarButton.Icon>
+                                <ctrls2:SegoeFluentIcon Glyph="&#xE711;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
+                </CommandBar>
+            </Grid>
+
+            <GridView
+                x:Name="MyModsGridView"
+                Grid.Row="3"
+                Padding="24,0,24,0"
+                CanReorderItems="False"
+                IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}"
+                ItemsSource="{x:Bind ViewModel.MyMods, Mode=OneWay}"
+                SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
+                SelectionChanged="MyModsGridView_SelectionChanged"
+                SelectionMode="Extended">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <myMods:MyModView />
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+
+        <muxc:ProgressRing
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsIndeterminate="True"
+            Visibility="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
     </Grid>
 </Page>

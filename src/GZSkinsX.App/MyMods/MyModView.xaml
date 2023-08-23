@@ -1,0 +1,202 @@
+<UserControl
+    x:Class="GZSkinsX.MyMods.MyModView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.MyMods"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:MyModViewModel}"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <StaticResource x:Key="MyModViewInstallBackground" ResourceKey="AccentAAFillColorTertiaryBrush" />
+                    <StaticResource x:Key="MyModViewInstallForeground" ResourceKey="TextFillColorPrimaryBrush" />
+                    <StaticResource x:Key="MyModViewUninstallBackground" ResourceKey="CardBackgroundFillColorSecondary" />
+                    <StaticResource x:Key="MyModViewUninstallForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <StaticResource x:Key="MyModViewInstallBackground" ResourceKey="AccentAAFillColorTertiaryBrush" />
+                    <StaticResource x:Key="MyModViewInstallForeground" ResourceKey="SystemColorHighlightTextColor" />
+                    <StaticResource x:Key="MyModViewUninstallBackground" ResourceKey="SystemChromeLowColor" />
+                    <StaticResource x:Key="MyModViewUninstallForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <converters:BoolToObjectConverter
+                x:Key="MyModViewStatusConverter"
+                FalseValue="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Uninstalled}"
+                TrueValue="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Installed}" />
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border
+        Width="180"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="4"
+        ToolTipService.Placement="Bottom">
+        <ToolTipService.ToolTip>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="12" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    x:Uid="MyModView_Tooltip_Name"
+                    Grid.Row="0"
+                    Grid.Column="0" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Text="{Binding ModInfo.Name}"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    x:Uid="MyModView_Tooltip_Author"
+                    Grid.Row="1"
+                    Grid.Column="0" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Text="{Binding ModInfo.Author}"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    x:Uid="MyModView_Tooltip_Description"
+                    Grid.Row="2"
+                    Grid.Column="0" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Text="{Binding ModInfo.Description}"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    x:Uid="MyModView_Tooltip_Status"
+                    Grid.Row="3"
+                    Grid.Column="0" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="3"
+                    FontWeight="Bold"
+                    Text="{Binding Enable, Converter={StaticResource MyModViewStatusConverter}}" />
+
+                <TextBlock
+                    x:Uid="MyModView_Tooltip_FileName"
+                    Grid.Row="4"
+                    Grid.Column="0" />
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Text="{Binding ModFile.Name}"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    x:Uid="MyModView_Tooltip_DateTime"
+                    Grid.Row="5"
+                    Grid.Column="0" />
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="3"
+                    Text="{Binding ModInfo.DateTime}" />
+            </Grid>
+        </ToolTipService.ToolTip>
+        <Grid>
+            <Grid Margin="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="12" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="2" />
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="0"
+                    Width="154"
+                    Height="220"
+                    CornerRadius="4">
+                    <Image Source="{Binding ModImage}" Stretch="UniformToFill" />
+                </Grid>
+
+                <StackPanel
+                    Grid.Row="2"
+                    Height="84"
+                    Spacing="8">
+                    <TextBlock
+                        MaxHeight="38"
+                        FontWeight="Bold"
+                        Text="{Binding ModInfo.Name}"
+                        TextTrimming="CharacterEllipsis" />
+                    <TextBlock
+                        MaxHeight="38"
+                        Opacity=".78"
+                        Text="{Binding ModInfo.Author}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+                <Border
+                    Grid.RowSpan="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Background="{ThemeResource MyModViewInstallBackground}"
+                    CornerRadius="6"
+                    Visibility="{Binding Enable, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock
+                        Margin="8,4"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Foreground="{ThemeResource MyModViewInstallForeground}"
+                        Text="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Installed}" />
+                </Border>
+                <Border
+                    Grid.RowSpan="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Background="{ThemeResource MyModViewUninstallBackground}"
+                    CornerRadius="6"
+                    Visibility="{Binding Enable, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                    <TextBlock
+                        Margin="8,4"
+                        FontSize="12"
+                        FontWeight="Normal"
+                        Foreground="{ThemeResource MyModViewUninstallForeground}"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Uninstalled}" />
+                </Border>
+
+            </Grid>
+            <Border
+                Margin="6"
+                Padding="10,4"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="{ThemeResource AccentAAFillColorTertiaryBrush}"
+                CornerRadius="4"
+                Visibility="{Binding IsShowIndex, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="{ThemeResource SystemColorHighlightTextColor}"
+                    Text="{Binding IndexOfTable}" />
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
