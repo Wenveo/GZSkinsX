@@ -25,6 +25,11 @@ internal static class MyModsHelper
 {
     public static string EncryptConfigText(string str)
     {
+        if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
+        {
+            return string.Empty;
+        }
+
         unsafe
         {
             var buffer = (void*)0;
@@ -40,6 +45,11 @@ internal static class MyModsHelper
 
     public static string DecryptConfigText(string str)
     {
+        if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
+        {
+            return string.Empty;
+        }
+
         unsafe
         {
             var buffer = (void*)0;
