@@ -28,6 +28,7 @@ public static partial class AppxContext
         "global::GZSkinsX.Contracts.Game.IGameService",
         "global::GZSkinsX.Contracts.Logging.ILoggingService",
         "global::GZSkinsX.Contracts.Mounter.IMounterService",
+        "global::GZSkinsX.Contracts.MyMods.IMyModsService",
         "global::GZSkinsX.Contracts.MRTCore.IMRTCoreService",
         "global::GZSkinsX.Contracts.Settings.ISettingsService",
         "global::GZSkinsX.Contracts.Themes.IThemeService",
