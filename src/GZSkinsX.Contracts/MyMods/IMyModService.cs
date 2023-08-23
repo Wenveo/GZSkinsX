@@ -17,6 +17,10 @@ namespace GZSkinsX.Contracts.MyMods;
 
 public interface IMyModsService
 {
+    bool IsInstalled(StorageFile storageFile);
+
+    int IndexOfTable(StorageFile storageFile);
+
     Task ImportModsAsync(params StorageFile[] storageFiles);
 
     Task ImportModsAsync(IEnumerable<StorageFile> storageFiles);

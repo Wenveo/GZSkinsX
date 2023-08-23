@@ -46,7 +46,30 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
     private readonly UTF8Encoding _utf8EncodingWithOutBOM = new(false);
 
-    public HashSet<string> InstalledMods { get; } = new();
+    private HashSet<string> InstalledMods { get; } = new();
+
+    public bool IsInstalled(StorageFile storageFile)
+    {
+        return InstalledMods.Contains(storageFile.DisplayName);
+    }
+
+    public int IndexOfTable(StorageFile storageFile)
+    {
+        var result = 0;
+
+        using var enumerator = InstalledMods.GetEnumerator();
+        while (enumerator.MoveNext())
+        {
+            if (StringComparer.Ordinal.Equals(enumerator.Current, storageFile.DisplayName))
+            {
+                break;
+            }
+
+            result++;
+        }
+
+        return result;
+    }
 
     public async Task ImportModsAsync(params StorageFile[] storageFiles)
     {
@@ -79,9 +102,16 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
     private async Task InstallModsCoreAsync(IEnumerable<StorageFile> storageFiles)
     {
+        var modsFolder = await GetModsFolderAsync();
         foreach (var file in storageFiles)
         {
             InstalledMods.Remove(file.DisplayName);
+
+            if (await modsFolder.TryGetItemAsync(file.Name) is not StorageFile)
+            {
+                continue;
+            }
+
             InstalledMods.Add(file.DisplayName);
         }
 
