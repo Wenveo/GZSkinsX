@@ -13,11 +13,15 @@ public readonly struct MyModInfo
 {
     public static readonly MyModInfo Empty = new();
 
-    public readonly string Name;
-    public readonly string Author;
-    public readonly string Description;
-    public readonly string DateTime;
-    public readonly bool IsEmpty;
+    public string Name { get; }
+
+    public string Author { get; }
+
+    public string Description { get; }
+
+    public string DateTime { get; }
+
+    public bool IsEmpty { get; }
 
     public MyModInfo()
     {
