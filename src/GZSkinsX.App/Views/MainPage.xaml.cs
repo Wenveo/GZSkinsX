@@ -89,6 +89,30 @@ internal sealed partial class MainPage : Page
         DataTransferManager.GetForCurrentView().DataRequested -= DataTransferManager_DataRequested;
     }
 
+    private void ContentGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key is VirtualKey.V)
+        {
+            ViewModel.IsShowInstalledIndex = true;
+        }
+    }
+
+    private void ContentGrid_PreviewKeyUp(object sender, KeyRoutedEventArgs e)
+    {
+        if (ViewModel.IsShowInstalledIndex)
+        {
+            ViewModel.IsShowInstalledIndex = false;
+        }
+    }
+
+    private void MyModsGridView_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (ViewModel.IsShowInstalledIndex)
+        {
+            ViewModel.IsShowInstalledIndex = false;
+        }
+    }
+
     private void MyModsGridView_DragOver(object sender, DragEventArgs e)
     {
         if (e.DataView.Contains(StandardDataFormats.StorageItems))

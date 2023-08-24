@@ -31,6 +31,8 @@
             Background="{ThemeResource NavigationViewContentBackground}"
             BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
             BorderThickness="0,1,0,0"
+            PreviewKeyDown="ContentGrid_PreviewKeyDown"
+            PreviewKeyUp="ContentGrid_PreviewKeyUp"
             Visibility="Collapsed">
             <Grid.ContextFlyout>
                 <muxc:CommandBarFlyout themes:ThemedFlyoutHelper.FixFlyoutTheme="True" Placement="Right">
@@ -210,6 +212,7 @@
                 Drop="MyModsGridView_Drop"
                 IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}"
                 ItemsSource="{x:Bind ViewModel.MyModCollection, Mode=OneWay}"
+                LostFocus="MyModsGridView_LostFocus"
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
                 SelectionChanged="MyModsGridView_SelectionChanged"
                 SelectionMode="Extended">

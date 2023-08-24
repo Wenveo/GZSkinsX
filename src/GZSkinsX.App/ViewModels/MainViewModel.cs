@@ -35,6 +35,9 @@ internal sealed partial class MainViewModel : ObservableObject
     public IMyModsService MyModsService { get; }
 
     [ObservableProperty]
+    private bool _isShowInstalledIndex;
+
+    [ObservableProperty]
     private bool _enableWorkspace = true;
 
     [ObservableProperty]
@@ -289,10 +292,11 @@ internal sealed partial class MainViewModel : ObservableObject
             return;
         }
 
-        await MyModsService.InstallModsAsync(
-            items.OfType<MyModViewModel>().Select(a => a.ModFile));
+        var myModViewModels = items.OfType<MyModViewModel>();
+        await MyModsService.InstallModsAsync(myModViewModels.Select(a => a.ModFile));
+        myModViewModels.All(item => item.Enable = true);
 
-        items.OfType<MyModViewModel>().All(item => item.Enable = true);
+        UpdateModInstalledIndex();
     }
 
     [RelayCommand]
@@ -303,10 +307,11 @@ internal sealed partial class MainViewModel : ObservableObject
             return;
         }
 
-        await MyModsService.UninstallModsAsync(
-            items.OfType<MyModViewModel>().Select(a => a.ModFile));
+        var myModViewModels = items.OfType<MyModViewModel>();
+        await MyModsService.UninstallModsAsync(myModViewModels.Select(a => a.ModFile));
+        myModViewModels.Any(item => item.Enable = false);
 
-        items.OfType<MyModViewModel>().Any(item => item.Enable = false);
+        UpdateModInstalledIndex();
     }
 
     [RelayCommand]
@@ -331,6 +336,28 @@ internal sealed partial class MainViewModel : ObservableObject
         listView.SelectAllSafe();
     }
 
+    private void UpdateModInstalledIndex()
+    {
+        foreach (var item in MyModCollection)
+        {
+            if (item.Enable)
+            {
+                item.IndexOfTable = MyModsService.IndexOfTable(item.ModFile) + 1;
+            }
+        }
+    }
+
+    partial void OnIsShowInstalledIndexChanged(bool value)
+    {
+        foreach (var item in MyModCollection)
+        {
+            if (item.Enable)
+            {
+                item.IsShowIndex = value;
+            }
+        }
+    }
+
     private async Task RefreshCoreAsync()
     {
         await MyModsService.RefreshAsync();
@@ -345,7 +372,7 @@ internal sealed partial class MainViewModel : ObservableObject
                 var modImage = await MyModsService.GetModImageAsync(file);
 
                 var isInstalled = MyModsService.IsInstalled(file);
-                var indexOfTable = MyModsService.IndexOfTable(file);
+                var indexOfTable = MyModsService.IndexOfTable(file) + 1;
 
                 newList.Add(new(file, modImage, modInfo, isInstalled, indexOfTable));
             }
