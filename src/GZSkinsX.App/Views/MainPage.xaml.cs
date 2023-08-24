@@ -43,11 +43,44 @@ internal sealed partial class MainPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        DispatcherQueue.GetForCurrentThread().EnqueueAsync(
-            ViewModel.OnRefreshAsync, DispatcherQueuePriority.Low).FireAndForget();
+        DispatcherQueue.GetForCurrentThread().EnqueueAsync(async () =>
+        {
+            if (await AppxContext.MounterService.TryGetMounterWorkingDirectoryAsync() is null)
+            {
+                MainLaunchButton.UpdateCompleted += MainLaunchButton_UpdateCompleted;
+                UninitializedContent.Visibility = Visibility.Visible;
+                ContentGrid.Visibility = Visibility.Collapsed;
+
+                await MainLaunchButton.OnUpdateAsync();
+                return;
+            }
+
+            ContentGrid.Visibility = Visibility.Visible;
+            UninitializedContent.Visibility = Visibility.Collapsed;
+
+            if (await AppxContext.MounterService.VerifyContentIntegrityAsync() is false)
+            {
+                await MainLaunchButton.OnUpdateAsync();
+            }
+            else
+            {
+                await MainLaunchButton.InitializeAsync();
+            }
+
+            await ViewModel.OnRefreshAsync();
+        }, DispatcherQueuePriority.Normal).FireAndForget();
 
         AppxContext.AppxTitleBar.SetTitleBar(AppTitleBar);
         DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
+    }
+
+    private async void MainLaunchButton_UpdateCompleted(object sender, EventArgs e)
+    {
+        MainLaunchButton.UpdateCompleted -= MainLaunchButton_UpdateCompleted;
+        UninitializedContent.Visibility = Visibility.Collapsed;
+        ContentGrid.Visibility = Visibility.Visible;
+
+        await ViewModel.OnRefreshAsync();
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -8,18 +8,15 @@
 #nullable enable
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-
-using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Controls;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Mounter;
 
-using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,27 +37,20 @@ internal sealed partial class LaunchButton : UserControl
 
     public object SyncRoot { get; } = new();
 
+    public event EventHandler? UpdateCompleted;
+
     public LaunchButton()
     {
         InitializeComponent();
+    }
 
-        // Initialize
-        DispatcherQueue.GetForCurrentThread().EnqueueAsync(async () =>
-        {
-            var b = await AppxContext.MounterService.VerifyContentIntegrityAsync();
-            if (b is false)
-            {
-                await OnUpdateAsync();
-            }
-            else
-            {
-                await UpdateLaunchStateAsync();
-                await UpdateMoreLaunchOptionsAsync();
-            }
+    public async Task InitializeAsync()
+    {
+        await UpdateLaunchStateAsync();
+        await UpdateMoreLaunchOptionsAsync();
 
-            AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
-            AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
-        }).FireAndForget();
+        AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
+        AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
     }
 
     private async void OnIsRunningChanged(IMounterService sender, bool args)
@@ -181,6 +171,15 @@ internal sealed partial class LaunchButton : UserControl
 
         await UpdateLaunchStateAsync(UpdatingState);
 
+        // 使用 BackgroundWorker 进行后台操作，
+        // 避免在 UI 线程上执行而导致 UI 卡死。
+        var bgDownloadWorker = new BackgroundWorker();
+        bgDownloadWorker.DoWork += BgDownloadWorker_DoWork;
+        bgDownloadWorker.RunWorkerAsync();
+    }
+
+    private async void BgDownloadWorker_DoWork(object sender, DoWorkEventArgs e)
+    {
         try
         {
             CancellationTokenSource? tokenSource = null;
@@ -189,24 +188,36 @@ internal sealed partial class LaunchButton : UserControl
                 tokenSource?.Cancel();
                 tokenSource = new CancellationTokenSource();
 
-                try
+                await Dispatcher.RunAsync(default, async () =>
                 {
-                    await ProgressAnimationAsync(p, tokenSource);
-                }
-                catch
-                {
-                }
+                    try
+                    {
+                        await ProgressAnimationAsync(p, tokenSource);
+                    }
+                    catch
+                    {
+
+                    }
+                });
             }));
 
-            await Task.Delay(800);
-            await UpdateLaunchStateAsync();
-            await UpdateMoreLaunchOptionsAsync();
-            await ShowUpToDateTeachingTipAsync();
+            await Dispatcher.RunAsync(default, async () =>
+            {
+                await Task.Delay(800);
+                await UpdateLaunchStateAsync();
+                await UpdateMoreLaunchOptionsAsync();
+                await ShowUpToDateTeachingTipAsync();
+
+                UpdateCompleted?.Invoke(this, EventArgs.Empty);
+            });
         }
         catch (Exception excp)
         {
-            await ShowUpdateFailedTeachingTipAsync(excp.Message);
-            await UpdateLaunchStateAsync(UpdateFailedState);
+            await Dispatcher.RunAsync(default, async () =>
+            {
+                await ShowUpdateFailedTeachingTipAsync(excp.Message);
+                await UpdateLaunchStateAsync(UpdateFailedState);
+            });
         }
 
         AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;

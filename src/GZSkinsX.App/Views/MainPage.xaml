@@ -30,7 +30,8 @@
             Grid.Row="1"
             Background="{ThemeResource NavigationViewContentBackground}"
             BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0,1,0,0"
+            Visibility="Collapsed">
             <Grid.ContextFlyout>
                 <muxc:CommandBarFlyout themes:ThemedFlyoutHelper.FixFlyoutTheme="True" Placement="Right">
                     <muxc:CommandBarFlyout.PrimaryCommands>
@@ -356,6 +357,15 @@
             VerticalAlignment="Center"
             IsIndeterminate="True"
             Visibility="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
+
+        <StackPanel
+            x:Name="UninitializedContent"
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="Collapsed">
+            <TextBlock x:Uid="Main_Uninitialized_Message" FontWeight="Bold" />
+        </StackPanel>
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>

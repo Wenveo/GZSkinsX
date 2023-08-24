@@ -282,6 +282,9 @@
   <data name="Main_SettingsMenu_Theme_Light.Text" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="Main_Uninitialized_Message.Text" xml:space="preserve">
+    <value>缺少必要的组件，需要在下载/更新后方可正常使用。</value>
+  </data>
   <data name="MyModsHelper_Exception_CannotToReadContent" xml:space="preserve">
     <value>在读取文件内容时出现了未知的错误，"{0}"。</value>
   </data>
