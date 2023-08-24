@@ -115,6 +115,12 @@ internal sealed partial class MainPage : Page
 
     private void MyModsGridView_DragOver(object sender, DragEventArgs e)
     {
+        // Is from the application isself ?
+        if (e.Data is not null && e.Data.Properties.Title == "DragMyModFiles")
+        {
+            return;
+        }
+
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
         {
             e.AcceptedOperation = DataPackageOperation.Copy;
@@ -132,6 +138,7 @@ internal sealed partial class MainPage : Page
 
     private void MyModsGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
     {
+        e.Data.Properties.Title = "DragMyModFiles";
         e.Data.SetStorageItems(e.Items.OfType<MyModViewModel>().Select(a => a.ModFile));
     }
 
