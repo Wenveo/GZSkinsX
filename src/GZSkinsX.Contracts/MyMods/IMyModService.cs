@@ -19,6 +19,8 @@ namespace GZSkinsX.Contracts.MyMods;
 
 public interface IMyModsService
 {
+    Task ClearAllInstalledAsync();
+
     bool IsInstalled(StorageFile storageFile);
 
     int IndexOfTable(StorageFile storageFile);

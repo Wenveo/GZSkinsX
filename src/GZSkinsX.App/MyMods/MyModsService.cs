@@ -48,6 +48,12 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
     private HashSet<string> InstalledMods { get; } = new();
 
+    public async Task ClearAllInstalledAsync()
+    {
+        InstalledMods.Clear();
+        await UpdateSettingsAsync();
+    }
+
     public bool IsInstalled(StorageFile storageFile)
     {
         return InstalledMods.Contains(storageFile.DisplayName);
