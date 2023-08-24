@@ -91,6 +91,6 @@ public interface IMounterService
     /// <summary>
     /// 验证本地已下载的组件的完整性
     /// </summary>
-    /// <returns>当</returns>
+    /// <returns>当对本地的组件完成验证后返回 true，否则返回 false</returns>
     Task<bool> VerifyContentIntegrityAsync();
 }
