@@ -440,26 +440,4 @@ internal sealed partial class LaunchButton : UserControl
     {
         await OnTerminateAndUpdateAsync();
     }
-
-    private void MultiStateToggleButtonFlyout_Opening(object sender, object e)
-    {
-        static void SyncThemeCore(IEnumerable<MenuFlyoutItemBase> items, ElementTheme requestedTheme)
-        {
-            foreach (var item in items)
-            {
-                if (item is MenuFlyoutSubItem subItem)
-                {
-                    SyncThemeCore(subItem.Items, requestedTheme);
-                }
-
-                item.RequestedTheme = requestedTheme;
-            }
-        }
-
-        if (sender is MenuFlyout flyout)
-        {
-            // Fix the theme of sub items
-            SyncThemeCore(flyout.Items, AppxContext.ThemeService.ActualTheme);
-        }
-    }
 }

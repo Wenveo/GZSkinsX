@@ -9,6 +9,7 @@
     xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:themes="using:GZSkinsX.Contracts.Themes"
     d:DesignHeight="300"
     d:DesignWidth="400"
     mc:Ignorable="d">
@@ -77,7 +78,7 @@
             <ctrls2:MultiStateToggleButton.Flyout>
                 <MenuFlyout
                     Windows10version1903:ShouldConstrainToRootBounds="True"
-                    Opening="MultiStateToggleButtonFlyout_Opening"
+                    themes:ThemedFlyoutHelper.FixFlyoutTheme="True"
                     Placement="Bottom">
                     <MenuFlyoutItem
                         x:Name="LaunchButton_Launch_MenuItem"
