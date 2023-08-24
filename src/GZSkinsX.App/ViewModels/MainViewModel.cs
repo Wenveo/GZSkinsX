@@ -9,8 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,10 +18,14 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.MyMods;
 using GZSkinsX.MyMods;
 
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.ViewModels;
@@ -34,12 +38,44 @@ internal sealed partial class MainViewModel : ObservableObject
     private bool _enableWorkspace = true;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MyModCollection))]
+    private string? _modsFilter;
+
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedIsNull))]
     [NotifyPropertyChangedFor(nameof(SelectedIsNotNull))]
     private MyModViewModel? _selectedMod;
 
-    [ObservableProperty]
-    private ObservableCollection<MyModViewModel> _myMods = new();
+    private IEnumerable<MyModViewModel> _myModCollection = Array.Empty<MyModViewModel>();
+
+    public IEnumerable<MyModViewModel> MyModCollection
+    {
+        get
+        {
+            var filter = ModsFilter;
+            if (filter is null || filter == string.Empty)
+            {
+                foreach (var item in _myModCollection)
+                {
+                    yield return item;
+                }
+
+                yield break;
+            }
+
+            foreach (var item in _myModCollection)
+            {
+                if (item.ModFile.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ||
+                    item.ModInfo.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ||
+                    item.ModInfo.Author.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ||
+                    item.ModInfo.Description.Contains(filter, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    yield return item;
+                }
+            }
+        }
+        set => SetProperty(ref _myModCollection, value, nameof(MyModCollection));
+    }
 
     public bool SelectedIsNull => SelectedMod is null;
 
@@ -51,24 +87,188 @@ internal sealed partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
+    private async Task OnClearAllInstalledAsync()
+    {
+        await MyModsService.ClearAllInstalledAsync();
+        await RefreshCoreAsync();
+    }
+
+    [RelayCommand]
+    private async Task OnCopyAsync(IList<object>? items)
+    {
+        if (items.Any() is false)
+        {
+            return;
+        }
+
+        var dataPackage = new DataPackage
+        {
+            RequestedOperation = DataPackageOperation.Copy
+        };
+
+        dataPackage.SetStorageItems(
+            items.OfType<MyModViewModel>().Select(a => a.ModFile));
+
+        Clipboard.SetContent(dataPackage);
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task OnCopyAsPathAsync(IList<object>? items)
+    {
+        if (items.Any() is false)
+        {
+            return;
+        }
+
+        var dataPackage = new DataPackage
+        {
+            RequestedOperation = DataPackageOperation.Copy
+        };
+
+        var paths = items.OfType<MyModViewModel>().Select(a => a.ModFile.Path).ToArray();
+        if (paths.Length == 1)
+        {
+            dataPackage.SetText($"\"{paths[0]}\"");
+        }
+        else
+        {
+            var stringBuilder = new StringBuilder();
+            for (var i = 0; i < paths.Length;)
+            {
+                stringBuilder.Append('\"');
+                stringBuilder.Append(paths[i]);
+                stringBuilder.Append('\"');
+
+                if (++i != paths.Length)
+                {
+                    stringBuilder.Append(Environment.NewLine);
+                }
+            }
+
+            dataPackage.SetText(stringBuilder.ToString());
+        }
+
+        Clipboard.SetContent(dataPackage);
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task OnOpenInFileExplorerAsync(IList<object>? items)
+    {
+        if (items.Any() is false)
+        {
+            return;
+        }
+
+        var options = new FolderLauncherOptions();
+        foreach (var item in items.OfType<MyModViewModel>().Select(a => a.ModFile))
+        {
+            options.ItemsToSelect.Add(item);
+        }
+
+        if (options.ItemsToSelect.Count > 0)
+        {
+            var modsFolder = await MyModsService.GetModsFolderAsync();
+            await Launcher.LaunchFolderAsync(modsFolder, options);
+        }
+    }
+
+    [RelayCommand]
+    private async Task OnOpenModFolderAsync()
+    {
+        await Launcher.LaunchFolderAsync(await MyModsService.GetModsFolderAsync());
+    }
+
+    [RelayCommand]
+    private async Task OnOpenWadFolderAsync()
+    {
+        await Launcher.LaunchFolderAsync(await MyModsService.GetWadsFolderAsync());
+    }
+
+    [RelayCommand]
     private async Task OnImportAsync()
     {
         var filePicker = new FileOpenPicker();
         filePicker.FileTypeFilter.Add(".lolgezi");
 
-        var files = await filePicker.PickMultipleFilesAsync();
-        if (files is null || files.Count == 0)
+        await ImportAsync(await filePicker.PickMultipleFilesAsync());
+    }
+
+    public async Task ImportAsync(IEnumerable<StorageFile> files)
+    {
+        if (files.Any() is false)
         {
             return;
         }
 
-        await RefreshCoreAsync();
+        var verifiedFiles = new List<StorageFile>();
+        foreach (var item in files)
+        {
+            try
+            {
+                await MyModsService.ReadModInfoAsync(item);
+                verifiedFiles.Add(item);
+            }
+            catch (Exception excp)
+            {
+                var contentDialog = new ContentDialog()
+                {
+                    Title = ResourceHelper.GetLocalized("Resources/Main_MyMods_ImportFilesDialog_InvaliedFile"),
+                    CloseButtonText = ResourceHelper.GetLocalized("Resources/Main_MyMods_ImportFilesDialog_CloseButtonText"),
+                    Content = excp.Message
+                };
+
+                await contentDialog.ShowAsync();
+            }
+        }
+
+        if (verifiedFiles.Count is 0)
+        {
+            return;
+        }
+
+        var importCount = 0;
+        var modsFolder = await MyModsService.GetModsFolderAsync();
+        foreach (var file in verifiedFiles)
+        {
+            if (await modsFolder.TryGetItemAsync(file.Name) is StorageFile existsFile)
+            {
+                var contentDialog = new ContentDialog()
+                {
+                    DefaultButton = ContentDialogButton.Primary,
+                    Title = ResourceHelper.GetLocalized("Resources/Main_MyMods_ReplaceOrSkipFilesDialog_Title"),
+                    PrimaryButtonText = ResourceHelper.GetLocalized("Resources/Main_MyMods_ReplaceOrSkipFilesDialog_Replace"),
+                    CloseButtonText = ResourceHelper.GetLocalized("Resources/Main_MyMods_ReplaceOrSkipFilesDialog_Skip"),
+                    Content = string.Format(ResourceHelper.GetLocalized("Resources/Main_MyMods_ReplaceOrSkipFilesDialog_Content"), existsFile.Name)
+                };
+
+                var result = await contentDialog.ShowAsync();
+                if (result is not ContentDialogResult.Primary)
+                {
+                    continue;
+                }
+
+                await file.CopyAndReplaceAsync(existsFile);
+            }
+            else
+            {
+                await file.CopyAsync(modsFolder);
+            }
+
+            importCount++;
+        }
+
+        if (importCount > 0)
+        {
+            await RefreshCoreAsync();
+        }
     }
 
     [RelayCommand]
     private async Task OnDeleteAsync(IList<object>? items)
     {
-        if (items is null || items.Count == 0)
+        if (items.Any() is false)
         {
             return;
         }
@@ -84,7 +284,7 @@ internal sealed partial class MainViewModel : ObservableObject
     [RelayCommand]
     private async Task OnInstallAsync(IList<object>? items)
     {
-        if (items is null || items.Count == 0)
+        if (items.Any() is false)
         {
             return;
         }
@@ -92,13 +292,13 @@ internal sealed partial class MainViewModel : ObservableObject
         await MyModsService.InstallModsAsync(
             items.OfType<MyModViewModel>().Select(a => a.ModFile));
 
-        items.OfType<MyModViewModel>().Any(item => item.Enable = true);
+        items.OfType<MyModViewModel>().All(item => item.Enable = true);
     }
 
     [RelayCommand]
     private async Task OnUninstallAsync(IList<object>? items)
     {
-        if (items is null || items.Count == 0)
+        if (items.Any() is false)
         {
             return;
         }
@@ -151,7 +351,7 @@ internal sealed partial class MainViewModel : ObservableObject
             }
         }
 
-        MyMods = new ObservableCollection<MyModViewModel>(newList);
+        MyModCollection = newList;
     }
 
     [RelayCommand]

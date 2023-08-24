@@ -7,12 +7,18 @@
 
 #nullable enable
 
+using System;
+using System.Linq;
+
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
+using GZSkinsX.MyMods;
 using GZSkinsX.ViewModels;
 
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,11 +47,35 @@ internal sealed partial class MainPage : Page
             ViewModel.OnRefreshAsync, DispatcherQueuePriority.Low).FireAndForget();
 
         AppxContext.AppxTitleBar.SetTitleBar(AppTitleBar);
+        DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         AppxContext.AppxTitleBar.SetTitleBar(null);
+        DataTransferManager.GetForCurrentView().DataRequested -= DataTransferManager_DataRequested;
+    }
+
+    private void MyModsGridView_DragOver(object sender, DragEventArgs e)
+    {
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+        }
+    }
+
+    private async void MyModsGridView_Drop(object sender, DragEventArgs e)
+    {
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            var items = await e.DataView.GetStorageItemsAsync();
+            await ViewModel.ImportAsync(items.OfType<StorageFile>());
+        }
+    }
+
+    private void MyModsGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+    {
+        e.Data.SetStorageItems(e.Items.OfType<MyModViewModel>().Select(a => a.ModFile));
     }
 
     private void MyModsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,5 +115,27 @@ internal sealed partial class MainPage : Page
                 await themeService.SetElementThemeAsync(newTheme);
             }
         }
+    }
+
+    private void CloseMyModsContextMenu_Click(object sender, RoutedEventArgs e)
+    {
+        ContentGrid.ContextFlyout?.Hide();
+    }
+
+    private void OnMyModsContextMenuShare_Click(object sender, RoutedEventArgs e)
+    {
+        ContentGrid.ContextFlyout?.Hide();
+
+        if (MyModsGridView.SelectedItems.Count > 0)
+        {
+            DataTransferManager.ShowShareUI();
+        }
+    }
+
+    private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+    {
+        args.Request.Data.Properties.Title = "Share";
+        args.Request.Data.SetStorageItems(
+            MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile), true);
     }
 }
