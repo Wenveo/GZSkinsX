@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 
 using CommunityToolkit.HighPerformance.Buffers;
 
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.MyMods;
 using GZSkinsX.Kernel;
 
@@ -75,7 +76,7 @@ internal static class MyModsHelper
             var ret = KernelInterop.ReadLegacySkinImage(handle.DangerousGetHandle().ToPointer(), &buffer, &length);
             if (ret is not 0)
             {
-                ThrowInvalidOperationExceptionForErrorCode(ret, storageFile);
+                ThrowInvalidOperationException(ret, storageFile);
             }
 
             var memoryOwner = MemoryOwner<byte>.Allocate(length);
@@ -98,7 +99,7 @@ internal static class MyModsHelper
             var ret = KernelInterop.ReadLegacySkinInfo(handle.DangerousGetHandle().ToPointer(), (void**)&rawDataSpan);
             if (ret is not 0)
             {
-                ThrowInvalidOperationExceptionForErrorCode(ret, storageFile);
+                ThrowInvalidOperationException(ret, storageFile);
             }
 
             string? name, author, description, datetime;
@@ -150,16 +151,16 @@ internal static class MyModsHelper
 
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void ThrowInvalidOperationExceptionForErrorCode(uint errorCode, StorageFile file)
+    private static void ThrowInvalidOperationException(uint errorCode, StorageFile file)
     {
-        var format = errorCode switch
+        var format = ResourceHelper.GetLocalized(errorCode switch
         {
             0x80002000 => "Resources/MyModsHelper_Exception_CannotToReadContent",
             0x80002002 => "Resources/MyModsHelper_Exception_ItemNotFound",
             0x80002001 => "Resources/MyModsHelper_Exception_InvalidFileHeader",
             0x80002003 => "Resources/MyModsHelper_Exception_UnsupportedFileVersion",
             _ => "Resources/MyModsHelper_Exception_Unknown"
-        };
+        });
 
         var message = string.Format(format, file.Name);
         throw new InvalidOperationException(message);
