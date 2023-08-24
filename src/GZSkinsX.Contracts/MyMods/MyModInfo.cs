@@ -9,35 +9,7 @@
 
 namespace GZSkinsX.Contracts.MyMods;
 
-public readonly struct MyModInfo
+public sealed record class MyModInfo(string Name, string Author, string Description, string DateTime)
 {
-    public static readonly MyModInfo Empty = new();
-
-    public string Name { get; }
-
-    public string Author { get; }
-
-    public string Description { get; }
-
-    public string DateTime { get; }
-
-    public bool IsEmpty { get; }
-
-    public MyModInfo()
-    {
-        Name = string.Empty;
-        Author = string.Empty;
-        Description = string.Empty;
-        DateTime = string.Empty;
-        IsEmpty = true;
-    }
-
-    public MyModInfo(string name, string author, string description, string dateTime)
-    {
-        Name = name;
-        Author = author;
-        Description = description;
-        DateTime = dateTime;
-        IsEmpty = false;
-    }
+    public static readonly MyModInfo Empty = new(string.Empty, string.Empty, string.Empty, string.Empty);
 }

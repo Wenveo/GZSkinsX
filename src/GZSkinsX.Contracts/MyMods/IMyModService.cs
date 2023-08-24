@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#nullable enable
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -47,9 +49,9 @@ public interface IMyModsService
 
     Task<MyModInfo> ReadModInfoAsync(StorageFile storageFile);
 
-    Task<MemoryOwner<byte>> TryReadModImageAsync(StorageFile storageFile);
+    Task<MemoryOwner<byte>?> TryReadModImageAsync(StorageFile storageFile);
 
-    Task<MyModInfo> TryReadModInfoAsync(StorageFile storageFile);
+    Task<MyModInfo?> TryReadModInfoAsync(StorageFile storageFile);
 
     Task RefreshAsync();
 

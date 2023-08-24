@@ -139,18 +139,16 @@ internal sealed partial class MainViewModel : ObservableObject
         var modsFolder = await MyModsService.GetModsFolderAsync();
         foreach (var file in await modsFolder.GetFilesAsync())
         {
-            var modInfo = await MyModsService.ReadModInfoAsync(file);
-            if (modInfo.IsEmpty)
+            var modInfo = await MyModsService.TryReadModInfoAsync(file);
+            if (modInfo is not null)
             {
-                continue;
+                var modImage = await MyModsService.GetModImageAsync(file);
+
+                var isInstalled = MyModsService.IsInstalled(file);
+                var indexOfTable = MyModsService.IndexOfTable(file);
+
+                newList.Add(new(file, modImage, modInfo, isInstalled, indexOfTable));
             }
-
-            var modImage = await MyModsService.GetModImageAsync(file);
-
-            var isInstalled = MyModsService.IsInstalled(file);
-            var indexOfTable = MyModsService.IndexOfTable(file);
-
-            newList.Add(new(file, modImage, modInfo, isInstalled, indexOfTable));
         }
 
         MyMods = new ObservableCollection<MyModViewModel>(newList);

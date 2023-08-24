@@ -205,7 +205,17 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
     public Task<MemoryOwner<byte>> ReadModImageAsync(StorageFile storageFile)
     {
-        var taskCompletionSource = new TaskCompletionSource<MemoryOwner<byte>>();
+        return Task.FromResult(MyModsHelper.ReadModImage(storageFile));
+    }
+
+    public Task<MyModInfo> ReadModInfoAsync(StorageFile storageFile)
+    {
+        return Task.FromResult(MyModsHelper.ReadModInfo(storageFile));
+    }
+
+    public Task<MemoryOwner<byte>?> TryReadModImageAsync(StorageFile storageFile)
+    {
+        var taskCompletionSource = new TaskCompletionSource<MemoryOwner<byte>?>();
         try
         {
             var result = MyModsHelper.ReadModImage(storageFile);
@@ -213,16 +223,16 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning($"MyModsService::ReadModImageAsync -> {excp.Message}");
+            AppxContext.LoggingService.LogWarning($"MyModsService::TryReadModImageAsync -> {excp.Message}");
             taskCompletionSource.SetException(excp);
         }
 
         return taskCompletionSource.Task;
     }
 
-    public Task<MyModInfo> ReadModInfoAsync(StorageFile storageFile)
+    public Task<MyModInfo?> TryReadModInfoAsync(StorageFile storageFile)
     {
-        var taskCompletionSource = new TaskCompletionSource<MyModInfo>();
+        var taskCompletionSource = new TaskCompletionSource<MyModInfo?>();
         try
         {
             var result = MyModsHelper.ReadModInfo(storageFile);
@@ -230,37 +240,11 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning($"MyModsService::ReadModInfoAsync -> {excp.Message}");
+            AppxContext.LoggingService.LogWarning($"MyModsService::TryReadModInfoAsync -> {excp.Message}");
             taskCompletionSource.SetException(excp);
         }
 
         return taskCompletionSource.Task;
-    }
-
-    public Task<MemoryOwner<byte>> TryReadModImageAsync(StorageFile storageFile)
-    {
-        try
-        {
-            return Task.FromResult(MyModsHelper.ReadModImage(storageFile));
-        }
-        catch (Exception excp)
-        {
-            AppxContext.LoggingService.LogWarning($"MyModsService::TryReadModImageAsync -> {excp.Message}");
-            return Task.FromResult(MemoryOwner<byte>.Empty);
-        }
-    }
-
-    public Task<MyModInfo> TryReadModInfoAsync(StorageFile storageFile)
-    {
-        try
-        {
-            return Task.FromResult(MyModsHelper.ReadModInfo(storageFile));
-        }
-        catch (Exception excp)
-        {
-            AppxContext.LoggingService.LogWarning($"MyModsService::TryReadModImageAsync -> {excp.Message}");
-            return Task.FromResult(MyModInfo.Empty);
-        }
     }
 
     private async Task<string> TryGetSettingsFilePathAsync()
