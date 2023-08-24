@@ -160,7 +160,7 @@ public class MultiStateToggleButton : ItemsControl
         {
             // Do localization for the secondary button
             var secondaryName = AppxContext.MRTCoreService
-                .AllResourceMaps["Microsoft.UI.Xaml.2.8"]
+                .AllResourceMaps["Microsoft.UI.Xaml.2.7"]
                 .GetString("Microsoft.UI.Xaml/Resources/SplitButtonSecondaryButtonName");
 
             AutomationProperties.SetName(_secondaryButton, secondaryName);
