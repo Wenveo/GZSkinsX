@@ -267,28 +267,21 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
             return string.Empty;
         }
 
-        var settingsFile = Path.Combine(workingDirectory.Path, metadata.SettingsFile);
-        if (File.Exists(settingsFile) is false)
-        {
-            return string.Empty;
-        }
-
-        return settingsFile;
+        return Path.Combine(workingDirectory.Path, metadata.SettingsFile);
     }
 
     private async Task<MTSettingsRoot?> TryGetSettingsRootAsync()
     {
-        using var fileStream = new FileStream(await TryGetSettingsFilePathAsync(), FileMode.Open, FileAccess.Read);
-        if (await JsonSerializer.DeserializeAsync<MTSettingsRoot>(fileStream) is not { } settingsRoot)
-        {
-            return null;
-        }
-
-        return settingsRoot;
+        return await TryGetSettingsRootAsync(await TryGetSettingsFilePathAsync());
     }
 
     private async Task<MTSettingsRoot?> TryGetSettingsRootAsync(string settingsFilePath)
     {
+        if (File.Exists(settingsFilePath) is false)
+        {
+            return null;
+        }
+
         using var fileStream = new FileStream(settingsFilePath, FileMode.Open, FileAccess.Read);
         if (await JsonSerializer.DeserializeAsync<MTSettingsRoot>(fileStream) is not { } settingsRoot)
         {
