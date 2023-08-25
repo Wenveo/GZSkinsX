@@ -185,18 +185,17 @@ internal sealed partial class LaunchButton : UserControl
             CancellationTokenSource? tokenSource = null;
             await AppxContext.MounterService.UpdateAsync(new Progress<double>(async (p) =>
             {
-                tokenSource?.Cancel();
-                tokenSource = new CancellationTokenSource();
-
                 await Dispatcher.RunAsync(default, async () =>
                 {
+                    tokenSource?.Cancel();
+                    tokenSource = new CancellationTokenSource();
+
                     try
                     {
                         await ProgressAnimationAsync(p, tokenSource);
                     }
                     catch
                     {
-
                     }
                 });
             }));
