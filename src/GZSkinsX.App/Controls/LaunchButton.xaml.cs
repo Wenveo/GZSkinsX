@@ -118,6 +118,15 @@ internal sealed partial class LaunchButton : UserControl
     {
         await UpdateLaunchStateAsync(CheckForUpdatesState);
 
+        // 使用 BackgroundWorker 进行后台操作，
+        // 避免在 UI 线程上执行而导致 UI 卡死。
+        var bgCheckUpdatesWorker = new BackgroundWorker();
+        bgCheckUpdatesWorker.DoWork += BgCheckUpdatesWorker_DoWork;
+        bgCheckUpdatesWorker.RunWorkerAsync();
+    }
+
+    private async void BgCheckUpdatesWorker_DoWork(object sender, DoWorkEventArgs e)
+    {
         bool needUpdate;
         try
         {
@@ -125,26 +134,35 @@ internal sealed partial class LaunchButton : UserControl
         }
         catch
         {
-            await UpdateLaunchStateAsync();
-            await ShowFailedToCheckUpdatesTeachingTipAsync();
+            await Dispatcher.RunAsync(default, async () =>
+            {
+                await UpdateLaunchStateAsync();
+                await ShowFailedToCheckUpdatesTeachingTipAsync();
+            });
             return;
         }
 
         if (needUpdate is false && await AppxContext.MounterService.VerifyContentIntegrityAsync())
         {
-            await UpdateLaunchStateAsync();
-            await ShowUpToDateTeachingTipAsync();
+            await Dispatcher.RunAsync(default, async () =>
+            {
+                await UpdateLaunchStateAsync();
+                await ShowUpToDateTeachingTipAsync();
+            });
         }
         else
         {
-            if (await AppxContext.MounterService.GetIsRunningAsync())
+            await Dispatcher.RunAsync(default, async () =>
             {
-                await ShowServerIsRunningTeachingTipAsync();
-            }
-            else
-            {
-                await OnUpdateAsync();
-            }
+                if (await AppxContext.MounterService.GetIsRunningAsync())
+                {
+                    await ShowServerIsRunningTeachingTipAsync();
+                }
+                else
+                {
+                    await OnUpdateAsync();
+                }
+            });
         }
     }
 
