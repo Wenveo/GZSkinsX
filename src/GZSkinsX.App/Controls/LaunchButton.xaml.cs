@@ -499,4 +499,13 @@ internal sealed partial class LaunchButton : UserControl
     {
         await OnTerminateAndUpdateAsync();
     }
+
+    private void LaunchButton_State_CheckForUpdates_ProgressRing_Loaded(object sender, RoutedEventArgs e)
+    {
+        LaunchButton_State_CheckForUpdates_ProgressRing.SetValue(
+            Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminateProperty, false);
+
+        LaunchButton_State_CheckForUpdates_ProgressRing.SetValue(
+            Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminateProperty, true);
+    }
 }

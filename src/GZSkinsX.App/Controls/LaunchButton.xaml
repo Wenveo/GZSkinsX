@@ -38,9 +38,10 @@
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_CheckForUpdates">
                 <StackPanel Orientation="Horizontal">
                     <muxc:ProgressRing
+                        x:Name="LaunchButton_State_CheckForUpdates_ProgressRing"
                         Width="16"
                         Height="16"
-                        IsIndeterminate="True" />
+                        Loaded="LaunchButton_State_CheckForUpdates_ProgressRing_Loaded" />
                     <TextBlock x:Uid="LaunchButton_State_CheckForUpdates_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
