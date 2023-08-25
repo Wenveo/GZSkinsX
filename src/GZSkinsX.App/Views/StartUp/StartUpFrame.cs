@@ -26,40 +26,6 @@ using Windows.UI.Xaml;
 namespace GZSkinsX.Views;
 
 [Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Index_Guid, PageType = typeof(IndexPage))]
-internal sealed class IndexFrame : IWindowFrame
-{
-    public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
-    {
-        return true;
-    }
-}
-
-
-[Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Main_Guid, PageType = typeof(MainPage))]
-internal sealed class MainFrame : IWindowFrame
-{
-    /// <inheritdoc/>
-    public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
-    {
-        return true;
-    }
-}
-
-[Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
-internal sealed class PreloadFrame : IWindowFrame
-{
-    /// <inheritdoc/>
-    public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
-    {
-        return true;
-    }
-}
-
-
-[Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
 internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 {
