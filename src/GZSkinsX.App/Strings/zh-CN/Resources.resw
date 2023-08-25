@@ -186,6 +186,9 @@
   <data name="LaunchButton_UpToDateTeachingTip_CurrentVersion" xml:space="preserve">
     <value>当前组件版本号 {0}</value>
   </data>
+  <data name="Main_MyMods_Collection_Count" xml:space="preserve">
+    <value>{0} 个模组</value>
+  </data>
   <data name="Main_MyMods_Commands_Delete.Label" xml:space="preserve">
     <value>删除</value>
   </data>

@@ -42,6 +42,8 @@ internal sealed partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(MyModCollection))]
+    [NotifyPropertyChangedFor(nameof(ShouldShowMyModsCount))]
+    [NotifyPropertyChangedFor(nameof(MyModsCount))]
     private string? _modsFilter;
 
     [ObservableProperty]
@@ -63,6 +65,7 @@ internal sealed partial class MainViewModel : ObservableObject
                     yield return item;
                 }
 
+                GC.Collect();
                 yield break;
             }
 
@@ -77,12 +80,21 @@ internal sealed partial class MainViewModel : ObservableObject
                 }
             }
         }
-        set => SetProperty(ref _myModCollection, value, nameof(MyModCollection));
+        set
+        {
+            SetProperty(ref _myModCollection, value, nameof(MyModCollection));
+            OnPropertyChanged(nameof(ShouldShowMyModsCount));
+            OnPropertyChanged(nameof(MyModsCount));
+        }
     }
 
     public bool SelectedIsNull => SelectedMod is null;
 
     public bool SelectedIsNotNull => SelectedMod is not null;
+
+    public bool ShouldShowMyModsCount => !string.IsNullOrEmpty(ModsFilter) || MyModCollection.Any();
+
+    public int MyModsCount => MyModCollection.Count();
 
     public MainViewModel()
     {

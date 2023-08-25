@@ -196,13 +196,14 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="24" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="24" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="36" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <GridView
                 x:Name="MyModsGridView"
-                Grid.Row="3"
+                Grid.Row="4"
                 Padding="24,0,24,0"
                 AllowDrop="True"
                 CanDragItems="True"
@@ -363,6 +364,14 @@
                     </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
+
+            <TextBlock
+                Grid.Row="2"
+                Margin="24,0,0,0"
+                DataContext="{x:Bind ViewModel, Mode=OneWay}"
+                Opacity="0.7"
+                Text="{Binding MyModsCount, Converter={StaticResource StringFormatConverter}, ConverterParameter={markups:LocalizedString ResourceKey=Resources/Main_MyMods_Collection_Count}}"
+                Visibility="{Binding ShouldShowMyModsCount, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
 
         <muxc:ProgressRing
