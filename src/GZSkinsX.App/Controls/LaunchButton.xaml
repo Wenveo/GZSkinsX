@@ -91,7 +91,10 @@
                             <ctrls2:SegoeFluentIcon Glyph="&#xE768;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
-                    <MenuFlyoutSubItem x:Name="LaunchButton_MoreLaunchOptions_MenuItem" x:Uid="LaunchButton_MoreLaunchOptions_MenuItem">
+                    <MenuFlyoutSubItem
+                        x:Name="LaunchButton_MoreLaunchOptions_MenuItem"
+                        x:Uid="LaunchButton_MoreLaunchOptions_MenuItem"
+                        Visibility="Collapsed">
                         <MenuFlyoutSubItem.Icon>
                             <ctrls2:SegoeFluentIcon Glyph="&#xE712;" />
                         </MenuFlyoutSubItem.Icon>
