@@ -109,7 +109,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 
     private void InitializeMainWindow()
     {
-        var minWindowSize = SizeHelper.FromDimensions(1000, 500);
+        var minWindowSize = SizeHelper.FromDimensions(988, 532);
         var appView = ApplicationView.GetForCurrentView();
         appView.SetPreferredMinSize(minWindowSize);
 
