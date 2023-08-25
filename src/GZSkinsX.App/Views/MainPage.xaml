@@ -216,6 +216,17 @@
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
                 SelectionChanged="MyModsGridView_SelectionChanged"
                 SelectionMode="Extended">
+                <GridView.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition />
+                        <RepositionThemeTransition />
+                    </TransitionCollection>
+                </GridView.ItemContainerTransitions>
+                <GridView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                        <Setter x:Name="Main_MyMods_GridViewItem_Margin" Property="Margin" Value="0,0,8,12" />
+                    </Style>
+                </GridView.ItemContainerStyle>
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <myMods:MyModView />
@@ -490,5 +501,26 @@
                 </StackPanel>
             </Grid>
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1910" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,0,6,12" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1340" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,0,4,4" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
