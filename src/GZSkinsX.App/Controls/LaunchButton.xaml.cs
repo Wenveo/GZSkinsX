@@ -55,7 +55,7 @@ internal sealed partial class LaunchButton : UserControl
 
     private async void OnIsRunningChanged(IMounterService sender, bool args)
     {
-        await AppxContext.AppxWindow.MainWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
         {
             await UpdateLaunchStateAsync(args ? RunningState : DefaultState);
         });
@@ -85,6 +85,11 @@ internal sealed partial class LaunchButton : UserControl
 
     public async Task OnLaunchAsync(string args)
     {
+        if (EnsureState(UpdatingState) || EnsureState(DefaultState) is false)
+        {
+            return;
+        }
+
         try
         {
             if (string.IsNullOrEmpty(args))
@@ -104,6 +109,11 @@ internal sealed partial class LaunchButton : UserControl
 
     public async Task OnTerminateAsync()
     {
+        if (EnsureState(UpdatingState) || EnsureState(RunningState) is false)
+        {
+            return;
+        }
+
         try
         {
             await AppxContext.MounterService.TerminateAsync();
@@ -116,6 +126,11 @@ internal sealed partial class LaunchButton : UserControl
 
     public async Task OnCheckForUpdatesAsync()
     {
+        if (EnsureState(CheckForUpdatesState) || EnsureState(UpdatingState))
+        {
+            return;
+        }
+
         await UpdateLaunchStateAsync(CheckForUpdatesState);
 
         // 使用 BackgroundWorker 进行后台操作，
@@ -168,12 +183,18 @@ internal sealed partial class LaunchButton : UserControl
 
     public async Task OnTerminateAndUpdateAsync()
     {
+        if (EnsureState(UpdatingState) || EnsureState(RunningState) is false)
+        {
+            return;
+        }
+
         try
         {
             await AppxContext.MounterService.TerminateAsync();
         }
-        catch
+        catch (Exception excp)
         {
+            await ShowRunFailedTeachingTipAsync(excp.Message);
             return;
         }
 
@@ -182,6 +203,11 @@ internal sealed partial class LaunchButton : UserControl
 
     public async Task OnUpdateAsync()
     {
+        if (EnsureState(UpdatingState))
+        {
+            return;
+        }
+
         HideAllTeachingTips();
 
         LaunchButton_State_Updating_ProgressRing.Value = 0;
@@ -238,6 +264,11 @@ internal sealed partial class LaunchButton : UserControl
         }
 
         AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
+    }
+
+    private bool EnsureState(string state)
+    {
+        return StringComparer.Ordinal.Equals(MultiStateLaunchButton.State, state);
     }
 
     private void HideAllTeachingTips()
