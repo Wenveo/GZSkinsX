@@ -165,7 +165,7 @@ internal sealed partial class MainPage : Page
         }
 
         var format = ResourceHelper.GetLocalized("Resources/Main_MyMods_SelectedItemsCount");
-        Main_MyMods_Commands_DeselectAll2.Label = string.Format(format, MyModsGridView.SelectedItems.Count);
+        Main_MyMods_Commands_DeselectAll2.Label = string.Format(format, MyModsGridView.SelectedItems.Count.ToString());
     }
 
     private void OnMainSettingsMenuFlyoutOpening(object sender, object e)
