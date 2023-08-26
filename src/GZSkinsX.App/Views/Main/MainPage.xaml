@@ -214,6 +214,7 @@
                 ItemTemplate="{StaticResource MyModViewTemplate}"
                 ItemsSource="{x:Bind ViewModel.MyModCollection, Mode=OneWay}"
                 LostFocus="MyModsGridView_LostFocus"
+                RightTapped="MyModsGridView_RightTapped"
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
                 SelectionChanged="MyModsGridView_SelectionChanged"
                 SelectionMode="Extended">

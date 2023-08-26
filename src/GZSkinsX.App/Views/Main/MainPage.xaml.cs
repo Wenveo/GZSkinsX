@@ -142,6 +142,20 @@ internal sealed partial class MainPage : Page
         e.Data.SetStorageItems(e.Items.OfType<MyModViewModel>().Select(a => a.ModFile));
     }
 
+    private void MyModsGridView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+    {
+        if (e.OriginalSource is FrameworkElement { DataContext: MyModViewModel item })
+        {
+            if (MyModsGridView.SelectedItems.Contains(item))
+            {
+                return;
+            }
+
+            MyModsGridView.SelectedItems.Clear();
+            MyModsGridView.SelectedItems.Add(item);
+        }
+    }
+
     private void MyModsGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (MyModsGridView.SelectedItems.Count == 0)
