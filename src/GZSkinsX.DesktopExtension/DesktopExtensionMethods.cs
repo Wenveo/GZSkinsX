@@ -22,6 +22,21 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         return Task.FromResult(handle.IsInvalid is false);
     }
 
+    public Task<bool> EnsureEfficiencyMode(int processId)
+    {
+        var result = false;
+        try
+        {
+            var process = Process.GetProcessById(processId);
+            result = EfficiencyManager.EnsureEfficiencyMode(process.Handle);
+        }
+        catch
+        {
+        }
+
+        return Task.FromResult(result);
+    }
+
     public Task<bool> ProcessLaunch(string executable, string args, bool runAs)
     {
         var startInfo = new ProcessStartInfo
@@ -46,6 +61,20 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         }
 
         return taskCompletionSource.Task;
+    }
+
+    public Task SetEfficiencyMode(int processId, bool isEnable)
+    {
+        try
+        {
+            var process = Process.GetProcessById(processId);
+            EfficiencyManager.SetEfficiencyMode(process.Handle, isEnable);
+        }
+        catch
+        {
+        }
+
+        return Task.CompletedTask;
     }
 
     public Task SetOwner(int processId)

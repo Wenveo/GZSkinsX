@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace GZSkinsX.DesktopExtension;
@@ -19,7 +20,9 @@ internal sealed class DesktopExtensionContext : ApplicationContext
         _sideCar = new DesktopExtensionMethods();
         _sideCar.ConnectionFailed += OnTerminateProcess;
         _sideCar.ConnectionFailed += OnTerminateProcess;
+
         _sideCar.InitializeAppServiceAsync();
+        _sideCar.SetEfficiencyMode(Process.GetCurrentProcess().Id, true);
     }
 
     private void OnTerminateProcess(object sender, EventArgs e)

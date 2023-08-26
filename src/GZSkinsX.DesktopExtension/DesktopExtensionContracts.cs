@@ -21,7 +21,11 @@ interface IDesktopExtensionMethods
 {
     Task<bool> IsMTRunning();
 
+    Task<bool> EnsureEfficiencyMode(int processId);
+
     Task<bool> ProcessLaunch(string executable, string args, bool runAs);
+
+    Task SetEfficiencyMode(int processId, bool isEnable);
 
     Task SetOwner(int processId);
 }
