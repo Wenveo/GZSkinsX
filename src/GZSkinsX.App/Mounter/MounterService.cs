@@ -38,7 +38,7 @@ internal sealed class MounterService : IMounterService
 {
     private static Uri[] OnlineManifests { get; } = new Uri[]
     {
-        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/PackageManifest.json")
+        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/PackageManifest.json")
     };
 
     private readonly MounterSettings _mounterSettings;
