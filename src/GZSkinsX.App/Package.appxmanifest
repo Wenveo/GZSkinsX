@@ -10,15 +10,15 @@
   IgnorableNamespaces="uap uap5 mp rescap desktop">
 
   <Identity
-    Name="GeziSkinsTeam.GZSkinsX.App"
-    Publisher="CN=Wenveo"
+    Name="61610AakStudio.64359D0915987"
+    Publisher="CN=23368CF6-33BA-4BD5-A112-861D8F4E666D"
     Version="3.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="7e1a65e6-71ac-47aa-8ce3-a4d1a831a4a4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="26f1a8a6-92d6-411e-a895-ee6045c7465b" PhonePublisherId="77940b1b-e72f-4ef2-bbe7-69d3406cb564"/>
 
   <Properties>
     <DisplayName>ms-resource:AppName</DisplayName>
-    <PublisherDisplayName>Wenveo</PublisherDisplayName>
+    <PublisherDisplayName>Noisrev</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
