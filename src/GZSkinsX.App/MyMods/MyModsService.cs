@@ -159,6 +159,11 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         return targetFolder;
     }
 
+    public Task<bool> GetIsEnableBloodAsync()
+    {
+        return Task.FromResult(_myModSettings.EnableBlood);
+    }
+
     public async Task<StorageFolder> GetModsFolderAsync()
     {
         return await GetWGZSubFolderAsync("Mods", FA_TOKEN_MODSFOLDER);
@@ -167,6 +172,17 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
     public async Task<StorageFolder> GetWadsFolderAsync()
     {
         return await GetWGZSubFolderAsync("Wads", FA_TOKEN_WADSFOLDER);
+    }
+
+    public async Task SetIsEnableBloodAsync(bool isEnable)
+    {
+        if (_myModSettings.EnableBlood == isEnable)
+        {
+            return;
+        }
+
+        _myModSettings.EnableBlood = isEnable;
+        await UpdateSettingsAsync();
     }
 
     public async Task SetModsFolderAsync(StorageFolder storageFolder)

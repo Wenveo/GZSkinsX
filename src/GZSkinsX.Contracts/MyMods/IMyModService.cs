@@ -37,9 +37,13 @@ public interface IMyModsService
 
     Task UninstallModsAsync(IEnumerable<StorageFile> storageFiles);
 
+    Task<bool> GetIsEnableBloodAsync();
+
     Task<StorageFolder> GetModsFolderAsync();
 
     Task<StorageFolder> GetWadsFolderAsync();
+
+    Task SetIsEnableBloodAsync(bool isEnable);
 
     Task SetModsFolderAsync(StorageFolder storageFolder);
 
