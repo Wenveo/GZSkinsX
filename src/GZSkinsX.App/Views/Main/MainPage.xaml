@@ -12,12 +12,8 @@
     xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:myMods="using:GZSkinsX.MyMods"
     xmlns:themes="using:GZSkinsX.Contracts.Themes"
     mc:Ignorable="d">
-    <Page.Resources>
-        <XamlUICommand x:Name="SwitchThemeCommand" ExecuteRequested="OnSwitchTheme" />
-    </Page.Resources>
     <Grid RowSpacing="6">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -460,9 +456,9 @@
                                 Placement="Bottom">
                                 <muxc:RadioMenuFlyoutItem
                                     x:Name="Main_SettingsMenu_Theme_Light"
-                                    x:Uid="Main_SettingsMenu_Theme_Light"
-                                    Command="{x:Bind SwitchThemeCommand}"
-                                    GroupName="ThemeMenu">
+                                    Command="{x:Bind ViewModel.SwitchThemeCommand, Mode=OneWay}"
+                                    GroupName="ThemeMenu"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Light}">
                                     <muxc:RadioMenuFlyoutItem.CommandParameter>
                                         <ElementTheme>Light</ElementTheme>
                                     </muxc:RadioMenuFlyoutItem.CommandParameter>
@@ -472,9 +468,9 @@
                                 </muxc:RadioMenuFlyoutItem>
                                 <muxc:RadioMenuFlyoutItem
                                     x:Name="Main_SettingsMenu_Theme_Dark"
-                                    x:Uid="Main_SettingsMenu_Theme_Dark"
-                                    Command="{x:Bind SwitchThemeCommand}"
-                                    GroupName="ThemeMenu">
+                                    Command="{x:Bind ViewModel.SwitchThemeCommand, Mode=OneWay}"
+                                    GroupName="ThemeMenu"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Dark}">
                                     <muxc:RadioMenuFlyoutItem.CommandParameter>
                                         <ElementTheme>Dark</ElementTheme>
                                     </muxc:RadioMenuFlyoutItem.CommandParameter>
@@ -484,9 +480,9 @@
                                 </muxc:RadioMenuFlyoutItem>
                                 <muxc:RadioMenuFlyoutItem
                                     x:Name="Main_SettingsMenu_Theme_Default"
-                                    x:Uid="Main_SettingsMenu_Theme_Default"
-                                    Command="{x:Bind SwitchThemeCommand}"
-                                    GroupName="ThemeMenu">
+                                    Command="{x:Bind ViewModel.SwitchThemeCommand, Mode=OneWay}"
+                                    GroupName="ThemeMenu"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Default}">
                                     <muxc:RadioMenuFlyoutItem.CommandParameter>
                                         <ElementTheme>Default</ElementTheme>
                                     </muxc:RadioMenuFlyoutItem.CommandParameter>
@@ -495,7 +491,10 @@
                                     </muxc:RadioMenuFlyoutItem.Icon>
                                 </muxc:RadioMenuFlyoutItem>
                                 <MenuFlyoutSeparator />
-                                <MenuFlyoutItem x:Uid="Main_SettingsMenu_Settings">
+                                <MenuFlyoutItem
+                                    x:Uid="Main_SettingsMenu_Settings"
+                                    Click="Main_SettingsMenu_Settings_Click"
+                                    Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Settings_Title}">
                                     <MenuFlyoutItem.Icon>
                                         <ctrls2:SegoeFluentIcon Glyph="&#xE713;" />
                                     </MenuFlyoutItem.Icon>

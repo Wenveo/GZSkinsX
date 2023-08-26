@@ -183,18 +183,6 @@ internal sealed partial class MainPage : Page
         }
     }
 
-    private async void OnSwitchTheme(XamlUICommand sender, ExecuteRequestedEventArgs args)
-    {
-        if (args.Parameter is ElementTheme newTheme)
-        {
-            var themeService = AppxContext.ThemeService;
-            if (themeService.CurrentTheme != newTheme)
-            {
-                await themeService.SetElementThemeAsync(newTheme);
-            }
-        }
-    }
-
     private void CloseMyModsContextMenu_Click(object sender, RoutedEventArgs e)
     {
         ContentGrid.ContextFlyout?.Hide();

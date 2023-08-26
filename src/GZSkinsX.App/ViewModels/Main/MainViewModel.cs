@@ -26,6 +26,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.ViewModels;
@@ -404,5 +405,15 @@ internal sealed partial class MainViewModel : ObservableObject
         EnableWorkspace = false;
         await RefreshCoreAsync();
         EnableWorkspace = true;
+    }
+
+    [RelayCommand]
+    private async Task OnSwitchTheme(ElementTheme newTheme)
+    {
+        var themeService = AppxContext.ThemeService;
+        if (themeService.CurrentTheme != newTheme)
+        {
+            await themeService.SetElementThemeAsync(newTheme);
+        }
     }
 }
