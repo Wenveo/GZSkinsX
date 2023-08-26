@@ -39,6 +39,9 @@
     <Compile Include="ViewModels\Index\IndexViewModel.cs" />
     <Compile Include="ViewModels\Main\MainViewModel.cs" />
     <Compile Include="ViewModels\Preload\PreloadViewModel.cs" />
+    <Compile Include="ViewModels\Settings\AutoEnableEfficiencyMode.cs" />
+    <Compile Include="ViewModels\Settings\AutoEnableEfficiencyModeSettings.cs" />
+    <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\StartUp\StartUpViewModel.cs" />
     <Compile Include="Views\Index\IndexFrame.cs" />
     <Compile Include="Views\Index\IndexPage.xaml.cs">
@@ -51,6 +54,10 @@
     <Compile Include="Views\Preload\PreloadFrame.cs" />
     <Compile Include="Views\Preload\PreloadPage.xaml.cs">
       <DependentUpon>PreloadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsFrame.cs" />
+    <Compile Include="Views\Settings\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartUp\StartUpPage.xaml.cs">
       <DependentUpon>StartUpPage.xaml</DependentUpon>
@@ -131,6 +138,10 @@
     <Page Include="Views\Preload\PreloadPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StartUp\StartUpPage.xaml">
       <Generator>MSBuild:Compile</Generator>

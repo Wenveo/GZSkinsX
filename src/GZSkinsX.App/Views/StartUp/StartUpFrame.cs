@@ -45,7 +45,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 
         if (Debugger.IsAttached)
         {
-            Application.Current.DebugSettings.EnableFrameRateCounter = true;
+            //Application.Current.DebugSettings.EnableFrameRateCounter = true;
         }
 
         InitializeMainWindow();

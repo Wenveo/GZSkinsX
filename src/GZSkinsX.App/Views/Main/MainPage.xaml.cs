@@ -14,6 +14,7 @@ using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
+using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.MyMods;
 using GZSkinsX.ViewModels;
 
@@ -181,6 +182,11 @@ internal sealed partial class MainPage : Page
                 Main_SettingsMenu_Theme_Default.IsChecked = true;
                 break;
         }
+    }
+
+    private void Main_SettingsMenu_Settings_Click(object sender, RoutedEventArgs e)
+    {
+        AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Settings_Guid);
     }
 
     private void CloseMyModsContextMenu_Click(object sender, RoutedEventArgs e)

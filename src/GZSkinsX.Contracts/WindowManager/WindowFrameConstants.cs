@@ -30,6 +30,11 @@ public static class WindowFrameConstants
     public const string Preload_Guid = "1D72AF65-7BDD-44AC-9EFC-D6454F95A4B9";
 
     /// <summary>
+    /// 表示设置页的 <seealso cref="Guid"/> 字符串值
+    /// </summary>
+    public const string Settings_Guid = "CE54A6CA-F261-401D-A811-AF211292686D";
+
+    /// <summary>
     /// 表示启动页的 <seealso cref="Guid"/> 字符串值
     /// </summary>
     public const string StartUp_Guid = "1C3A5F43-5383-4B87-A365-1D1610B92060";
