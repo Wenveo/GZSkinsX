@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
-    xmlns:local="using:GZSkinsX">
+    xmlns:myMods="using:GZSkinsX.MyMods">
     <Application.Resources>
         <ResourceDictionary>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -11,6 +11,7 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <myMods:MyModViewTemplates />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

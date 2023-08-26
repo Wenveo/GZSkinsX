@@ -5,7 +5,6 @@
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:animations="using:CommunityToolkit.WinUI.Animations"
-    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:ctrls="using:GZSkinsX.Controls"
     xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -212,6 +211,7 @@
                 DragOver="MyModsGridView_DragOver"
                 Drop="MyModsGridView_Drop"
                 IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}"
+                ItemTemplate="{StaticResource MyModViewTemplate}"
                 ItemsSource="{x:Bind ViewModel.MyModCollection, Mode=OneWay}"
                 LostFocus="MyModsGridView_LostFocus"
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
@@ -228,11 +228,6 @@
                         <Setter x:Name="Main_MyMods_GridViewItem_Margin" Property="Margin" Value="0,0,8,12" />
                     </Style>
                 </GridView.ItemContainerStyle>
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <myMods:MyModView />
-                    </DataTemplate>
-                </GridView.ItemTemplate>
             </GridView>
 
             <Grid Grid.Row="1">

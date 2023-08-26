@@ -31,8 +31,8 @@
     <Compile Include="Mounter\MounterService.cs" />
     <Compile Include="Mounter\MounterSettings.cs" />
     <Compile Include="MyMods\MyModsSettings.cs" />
-    <Compile Include="MyMods\MyModView.xaml.cs">
-      <DependentUpon>MyModView.xaml</DependentUpon>
+    <Compile Include="MyMods\MyModViewTemplates.xaml.cs">
+      <DependentUpon>MyModViewTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyMods\MyModViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyMods\MyModView.xaml">
+    <Page Include="MyMods\MyModViewTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
