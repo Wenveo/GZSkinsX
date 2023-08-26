@@ -355,6 +355,11 @@ internal sealed partial class MainViewModel : ObservableObject
             if (item.Enable)
             {
                 item.IndexOfTable = MyModsService.IndexOfTable(item.ModFile) + 1;
+                item.IsShowIndex = IsShowInstalledIndex;
+            }
+            else
+            {
+                item.IsShowIndex = false;
             }
         }
     }
