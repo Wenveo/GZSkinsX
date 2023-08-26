@@ -144,6 +144,15 @@
   <data name="Common_Dialog_OK" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="LaunchButton_About_Dialog_Author" xml:space="preserve">
+    <value>作者：</value>
+  </data>
+  <data name="LaunchButton_About_Dialog_Title" xml:space="preserve">
+    <value>详细信息</value>
+  </data>
+  <data name="LaunchButton_About_Dialog_Version" xml:space="preserve">
+    <value>当前组件版本：</value>
+  </data>
   <data name="LaunchButton_About_MenuItem.Text" xml:space="preserve">
     <value>技术支持</value>
   </data>

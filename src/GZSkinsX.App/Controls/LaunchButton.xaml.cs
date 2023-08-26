@@ -20,6 +20,7 @@ using GZSkinsX.Contracts.Mounter;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -48,6 +49,7 @@ internal sealed partial class LaunchButton : UserControl
     {
         await UpdateLaunchStateAsync();
         await UpdateMoreLaunchOptionsAsync();
+        await UpdateAboutMenuItemVisibility();
 
         AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
         AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
@@ -250,6 +252,7 @@ internal sealed partial class LaunchButton : UserControl
                 await UpdateLaunchStateAsync();
                 await UpdateMoreLaunchOptionsAsync();
                 await ShowUpToDateTeachingTipAsync();
+                await UpdateAboutMenuItemVisibility();
 
                 UpdateCompleted?.Invoke(this, EventArgs.Empty);
             });
@@ -430,6 +433,12 @@ internal sealed partial class LaunchButton : UserControl
         }
     }
 
+    private async Task UpdateAboutMenuItemVisibility()
+    {
+        LaunchButton_About_MenuItem.Visibility = (await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(
+            nameof(MTPackageMetadata.Author))).IsEmpty ? Visibility.Collapsed : Visibility.Visible;
+    }
+
     private async Task ProgressAnimationAsync(double value, CancellationTokenSource tokenSource)
     {
         const int AnimationCount = 8;
@@ -490,9 +499,38 @@ internal sealed partial class LaunchButton : UserControl
         await OnCheckForUpdatesAsync();
     }
 
-    private void LaunchButton_About_MenuItem_Click(object sender, RoutedEventArgs e)
+    private async void LaunchButton_About_MenuItem_Click(object sender, RoutedEventArgs e)
     {
+        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(
+            nameof(MTPackageMetadata.Author), nameof(MTPackageMetadata.Version));
 
+        if (metadata.IsEmpty)
+        {
+            return;
+        }
+
+        var richTextBlock = new RichTextBlock();
+
+        var versionPara = new Paragraph();
+        versionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Version") });
+        versionPara.Inlines.Add(new Run() { Text = metadata.Version });
+
+        richTextBlock.Blocks.Add(versionPara);
+
+        var authorPara = new Paragraph();
+        authorPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Author") });
+        authorPara.Inlines.Add(new Run() { Text = metadata.Author });
+
+        richTextBlock.Blocks.Add(authorPara);
+
+        var contentDialog = new ContentDialog()
+        {
+            Title = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Title"),
+            CloseButtonText = ResourceHelper.GetLocalized("Resources/Common_Dialog_OK"),
+            Content = richTextBlock
+        };
+
+        await contentDialog.ShowAsync();
     }
 
     private async void LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)

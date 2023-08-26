@@ -124,7 +124,8 @@
                     <MenuFlyoutItem
                         x:Name="LaunchButton_About_MenuItem"
                         x:Uid="LaunchButton_About_MenuItem"
-                        Click="LaunchButton_About_MenuItem_Click">
+                        Click="LaunchButton_About_MenuItem_Click"
+                        Visibility="Collapsed">
                         <MenuFlyoutItem.Icon>
                             <ctrls2:SegoeFluentIcon Glyph="&#xE946;" />
                         </MenuFlyoutItem.Icon>
