@@ -50,6 +50,7 @@ internal sealed partial class PreloadPage : Page
 
         if (b && r is 0)
         {
+            TryCheckUpdatesAsync().FireAndForget();
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
         }
         else
@@ -65,5 +66,67 @@ internal sealed partial class PreloadPage : Page
         CrashContent.Visibility = Visibility.Visible;
 
         CrashTextHost.Text = message;
+    }
+
+    private async Task ShowUnsupportedAppVersionDialogAsync(string uriString)
+    {
+        var contentDialog = new ContentDialog
+        {
+            DefaultButton = ContentDialogButton.Primary,
+            Title = ResourceHelper.GetLocalized("Resources/Preload_Unsupported_AppVersion_Dialog_Title"),
+            Content = ResourceHelper.GetLocalized("Resources/Preload_Unsupported_AppVersion_Dialog_Content"),
+            CloseButtonText = ResourceHelper.GetLocalized("Resources/Preload_Unsupported_AppVersion_Dialog_Quit"),
+            PrimaryButtonText = ResourceHelper.GetLocalized("Resources/Preload_Unsupported_AppVersion_Dialog_GetUpdates")
+        };
+
+        var result = await contentDialog.ShowAsync();
+        if (result is ContentDialogResult.Primary)
+        {
+            await Launcher.LaunchUriAsync(new Uri(uriString));
+        }
+
+        App.Current.Exit();
+    }
+
+    private async Task ShowAvailableUpdateDialogAsync(string uriString)
+    {
+        var contentDialog = new ContentDialog
+        {
+            DefaultButton = ContentDialogButton.Primary,
+            Title = ResourceHelper.GetLocalized("Resources/Preload_Available_Update_Dialog_Title"),
+            Content = ResourceHelper.GetLocalized("Resources/Preload_Available_Update_Dialog_Content"),
+            CloseButtonText = ResourceHelper.GetLocalized("Resources/Common_Dialog_Cancel"),
+            PrimaryButtonText = ResourceHelper.GetLocalized("Resources/Common_Dialog_OK"),
+        };
+
+        var result = await contentDialog.ShowAsync();
+        if (result is ContentDialogResult.Primary)
+        {
+            await Launcher.LaunchUriAsync(new Uri(uriString));
+        }
+    }
+
+    private async Task TryCheckUpdatesAsync()
+    {
+        try
+        {
+            var updater = AppxContext.Resolve<Updater>();
+            var updateInfo = await updater.GetUpdateInfoAsync();
+
+            if (updateInfo.IsSupported is false)
+            {
+                await ShowUnsupportedAppVersionDialogAsync(updateInfo.UriString);
+                return;
+            }
+
+            if (updateInfo.NeedUpdates)
+            {
+                await ShowAvailableUpdateDialogAsync(updateInfo.UriString);
+                return;
+            }
+        }
+        catch
+        {
+        }
     }
 }

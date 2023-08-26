@@ -36,6 +36,7 @@
     </Compile>
     <Compile Include="MyMods\MyModViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="ViewModels\Index\IndexViewModel.cs" />
     <Compile Include="ViewModels\Main\MainViewModel.cs" />
     <Compile Include="ViewModels\Preload\PreloadViewModel.cs" />

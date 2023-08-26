@@ -345,11 +345,29 @@
   <data name="MyModView_Tooltip_Status.Text" xml:space="preserve">
     <value>状态：</value>
   </data>
+  <data name="Preload_Available_Update_Dialog_Content" xml:space="preserve">
+    <value>检查到有新的版本，是否立即更新？</value>
+  </data>
+  <data name="Preload_Available_Update_Dialog_Title" xml:space="preserve">
+    <value>有可用更新</value>
+  </data>
   <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
     <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
   </data>
   <data name="Preload_Loading_Title.Text" xml:space="preserve">
     <value>正在加载中</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_Content" xml:space="preserve">
+    <value>请更新至最新版本再打开此应用。</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_GetUpdates" xml:space="preserve">
+    <value>从 Microsoft Store 中获取更新</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_Quit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_Title" xml:space="preserve">
+    <value>该应用的版本已不受支持</value>
   </data>
   <data name="Settings_About_App.Description" xml:space="preserve">
     <value>© 2022 - 2023 GZSkins, Inc. 保留所有权利。</value>
