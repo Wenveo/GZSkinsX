@@ -50,7 +50,8 @@ internal sealed class Updater
 {
     private static Uri[] OnlineApplicationDatas { get; } = new Uri[]
     {
-        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/ApplicationData.json")
+        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/ApplicationData.json"),
+        new Uri("http://x1.gzskins.com/MounterV3/ApplicationData.json")
     };
 
     public async ValueTask<UpdateInfo> GetUpdateInfoAsync()
