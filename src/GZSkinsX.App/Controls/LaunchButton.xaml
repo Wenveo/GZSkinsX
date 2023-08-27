@@ -175,6 +175,7 @@
             x:Name="LaunchButton_UpdateButIsRunningTeachingTip"
             x:Uid="LaunchButton_UpdateButIsRunningTeachingTip"
             ActionButtonClick="LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick"
+            CloseButtonClick="LaunchButton_UpdateButIsRunningTeachingTip_CloseButtonClick"
             Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
             <muxc:TeachingTip.IconSource>
                 <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />
