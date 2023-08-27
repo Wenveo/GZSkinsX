@@ -48,6 +48,14 @@
           <uap:AppService Name="GZXDesktopExtension-AppService" />
         </uap:Extension>
         <desktop:Extension Category="windows.fullTrustProcess" Executable="GZSkinsX.DesktopExtension\GZSkinsX.DesktopExtension.exe" />
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="lolgezi_types">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.lolgezi</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:Logo>Assets\Images\Mod_Folder.png</uap:Logo>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
