@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 using CommunityToolkit.AppServices;
 
+using Windows.Foundation.Collections;
+
 namespace GZSkinsX.DesktopExtension;
 
 [AppService("GZXDesktopExtension-AppService")]
@@ -19,13 +21,71 @@ internal
 #endif 
 interface IDesktopExtensionMethods
 {
+    Task<bool> InitializeGZXKernelModule();
+
+    Task<string> EncryptConfigText(string str);
+
+    Task<string> DecryptConfigText(string str);
+
+    Task ExtractModImage(string input, string output);
+
+    [return: ValueSetSerializer(typeof(ModInfoSerializer))]
+    Task<ModInfo> ReadModInfo(string filePath);
+
     Task<bool> IsMTRunning();
 
-    Task<bool> EnsureEfficiencyMode(int processId);
-
     Task<bool> ProcessLaunch(string executable, string args, bool runAs);
+
+    Task<bool> EnsureEfficiencyMode(int processId);
 
     Task SetEfficiencyMode(int processId, bool isEnable);
 
     Task SetOwner(int processId);
+}
+
+
+#if WINDOWS_UWP
+public
+#else
+internal
+#endif
+record class ModInfo(string Name, string Author, string Description, string DateTime);
+
+
+#if WINDOWS_UWP
+public
+#else
+internal
+#endif
+sealed class ModInfoSerializer : IValueSetSerializer<ModInfo>
+{
+    ModInfo? IValueSetSerializer<ModInfo>.Deserialize(ValueSet? valueSet)
+    {
+        if (valueSet is null)
+        {
+            return null;
+        }
+
+        return new ModInfo(
+            valueSet[nameof(ModInfo.Name)] as string ?? string.Empty,
+            valueSet[nameof(ModInfo.Author)] as string ?? string.Empty,
+            valueSet[nameof(ModInfo.Description)] as string ?? string.Empty,
+            valueSet[nameof(ModInfo.DateTime)] as string ?? string.Empty);
+    }
+
+    ValueSet? IValueSetSerializer<ModInfo>.Serialize(ModInfo? value)
+    {
+        if (value is null)
+        {
+            return null;
+        }
+
+        return new ValueSet
+        {
+            { nameof(ModInfo.Name), value.Name },
+            { nameof(ModInfo.Author), value.Author },
+            { nameof(ModInfo.Description), value.Description },
+            { nameof(ModInfo.DateTime), value.DateTime},
+        };
+    }
 }

@@ -10,8 +10,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using CommunityToolkit.HighPerformance.Buffers;
-
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -51,11 +49,7 @@ public interface IMyModsService
 
     Task<BitmapImage> GetModImageAsync(StorageFile storageFile);
 
-    Task<MemoryOwner<byte>> ReadModImageAsync(StorageFile storageFile);
-
     Task<MyModInfo> ReadModInfoAsync(StorageFile storageFile);
-
-    Task<MemoryOwner<byte>?> TryReadModImageAsync(StorageFile storageFile);
 
     Task<MyModInfo?> TryReadModInfoAsync(StorageFile storageFile);
 

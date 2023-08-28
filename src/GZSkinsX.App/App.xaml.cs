@@ -84,13 +84,14 @@ public sealed partial class App : Application
     /// <summary>
     /// Initializes the app service on the host process 
     /// </summary>
-    protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+    protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
     {
         base.OnBackgroundActivated(args);
 
         if (DesktopExtensionMethods.OnBackgroundActivated(args))
         {
-            DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
+            await DesktopExtensionMethods.InitializeGZXKernelModule();
+            await DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
         }
     }
 

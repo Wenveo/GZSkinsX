@@ -15,7 +15,6 @@ using CommunityToolkit.WinUI;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
-using GZSkinsX.Kernel;
 
 using Windows.ApplicationModel;
 using Windows.System;
@@ -45,10 +44,7 @@ internal sealed partial class PreloadPage : Page
 
     private async Task InitializeAsync()
     {
-        var b = await Package.Current.VerifyContentIntegrityAsync();
-        var r = await Task.Run(KernelInterop.InitializeGZXKernelModule);
-
-        if (b && r is 0)
+        if (await Package.Current.VerifyContentIntegrityAsync())
         {
             TryCheckUpdatesAsync().FireAndForget();
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
