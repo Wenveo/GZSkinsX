@@ -9,7 +9,6 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 using CommunityToolkit.HighPerformance.Buffers;
@@ -37,7 +36,7 @@ internal static class MyModsHelper
             fixed (char* ch = str)
             {
                 KernelInterop.EncryptConfigText(ch, &buffer);
-                var value = s_stringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, wsclen(buffer)));
+                var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, Count((char*)buffer)));
                 KernelInterop.FreeCryptographicBuffer(buffer);
                 return value;
             }
@@ -57,7 +56,7 @@ internal static class MyModsHelper
             fixed (char* ch = str)
             {
                 KernelInterop.DecryptConfigText(ch, &buffer);
-                var value = s_stringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, wsclen(buffer)));
+                var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, Count((char*)buffer)));
                 KernelInterop.FreeCryptographicBuffer(buffer);
                 return value;
             }
@@ -111,37 +110,37 @@ internal static class MyModsHelper
             var ptr = (*skinInfoPtr).name;
             if (ptr != (char*)0)
             {
-                len = wsclen(ptr);
+                len = Count(ptr);
                 tmp = new(ptr, len);
 
-                name = s_stringPool.GetOrAdd(tmp);
+                name = MyStringPool.GetOrAdd(tmp);
             }
 
             ptr = (*skinInfoPtr).author;
             if (ptr != (char*)0)
             {
-                len = wsclen(ptr);
+                len = Count(ptr);
                 tmp = new(ptr, len);
 
-                author = s_stringPool.GetOrAdd(tmp);
+                author = MyStringPool.GetOrAdd(tmp);
             }
 
             ptr = (*skinInfoPtr).description;
             if (ptr != (char*)0)
             {
-                len = wsclen(ptr);
+                len = Count(ptr);
                 tmp = new(ptr, len);
 
-                description = s_stringPool.GetOrAdd(tmp);
+                description = MyStringPool.GetOrAdd(tmp);
             }
 
             ptr = (*skinInfoPtr).datetime;
             if (ptr != (char*)0)
             {
-                len = wsclen(ptr);
+                len = Count(ptr);
                 tmp = new(ptr, len);
 
-                datetime = s_stringPool.GetOrAdd(tmp);
+                datetime = MyStringPool.GetOrAdd(tmp);
             }
 
             KernelInterop.FreeLegacySkinInfo(skinInfoPtr);
@@ -166,19 +165,16 @@ internal static class MyModsHelper
         throw new InvalidOperationException(message);
     }
 
-    private static readonly MethodInfo s_wcslen = typeof(string).GetMethod("wcslen",
-        BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance);
+    private static StringPool MyStringPool { get; } = new();
 
-    private static readonly object[] s_objects = new object[1];
-
-    private static readonly StringPool s_stringPool = new();
-
-    private static unsafe int wsclen(void* ptr)
+    private static unsafe int Count(char* ch)
     {
-        lock (s_objects.SyncRoot)
+        var count = 0;
+        while (*ch++ != char.MinValue)
         {
-            s_objects[0] = (IntPtr)ptr;
-            return (int)s_wcslen.Invoke(null, s_objects);
+            count++;
         }
+
+        return count;
     }
 }
