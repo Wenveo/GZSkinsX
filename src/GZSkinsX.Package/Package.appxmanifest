@@ -6,7 +6,8 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap uap5 mp rescap">
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap uap5 mp rescap desktop">
 
   <mp:PhoneIdentity PhoneProductId="a9602f80-51cb-4afc-aa10-3cf70950108e" PhonePublisherId="77940b1b-e72f-4ef2-bbe7-69d3406cb564"/>
 
@@ -55,6 +56,12 @@
             <uap:Logo>Assets\Images\Mod_Folder.png</uap:Logo>
           </uap:FileTypeAssociation>
         </uap:Extension>
+          
+        <uap:Extension Category="windows.appService">
+          <uap:AppService Name="GZXDesktopExtension-AppService" />
+        </uap:Extension>
+          
+        <desktop:Extension Category="windows.fullTrustProcess" Executable="GZSkinsX.DesktopExtension\GZSkinsX.DesktopExtension.exe" />
       </Extensions>
         
     </Application>
@@ -63,5 +70,6 @@
   <Capabilities>
     <Capability Name="internetClientServer"/>
     <rescap:Capability Name="confirmAppClose"/>
+    <rescap:Capability Name="runFullTrust" />
   </Capabilities>
 </Package>
