@@ -502,7 +502,8 @@ internal sealed partial class LaunchButton : UserControl
     private async void LaunchButton_About_MenuItem_Click(object sender, RoutedEventArgs e)
     {
         var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(
-            nameof(MTPackageMetadata.Author), nameof(MTPackageMetadata.Version));
+            nameof(MTPackageMetadata.Author), nameof(MTPackageMetadata.Version),
+            nameof(MTPackageMetadata.Description), nameof(MTPackageMetadata.AboutTheAuthor));
 
         if (metadata.IsEmpty)
         {
@@ -511,17 +512,42 @@ internal sealed partial class LaunchButton : UserControl
 
         var richTextBlock = new RichTextBlock();
 
-        var versionPara = new Paragraph();
-        versionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Version") });
-        versionPara.Inlines.Add(new Run() { Text = metadata.Version });
+        if (!string.IsNullOrEmpty(metadata.Version) && !string.IsNullOrWhiteSpace(metadata.Version))
+        {
+            var versionPara = new Paragraph();
+            versionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Version") });
+            versionPara.Inlines.Add(new Run() { Text = metadata.Version });
 
-        richTextBlock.Blocks.Add(versionPara);
+            richTextBlock.Blocks.Add(versionPara);
+        }
 
-        var authorPara = new Paragraph();
-        authorPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Author") });
-        authorPara.Inlines.Add(new Run() { Text = metadata.Author });
+        if (!string.IsNullOrEmpty(metadata.Author) && !string.IsNullOrWhiteSpace(metadata.Author))
+        {
+            var authorPara = new Paragraph();
+            authorPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Author") });
 
-        richTextBlock.Blocks.Add(authorPara);
+            if (string.IsNullOrEmpty(metadata.AboutTheAuthor) || string.IsNullOrWhiteSpace(metadata.AboutTheAuthor))
+            {
+                authorPara.Inlines.Add(new Run() { Text = metadata.Author });
+            }
+            else
+            {
+                var authorLink = new Hyperlink() { NavigateUri = new Uri(metadata.AboutTheAuthor) };
+                authorLink.Inlines.Add(new Run() { Text = metadata.Author });
+                authorPara.Inlines.Add(authorLink);
+            }
+
+            richTextBlock.Blocks.Add(authorPara);
+        }
+
+        if (!string.IsNullOrEmpty(metadata.Description) && !string.IsNullOrWhiteSpace(metadata.Description))
+        {
+            var descriptionPara = new Paragraph();
+            descriptionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Description") });
+            descriptionPara.Inlines.Add(new Run() { Text = metadata.Description });
+
+            richTextBlock.Blocks.Add(descriptionPara);
+        }
 
         var contentDialog = new ContentDialog()
         {
