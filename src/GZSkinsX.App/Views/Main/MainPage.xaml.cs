@@ -56,6 +56,7 @@ internal sealed partial class MainPage : Page
                 return;
             }
 
+            ViewModel.EnableWorkspace = false;
             ContentGrid.Visibility = Visibility.Visible;
             UninitializedContent.Visibility = Visibility.Collapsed;
 

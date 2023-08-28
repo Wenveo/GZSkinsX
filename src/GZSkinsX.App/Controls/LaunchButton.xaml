@@ -22,11 +22,21 @@
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch"
             Click="MultiStateLaunchButton_Click"
-            State="LaunchButton_State_CheckForUpdates">
+            State="LaunchButton_State_Loading">
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Default">
                 <StackPanel Orientation="Horizontal">
                     <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
                     <TextBlock x:Uid="LaunchButton_State_Default_Textblock" Margin="8,0,0,0" />
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Loading">
+                <StackPanel Orientation="Horizontal">
+                    <muxc:ProgressRing
+                        x:Name="LaunchButton_State_Loading_ProgressRing"
+                        Width="16"
+                        Height="16"
+                        Loaded="Indeterminate_ProgressRing_Loaded" />
+                    <TextBlock x:Uid="LaunchButton_State_Loading_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
             <ctrls2:MultiStateToggleButtonState IsChecked="True" StateName="LaunchButton_State_Running">
@@ -41,7 +51,7 @@
                         x:Name="LaunchButton_State_CheckForUpdates_ProgressRing"
                         Width="16"
                         Height="16"
-                        Loaded="LaunchButton_State_CheckForUpdates_ProgressRing_Loaded" />
+                        Loaded="Indeterminate_ProgressRing_Loaded" />
                     <TextBlock x:Uid="LaunchButton_State_CheckForUpdates_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
