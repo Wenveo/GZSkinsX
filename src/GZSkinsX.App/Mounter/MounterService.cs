@@ -392,22 +392,50 @@ internal sealed class MounterService : IMounterService
 
     private MTPackageMetadata ParseMetadataFromString(string input, params string[] filter)
     {
-        static IEnumerable<MTPackageMetadataStartUpArgument> GetStartUpArgs(IJsonValue jsonArray)
+        IEnumerable<MTPackageMetadataStartUpArgument> GetStartUpArgs(JsonObject json, string propName)
         {
-            if (jsonArray.ValueType is JsonValueType.Array)
+            if (filter.Length is 0 || filter.Contains(propName, StringComparer.OrdinalIgnoreCase))
             {
-                foreach (var item in jsonArray.GetArray())
+                if (json.TryGetValue(propName, out var tempValue) is false || tempValue.ValueType is not JsonValueType.Array)
                 {
-                    var startUpArgData = item.GetObject();
-                    if (startUpArgData.TryGetValue("Name", out var name) &&
-                        startUpArgData.TryGetValue("Value", out var value))
-                    {
-                        yield return new(name.GetString(), value.GetString());
-                    }
+                    yield break;
                 }
 
-                yield break;
+                foreach (var item in tempValue.GetArray())
+                {
+                    if (item.ValueType is not JsonValueType.Object)
+                    {
+                        continue;
+                    }
+
+                    if (item.GetObject().TryGetValue("Name", out var name) is false || name.ValueType is not JsonValueType.String)
+                    {
+                        continue;
+                    }
+
+                    if (item.GetObject().TryGetValue("Value", out var value) is false || name.ValueType is not JsonValueType.String)
+                    {
+                        continue;
+                    }
+
+                    yield return new(name.GetString(), value.GetString());
+                }
             }
+
+            yield break;
+        }
+
+        string GetValueOrDefault(JsonObject json, string propName)
+        {
+            if (filter.Length is 0 || filter.Contains(propName, StringComparer.OrdinalIgnoreCase))
+            {
+                if (json.TryGetValue(propName, out var tempValue) && tempValue.ValueType is JsonValueType.String)
+                {
+                    return tempValue.GetString();
+                }
+            }
+
+            return string.Empty;
         }
 
         if (JsonObject.TryParse(input, out var jsonObject) is false)
@@ -415,70 +443,16 @@ internal sealed class MounterService : IMounterService
             return MTPackageMetadata.Empty;
         }
 
-        IJsonValue? tempValue;
-
-        string author = string.Empty, version = string.Empty;
-        string settingsFile = string.Empty, executableFile = string.Empty;
-        string procStartupArgs = string.Empty, procTerminateArgs = string.Empty;
-        var startUpArgs = Array.Empty<MTPackageMetadataStartUpArgument>();
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.Author), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.Author), out tempValue))
-            {
-                author = tempValue.GetString();
-            }
-        }
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.Version), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.Version), out tempValue))
-            {
-                version = tempValue.GetString();
-            }
-        }
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.SettingsFile), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.SettingsFile), out tempValue))
-            {
-                settingsFile = tempValue.GetString();
-            }
-        }
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.ExecutableFile), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.ExecutableFile), out tempValue))
-            {
-                executableFile = tempValue.GetString();
-            }
-        }
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.ProcStartupArgs), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.ProcStartupArgs), out tempValue))
-            {
-                procStartupArgs = tempValue.GetString();
-            }
-        }
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.ProcTerminateArgs), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.ProcTerminateArgs), out tempValue))
-            {
-                procTerminateArgs = tempValue.GetString();
-            }
-        }
-
-        if (filter.Length is 0 || filter.Contains(nameof(MTPackageMetadata.OtherStartupArgs), StringComparer.OrdinalIgnoreCase))
-        {
-            if (jsonObject.TryGetValue(nameof(MTPackageMetadata.OtherStartupArgs), out tempValue))
-            {
-                startUpArgs = GetStartUpArgs(tempValue).ToArray();
-            }
-        }
-
-        return new MTPackageMetadata(author, version, settingsFile, executableFile, procStartupArgs, procTerminateArgs, startUpArgs);
+        return new MTPackageMetadata(
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.Author)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.Version)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.Description)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.AboutTheAuthor)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.SettingsFile)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.ExecutableFile)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.ProcStartupArgs)),
+            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.ProcTerminateArgs)),
+            GetStartUpArgs(jsonObject, nameof(MTPackageMetadata.ProcStartupArgs)).ToArray());
     }
 
     private async Task TryCleanupMounterRootFolderAsync()

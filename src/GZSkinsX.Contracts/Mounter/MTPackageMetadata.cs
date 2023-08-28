@@ -17,6 +17,10 @@ public readonly struct MTPackageMetadata
 
     public readonly string Version;
 
+    public readonly string Description;
+
+    public readonly string AboutTheAuthor;
+
     public readonly string SettingsFile;
 
     public readonly string ExecutableFile;
@@ -33,6 +37,8 @@ public readonly struct MTPackageMetadata
     {
         Author = string.Empty;
         Version = string.Empty;
+        Description = string.Empty;
+        AboutTheAuthor = string.Empty;
         SettingsFile = string.Empty;
         ExecutableFile = string.Empty;
         ProcStartupArgs = string.Empty;
@@ -41,11 +47,13 @@ public readonly struct MTPackageMetadata
         IsEmpty = true;
     }
 
-    public MTPackageMetadata(string author, string version, string settingsFile, string executableFile,
+    public MTPackageMetadata(string author, string version, string description, string aboutTheAuthor, string settingsFile, string executableFile,
         string procStartupArgs, string procTerminateArgs, params MTPackageMetadataStartUpArgument[] otherStartupArgs)
     {
         Author = author;
         Version = version;
+        Description = description;
+        AboutTheAuthor = aboutTheAuthor;
         SettingsFile = settingsFile;
         ExecutableFile = executableFile;
         ProcStartupArgs = procStartupArgs;
