@@ -218,4 +218,13 @@ internal sealed partial class MainPage : Page
         args.Request.Data.SetStorageItems(
             MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile), true);
     }
+
+    private void Main_Loading_ProgressRing_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is Microsoft.UI.Xaml.Controls.ProgressRing self)
+        {
+            self.SetValue(Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminateProperty, false);
+            self.SetValue(Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminateProperty, true);
+        }
+    }
 }

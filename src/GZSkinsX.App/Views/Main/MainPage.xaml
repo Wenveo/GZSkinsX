@@ -371,7 +371,7 @@
             Grid.Row="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsIndeterminate="True"
+            Loaded="Main_Loading_ProgressRing_Loaded"
             Visibility="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
 
         <StackPanel
