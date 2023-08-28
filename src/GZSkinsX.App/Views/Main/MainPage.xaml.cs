@@ -35,6 +35,8 @@ namespace GZSkinsX.Views;
 /// </summary>
 internal sealed partial class MainPage : Page
 {
+    public bool HasLoad { get; private set; }
+
     public MainViewModel ViewModel { get; } = new();
 
     public MainPage()
@@ -46,27 +48,32 @@ internal sealed partial class MainPage : Page
     {
         DispatcherQueue.GetForCurrentThread().EnqueueAsync(async () =>
         {
-            if (await AppxContext.MounterService.TryGetMounterWorkingDirectoryAsync() is null)
+            if (HasLoad is false)
             {
-                MainLaunchButton.UpdateCompleted += MainLaunchButton_UpdateCompleted;
-                UninitializedContent.Visibility = Visibility.Visible;
-                ContentGrid.Visibility = Visibility.Collapsed;
+                if (await AppxContext.MounterService.TryGetMounterWorkingDirectoryAsync() is null)
+                {
+                    MainLaunchButton.UpdateCompleted += MainLaunchButton_UpdateCompleted;
+                    UninitializedContent.Visibility = Visibility.Visible;
+                    ContentGrid.Visibility = Visibility.Collapsed;
 
-                await MainLaunchButton.OnUpdateAsync();
-                return;
-            }
+                    await MainLaunchButton.OnUpdateAsync();
+                    return;
+                }
 
-            ViewModel.EnableWorkspace = false;
-            ContentGrid.Visibility = Visibility.Visible;
-            UninitializedContent.Visibility = Visibility.Collapsed;
+                ViewModel.EnableWorkspace = false;
+                ContentGrid.Visibility = Visibility.Visible;
+                UninitializedContent.Visibility = Visibility.Collapsed;
 
-            if (await AppxContext.MounterService.VerifyContentIntegrityAsync() is false)
-            {
-                await MainLaunchButton.OnUpdateAsync();
-            }
-            else
-            {
-                await MainLaunchButton.InitializeAsync();
+                if (await AppxContext.MounterService.VerifyContentIntegrityAsync() is false)
+                {
+                    await MainLaunchButton.OnUpdateAsync();
+                }
+                else
+                {
+                    await MainLaunchButton.InitializeAsync();
+                }
+
+                HasLoad = true;
             }
 
             await ViewModel.OnRefreshAsync();
