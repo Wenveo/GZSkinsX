@@ -109,7 +109,10 @@ internal sealed partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task OnBrowerGameFolderAsync()
     {
-        var folder = await new FolderPicker().PickSingleFolderAsync();
+        var folderPicker = new FolderPicker();
+        folderPicker.FileTypeFilter.Add("*");
+
+        var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
             var b = await AppxContext.GameService.TryUpdateAsync(folder, AppxContext.GameService.CurrentRegion);
@@ -134,7 +137,10 @@ internal sealed partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task OnBrowerModsFolderAsync()
     {
-        var folder = await new FolderPicker().PickSingleFolderAsync();
+        var folderPicker = new FolderPicker();
+        folderPicker.FileTypeFilter.Add("*");
+
+        var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
             await AppxContext.MyModsService.SetModsFolderAsync(folder);
@@ -146,7 +152,10 @@ internal sealed partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task OnBrowerWadsFolderAsync()
     {
-        var folder = await new FolderPicker().PickSingleFolderAsync();
+        var folderPicker = new FolderPicker();
+        folderPicker.FileTypeFilter.Add("*");
+
+        var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
             await AppxContext.MyModsService.SetWadsFolderAsync(folder);

@@ -66,7 +66,10 @@ internal sealed partial class StartUpViewModel : ObservableObject
     [RelayCommand]
     private async Task OnBrowser()
     {
-        var folder = await new FolderPicker().PickSingleFolderAsync();
+        var folderPicker = new FolderPicker();
+        folderPicker.FileTypeFilter.Add("*");
+
+        var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
             SelectedFolder = folder;
