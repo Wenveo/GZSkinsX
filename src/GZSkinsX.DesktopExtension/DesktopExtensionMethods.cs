@@ -220,7 +220,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         {
             Arguments = args,
             FileName = executable,
-            UseShellExecute = false,
+            UseShellExecute = true,
             Verb = runAs ? "RunAs" : string.Empty,
             WorkingDirectory = Path.GetDirectoryName(executable)
         };
