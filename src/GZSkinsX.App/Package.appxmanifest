@@ -2,14 +2,18 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap uap5 mp rescap">
+    
+  <mp:PhoneIdentity PhoneProductId="a9602f80-51cb-4afc-aa10-3cf70950108e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Identity
     Name="61610AakStudio.64359D0915987"
     Publisher="CN=23368CF6-33BA-4BD5-A112-861D8F4E666D"
+    ProcessorArchitecture="x64"
     Version="3.0.0.0" />
 
   <Properties>
@@ -56,7 +60,7 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClientServer"/>
+    <Capability Name="internetClient"/>
     <rescap:Capability Name="confirmAppClose"/>
   </Capabilities>
 </Package>

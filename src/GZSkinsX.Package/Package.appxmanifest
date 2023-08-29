@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
-  IgnorableNamespaces="uap uap5 mp rescap desktop">
+  IgnorableNamespaces="uap uap5 rescap desktop">
 
   <Identity
     Name="61610AakStudio.64359D0915987"
     Publisher="CN=23368CF6-33BA-4BD5-A112-861D8F4E666D"
+    ProcessorArchitecture="x64"
     Version="3.0.0.0" />
 
   <Properties>
@@ -41,7 +40,7 @@
         BackgroundColor="transparent">
         <uap:SplashScreen Image="Assets\SplashScreen.png" uap5:Optional="true"/>
       </uap:VisualElements>
-      
+
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="lolgezi_types">
@@ -63,7 +62,7 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClientServer"/>
+    <Capability Name="internetClient"/>
     <rescap:Capability Name="confirmAppClose"/>
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
