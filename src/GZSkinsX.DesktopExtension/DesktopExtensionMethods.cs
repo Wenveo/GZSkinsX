@@ -23,35 +23,45 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 {
     private static StringPool MyStringPool { get; } = new();
 
-    private KernelInterop? Interop { get; set; }
+    private KernelInterop? _interop;
 
-    public async Task<bool> InitializeGZXKernelModule()
+    private async Task<KernelInterop?> InitializeKernelModule()
     {
+        if (_interop is not null)
+        {
+            return _interop;
+        }
+
         try
         {
             var module = await (await ApplicationData.Current.RoamingFolder
                 .CreateFolderAsync("Kernel", CreationCollisionOption.OpenIfExists))
                 .CreateFileAsync("GZSkinsX.Kernel.dll", CreationCollisionOption.OpenIfExists);
 
-            Interop = new KernelInterop(module.Path);
-            return Interop.InitializeGZXKernelModule() == 0;
+            _interop = new KernelInterop(module.Path);
+
+            var ret = _interop.InitializeGZXKernelModule();
+            Debug.Assert(ret == 0);
+
+            return _interop;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public Task<string> EncryptConfigText(string str)
+    public async Task<string> EncryptConfigText(string str)
     {
-        if (Interop is null)
+        var interop = await InitializeKernelModule();
+        if (interop is null)
         {
-            return Task.FromResult(string.Empty);
+            return string.Empty;
         }
 
         if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
         {
-            return Task.FromResult(string.Empty);
+            return string.Empty;
         }
 
         unsafe
@@ -59,24 +69,25 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var buffer = (void*)0;
             fixed (char* ch = str)
             {
-                Interop.EncryptConfigText(ch, &buffer);
+                interop.EncryptConfigText(ch, &buffer);
                 var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, Count((char*)buffer)));
-                Interop.FreeCryptographicBuffer(buffer);
-                return Task.FromResult(value);
+                interop.FreeCryptographicBuffer(buffer);
+                return value;
             }
         }
     }
 
-    public Task<string> DecryptConfigText(string str)
+    public async Task<string> DecryptConfigText(string str)
     {
-        if (Interop is null)
+        var interop = await InitializeKernelModule();
+        if (interop is null)
         {
-            return Task.FromResult(string.Empty);
+            return string.Empty;
         }
 
         if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
         {
-            return Task.FromResult(string.Empty);
+            return string.Empty;
         }
 
         unsafe
@@ -84,21 +95,17 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var buffer = (void*)0;
             fixed (char* ch = str)
             {
-                Interop.DecryptConfigText(ch, &buffer);
+                interop.DecryptConfigText(ch, &buffer);
                 var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, Count((char*)buffer)));
-                Interop.FreeCryptographicBuffer(buffer);
-                return Task.FromResult(value);
+                interop.FreeCryptographicBuffer(buffer);
+                return value;
             }
         }
     }
 
-    public Task ExtractModImage(string input, string output)
+    public async Task ExtractModImage(string input, string output)
     {
-        if (Interop is null)
-        {
-            return Task.FromException(GetModuleNotFoundException());
-        }
-
+        var interop = await InitializeKernelModule() ?? throw GetModuleNotFoundException();
         using var fileStream = new FileStream(input, FileMode.Open, FileAccess.Read);
 
         unsafe
@@ -106,12 +113,12 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var buffer = (void*)0;
             var length = 0;
 
-            var ret = Interop.ReadLegacySkinImage(
+            var ret = interop.ReadLegacySkinImage(
                 fileStream.SafeFileHandle.DangerousGetHandle().ToPointer(), &buffer, &length);
 
             if (ret is not 0)
             {
-                return Task.FromException(GetKernelInvalidOperationException(ret, input));
+                throw GetKernelInvalidOperationException(ret, input);
             }
 
             using var unmanagedStream = new UnmanagedMemoryStream((byte*)buffer, length);
@@ -119,22 +126,13 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
             outputStram.Seek(0, default);
             unmanagedStream.CopyTo(outputStram);
-            Interop.FreeCryptographicBuffer(buffer);
-
-            return Task.CompletedTask;
+            interop.FreeCryptographicBuffer(buffer);
         }
     }
 
-    public Task<ModInfo> ReadModInfo(string filePath)
+    public async Task<ModInfo> ReadModInfo(string filePath)
     {
-        var taskCompleteSource = new TaskCompletionSource<ModInfo>();
-
-        if (Interop is null)
-        {
-            taskCompleteSource.SetException(GetModuleNotFoundException());
-            return taskCompleteSource.Task;
-        }
-
+        var interop = await InitializeKernelModule() ?? throw GetModuleNotFoundException();
         using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
         unsafe
@@ -142,64 +140,46 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var rawDataSpan = stackalloc byte[32];
             var skinInfoPtr = (LegacySkinInfo*)rawDataSpan;
 
-            var ret = Interop.ReadLegacySkinInfo(
+            var ret = interop.ReadLegacySkinInfo(
                 fileStream.SafeFileHandle.DangerousGetHandle().ToPointer(), (void**)&rawDataSpan);
 
             if (ret is not 0)
             {
-                taskCompleteSource.SetException(GetKernelInvalidOperationException(ret, filePath));
+                throw GetKernelInvalidOperationException(ret, filePath);
             }
             else
             {
                 string? name, author, description, datetime;
                 name = author = description = datetime = string.Empty;
 
-                int len;
-                ReadOnlySpan<char> tmp;
-
                 var ptr = (*skinInfoPtr).name;
                 if (ptr != (char*)0)
                 {
-                    len = Count(ptr);
-                    tmp = new(ptr, len);
-
-                    name = MyStringPool.GetOrAdd(tmp);
+                    name = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
                 }
 
                 ptr = (*skinInfoPtr).author;
                 if (ptr != (char*)0)
                 {
-                    len = Count(ptr);
-                    tmp = new(ptr, len);
-
-                    author = MyStringPool.GetOrAdd(tmp);
+                    author = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
                 }
 
                 ptr = (*skinInfoPtr).description;
                 if (ptr != (char*)0)
                 {
-                    len = Count(ptr);
-                    tmp = new(ptr, len);
-
-                    description = MyStringPool.GetOrAdd(tmp);
+                    description = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
                 }
 
                 ptr = (*skinInfoPtr).datetime;
                 if (ptr != (char*)0)
                 {
-                    len = Count(ptr);
-                    tmp = new(ptr, len);
-
-                    datetime = MyStringPool.GetOrAdd(tmp);
+                    datetime = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
                 }
 
-                taskCompleteSource.SetResult(new(name, author, description, datetime));
+                interop.FreeLegacySkinInfo(skinInfoPtr);
+                return new(name, author, description, datetime);
             }
-
-            Interop.FreeLegacySkinInfo(skinInfoPtr);
         }
-
-        return taskCompleteSource.Task;
     }
 
     private static InvalidOperationException GetKernelInvalidOperationException(uint errorCode, string fileName)
@@ -312,7 +292,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
     internal void SafeExit()
     {
-        Interop?.Dispose();
+        _interop?.Dispose();
         Program.Exit(0);
     }
 }

@@ -21,8 +21,6 @@ internal
 #endif 
 interface IDesktopExtensionMethods
 {
-    Task<bool> InitializeGZXKernelModule();
-
     Task<string> EncryptConfigText(string str);
 
     Task<string> DecryptConfigText(string str);

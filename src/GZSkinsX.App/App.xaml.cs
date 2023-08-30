@@ -90,7 +90,6 @@ public sealed partial class App : Application
 
         if (DesktopExtensionMethods.OnBackgroundActivated(args))
         {
-            await DesktopExtensionMethods.InitializeGZXKernelModule();
             await DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
         }
     }
