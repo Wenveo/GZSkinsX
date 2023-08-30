@@ -31,10 +31,7 @@
             PreviewKeyUp="ContentGrid_PreviewKeyUp"
             Visibility="Collapsed">
             <Grid.ContextFlyout>
-                <muxc:CommandBarFlyout
-                    themes:ThemedFlyoutHelper.FixFlyoutTheme="True"
-                    AlwaysExpanded="True"
-                    Placement="Right">
+                <muxc:CommandBarFlyout themes:ThemedFlyoutHelper.FixFlyoutTheme="True" Placement="Right">
                     <muxc:CommandBarFlyout.PrimaryCommands>
                         <AppBarButton
                             x:Uid="Main_MyMods_ContextMenu_Import"
