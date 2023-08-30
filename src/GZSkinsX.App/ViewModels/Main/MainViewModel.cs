@@ -248,6 +248,12 @@ internal sealed partial class MainViewModel : ObservableObject
         var modsFolder = await MyModsService.GetModsFolderAsync();
         foreach (var file in verifiedFiles)
         {
+            var parent = await file.GetParentAsync();
+            if (parent.Path == modsFolder.Path)
+            {
+                continue;
+            }
+
             if (await modsFolder.TryGetItemAsync(file.Name) is StorageFile existsFile)
             {
                 var contentDialog = new ContentDialog()
