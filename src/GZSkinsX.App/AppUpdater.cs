@@ -16,9 +16,9 @@ using Windows.Web.Http;
 
 namespace GZSkinsX;
 
-internal readonly struct UpdateInfo
+internal readonly struct AppInfo
 {
-    public static readonly UpdateInfo Empty = new();
+    public static readonly AppInfo Empty = new();
 
     public readonly bool NeedUpdates;
 
@@ -28,7 +28,7 @@ internal readonly struct UpdateInfo
 
     public readonly bool IsEmpty;
 
-    public UpdateInfo()
+    public AppInfo()
     {
         NeedUpdates = false;
         IsSupported = false;
@@ -36,7 +36,7 @@ internal readonly struct UpdateInfo
         IsEmpty = true;
     }
 
-    public UpdateInfo(bool needUpdates, bool isSupported, string uriString)
+    public AppInfo(bool needUpdates, bool isSupported, string uriString)
     {
         NeedUpdates = needUpdates;
         IsSupported = isSupported;
@@ -46,26 +46,26 @@ internal readonly struct UpdateInfo
 }
 
 [Shared, Export]
-internal sealed class Updater
+internal sealed class AppUpdater
 {
-    private static Uri[] OnlineApplicationDatas { get; } = new Uri[]
+    private static Uri[] OnlineApplicationInfos { get; } = new Uri[]
     {
         new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/ApplicationData.json"),
         new Uri("http://x1.gzskins.com/MounterV3/ApplicationData.json")
     };
 
-    public async ValueTask<UpdateInfo> GetUpdateInfoAsync()
+    public async ValueTask<AppInfo> GetAppInfoAsync()
     {
         var httpClient = new HttpClient();
 
         try
         {
-            var applicationData = await DownloadApplicationAsync(httpClient);
+            var applicationData = await DownloadApplicationInfoAsync(httpClient);
 
             var needUpdate = Version.Parse(applicationData.AppVersion) != AppxContext.AppxVersion;
             var isSupported = Version.Parse(applicationData.SupportedMinVersion) <= AppxContext.AppxVersion;
 
-            return new UpdateInfo(needUpdate, isSupported, applicationData.MainApp);
+            return new AppInfo(needUpdate, isSupported, applicationData.MainApp);
         }
         finally
         {
@@ -73,9 +73,9 @@ internal sealed class Updater
         }
     }
 
-    private async Task<ApplicationData> DownloadApplicationAsync(HttpClient httpClient)
+    private async Task<ApplicationInfo> DownloadApplicationInfoAsync(HttpClient httpClient)
     {
-        foreach (var uri in OnlineApplicationDatas)
+        foreach (var uri in OnlineApplicationInfos)
         {
             using var response = await httpClient.GetAsync(uri);
             response.EnsureSuccessStatusCode();
@@ -83,19 +83,19 @@ internal sealed class Updater
             var result = await response.Content.ReadAsStringAsync();
             var jsonObject = JsonObject.Parse(result);
 
-            return new ApplicationData(
-                jsonObject[nameof(ApplicationData.MainApp)].GetString(),
-                jsonObject[nameof(ApplicationData.AppVersion)].GetString(),
-                jsonObject[nameof(ApplicationData.SupportedMinVersion)].GetString());
+            return new ApplicationInfo(
+                jsonObject[nameof(ApplicationInfo.MainApp)].GetString(),
+                jsonObject[nameof(ApplicationInfo.AppVersion)].GetString(),
+                jsonObject[nameof(ApplicationInfo.SupportedMinVersion)].GetString());
         }
 
         throw new IndexOutOfRangeException();
     }
 
 
-    private readonly struct ApplicationData
+    private readonly struct ApplicationInfo
     {
-        public static readonly ApplicationData Empty = new();
+        public static readonly ApplicationInfo Empty = new();
 
         public readonly string MainApp;
 
@@ -105,7 +105,7 @@ internal sealed class Updater
 
         public readonly bool IsEmpty;
 
-        public ApplicationData()
+        public ApplicationInfo()
         {
             MainApp = string.Empty;
             AppVersion = string.Empty;
@@ -113,7 +113,7 @@ internal sealed class Updater
             IsEmpty = true;
         }
 
-        public ApplicationData(string mainApp, string appVersion, string supportedMinVersion)
+        public ApplicationInfo(string mainApp, string appVersion, string supportedMinVersion)
         {
             MainApp = mainApp;
             AppVersion = appVersion;

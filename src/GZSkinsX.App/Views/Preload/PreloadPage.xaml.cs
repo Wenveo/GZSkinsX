@@ -106,8 +106,8 @@ internal sealed partial class PreloadPage : Page
     {
         try
         {
-            var updater = AppxContext.Resolve<Updater>();
-            var updateInfo = await updater.GetUpdateInfoAsync();
+            var updater = AppxContext.Resolve<AppUpdater>();
+            var updateInfo = await updater.GetAppInfoAsync();
 
             if (updateInfo.IsSupported is false)
             {
