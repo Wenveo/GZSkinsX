@@ -39,6 +39,7 @@
     <Compile Include="Views\Index\IndexPage.xaml.cs">
       <DependentUpon>IndexPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Index\IndexSettings.cs" />
     <Compile Include="Views\Main\MainFrame.cs" />
     <Compile Include="Views\Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

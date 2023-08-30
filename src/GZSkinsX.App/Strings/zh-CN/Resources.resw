@@ -144,6 +144,15 @@
   <data name="Common_Dialog_OK" xml:space="preserve">
     <value>确定</value>
   </data>
+  <data name="Index_DownloadFailed_Title.Text" xml:space="preserve">
+    <value>未知的错误，无法下载/更新程序组件</value>
+  </data>
+  <data name="Index_Downloading_Title.Text" xml:space="preserve">
+    <value>正在下载/更新必要的基础运行组件</value>
+  </data>
+  <data name="Index_PendingRestart_Title.Text" xml:space="preserve">
+    <value>下载已完成，请手动重启应用</value>
+  </data>
   <data name="LaunchButton_About_Dialog_Author" xml:space="preserve">
     <value>作者：</value>
   </data>

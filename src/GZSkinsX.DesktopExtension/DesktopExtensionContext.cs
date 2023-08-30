@@ -27,6 +27,6 @@ internal sealed class DesktopExtensionContext : ApplicationContext
 
     private void OnTerminateProcess(object sender, EventArgs e)
     {
-        Program.Exit(0);
+        _sideCar.SafeExit();
     }
 }

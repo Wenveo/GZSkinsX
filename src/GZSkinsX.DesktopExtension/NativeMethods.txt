@@ -1,3 +1,6 @@
+LoadLibrary
+FreeLibrary
+GetProcAddress
 GetPriorityClass
 OpenFileMapping
 SetProcessInformation

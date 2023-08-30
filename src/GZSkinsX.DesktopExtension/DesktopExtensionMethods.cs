@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 using CommunityToolkit.HighPerformance.Buffers;
 
 using GZSkinsX.DesktopExtension.Strings;
-using GZSkinsX.Kernel;
 
+using Windows.Storage;
 using Windows.Win32;
 
 namespace GZSkinsX.DesktopExtension;
@@ -23,14 +23,32 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 {
     private static StringPool MyStringPool { get; } = new();
 
-    public Task<bool> InitializeGZXKernelModule()
+    private KernelInterop? Interop { get; set; }
+
+    public async Task<bool> InitializeGZXKernelModule()
     {
-        var ret = KernelInterop.InitializeGZXKernelModule();
-        return Task.FromResult(ret == 0);
+        try
+        {
+            var module = await (await ApplicationData.Current.RoamingFolder
+                .CreateFolderAsync("Kernel", CreationCollisionOption.OpenIfExists))
+                .CreateFileAsync("GZSkinsX.Kernel.dll", CreationCollisionOption.OpenIfExists);
+
+            Interop = new KernelInterop(module.Path);
+            return Interop.InitializeGZXKernelModule() == 0;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     public Task<string> EncryptConfigText(string str)
     {
+        if (Interop is null)
+        {
+            return Task.FromResult(string.Empty);
+        }
+
         if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
         {
             return Task.FromResult(string.Empty);
@@ -41,9 +59,9 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var buffer = (void*)0;
             fixed (char* ch = str)
             {
-                KernelInterop.EncryptConfigText(ch, &buffer);
+                Interop.EncryptConfigText(ch, &buffer);
                 var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, Count((char*)buffer)));
-                KernelInterop.FreeCryptographicBuffer(buffer);
+                Interop.FreeCryptographicBuffer(buffer);
                 return Task.FromResult(value);
             }
         }
@@ -51,6 +69,11 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
     public Task<string> DecryptConfigText(string str)
     {
+        if (Interop is null)
+        {
+            return Task.FromResult(string.Empty);
+        }
+
         if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
         {
             return Task.FromResult(string.Empty);
@@ -61,9 +84,9 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var buffer = (void*)0;
             fixed (char* ch = str)
             {
-                KernelInterop.DecryptConfigText(ch, &buffer);
+                Interop.DecryptConfigText(ch, &buffer);
                 var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer, Count((char*)buffer)));
-                KernelInterop.FreeCryptographicBuffer(buffer);
+                Interop.FreeCryptographicBuffer(buffer);
                 return Task.FromResult(value);
             }
         }
@@ -71,6 +94,11 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
     public Task ExtractModImage(string input, string output)
     {
+        if (Interop is null)
+        {
+            return Task.FromException(GetModuleNotFoundException());
+        }
+
         using var fileStream = new FileStream(input, FileMode.Open, FileAccess.Read);
 
         unsafe
@@ -78,7 +106,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
             var buffer = (void*)0;
             var length = 0;
 
-            var ret = KernelInterop.ReadLegacySkinImage(
+            var ret = Interop.ReadLegacySkinImage(
                 fileStream.SafeFileHandle.DangerousGetHandle().ToPointer(), &buffer, &length);
 
             if (ret is not 0)
@@ -91,7 +119,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
             outputStram.Seek(0, default);
             unmanagedStream.CopyTo(outputStram);
-            KernelInterop.FreeCryptographicBuffer(buffer);
+            Interop.FreeCryptographicBuffer(buffer);
 
             return Task.CompletedTask;
         }
@@ -99,15 +127,22 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
     public Task<ModInfo> ReadModInfo(string filePath)
     {
-        using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
         var taskCompleteSource = new TaskCompletionSource<ModInfo>();
+
+        if (Interop is null)
+        {
+            taskCompleteSource.SetException(GetModuleNotFoundException());
+            return taskCompleteSource.Task;
+        }
+
+        using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
         unsafe
         {
             var rawDataSpan = stackalloc byte[32];
-            var skinInfoPtr = (KernelInterop.LegacySkinInfo*)rawDataSpan;
+            var skinInfoPtr = (LegacySkinInfo*)rawDataSpan;
 
-            var ret = KernelInterop.ReadLegacySkinInfo(
+            var ret = Interop.ReadLegacySkinInfo(
                 fileStream.SafeFileHandle.DangerousGetHandle().ToPointer(), (void**)&rawDataSpan);
 
             if (ret is not 0)
@@ -161,7 +196,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
                 taskCompleteSource.SetResult(new(name, author, description, datetime));
             }
 
-            KernelInterop.FreeLegacySkinInfo(skinInfoPtr);
+            Interop.FreeLegacySkinInfo(skinInfoPtr);
         }
 
         return taskCompleteSource.Task;
@@ -180,6 +215,11 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
 
         var message = string.Format(format, fileName);
         return new InvalidOperationException(message);
+    }
+
+    private static InvalidOperationException GetModuleNotFoundException()
+    {
+        return new InvalidOperationException(Resource.Interop_Exception_ModuleNotFound);
     }
 
     private static unsafe int Count(char* ch)
@@ -260,7 +300,7 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         {
             var owner = Process.GetProcessById(processId);
             owner.EnableRaisingEvents = true;
-            owner.Exited += (_, _) => Program.Exit(0);
+            owner.Exited += (_, _) => SafeExit();
         }
         catch
         {
@@ -268,5 +308,11 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         }
 
         return Task.CompletedTask;
+    }
+
+    internal void SafeExit()
+    {
+        Interop?.Dispose();
+        Program.Exit(0);
     }
 }

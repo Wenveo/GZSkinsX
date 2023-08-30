@@ -7,13 +7,21 @@
 
 #nullable enable
 
+using System;
+using System.IO.Hashing;
+using System.Runtime.InteropServices.WindowsRuntime;
+
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
+using GZSkinsX.ViewModels;
 
+using Windows.Storage;
 using Windows.System;
+
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -24,8 +32,10 @@ namespace GZSkinsX.Views;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class IndexPage : Page
+internal sealed partial class IndexPage : Page
 {
+    public IndexViewModel ViewModel { get; } = new();
+
     public IndexPage()
     {
         InitializeComponent();
@@ -33,9 +43,29 @@ public sealed partial class IndexPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        DispatcherQueue.GetForCurrentThread().EnqueueAsync(() =>
+        DispatcherQueue.GetForCurrentThread().EnqueueAsync(async () =>
         {
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
-        }, DispatcherQueuePriority.Low).FireAndForget();
+            try
+            {
+                var destFile = await (await ApplicationData.Current.RoamingFolder
+                    .CreateFolderAsync("Kernel", CreationCollisionOption.OpenIfExists))
+                    .CreateFileAsync("GZSkinsX.Kernel.dll", CreationCollisionOption.OpenIfExists);
+
+                var buffer = await FileIO.ReadBufferAsync(destFile);
+                var checksum = XxHash64.HashToUInt64(buffer.ToArray());
+                if (checksum == 1812918375494270614)
+                {
+                    AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+                    return;
+                }
+            }
+            catch
+            {
+            }
+
+            ContentGrid.Visibility = Visibility.Visible;
+            await ViewModel.DownloadAsync();
+
+        }, DispatcherQueuePriority.Normal).FireAndForget();
     }
 }
