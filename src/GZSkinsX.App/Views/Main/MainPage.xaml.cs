@@ -19,6 +19,7 @@ using GZSkinsX.MyMods;
 using GZSkinsX.ViewModels;
 
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -42,6 +43,15 @@ internal sealed partial class MainPage : Page
     public MainPage()
     {
         InitializeComponent();
+
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+        {
+            ContentGrid.ContextFlyout = ContentGrid_ContextFlyout_Win11;
+        }
+        else
+        {
+            ContentGrid.ContextFlyout = ContentGrid_ContextFlyout_Win10;
+        }
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)

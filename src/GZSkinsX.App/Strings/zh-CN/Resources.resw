@@ -234,61 +234,55 @@
   <data name="Main_MyMods_Collection_Count" xml:space="preserve">
     <value>{0} 个模组</value>
   </data>
-  <data name="Main_MyMods_Commands_Delete.Label" xml:space="preserve">
-    <value>删除</value>
-  </data>
-  <data name="Main_MyMods_Commands_DeselectAll.Label" xml:space="preserve">
-    <value>取消选中</value>
-  </data>
-  <data name="Main_MyMods_Commands_Import.Label" xml:space="preserve">
-    <value>导入</value>
-  </data>
-  <data name="Main_MyMods_Commands_Import2.Label" xml:space="preserve">
-    <value>导入模组</value>
-  </data>
-  <data name="Main_MyMods_Commands_Install.Label" xml:space="preserve">
-    <value>安装</value>
-  </data>
-  <data name="Main_MyMods_Commands_SelectAll.Label" xml:space="preserve">
-    <value>全部选中</value>
-  </data>
-  <data name="Main_MyMods_Commands_Uninstall.Label" xml:space="preserve">
-    <value>卸载</value>
-  </data>
-  <data name="Main_MyMods_ContextMenu_ClearAllInstalled.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_ClearAllInstalled" xml:space="preserve">
     <value>清除所有已安装项</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Copy.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_Copy" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_CopyAsPath.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_Copy2" xml:space="preserve">
+    <value>复制文件</value>
+  </data>
+  <data name="Main_MyMods_Commands_CopyAsPath" xml:space="preserve">
     <value>复制文件所在路径</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Delete.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_CopyAsPath2" xml:space="preserve">
+    <value>复制为路径</value>
+  </data>
+  <data name="Main_MyMods_Commands_Delete" xml:space="preserve">
     <value>删除</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Import.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_DeselectAll" xml:space="preserve">
+    <value>取消选中</value>
+  </data>
+  <data name="Main_MyMods_Commands_Import" xml:space="preserve">
     <value>导入</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Install.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_Import2" xml:space="preserve">
+    <value>导入模组</value>
+  </data>
+  <data name="Main_MyMods_Commands_Install" xml:space="preserve">
     <value>安装</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_OpenInFileExplorer.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_OpenInFileExplorer" xml:space="preserve">
     <value>在资源管理器中显示</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_OpenModFolder.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_OpenModFolder" xml:space="preserve">
     <value>打开 模组 文件夹</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_OpenWadFolder.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_OpenWadFolder" xml:space="preserve">
     <value>打开 WAD 文件夹</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Refresh.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_Refresh" xml:space="preserve">
     <value>刷新</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Share.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_SelectAll" xml:space="preserve">
+    <value>全部选中</value>
+  </data>
+  <data name="Main_MyMods_Commands_Share" xml:space="preserve">
     <value>共享</value>
   </data>
-  <data name="Main_MyMods_ContextMenu_Uninstall.Label" xml:space="preserve">
+  <data name="Main_MyMods_Commands_Uninstall" xml:space="preserve">
     <value>卸载</value>
   </data>
   <data name="Main_MyMods_ImportFilesDialog_CloseButtonText" xml:space="preserve">
