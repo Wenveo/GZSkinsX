@@ -37,9 +37,10 @@ internal sealed partial class IndexViewModel : ObservableObject
 
     public bool InProcess => ProcessValue != 0;
 
-    private static Uri[] Modules { get; } = new Uri[]
+    private static Uri[] ModuleUris { get; } = new Uri[]
     {
-        new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/Kernel/3.0.0.0/GZSkinsX.Kernel.dll")
+        new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/Kernel/3.0.0.0/GZSkinsX.Kernel.dll"),
+        new("http://x1.gzskins.com/MounterV3/Kernel/3.0.0.0/GZSkinsX.Kernel.dll")
     };
 
     public async Task DownloadAsync()
@@ -51,7 +52,7 @@ internal sealed partial class IndexViewModel : ObservableObject
             .CreateFileAsync("GZSkinsX.Kernel.dll", CreationCollisionOption.OpenIfExists);
 
         var downloader = new BackgroundDownloader();
-        foreach (var uri in Modules)
+        foreach (var uri in ModuleUris)
         {
             try
             {
