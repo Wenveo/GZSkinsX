@@ -527,7 +527,7 @@
                     Margin="14,4,0,0"
                     VerticalAlignment="Center"
                     FontWeight="Bold"
-                    Text="{markups:LocalizedString ResourceKey=Resources/AppName}" />
+                    Text="{markups:LocalizedString ResourceKey=Resources/AppStoreName}" />
             </Border>
 
             <Grid Grid.Column="2" Margin="0,6,0,0">
