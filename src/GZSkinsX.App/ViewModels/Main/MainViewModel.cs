@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -274,7 +275,12 @@ internal sealed partial class MainViewModel : ObservableObject
             }
             else
             {
-                await file.CopyAsync(modsFolder);
+                var newFile = await file.CopyAsync(modsFolder);
+                if (Path.GetExtension(newFile.Name) != ".lolgezi")
+                {
+                    // Fix extension name
+                    await newFile.RenameAsync(Path.GetFileName(newFile.Name) + ".lolgezi");
+                }
             }
 
             importCount++;
