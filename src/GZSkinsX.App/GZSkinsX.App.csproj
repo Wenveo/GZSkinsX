@@ -18,6 +18,7 @@
     <Compile Include="Controls\LaunchButton.xaml.cs">
       <DependentUpon>LaunchButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DesktopExtension\DesktopExtensionService.cs" />
     <Compile Include="MyMods\MyModsService.cs" />
     <Compile Include="Mounter\MounterService.cs" />
     <Compile Include="Mounter\MounterSettings.cs" />

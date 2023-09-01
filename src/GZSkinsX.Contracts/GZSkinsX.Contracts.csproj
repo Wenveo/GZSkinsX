@@ -29,6 +29,7 @@
     <Compile Include="Controls\SegoeMDL2Assets.cs" />
     <Compile Include="Controls\SegoeMDL2AssetsSource.cs" />
     <Compile Include="Controls\StaticFontFamilys.cs" />
+    <Compile Include="DesktopExtension\IDesktopExtensionService.cs" />
     <Compile Include="Extension\AdvanceExtensionMetadataAttribute.cs" />
     <Compile Include="Extension\ExportAdvanceExtensionAttribute.cs" />
     <Compile Include="Extension\IAdvanceExtension.cs" />
