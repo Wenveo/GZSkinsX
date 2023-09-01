@@ -176,9 +176,6 @@ public sealed partial class App : Application
             {
                 CoreApplication.EnablePrelaunch(true);
             }
-
-            // Ensure the current window is active
-            Window.Current.Activate();
         }
 
         OnAppLaunch(e);
@@ -191,12 +188,15 @@ public sealed partial class App : Application
             await InitializeServiceAsync.Value;
         }
 
+        await AppxContext.ActivationService.ActivateAsync(args);
+
         if (Window.Current.Content is FrameworkElement frameworkElement)
         {
             frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
         }
 
-        await AppxContext.ActivationService.ActivateAsync(args);
+        // Ensure the current window is active
+        Window.Current.Activate();
     }
 
     [DllImport("ext-ms-win-ntuser-window-l1-1-0.dll", ExactSpelling = true, EntryPoint = "FindWindowW", SetLastError = true)]
