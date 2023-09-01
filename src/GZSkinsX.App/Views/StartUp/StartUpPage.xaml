@@ -39,6 +39,7 @@
         </Grid.RowDefinitions>
         <TextBlock
             x:Name="StartUp_Initialize_Title"
+            x:Uid="StartUp_Initialize_Title"
             Grid.Row="0"
             Grid.Column="1"
             HorizontalAlignment="Left"
@@ -46,6 +47,7 @@
             FontWeight="Bold" />
         <muxc:InfoBar
             x:Name="StartUp_Initialize_Error_InfoBar"
+            x:Uid="StartUp_Initialize_Error_InfoBar"
             Title="{x:Bind ViewModel.InfoBarTitle, Mode=OneWay}"
             Grid.Row="4"
             Grid.Column="1"
@@ -61,6 +63,7 @@
         </StackPanel>
         <TextBox
             x:Name="StartUp_Initialize_Directory_TextBox"
+            x:Uid="StartUp_Initialize_Directory_TextBox"
             Grid.Row="8"
             Grid.Column="1"
             IsReadOnly="True"
@@ -85,6 +88,7 @@
             Spacing="12">
             <ComboBox
                 x:Name="StartUp_Initialize_Region_Selector"
+                x:Uid="StartUp_Initialize_Region_Selector"
                 MinWidth="100"
                 ItemsSource="{x:Bind ViewModel.Regions, Mode=OneWay}"
                 SelectedIndex="{x:Bind ViewModel.RegionsSelectedIndex, Mode=TwoWay}" />

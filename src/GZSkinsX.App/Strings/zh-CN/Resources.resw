@@ -315,6 +315,9 @@
   <data name="Main_MyMods_Title.Text" xml:space="preserve">
     <value>所有模组</value>
   </data>
+  <data name="Main_Settings_Menu.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>设置菜单</value>
+  </data>
   <data name="Main_Uninitialized_Message.Text" xml:space="preserve">
     <value>缺少必要的组件，需要在下载/更新后方可正常使用。</value>
   </data>
@@ -386,6 +389,9 @@
   </data>
   <data name="Settings_About_Title.Text" xml:space="preserve">
     <value>关于</value>
+  </data>
+  <data name="Settings_Back_Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>返回至主页</value>
   </data>
   <data name="Settings_Default_Efficiency.Description" xml:space="preserve">
     <value>降低进程的优先级并限制资源占用以提高系统性能和降低功耗</value>

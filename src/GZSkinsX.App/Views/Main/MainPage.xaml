@@ -565,6 +565,7 @@
                     <ctrls:LaunchButton x:Name="MainLaunchButton" Height="32" />
 
                     <Button
+                        x:Uid="Main_Settings_Menu"
                         Width="32"
                         Height="32"
                         Padding="8">

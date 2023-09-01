@@ -218,6 +218,7 @@
 
         <Border x:Name="FakeTitleBar" Background="Transparent" />
         <Button
+            x:Uid="Settings_Back_Button"
             Width="32"
             Height="32"
             Margin="8"
