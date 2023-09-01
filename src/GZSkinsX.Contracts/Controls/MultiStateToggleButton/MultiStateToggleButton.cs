@@ -372,10 +372,12 @@ public class MultiStateToggleButton : ItemsControl
             {
                 currentState.Parent ??= this;
                 _primaryButton.Content = currentState.Content;
+                AutomationProperties.SetName(this, currentState.StateName);
             }
             else
             {
                 _primaryButton.Content = null;
+                AutomationProperties.SetName(this, null);
             }
         }
     }
