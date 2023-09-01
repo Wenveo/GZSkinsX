@@ -5,6 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#if WINDOWS_UWP
+#nullable enable
+#endif
+
 using System.Threading.Tasks;
 
 using CommunityToolkit.AppServices;
@@ -39,6 +43,8 @@ interface IDesktopExtensionMethods
     Task SetEfficiencyMode(int processId, bool isEnable);
 
     Task SetOwner(int processId);
+
+    Task<bool> SetWindowText(long windowHandle, string newTitle);
 }
 
 

@@ -290,6 +290,17 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         return Task.CompletedTask;
     }
 
+    public Task<bool> SetWindowText(long windowHandle, string newTitle)
+    {
+        if (windowHandle is not 0)
+        {
+            var ret = PInvoke.SetWindowText(new(new(windowHandle)), newTitle);
+            return Task.FromResult(ret == 0);
+        }
+
+        return Task.FromResult(false);
+    }
+
     internal void SafeExit()
     {
         _interop?.Dispose();

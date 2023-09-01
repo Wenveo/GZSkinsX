@@ -11,7 +11,10 @@ using System;
 using System.Composition.Hosting;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+
+using CommunityToolkit.Diagnostics;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
@@ -19,7 +22,7 @@ using GZSkinsX.Contracts.WindowManager;
 
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation.Metadata;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Xaml;
 
 namespace GZSkinsX;
@@ -79,6 +82,7 @@ public sealed partial class App : Application
     public App()
     {
         InitializeComponent();
+        SetRandomWindowText();
     }
 
     /// <summary>
@@ -94,6 +98,22 @@ public sealed partial class App : Application
         }
     }
 
+    private void SetRandomWindowText()
+    {
+        unsafe
+        {
+            var mainResourceMap = ResourceManager.Current.MainResourceMap;
+            fixed (char* displayName = mainResourceMap.GetValue("Resources/AppDisplayName").ValueAsString)
+            {
+                var windowHandle = FindWindow(null, displayName);
+                if (windowHandle != IntPtr.Zero)
+                {
+                    DesktopExtensionMethods.SetWindowText(windowHandle.ToInt64(), Guid.NewGuid().ToHexString().Substring(2));
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Invoked when the application is launched normally by the end user.  Other entry points
     /// will be used such as when the application is launched to open a specific file.
@@ -104,7 +124,7 @@ public sealed partial class App : Application
         await InitializeServiceAsync.Value;
         if (e.PrelaunchActivated == false)
         {
-            if (ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
+            if (Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
             {
                 CoreApplication.EnablePrelaunch(true);
             }
@@ -118,4 +138,7 @@ public sealed partial class App : Application
             frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
         }
     }
+
+    [DllImport("ext-ms-win-ntuser-window-l1-1-0.dll", ExactSpelling = true, EntryPoint = "FindWindowW", SetLastError = true)]
+    internal static extern unsafe IntPtr FindWindow([In, Optional] char* lpClassName, [In, Optional] char* lpWindowName);
 }

@@ -5,3 +5,4 @@ GetPriorityClass
 OpenFileMapping
 SetProcessInformation
 SetPriorityClass
+SetWindowText
