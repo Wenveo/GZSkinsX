@@ -23,6 +23,7 @@ public static partial class AppxContext
     {
         "global::GZSkinsX.Contracts.AccessCache.IFutureAccessService",
         "global::GZSkinsX.Contracts.AccessCache.IMostRecentlyUsedService",
+        "global::GZSkinsX.Contracts.Activation.IActivationService",
         "global::GZSkinsX.Contracts.Appx.IAppxWindow",
         "global::GZSkinsX.Contracts.Appx.IAppxTitleBar",
         "global::GZSkinsX.Contracts.DesktopExtension.IDesktopExtensionService",

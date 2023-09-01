@@ -122,13 +122,54 @@ public sealed partial class App : Application
     }
 
     /// <summary>
+    /// Invoked when the application is activated by some means other than normal launching.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnActivated(IActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
+    /// Invoked when the application is activated due to an activation contract with ActivationKind as **CachedFileUpdater**.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
+    /// Invoked when the application is activated through file-open.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnFileActivated(FileActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
+    /// Invoked when the application is activated through file-open dialog association.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
+    /// Invoked when the application is activated through file-save dialog association.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
+    /// Invoked when the application is activated through a search association.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnSearchActivated(SearchActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
+    /// Invoked when the application is activated through sharing association.
+    /// </summary>
+    /// <param name="args">Event data for the event.</param>
+    protected override void OnShareTargetActivated(ShareTargetActivatedEventArgs args) => OnAppLaunch(args);
+
+    /// <summary>
     /// Invoked when the application is launched normally by the end user.  Other entry points
     /// will be used such as when the application is launched to open a specific file.
     /// </summary>
     /// <param name="e">Details about the launch request and process.</param>
-    protected override async void OnLaunched(LaunchActivatedEventArgs e)
+    protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
-        await InitializeServiceAsync.Value;
         if (e.PrelaunchActivated == false)
         {
             if (Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch"))
@@ -140,10 +181,22 @@ public sealed partial class App : Application
             Window.Current.Activate();
         }
 
+        OnAppLaunch(e);
+    }
+
+    private async void OnAppLaunch(IActivatedEventArgs args)
+    {
+        if (InitializeServiceAsync.IsValueCreated is false)
+        {
+            await InitializeServiceAsync.Value;
+        }
+
         if (Window.Current.Content is FrameworkElement frameworkElement)
         {
             frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
         }
+
+        await AppxContext.ActivationService.ActivateAsync(args);
     }
 
     [DllImport("ext-ms-win-ntuser-window-l1-1-0.dll", ExactSpelling = true, EntryPoint = "FindWindowW", SetLastError = true)]

@@ -12,6 +12,9 @@
     <Compile Include="AccessCache\IAccessCacheService.cs" />
     <Compile Include="AccessCache\IFutureAccessService.cs" />
     <Compile Include="AccessCache\IMostRecentlyUsedService.cs" />
+    <Compile Include="Activation\IActivationHandler2.cs" />
+    <Compile Include="Activation\IActivationService.cs" />
+    <Compile Include="Activation\IActivationHandler.cs" />
     <Compile Include="Appx\AppxContext.cs" />
     <Compile Include="Appx\AppxContext.InternalCalls.cs" />
     <Compile Include="Appx\AppxContext.Services.g.cs">

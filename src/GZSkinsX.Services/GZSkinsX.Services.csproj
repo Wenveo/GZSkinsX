@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="AccessCache\FutureAccessService.cs" />
     <Compile Include="AccessCache\MostRecentlyUsedService.cs" />
+    <Compile Include="Activation\ActivationService.cs" />
     <Compile Include="AppxServices.cs" />
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameService.cs" />
