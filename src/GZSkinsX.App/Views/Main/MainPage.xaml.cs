@@ -224,9 +224,26 @@ internal sealed partial class MainPage : Page
 
     private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
     {
-        args.Request.Data.Properties.Title = "Share";
-        args.Request.Data.SetStorageItems(
-            MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile), true);
+        var items = MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile).ToArray();
+        if (items.Length > 0)
+        {
+            if (items.Length == 1)
+            {
+                var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Title");
+                args.Request.Data.Properties.Title = string.Format(format, items[0].Name);
+            }
+            else
+            {
+                var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Multiple_Items_Title");
+                args.Request.Data.Properties.Title = string.Format(format, items[0].Name, items[1].Name);
+            }
+
+            args.Request.Data.SetStorageItems(items, true);
+        }
+        else
+        {
+            args.Request.Data.Properties.Title = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Failed_Title");
+        }
     }
 
     private void Main_Loading_ProgressRing_Loaded(object sender, RoutedEventArgs e)
