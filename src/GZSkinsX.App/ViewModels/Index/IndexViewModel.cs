@@ -65,7 +65,6 @@ internal sealed partial class IndexViewModel : ObservableObject
                 var result = await CoreApplication.RequestRestartAsync(string.Empty);
                 if (result is AppRestartFailureReason.NotInForeground or AppRestartFailureReason.Other)
                 {
-                    IsDownloading = false;
                     IsPendingRestart = true;
                 }
             }
