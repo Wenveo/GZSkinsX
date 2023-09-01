@@ -12,7 +12,7 @@ using System.Composition;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Settings;
 
-namespace GZSkinsX.MyMods;
+namespace GZSkinsX.Services.MyMods;
 
 [Shared, Export(typeof(MyModsSettings))]
 internal sealed class MyModsSettings

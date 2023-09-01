@@ -24,7 +24,7 @@ using GZSkinsX.Contracts.MyMods;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace GZSkinsX.MyMods;
+namespace GZSkinsX.Services.MyMods;
 
 [Shared, Export(typeof(IMyModsService))]
 [method: ImportingConstructor]
@@ -210,7 +210,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
             var localCacheFolder = await GetImageCacheFolderAsync();
 
             var imageFilePath = Path.Combine(localCacheFolder.Path, storageFile.DisplayName);
-            await App.DesktopExtensionMethods.ExtractModImage(storageFile.Path, imageFilePath);
+            await AppxContext.DesktopExtensionService.ExtractModImageAsync(storageFile.Path, imageFilePath);
 
             return new BitmapImage(new Uri(imageFilePath, UriKind.Absolute));
         }
@@ -223,8 +223,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
     public async Task<MyModInfo> ReadModInfoAsync(StorageFile storageFile)
     {
-        var modInfo = await App.DesktopExtensionMethods.ReadModInfo(storageFile.Path);
-        return new(modInfo.Name, modInfo.Author, modInfo.Description, modInfo.DateTime);
+        return await AppxContext.DesktopExtensionService.ReadModInfoAsync(storageFile.Path);
     }
 
     public async Task<MyModInfo?> TryReadModInfoAsync(StorageFile storageFile)
@@ -232,8 +231,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         MyModInfo? result;
         try
         {
-            var modInfo = await App.DesktopExtensionMethods.ReadModInfo(storageFile.Path);
-            result = new(modInfo.Name, modInfo.Author, modInfo.Description, modInfo.DateTime);
+            result = await AppxContext.DesktopExtensionService.ReadModInfoAsync(storageFile.Path);
         }
         catch (Exception excp)
         {
@@ -315,7 +313,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
             yield break;
         }
 
-        var result = await App.DesktopExtensionMethods.DecryptConfigText(str);
+        var result = await AppxContext.DesktopExtensionService.DecryptConfigTextAsync(str);
         if (string.IsNullOrEmpty(result) || string.IsNullOrWhiteSpace(result))
         {
             yield break;
@@ -388,7 +386,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         settingsData.GZSkins["Blood"]           = _myModSettings.EnableBlood;
         settingsData.GZSkins["CustomInstall"]   = wadsFolder.Path + Path.DirectorySeparatorChar;
         settingsData.GZSkins["RGZInstall"]      = modsFolder.Path + Path.DirectorySeparatorChar;
-        settingsData.GZSkins["RGZFileTable"]    = await App.DesktopExtensionMethods.EncryptConfigText(stringBuilder.ToString());
+        settingsData.GZSkins["RGZFileTable"]    = await AppxContext.DesktopExtensionService.EncryptConfigTextAsync(stringBuilder.ToString());
 #pragma warning restore format
 
         var parentFolder = Path.GetDirectoryName(settingsFilePath);

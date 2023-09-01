@@ -7,12 +7,10 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using GZSkinsX.Contracts.MyMods;
-
 using Windows.Storage;
 using Windows.UI.Xaml.Media;
 
-namespace GZSkinsX.MyMods;
+namespace GZSkinsX.Contracts.MyMods;
 
 internal sealed partial class MyModViewModel(StorageFile modFile, ImageSource modImage,
     MyModInfo modInfo, bool enable, int indexOfTable) : ObservableObject

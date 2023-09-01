@@ -14,8 +14,8 @@ using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
+using GZSkinsX.Contracts.MyMods;
 using GZSkinsX.Contracts.WindowManager;
-using GZSkinsX.MyMods;
 using GZSkinsX.ViewModels;
 
 using Windows.ApplicationModel.DataTransfer;

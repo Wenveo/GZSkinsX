@@ -50,6 +50,10 @@
     <Compile Include="MRTCore\MRTCoreConstants.cs" />
     <Compile Include="MyMods\IMyModService.cs" />
     <Compile Include="MyMods\MyModInfo.cs" />
+    <Compile Include="MyMods\MyModViewModel.cs" />
+    <Compile Include="MyMods\MyModViewTemplates.xaml.cs">
+      <DependentUpon>MyModViewTemplates.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\ISettingsSection.cs" />
     <Compile Include="Settings\ISettingsService.cs" />
@@ -103,6 +107,9 @@
     <PackageReference Include="System.IO.Hashing">
       <Version>8.0.0-preview.7.23375.6</Version>
     </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>8.0.0-preview.7.23375.6</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Appx\AppxContext.Services.g.tt">
@@ -117,6 +124,10 @@
     <Page Include="Controls\MultiStateToggleButton\MultiStateToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyMods\MyModViewTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>

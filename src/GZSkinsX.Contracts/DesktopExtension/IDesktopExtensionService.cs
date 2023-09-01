@@ -26,4 +26,6 @@ public interface IDesktopExtensionService
     Task<MyModInfo> ReadModInfoAsync(string filePath);
 
     Task<bool> ProcessLaunchAsync(string executable, string args, bool runAs);
+
+    Task<bool> IsMTRunningAsync();
 }

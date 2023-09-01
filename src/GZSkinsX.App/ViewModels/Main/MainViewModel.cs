@@ -20,7 +20,6 @@ using CommunityToolkit.WinUI;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.MyMods;
-using GZSkinsX.MyMods;
 
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;

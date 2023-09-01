@@ -51,4 +51,9 @@ internal sealed class DesktopExtensionService : IDesktopExtensionService
     {
         return await App.DesktopExtensionMethods.ProcessLaunch(executable, args, runAs);
     }
+
+    public async Task<bool> IsMTRunningAsync()
+    {
+        return await App.DesktopExtensionMethods.IsMTRunning();
+    }
 }

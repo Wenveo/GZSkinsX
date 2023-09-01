@@ -30,7 +30,7 @@ using Windows.Foundation;
 using Windows.Storage;
 using Windows.Web.Http;
 
-namespace GZSkinsX.Mounter;
+namespace GZSkinsX.Services.Mounter;
 
 /// <inheritdoc cref="IMounterService"/>
 [Shared, Export(typeof(IMounterService))]
@@ -67,7 +67,8 @@ internal sealed class MounterService : IMounterService
 
                 try
                 {
-                    if (await App.DesktopExtensionMethods.IsMTRunning() is false)
+                    var b = await AppxContext.DesktopExtensionService.IsMTRunningAsync();
+                    if (b is false)
                     {
                         IsRunningChanged?.Invoke(this, false);
                         break;
@@ -166,7 +167,7 @@ internal sealed class MounterService : IMounterService
 
     public async Task<bool> GetIsRunningAsync()
     {
-        return await App.DesktopExtensionMethods.IsMTRunning();
+        return await AppxContext.DesktopExtensionService.IsMTRunningAsync();
     }
 
     public async Task LaunchAsync()
@@ -179,7 +180,7 @@ internal sealed class MounterService : IMounterService
                 nameof(MTPackageMetadata.ProcStartupArgs));
 
         var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        await App.DesktopExtensionMethods.ProcessLaunch(executableFile, localPackageMetadata.ProcStartupArgs, true);
+        await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, localPackageMetadata.ProcStartupArgs, true);
     }
 
     public async Task LaunchAsync(string args)
@@ -191,7 +192,7 @@ internal sealed class MounterService : IMounterService
                 nameof(MTPackageMetadata.ExecutableFile));
 
         var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        await App.DesktopExtensionMethods.ProcessLaunch(executableFile, args, true);
+        await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, args, true);
     }
 
     public async Task TerminateAsync()
@@ -204,7 +205,7 @@ internal sealed class MounterService : IMounterService
                 nameof(MTPackageMetadata.ProcTerminateArgs));
 
         var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        await App.DesktopExtensionMethods.ProcessLaunch(executableFile, localPackageMetadata.ProcTerminateArgs, true);
+        await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, localPackageMetadata.ProcTerminateArgs, true);
     }
 
     public async Task<MTPackageMetadata> TryGetCurrentPackageMetadataAsync(params string[] filter)

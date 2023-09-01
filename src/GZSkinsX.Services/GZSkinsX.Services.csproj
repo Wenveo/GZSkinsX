@@ -18,8 +18,12 @@
     <Compile Include="MainApp\AppxTitleBar.cs" />
     <Compile Include="MainApp\AppxWindow.cs" />
     <Compile Include="MainApp\AutoThemeTitleBar.cs" />
+    <Compile Include="Mounter\MounterService.cs" />
+    <Compile Include="Mounter\MounterSettings.cs" />
     <Compile Include="MRTCore\MRTCoreMap.cs" />
     <Compile Include="MRTCore\MRTCoreService.cs" />
+    <Compile Include="MyMods\MyModsService.cs" />
+    <Compile Include="MyMods\MyModsSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SettingsSection.cs" />
     <Compile Include="Settings\SettingsService.cs" />

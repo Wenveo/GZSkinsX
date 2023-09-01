@@ -12,7 +12,7 @@ using System.Composition;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Settings;
 
-namespace GZSkinsX.Mounter;
+namespace GZSkinsX.Services.Mounter;
 
 [Shared, Export(typeof(MounterSettings))]
 internal sealed class MounterSettings

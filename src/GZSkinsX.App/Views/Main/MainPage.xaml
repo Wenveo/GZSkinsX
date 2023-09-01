@@ -12,293 +12,299 @@
     xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:myMods="using:GZSkinsX.Contracts.MyMods"
     xmlns:themes="using:GZSkinsX.Contracts.Themes"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <myMods:MyModViewTemplates />
+            </ResourceDictionary.MergedDictionaries>
 
-        <MenuFlyout x:Name="ContentGrid_ContextFlyout_Win10" themes:ThemedFlyoutHelper.FixFlyoutTheme="True">
-            <MenuFlyoutItem
-                Command="{x:Bind ViewModel.InstallCommand, Mode=OneWay}"
-                CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Install}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="E" Modifiers="Control" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE896;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Command="{x:Bind ViewModel.UninstallCommand, Mode=OneWay}"
-                CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Uninstall}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="E" Modifiers="Control,Shift" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xEA39;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-            <MenuFlyoutItem Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Import}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="O" Modifiers="Control" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Refresh}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="F5" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Command="{x:Bind ViewModel.CopyCommand, Mode=OneWay}"
-                CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Copy2}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="C" Modifiers="Control" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE8C8;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Command="{x:Bind ViewModel.CopyAsPathCommand, Mode=OneWay}"
-                CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_CopyAsPath2}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="C" Modifiers="Control,Shift" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE62F;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Command="{x:Bind ViewModel.OpenInFileExplorerCommand, Mode=OneWay}"
-                CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenInFileExplorer}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="F3" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xEC50;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem
-                Click="OnMyModsContextMenuShare_Click"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Share}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="S" Modifiers="Menu" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE72D;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutSeparator />
-            <MenuFlyoutItem Command="{x:Bind ViewModel.OpenModFolderCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenModFolder}">
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE8DA;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem Command="{x:Bind ViewModel.OpenWadFolderCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenWadFolder}">
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE8DA;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutSeparator />
-            <MenuFlyoutItem Command="{x:Bind ViewModel.ClearAllInstalledCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_ClearAllInstalled}">
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xECC9;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-            <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-            <MenuFlyoutItem
-                Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
-                CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
-                Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                <MenuFlyoutItem.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="Delete" />
-                </MenuFlyoutItem.KeyboardAccelerators>
-                <MenuFlyoutItem.Icon>
-                    <ctrls2:SegoeFluentIcon Glyph="&#xE74D;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
-        </MenuFlyout>
-
-        <muxc:CommandBarFlyout
-            x:Name="ContentGrid_ContextFlyout_Win11"
-            themes:ThemedFlyoutHelper.FixFlyoutTheme="True"
-            Placement="Right">
-            <muxc:CommandBarFlyout.PrimaryCommands>
-                <AppBarButton
-                    Click="CloseMyModsContextMenu_Click"
-                    Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Import}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="O" Modifiers="Control" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="CloseMyModsContextMenu_Click"
-                    Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Refresh}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F5" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="CloseMyModsContextMenu_Click"
+            <MenuFlyout x:Name="ContentGrid_ContextFlyout_Win10" themes:ThemedFlyoutHelper.FixFlyoutTheme="True">
+                <MenuFlyoutItem
                     Command="{x:Bind ViewModel.InstallCommand, Mode=OneWay}"
                     CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Install}"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Install}"
                     Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
+                    <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="E" Modifiers="Control" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE896;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="CloseMyModsContextMenu_Click"
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem
                     Command="{x:Bind ViewModel.UninstallCommand, Mode=OneWay}"
                     CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Uninstall}"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Uninstall}"
                     Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
+                    <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="E" Modifiers="Control,Shift" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xEA39;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="CloseMyModsContextMenu_Click"
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <MenuFlyoutItem Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Import}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="O" Modifiers="Control" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Refresh}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F5" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem
                     Command="{x:Bind ViewModel.CopyCommand, Mode=OneWay}"
                     CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Copy}"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Copy2}"
                     Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
+                    <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="C" Modifiers="Control" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE8C8;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="OnMyModsContextMenuShare_Click"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Share}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="S" Modifiers="Menu" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE72D;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="CloseMyModsContextMenu_Click"
-                    Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
-                    CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Delete" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE74D;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </muxc:CommandBarFlyout.PrimaryCommands>
-            <muxc:CommandBarFlyout.SecondaryCommands>
-                <AppBarButton
-                    Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Import}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="O" Modifiers="Control" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Refresh}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F5" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{x:Bind ViewModel.OpenInFileExplorerCommand, Mode=OneWay}"
-                    CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenInFileExplorer}"
-                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="F3" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
-                        <ctrls2:SegoeFluentIcon Glyph="&#xEC50;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem
                     Command="{x:Bind ViewModel.CopyAsPathCommand, Mode=OneWay}"
                     CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
-                    Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_CopyAsPath}"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_CopyAsPath2}"
                     Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.KeyboardAccelerators>
+                    <MenuFlyoutItem.KeyboardAccelerators>
                         <KeyboardAccelerator Key="C" Modifiers="Control,Shift" />
-                    </AppBarButton.KeyboardAccelerators>
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE62F;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <AppBarButton Command="{x:Bind ViewModel.OpenModFolderCommand, Mode=OneWay}" Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenModFolder}">
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem
+                    Command="{x:Bind ViewModel.OpenInFileExplorerCommand, Mode=OneWay}"
+                    CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenInFileExplorer}"
+                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F3" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xEC50;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem
+                    Click="OnMyModsContextMenuShare_Click"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Share}"
+                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="S" Modifiers="Menu" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE72D;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Command="{x:Bind ViewModel.OpenModFolderCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenModFolder}">
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE8DA;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton Command="{x:Bind ViewModel.OpenWadFolderCommand, Mode=OneWay}" Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenWadFolder}">
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Command="{x:Bind ViewModel.OpenWadFolderCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenWadFolder}">
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE8DA;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarSeparator />
-                <AppBarButton Command="{x:Bind ViewModel.ClearAllInstalledCommand, Mode=OneWay}" Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_ClearAllInstalled}">
-                    <AppBarButton.Icon>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Command="{x:Bind ViewModel.ClearAllInstalledCommand, Mode=OneWay}" Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_ClearAllInstalled}">
+                    <MenuFlyoutItem.Icon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xECC9;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </muxc:CommandBarFlyout.SecondaryCommands>
-        </muxc:CommandBarFlyout>
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <MenuFlyoutItem
+                    Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+                    CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
+                    Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Delete" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                    <MenuFlyoutItem.Icon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE74D;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+            </MenuFlyout>
 
+            <muxc:CommandBarFlyout
+                x:Name="ContentGrid_ContextFlyout_Win11"
+                themes:ThemedFlyoutHelper.FixFlyoutTheme="True"
+                Placement="Right">
+                <muxc:CommandBarFlyout.PrimaryCommands>
+                    <AppBarButton
+                        Click="CloseMyModsContextMenu_Click"
+                        Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Import}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="O" Modifiers="Control" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="CloseMyModsContextMenu_Click"
+                        Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Refresh}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F5" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="CloseMyModsContextMenu_Click"
+                        Command="{x:Bind ViewModel.InstallCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Install}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="E" Modifiers="Control" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE896;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="CloseMyModsContextMenu_Click"
+                        Command="{x:Bind ViewModel.UninstallCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Uninstall}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="E" Modifiers="Control,Shift" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xEA39;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="CloseMyModsContextMenu_Click"
+                        Command="{x:Bind ViewModel.CopyCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Copy}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="C" Modifiers="Control" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8C8;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="OnMyModsContextMenuShare_Click"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Share}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="S" Modifiers="Menu" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE72D;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="CloseMyModsContextMenu_Click"
+                        Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Delete" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE74D;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </muxc:CommandBarFlyout.PrimaryCommands>
+                <muxc:CommandBarFlyout.SecondaryCommands>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.ImportCommand, Mode=OneWay}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Import}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="O" Modifiers="Control" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE710;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Refresh}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F5" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE72C;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.OpenInFileExplorerCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenInFileExplorer}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F3" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xEC50;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.CopyAsPathCommand, Mode=OneWay}"
+                        CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_CopyAsPath}"
+                        Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="C" Modifiers="Control,Shift" />
+                        </AppBarButton.KeyboardAccelerators>
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE62F;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarSeparator Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <AppBarButton Command="{x:Bind ViewModel.OpenModFolderCommand, Mode=OneWay}" Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenModFolder}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8DA;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton Command="{x:Bind ViewModel.OpenWadFolderCommand, Mode=OneWay}" Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_OpenWadFolder}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8DA;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarSeparator />
+                    <AppBarButton Command="{x:Bind ViewModel.ClearAllInstalledCommand, Mode=OneWay}" Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_ClearAllInstalled}">
+                        <AppBarButton.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xECC9;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </muxc:CommandBarFlyout.SecondaryCommands>
+            </muxc:CommandBarFlyout>
+
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid RowSpacing="6">
