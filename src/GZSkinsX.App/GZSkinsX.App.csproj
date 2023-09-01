@@ -12,6 +12,8 @@
     <Compile Include="..\GZSkinsX.DesktopExtension\DesktopExtensionContracts.cs">
       <Link>DesktopExtensionContracts.cs</Link>
     </Compile>
+    <Compile Include="Activation\AutoInitializeHandlers.cs" />
+    <Compile Include="Activation\ModFileActivationHandler.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
