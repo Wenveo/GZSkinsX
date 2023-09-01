@@ -63,6 +63,10 @@ public sealed partial class App : Application
 
         await Services.Logging.LoggerImpl.Shared.InitializeAsync();
 
+        var gameService = AppxContext.GameService;
+        var rootFolder = await gameService.TryGetRootFolderAsync();
+        await gameService.TryUpdateAsync(rootFolder, gameService.CurrentRegion);
+
         var windowManagerService = AppxContext.WindowManagerService;
         windowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
 

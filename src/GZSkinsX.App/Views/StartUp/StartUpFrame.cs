@@ -25,10 +25,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
 
     public async Task<bool> CanNavigateToAsync(WindowFrameNavigatingEvnetArgs args)
     {
-        var gameService = AppxContext.GameService;
-
-        var rootFolder = await gameService.TryGetRootFolderAsync();
-        if (await gameService.TryUpdateAsync(rootFolder, gameService.CurrentRegion))
+        if (await AppxContext.GameService.TryGetRootFolderAsync() is not null)
         {
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             return false;
@@ -36,8 +33,7 @@ internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
         else
         {
             // IsInvalid
-            args.Parameter = gameService.CurrentRegion is not GameRegion.Unknown;
-
+            args.Parameter = AppxContext.GameService.CurrentRegion is not GameRegion.Unknown;
             return true;
         }
     }
