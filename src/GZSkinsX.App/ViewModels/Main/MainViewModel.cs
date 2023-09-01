@@ -249,7 +249,7 @@ internal sealed partial class MainViewModel : ObservableObject
         foreach (var file in verifiedFiles)
         {
             var parent = await file.GetParentAsync();
-            if (parent.Path == modsFolder.Path)
+            if (parent is not null && parent.Path == modsFolder.Path)
             {
                 continue;
             }
