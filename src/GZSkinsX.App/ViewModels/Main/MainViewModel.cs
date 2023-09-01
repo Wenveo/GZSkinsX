@@ -407,6 +407,8 @@ internal sealed partial class MainViewModel : ObservableObject
             }
         }
 
+        await MyModsService.UpdateSettingsAsync();
+
         MyModCollection = newList;
     }
 
