@@ -25,6 +25,7 @@ public static partial class AppxContext
         "global::GZSkinsX.Contracts.AccessCache.IMostRecentlyUsedService",
         "global::GZSkinsX.Contracts.Appx.IAppxWindow",
         "global::GZSkinsX.Contracts.Appx.IAppxTitleBar",
+        "global::GZSkinsX.Contracts.DesktopExtension.IDesktopExtensionService",
         "global::GZSkinsX.Contracts.Game.IGameService",
         "global::GZSkinsX.Contracts.Logging.ILoggingService",
         "global::GZSkinsX.Contracts.Mounter.IMounterService",
