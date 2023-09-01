@@ -90,18 +90,8 @@ public sealed partial class App : Application
     }
 
     /// <summary>
-    /// Initializes the app service on the host process 
+    /// Set random window title to avoid detection
     /// </summary>
-    protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
-    {
-        base.OnBackgroundActivated(args);
-
-        if (DesktopExtensionMethods.OnBackgroundActivated(args))
-        {
-            await DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
-        }
-    }
-
     private void SetRandomWindowText()
     {
         unsafe
@@ -115,6 +105,19 @@ public sealed partial class App : Application
                     DesktopExtensionMethods.SetWindowText(windowHandle.ToInt64(), Guid.NewGuid().ToHexString().Substring(2));
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Initializes the app service on the host process 
+    /// </summary>
+    protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+    {
+        base.OnBackgroundActivated(args);
+
+        if (DesktopExtensionMethods.OnBackgroundActivated(args))
+        {
+            await DesktopExtensionMethods.SetOwner(Process.GetCurrentProcess().Id);
         }
     }
 
