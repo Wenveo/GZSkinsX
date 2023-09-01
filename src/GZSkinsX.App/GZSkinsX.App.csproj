@@ -12,8 +12,7 @@
     <Compile Include="..\GZSkinsX.DesktopExtension\DesktopExtensionContracts.cs">
       <Link>DesktopExtensionContracts.cs</Link>
     </Compile>
-    <Compile Include="Activation\AutoInitializeHandlers.cs" />
-    <Compile Include="Activation\ModFileActivationHandler.cs" />
+    <Compile Include="Activation\FileActivationHandler.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -36,7 +35,7 @@
     </Compile>
     <Compile Include="Views\Index\IndexSettings.cs" />
     <Compile Include="Views\Main\MainFrame.cs" />
-    <Compile Include="Views\Main\MainActivationHandler.cs" />
+    <Compile Include="Activation\MainActivationHandler.cs" />
     <Compile Include="Views\Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

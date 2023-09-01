@@ -13,12 +13,12 @@ using System.Linq;
 
 using CommunityToolkit.WinUI;
 
+using GZSkinsX.Activation;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.MyMods;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.ViewModels;
-using GZSkinsX.Views.Main;
 
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation.Metadata;

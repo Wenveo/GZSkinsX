@@ -6,12 +6,14 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Activation;
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Views;
 
 using Windows.ApplicationModel.Activation;
@@ -20,7 +22,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.Activation;
 
-internal sealed class ModFileActivationHandler : IActivationHandler, IActivationHandler2
+internal sealed class FileActivationHandler : IActivationHandler, IActivationHandler2
 {
     public async Task<bool> CanHandleAsync(IActivatedEventArgs args)
     {
@@ -39,7 +41,7 @@ internal sealed class ModFileActivationHandler : IActivationHandler, IActivation
             return false;
         }
 
-        if (e.Files.Any(a => Path.GetExtension(a.Name) == ".lolgezi") is false)
+        if (e.Files.Any() is false)
         {
             return false;
         }
@@ -54,19 +56,29 @@ internal sealed class ModFileActivationHandler : IActivationHandler, IActivation
             return;
         }
 
-        var modFiles = e.Files.OfType<StorageFile>().Where(a => Path.GetExtension(a.Name) == ".lolgezi");
+        var modFiles = e.Files.OfType<StorageFile>();
         if (modFiles.Any() is false)
         {
             return;
         }
 
         var modsFolder = await AppxContext.MyModsService.GetModsFolderAsync();
-        foreach (var item in modFiles)
+        foreach (var file in modFiles)
         {
+            if (await modsFolder.TryGetItemAsync(file.Name) is not null)
+            {
+                continue;
+            }
+
             try
             {
-                await AppxContext.MyModsService.ReadModInfoAsync(item);
-                await item.CopyAsync(modsFolder);
+                await AppxContext.MyModsService.ReadModInfoAsync(file);
+                var newFile = await file.CopyAsync(modsFolder);
+                if (Path.GetExtension(newFile.Name) != ".lolgezi")
+                {
+                    // Fix extension name
+                    await newFile.RenameAsync(Path.GetFileName(newFile.Name) + ".lolgezi");
+                }
             }
             catch (Exception)
             {
@@ -86,5 +98,15 @@ internal sealed class ModFileActivationHandler : IActivationHandler, IActivation
     bool IActivationHandler.CanHandle(IActivatedEventArgs args)
     {
         return false;
+    }
+
+    [Shared, ExportAdvanceExtension]
+    [AdvanceExtensionMetadata(Order = double.MinValue)]
+    private sealed class AutoLoaded : IAdvanceExtension
+    {
+        public AutoLoaded()
+        {
+            AppxContext.ActivationService.RegisterHandler(new FileActivationHandler());
+        }
     }
 }

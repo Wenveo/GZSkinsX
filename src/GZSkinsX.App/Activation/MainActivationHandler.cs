@@ -13,12 +13,13 @@ using System.Threading.Tasks;
 using GZSkinsX.Contracts.Activation;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.WindowManager;
+using GZSkinsX.Views;
 
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 
-namespace GZSkinsX.Views.Main;
+namespace GZSkinsX.Activation;
 
 internal sealed class MainActivationHandler : IActivationHandler
 {
