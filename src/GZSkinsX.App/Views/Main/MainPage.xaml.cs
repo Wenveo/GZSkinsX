@@ -8,6 +8,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using CommunityToolkit.WinUI;
@@ -17,6 +18,7 @@ using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.MyMods;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.ViewModels;
+using GZSkinsX.Views.Main;
 
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation.Metadata;
@@ -52,6 +54,9 @@ internal sealed partial class MainPage : Page
         {
             ContentGrid.ContextFlyout = ContentGrid_ContextFlyout_Win10;
         }
+
+        AppxContext.ActivationService.UnregisterHandler(MainActivationHandler.Instance);
+        AppxContext.ActivationService.RegisterHandler(MainActivationHandler.Instance);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -86,7 +91,15 @@ internal sealed partial class MainPage : Page
                 HasLoad = true;
             }
 
-            await ViewModel.OnRefreshAsync();
+            if (e.Parameter is IEnumerable<StorageFile> modFiles)
+            {
+                await ViewModel.ImportAsync(modFiles);
+            }
+            else
+            {
+                await ViewModel.OnRefreshAsync();
+            }
+
         }, DispatcherQueuePriority.Normal).FireAndForget();
 
         AppxContext.AppxTitleBar.SetTitleBar(AppTitleBar);

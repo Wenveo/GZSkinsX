@@ -36,6 +36,7 @@
     </Compile>
     <Compile Include="Views\Index\IndexSettings.cs" />
     <Compile Include="Views\Main\MainFrame.cs" />
+    <Compile Include="Views\Main\MainActivationHandler.cs" />
     <Compile Include="Views\Main\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
