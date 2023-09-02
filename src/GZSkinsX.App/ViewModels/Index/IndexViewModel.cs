@@ -84,6 +84,6 @@ internal sealed partial class IndexViewModel : ObservableObject
 
     private void UpdateDownloadProgress(DownloadOperation download)
     {
-        ProcessValue = download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
+        ProcessValue = (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
     }
 }
