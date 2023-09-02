@@ -27,8 +27,8 @@ using GZSkinsX.Contracts.Mounter;
 
 using Windows.Data.Json;
 using Windows.Foundation;
+using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
-using Windows.Web.Http;
 
 namespace GZSkinsX.Services.Mounter;
 
@@ -42,6 +42,8 @@ internal sealed class MounterService : IMounterService
         new Uri("http://x1.gzskins.com/MounterV3/PackageManifest.json")
     };
 
+    private readonly BackgroundDownloader _downloader;
+
     private readonly MounterSettings _mounterSettings;
 
     public event TypedEventHandler<IMounterService, bool>? IsRunningChanged;
@@ -49,6 +51,7 @@ internal sealed class MounterService : IMounterService
     [ImportingConstructor]
     public MounterService(MounterSettings mounterSettings)
     {
+        _downloader = new BackgroundDownloader();
         _mounterSettings = mounterSettings;
 
         var worker = new BackgroundWorker();
@@ -130,11 +133,9 @@ internal sealed class MounterService : IMounterService
         var metadata = await TryGetCurrentPackageMetadataAsync();
         if (metadata.IsEmpty is false)
         {
-            var httpClient = new HttpClient();
-
             try
             {
-                var onlineManifest = await DownloadPackageManifestAsync(httpClient);
+                var onlineManifest = await DownloadPackageManifestAsync();
                 if (StringComparer.Ordinal.Equals(metadata.Version, onlineManifest.Version))
                 {
                     return false;
@@ -144,10 +145,6 @@ internal sealed class MounterService : IMounterService
             {
                 AppxContext.LoggingService.LogError($"MounterService::CheckForUpdatesAsync -> Failed to check for updates. Exception message: \n\"{excp.Message}\".");
                 throw;
-            }
-            finally
-            {
-                httpClient.Dispose();
             }
         }
 
@@ -234,25 +231,21 @@ internal sealed class MounterService : IMounterService
 
     public async Task UpdateAsync(IProgress<double>? progress = null)
     {
-        progress?.Report(0.0d);
-        using var httpClient = new HttpClient();
-
-        progress?.Report(2.0d);
         var workingDirectory = await TryGetMounterWorkingDirectoryAsync();
-
-        progress?.Report(4.0d);
-
         var previousMetadata = workingDirectory is not null ? await TryGetLocalMTPackageMetadataAsync(workingDirectory,
             nameof(MTPackageMetadata.Version), nameof(MTPackageMetadata.SettingsFile)) : MTPackageMetadata.Empty;
 
-        progress?.Report(9.0d);
-        var onlineManifest = await DownloadPackageManifestAsync(httpClient);
+        var onlineManifest = await DownloadPackageManifestAsync(new((download) =>
+        {
+            progress?.Report((double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 6);
+        }));
 
-        progress?.Report(28.0d);
         if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version) is false)
         {
-            var destFolder = await DownloadMTPackageAsync(httpClient, new(onlineManifest.Path));
-            progress?.Report(84.0d);
+            var destFolder = await DownloadMTPackageAsync(new(onlineManifest.Path), new((download) =>
+            {
+                progress?.Report(6 + (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 94);
+            }));
 
             // New Metadata
             var newMetadata = await GetLocalMTPackageMetadataAsync(destFolder, nameof(MTPackageMetadata.SettingsFile));
@@ -260,21 +253,15 @@ internal sealed class MounterService : IMounterService
             // Copy settings file
             if (workingDirectory is not null && previousMetadata.IsEmpty is false)
             {
-                progress?.Report(92.0d);
-
                 var settingsFilePath = Path.Combine(workingDirectory.Path, previousMetadata.SettingsFile);
                 if (File.Exists(settingsFilePath))
                 {
                     File.Copy(settingsFilePath, Path.Combine(destFolder.Path, newMetadata.SettingsFile), true);
                 }
-
-                progress?.Report(98.0d);
             }
 
             _mounterSettings.WorkingDirectory = destFolder.Name;
         }
-
-        progress?.Report(100.0d);
 
         await TryCleanupMounterRootFolderAsync();
     }
@@ -347,33 +334,60 @@ internal sealed class MounterService : IMounterService
         return await relativeTo.CreateFolderAsync(folderName);
     }
 
-    private async Task<MTPackageManifest> DownloadPackageManifestAsync(HttpClient httpClient)
+    private async Task<MTPackageManifest> DownloadPackageManifestAsync(Progress<DownloadOperation>? progress = null)
     {
+        var temp = await GetTemporaryFileAsync();
         foreach (var uri in OnlineManifests)
         {
-            using var response = await httpClient.GetAsync(uri);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                var operation = _downloader.CreateDownload(uri, temp);
+                if (progress is not null)
+                {
+                    await operation.StartAsync().AsTask(progress);
+                }
+                else
+                {
+                    await operation.StartAsync();
+                }
 
-            var result = await response.Content.ReadAsStringAsync();
-            var jsonObject = JsonObject.Parse(result);
+                var content = await FileIO.ReadTextAsync(temp);
+                var jsonObject = JsonObject.Parse(content);
 
-            return new MTPackageManifest(
-                jsonObject[nameof(MTPackageManifest.Path)].GetString(),
-                jsonObject[nameof(MTPackageManifest.Version)].GetString());
+                return new MTPackageManifest(
+                    jsonObject[nameof(MTPackageManifest.Path)].GetString(),
+                    jsonObject[nameof(MTPackageManifest.Version)].GetString());
+            }
+            catch (Exception)
+            {
+                continue;
+            }
         }
 
+        await temp.DeleteAsync();
         throw new IndexOutOfRangeException();
     }
 
-    private async Task<StorageFolder> DownloadMTPackageAsync(HttpClient httpClient, Uri requestUri)
+    private async Task<StorageFolder> DownloadMTPackageAsync(Uri requestUri, Progress<DownloadOperation>? progress = null)
     {
-        using var responseStream = await httpClient.GetInputStreamAsync(requestUri);
-        using var zipArchive = new ZipArchive(responseStream.AsStreamForRead());
+        var temp = await GetTemporaryFileAsync();
+
+        var operation = _downloader.CreateDownload(requestUri, temp);
+        if (progress is not null)
+        {
+            await operation.StartAsync().AsTask(progress);
+        }
+        else
+        {
+            await operation.StartAsync();
+        }
 
         var rootFolder = await GetMounterRootFolderAsync();
         var destFolder = await CreateAnEmptyFolderAsync(rootFolder, Guid.NewGuid().ToString());
 
-        zipArchive.ExtractToDirectory(destFolder.Path);
+        ZipFile.ExtractToDirectory(temp.Path, destFolder.Path);
+        await temp.DeleteAsync();
+
         return destFolder;
     }
 
@@ -389,6 +403,11 @@ internal sealed class MounterService : IMounterService
     private async Task<StorageFolder> GetMounterRootFolderAsync()
     {
         return await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Mounter", CreationCollisionOption.OpenIfExists);
+    }
+
+    private async Task<StorageFile> GetTemporaryFileAsync()
+    {
+        return await ApplicationData.Current.TemporaryFolder.CreateFileAsync(Guid.NewGuid().ToString());
     }
 
     private MTPackageMetadata ParseMetadataFromString(string input, params string[] filter)
