@@ -357,7 +357,7 @@ internal sealed partial class MainViewModel : ObservableObject
 
                     AppxContext.LoggingService.LogOkay(
                         "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
-                        $"The mod file \"{newFile.Name}\" have been imported. And fix the file extension name");
+                        $"The mod file \"{newFile.DisplayName}\" have been imported. And fix the file extension name.");
                 }
                 else
                 {
