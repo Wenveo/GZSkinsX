@@ -93,6 +93,9 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
                 await mainPage.ViewModel.OnRefreshAsync();
             }
         }
+
+        // Just handler once
+        AppxContext.ActivationService.UnregisterHandler(this);
     }
 
     bool IActivationHandler.CanHandle(IActivatedEventArgs args)
