@@ -5,9 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
 using System.Composition;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,29 +60,7 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
             return;
         }
 
-        var modsFolder = await AppxContext.MyModsService.GetModsFolderAsync();
-        foreach (var file in modFiles)
-        {
-            if (await modsFolder.TryGetItemAsync(file.Name) is not null)
-            {
-                continue;
-            }
-
-            try
-            {
-                await AppxContext.MyModsService.ReadModInfoAsync(file);
-                var newFile = await file.CopyAsync(modsFolder);
-                if (Path.GetExtension(newFile.Name) != ".lolgezi")
-                {
-                    // Fix extension name
-                    await newFile.RenameAsync(Path.GetFileName(newFile.Name) + ".lolgezi");
-                }
-            }
-            catch (Exception)
-            {
-                continue;
-            }
-        }
+        await AppxContext.MyModsService.ImportModsAsync(modFiles);
 
         if (AppxContext.AppxWindow.MainWindow.Content is Frame rootFrame)
         {
@@ -94,7 +70,7 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
             }
         }
 
-        // Just handler once
+        // Just handle once
         AppxContext.ActivationService.UnregisterHandler(this);
     }
 

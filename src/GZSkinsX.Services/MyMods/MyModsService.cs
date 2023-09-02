@@ -105,7 +105,37 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         var modsFolder = await GetModsFolderAsync();
         foreach (var file in storageFiles)
         {
-            await file.CopyAsync(modsFolder);
+            if (await modsFolder.TryGetItemAsync(file.Name) is StorageFile existsFile)
+            {
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.Services.MyModsService.ImportModsCoreAsync",
+                    $"A mod file with the same name already exists \"{existsFile.Name}\", skip import.");
+            }
+
+            try
+            {
+                await ReadModInfoAsync(file);
+
+                var newFile = await file.CopyAsync(modsFolder);
+                if (Path.GetExtension(newFile.Name) != ".lolgezi")
+                {
+                    // Fix extension name
+                    await newFile.RenameAsync(Path.GetFileName(newFile.Name) + ".lolgezi");
+                }
+
+                AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.Services.MyModsService.ImportModsCoreAsync",
+                    $"The mod file \"{newFile.Name}\" have been imported.");
+            }
+            catch (Exception excp)
+            {
+                AppxContext.LoggingService.LogError(
+                    "GZSkinsX.Services.MyModsService.ImportModsCoreAsync",
+                    $"""
+                    Failed to import the file "{file.Name}".
+                    {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}.
+                    """);
+            }
         }
     }
 
