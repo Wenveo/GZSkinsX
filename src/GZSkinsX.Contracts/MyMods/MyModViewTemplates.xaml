@@ -52,8 +52,8 @@
 
     <converters:BoolToObjectConverter
         x:Key="MyModViewStatusContentConverter"
-        FalseValue="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Uninstalled}"
-        TrueValue="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Installed}" />
+        FalseValue="{markups:LocalizedString ResourceKey=GZSkinsX.Contracts/Resources/MyModView_Status_Uninstalled}"
+        TrueValue="{markups:LocalizedString ResourceKey=GZSkinsX.Contracts/Resources/MyModView_Status_Installed}" />
 
     <DataTemplate x:Key="MyModViewTemplate" x:DataType="local:MyModViewModel">
         <Grid
@@ -187,7 +187,7 @@
                         FontSize="12"
                         FontWeight="{StaticResource MyModViewStatusFontWeightInstall}"
                         Foreground="{ThemeResource MyModViewStatusForegroundInstall}"
-                        Text="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Installed}" />
+                        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Contracts/Resources/MyModView_Status_Installed}" />
                 </Border>
 
                 <Border
@@ -204,7 +204,7 @@
                         FontSize="12"
                         FontWeight="{StaticResource MyModViewStatusFontWeightUninstall}"
                         Foreground="{ThemeResource MyModViewStatusForegroundUninstall}"
-                        Text="{markups:LocalizedString ResourceKey=Resources/MyModView_Status_Uninstalled}" />
+                        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Contracts/Resources/MyModView_Status_Uninstalled}" />
                 </Border>
             </Grid>
 

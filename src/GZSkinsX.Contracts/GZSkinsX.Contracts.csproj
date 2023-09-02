@@ -119,6 +119,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
     </None>
+    <PRIResource Include="Strings\zh-CN\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
