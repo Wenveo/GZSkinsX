@@ -196,7 +196,7 @@ public sealed partial class App : Application
         }
 
         // Ensure the current window is active
-        Window.Current.Activate();
+        AppxContext.AppxWindow.MainWindow.Activate();
     }
 
     [DllImport("ext-ms-win-ntuser-window-l1-1-0.dll", ExactSpelling = true, EntryPoint = "FindWindowW", SetLastError = true)]
