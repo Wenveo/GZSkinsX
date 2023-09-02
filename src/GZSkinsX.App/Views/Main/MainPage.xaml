@@ -323,6 +323,12 @@
             PreviewKeyUp="ContentGrid_PreviewKeyUp"
             Visibility="Collapsed">
 
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition />
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="24" />
                 <RowDefinition Height="Auto" />

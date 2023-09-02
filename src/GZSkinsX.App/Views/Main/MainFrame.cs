@@ -7,6 +7,8 @@
 
 using GZSkinsX.Contracts.WindowManager;
 
+using Windows.UI.Xaml.Media.Animation;
+
 namespace GZSkinsX.Views;
 
 [System.Composition.Shared, ExportWindowFrame]
@@ -16,6 +18,7 @@ internal sealed class MainFrame : IWindowFrame
     /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
+        args.NavigationTransitionInfo = new SuppressNavigationTransitionInfo();
         return true;
     }
 }
