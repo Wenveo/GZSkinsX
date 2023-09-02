@@ -49,12 +49,23 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
     public async Task ClearAllInstalledAsync()
     {
         InstalledMods.Clear();
+
+        AppxContext.LoggingService.LogOkay(
+            "GZSkinsX.Services.MyModsService.ClearAllInstalledAsync",
+            "Successfully cleaned all installed mods.");
+
         await UpdateSettingsAsync();
     }
 
     public bool IsInstalled(StorageFile storageFile)
     {
-        return InstalledMods.Contains(storageFile.DisplayName);
+        var result = InstalledMods.Contains(storageFile.DisplayName);
+
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.MyModsService.IsInstalled",
+            $"The mod \"{storageFile.DisplayName}\" is {(result ? "installed" : "uninstalled")}.");
+
+        return result;
     }
 
     public int IndexOfTable(StorageFile storageFile)
@@ -71,6 +82,10 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
             result++;
         }
+
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.MyModsService.IndexOfTable",
+            $"The index of the mod \"{storageFile.DisplayName}\" is {result}.");
 
         return result;
     }
@@ -113,10 +128,18 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
 
             if (await modsFolder.TryGetItemAsync(file.Name) is not StorageFile)
             {
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.Services.MyModsService.InstallModsCoreAsync",
+                    $"The mod file does not exist in the mods folder {file.Name}.");
+
                 continue;
             }
 
             InstalledMods.Add(file.DisplayName);
+
+            AppxContext.LoggingService.LogAlways(
+                "GZSkinsX.Services.MyModsService.InstallModsCoreAsync",
+                $"The mod file \"{file.Name}\" have been installed.");
         }
 
         await UpdateSettingsAsync();
@@ -136,6 +159,10 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
     {
         foreach (var file in storageFiles)
         {
+            AppxContext.LoggingService.LogAlways(
+                "GZSkinsX.Services.MyModsService.UninstallModsCoreAsync",
+                $"The mod \"{file.DisplayName}\" have been uninstalled.");
+
             InstalledMods.Remove(file.DisplayName);
         }
 
@@ -179,6 +206,10 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
             return;
         }
 
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.MyModsService.SetIsEnableBloodAsync",
+            $"The blood is {(isEnable ? "enabled" : "disabled")}.");
+
         _myModSettings.EnableBlood = isEnable;
         await UpdateSettingsAsync();
     }
@@ -186,12 +217,22 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
     public async Task SetModsFolderAsync(StorageFolder storageFolder)
     {
         AppxContext.FutureAccessService.Add(storageFolder, FA_TOKEN_MODSFOLDER);
+
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.MyModsService.SetModsFolderAsync",
+            $"The mods folder have been changed, new folder: \"{storageFolder.Path}\".");
+
         await UpdateSettingsAsync();
     }
 
     public async Task SetWadsFolderAsync(StorageFolder storageFolder)
     {
         AppxContext.FutureAccessService.Add(storageFolder, FA_TOKEN_WADSFOLDER);
+
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.MyModsService.SetWadsFolderAsync",
+            $"The wads folder have been changed, new folder: \"{storageFolder.Path}\".");
+
         await UpdateSettingsAsync();
     }
 
@@ -216,7 +257,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning(
+            AppxContext.LoggingService.LogError(
                 "GZSkinsX.Services.MyModsService.GetModImageAsync",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
 
@@ -238,7 +279,7 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning(
+            AppxContext.LoggingService.LogError(
                 "GZSkinsX.Services.MyModsService.TryReadModInfoAsync",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
 
@@ -278,12 +319,12 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
 
         using var fileStream = new FileStream(settingsFilePath, FileMode.Open, FileAccess.Read);
-        if (await JsonSerializer.DeserializeAsync<MTSettingsRoot>(fileStream) is not { } settingsRoot)
+        if (await JsonSerializer.DeserializeAsync<MTSettingsRoot>(fileStream) is { } settingsRoot)
         {
-            return null;
+            return settingsRoot;
         }
 
-        return settingsRoot;
+        return null;
     }
 
     private async Task<MTSettingsData?> TryGetSettingsDataAsync()
@@ -401,7 +442,25 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
             Directory.CreateDirectory(parentFolder);
         }
 
-        File.WriteAllText(settingsFilePath, JsonSerializer.Serialize(settingsRoot, _jsonSerializerOptions), _utf8EncodingWithOutBOM);
+        try
+        {
+            File.WriteAllText(settingsFilePath, JsonSerializer.Serialize(settingsRoot, _jsonSerializerOptions), _utf8EncodingWithOutBOM);
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.Services.MyModsService.UpdateSettingsAsync",
+                "Successfully update the mods configuration file.");
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.Services.MyModsService.UpdateSettingsAsync",
+                $"""
+                Failed to update the mods configuration file.
+                {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}.
+                """);
+
+            throw;
+        }
     }
 
     private sealed class MTSettingsData

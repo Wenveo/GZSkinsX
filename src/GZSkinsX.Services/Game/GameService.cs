@@ -70,14 +70,14 @@ internal sealed class GameService(GameSettings gameSettings) : IGameService
             _gameSettings.CurrentRegion = region;
 
             _loggingService.LogOkay("GZSkinsX.Services.GameService.TryUpdateAsync",
-                $"Update game data successfully /p:GameRegion={region} /p:RootDirectory={rootFolder!.Path}");
+                $"Update game data successfully /p:GameRegion=\"{region}\" /p:RootDirectory=\"{rootFolder!.Path}\"");
 
             return true;
         }
 
         var path = rootFolder is not null ? rootFolder.Path : "<null>";
         _loggingService.LogWarning("GZSkinsX.Services.GameService.TryUpdateAsync",
-            $"Failed to update game data /p:GameRegion={region} /p:RootDirectory={path}");
+            $"Failed to update game data /p:GameRegion=\"{region}\" /p:RootDirectory=\"{path}\".");
 
         return false;
     }

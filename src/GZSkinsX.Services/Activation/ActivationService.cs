@@ -25,7 +25,7 @@ internal sealed class ActivationService : IActivationService
     {
         AppxContext.LoggingService.LogAlways(
             "GZSkinsX.Services.ActivationService.ActivateAsync",
-            $"Type = {args.GetType()}, Kind = {args.Kind}, PreviousExecutionState = {args.PreviousExecutionState}.");
+            $"{{Type = {args.GetType()}, Kind = {args.Kind}, PreviousExecutionState = {args.PreviousExecutionState}}}");
 
         for (var i = _handlers.Count - 1; i >= 0; i--)
         {

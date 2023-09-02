@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 
+using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.WindowManager;
 
 using Microsoft.UI.Xaml.Controls;
@@ -148,12 +149,26 @@ internal sealed class WindowManagerService : IWindowManagerService
             ? await windowFrame2.CanNavigateToAsync(args)
             : windowFrame.CanNavigateTo(args);
 
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.WindowManagerService.NavigateCore",
+            $"{(b ? "Can" : "Cannot")} navigate to the frame \"{context.Metadata.Guid}\".");
+
         if (b)
         {
             if (_frame.Navigate(context.Metadata.PageType, args.Parameter,
                 args.NavigationTransitionInfo ?? new DrillInNavigationTransitionInfo()))
             {
+                AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.Services.WindowManagerService.NavigateCore",
+                    $"Successfully navigate to the frame \"{context.Metadata.Guid}\".");
+
                 _frame.BackStack.Clear();
+            }
+            else
+            {
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.Services.WindowManagerService.NavigateCore",
+                    $"Failed to navigate to the frame \"{context.Metadata.Guid}\".");
             }
         }
     }

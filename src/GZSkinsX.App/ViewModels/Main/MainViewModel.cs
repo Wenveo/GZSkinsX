@@ -122,10 +122,17 @@ internal sealed partial class MainViewModel : ObservableObject
             RequestedOperation = DataPackageOperation.Copy
         };
 
-        dataPackage.SetStorageItems(
-            items.OfType<MyModViewModel>().Select(a => a.ModFile));
+        var storageItems = items
+            .OfType<MyModViewModel>()
+            .Select(a => a.ModFile);
 
+        dataPackage.SetStorageItems(storageItems);
         Clipboard.SetContent(dataPackage);
+
+        AppxContext.LoggingService.LogOkay(
+            "GZSkinsX.App.ViewModels.MainViewModel.OnCopyAsync",
+            $"Files \"{string.Join(',', storageItems.Select(a => a.Name))}\" have been copied to the clipboard.");
+
         await Task.CompletedTask;
     }
 
@@ -142,27 +149,35 @@ internal sealed partial class MainViewModel : ObservableObject
             RequestedOperation = DataPackageOperation.Copy
         };
 
-        var paths = items.OfType<MyModViewModel>().Select(a => a.ModFile.Path).ToArray();
-        if (paths.Length == 1)
+        var files = items.OfType<MyModViewModel>().Select(a => a.ModFile).ToArray();
+        if (files.Length == 1)
         {
-            dataPackage.SetText($"\"{paths[0]}\"");
+            dataPackage.SetText($"\"{files[0].Path}\"");
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnCopyAsPathAsync",
+                $"The path of file \"{files[0].Name}\" have been copied to the clipboard.");
         }
         else
         {
             var stringBuilder = new StringBuilder();
-            for (var i = 0; i < paths.Length;)
+            for (var i = 0; i < files.Length;)
             {
                 stringBuilder.Append('\"');
-                stringBuilder.Append(paths[i]);
+                stringBuilder.Append(files[i].Path);
                 stringBuilder.Append('\"');
 
-                if (++i != paths.Length)
+                if (++i != files.Length)
                 {
                     stringBuilder.Append(Environment.NewLine);
                 }
             }
 
             dataPackage.SetText(stringBuilder.ToString());
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnCopyAsPathAsync",
+                $"The paths of files \"{string.Join(',', files.Select(a => a.Name))}\" have been copied to the clipboard.");
         }
 
         Clipboard.SetContent(dataPackage);
@@ -186,20 +201,61 @@ internal sealed partial class MainViewModel : ObservableObject
         if (options.ItemsToSelect.Count > 0)
         {
             var modsFolder = await MyModsService.GetModsFolderAsync();
-            await Launcher.LaunchFolderAsync(modsFolder, options);
+            var b = await Launcher.LaunchFolderAsync(modsFolder, options);
+
+            if (b)
+            {
+                AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
+                    $"Successfully open the mods folder, ItemToSelect: \"{string.Join(',', options.ItemsToSelect.Select(a => a.Name))}\".");
+            }
+            else
+            {
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
+                    $"Failed to open the mods folder.");
+            }
+        }
+        else
+        {
+            AppxContext.LoggingService.LogWarning(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
+                $"No items to select, will not open the mods folder.");
         }
     }
 
     [RelayCommand]
     private async Task OnOpenModFolderAsync()
     {
-        await Launcher.LaunchFolderAsync(await MyModsService.GetModsFolderAsync());
+        if (await Launcher.LaunchFolderAsync(await MyModsService.GetModsFolderAsync()))
+        {
+            AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
+                    $"Successfully open the mods folder.");
+        }
+        else
+        {
+            AppxContext.LoggingService.LogWarning(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
+                $"Failed to open the mods folder.");
+        }
     }
 
     [RelayCommand]
     private async Task OnOpenWadFolderAsync()
     {
-        await Launcher.LaunchFolderAsync(await MyModsService.GetWadsFolderAsync());
+        if (await Launcher.LaunchFolderAsync(await MyModsService.GetWadsFolderAsync()))
+        {
+            AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
+                    $"Successfully open the wads folder.");
+        }
+        else
+        {
+            AppxContext.LoggingService.LogWarning(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
+                $"Failed to open the wads folder.");
+        }
     }
 
     [RelayCommand]
@@ -228,6 +284,10 @@ internal sealed partial class MainViewModel : ObservableObject
             }
             catch (Exception excp)
             {
+                AppxContext.LoggingService.LogError(
+                    "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                    $"{excp}: {excp.Message}. {Environment.NewLine}{excp.StackTrace}.");
+
                 var contentDialog = new ContentDialog()
                 {
                     Title = ResourceHelper.GetLocalized("Resources/Main_MyMods_ImportFilesDialog_InvaliedFile"),
@@ -256,6 +316,10 @@ internal sealed partial class MainViewModel : ObservableObject
 
             if (await modsFolder.TryGetItemAsync(file.Name) is StorageFile existsFile)
             {
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                    $"A mod file with the same name already exists \"{existsFile.Name}\".");
+
                 var contentDialog = new ContentDialog()
                 {
                     DefaultButton = ContentDialogButton.Primary,
@@ -268,18 +332,38 @@ internal sealed partial class MainViewModel : ObservableObject
                 var result = await contentDialog.ShowAsync();
                 if (result is not ContentDialogResult.Primary)
                 {
+                    AppxContext.LoggingService.LogWarning(
+                        "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                        $"The operation to replace the existing mod file have been canceled.");
+
                     continue;
                 }
 
                 await file.CopyAndReplaceAsync(existsFile);
+
+                AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                    $"The existing mod file have been successfully replaced.");
             }
             else
             {
                 var newFile = await file.CopyAsync(modsFolder);
                 if (Path.GetExtension(newFile.Name) != ".lolgezi")
                 {
+                    var newFileName = Path.GetFileName(newFile.Name) + ".lolgezi";
+
                     // Fix extension name
-                    await newFile.RenameAsync(Path.GetFileName(newFile.Name) + ".lolgezi");
+                    await newFile.RenameAsync(newFileName);
+
+                    AppxContext.LoggingService.LogOkay(
+                        "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                        $"The mod file \"{newFile.Name}\" have been imported. And fix the file extension name");
+                }
+                else
+                {
+                    AppxContext.LoggingService.LogOkay(
+                        "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                        $"The mod file \"{newFile.Name}\" have been imported.");
                 }
             }
 
@@ -302,7 +386,25 @@ internal sealed partial class MainViewModel : ObservableObject
 
         foreach (var file in items.OfType<MyModViewModel>().Select(a => a.ModFile))
         {
-            await file.DeleteAsync();
+            try
+            {
+                await file.DeleteAsync();
+
+                AppxContext.LoggingService.LogOkay(
+                    "GZSkinsX.App.ViewModels.MainViewModel.OnDeleteAsync",
+                    $"The mod file \"{file.Name}\" have been deleted.");
+            }
+            catch (Exception excp)
+            {
+                AppxContext.LoggingService.LogError(
+                    "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
+                    $"""
+                    Failed to delete the mod file \"{file.Name}\".
+                    {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}.
+                    """);
+
+                continue;
+            }
         }
 
         await RefreshCoreAsync();
@@ -316,9 +418,25 @@ internal sealed partial class MainViewModel : ObservableObject
             return;
         }
 
-        var myModViewModels = items.OfType<MyModViewModel>();
-        await MyModsService.InstallModsAsync(myModViewModels.Select(a => a.ModFile));
-        myModViewModels.All(item => item.Enable = true);
+        try
+        {
+            var myModViewModels = items.OfType<MyModViewModel>();
+            await MyModsService.InstallModsAsync(myModViewModels.Select(a => a.ModFile));
+            myModViewModels.All(item => item.Enable = true);
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnInstallAsync",
+                $"One or more mods were successfully installed. Items: \"{string.Join(',', myModViewModels.Select(a => a.ModFile.Name))}\".");
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnInstallAsync",
+                $"""
+                Failed to install one or more mods.
+                {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}
+                """);
+        }
 
         UpdateModInstalledIndex();
     }
@@ -331,9 +449,25 @@ internal sealed partial class MainViewModel : ObservableObject
             return;
         }
 
-        var myModViewModels = items.OfType<MyModViewModel>();
-        await MyModsService.UninstallModsAsync(myModViewModels.Select(a => a.ModFile));
-        myModViewModels.Any(item => item.Enable = false);
+        try
+        {
+            var myModViewModels = items.OfType<MyModViewModel>();
+            await MyModsService.UninstallModsAsync(myModViewModels.Select(a => a.ModFile));
+            myModViewModels.Any(item => item.Enable = false);
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnUninstallAsync",
+                $"One or more mods were successfully uninstalled. Items: \"{string.Join(',', myModViewModels.Select(a => a.ModFile.Name))}\".");
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.App.ViewModels.MainViewModel.OnUninstallAsync",
+                $"""
+                Failed to uninstall one or more mods.
+                {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}
+                """);
+        }
 
         UpdateModInstalledIndex();
     }
@@ -347,6 +481,10 @@ internal sealed partial class MainViewModel : ObservableObject
         }
 
         listView.DeselectAll();
+
+        AppxContext.LoggingService.LogOkay(
+            "GZSkinsX.App.ViewModels.MainViewModel.OnDeselectAll",
+            $"All items have been deselected.");
     }
 
     [RelayCommand]
@@ -358,6 +496,10 @@ internal sealed partial class MainViewModel : ObservableObject
         }
 
         listView.SelectAllSafe();
+
+        AppxContext.LoggingService.LogOkay(
+            "GZSkinsX.App.ViewModels.MainViewModel.OnSelectAll",
+            $"All items have been selected.");
     }
 
     private void UpdateModInstalledIndex()
@@ -389,27 +531,43 @@ internal sealed partial class MainViewModel : ObservableObject
 
     private async Task RefreshCoreAsync()
     {
-        await MyModsService.RefreshAsync();
-
-        var newList = new List<MyModViewModel>();
-        var modsFolder = await MyModsService.GetModsFolderAsync();
-        foreach (var file in await modsFolder.GetFilesAsync())
+        try
         {
-            var modInfo = await MyModsService.TryReadModInfoAsync(file);
-            if (modInfo is not null)
+            await MyModsService.RefreshAsync();
+
+            var newList = new List<MyModViewModel>();
+            var modsFolder = await MyModsService.GetModsFolderAsync();
+            foreach (var file in await modsFolder.GetFilesAsync())
             {
-                var modImage = await MyModsService.GetModImageAsync(file);
+                var modInfo = await MyModsService.TryReadModInfoAsync(file);
+                if (modInfo is not null)
+                {
+                    var modImage = await MyModsService.GetModImageAsync(file);
 
-                var isInstalled = MyModsService.IsInstalled(file);
-                var indexOfTable = MyModsService.IndexOfTable(file) + 1;
+                    var isInstalled = MyModsService.IsInstalled(file);
+                    var indexOfTable = MyModsService.IndexOfTable(file) + 1;
 
-                newList.Add(new(file, modImage, modInfo, isInstalled, indexOfTable));
+                    newList.Add(new(file, modImage, modInfo, isInstalled, indexOfTable));
+                }
             }
+
+            await MyModsService.UpdateSettingsAsync();
+
+            MyModCollection = newList;
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.App.ViewModels.MainViewModel.RefreshCoreAsync",
+                $"The mods collection have been successfully refreshed.");
         }
-
-        await MyModsService.UpdateSettingsAsync();
-
-        MyModCollection = newList;
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.App.ViewModels.MainViewModel.RefreshCoreAsync",
+                $"""
+                Unable to refresh the mods collection.
+                {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}
+                """);
+        }
     }
 
     [RelayCommand]

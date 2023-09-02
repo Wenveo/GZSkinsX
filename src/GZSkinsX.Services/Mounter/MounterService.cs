@@ -122,7 +122,7 @@ internal sealed class MounterService : IMounterService
                 else
                 {
                     IsRunningChanged?.Invoke(this, false);
-                    AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.DoSomething", "MotClientAgent has exited.");
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.DoSomething", "MotClientAgent is not running.");
                     await CheckRunAsync();
                 }
             }
@@ -148,11 +148,11 @@ internal sealed class MounterService : IMounterService
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning(
+                AppxContext.LoggingService.LogError(
                     "GZSkinsX.Services.MounterService.CheckForUpdatesAsync",
                     $"""
-                    Failed to check updates. "{excp.Message}".
-                    {excp}: {excp.StackTrace}
+                    Failed to check updates.
+                    {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}
                     """);
 
                 throw;
@@ -189,7 +189,19 @@ internal sealed class MounterService : IMounterService
                 nameof(MTPackageMetadata.ProcStartupArgs));
 
         var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, localPackageMetadata.ProcStartupArgs, true);
+        try
+        {
+            await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, localPackageMetadata.ProcStartupArgs, true);
+            AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.LaunchAsync", "Launch successfully.");
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.Services.MounterService.LaunchAsync",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+
+            throw;
+        }
     }
 
     public async Task LaunchAsync(string args)
@@ -201,7 +213,20 @@ internal sealed class MounterService : IMounterService
                 nameof(MTPackageMetadata.ExecutableFile));
 
         var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, args, true);
+
+        try
+        {
+            await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, args, true);
+            AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.LaunchAsync2", "Launch successfully.");
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.Services.MounterService.LaunchAsync2",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+
+            throw;
+        }
     }
 
     public async Task TerminateAsync()
@@ -214,7 +239,19 @@ internal sealed class MounterService : IMounterService
                 nameof(MTPackageMetadata.ProcTerminateArgs));
 
         var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, localPackageMetadata.ProcTerminateArgs, true);
+        try
+        {
+            await AppxContext.DesktopExtensionService.ProcessLaunchAsync(executableFile, localPackageMetadata.ProcTerminateArgs, true);
+            AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.TerminateAsync", "Terminate successfully.");
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.Services.MounterService.TerminateAsync",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+
+            throw;
+        }
     }
 
     public async Task<MTPackageMetadata> TryGetCurrentPackageMetadataAsync(params string[] filter)
@@ -252,7 +289,13 @@ internal sealed class MounterService : IMounterService
             progress?.Report((double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 6);
         }));
 
-        if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version) is false)
+        if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version))
+        {
+            AppxContext.LoggingService.LogAlways(
+                "GZSkinsX.Services.MounterService.UpdateAsync",
+                "This component is already up to date.");
+        }
+        else
         {
             var destFolder = await DownloadMTPackageAsync(new(onlineManifest.Path), new((download) =>
             {
@@ -273,6 +316,10 @@ internal sealed class MounterService : IMounterService
             }
 
             _mounterSettings.WorkingDirectory = destFolder.Name;
+
+            AppxContext.LoggingService.LogOkay(
+                "GZSkinsX.Services.MounterService.UpdateAsync",
+                $"The component has been updated to \"{onlineManifest.Version}\".");
         }
 
         await TryCleanupMounterRootFolderAsync();
@@ -327,11 +374,11 @@ internal sealed class MounterService : IMounterService
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning(
+                AppxContext.LoggingService.LogError(
                     "MounterService::VerifyLocalMTPackageIntegrityAsync",
                     $"""
-                    Failed to calculate file checksum "{path}", ErrorMessage = "{excp.Message}".
-                    {excp}: {excp.StackTrace}"
+                    Failed to calculate file checksum "{path}".
+                    {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
                     """);
 
                 return false;
@@ -378,9 +425,9 @@ internal sealed class MounterService : IMounterService
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning(
+                AppxContext.LoggingService.LogError(
                     "GZSkinsX.Services.MounterService.DownloadPackageManifestAsync",
-                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
                 continue;
             }
@@ -414,9 +461,9 @@ internal sealed class MounterService : IMounterService
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning(
+            AppxContext.LoggingService.LogError(
                 "GZSkinsX.Services.MounterService.DownloadMTPackageAsync",
-                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
             throw;
         }
@@ -528,9 +575,9 @@ internal sealed class MounterService : IMounterService
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning(
+                AppxContext.LoggingService.LogError(
                     "GZSkinsX::Services::MounterService::TryClearMounterRootFolderAsync",
-                    $"Failed to delete storage item ({item.Name}): \"{excp.Message}\".");
+                    $"Failed to delete the storage item ({item.Name}): \"{excp.Message}\".");
             }
         }
     }

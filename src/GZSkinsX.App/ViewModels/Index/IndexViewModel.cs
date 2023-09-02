@@ -71,9 +71,9 @@ internal sealed partial class IndexViewModel : ObservableObject
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning(
+                AppxContext.LoggingService.LogError(
                     "GZSkinsX.App.ViewModels.IndexViewModel.DownloadAsync",
-                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
                 continue;
             }
