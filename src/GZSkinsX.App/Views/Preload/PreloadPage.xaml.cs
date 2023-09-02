@@ -49,7 +49,7 @@ internal sealed partial class PreloadPage : Page
         if (await Package.Current.VerifyContentIntegrityAsync())
         {
             TryCheckUpdatesAsync().FireAndForget();
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid);
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid, true);
         }
         else
         {

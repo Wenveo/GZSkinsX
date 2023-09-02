@@ -18,7 +18,12 @@ internal sealed class MainFrame : IWindowFrame
     /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        args.NavigationTransitionInfo = new SuppressNavigationTransitionInfo();
+        // Should enable animation ?
+        if (args.Parameter is not bool b || b is false)
+        {
+            args.NavigationTransitionInfo = new SuppressNavigationTransitionInfo();
+        }
+
         return true;
     }
 }
