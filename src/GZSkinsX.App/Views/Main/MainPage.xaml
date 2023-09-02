@@ -355,11 +355,6 @@
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
                 SelectionChanged="MyModsGridView_SelectionChanged"
                 SelectionMode="Extended">
-
-                <GridView.Resources>
-                    <ThemeShadow x:Name="MyModsGridViewItem_SharedShadow" />
-                </GridView.Resources>
-
                 <GridView.ItemContainerTransitions>
                     <TransitionCollection>
                         <ContentThemeTransition />
@@ -369,7 +364,6 @@
                 <GridView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
                         <Setter x:Name="Main_MyMods_GridViewItem_Margin" Property="Margin" Value="0,0,8,12" />
-                        <Setter Property="Shadow" Value="{StaticResource MyModsGridViewItem_SharedShadow}" />
                     </Style>
                 </GridView.ItemContainerStyle>
             </GridView>
@@ -560,6 +554,7 @@
                 </Grid.ColumnDefinitions>
 
                 <AutoSuggestBox
+                    x:Name="Main_MyMods_SerachBox"
                     x:Uid="Main_MyMods_SerachBox"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
@@ -570,6 +565,12 @@
                     <animations:Implicit.Animations>
                         <animations:OffsetAnimation Duration="0:0:0.420" />
                     </animations:Implicit.Animations>
+                    <animations:Implicit.ShowAnimations>
+                        <animations:OpacityAnimation From="0" To="1" />
+                    </animations:Implicit.ShowAnimations>
+                    <animations:Implicit.HideAnimations>
+                        <animations:OpacityAnimation From="1" To="0" />
+                    </animations:Implicit.HideAnimations>
                     <AutoSuggestBox.QueryIcon>
                         <ctrls2:SegoeFluentIcon FontSize="14" Glyph="&#xE11A;" />
                     </AutoSuggestBox.QueryIcon>
@@ -670,6 +671,22 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,0,4,4" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="560" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Main_MyMods_SerachBox.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Main_MyMods_SerachBox.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
