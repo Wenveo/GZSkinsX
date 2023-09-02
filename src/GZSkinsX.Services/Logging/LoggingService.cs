@@ -19,15 +19,20 @@ namespace GZSkinsX.Services.Logging;
 internal sealed class LoggingService : ILoggingService
 {
 #pragma warning disable format
-    private const string AlwaysString   =   "ALWAYS";
-    private const string DebugString    =   " DEBUG";
-    private const string ErrorString    =   " ERROR";
-    private const string OkayString     =   "  OKAY";
-    private const string WarningString  =   "  WARN";
-
-    private const string LoggingMessageFormat   = "{0:yyyy-MM-ddTHH:mm:ss}| {1}| {2}";
-    private const string LoggingStartedFormat   = "Logging started at {0:yyyy-MM-ddThh:mm:ss.ffff}";
+    private const string AlwaysString   =   "[ALWAYS]";
+    private const string DebugString    =   "[DEBUG]";
+    private const string ErrorString    =   "[ERROR]";
+    private const string OkayString     =   "[OKAY]";
+    private const string WarningString  =   "[WARN]";
 #pragma warning restore format
+
+    private const string LoggingMessageFormat =
+        """
+        {0:yyyy-MM-ddTHH:mm:ss.ffffffK} {1}
+        {2}
+        {3}
+
+        """;
 
     /// <summary>
     /// 内部日志器默认实现
@@ -40,65 +45,66 @@ internal sealed class LoggingService : ILoggingService
     public LoggingService()
     {
         _logger = LoggerImpl.Shared;
-        LogAlways(string.Format(LoggingStartedFormat, DateTime.Now));
+        LogAlways("GZSkinsX::Services::LoggingService",
+            $"Logging started at {DateTimeOffset.Now}");
     }
 
     /// <inheritdoc/>
-    public void LogAlways(string message)
+    public void LogAlways(string title, string message)
     {
         _logger.Log(string.Format(LoggingMessageFormat,
-            DateTime.Now, AlwaysString, message));
+            DateTimeOffset.Now, AlwaysString, title, message));
     }
 
     /// <inheritdoc/>
-    public void LogDebug(string message)
+    public void LogDebug(string title, string message)
     {
 #if DEBUG
         _logger.Log(string.Format(LoggingMessageFormat,
-            DateTime.Now, DebugString, message));
+            DateTimeOffset.Now, DebugString, title, message));
 #endif
     }
 
     /// <inheritdoc/>
-    public void LogError(string message)
+    public void LogError(string title, string message)
     {
         _logger.Log(string.Format(LoggingMessageFormat,
-            DateTime.Now, ErrorString, message));
+            DateTimeOffset.Now, ErrorString, title, message));
     }
 
     /// <inheritdoc/>
-    public void LogOkay(string message)
+    public void LogOkay(string title, string message)
     {
         _logger.Log(string.Format(LoggingMessageFormat,
-            DateTime.Now, OkayString, message));
+            DateTimeOffset.Now, OkayString, title, message));
     }
 
     /// <inheritdoc/>
-    public void LogWarning(string message)
+    public void LogWarning(string title, string message)
     {
         _logger.Log(string.Format(LoggingMessageFormat,
-            DateTime.Now, WarningString, message));
+            DateTimeOffset.Now, WarningString, title, message));
     }
 
     /// <inheritdoc/>
-    public void Log(LogLevel level, string message)
+    public void Log(LogLevel level, string title, string message)
     {
         switch (level)
         {
             case LogLevel.Debug:
-                LogDebug(message);
+                LogDebug(title, message);
                 break;
             case LogLevel.Error:
-                LogError(message);
+                LogError(title, message);
                 break;
             case LogLevel.Okay:
-                LogOkay(message);
+                LogOkay(title, message);
                 break;
             case LogLevel.Warning:
-                LogWarning(message);
+                LogWarning(title, message);
                 break;
             default:
-                LogAlways(message);
+                LogAlways(title, message);
                 break;
         }
     }

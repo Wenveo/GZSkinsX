@@ -15,37 +15,43 @@ public interface ILoggingService
     /// <summary>
     /// 设置常规日志消息格式并写入该消息
     /// </summary>
+    /// <param name="title">要写入此条日志消息的标题</param>
     /// <param name="message">要写入的日志消息字符串</param>
-    void LogAlways(string message);
+    void LogAlways(string title, string message);
 
     /// <summary>
     /// 设置调试日志消息格式并写入该消息
     /// </summary>
+    /// <param name="title">要写入此条日志消息的标题</param>
     /// <param name="message">要写入的日志消息字符串</param>
-    void LogDebug(string message);
+    void LogDebug(string title, string message);
 
     /// <summary>
     /// 设置错误日志消息格式并写入该消息
     /// </summary>
+    /// <param name="title">要写入此条日志消息的标题</param>
     /// <param name="message">要写入的日志消息字符串</param>
-    void LogError(string message);
+    void LogError(string title, string message);
 
     /// <summary>
     /// 设置执行成功的日志消息格式并写入该消息
     /// </summary>
+    /// <param name="title">要写入此条日志消息的标题</param>
     /// <param name="message">要写入的日志消息字符串</param>
-    void LogOkay(string message);
+    void LogOkay(string title, string message);
 
     /// <summary>
     /// 设置警告日志消息格式并写入该消息
     /// </summary>
+    /// <param name="title">要写入此条日志消息的标题</param>
     /// <param name="message">要写入的日志消息字符串</param>
-    void LogWarning(string message);
+    void LogWarning(string title, string message);
 
     /// <summary>
     /// 在指定的日志级别设置日志消息格式并写入该消息
     /// </summary>
     /// <param name="level">将在此级别上写入项</param>
+    /// <param name="title">要写入此条日志消息的标题</param>
     /// <param name="message">要写入的日志消息字符串</param>
-    void Log(LogLevel level, string message);
+    void Log(LogLevel level, string title, string message);
 }
