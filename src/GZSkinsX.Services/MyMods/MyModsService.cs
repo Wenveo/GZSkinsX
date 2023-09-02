@@ -216,7 +216,10 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning($"MyModsService::GetModImageAsync -> {excp.Message}");
+            AppxContext.LoggingService.LogWarning(
+                "GZSkinsX.Services.MyModsService.GetModImageAsync",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+
             return new BitmapImage(new Uri("ms-appx:///Assets/Images/Mod_Preview_Empty.png"));
         }
     }
@@ -235,7 +238,10 @@ internal sealed class MyModsService(MyModsSettings myModSettings) : IMyModsServi
         }
         catch (Exception excp)
         {
-            AppxContext.LoggingService.LogWarning($"MyModsService::TryReadModInfoAsync -> {excp.Message}");
+            AppxContext.LoggingService.LogWarning(
+                "GZSkinsX.Services.MyModsService.TryReadModInfoAsync",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+
             result = null;
         }
 

@@ -10,6 +10,7 @@ using System.Composition;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Activation;
+using GZSkinsX.Contracts.Appx;
 
 using Windows.ApplicationModel.Activation;
 
@@ -22,6 +23,10 @@ internal sealed class ActivationService : IActivationService
 
     public async Task ActivateAsync(IActivatedEventArgs args)
     {
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Services.ActivationService.ActivateAsync",
+            $"Type = {args.GetType()}, Kind = {args.Kind}, PreviousExecutionState = {args.PreviousExecutionState}.");
+
         for (var i = _handlers.Count - 1; i >= 0; i--)
         {
             var handler = _handlers[i];

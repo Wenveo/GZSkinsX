@@ -74,6 +74,7 @@ internal sealed class MounterService : IMounterService
                     if (b is false)
                     {
                         IsRunningChanged?.Invoke(this, false);
+                        AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.CheckExitAsync", "MotClientAgent has exited.");
                         break;
                     }
                 }
@@ -96,6 +97,7 @@ internal sealed class MounterService : IMounterService
                     if (await GetIsRunningAsync())
                     {
                         IsRunningChanged?.Invoke(this, true);
+                        AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.CheckRunAsync", "MotClientAgent is running.");
                         break;
                     }
                 }
@@ -114,11 +116,13 @@ internal sealed class MounterService : IMounterService
                 if (await GetIsRunningAsync())
                 {
                     IsRunningChanged?.Invoke(this, true);
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.DoSomething", "MotClientAgent is running.");
                     await CheckExitAsync();
                 }
                 else
                 {
                     IsRunningChanged?.Invoke(this, false);
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.DoSomething", "MotClientAgent has exited.");
                     await CheckRunAsync();
                 }
             }
@@ -138,16 +142,24 @@ internal sealed class MounterService : IMounterService
                 var onlineManifest = await DownloadPackageManifestAsync();
                 if (StringComparer.Ordinal.Equals(metadata.Version, onlineManifest.Version))
                 {
+                    AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.CheckForUpdatesAsync", $"Now is uptodate \"{metadata.Version}\".");
                     return false;
                 }
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogError($"MounterService::CheckForUpdatesAsync -> Failed to check for updates. Exception message: \n\"{excp.Message}\".");
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.Services.MounterService.CheckForUpdatesAsync",
+                    $"""
+                    Failed to check updates. "{excp.Message}".
+                    {excp}: {excp.StackTrace}
+                    """);
+
                 throw;
             }
         }
 
+        AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.CheckForUpdatesAsync", $"Attention needed.");
         return true;
     }
 
@@ -315,7 +327,13 @@ internal sealed class MounterService : IMounterService
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning($"MounterService::VerifyLocalMTPackageIntegrityAsync -> Failed to calculate file checksum: {excp.Message}");
+                AppxContext.LoggingService.LogWarning(
+                    "MounterService::VerifyLocalMTPackageIntegrityAsync",
+                    $"""
+                    Failed to calculate file checksum "{path}", ErrorMessage = "{excp.Message}".
+                    {excp}: {excp.StackTrace}"
+                    """);
+
                 return false;
             }
         }
@@ -358,8 +376,12 @@ internal sealed class MounterService : IMounterService
                     jsonObject[nameof(MTPackageManifest.Path)].GetString(),
                     jsonObject[nameof(MTPackageManifest.Version)].GetString());
             }
-            catch (Exception)
+            catch (Exception excp)
             {
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX.Services.MounterService.DownloadPackageManifestAsync",
+                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+
                 continue;
             }
         }
@@ -385,8 +407,19 @@ internal sealed class MounterService : IMounterService
         var rootFolder = await GetMounterRootFolderAsync();
         var destFolder = await CreateAnEmptyFolderAsync(rootFolder, Guid.NewGuid().ToString());
 
-        ZipFile.ExtractToDirectory(temp.Path, destFolder.Path);
-        await temp.DeleteAsync();
+        try
+        {
+            ZipFile.ExtractToDirectory(temp.Path, destFolder.Path);
+            await temp.DeleteAsync();
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogWarning(
+                "GZSkinsX.Services.MounterService.DownloadMTPackageAsync",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
+
+            throw;
+        }
 
         return destFolder;
     }
@@ -495,7 +528,9 @@ internal sealed class MounterService : IMounterService
             }
             catch (Exception excp)
             {
-                AppxContext.LoggingService.LogWarning($"MounterService::TryClearMounterRootFolderAsync -> Failed to delete storage item ({item.Name}): \"{excp.Message}\".");
+                AppxContext.LoggingService.LogWarning(
+                    "GZSkinsX::Services::MounterService::TryClearMounterRootFolderAsync",
+                    $"Failed to delete storage item ({item.Name}): \"{excp.Message}\".");
             }
         }
     }

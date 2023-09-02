@@ -76,7 +76,9 @@ public sealed partial class App : Application
             _ = item.Value;
         }
 
-        AppxContext.LoggingService.LogAlways("Application: Initialized successfully.");
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX::App",
+            "Initialized successfully.");
     });
 
     /// <summary>

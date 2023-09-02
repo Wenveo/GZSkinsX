@@ -52,7 +52,7 @@ internal sealed partial class PreloadPage : Page
         else
         {
             ShowCrashMessage("Preload_Crash_Failed_To_Verify_Content_Integrity".GetLocalized()!);
-            AppxContext.LoggingService.LogError($"AppxPreload: Failed to verify content integrity.");
+            AppxContext.LoggingService.LogError("GZSkinsX.App.Views.PreloadPage.InitializeAsync", $"Failed to verify content integrity.");
         }
     }
 

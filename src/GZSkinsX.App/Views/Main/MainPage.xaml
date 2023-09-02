@@ -355,6 +355,11 @@
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
                 SelectionChanged="MyModsGridView_SelectionChanged"
                 SelectionMode="Extended">
+
+                <GridView.Resources>
+                    <ThemeShadow x:Name="MyModsGridViewItem_SharedShadow" />
+                </GridView.Resources>
+
                 <GridView.ItemContainerTransitions>
                     <TransitionCollection>
                         <ContentThemeTransition />
@@ -364,6 +369,7 @@
                 <GridView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
                         <Setter x:Name="Main_MyMods_GridViewItem_Margin" Property="Margin" Value="0,0,8,12" />
+                        <Setter Property="Shadow" Value="{StaticResource MyModsGridViewItem_SharedShadow}" />
                     </Style>
                 </GridView.ItemContainerStyle>
             </GridView>

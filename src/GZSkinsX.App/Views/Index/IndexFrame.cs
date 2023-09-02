@@ -43,7 +43,7 @@ internal sealed class IndexFrame : IWindowFrame
 
             if (!appView.TryResizeView(minWindowSize))
             {
-                AppxContext.LoggingService.LogWarning("AppxStartUp: Failed to resize the window.");
+                AppxContext.LoggingService.LogWarning("GZSkinsX.App.Views.IndexFrame.InitializeMainWindow", "Failed to resize the window.");
             }
 
             AppxContext.AppxWindow.Closed += (_, _) => Settings.IsInitialize = true;
@@ -67,6 +67,8 @@ internal sealed class IndexFrame : IWindowFrame
             }
         }
 
-        AppxContext.LoggingService.LogDebug($"AppxIndex: IsInitialize = {Settings.IsInitialize}");
+        AppxContext.LoggingService.LogDebug(
+            "GZSkinsX.App.Views.IndexFrame::InitializeMainWindow",
+            $"IsInitialize = {Settings.IsInitialize}");
     }
 }
