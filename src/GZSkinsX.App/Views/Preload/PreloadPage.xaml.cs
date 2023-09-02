@@ -44,6 +44,8 @@ internal sealed partial class PreloadPage : Page
 
     private async Task InitializeAsync()
     {
+        // Try Initialize Module
+        await App.DesktopExtensionMethods.EncryptConfigText("A");
         if (await Package.Current.VerifyContentIntegrityAsync())
         {
             TryCheckUpdatesAsync().FireAndForget();
