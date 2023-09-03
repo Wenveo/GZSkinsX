@@ -88,13 +88,13 @@
       <Version>8.2.2-build.1</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Animations">
-      <Version>8.0.230824-build.613</Version>
+      <Version>8.0.230901-build.689</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Controls.SettingsControls">
-      <Version>8.0.230824-build.613</Version>
+      <Version>8.0.230901-build.689</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Uwp.Converters">
-      <Version>8.0.230824-build.613</Version>
+      <Version>8.0.230901-build.689</Version>
     </PackageReference>
     <PackageReference Include="PolySharp">
       <Version>1.13.2</Version>
