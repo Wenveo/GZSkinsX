@@ -36,6 +36,8 @@ interface IDesktopExtensionMethods
 
     Task<bool> IsMTRunning();
 
+    Task<bool> IsProcessRunning(string processName);
+
     Task<bool> ProcessLaunch(string executable, string args, bool runAs);
 
     Task<bool> EnsureEfficiencyMode(int processId);

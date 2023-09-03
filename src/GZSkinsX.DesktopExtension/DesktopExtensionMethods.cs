@@ -219,6 +219,28 @@ internal sealed partial class DesktopExtensionMethods : IDesktopExtensionMethods
         return Task.FromResult(handle.IsInvalid is false);
     }
 
+    public Task<bool> IsProcessRunning(string processName)
+    {
+        if (string.IsNullOrEmpty(processName))
+        {
+            return Task.FromResult(false);
+        }
+
+        var processes = Process.GetProcesses(".");
+        for (var i = 0; i < processes.Length; i++)
+        {
+            var item = processes[i].ProcessName;
+            processes[i].Dispose();
+
+            if (StringComparer.OrdinalIgnoreCase.Equals(processName, item))
+            {
+                return Task.FromResult(true);
+            }
+        }
+
+        return Task.FromResult(false);
+    }
+
     public Task<bool> EnsureEfficiencyMode(int processId)
     {
         var result = false;

@@ -61,6 +61,7 @@ public sealed partial class App : Application
         var compositionHost = configuration.CreateContainer();
         AppxContext.InitializeLifetimeService(compositionHost);
 
+        compositionHost.GetExport<AppSettings>().Initialize();
         await Services.Logging.LoggerImpl.Shared.InitializeAsync();
 
         var gameService = AppxContext.GameService;

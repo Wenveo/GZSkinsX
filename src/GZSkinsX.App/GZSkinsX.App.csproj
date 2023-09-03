@@ -16,6 +16,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="Controls\LaunchButton.xaml.cs">
       <DependentUpon>LaunchButton.xaml</DependentUpon>
     </Compile>
@@ -25,8 +26,6 @@
     <Compile Include="ViewModels\Index\IndexViewModel.cs" />
     <Compile Include="ViewModels\Main\MainViewModel.cs" />
     <Compile Include="ViewModels\Preload\PreloadViewModel.cs" />
-    <Compile Include="ViewModels\Settings\AutoEnableEfficiencyMode.cs" />
-    <Compile Include="ViewModels\Settings\AutoEnableEfficiencyModeSettings.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\StartUp\StartUpViewModel.cs" />
     <Compile Include="Views\Index\IndexFrame.cs" />
