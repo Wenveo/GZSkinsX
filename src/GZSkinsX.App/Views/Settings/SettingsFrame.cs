@@ -17,7 +17,6 @@ internal sealed class SettingsFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        args.NavigationTransitionInfo = new SuppressNavigationTransitionInfo();
         return true;
     }
 }

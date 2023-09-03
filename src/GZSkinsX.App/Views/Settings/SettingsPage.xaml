@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:themes="using:GZSkinsX.Contracts.Themes"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Grid RowSpacing="24">
@@ -42,13 +43,13 @@
             <StackPanel Margin="0,0,0,24" Spacing="20">
                 <StackPanel.ChildrenTransitions>
                     <TransitionCollection>
-                        <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True" />
+                        <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
                 <StackPanel>
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
-                            <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True" />
+                            <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
 
@@ -122,7 +123,7 @@
                 <StackPanel>
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
-                            <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True" />
+                            <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
 
@@ -184,7 +185,7 @@
 
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
-                            <EntranceThemeTransition FromVerticalOffset="50" IsStaggeringEnabled="True" />
+                            <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
 
