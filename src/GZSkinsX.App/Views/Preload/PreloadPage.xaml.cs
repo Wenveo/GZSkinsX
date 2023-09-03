@@ -102,29 +102,41 @@ internal sealed partial class PreloadPage : Page
         {
             await Launcher.LaunchUriAsync(new Uri(uriString));
         }
+
+        AppxContext.Resolve<PreloadSettings>().DontNeedShowTheAvailableUpdateDialog = true;
     }
 
     private async Task TryCheckUpdatesAsync()
     {
-        try
+        var updater = AppxContext.Resolve<AppUpdater>();
+        var updateInfo = await updater.TryGetAppInfoAsync();
+        if (updateInfo.IsEmpty)
         {
-            var updater = AppxContext.Resolve<AppUpdater>();
-            var updateInfo = await updater.GetAppInfoAsync();
+            return;
+        }
 
-            if (updateInfo.IsSupported is false)
+        var settings = AppxContext.Resolve<PreloadSettings>();
+        if (updateInfo.NeedUpdates is false)
+        {
+            // Reset
+            if (settings.DontNeedShowTheAvailableUpdateDialog)
             {
-                await ShowUnsupportedAppVersionDialogAsync(updateInfo.UriString);
-                return;
+                settings.DontNeedShowTheAvailableUpdateDialog = false;
             }
 
-            if (updateInfo.NeedUpdates)
+            return;
+        }
+
+        if (updateInfo.IsSupported is false)
+        {
+            await ShowUnsupportedAppVersionDialogAsync(updateInfo.UriString);
+        }
+        else
+        {
+            if (settings.DontNeedShowTheAvailableUpdateDialog is false)
             {
                 await ShowAvailableUpdateDialogAsync(updateInfo.UriString);
-                return;
             }
-        }
-        catch
-        {
         }
     }
 }

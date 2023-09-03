@@ -43,6 +43,7 @@
     <Compile Include="Views\Preload\PreloadPage.xaml.cs">
       <DependentUpon>PreloadPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Preload\PreloadSettings.cs" />
     <Compile Include="Views\Settings\SettingsFrame.cs" />
     <Compile Include="Views\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>

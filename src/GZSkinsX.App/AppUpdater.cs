@@ -20,9 +20,9 @@ internal readonly struct AppInfo
 {
     public static readonly AppInfo Empty = new();
 
-    public readonly bool NeedUpdates;
-
     public readonly bool IsSupported;
+
+    public readonly bool NeedUpdates;
 
     public readonly string UriString;
 
@@ -30,16 +30,14 @@ internal readonly struct AppInfo
 
     public AppInfo()
     {
-        NeedUpdates = false;
-        IsSupported = false;
         UriString = string.Empty;
         IsEmpty = true;
     }
 
-    public AppInfo(bool needUpdates, bool isSupported, string uriString)
+    public AppInfo(bool isSupported, bool needUpdates, string uriString)
     {
-        NeedUpdates = needUpdates;
         IsSupported = isSupported;
+        NeedUpdates = needUpdates;
         UriString = uriString;
         IsEmpty = false;
     }
@@ -54,7 +52,7 @@ internal sealed class AppUpdater
         new Uri("http://x1.gzskins.com/MounterV3/ApplicationData.json")
     };
 
-    public async ValueTask<AppInfo> GetAppInfoAsync()
+    public async ValueTask<AppInfo> TryGetAppInfoAsync()
     {
         var httpClient = new HttpClient();
 
@@ -65,7 +63,15 @@ internal sealed class AppUpdater
             var needUpdate = Version.Parse(applicationData.AppVersion) != AppxContext.AppxVersion;
             var isSupported = Version.Parse(applicationData.SupportedMinVersion) <= AppxContext.AppxVersion;
 
-            return new AppInfo(needUpdate, isSupported, applicationData.MainApp);
+            return new AppInfo(isSupported, needUpdate, applicationData.MainApp);
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.App.AppUpdater.TryGetAppInfoAsync",
+                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+
+            return AppInfo.Empty;
         }
         finally
         {
