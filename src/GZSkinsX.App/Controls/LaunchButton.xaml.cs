@@ -12,11 +12,16 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
+using CommunityToolkit.WinUI;
+
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Controls;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Mounter;
 
+using Microsoft.Toolkit.Uwp.Notifications;
+
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -53,6 +58,32 @@ internal sealed partial class LaunchButton : UserControl
 
         AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
         AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
+
+        DispatcherQueue.GetForCurrentThread().EnqueueAsync(async () =>
+        {
+            try
+            {
+                var needUpdate = await AppxContext.MounterService.CheckForUpdatesAsync();
+                if (needUpdate)
+                {
+                    if (EnsureState(CheckForUpdatesState) || EnsureState(UpdatingState))
+                    {
+                        return;
+                    }
+
+                    new ToastContentBuilder()
+                        .AddArgument("sessionID", Guid.NewGuid().ToString())
+                            .AddText(ResourceHelper.GetLocalized("Resources/LaunchButton_Toast_AvailableUpdate_Title"))
+                            .AddText(ResourceHelper.GetLocalized("Resources/LaunchButton_Toast_AvailableUpdate_Subtitle"))
+                        .Show();
+                }
+            }
+            catch
+            {
+                // Don't need log
+            }
+
+        }, DispatcherQueuePriority.Normal).FireAndForget();
     }
 
     private async void OnIsRunningChanged(IMounterService sender, bool args)

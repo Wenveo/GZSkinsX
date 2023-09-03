@@ -213,6 +213,12 @@
   <data name="LaunchButton_Terminate_MenuItem.Text" xml:space="preserve">
     <value>终止服务</value>
   </data>
+  <data name="LaunchButton_Toast_AvailableUpdate_Subtitle" xml:space="preserve">
+    <value>为了确保能够正常使用，请尽快更新。</value>
+  </data>
+  <data name="LaunchButton_Toast_AvailableUpdate_Title" xml:space="preserve">
+    <value>检查到服务组件有可用的更新。</value>
+  </data>
   <data name="LaunchButton_UpdateButIsRunningTeachingTip.ActionButtonContent" xml:space="preserve">
     <value>终止服务并更新</value>
   </data>
