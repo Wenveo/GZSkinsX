@@ -23,8 +23,8 @@ namespace GZSkinsX.ViewModels;
 internal sealed partial class IndexViewModel : ObservableObject
 {
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(InProcess))]
-    private double _processValue;
+    [NotifyPropertyChangedFor(nameof(InProgress))]
+    private double _progressValue;
 
     [ObservableProperty]
     private bool _hasError;
@@ -35,7 +35,7 @@ internal sealed partial class IndexViewModel : ObservableObject
     [ObservableProperty]
     private bool _isDownloading;
 
-    public bool InProcess => ProcessValue != 0;
+    public bool InProgress => ProgressValue != 0;
 
     private static Uri[] ModuleUris { get; } = new Uri[]
     {
@@ -87,6 +87,6 @@ internal sealed partial class IndexViewModel : ObservableObject
 
     private void UpdateDownloadProgress(DownloadOperation download)
     {
-        ProcessValue = (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
+        ProgressValue = (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
     }
 }

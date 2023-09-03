@@ -57,8 +57,8 @@
             Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="3"
-            IsIndeterminate="{x:Bind ViewModel.InProcess, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+            IsIndeterminate="{x:Bind ViewModel.InProgress, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
             ShowError="{x:Bind ViewModel.HasError, Mode=OneWay}"
-            Value="{x:Bind ViewModel.ProcessValue, Mode=OneWay}" />
+            Value="{x:Bind ViewModel.ProgressValue, Mode=OneWay}" />
     </Grid>
 </Page>
