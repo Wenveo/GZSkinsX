@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media;
 
 namespace GZSkinsX.Contracts.MyMods;
 
-internal sealed partial class MyModViewModel(StorageFile modFile, ImageSource modImage,
+public sealed partial class MyModViewModel(StorageFile modFile, ImageSource modImage,
     MyModInfo modInfo, bool enable, int indexOfTable) : ObservableObject
 {
     [ObservableProperty]
