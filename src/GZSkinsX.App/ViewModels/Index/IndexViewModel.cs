@@ -20,29 +20,51 @@ using Windows.Storage;
 
 namespace GZSkinsX.ViewModels;
 
+/// <inheritdoc/>
 internal sealed partial class IndexViewModel : ObservableObject
 {
+    /// <summary>
+    /// 获取和设置下载进度的值
+    /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(InProgress))]
     private double _progressValue;
 
+    /// <summary>
+    /// 表示当前是否出现了错误
+    /// </summary>
     [ObservableProperty]
     private bool _hasError;
 
+    /// <summary>
+    /// 表示当前是否需要等待应用重新启动
+    /// </summary>
     [ObservableProperty]
     private bool _isPendingRestart;
 
+    /// <summary>
+    /// 表示当前是否已处于下载操作中
+    /// </summary>
     [ObservableProperty]
     private bool _isDownloading;
 
+    /// <summary>
+    /// 表示当前是否正在进行下载中
+    /// </summary>
     public bool InProgress => ProgressValue != 0;
 
-    private static Uri[] ModuleUris { get; } = new Uri[]
+    /// <summary>
+    /// 表示内核模块的下载链接列表
+    /// </summary>
+    private static Uri[] KernelModules { get; } = new Uri[]
     {
         new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/Kernel/3.0.0.0/GZSkinsX.Kernel.dll"),
         new("http://x1.gzskins.com/MounterV3/Kernel/3.0.0.0/GZSkinsX.Kernel.dll")
     };
 
+    /// <summary>
+    /// 开始进行下载模块的操作
+    /// </summary>
     public async Task DownloadAsync()
     {
         IsDownloading = true;
@@ -52,12 +74,14 @@ internal sealed partial class IndexViewModel : ObservableObject
             .CreateFileAsync("GZSkinsX.Kernel.dll", CreationCollisionOption.OpenIfExists);
 
         var downloader = new BackgroundDownloader();
-        foreach (var uri in ModuleUris)
+        foreach (var uri in KernelModules)
         {
             try
             {
-                var operation = downloader.CreateDownload(uri, destFile);
-                await operation.StartAsync().AsTask(new Progress<DownloadOperation>(UpdateDownloadProgress));
+                await downloader.CreateDownload(uri, destFile).StartAsync().AsTask(new Progress<DownloadOperation>((download) =>
+                {
+                    ProgressValue = (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
+                }));
 
                 await Task.Delay(200);
 
@@ -83,10 +107,5 @@ internal sealed partial class IndexViewModel : ObservableObject
         {
             HasError = true;
         }
-    }
-
-    private void UpdateDownloadProgress(DownloadOperation download)
-    {
-        ProgressValue = (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
     }
 }

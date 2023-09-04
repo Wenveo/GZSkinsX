@@ -31,6 +31,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace GZSkinsX.ViewModels;
 
+/// <inheritdoc/>
 internal sealed partial class MainViewModel : ObservableObject
 {
     public IMyModsService MyModsService { get; }
