@@ -73,14 +73,14 @@ internal sealed class WindowManagerService : IWindowManagerService
     {
         if (AppxContext.AppxWindow.MainWindow.Content is not Frame frame || frame != _frame)
         {
-            foreach (Lazy<IWindowFrame, WindowFrameMetadataAttribute> elem in _windowFrames)
+            foreach (var elem in _windowFrames)
             {
-                string guidString = elem.Metadata.Guid;
-                bool b = Guid.TryParse(guidString, out Guid guid);
+                var guidString = elem.Metadata.Guid;
+                var b = Guid.TryParse(guidString, out var guid);
                 Debug.Assert(b, $"WindowManagerService: Couldn't parse Guid property: '{guidString}'");
                 if (!b) continue;
 
-                Type pageType = elem.Metadata.PageType;
+                var pageType = elem.Metadata.PageType;
                 b = pageType.BaseType != null;
                 Debug.Assert(b, $"WindowManagerService: The PageType cannot be null: '{pageType.BaseType}'");
                 if (!b) continue;
@@ -99,7 +99,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// <inheritdoc/>
     public void NavigateTo(string guidString)
     {
-        if (Guid.TryParse(guidString, out Guid guid))
+        if (Guid.TryParse(guidString, out var guid))
         {
             NavigateCore(guid, null, null);
         }
@@ -108,7 +108,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// <inheritdoc/>
     public void NavigateTo(string guidString, object parameter)
     {
-        if (Guid.TryParse(guidString, out Guid guid))
+        if (Guid.TryParse(guidString, out var guid))
         {
             NavigateCore(guid, parameter, null);
         }
@@ -117,7 +117,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// <inheritdoc/>
     public void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride)
     {
-        if (Guid.TryParse(guidString, out Guid guid))
+        if (Guid.TryParse(guidString, out var guid))
         {
             NavigateCore(guid, parameter, infoOverride);
         }
@@ -143,15 +143,15 @@ internal sealed class WindowManagerService : IWindowManagerService
 
     private async void NavigateCore(Guid frameGuid, object? parameter, NavigationTransitionInfo? infoOverride)
     {
-        if (_guidToWindowFrame.TryGetValue(frameGuid, out WindowFrameContext? context) is false)
+        if (_guidToWindowFrame.TryGetValue(frameGuid, out var context) is false)
         {
             return;
         }
 
-        IWindowFrame windowFrame = context.Value;
+        var windowFrame = context.Value;
         WindowFrameNavigatingEvnetArgs args = new(context, parameter, infoOverride);
 
-        bool b = windowFrame is IWindowFrame2 windowFrame2
+        var b = windowFrame is IWindowFrame2 windowFrame2
             ? await windowFrame2.CanNavigateToAsync(args)
             : windowFrame.CanNavigateTo(args);
 
