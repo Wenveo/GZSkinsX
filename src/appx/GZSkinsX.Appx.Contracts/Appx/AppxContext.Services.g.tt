@@ -21,6 +21,8 @@ public static partial class AppxContext
 <#
     var services = new List<string>()
     {
+        "GZSkinsX.Contracts.AccessCache.IFutureAccessService",
+        "GZSkinsX.Contracts.AccessCache.IMostRecentlyUsedService",
         "GZSkinsX.Contracts.Appx.IAppxTitleBar",
         "GZSkinsX.Contracts.Appx.IAppxWindow",
         "GZSkinsX.Contracts.Logging.ILoggingService",
