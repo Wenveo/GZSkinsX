@@ -6,6 +6,7 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.18-beta">
       <PrivateAssets>all</PrivateAssets>
@@ -16,5 +17,4 @@
   <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
   </ItemGroup>
-
 </Project>

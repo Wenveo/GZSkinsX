@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  
   <PropertyGroup>
     <ImplicitUsings>disable</ImplicitUsings>
     <Deterministic>true</Deterministic>
@@ -11,5 +10,4 @@
   <ItemGroup Condition="'$(UseWinUI)' == 'true'">
     <RuntimeHostConfigurationOption Include="System.Runtime.Loader.UseRidGraph" Value="true" />
   </ItemGroup>
-  
 </Project>
