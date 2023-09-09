@@ -17,7 +17,7 @@ namespace GZSkinsX.Appx.Themes;
 [Shared, Export]
 internal sealed class ThemeSettings
 {
-    private const string THE_GUID = "215B274D-087C-4F5E-83A4-AE7429CE90E6";
+    private const string THE_GUID = "29F0DBF1-D323-48E4-851A-A617AAAC708E";
     private const string CURRENT_THEME_NAME = "CurrentTheme";
 
     private readonly ISettingsSection _settingsSection =
