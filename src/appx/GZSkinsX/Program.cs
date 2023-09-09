@@ -5,26 +5,129 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
+using System.Collections.Generic;
+using System.Composition.Hosting;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+
+using GZSkinsX.Appx.Contracts.App;
+
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+using Microsoft.Windows.AppLifecycle;
+
 namespace GZSkinsX;
 
+/// <summary>
+/// 自定义的应用程序启动类。
+/// </summary>
 internal static partial class Program
 {
-    [System.Runtime.InteropServices.LibraryImport("Microsoft.ui.xaml.dll")]
-    private static partial void XamlCheckProcessRequirements();
+    /// <summary>
+    /// 当前组件容器的宿主的懒加载对象。
+    /// </summary>
+    private static readonly Lazy<CompositionHost> s_lazy_compositionHost;
 
-    [System.STAThread]
-    private static void Main(string[] args)
+    /// <summary>
+    /// 获取内部的 <see cref="System.Composition.Hosting.CompositionHost"/> 公开实现。
+    /// </summary>
+    public static CompositionHost CompositionHost => s_lazy_compositionHost.Value;
+
+    /// <summary>
+    /// 初始化 <see cref="Program"/> 的静态成员。
+    /// </summary>
+    static Program()
     {
-        XamlCheckProcessRequirements();
-
-        WinRT.ComWrappersSupport.InitializeComWrappers();
-        Microsoft.UI.Xaml.Application.Start((p) =>
+        s_lazy_compositionHost = new(() =>
         {
-            var context = new Microsoft.UI.Dispatching.DispatcherQueueSynchronizationContext(
-                Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());
-
-            System.Threading.SynchronizationContext.SetSynchronizationContext(context);
-            new App();
+            var configuration = new ContainerConfiguration();
+            configuration.WithAssemblies(GetAssemblies());
+            return configuration.CreateContainer();
         });
     }
+
+    [STAThread]
+    private static async Task<int> Main(string[] args)
+    {
+        XamlCheckProcessRequirements();
+        WinRT.ComWrappersSupport.InitializeComWrappers();
+
+        if (EnsureWindowsApp() && !await DecideRedirection())
+        {
+            Application.Start((p) =>
+            {
+                SynchronizationContext.SetSynchronizationContext(
+                    new DispatcherQueueSynchronizationContext(
+                        DispatcherQueue.GetForCurrentThread()));
+
+                AppxContext.InitializeLifetimeService(p, CompositionHost);
+
+                new App();
+            });
+        }
+
+        return 0;
+    }
+
+    private static IEnumerable<Assembly> GetAssemblies()
+    {
+        // Main Appx
+        {
+            // Self Assembly
+            yield return typeof(App).Assembly;
+
+            // GZSkinsX.Appx.Contracts
+            yield return typeof(AppxContext).Assembly;
+        }
+
+        Assembly asm;
+        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory.Path, "GZSkinsX.Appx.*.dll")
+                .Where(a => a.IndexOf("GZSkinsX.Appx.Contracts.dll", StringComparison.OrdinalIgnoreCase) is -1))
+        {
+            try
+            {
+                asm = Assembly.LoadFile(filePath);
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+
+            yield return asm;
+        }
+    }
+
+    private static async Task<bool> DecideRedirection()
+    {
+        var mainInstance = AppInstance.FindOrRegisterForKey("main");
+
+        // If the instance that's executing the OnLaunched handler right now
+        // isn't the "main" instance.
+        if (!mainInstance.IsCurrent)
+        {
+            // Redirect the activation (and args) to the "main" instance, and exit.
+            var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+            await mainInstance.RedirectActivationToAsync(activatedEventArgs);
+        }
+
+        return !mainInstance.IsCurrent;
+    }
+
+    private static unsafe bool EnsureWindowsApp()
+    {
+        var length = 0;
+        return GetCurrentPackageFullName(ref length, null) != 15700L;
+    }
+
+    [LibraryImport("Microsoft.ui.xaml.dll")]
+    private static partial void XamlCheckProcessRequirements();
+
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    private static unsafe partial int GetCurrentPackageFullName(
+         ref int packageFullNameLength, [Optional] char* packageFullName);
 }
