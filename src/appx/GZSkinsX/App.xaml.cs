@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Appx.MainApp;
+using GZSkinsX.Appx.Contracts.App;
 
 using Microsoft.UI.Xaml;
 
@@ -34,9 +34,6 @@ public partial class App : Application
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        _window = new MainWindow();
-        _window.Activate();
+        AppxContext.AppxWindow.Activate();
     }
-
-    private Window _window;
 }

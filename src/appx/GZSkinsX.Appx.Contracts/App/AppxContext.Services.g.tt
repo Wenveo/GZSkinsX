@@ -21,7 +21,10 @@ public static partial class AppxContext
 <#
     var services = new List<string>()
     {
-        "GZSkinsX.Appx.Contracts.Settings.ISettingsService"
+        "GZSkinsX.Appx.Contracts.App.IAppxTitleBar",
+        "GZSkinsX.Appx.Contracts.App.IAppxWindow",
+        "GZSkinsX.Appx.Contracts.Settings.ISettingsService",
+        "GZSkinsX.Appx.Contracts.Themes.IThemeService"
     };
 
     var shortNames = new List<string>(services.Count);

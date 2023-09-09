@@ -27,6 +27,7 @@
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.MainApp\GZSkinsX.Appx.MainApp.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Settings\GZSkinsX.Appx.Settings.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Appx.Themes\GZSkinsX.Appx.Themes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

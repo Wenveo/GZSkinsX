@@ -1,0 +1,5 @@
+// Struct
+HIGHCONTRASTW
+
+// Win32 Api
+SystemParametersInfo
