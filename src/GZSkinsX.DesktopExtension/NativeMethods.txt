@@ -1,8 +1,0 @@
-LoadLibrary
-FreeLibrary
-GetProcAddress
-GetPriorityClass
-OpenFileMapping
-SetProcessInformation
-SetPriorityClass
-SetWindowText
