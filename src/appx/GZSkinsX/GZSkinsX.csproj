@@ -31,6 +31,7 @@
     <ProjectReference Include="..\GZSkinsX.Appx.MRTCore\GZSkinsX.Appx.MRTCore.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Settings\GZSkinsX.Appx.Settings.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Themes\GZSkinsX.Appx.Themes.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Appx.WindowManager\GZSkinsX.Appx.WindowManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>

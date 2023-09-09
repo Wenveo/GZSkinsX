@@ -28,7 +28,8 @@ public static partial class AppxContext
         "GZSkinsX.Contracts.Logging.ILoggingService",
         "GZSkinsX.Contracts.MRTCore.IMRTCoreService",
         "GZSkinsX.Contracts.Settings.ISettingsService",
-        "GZSkinsX.Contracts.Themes.IThemeService"
+        "GZSkinsX.Contracts.Themes.IThemeService",
+        "GZSkinsX.Contracts.WindowManager.IWindowManagerService"
     };
 
     var shortNames = new List<string>(services.Count);
