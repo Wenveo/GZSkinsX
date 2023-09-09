@@ -7,7 +7,7 @@
 
 using System;
 
-namespace GZSkinsX.Appx.Contracts.Settings;
+namespace GZSkinsX.Contracts.Settings;
 
 /// <summary>
 /// 提供存储应用程序设置的服务，可用于存储本地数据或漫游数据。

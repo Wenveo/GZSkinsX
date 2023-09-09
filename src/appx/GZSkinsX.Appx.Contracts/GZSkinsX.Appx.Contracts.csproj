@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>GZSkinsX.Appx.Contracts</RootNamespace>
+    <RootNamespace>GZSkinsX.Contracts</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
   </PropertyGroup>
@@ -24,14 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="App\AppxContext.Services.g.tt">
+    <None Update="Appx\AppxContext.Services.g.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppxContext.Services.g.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="App\AppxContext.Services.g.cs">
+    <Compile Update="Appx\AppxContext.Services.g.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>AppxContext.Services.g.tt</DependentUpon>

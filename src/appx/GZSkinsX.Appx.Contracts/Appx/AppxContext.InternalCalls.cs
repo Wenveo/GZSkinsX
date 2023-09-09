@@ -13,7 +13,7 @@ using Microsoft.UI.Xaml;
 
 [assembly: InternalsVisibleTo("GZSkinsX")]
 
-namespace GZSkinsX.Appx.Contracts.App;
+namespace GZSkinsX.Contracts.Appx;
 
 public static partial class AppxContext
 {

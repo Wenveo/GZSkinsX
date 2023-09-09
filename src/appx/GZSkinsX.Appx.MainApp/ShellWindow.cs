@@ -7,8 +7,8 @@
 
 using System.Runtime.InteropServices;
 
-using GZSkinsX.Appx.Contracts.App;
-using GZSkinsX.Appx.Contracts.Themes;
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Themes;
 
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;

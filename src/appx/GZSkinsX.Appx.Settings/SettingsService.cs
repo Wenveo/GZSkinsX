@@ -5,9 +5,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Appx.Contracts.Settings;
-
 using System.Composition;
+
+using GZSkinsX.Contracts.Settings;
 
 namespace GZSkinsX.Appx.Settings;
 
@@ -30,9 +30,9 @@ internal sealed class SettingsService : ISettingsService
     /// </summary>
     public SettingsService()
     {
-        Windows.Storage.ApplicationData current = Windows.Storage.ApplicationData.Current;
-        _roamingSettingsSection = new(current.RoamingSettings, SettingsType.Roaming);
+        var current = Windows.Storage.ApplicationData.Current;
         _localSettingsSection = new(current.LocalSettings, SettingsType.Local);
+        _roamingSettingsSection = new(current.RoamingSettings, SettingsType.Roaming);
     }
 
     /// <inheritdoc/>

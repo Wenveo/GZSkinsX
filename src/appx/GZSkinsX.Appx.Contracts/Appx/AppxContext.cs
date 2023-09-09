@@ -10,7 +10,7 @@ using System;
 using Windows.ApplicationModel;
 using Windows.Storage;
 
-namespace GZSkinsX.Appx.Contracts.App;
+namespace GZSkinsX.Contracts.Appx;
 
 /// <summary>
 /// 当前 Appx 应用的上下文。

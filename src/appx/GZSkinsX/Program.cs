@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-using GZSkinsX.Appx.Contracts.App;
+using GZSkinsX.Contracts.Appx;
 
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;

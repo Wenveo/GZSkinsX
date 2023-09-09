@@ -7,8 +7,8 @@
 
 using System.Composition;
 
-using GZSkinsX.Appx.Contracts.App;
-using GZSkinsX.Appx.Contracts.Settings;
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Settings;
 
 namespace GZSkinsX.Appx.MainApp;
 

@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Appx.Contracts.Settings;
+namespace GZSkinsX.Contracts.Settings;
 
 /// <summary>
 /// 表示子节点配置的类型。

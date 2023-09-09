@@ -12,9 +12,8 @@ using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
 
-using GZSkinsX.Appx.Contracts.App;
-using GZSkinsX.Appx.Contracts.Themes;
-using GZSkinsX.Appx.Themes;
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Themes;
 
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -25,7 +24,7 @@ using Windows.Win32;
 using Windows.Win32.UI.Accessibility;
 using Windows.Win32.UI.WindowsAndMessaging;
 
-namespace GZSkinsX.Services.Themes;
+namespace GZSkinsX.Appx.Themes;
 
 /// <inheritdoc cref="IThemeService"/>
 [Shared, Export(typeof(IThemeService))]

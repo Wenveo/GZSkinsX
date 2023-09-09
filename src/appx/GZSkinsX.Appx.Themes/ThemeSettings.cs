@@ -7,12 +7,12 @@
 
 using System.Composition;
 
-using GZSkinsX.Appx.Contracts.App;
-using GZSkinsX.Appx.Contracts.Settings;
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Settings;
 
 using Microsoft.UI.Xaml;
 
-namespace GZSkinsX.Services.Themes;
+namespace GZSkinsX.Appx.Themes;
 
 [Shared, Export]
 internal sealed class ThemeSettings

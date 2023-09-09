@@ -5,61 +5,49 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Appx.Contracts.Settings;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+
+using GZSkinsX.Contracts.Settings;
 
 using Windows.Storage;
 
 namespace GZSkinsX.Appx.Settings;
 
 /// <inheritdoc cref="ISettingsSection"/>
-internal sealed class SettingsSection : ISettingsSection
+/// <summary>
+/// 通过指定的 <see cref="ApplicationDataContainer"/> 和 <see cref="SettingsType"/> 来初始化 <see cref="SettingsSection"/> 的新实例。
+/// </summary>
+/// <param name="container">用于存储应用程序数据的容器。</param>
+/// <param name="settingsType">指定该设置节点的类型。</param>
+internal sealed class SettingsSection(ApplicationDataContainer container, SettingsType settingsType) : ISettingsSection
 {
     /// <summary>
     /// 用于存储子节点配置的字典，并使用子节点配置的名称当作值的键。
     /// </summary>
-    private readonly Dictionary<string, SettingsSection> _nameToSectionDict;
+    private readonly Dictionary<string, SettingsSection> _nameToSectionDict =
+        container.Containers.ToDictionary(a => a.Key, b => new SettingsSection(b.Value, settingsType));
 
     /// <summary>
     /// 线程锁对象，以保证在多线程下资源的同步访问。
     /// </summary>
-    private readonly ReaderWriterLockSlim _lockSlim;
+    private readonly ReaderWriterLockSlim _lockSlim = new();
 
     /// <summary>
     /// 内部定义的 UWP 中的配置容器。
     /// </summary>
-    private ApplicationDataContainer? _container;
+    private ApplicationDataContainer? _container = container;
 
     /// <inheritdoc/>
-    public string Name { get; }
+    public string Name { get; } = container.Name;
 
     /// <inheritdoc/>
-    public SettingsType Type { get; }
-
-    /// <summary>
-    /// 通过指定的 <see cref="ApplicationDataContainer"/> 和 <see cref="SettingsType"/> 来初始化 <see cref="SettingsSection"/> 的新实例。
-    /// </summary>
-    /// <param name="container">用于存储应用程序数据的容器。</param>
-    /// <param name="settingsType">指定该设置节点的类型。</param>
-    public SettingsSection(ApplicationDataContainer container, SettingsType settingsType)
-    {
-        _lockSlim = new();
-        _container = container;
-        _nameToSectionDict = new Dictionary<string, SettingsSection>();
-        foreach (KeyValuePair<string, ApplicationDataContainer> item in container.Containers)
-        {
-            _nameToSectionDict.Add(item.Key, new SettingsSection(item.Value, settingsType));
-        }
-
-        Name = container.Name;
-        Type = settingsType;
-    }
+    public SettingsType Type { get; } = settingsType;
 
     /// <inheritdoc/>
     public string? Attribute(string key)
@@ -68,7 +56,7 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterReadLock();
         try
         {
-            if (_container.Values.TryGetValue(key, out object? value))
+            if (_container.Values.TryGetValue(key, out var value))
             {
                 return (string?)value;
             }
@@ -88,9 +76,9 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterReadLock();
         try
         {
-            if (_container.Values.TryGetValue(key, out object? value))
+            if (_container.Values.TryGetValue(key, out var value))
             {
-                TypeConverter c = TypeDescriptor.GetConverter(typeof(TValue));
+                var c = TypeDescriptor.GetConverter(typeof(TValue));
                 try
                 {
                     return (TValue?)c.ConvertFromInvariantString((string)value);
@@ -118,8 +106,8 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterUpgradeableReadLock();
         try
         {
-            TypeConverter c = TypeDescriptor.GetConverter(typeof(TValue));
-            string? stringValue = c.ConvertToInvariantString(value);
+            var c = TypeDescriptor.GetConverter(typeof(TValue));
+            var stringValue = c.ConvertToInvariantString(value);
 
             _lockSlim.EnterWriteLock();
             try
@@ -163,7 +151,7 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterUpgradeableReadLock();
         try
         {
-            if (_nameToSectionDict.TryGetValue(name, out SettingsSection? settingsSection))
+            if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
             {
                 _lockSlim.EnterWriteLock();
                 try
@@ -191,7 +179,7 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterReadLock();
         try
         {
-            if (_nameToSectionDict.TryGetValue(name, out SettingsSection? settingsSection))
+            if (_nameToSectionDict.TryGetValue(name, out var settingsSection))
             {
                 return settingsSection;
             }
@@ -204,7 +192,7 @@ internal sealed class SettingsSection : ISettingsSection
         _lockSlim.EnterUpgradeableReadLock();
         try
         {
-            if (!_container.Containers.TryGetValue(name, out ApplicationDataContainer? container))
+            if (!_container.Containers.TryGetValue(name, out var container))
             {
                 container = _container.CreateContainer(name, ApplicationDataCreateDisposition.Always);
             }

@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml;
 using Windows.Graphics;
 using Windows.UI;
 
-namespace GZSkinsX.Appx.Contracts.App;
+namespace GZSkinsX.Contracts.Appx;
 
 /// <summary>
 /// 提供对当前应用程序主窗口的标题栏管理的能力。

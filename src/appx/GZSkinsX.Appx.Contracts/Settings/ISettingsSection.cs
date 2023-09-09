@@ -7,7 +7,7 @@
 
 using System;
 
-namespace GZSkinsX.Appx.Contracts.Settings;
+namespace GZSkinsX.Contracts.Settings;
 
 /// <summary>
 /// 表示位于程序设置中的子节点配置。

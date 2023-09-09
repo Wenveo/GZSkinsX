@@ -9,7 +9,7 @@ using System;
 
 using Microsoft.UI.Xaml;
 
-namespace GZSkinsX.Appx.Contracts.App;
+namespace GZSkinsX.Contracts.Appx;
 
 /// <summary>
 /// 提供应用程序主窗口管理的相关功能集合。

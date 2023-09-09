@@ -14,17 +14,17 @@
 
 #nullable enable
 
-namespace GZSkinsX.Appx.Contracts.App;
+namespace GZSkinsX.Contracts.Appx;
 
 public static partial class AppxContext
 {
 <#
     var services = new List<string>()
     {
-        "GZSkinsX.Appx.Contracts.App.IAppxTitleBar",
-        "GZSkinsX.Appx.Contracts.App.IAppxWindow",
-        "GZSkinsX.Appx.Contracts.Settings.ISettingsService",
-        "GZSkinsX.Appx.Contracts.Themes.IThemeService"
+        "GZSkinsX.Contracts.Appx.IAppxTitleBar",
+        "GZSkinsX.Contracts.Appx.IAppxWindow",
+        "GZSkinsX.Contracts.Settings.ISettingsService",
+        "GZSkinsX.Contracts.Themes.IThemeService"
     };
 
     var shortNames = new List<string>(services.Count);

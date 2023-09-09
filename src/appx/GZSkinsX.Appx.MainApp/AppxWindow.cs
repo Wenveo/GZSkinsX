@@ -8,7 +8,7 @@
 using System;
 using System.Composition;
 
-using GZSkinsX.Appx.Contracts.App;
+using GZSkinsX.Contracts.Appx;
 
 using Microsoft.UI.Xaml;
 
