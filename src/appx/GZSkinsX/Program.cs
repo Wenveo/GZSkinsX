@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+using GZSkinsX.Appx.Logging;
 using GZSkinsX.Contracts.Appx;
 
 using Microsoft.UI.Dispatching;
@@ -59,6 +60,10 @@ internal static partial class Program
 
         if (EnsureWindowsApp() && !await DecideRedirection())
         {
+            /// 在应用程序启动之前进行日志器的初始化操作
+            /// 这样能够大幅减少日志器的初始化所需的时间
+            await LoggerImpl.Shared.InitializeAsync();
+
             Application.Start((p) =>
             {
                 SynchronizationContext.SetSynchronizationContext(
@@ -69,6 +74,8 @@ internal static partial class Program
 
                 new App();
             });
+
+            LoggerImpl.Shared.CloseOutputStream();
         }
 
         return 0;

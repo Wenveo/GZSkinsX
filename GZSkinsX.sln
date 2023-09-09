@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Settings", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Themes", "src\appx\GZSkinsX.Appx.Themes\GZSkinsX.Appx.Themes.csproj", "{4B3CFF00-16B6-46F8-83D6-1F6EEF91759A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Logging", "src\appx\GZSkinsX.Appx.Logging\GZSkinsX.Appx.Logging.csproj", "{0F6DEF70-5720-4BAD-81B3-4F2C98B1CAFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

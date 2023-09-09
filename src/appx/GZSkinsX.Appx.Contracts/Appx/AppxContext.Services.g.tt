@@ -23,6 +23,7 @@ public static partial class AppxContext
     {
         "GZSkinsX.Contracts.Appx.IAppxTitleBar",
         "GZSkinsX.Contracts.Appx.IAppxWindow",
+        "GZSkinsX.Contracts.Logging.ILoggingService",
         "GZSkinsX.Contracts.Settings.ISettingsService",
         "GZSkinsX.Contracts.Themes.IThemeService"
     };
