@@ -23,8 +23,10 @@ public static partial class AppxContext
     {
         "GZSkinsX.Contracts.AccessCache.IFutureAccessService",
         "GZSkinsX.Contracts.AccessCache.IMostRecentlyUsedService",
+        "GZSkinsX.Contracts.Activation.IActivationService",
         "GZSkinsX.Contracts.Appx.IAppxTitleBar",
         "GZSkinsX.Contracts.Appx.IAppxWindow",
+        "GZSkinsX.Contracts.Game.IGameService",
         "GZSkinsX.Contracts.Logging.ILoggingService",
         "GZSkinsX.Contracts.MRTCore.IMRTCoreService",
         "GZSkinsX.Contracts.Settings.ISettingsService",
