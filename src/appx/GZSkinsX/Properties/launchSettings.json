@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "GZSkinsX (Local Machine)": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
