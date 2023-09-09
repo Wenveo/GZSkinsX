@@ -12,7 +12,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -27,7 +27,7 @@
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.MainApp\GZSkinsX.Appx.MainApp.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
