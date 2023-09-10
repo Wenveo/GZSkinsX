@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>格子</value>
+  </data>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>格子</value>
+  </data>
+  <data name="AppStoreName" xml:space="preserve">
+    <value>格子</value>
+  </data>
+  <data name="Common_Application_Settings_Title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Common_Application_Theme_Dark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="Common_Application_Theme_Default" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="Common_Application_Theme_Light" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="Common_Dialog_Browser" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="Common_Dialog_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Common_Dialog_OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Index_DownloadFailed_Title.Text" xml:space="preserve">
+    <value>未知的错误，无法更新应用程序</value>
+  </data>
+  <data name="Index_Downloading_Title.Text" xml:space="preserve">
+    <value>正在更新应用程序，请稍等.....</value>
+  </data>
+  <data name="Index_PendingRestart_Title.Text" xml:space="preserve">
+    <value>更新已完成，请手动重启应用</value>
+  </data>
+  <data name="LaunchButton_About_Dialog_Author" xml:space="preserve">
+    <value>作者：</value>
+  </data>
+  <data name="LaunchButton_About_Dialog_Description" xml:space="preserve">
+    <value>说明：</value>
+  </data>
+  <data name="LaunchButton_About_Dialog_Title" xml:space="preserve">
+    <value>详细信息</value>
+  </data>
+  <data name="LaunchButton_About_Dialog_Version" xml:space="preserve">
+    <value>当前组件版本：</value>
+  </data>
+  <data name="LaunchButton_About_MenuItem.Text" xml:space="preserve">
+    <value>技术支持</value>
+  </data>
+  <data name="LaunchButton_CheckForUpdats_MenuItem.Text" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="LaunchButton_FailedToCheckUpdatesTeachingTip.Subtitle" xml:space="preserve">
+    <value>由于某些不可抗拒的因素，未能与主星建立目标连接。</value>
+  </data>
+  <data name="LaunchButton_FailedToCheckUpdatesTeachingTip.Title" xml:space="preserve">
+    <value>服务器罢工了......</value>
+  </data>
+  <data name="LaunchButton_Launch_MenuItem.Text" xml:space="preserve">
+    <value>启动服务</value>
+  </data>
+  <data name="LaunchButton_MoreLaunchOptions_MenuItem.Text" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="LaunchButton_RunFailedTeachingTip.Title" xml:space="preserve">
+    <value>Oops! 意想不到的事情发生了！</value>
+  </data>
+  <data name="LaunchButton_RunFailedTeachingTip_ErrorMessage" xml:space="preserve">
+    <value>错误消息："{0}".</value>
+  </data>
+  <data name="LaunchButton_State_CheckForUpdates_Textblock.Text" xml:space="preserve">
+    <value>正在检查更新...</value>
+  </data>
+  <data name="LaunchButton_State_Default_Textblock.Text" xml:space="preserve">
+    <value>启动服务</value>
+  </data>
+  <data name="LaunchButton_State_Loading_Textblock.Text" xml:space="preserve">
+    <value>初始化组件中...</value>
+  </data>
+  <data name="LaunchButton_State_Running_Textblock.Text" xml:space="preserve">
+    <value>终止服务</value>
+  </data>
+  <data name="LaunchButton_State_UpdateFailed_Textblock.Text" xml:space="preserve">
+    <value>更新失败</value>
+  </data>
+  <data name="LaunchButton_State_Updating_ProgressString" xml:space="preserve">
+    <value>更新中 {0:F2} %</value>
+  </data>
+  <data name="LaunchButton_Terminate_MenuItem.Text" xml:space="preserve">
+    <value>终止服务</value>
+  </data>
+  <data name="LaunchButton_Toast_AvailableUpdate_Subtitle" xml:space="preserve">
+    <value>为了确保能够正常使用，请尽快更新。</value>
+  </data>
+  <data name="LaunchButton_Toast_AvailableUpdate_Title" xml:space="preserve">
+    <value>检查到服务组件有可用的更新。</value>
+  </data>
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.ActionButtonContent" xml:space="preserve">
+    <value>终止服务并更新</value>
+  </data>
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.CloseButtonContent" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.Subtitle" xml:space="preserve">
+    <value>是否要停止服务并更新？</value>
+  </data>
+  <data name="LaunchButton_UpdateButIsRunningTeachingTip.Title" xml:space="preserve">
+    <value>检测到服务正在运行中</value>
+  </data>
+  <data name="LaunchButton_UpdateFailedTeachingTip.Title" xml:space="preserve">
+    <value>在尝试对组件进行更新时失败</value>
+  </data>
+  <data name="LaunchButton_UpToDateTeachingTip.Title" xml:space="preserve">
+    <value>已更新至最新版本</value>
+  </data>
+  <data name="LaunchButton_UpToDateTeachingTip_CurrentVersion" xml:space="preserve">
+    <value>当前组件版本号 {0}</value>
+  </data>
+  <data name="Main_MyMods_Collection_Count" xml:space="preserve">
+    <value>{0} 个模组</value>
+  </data>
+  <data name="Main_MyMods_Commands_ClearAllInstalled" xml:space="preserve">
+    <value>清除所有已安装项</value>
+  </data>
+  <data name="Main_MyMods_Commands_Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="Main_MyMods_Commands_Copy2" xml:space="preserve">
+    <value>复制文件</value>
+  </data>
+  <data name="Main_MyMods_Commands_CopyAsPath" xml:space="preserve">
+    <value>复制文件所在路径</value>
+  </data>
+  <data name="Main_MyMods_Commands_CopyAsPath2" xml:space="preserve">
+    <value>复制为路径</value>
+  </data>
+  <data name="Main_MyMods_Commands_Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Main_MyMods_Commands_DeselectAll" xml:space="preserve">
+    <value>取消选中</value>
+  </data>
+  <data name="Main_MyMods_Commands_Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="Main_MyMods_Commands_Import2" xml:space="preserve">
+    <value>导入模组</value>
+  </data>
+  <data name="Main_MyMods_Commands_Install" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="Main_MyMods_Commands_OpenInFileExplorer" xml:space="preserve">
+    <value>在资源管理器中显示</value>
+  </data>
+  <data name="Main_MyMods_Commands_OpenModFolder" xml:space="preserve">
+    <value>打开 模组 文件夹</value>
+  </data>
+  <data name="Main_MyMods_Commands_OpenWadFolder" xml:space="preserve">
+    <value>打开 WAD 文件夹</value>
+  </data>
+  <data name="Main_MyMods_Commands_Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Main_MyMods_Commands_SelectAll" xml:space="preserve">
+    <value>全部选中</value>
+  </data>
+  <data name="Main_MyMods_Commands_Share" xml:space="preserve">
+    <value>共享</value>
+  </data>
+  <data name="Main_MyMods_Commands_Uninstall" xml:space="preserve">
+    <value>卸载</value>
+  </data>
+  <data name="Main_MyMods_ImportFilesDialog_CloseButtonText" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Main_MyMods_ImportFilesDialog_InvaliedFile" xml:space="preserve">
+    <value>发生了意料之外的错误。</value>
+  </data>
+  <data name="Main_MyMods_ReplaceOrSkipFilesDialog_Content" xml:space="preserve">
+    <value>目标文件夹已存在具有相同名称的文件，是否要替换该文件 "{0}" ？</value>
+  </data>
+  <data name="Main_MyMods_ReplaceOrSkipFilesDialog_Replace" xml:space="preserve">
+    <value>替换目标文件</value>
+  </data>
+  <data name="Main_MyMods_ReplaceOrSkipFilesDialog_Skip" xml:space="preserve">
+    <value>跳过</value>
+  </data>
+  <data name="Main_MyMods_ReplaceOrSkipFilesDialog_Title" xml:space="preserve">
+    <value>替换或跳过文件？</value>
+  </data>
+  <data name="Main_MyMods_SelectedItemsCount" xml:space="preserve">
+    <value>已选择 {0} 项</value>
+  </data>
+  <data name="Main_MyMods_SerachBox.PlaceholderText" xml:space="preserve">
+    <value>在此列表中搜索...</value>
+  </data>
+  <data name="Main_MyMods_Title.Text" xml:space="preserve">
+    <value>所有模组</value>
+  </data>
+  <data name="Main_Settings_Menu.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>设置菜单</value>
+  </data>
+  <data name="Main_Share_Dialog_Failed_Title" xml:space="preserve">
+    <value>目前没有可共享的内容</value>
+  </data>
+  <data name="Main_Share_Dialog_Multiple_Items_Title" xml:space="preserve">
+    <value>正在共享文件 {0}, {1} ...</value>
+  </data>
+  <data name="Main_Share_Dialog_Title" xml:space="preserve">
+    <value>正在共享文件 {0}</value>
+  </data>
+  <data name="Main_Uninitialized_Message.Text" xml:space="preserve">
+    <value>缺少必要的组件，需要在下载/更新后方可正常使用。</value>
+  </data>
+  <data name="Preload_Available_Update_Dialog_Content" xml:space="preserve">
+    <value>检查到有新的版本，是否立即更新？</value>
+  </data>
+  <data name="Preload_Available_Update_Dialog_Title" xml:space="preserve">
+    <value>有可用更新</value>
+  </data>
+  <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
+    <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
+  </data>
+  <data name="Preload_Loading_Title.Text" xml:space="preserve">
+    <value>正在加载中</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_Content" xml:space="preserve">
+    <value>请更新至最新版本再打开此应用。</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_GetUpdates" xml:space="preserve">
+    <value>从 Microsoft Store 中获取更新</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_Quit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="Preload_Unsupported_AppVersion_Dialog_Title" xml:space="preserve">
+    <value>该应用的版本已不受支持</value>
+  </data>
+  <data name="Settings_About_App.Description" xml:space="preserve">
+    <value>© 2022 - 2023 GZSkins, Inc. 保留所有权利。</value>
+  </data>
+  <data name="Settings_About_App.Header" xml:space="preserve">
+    <value>格子</value>
+  </data>
+  <data name="Settings_About_App_RateAndReview_HyperlinkButton.Content" xml:space="preserve">
+    <value>评分及反馈</value>
+  </data>
+  <data name="Settings_About_App_RateAndReview_HyperlinkButton.NavigateUri" xml:space="preserve">
+    <value>ms-windows-store://review/?PFN=61610AakStudio.64359D0915987_8fr87xx5s0whj</value>
+  </data>
+  <data name="Settings_About_App_Website_HyperlinkButton.Content" xml:space="preserve">
+    <value>格子皮肤站</value>
+  </data>
+  <data name="Settings_About_App_Website_HyperlinkButton.NavigateUri" xml:space="preserve">
+    <value>https://www.lolgezi.com</value>
+  </data>
+  <data name="Settings_About_Title.Text" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Settings_Back_Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>返回至主页</value>
+  </data>
+  <data name="Settings_Default_AutoExit.Description" xml:space="preserve">
+    <value>在游戏启动时自动退出应用程序以提高安全性 (更改此选项需要在重启后才生效)</value>
+  </data>
+  <data name="Settings_Default_AutoExit.Header" xml:space="preserve">
+    <value>自动退出</value>
+  </data>
+  <data name="Settings_Default_Efficiency.Description" xml:space="preserve">
+    <value>降低进程的优先级并限制资源占用以提高系统性能和降低功耗</value>
+  </data>
+  <data name="Settings_Default_Efficiency.Header" xml:space="preserve">
+    <value>效率模式</value>
+  </data>
+  <data name="Settings_Default_GameFolder.Header" xml:space="preserve">
+    <value>游戏目录</value>
+  </data>
+  <data name="Settings_Default_Theme.Description" xml:space="preserve">
+    <value>选择应用程序的颜色主题</value>
+  </data>
+  <data name="Settings_Default_Theme.Header" xml:space="preserve">
+    <value>颜色主题</value>
+  </data>
+  <data name="Settings_MyMods_Blood.Description" xml:space="preserve">
+    <value>启用游戏内被和谐的红血特效</value>
+  </data>
+  <data name="Settings_MyMods_Blood.Header" xml:space="preserve">
+    <value>红色血液</value>
+  </data>
+  <data name="Settings_MyMods_ModsFolder.Header" xml:space="preserve">
+    <value>模组目录</value>
+  </data>
+  <data name="Settings_MyMods_Title.Text" xml:space="preserve">
+    <value>模组</value>
+  </data>
+  <data name="Settings_MyMods_WadsFolder.Header" xml:space="preserve">
+    <value>WAD目录</value>
+  </data>
+  <data name="StartUp_Error_Directory_Invalid" xml:space="preserve">
+    <value>选择的游戏目录无效，请重新选择！</value>
+  </data>
+  <data name="StartUp_Error_Directory_Null" xml:space="preserve">
+    <value>游戏目录不能为空！</value>
+  </data>
+  <data name="StartUp_Error_Region_Null" xml:space="preserve">
+    <value>请设置游戏区域！</value>
+  </data>
+  <data name="StartUp_Initialize_Default_Title" xml:space="preserve">
+    <value>设置游戏基本信息</value>
+  </data>
+  <data name="StartUp_Initialize_Directory_Browser.Content" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="StartUp_Initialize_Directory_Subtitle.Text" xml:space="preserve">
+    <value>选择英雄联盟游戏所在的文件夹</value>
+  </data>
+  <data name="StartUp_Initialize_Directory_Title.Text" xml:space="preserve">
+    <value>游戏目录</value>
+  </data>
+  <data name="StartUp_Initialize_Invalid_Title" xml:space="preserve">
+    <value>检查到无效的游戏目录，请重新设置。</value>
+  </data>
+  <data name="StartUp_Initialize_OKButton.Content" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Helper.ToolTipService.ToolTip" xml:space="preserve">
+    <value>除中国内地以外的地区都由拳头游戏 (Riot Games) 官方运营（这里简称拳头服，也可称作官方/直营服），而中国内地则是由腾讯游戏独家代理运营。（马服）</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Riot" xml:space="preserve">
+    <value>拳头服</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Subtitle.Text" xml:space="preserve">
+    <value>设置游戏所在的区域/服务器</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Tencent" xml:space="preserve">
+    <value>腾讯服</value>
+  </data>
+  <data name="StartUp_Initialize_Region_Title.Text" xml:space="preserve">
+    <value>区域</value>
+  </data>
+</root>

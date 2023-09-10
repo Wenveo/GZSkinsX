@@ -1,0 +1,245 @@
+<Page
+    x:Class="GZSkinsX.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Views"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="42" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <ctrls2:SegoeFluentIcon
+                    Margin="0,0,6,0"
+                    FontSize="24"
+                    Glyph="&#xE713;" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Settings_Title}" />
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" Padding="24,0,24,0">
+            <StackPanel Margin="0,0,0,24" Spacing="20">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+                <StackPanel>
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+
+                    <controls:SettingsCard x:Uid="Settings_Default_Theme">
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE790;" />
+                        </controls:SettingsCard.HeaderIcon>
+
+                        <DropDownButton Content="{x:Bind ViewModel.CurrentThemeDisplayName, Mode=OneWay}">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        x:Uid="Settings_Default_ThemeMenu_Light"
+                                        Command="{x:Bind ViewModel.SetCurrentThemeCommand, Mode=OneWay}"
+                                        GroupName="Settings_Default_ThemeMenu"
+                                        IsChecked="{x:Bind ViewModel.IsLightTheme, Mode=OneWay}"
+                                        Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Light}">
+                                        <RadioMenuFlyoutItem.CommandParameter>
+                                            <ElementTheme>Light</ElementTheme>
+                                        </RadioMenuFlyoutItem.CommandParameter>
+                                    </RadioMenuFlyoutItem>
+                                    <RadioMenuFlyoutItem
+                                        x:Uid="Settings_Default_ThemeMenu_Dark"
+                                        Command="{x:Bind ViewModel.SetCurrentThemeCommand, Mode=OneWay}"
+                                        GroupName="Settings_Default_ThemeMenu"
+                                        IsChecked="{x:Bind ViewModel.IsDarkTheme, Mode=OneWay}"
+                                        Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Dark}">
+                                        <RadioMenuFlyoutItem.CommandParameter>
+                                            <ElementTheme>Dark</ElementTheme>
+                                        </RadioMenuFlyoutItem.CommandParameter>
+                                    </RadioMenuFlyoutItem>
+                                    <RadioMenuFlyoutItem
+                                        x:Uid="Settings_Default_ThemeMenu_Default"
+                                        Command="{x:Bind ViewModel.SetCurrentThemeCommand, Mode=OneWay}"
+                                        GroupName="Settings_Default_ThemeMenu"
+                                        IsChecked="{x:Bind ViewModel.IsDefaultTheme, Mode=OneWay}"
+                                        Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Default}">
+                                        <RadioMenuFlyoutItem.CommandParameter>
+                                            <ElementTheme>Default</ElementTheme>
+                                        </RadioMenuFlyoutItem.CommandParameter>
+                                    </RadioMenuFlyoutItem>
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="Settings_Default_Efficiency">
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xF1E8;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsEnableEfficiencyMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="Settings_Default_AutoExit">
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE9F5;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsEnableAutoExit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="Settings_Default_GameFolder">
+                        <controls:SettingsCard.Description>
+                            <RichTextBlock Opacity=".8">
+                                <Paragraph>
+                                    <Run Text="{x:Bind ViewModel.GameFolder.Path, Mode=OneWay}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </controls:SettingsCard.Description>
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8B7;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <Button Command="{x:Bind ViewModel.BrowerGameFolderCommand, Mode=OneWay}" Content="{markups:LocalizedString ResourceKey=Resources/Common_Dialog_Browser}" />
+                    </controls:SettingsCard>
+
+                </StackPanel>
+
+                <StackPanel>
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+
+                    <TextBlock
+                        x:Uid="Settings_MyMods_Title"
+                        Margin="0,0,0,6"
+                        FontWeight="Bold" />
+
+                    <controls:SettingsCard x:Uid="Settings_MyMods_Blood">
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xEB42;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsEnableBlood, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="Settings_MyMods_ModsFolder">
+                        <controls:SettingsCard.Description>
+                            <RichTextBlock Opacity=".8">
+                                <Paragraph>
+                                    <Run Text="{x:Bind ViewModel.ModsFolder.Path, Mode=OneWay}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </controls:SettingsCard.Description>
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8D5;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <Button Command="{x:Bind ViewModel.BrowerModsFolderCommand, Mode=OneWay}" Content="{markups:LocalizedString ResourceKey=Resources/Common_Dialog_Browser}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="Settings_MyMods_WadsFolder">
+                        <controls:SettingsCard.Description>
+                            <RichTextBlock Opacity=".8">
+                                <Paragraph>
+                                    <Run Text="{x:Bind ViewModel.WadsFolder.Path, Mode=OneWay}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </controls:SettingsCard.Description>
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8D5;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <Button Command="{x:Bind ViewModel.BrowerWadsFolderCommand, Mode=OneWay}" Content="{markups:LocalizedString ResourceKey=Resources/Common_Dialog_Browser}" />
+                    </controls:SettingsCard>
+
+                </StackPanel>
+
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Default">
+                                    <BitmapImage x:Key="Settings_About_App_Icon" UriSource="/Assets/Square44x44Logo.altform-unplated_targetsize-48.png" />
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Light">
+                                    <BitmapImage x:Key="Settings_About_App_Icon" UriSource="/Assets/Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </StackPanel.Resources>
+
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromVerticalOffset="120" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+
+                    <TextBlock
+                        x:Uid="Settings_About_Title"
+                        Margin="0,0,0,6"
+                        FontWeight="Bold" />
+
+                    <controls:SettingsExpander x:Uid="Settings_About_App">
+                        <controls:SettingsExpander.HeaderIcon>
+                            <ImageIcon Source="{ThemeResource Settings_About_App_Icon}" />
+                        </controls:SettingsExpander.HeaderIcon>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <HyperlinkButton x:Uid="Settings_About_App_Website_HyperlinkButton" />
+                                    <HyperlinkButton x:Uid="Settings_About_App_RateAndReview_HyperlinkButton" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                        <RichTextBlock Opacity=".8">
+                            <Paragraph>
+                                <Run Text="{x:Bind ViewModel.VersionString, Mode=OneTime}" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsExpander>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border x:Name="FakeTitleBar" Background="Transparent" />
+        <Button
+            x:Uid="Settings_Back_Button"
+            Width="32"
+            Height="32"
+            Margin="8"
+            Padding="4,6"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            Click="GoBack_Click">
+            <AnimatedIcon>
+                <AnimatedIcon.FallbackIconSource>
+                    <ctrls2:SegoeFluentIconSource Glyph="&#xE72B;" />
+                </AnimatedIcon.FallbackIconSource>
+                <AnimatedIcon.Source>
+                    <animatedVisuals:AnimatedBackVisualSource />
+                </AnimatedIcon.Source>
+            </AnimatedIcon>
+        </Button>
+    </Grid>
+</Page>

@@ -1,0 +1,192 @@
+<UserControl
+    x:Class="GZSkinsX.Controls.LaunchButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Controls"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:themes="using:GZSkinsX.Contracts.Themes"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ctrls2:MultiStateToggleButton
+            x:Name="MultiStateLaunchButton"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            Click="MultiStateLaunchButton_Click"
+            State="LaunchButton_State_Loading">
+            <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Default">
+                <StackPanel Orientation="Horizontal">
+                    <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
+                    <TextBlock x:Uid="LaunchButton_State_Default_Textblock" Margin="8,0,0,0" />
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Loading">
+                <StackPanel Orientation="Horizontal">
+                    <muxc:ProgressRing
+                        x:Name="LaunchButton_State_Loading_ProgressRing"
+                        Width="16"
+                        Height="16"
+                        Loaded="Indeterminate_ProgressRing_Loaded" />
+                    <TextBlock x:Uid="LaunchButton_State_Loading_Textblock" Margin="10,0,0,0" />
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButtonState IsChecked="True" StateName="LaunchButton_State_Running">
+                <StackPanel Orientation="Horizontal">
+                    <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xEE95;" />
+                    <TextBlock x:Uid="LaunchButton_State_Running_Textblock" Margin="8,0,0,0" />
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_CheckForUpdates">
+                <StackPanel Orientation="Horizontal">
+                    <muxc:ProgressRing
+                        x:Name="LaunchButton_State_CheckForUpdates_ProgressRing"
+                        Width="16"
+                        Height="16"
+                        Loaded="Indeterminate_ProgressRing_Loaded" />
+                    <TextBlock x:Uid="LaunchButton_State_CheckForUpdates_Textblock" Margin="10,0,0,0" />
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_UpdateFailed">
+                <StackPanel Orientation="Horizontal">
+                    <ctrls2:SegoeFluentIcon
+                        FontSize="16"
+                        Foreground="{ThemeResource ProgressBarErrorForegroundColor}"
+                        Glyph="&#xEA6A;" />
+                    <TextBlock
+                        x:Uid="LaunchButton_State_UpdateFailed_Textblock"
+                        Margin="10,0,0,0"
+                        Foreground="{ThemeResource ProgressBarErrorForegroundColor}" />
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Updating">
+                <StackPanel Orientation="Horizontal">
+                    <muxc:ProgressRing
+                        x:Name="LaunchButton_State_Updating_ProgressRing"
+                        Width="16"
+                        Height="16"
+                        IsIndeterminate="False" />
+                    <TextBlock Margin="10,0,0,0">
+                        <TextBlock.Text>
+                            <Binding
+                                Converter="{StaticResource StringFormatConverter}"
+                                ConverterParameter="{markups:LocalizedString ResourceKey=Resources/LaunchButton_State_Updating_ProgressString}"
+                                ElementName="LaunchButton_State_Updating_ProgressRing"
+                                Mode="OneWay"
+                                Path="Value" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </ctrls2:MultiStateToggleButtonState>
+            <ctrls2:MultiStateToggleButton.Flyout>
+                <MenuFlyout Placement="Bottom">
+                    <MenuFlyoutItem
+                        x:Name="LaunchButton_Launch_MenuItem"
+                        x:Uid="LaunchButton_Launch_MenuItem"
+                        Click="LaunchButton_Launch_MenuItem_Click">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F5" />
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                        <MenuFlyoutItem.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE768;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSubItem
+                        x:Name="LaunchButton_MoreLaunchOptions_MenuItem"
+                        x:Uid="LaunchButton_MoreLaunchOptions_MenuItem"
+                        Visibility="Collapsed">
+                        <MenuFlyoutSubItem.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE712;" />
+                        </MenuFlyoutSubItem.Icon>
+                    </MenuFlyoutSubItem>
+                    <MenuFlyoutSeparator x:Name="LaunchButton_HaveMoreLaunchOptions_Separator" />
+                    <MenuFlyoutItem
+                        x:Name="LaunchButton_Terminate_MenuItem"
+                        x:Uid="LaunchButton_Terminate_MenuItem"
+                        Click="LaunchButton_Terminate_MenuItem_Click">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F5" Modifiers="Shift" />
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                        <MenuFlyoutItem.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE71A;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator x:Name="LaunchButton_DontHaveMoreLaunchOptions_Separator" />
+                    <MenuFlyoutItem
+                        x:Name="LaunchButton_CheckForUpdats_MenuItem"
+                        x:Uid="LaunchButton_CheckForUpdats_MenuItem"
+                        Click="LaunchButton_CheckForUpdats_MenuItem_Click">
+                        <MenuFlyoutItem.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE895;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem
+                        x:Name="LaunchButton_About_MenuItem"
+                        x:Uid="LaunchButton_About_MenuItem"
+                        Click="LaunchButton_About_MenuItem_Click"
+                        Visibility="Collapsed">
+                        <MenuFlyoutItem.Icon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE946;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </ctrls2:MultiStateToggleButton.Flyout>
+        </ctrls2:MultiStateToggleButton>
+
+        <muxc:TeachingTip
+            x:Name="LaunchButton_FailedToCheckUpdatesTeachingTip"
+            x:Uid="LaunchButton_FailedToCheckUpdatesTeachingTip"
+            Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
+            <muxc:TeachingTip.IconSource>
+                <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+
+        <muxc:TeachingTip
+            x:Name="LaunchButton_RunFailedTeachingTip"
+            x:Uid="LaunchButton_RunFailedTeachingTip"
+            Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
+            <muxc:TeachingTip.IconSource>
+                <ctrls2:SegoeFluentIconSource Glyph="&#xE783;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+
+        <muxc:TeachingTip
+            x:Name="LaunchButton_UpToDateTeachingTip"
+            x:Uid="LaunchButton_UpToDateTeachingTip"
+            IsLightDismissEnabled="True"
+            Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
+            <muxc:TeachingTip.IconSource>
+                <ctrls2:SegoeFluentIconSource Glyph="&#xE73E;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+
+        <muxc:TeachingTip
+            x:Name="LaunchButton_UpdateFailedTeachingTip"
+            x:Uid="LaunchButton_UpdateFailedTeachingTip"
+            Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
+            <muxc:TeachingTip.IconSource>
+                <ctrls2:SegoeFluentIconSource Glyph="&#xEA39;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+
+        <muxc:TeachingTip
+            x:Name="LaunchButton_UpdateButIsRunningTeachingTip"
+            x:Uid="LaunchButton_UpdateButIsRunningTeachingTip"
+            ActionButtonClick="LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick"
+            CloseButtonClick="LaunchButton_UpdateButIsRunningTeachingTip_CloseButtonClick"
+            Target="{x:Bind MultiStateLaunchButton, Mode=OneTime}">
+            <muxc:TeachingTip.IconSource>
+                <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+    </Grid>
+</UserControl>
