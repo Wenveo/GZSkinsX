@@ -7,11 +7,13 @@
 
 using System.Threading.Tasks;
 
+using Microsoft.Windows.AppLifecycle;
+
 namespace GZSkinsX.Contracts.Activation;
 
 public interface IActivationService
 {
-    Task ActivateAsync(object activationArgs);
+    Task ActivateAsync(AppActivationArguments args);
 
     void RegisterHandler(IActivationHandler handler);
 

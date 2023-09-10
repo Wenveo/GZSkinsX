@@ -7,9 +7,11 @@
 
 using System.Threading.Tasks;
 
+using Microsoft.Windows.AppLifecycle;
+
 namespace GZSkinsX.Contracts.Activation;
 
 public interface IActivationHandler2
 {
-    Task<bool> CanHandleAsync(object activationArgs);
+    Task<bool> CanHandleAsync(AppActivationArguments args);
 }

@@ -23,9 +23,9 @@ internal sealed class ActivationService : IActivationService
 {
     private readonly List<IActivationHandler> _handlers = new();
 
-    public async Task ActivateAsync(object activationArgs)
+    public async Task ActivateAsync(AppActivationArguments args)
     {
-        if (activationArgs is IActivatedEventArgs uwpArgs)
+        if (args.Data is IActivatedEventArgs uwpArgs)
         {
             AppxContext.LoggingService.LogAlways(
                 "GZSkinsX.Appx.ActivationService.ActivateAsync",
@@ -33,12 +33,9 @@ internal sealed class ActivationService : IActivationService
         }
         else
         {
-            if (activationArgs is AppActivationArguments winUIArgs)
-            {
-                AppxContext.LoggingService.LogAlways(
-                    "GZSkinsX.Appx.ActivationService.ActivateAsync",
-                    $"{{Type = {winUIArgs.GetType()}, Kind = {winUIArgs.Kind}}}");
-            }
+            AppxContext.LoggingService.LogAlways(
+                "GZSkinsX.Appx.ActivationService.ActivateAsync",
+                $"{{Type = {args.Data.GetType()}, Kind = {args.Kind}}}");
         }
 
         for (var i = _handlers.Count - 1; i >= 0; i--)
@@ -46,20 +43,20 @@ internal sealed class ActivationService : IActivationService
             var handler = _handlers[i];
             if (handler is IActivationHandler2 canHandleAsync)
             {
-                if (await canHandleAsync.CanHandleAsync(activationArgs) is false)
+                if (await canHandleAsync.CanHandleAsync(args) is false)
                 {
                     continue;
                 }
             }
             else
             {
-                if (handler.CanHandle(activationArgs) is false)
+                if (handler.CanHandle(args) is false)
                 {
                     continue;
                 }
             }
 
-            await handler.HandleAsync(activationArgs);
+            await handler.HandleAsync(args);
             break;
         }
     }

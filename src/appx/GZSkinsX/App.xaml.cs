@@ -32,26 +32,26 @@ public partial class App : Application
         InitializeComponent();
     }
 
+    internal void OnActivated(object? sender, AppActivationArguments e)
+    {
+        OnAppLaunch(e);
+    }
+
     /// <summary>
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        OnAppLaunch(args);
+        OnAppLaunch(AppInstance.GetCurrent().GetActivatedEventArgs());
     }
 
-    internal void OnActivated(object? sender, AppActivationArguments e)
-    {
-        OnAppLaunch(e);
-    }
-
-    private void OnAppLaunch(object activationArgs)
+    private void OnAppLaunch(AppActivationArguments activationArgs)
     {
         // Avoid marked as static
         Debug.Assert(_contentLoaded);
 
-        DispatcherQueue.GetForCurrentThread().TryEnqueue(async () =>
+        AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(async () =>
         {
             // Handles activation args
             await AppxContext.ActivationService.ActivateAsync(activationArgs);
