@@ -64,6 +64,9 @@ internal static partial class Program
             /// 这样能够大幅减少日志器的初始化所需的时间
             await LoggerImpl.Shared.InitializeAsync();
 
+            var appInstance = AppInstance.GetCurrent();
+            App? mainApp = null;
+
             Application.Start((p) =>
             {
                 SynchronizationContext.SetSynchronizationContext(
@@ -72,8 +75,14 @@ internal static partial class Program
 
                 AppxContext.InitializeLifetimeService(p, CompositionHost);
 
-                new App();
+                mainApp = new();
+                appInstance.Activated += mainApp.OnActivated;
             });
+
+            if (mainApp is not null)
+            {
+                appInstance.Activated -= mainApp.OnActivated;
+            }
 
             LoggerImpl.Shared.CloseOutputStream();
         }

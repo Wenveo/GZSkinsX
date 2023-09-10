@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Appx.AccessCache\GZSkinsX.Appx.AccessCache.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Appx.Activation\GZSkinsX.Appx.Activation.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Game\GZSkinsX.Appx.Game.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Logging\GZSkinsX.Appx.Logging.csproj" />

@@ -5,9 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System.Diagnostics;
+
 using GZSkinsX.Contracts.Appx;
 
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.AppLifecycle;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,6 +38,26 @@ public partial class App : Application
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        AppxContext.AppxWindow.Activate();
+        OnAppLaunch(args);
+    }
+
+    internal void OnActivated(object? sender, AppActivationArguments e)
+    {
+        OnAppLaunch(e);
+    }
+
+    private void OnAppLaunch(object activationArgs)
+    {
+        // Avoid marked as static
+        Debug.Assert(_contentLoaded);
+
+        DispatcherQueue.GetForCurrentThread().TryEnqueue(async () =>
+        {
+            // Handles activation args
+            await AppxContext.ActivationService.ActivateAsync(activationArgs);
+
+            // Ensure the current window is active
+            AppxContext.AppxWindow.Activate();
+        });
     }
 }
