@@ -61,6 +61,11 @@ internal sealed class AppxWindow : IAppxWindow
         }
         else
         {
+            if (_shellWindow.Content is FrameworkElement frameworkElement)
+            {
+                frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
+            }
+
             Activated?.Invoke(this, args);
         }
     }
@@ -76,11 +81,6 @@ internal sealed class AppxWindow : IAppxWindow
     /// <inheritdoc/>
     public void Activate()
     {
-        if (_shellWindow.Content is FrameworkElement frameworkElement)
-        {
-            frameworkElement.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
-        }
-
         _shellWindow.Activate();
     }
 
