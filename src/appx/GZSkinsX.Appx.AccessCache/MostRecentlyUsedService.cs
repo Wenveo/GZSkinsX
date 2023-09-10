@@ -5,14 +5,14 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Contracts.AccessCache;
-using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Settings;
-
 using System;
 using System.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
+using GZSkinsX.Contracts.AccessCache;
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Settings;
 
 using Windows.Foundation;
 using Windows.Storage;
@@ -73,7 +73,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
         ArgumentNullException.ThrowIfNull(storageItem);
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (string.IsNullOrEmpty(token))
         {
             token = _mostRecentlyUsedList.Add(storageItem, name);
@@ -91,7 +91,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
         ArgumentNullException.ThrowIfNull(storageItem);
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (string.IsNullOrEmpty(token))
         {
             token = _mostRecentlyUsedList.Add(storageItem, name, visibility);
@@ -121,7 +121,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (token is null)
         {
             return false;
@@ -135,7 +135,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -150,7 +150,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -165,7 +165,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -180,7 +180,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -195,7 +195,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -210,7 +210,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -225,7 +225,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (token is not null)
         {
             _mostRecentlyUsedList.Remove(token);
@@ -237,7 +237,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         try
         {
-            StorageFile file = await _mostRecentlyUsedList.GetFileAsync(
+            var file = await _mostRecentlyUsedList.GetFileAsync(
                 _settingsSection.Attribute<string>(name));
 
             return file;
@@ -253,7 +253,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         try
         {
-            StorageFile file = await _mostRecentlyUsedList.GetFileAsync(
+            var file = await _mostRecentlyUsedList.GetFileAsync(
                 _settingsSection.Attribute<string>(name), options);
 
             return file;
@@ -269,7 +269,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         try
         {
-            StorageFolder folder = await _mostRecentlyUsedList.GetFolderAsync(
+            var folder = await _mostRecentlyUsedList.GetFolderAsync(
                 _settingsSection.Attribute<string>(name));
 
             return folder;
@@ -285,7 +285,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         try
         {
-            StorageFolder folder = await _mostRecentlyUsedList.GetFolderAsync(
+            var folder = await _mostRecentlyUsedList.GetFolderAsync(
                 _settingsSection.Attribute<string>(name), options);
 
             return folder;
@@ -301,7 +301,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         try
         {
-            IStorageItem item = await _mostRecentlyUsedList.GetItemAsync(
+            var item = await _mostRecentlyUsedList.GetItemAsync(
                 _settingsSection.Attribute<string>(name));
 
             return item;
@@ -317,7 +317,7 @@ internal sealed class MostRecentlyUsedService : IMostRecentlyUsedService
     {
         try
         {
-            IStorageItem item = await _mostRecentlyUsedList.GetItemAsync(
+            var item = await _mostRecentlyUsedList.GetItemAsync(
                 _settingsSection.Attribute<string>(name), options);
 
             return item;

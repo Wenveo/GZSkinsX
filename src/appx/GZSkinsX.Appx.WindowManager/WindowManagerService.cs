@@ -5,17 +5,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.WindowManager;
-
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
-
 using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Diagnostics;
 using System.Linq;
+
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.WindowManager;
+
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GZSkinsX.Appx.WindowManager;
 

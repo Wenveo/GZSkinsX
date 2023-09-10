@@ -5,13 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Contracts.AccessCache;
-using GZSkinsX.Contracts.Settings;
-
 using System;
 using System.Composition;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
+using GZSkinsX.Contracts.AccessCache;
+using GZSkinsX.Contracts.Settings;
 
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -53,7 +53,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
         ArgumentNullException.ThrowIfNull(storageItem);
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (string.IsNullOrEmpty(token))
         {
             token = _futureAccessList.Add(storageItem, name);
@@ -83,7 +83,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (token is null)
         {
             return false;
@@ -97,7 +97,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -112,7 +112,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -127,7 +127,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -142,7 +142,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -157,7 +157,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -172,7 +172,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         Debug.Assert(token != null);
         if (token is null)
         {
@@ -187,7 +187,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         ArgumentException.ThrowIfNullOrEmpty(name);
 
-        string? token = _settingsSection.Attribute<string>(name);
+        var token = _settingsSection.Attribute<string>(name);
         if (token is not null)
         {
             _futureAccessList.Remove(token);
@@ -199,7 +199,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         try
         {
-            StorageFile file = await _futureAccessList.GetFileAsync(
+            var file = await _futureAccessList.GetFileAsync(
                 _settingsSection.Attribute<string>(name));
 
             return file;
@@ -215,7 +215,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         try
         {
-            StorageFile file = await _futureAccessList.GetFileAsync(
+            var file = await _futureAccessList.GetFileAsync(
                 _settingsSection.Attribute<string>(name), options);
 
             return file;
@@ -231,7 +231,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         try
         {
-            StorageFolder folder = await _futureAccessList.GetFolderAsync(
+            var folder = await _futureAccessList.GetFolderAsync(
                 _settingsSection.Attribute<string>(name));
 
             return folder;
@@ -247,7 +247,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         try
         {
-            StorageFolder folder = await _futureAccessList.GetFolderAsync(
+            var folder = await _futureAccessList.GetFolderAsync(
                 _settingsSection.Attribute<string>(name), options);
 
             return folder;
@@ -263,7 +263,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         try
         {
-            IStorageItem item = await _futureAccessList.GetItemAsync(
+            var item = await _futureAccessList.GetItemAsync(
                 _settingsSection.Attribute<string>(name));
 
             return item;
@@ -279,7 +279,7 @@ internal sealed class FutureAccessService(ISettingsService settingsService) : IF
     {
         try
         {
-            IStorageItem item = await _futureAccessList.GetItemAsync(
+            var item = await _futureAccessList.GetItemAsync(
                 _settingsSection.Attribute<string>(name), options);
 
             return item;
