@@ -28,6 +28,7 @@ public static partial class AppxContext
         "GZSkinsX.Contracts.Appx.IAppxWindow",
         "GZSkinsX.Contracts.Game.IGameService",
         "GZSkinsX.Contracts.Logging.ILoggingService",
+        "GZSkinsX.Contracts.Mounter.IMounterService",
         "GZSkinsX.Contracts.MRTCore.IMRTCoreService",
         "GZSkinsX.Contracts.Settings.ISettingsService",
         "GZSkinsX.Contracts.Themes.IThemeService",
