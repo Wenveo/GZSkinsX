@@ -10,4 +10,5 @@ using System;
 namespace GZSkinsX.Contracts.AccessCache;
 
 public sealed class AccessCacheItemNotFoundException(string itemName)
-    : Exception($"No item with a matching name was found in the stored list: {itemName}") { }
+    : Exception($"No item with a matching name was found in the stored list: {itemName}")
+{ }

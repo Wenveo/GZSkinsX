@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 using CommunityToolkit.Mvvm.ComponentModel;
