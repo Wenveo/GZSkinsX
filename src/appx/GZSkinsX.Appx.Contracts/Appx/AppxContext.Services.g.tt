@@ -66,7 +66,7 @@ public static partial class AppxContext
     public static T Resolve<T>() where T : class
     {
         EnsureInitialized();
-        return _compositionHost.GetExport<T>();
+        return _exportProvider.GetExportedValue<T>();
     }
 
     /// <summary>
@@ -74,17 +74,22 @@ public static partial class AppxContext
     /// </summary>
     /// <typeparam name="T">目标类型中使用 <see cref="global::System.Composition.ExportAttribute"/> 所声明的导出类型。</typeparam>
     /// <param name="value">已获取到的类型实例，但如果获取失败则会返回 default。</param>
-    /// <returns>当获取成功时返回 true，否则返回 false</returns>
+    /// <returns>当获取成功时返回 true，否则返回 false。</returns>
     public static bool TryResolve<T>([global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value) where T : class
     {
         EnsureInitialized();
-        return _compositionHost.TryGetExport<T>(out value);
-    }
 
-    /// <summary>
-    /// 用于获取和检索所有已导出的类型的组件容器。
-    /// </summary>
-    private static global::System.Composition.Hosting.CompositionHost? _compositionHost;
+        try
+        {
+            value = _exportProvider.GetExportedValue<T>();
+        }
+        catch
+        {
+            value = null;
+        }
+
+        return value is not null;
+    }
     
     /// <summary>
     /// 检查和获取指定导出类型的成员对象。
@@ -101,14 +106,23 @@ public static partial class AppxContext
         }
 
         EnsureInitialized();
-        return service = _compositionHost.GetExport<T>();
+        return service = _exportProvider.GetExportedValue<T>();
     }
 
-    [global::System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_compositionHost))]
+    /// <summary>
+    /// 用于获取和检索所有已导出的类型的组件容器。
+    /// </summary>
+    private static global::Microsoft.VisualStudio.Composition.ExportProvider? _exportProvider;
+    
+    /// <summary>
+    /// 确认当前应用程序上下文是否已初始化。
+    /// </summary>
+    /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化时发生。</exception>
+    [global::System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_exportProvider))]
     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     private static void EnsureInitialized()
     {
-        if (_compositionHost is not null)
+        if (_exportProvider is not null)
         {
             return;
         }

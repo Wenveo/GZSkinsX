@@ -6,10 +6,9 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Composition.Hosting;
 using System.Runtime.CompilerServices;
 
-using Microsoft.UI.Xaml;
+using Microsoft.VisualStudio.Composition;
 
 [assembly: InternalsVisibleTo("GZSkinsX")]
 
@@ -20,21 +19,17 @@ public static partial class AppxContext
     /// <summary>
     /// 初始化应用程序的生命周期服务。
     /// </summary>
-    /// <param name="callbackParams">应用程序初始化的参数。</param>
-    /// <param name="compositionHost">组件容器的 <seealso cref="CompositionHost"/> 对象的实例。</param>
-    /// <exception cref="ArgumentNullException"><paramref name="callbackParams"/> 或 <paramref name="compositionHost"/> 的默认值为空。</exception>
-    internal static void InitializeLifetimeService(
-        ApplicationInitializationCallbackParams callbackParams,
-        CompositionHost compositionHost)
+    /// <param name="exportProvider">组件容器的 <seealso cref="ExportProvider"/> 对象的实例。</param>
+    /// <exception cref="ArgumentNullException"><paramref name="exportProvider"/> 的默认值为空。</exception>
+    internal static void InitializeLifetimeService(ExportProvider exportProvider)
     {
-        ArgumentNullException.ThrowIfNull(callbackParams);
-        ArgumentNullException.ThrowIfNull(compositionHost);
+        ArgumentNullException.ThrowIfNull(exportProvider);
 
-        if (_compositionHost is not null)
+        if (_exportProvider is not null)
         {
             throw new InvalidOperationException("The lifetime service has been initialized!");
         }
 
-        _compositionHost = compositionHost;
+        _exportProvider = exportProvider;
     }
 }
