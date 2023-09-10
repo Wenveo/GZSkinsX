@@ -14,8 +14,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 
 [assembly: InternalsVisibleTo("GZSkinsX")]
+[assembly: InternalsVisibleTo("GZSkinsX.Appx.Logging")]
 
-namespace GZSkinsX.Appx.Logging;
+namespace GZSkinsX.Contracts.Logging;
 
 /// <summary>
 /// 应用程序的默认日志器的实现类。
