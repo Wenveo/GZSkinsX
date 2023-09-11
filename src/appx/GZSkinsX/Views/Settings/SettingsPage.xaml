@@ -95,20 +95,6 @@
 
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="Settings_Default_Efficiency">
-                        <controls:SettingsCard.HeaderIcon>
-                            <ctrls2:SegoeFluentIcon Glyph="&#xF1E8;" />
-                        </controls:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsEnableEfficiencyMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="Settings_Default_AutoExit">
-                        <controls:SettingsCard.HeaderIcon>
-                            <ctrls2:SegoeFluentIcon Glyph="&#xE9F5;" />
-                        </controls:SettingsCard.HeaderIcon>
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsEnableAutoExit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </controls:SettingsCard>
-
                     <controls:SettingsCard x:Uid="Settings_Default_GameFolder">
                         <controls:SettingsCard.Description>
                             <RichTextBlock Opacity=".8">

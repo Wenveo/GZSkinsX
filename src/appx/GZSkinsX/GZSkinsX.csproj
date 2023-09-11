@@ -31,10 +31,6 @@
 
   <ItemGroup>
     <PackageReference Include="MessagePack" Version="2.5.124" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.18-beta">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
   
   <ItemGroup>

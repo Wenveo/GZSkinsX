@@ -384,18 +384,6 @@
   <data name="Settings_Back_Button.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>返回至主页</value>
   </data>
-  <data name="Settings_Default_AutoExit.Description" xml:space="preserve">
-    <value>在游戏启动时自动退出应用程序以提高安全性 (更改此选项需要在重启后才生效)</value>
-  </data>
-  <data name="Settings_Default_AutoExit.Header" xml:space="preserve">
-    <value>自动退出</value>
-  </data>
-  <data name="Settings_Default_Efficiency.Description" xml:space="preserve">
-    <value>降低进程的优先级并限制资源占用以提高系统性能和降低功耗</value>
-  </data>
-  <data name="Settings_Default_Efficiency.Header" xml:space="preserve">
-    <value>效率模式</value>
-  </data>
   <data name="Settings_Default_GameFolder.Header" xml:space="preserve">
     <value>游戏目录</value>
   </data>

@@ -37,12 +37,6 @@ internal sealed partial class SettingsViewModel : ObservableObject
     private bool _isEnableBlood;
 
     [ObservableProperty]
-    private bool _isEnableEfficiencyMode;
-
-    [ObservableProperty]
-    private bool _isEnableAutoExit;
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsLightTheme))]
     [NotifyPropertyChangedFor(nameof(IsDarkTheme))]
     [NotifyPropertyChangedFor(nameof(IsDefaultTheme))]
@@ -75,8 +69,6 @@ internal sealed partial class SettingsViewModel : ObservableObject
     public async Task InitializeAsync()
     {
         IsEnableBlood = await AppxContext.MyModsService.GetIsEnableBloodAsync();
-        IsEnableEfficiencyMode = AppxContext.Resolve<AppSettings>().ShouldEnableEfficiencyMode;
-        IsEnableAutoExit = !AppxContext.Resolve<AppSettings>().DontNeedCloseWhenGameIsLaunched;
 
         GameFolder = await AppxContext.GameService.TryGetRootFolderAsync();
         ModsFolder = await AppxContext.MyModsService.GetModsFolderAsync();
@@ -88,17 +80,6 @@ internal sealed partial class SettingsViewModel : ObservableObject
     async partial void OnIsEnableBloodChanged(bool value)
     {
         await AppxContext.MyModsService.SetIsEnableBloodAsync(value);
-    }
-
-    partial void OnIsEnableEfficiencyModeChanged(bool value)
-    {
-        AppxContext.Resolve<AppSettings>().ShouldEnableEfficiencyMode = value;
-        EfficiencyManager.SetEfficiencyMode(Environment.ProcessId, value);
-    }
-
-    partial void OnIsEnableAutoExitChanged(bool value)
-    {
-        AppxContext.Resolve<AppSettings>().DontNeedCloseWhenGameIsLaunched = !value;
     }
 
     [RelayCommand]
