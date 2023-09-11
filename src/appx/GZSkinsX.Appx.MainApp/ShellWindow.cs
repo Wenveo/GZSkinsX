@@ -45,7 +45,7 @@ internal sealed class ShellWindow : Window
         }
         else
         {
-            AppWindow.Resize(new(1200, 600));
+            AppWindow.Resize(new(1000, 572));
         }
 
         if (WindowSettigns.IsMaximized)
