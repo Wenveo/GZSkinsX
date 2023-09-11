@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.Marshalling;
 
 using CommunityToolkit.WinUI;
 
@@ -105,7 +103,7 @@ internal sealed partial class MainPage : Page
         }, DispatcherQueuePriority.Normal).FireAndForget();
 
         AppTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, AppxContext.AppxWindow.MainWindow);
-        //DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
+        DataTransferManagerHelper.GetDataTransferManager().DataRequested += DataTransferManager_DataRequested;
     }
 
     private async void MainLaunchButton_UpdateCompleted(object? sender, EventArgs e)
@@ -120,7 +118,7 @@ internal sealed partial class MainPage : Page
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         AppTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, null);
-        //DataTransferManager.GetForCurrentView().DataRequested -= DataTransferManager_DataRequested;
+        DataTransferManagerHelper.GetDataTransferManager().DataRequested -= DataTransferManager_DataRequested;
     }
 
     private void ContentGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -233,33 +231,39 @@ internal sealed partial class MainPage : Page
 
         if (MyModsGridView.SelectedItems.Count > 0)
         {
-            var interop = DataTransferManager.As<IDataTransferManagerInterop>();
+            var interop = DataTransferManagerHelper.GetDataTransferManagerInterop();
             interop.ShowShareUIForWindow(AppxContext.AppxWindow.MainWindowHandle);
         }
     }
 
-    private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+    private async void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
     {
-        var items = MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile).ToArray();
-        if (items.Length > 0)
+        var deferral = args.Request.GetDeferral();
+        await DispatcherQueue.EnqueueAsync(() =>
         {
-            if (items.Length == 1)
+            var items = MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile).ToArray();
+            if (items.Length > 0)
             {
-                var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Title");
-                args.Request.Data.Properties.Title = string.Format(format, items[0].Name);
+                if (items.Length == 1)
+                {
+                    var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Title");
+                    args.Request.Data.Properties.Title = string.Format(format, items[0].Name);
+                }
+                else
+                {
+                    var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Multiple_Items_Title");
+                    args.Request.Data.Properties.Title = string.Format(format, items[0].Name, items[1].Name);
+                }
+
+                args.Request.Data.SetStorageItems(items, true);
             }
             else
             {
-                var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Multiple_Items_Title");
-                args.Request.Data.Properties.Title = string.Format(format, items[0].Name, items[1].Name);
+                args.Request.Data.Properties.Title = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Failed_Title");
             }
+        });
 
-            args.Request.Data.SetStorageItems(items, true);
-        }
-        else
-        {
-            args.Request.Data.Properties.Title = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Failed_Title");
-        }
+        deferral.Complete();
     }
 
     private void Main_Loading_ProgressRing_Loaded(object sender, RoutedEventArgs e)
@@ -269,15 +273,5 @@ internal sealed partial class MainPage : Page
             self.SetValue(ProgressRing.IsIndeterminateProperty, false);
             self.SetValue(ProgressRing.IsIndeterminateProperty, true);
         }
-    }
-
-    [GeneratedComInterface]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [System.Runtime.InteropServices.Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8")]
-    internal partial interface IDataTransferManagerInterop
-    {
-        nint GetForWindow(nint appWindow, ref Guid riid);
-
-        void ShowShareUIForWindow(nint appWindow);
     }
 }
