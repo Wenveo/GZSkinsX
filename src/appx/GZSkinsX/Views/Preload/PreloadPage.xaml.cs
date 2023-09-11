@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
@@ -17,7 +18,6 @@ using GZSkinsX.Contracts.WindowManager;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 
 using Windows.ApplicationModel;
 
@@ -34,27 +34,42 @@ internal sealed partial class PreloadPage : Page
     public PreloadPage()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        DispatcherQueue.EnqueueAsync(InitializeAsync).FireAndForget();
-    }
+        var backgroundWorker = new BackgroundWorker();
+        backgroundWorker.DoWork += async (s, e) =>
+        {
+            var dispatcherQueue = (e.Argument as DispatcherQueue)!;
 
-    private async Task InitializeAsync()
-    {
-        // Try Initialize Module
-        await AppxContext.MyModsService.UpdateSettingsAsync();
-        if (await Package.Current.VerifyContentIntegrityAsync())
-        {
-            TryCheckUpdatesAsync().FireAndForget();
-            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid, true);
-        }
-        else
-        {
-            ShowCrashMessage("Preload_Crash_Failed_To_Verify_Content_Integrity".GetLocalized()!);
-            AppxContext.LoggingService.LogError("GZSkinsX.App.Views.PreloadPage.InitializeAsync", $"Failed to verify content integrity.");
-        }
+            // Try Initialize Module
+            try
+            {
+                await AppxContext.MyModsService.UpdateSettingsAsync();
+            }
+            catch
+            {
+            }
+
+            await dispatcherQueue.EnqueueAsync(async () =>
+            {
+                if (await Package.Current.VerifyContentIntegrityAsync())
+                {
+                    TryCheckUpdatesAsync().FireAndForget();
+                    AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid, true);
+                }
+                else
+                {
+                    ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
+                    AppxContext.LoggingService.LogError("GZSkinsX.App.Views.PreloadPage.InitializeAsync", $"Failed to verify content integrity.");
+
+                }
+            });
+        };
+
+        backgroundWorker.RunWorkerAsync(DispatcherQueue);
     }
 
     private void ShowCrashMessage(string message)
@@ -109,7 +124,6 @@ internal sealed partial class PreloadPage : Page
 
     private async Task TryCheckUpdatesAsync()
     {
-        var updater = AppxContext.Resolve<AppUpdater>();
         var updateInfo = await AppUpdater.TryGetAppInfoAsync();
         if (updateInfo.IsEmpty)
         {

@@ -103,7 +103,7 @@ internal sealed partial class MainPage : Page
 
         }, DispatcherQueuePriority.Normal).FireAndForget();
 
-        AppxContext.AppxTitleBar.SetTitleBar(AppTitleBar);
+        //DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
         DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
     }
 
@@ -119,7 +119,7 @@ internal sealed partial class MainPage : Page
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
         AppxContext.AppxTitleBar.SetTitleBar(null);
-        DataTransferManager.GetForCurrentView().DataRequested -= DataTransferManager_DataRequested;
+        //DataTransferManager.GetForCurrentView().DataRequested -= DataTransferManager_DataRequested;
     }
 
     private void ContentGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)

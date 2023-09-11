@@ -9,14 +9,10 @@ using System;
 using System.IO.Hashing;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-using CommunityToolkit.WinUI;
-
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.ViewModels;
 
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -42,7 +38,7 @@ internal sealed partial class IndexPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        DispatcherQueue.EnqueueAsync(async () =>
+        DispatcherQueue.TryEnqueue(async () =>
         {
             try
             {
@@ -63,8 +59,7 @@ internal sealed partial class IndexPage : Page
             }
 
             ContentGrid.Visibility = Visibility.Visible;
-            await ViewModel.DownloadAsync();
-
-        }, DispatcherQueuePriority.Normal).FireAndForget();
+            ViewModel.StartDownload();
+        });
     }
 }
