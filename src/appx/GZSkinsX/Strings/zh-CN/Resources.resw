@@ -321,7 +321,7 @@
   <data name="Main_MyMods_Title.Text" xml:space="preserve">
     <value>所有模组</value>
   </data>
-  <data name="Main_Settings_Menu.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Main_Settings_Menu.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>设置菜单</value>
   </data>
   <data name="Main_Share_Dialog_Failed_Title" xml:space="preserve">
@@ -381,7 +381,7 @@
   <data name="Settings_About_Title.Text" xml:space="preserve">
     <value>关于</value>
   </data>
-  <data name="Settings_Back_Button.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+  <data name="Settings_Back_Button.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>返回至主页</value>
   </data>
   <data name="Settings_Default_AutoExit.Description" xml:space="preserve">
