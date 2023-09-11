@@ -121,4 +121,28 @@
     <value>More Options</value>
     <comment>Automation name for the secondary button.</comment>
   </data>
+  <data name="MyModView_Status_Installed" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="MyModView_Status_Uninstalled" xml:space="preserve">
+    <value>Uninstalled</value>
+  </data>
+  <data name="MyModView_Tooltip_Author.Text" xml:space="preserve">
+    <value>Author: </value>
+  </data>
+  <data name="MyModView_Tooltip_DateTime.Text" xml:space="preserve">
+    <value>Created: </value>
+  </data>
+  <data name="MyModView_Tooltip_Description.Text" xml:space="preserve">
+    <value>Description: </value>
+  </data>
+  <data name="MyModView_Tooltip_FileName.Text" xml:space="preserve">
+    <value>Filename: </value>
+  </data>
+  <data name="MyModView_Tooltip_Name.Text" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="MyModView_Tooltip_Status.Text" xml:space="preserve">
+    <value>Status: </value>
+  </data>
 </root>
