@@ -461,7 +461,7 @@ internal sealed partial class MainViewModel : ObservableObject
             await MyModsService.UninstallModsAsync(myModViewModels.Select(a => a.ModFile));
 
             var b = myModViewModels.Any(item => item.Enable = false);
-            Debug.Assert(b);
+            Debug.Assert(b is false);
 
             AppxContext.LoggingService.LogOkay(
                 "GZSkinsX.App.ViewModels.MainViewModel.OnUninstallAsync",
