@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
+
+using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Controls;
@@ -18,8 +19,6 @@ using GZSkinsX.Contracts.Mounter;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
-
-using Windows.UI.Core;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -54,9 +53,9 @@ internal sealed partial class LaunchButton : UserControl
         AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
     }
 
-    private async void OnIsRunningChanged(IMounterService sender, bool args)
+    private void OnIsRunningChanged(IMounterService sender, bool args)
     {
-        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+        DispatcherQueue.TryEnqueue(async () =>
         {
             await UpdateLaunchStateAsync(args ? RunningState : DefaultState);
         });
@@ -150,7 +149,7 @@ internal sealed partial class LaunchButton : UserControl
         }
         catch
         {
-            await Dispatcher.RunAsync(default, async () =>
+            DispatcherQueue.TryEnqueue(async () =>
             {
                 await UpdateLaunchStateAsync();
                 await ShowFailedToCheckUpdatesTeachingTipAsync();
@@ -160,7 +159,7 @@ internal sealed partial class LaunchButton : UserControl
 
         if (needUpdate is false && await AppxContext.MounterService.VerifyContentIntegrityAsync())
         {
-            await Dispatcher.RunAsync(default, async () =>
+            DispatcherQueue.TryEnqueue(async () =>
             {
                 await UpdateLaunchStateAsync();
                 await ShowUpToDateTeachingTipAsync();
@@ -168,7 +167,7 @@ internal sealed partial class LaunchButton : UserControl
         }
         else
         {
-            await Dispatcher.RunAsync(default, async () =>
+            await DispatcherQueue.EnqueueAsync(async () =>
             {
                 if (AppxContext.MounterService.IsMTRunning)
                 {
@@ -227,25 +226,15 @@ internal sealed partial class LaunchButton : UserControl
     {
         try
         {
-            CancellationTokenSource? tokenSource = null;
             await AppxContext.MounterService.UpdateAsync(new Progress<double>(async (p) =>
             {
-                await Dispatcher.RunAsync(default, async () =>
+                await DispatcherQueue.EnqueueAsync(() =>
                 {
-                    tokenSource?.Cancel();
-                    tokenSource = new CancellationTokenSource();
-
-                    try
-                    {
-                        await ProgressAnimationAsync(p, tokenSource);
-                    }
-                    catch
-                    {
-                    }
+                    LaunchButton_State_Updating_ProgressRing.Value = p;
                 });
             }));
 
-            await Dispatcher.RunAsync(default, async () =>
+            await DispatcherQueue.EnqueueAsync(async () =>
             {
                 await Task.Delay(800);
                 await UpdateLaunchStateAsync();
@@ -258,7 +247,7 @@ internal sealed partial class LaunchButton : UserControl
         }
         catch (Exception excp)
         {
-            await Dispatcher.RunAsync(default, async () =>
+            await DispatcherQueue.EnqueueAsync(async () =>
             {
                 await ShowUpdateFailedTeachingTipAsync(excp.Message);
                 await UpdateLaunchStateAsync(UpdateFailedState);
@@ -438,46 +427,6 @@ internal sealed partial class LaunchButton : UserControl
             nameof(MTPackageMetadata.Author))).IsEmpty ? Visibility.Collapsed : Visibility.Visible;
     }
 
-    private async Task ProgressAnimationAsync(double value, CancellationTokenSource tokenSource)
-    {
-        const int AnimationCount = 8;
-        const int AnimationDelay = 320;
-        const int CompletionDelay = 80;
-
-        if (LaunchButton_State_Updating_ProgressRing.Value < value)
-        {
-            var maxValue = Math.Min(value - LaunchButton_State_Updating_ProgressRing.Value, 100);
-            var delay = AnimationDelay / AnimationCount;
-            var middle = maxValue / AnimationCount;
-
-            for (var i = AnimationCount; i > 1; i--)
-            {
-                await Task.Delay(delay, tokenSource.Token);
-                LaunchButton_State_Updating_ProgressRing.Value = Math.Round(LaunchButton_State_Updating_ProgressRing.Value + middle, 2);
-            }
-
-            await Task.Delay(delay, tokenSource.Token);
-            LaunchButton_State_Updating_ProgressRing.Value = Math.Round(value, 2);
-        }
-        else
-        {
-            var maxValue = Math.Max(LaunchButton_State_Updating_ProgressRing.Value - value, 0);
-            var delay = AnimationDelay / AnimationCount;
-            var middle = maxValue / AnimationCount;
-
-            for (var i = AnimationCount; i > 1; i--)
-            {
-                await Task.Delay(delay, tokenSource.Token);
-                LaunchButton_State_Updating_ProgressRing.Value = Math.Round(LaunchButton_State_Updating_ProgressRing.Value - middle);
-            }
-
-            await Task.Delay(delay, tokenSource.Token);
-            LaunchButton_State_Updating_ProgressRing.Value = Math.Round(value, 2);
-        }
-
-        await Task.Delay(CompletionDelay, tokenSource.Token);
-    }
-
     private async void MultiStateLaunchButton_Click(MultiStateToggleButton sender, EventArgs args)
     {
         await OnToggleStateAsync();
@@ -550,30 +499,31 @@ internal sealed partial class LaunchButton : UserControl
 
         var contentDialog = new ContentDialog()
         {
-            Title = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Title"),
+            XamlRoot = XamlRoot,
+            Content = richTextBlock,
             CloseButtonText = ResourceHelper.GetLocalized("Resources/Common_Dialog_OK"),
-            Content = richTextBlock
+            Title = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Title"),
         };
 
         await contentDialog.ShowAsync();
     }
 
-    private async void LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)
+    private async void LaunchButton_UpdateButIsRunningTeachingTip_ActionButtonClick(TeachingTip sender, object args)
     {
         await OnTerminateAndUpdateAsync();
     }
 
-    private async void LaunchButton_UpdateButIsRunningTeachingTip_CloseButtonClick(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)
+    private async void LaunchButton_UpdateButIsRunningTeachingTip_CloseButtonClick(TeachingTip sender, object args)
     {
         await UpdateLaunchStateAsync();
     }
 
     private void Indeterminate_ProgressRing_Loaded(object sender, RoutedEventArgs e)
     {
-        if (sender is Microsoft.UI.Xaml.Controls.ProgressRing self)
+        if (sender is ProgressRing self)
         {
-            self.SetValue(Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminateProperty, false);
-            self.SetValue(Microsoft.UI.Xaml.Controls.ProgressRing.IsIndeterminateProperty, true);
+            self.SetValue(ProgressRing.IsIndeterminateProperty, false);
+            self.SetValue(ProgressRing.IsIndeterminateProperty, true);
         }
     }
 }
