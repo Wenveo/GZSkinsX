@@ -15,6 +15,7 @@ using CommunityToolkit.WinUI;
 
 using GZSkinsX.Activation;
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Controls;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.MyMods;
 using GZSkinsX.Contracts.WindowManager;
@@ -103,8 +104,8 @@ internal sealed partial class MainPage : Page
 
         }, DispatcherQueuePriority.Normal).FireAndForget();
 
+        AppTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, AppxContext.AppxWindow.MainWindow);
         //DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
-        DataTransferManager.GetForCurrentView().DataRequested += DataTransferManager_DataRequested;
     }
 
     private async void MainLaunchButton_UpdateCompleted(object? sender, EventArgs e)
@@ -118,7 +119,7 @@ internal sealed partial class MainPage : Page
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
-        AppxContext.AppxTitleBar.SetTitleBar(null);
+        AppTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, null);
         //DataTransferManager.GetForCurrentView().DataRequested -= DataTransferManager_DataRequested;
     }
 

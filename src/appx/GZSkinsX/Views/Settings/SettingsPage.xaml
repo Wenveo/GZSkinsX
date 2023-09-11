@@ -222,24 +222,30 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Border x:Name="FakeTitleBar" Background="Transparent" />
-        <Button
-            x:Uid="Settings_Back_Button"
-            Width="32"
-            Height="32"
-            Margin="8"
-            Padding="4,6"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            Click="GoBack_Click">
-            <AnimatedIcon>
-                <AnimatedIcon.FallbackIconSource>
-                    <ctrls2:SegoeFluentIconSource Glyph="&#xE72B;" />
-                </AnimatedIcon.FallbackIconSource>
-                <AnimatedIcon.Source>
-                    <animatedVisuals:AnimatedBackVisualSource />
-                </AnimatedIcon.Source>
-            </AnimatedIcon>
-        </Button>
+        <ctrls2:WinUITitleBar x:Name="FakeTitleBar">
+            <ctrls2:WinUITitleBar.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Client" />
+                <ColumnDefinition Width="*" ctrls2:WinUITitleBar.UIContentType="Caption" />
+            </ctrls2:WinUITitleBar.ColumnDefinitions>
+
+            <Button
+                x:Uid="Settings_Back_Button"
+                Width="32"
+                Height="32"
+                Margin="8"
+                Padding="4,6"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Click="GoBack_Click">
+                <AnimatedIcon>
+                    <AnimatedIcon.FallbackIconSource>
+                        <ctrls2:SegoeFluentIconSource Glyph="&#xE72B;" />
+                    </AnimatedIcon.FallbackIconSource>
+                    <AnimatedIcon.Source>
+                        <animatedVisuals:AnimatedBackVisualSource />
+                    </AnimatedIcon.Source>
+                </AnimatedIcon>
+            </Button>
+        </ctrls2:WinUITitleBar>
     </Grid>
 </Page>
