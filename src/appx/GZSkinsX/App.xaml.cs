@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Contracts.Game;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.Extension;
 
@@ -90,18 +91,15 @@ public partial class App : Application
         OnAppLaunch(AppInstance.GetCurrent().GetActivatedEventArgs());
     }
 
-    private void OnAppLaunch(AppActivationArguments activationArgs)
+    private async void OnAppLaunch(AppActivationArguments activationArgs)
     {
         // Avoid marked as static
         Debug.Assert(_contentLoaded);
 
-        AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(async () =>
-        {
-            // Handles activation args
-            await AppxContext.ActivationService.ActivateAsync(activationArgs);
+        // Handles activation args
+        await AppxContext.ActivationService.ActivateAsync(activationArgs);
 
-            // Ensure the current window is active
-            AppxContext.AppxWindow.Activate();
-        });
+        // Ensure the current window is active
+        AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(AppxContext.AppxWindow.Activate);
     }
 }

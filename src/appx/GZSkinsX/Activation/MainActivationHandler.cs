@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +18,7 @@ using GZSkinsX.Views;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 
+using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 
 namespace GZSkinsX.Activation;
@@ -31,13 +31,17 @@ internal sealed class MainActivationHandler : IActivationHandler
 
     public bool CanHandle(AppActivationArguments args)
     {
-        if (args.Kind is not ExtendedActivationKind.File ||
-            args.Data is not IReadOnlyList<IStorageItem> e)
+        if (args.Kind is not ExtendedActivationKind.File)
         {
             return false;
         }
 
-        if (e.Any(a => Path.GetExtension(a.Name) == ".lolgezi") is false)
+        if (args.Data is not FileActivatedEventArgs e)
+        {
+            return false;
+        }
+
+        if (e.Files.Any(a => Path.GetExtension(a.Name) == ".lolgezi") is false)
         {
             return false;
         }
@@ -47,28 +51,37 @@ internal sealed class MainActivationHandler : IActivationHandler
 
     public async Task HandleAsync(AppActivationArguments args)
     {
-        if (args.Kind is not ExtendedActivationKind.File ||
-            args.Data is not IReadOnlyList<IStorageItem> e)
+        if (args.Kind is not ExtendedActivationKind.File)
         {
             return;
         }
 
-        var modFiles = e.OfType<StorageFile>().Where(a => Path.GetExtension(a.Name) == ".lolgezi");
+        if (args.Data is not FileActivatedEventArgs e)
+        {
+            return;
+        }
+
+        var modFiles = e.Files.OfType<StorageFile>().Where(a => Path.GetExtension(a.Name) == ".lolgezi");
         if (modFiles.Any() is false)
         {
             return;
         }
 
-        if (AppxContext.AppxWindow.MainWindow.Content is Frame rootFrame)
+        AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(async () =>
         {
-            if (rootFrame.Content is MainPage mainPage)
+            if (AppxContext.AppxWindow.MainWindow.Content is Frame rootFrame)
             {
-                await mainPage.ViewModel.ImportAsync(modFiles);
+                if (rootFrame.Content is MainPage mainPage)
+                {
+                    await mainPage.ViewModel.ImportAsync(modFiles);
+                }
+                else
+                {
+                    AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid, modFiles);
+                }
             }
-            else
-            {
-                AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Main_Guid, modFiles);
-            }
-        }
+        });
+
+        await Task.CompletedTask;
     }
 }

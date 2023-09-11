@@ -5,7 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +17,7 @@ using GZSkinsX.Views;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 
+using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 
 namespace GZSkinsX.Activation;
@@ -31,13 +31,17 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
             return false;
         }
 
-        if (args.Kind is not ExtendedActivationKind.File ||
-            args.Data is not IReadOnlyList<IStorageItem> e)
+        if (args.Kind is not ExtendedActivationKind.File)
         {
             return false;
         }
 
-        if (e.Any() is false)
+        if (args.Data is not FileActivatedEventArgs e)
+        {
+            return false;
+        }
+
+        if (e.Files.Any() is false)
         {
             return false;
         }
@@ -47,13 +51,17 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
 
     public async Task HandleAsync(AppActivationArguments args)
     {
-        if (args.Kind is not ExtendedActivationKind.File ||
-            args.Data is not IReadOnlyList<IStorageItem> e)
+        if (args.Kind is not ExtendedActivationKind.File)
         {
             return;
         }
 
-        var modFiles = e.OfType<StorageFile>();
+        if (args.Data is not FileActivatedEventArgs e)
+        {
+            return;
+        }
+
+        var modFiles = e.Files.OfType<StorageFile>();
         if (modFiles.Any() is false)
         {
             return;
@@ -61,13 +69,18 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
 
         await AppxContext.MyModsService.ImportModsAsync(modFiles);
 
-        if (AppxContext.AppxWindow.MainWindow.Content is Frame rootFrame)
+        AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(async () =>
         {
-            if (rootFrame.Content is MainPage mainPage)
+            if (AppxContext.AppxWindow.MainWindow.Content is Frame rootFrame)
             {
-                await mainPage.ViewModel.OnRefreshAsync();
+                if (rootFrame.Content is MainPage mainPage)
+                {
+                    await mainPage.ViewModel.OnRefreshAsync();
+                }
             }
-        }
+        });
+
+        await Task.CompletedTask;
 
         // Just handle once
         AppxContext.ActivationService.UnregisterHandler(this);
