@@ -6,14 +6,20 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.ComponentModel;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
+
+using Microsoft.UI.Dispatching;
+using Microsoft.Windows.AppLifecycle;
 
 using Windows.ApplicationModel.Core;
-using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
 
 namespace GZSkinsX.ViewModels;
@@ -22,37 +28,37 @@ namespace GZSkinsX.ViewModels;
 internal sealed partial class IndexViewModel : ObservableObject
 {
     /// <summary>
-    /// 获取和设置下载进度的值
+    /// 获取和设置下载进度的值。
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(InProgress))]
     private double _progressValue;
 
     /// <summary>
-    /// 表示当前是否出现了错误
+    /// 表示当前是否出现了错误。
     /// </summary>
     [ObservableProperty]
     private bool _hasError;
 
     /// <summary>
-    /// 表示当前是否需要等待应用重新启动
+    /// 表示当前是否需要等待应用重新启动。
     /// </summary>
     [ObservableProperty]
     private bool _isPendingRestart;
 
     /// <summary>
-    /// 表示当前是否已处于下载操作中
+    /// 表示当前是否已处于下载操作中。
     /// </summary>
     [ObservableProperty]
     private bool _isDownloading;
 
     /// <summary>
-    /// 表示当前是否正在进行下载中
+    /// 表示当前是否正在进行下载中。
     /// </summary>
     public bool InProgress => ProgressValue != 0;
 
     /// <summary>
-    /// 表示内核模块的下载链接列表
+    /// 表示内核模块的下载链接列表。
     /// </summary>
     private static Uri[] KernelModules { get; } = new Uri[]
     {
@@ -61,34 +67,48 @@ internal sealed partial class IndexViewModel : ObservableObject
     };
 
     /// <summary>
-    /// 开始进行下载模块的操作
+    /// 开始进行下载模块的操作。
     /// </summary>
-    public async Task DownloadAsync()
+    public void StartDownload()
     {
-        IsDownloading = true;
+        var bgDownloadWorker = new BackgroundWorker();
+        bgDownloadWorker.DoWork += OnDoWork;
+        bgDownloadWorker.RunWorkerAsync(DispatcherQueue.GetForCurrentThread());
+    }
+
+    private async void OnDoWork(object? sender, DoWorkEventArgs e)
+    {
+        var dispatcherQueue = (e.Argument as DispatcherQueue)!;
+        dispatcherQueue.TryEnqueue(() => IsDownloading = true);
 
         var destFile = await (await ApplicationData.Current.RoamingFolder
             .CreateFolderAsync("Kernel", CreationCollisionOption.OpenIfExists))
             .CreateFileAsync("GZSkinsX.Kernel.dll", CreationCollisionOption.OpenIfExists);
 
-        var downloader = new BackgroundDownloader();
+        using var outputStream = await destFile.OpenStreamForWriteAsync();
+        using var httpClient = new HttpClient(new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
+        });
+
         foreach (var uri in KernelModules)
         {
             try
             {
-                await downloader.CreateDownload(uri, destFile).StartAsync().AsTask(new Progress<DownloadOperation>((download) =>
-                {
-                    ProgressValue = (double)download.Progress.BytesReceived / download.Progress.TotalBytesToReceive * 100;
-                }));
+                await httpClient.DownloadAsync(uri, outputStream, new Progress<double>((progress)
+                    => dispatcherQueue.TryEnqueue(() => ProgressValue = progress * 100)));
 
                 await Task.Delay(200);
 
-                // Should complete in there
-                var result = await CoreApplication.RequestRestartAsync(string.Empty);
+                //// Should complete in there
+                var result = AppInstance.Restart(string.Empty);
                 if (result is AppRestartFailureReason.NotInForeground or AppRestartFailureReason.Other)
                 {
-                    IsDownloading = false;
-                    IsPendingRestart = true;
+                    dispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsDownloading = false;
+                        IsPendingRestart = true;
+                    });
                 }
             }
             catch (Exception excp)
@@ -97,13 +117,18 @@ internal sealed partial class IndexViewModel : ObservableObject
                     "GZSkinsX.App.ViewModels.IndexViewModel.DownloadAsync",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
+                outputStream.Seek(0, SeekOrigin.Begin);
                 continue;
             }
         }
 
-        if (IsPendingRestart is false)
+        dispatcherQueue.TryEnqueue(() =>
         {
-            HasError = true;
-        }
+            if (IsPendingRestart is false)
+            {
+                IsDownloading = false;
+                HasError = true;
+            }
+        });
     }
 }

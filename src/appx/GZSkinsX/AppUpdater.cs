@@ -6,12 +6,12 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 
 using Windows.Data.Json;
-using Windows.Web.Http;
 
 namespace GZSkinsX;
 
@@ -52,7 +52,10 @@ internal sealed class AppUpdater
 
     public static async ValueTask<AppInfo> TryGetAppInfoAsync()
     {
-        var httpClient = new HttpClient();
+        using var httpClient = new HttpClient(new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
+        });
 
         try
         {
