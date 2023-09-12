@@ -42,7 +42,7 @@ internal sealed class LoggingService : ILoggingService
     /// </summary>
     public LoggingService()
     {
-        _logger = LoggerImpl.Shared;
+        _logger = new LoggerImpl();
         LogAlways("GZSkinsX::Services::LoggingService",
             $"Logging started at {DateTimeOffset.Now}");
     }

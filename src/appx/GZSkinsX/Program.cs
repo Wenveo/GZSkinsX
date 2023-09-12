@@ -18,7 +18,6 @@ using System.Threading.Tasks;
 using GZSkinsX.Composition;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
-using GZSkinsX.Contracts.Logging;
 using GZSkinsX.Extension;
 
 using Microsoft.UI.Dispatching;
@@ -52,10 +51,6 @@ internal static partial class Program
             {
             }
 
-            /// 在应用程序启动之前进行日志器的初始化操作，
-            /// 这样能够大幅减少日志器的初始化所需的时间。
-            await LoggerImpl.Shared.InitializeAsync();
-
             App? mainApp = null;
             var appInstance = AppInstance.GetCurrent();
             var exportProvider = await InitializeMEFAsync();
@@ -82,9 +77,6 @@ internal static partial class Program
 
             /// 通知应用程序退出的事件。
             extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppExit);
-
-            /// 关闭日志输出流。
-            LoggerImpl.Shared.CloseOutputStream();
         }
 
         return 0;
