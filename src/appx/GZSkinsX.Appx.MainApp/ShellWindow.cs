@@ -5,6 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
 using System.Runtime.InteropServices;
 
 using GZSkinsX.Contracts.Appx;
@@ -24,7 +25,7 @@ using WinRT.Interop;
 
 namespace GZSkinsX.Appx.MainApp;
 
-internal sealed class ShellWindow : Window
+internal sealed partial class ShellWindow : Window
 {
     private ShellWindowSettings WindowSettigns { get; }
 
@@ -55,6 +56,8 @@ internal sealed class ShellWindow : Window
 
         DispatcherQueue.TryEnqueue(() =>
         {
+            TryApplyAero();
+
             var themeService = AppxContext.ThemeService;
             themeService.ThemeChanged += OnThemeChanged;
 
@@ -112,4 +115,66 @@ internal sealed class ShellWindow : Window
         AppWindow.TitleBar.ButtonForegroundColor =
             newTheme is ElementTheme.Light ? Colors.Black : Colors.White;
     }
+
+    private bool TryApplyAero()
+    {
+        unsafe
+        {
+            var accentPolicy = new ACCENT_POLICY
+            {
+                AccentState = ACCENT_STATE.ACCENT_ENABLE_BLURBEHIND,
+            };
+
+            var data = new WINCOMPATTRDATA
+            {
+                Attribute = WINCOMPATTR.WCA_ACCENT_POLICY,
+                SizeOfData = Marshal.SizeOf(accentPolicy),
+                Data = (nint)(&accentPolicy)
+            };
+
+            return SetWindowCompositionAttribute(WindowNative.GetWindowHandle(this), ref data) == 0;
+        }
+    }
+
+    /// <summary>
+    /// DWM window accent state.
+    /// </summary>
+    private enum ACCENT_STATE
+    {
+        ACCENT_ENABLE_BLURBEHIND = 3
+    }
+
+    /// <summary>
+    /// DWM window attributes.
+    /// </summary>
+    private enum WINCOMPATTR
+    {
+        WCA_ACCENT_POLICY = 19
+    }
+
+    /// <summary>
+    /// DWM window accent policy.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    private struct ACCENT_POLICY
+    {
+        public ACCENT_STATE AccentState;
+        public uint AccentFlags;
+        public uint GradientColor;
+        public uint AnimationId;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct WINCOMPATTRDATA
+    {
+        public WINCOMPATTR Attribute;
+        public IntPtr Data;
+        public int SizeOfData;
+    }
+
+    /// <summary>
+    /// Sets various information regarding DWM window attributes.
+    /// </summary>
+    [LibraryImport("user32.dll")]
+    private static partial int SetWindowCompositionAttribute(nint hWnd, ref WINCOMPATTRDATA data);
 }
