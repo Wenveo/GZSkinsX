@@ -58,7 +58,7 @@
 
                         <DropDownButton Content="{x:Bind ViewModel.CurrentThemeDisplayName, Mode=OneWay}">
                             <DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
+                                <MenuFlyout ctrls2:FlyoutThemeHelper.AllowSyncTheme="True" Placement="Bottom">
                                     <RadioMenuFlyoutItem
                                         x:Uid="Settings_Default_ThemeMenu_Light"
                                         Command="{x:Bind ViewModel.SetCurrentThemeCommand, Mode=OneWay}"

@@ -85,7 +85,7 @@
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
             <ctrls2:MultiStateToggleButton.Flyout>
-                <MenuFlyout Placement="Bottom">
+                <MenuFlyout ctrls2:FlyoutThemeHelper.AllowSyncTheme="True" Placement="Bottom">
                     <MenuFlyoutItem
                         x:Name="LaunchButton_Launch_MenuItem"
                         x:Uid="LaunchButton_Launch_MenuItem"

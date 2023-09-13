@@ -20,7 +20,7 @@
                 <myMods:MyModViewTemplates />
             </ResourceDictionary.MergedDictionaries>
 
-            <MenuFlyout x:Name="ContentGrid_ContextFlyout_Win10">
+            <MenuFlyout x:Name="ContentGrid_ContextFlyout_Win10" ctrls2:FlyoutThemeHelper.AllowSyncTheme="True">
                 <MenuFlyoutItem
                     Command="{x:Bind ViewModel.InstallCommand, Mode=OneWay}"
                     CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
@@ -141,7 +141,10 @@
                 </MenuFlyoutItem>
             </MenuFlyout>
 
-            <CommandBarFlyout x:Name="ContentGrid_ContextFlyout_Win11" Placement="Right">
+            <CommandBarFlyout
+                x:Name="ContentGrid_ContextFlyout_Win11"
+                ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
+                Placement="Right">
                 <CommandBarFlyout.PrimaryCommands>
                     <AppBarButton
                         Click="CloseMyModsContextMenu_Click"
@@ -581,6 +584,7 @@
                     <Button.Flyout>
                         <MenuFlyout
                             x:Name="MainSettingsMenuFlyout"
+                            ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
                             Opening="OnMainSettingsMenuFlyoutOpening"
                             Placement="Bottom">
                             <RadioMenuFlyoutItem
