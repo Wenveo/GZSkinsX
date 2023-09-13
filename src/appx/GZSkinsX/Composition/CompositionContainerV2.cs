@@ -46,17 +46,16 @@ internal sealed class CompositionContainerV2(AssemblyCatalogV2 catalog)
     /// <returns>从容器中创建的 <see cref="IExportProviderFactory"/> 实例。</returns>
     private async Task<IExportProviderFactory> CreateExportProviderFactoryCoreAsync(bool useCache)
     {
-        var resolver = Resolver.DefaultInstance;
         if (useCache)
         {
-            var factory = await TryGetCachedExportProviderFactoryAsync(resolver);
+            var factory = await TryGetCachedExportProviderFactoryAsync(Resolver.DefaultInstance);
             if (factory != null)
             {
                 return factory;
             }
         }
 
-        return await CreateExportProviderFactoryAsync(resolver);
+        return await CreateExportProviderFactoryAsync(Resolver.DefaultInstance);
     }
 
     /// <summary>
@@ -117,7 +116,7 @@ internal sealed class CompositionContainerV2(AssemblyCatalogV2 catalog)
             using var cachedStream = File.Create(CacheFileFullPath);
             isCreated = true;
 
-            using var writer = new CacheStreamWriter();
+            await using var writer = new CacheStreamWriter();
             await writer.WriteAssemablyCatalogCacheAsync(catalog.Cache);
             await writer.WriteCompositionCacheAsync(configuration);
             await writer.SaveAsync(cachedStream);

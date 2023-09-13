@@ -24,12 +24,12 @@ internal sealed class CacheStreamWriter : IAsyncDisposable, IDisposable
     /// <summary>
     /// 当前的 <see cref="AssemblyCatalogV2Cache"/> 缓存流。
     /// </summary>
-    private readonly MemoryStream _assemblyCatalogCacheStream;
+    private readonly FileStream _assemblyCatalogCacheStream;
 
     /// <summary>
     /// 当前的 <see cref="CompositionConfiguration"/> 缓存流。
     /// </summary>
-    private readonly MemoryStream _compositionCacheStream;
+    private readonly FileStream _compositionCacheStream;
 
     /// <summary>
     /// 用于判断当前类是否调用过 Dispose 或 DisposeAsync。
@@ -41,8 +41,8 @@ internal sealed class CacheStreamWriter : IAsyncDisposable, IDisposable
     /// </summary>
     public CacheStreamWriter()
     {
-        _assemblyCatalogCacheStream = new MemoryStream();
-        _compositionCacheStream = new MemoryStream();
+        _assemblyCatalogCacheStream = new FileStream(Path.GetTempFileName(), FileMode.Open, FileAccess.ReadWrite);
+        _compositionCacheStream = new FileStream(Path.GetTempFileName(), FileMode.Open, FileAccess.ReadWrite);
     }
 
     /// <summary>
@@ -80,17 +80,41 @@ internal sealed class CacheStreamWriter : IAsyncDisposable, IDisposable
     /// <param name="cacheStream">目标输出流。</param>
     public async Task SaveAsync(Stream cacheStream)
     {
-        using var bw = new BinaryWriter(cacheStream);
-
         // 这里写入第二个数据段的偏移量
         // 第一段数据的偏移量大小始终为 4
         // Second Data Offset + First Data + Second Data
-        bw.Write(4 + (int)_assemblyCatalogCacheStream.Length);
+        var offset = 4 + (int)_assemblyCatalogCacheStream.Length;
+        await cacheStream.WriteAsync(BitConverter.GetBytes(offset));
 
-        bw.Write(_assemblyCatalogCacheStream.ToArray());
-        bw.Write(_compositionCacheStream.ToArray());
+        _assemblyCatalogCacheStream.Seek(0, SeekOrigin.Begin);
+        await _assemblyCatalogCacheStream.CopyToAsync(cacheStream);
+
+        _compositionCacheStream.Seek(0, SeekOrigin.Begin);
+        await _compositionCacheStream.CopyToAsync(cacheStream);
 
         await cacheStream.FlushAsync();
+    }
+
+    /// <summary>
+    /// 尝试清理写出缓存内容时所使用的临时文件。
+    /// </summary>
+    private void TryCleanup()
+    {
+        try
+        {
+            File.Delete(_assemblyCatalogCacheStream.Name);
+        }
+        catch
+        {
+        }
+
+        try
+        {
+            File.Delete(_compositionCacheStream.Name);
+        }
+        catch
+        {
+        }
     }
 
     /// <inheritdoc/>
@@ -101,6 +125,7 @@ internal sealed class CacheStreamWriter : IAsyncDisposable, IDisposable
             _assemblyCatalogCacheStream.Dispose();
             _compositionCacheStream.Dispose();
 
+            TryCleanup();
             _disposed = true;
             GC.SuppressFinalize(this);
         }
@@ -114,6 +139,7 @@ internal sealed class CacheStreamWriter : IAsyncDisposable, IDisposable
             await _assemblyCatalogCacheStream.DisposeAsync();
             await _compositionCacheStream.DisposeAsync();
 
+            TryCleanup();
             _disposed = true;
             GC.SuppressFinalize(this);
         }
