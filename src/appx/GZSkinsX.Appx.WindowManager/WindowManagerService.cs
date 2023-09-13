@@ -92,6 +92,7 @@ internal sealed class WindowManagerService : IWindowManagerService
                 _guidToWindowFrame[guid] = new WindowFrameContext(elem);
             }
 
+            _frame.RequestedTheme = AppxContext.ThemeService.CurrentTheme;
             AppxContext.AppxWindow.MainWindow.Content = _frame;
         }
     }
