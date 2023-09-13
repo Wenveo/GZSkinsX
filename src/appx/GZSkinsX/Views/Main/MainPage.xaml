@@ -590,7 +590,6 @@
                             <RadioMenuFlyoutItem
                                 x:Name="Main_SettingsMenu_Theme_Light"
                                 Command="{x:Bind ViewModel.SwitchThemeCommand, Mode=OneWay}"
-                                GroupName="ThemeMenu"
                                 Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Light}">
                                 <RadioMenuFlyoutItem.CommandParameter>
                                     <ElementTheme>Light</ElementTheme>
@@ -602,7 +601,6 @@
                             <RadioMenuFlyoutItem
                                 x:Name="Main_SettingsMenu_Theme_Dark"
                                 Command="{x:Bind ViewModel.SwitchThemeCommand, Mode=OneWay}"
-                                GroupName="ThemeMenu"
                                 Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Dark}">
                                 <RadioMenuFlyoutItem.CommandParameter>
                                     <ElementTheme>Dark</ElementTheme>
@@ -614,7 +612,6 @@
                             <RadioMenuFlyoutItem
                                 x:Name="Main_SettingsMenu_Theme_Default"
                                 Command="{x:Bind ViewModel.SwitchThemeCommand, Mode=OneWay}"
-                                GroupName="ThemeMenu"
                                 Text="{markups:LocalizedString ResourceKey=Resources/Common_Application_Theme_Default}">
                                 <RadioMenuFlyoutItem.CommandParameter>
                                     <ElementTheme>Default</ElementTheme>

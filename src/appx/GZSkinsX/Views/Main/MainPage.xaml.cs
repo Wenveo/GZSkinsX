@@ -23,6 +23,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
 using Windows.ApplicationModel.DataTransfer;
@@ -172,6 +173,10 @@ internal sealed partial class MainPage : Page
 
     private void OnMainSettingsMenuFlyoutOpening(object sender, object e)
     {
+        Main_SettingsMenu_Theme_Default.IsChecked = false;
+        Main_SettingsMenu_Theme_Light.IsChecked = false;
+        Main_SettingsMenu_Theme_Dark.IsChecked = false;
+
         switch (AppxContext.ThemeService.CurrentTheme)
         {
             case ElementTheme.Light:
