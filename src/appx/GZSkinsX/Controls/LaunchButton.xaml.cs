@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
@@ -132,15 +131,10 @@ internal sealed partial class LaunchButton : UserControl
         }
 
         await UpdateLaunchStateAsync(CheckForUpdatesState);
-
-        // 使用 BackgroundWorker 进行后台操作，
-        // 避免在 UI 线程上执行而导致 UI 卡死。
-        var bgCheckUpdatesWorker = new BackgroundWorker();
-        bgCheckUpdatesWorker.DoWork += BgCheckUpdatesWorker_DoWork;
-        bgCheckUpdatesWorker.RunWorkerAsync();
+        await Task.Run(OnCheckForUpdatesCoreAsync);
     }
 
-    private async void BgCheckUpdatesWorker_DoWork(object? sender, DoWorkEventArgs e)
+    private async Task OnCheckForUpdatesCoreAsync()
     {
         bool needUpdate;
         try
@@ -214,15 +208,10 @@ internal sealed partial class LaunchButton : UserControl
         AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
 
         await UpdateLaunchStateAsync(UpdatingState);
-
-        // 使用 BackgroundWorker 进行后台操作，
-        // 避免在 UI 线程上执行而导致 UI 卡死。
-        var bgDownloadWorker = new BackgroundWorker();
-        bgDownloadWorker.DoWork += BgDownloadWorker_DoWork;
-        bgDownloadWorker.RunWorkerAsync();
+        await Task.Run(OnUpdateCoreAsync);
     }
 
-    private async void BgDownloadWorker_DoWork(object? sender, DoWorkEventArgs e)
+    private async Task OnUpdateCoreAsync()
     {
         try
         {
@@ -296,14 +285,14 @@ internal sealed partial class LaunchButton : UserControl
         HideAllTeachingTips();
 
         var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Version));
-        if (metadata.IsEmpty)
-        {
-            LaunchButton_UpToDateTeachingTip.Subtitle = string.Empty;
-        }
-        else
+        if (metadata is not null)
         {
             var format = ResourceHelper.GetLocalized("Resources/LaunchButton_UpToDateTeachingTip_CurrentVersion");
             LaunchButton_UpToDateTeachingTip.Subtitle = string.Format(format, metadata.Version);
+        }
+        else
+        {
+            LaunchButton_UpToDateTeachingTip.Subtitle = string.Empty;
         }
 
         LaunchButton_UpToDateTeachingTip.IsOpen = true;
@@ -399,7 +388,7 @@ internal sealed partial class LaunchButton : UserControl
         }
 
         var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.OtherStartupArgs));
-        if (metadata.OtherStartupArgs.Length is not < 1)
+        if (metadata is not null && metadata.OtherStartupArgs.Length is not < 1)
         {
             for (var i = 0; i < metadata.OtherStartupArgs.Length; i++)
             {
@@ -419,12 +408,14 @@ internal sealed partial class LaunchButton : UserControl
 
             LaunchButton_MoreLaunchOptions_MenuItem.Items.Clear();
         }
+
+        await Task.CompletedTask;
     }
 
     private async Task UpdateAboutMenuItemVisibility()
     {
-        LaunchButton_About_MenuItem.Visibility = (await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(
-            nameof(MTPackageMetadata.Author))).IsEmpty ? Visibility.Collapsed : Visibility.Visible;
+        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Author));
+        LaunchButton_About_MenuItem.Visibility = metadata is null ? Visibility.Collapsed : Visibility.Visible;
     }
 
     private async void MultiStateLaunchButton_Click(MultiStateToggleButton sender, EventArgs args)
@@ -453,7 +444,7 @@ internal sealed partial class LaunchButton : UserControl
             nameof(MTPackageMetadata.Author), nameof(MTPackageMetadata.Version),
             nameof(MTPackageMetadata.Description), nameof(MTPackageMetadata.AboutTheAuthor));
 
-        if (metadata.IsEmpty)
+        if (metadata is null)
         {
             return;
         }

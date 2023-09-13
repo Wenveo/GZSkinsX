@@ -7,9 +7,6 @@
 
 namespace GZSkinsX.Contracts.Mounter;
 
-public readonly struct MTPackageMetadataStartUpArgument(string name, string value)
+public readonly record struct MTPackageMetadataStartUpArgument(string Name, string Value)
 {
-    public readonly string Name = name;
-
-    public readonly string Value = value;
 }

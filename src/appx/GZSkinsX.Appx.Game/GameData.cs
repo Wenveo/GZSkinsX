@@ -5,13 +5,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
+using System.IO;
 
 using GZSkinsX.Contracts.Game;
-
-using Windows.Storage;
 
 namespace GZSkinsX.Appx.Game;
 
@@ -39,66 +36,62 @@ internal sealed class GameData : IGameData
     private const string LCU_EXECUTE_File_NAME = "LeagueClient.exe";
 
     /// <inheritdoc/>
-    public StorageFolder? GameFolder { get; private set; }
+    public string? GameFolder { get; private set; }
 
     /// <inheritdoc/>
-    public StorageFile? GameExecuteFile { get; private set; }
+    public string? GameExecuteFile { get; private set; }
 
     /// <inheritdoc/>
-    public StorageFolder? LCUFolder { get; private set; }
+    public string? LCUFolder { get; private set; }
 
     /// <inheritdoc/>
-    public StorageFile? LCUExecuteFile { get; private set; }
+    public string? LCUExecuteFile { get; private set; }
 
-    /// <summary>
-    /// 尝试从传入指定的游戏目录以及区域来更新当前游戏数据的基本路径信息。
-    /// </summary>
-    /// <param name="rootDirectory">游戏的根目录文件夹。</param>
-    /// <param name="region">游戏所在的区域服务器。</param>
-    /// <returns>在成功更新数据时返回 true，否则返回 false。</returns>
+    /// <inheritdoc cref="IGameService.TryUpdate(string?, GameRegion)"/>
     [MemberNotNullWhen(true, nameof(LCUFolder), nameof(LCUExecuteFile))]
     [MemberNotNullWhen(true, nameof(GameFolder), nameof(GameExecuteFile))]
-    public async Task<bool> TryUpdateAsync(StorageFolder? rootFolder, GameRegion region)
+    public bool TryUpdate([NotNullWhen(true)] string? rootFolder, GameRegion region)
     {
-        if (rootFolder is not null && region is not GameRegion.Unknown)
+        if (string.IsNullOrEmpty(rootFolder) || region is GameRegion.Unknown)
         {
-            if (await rootFolder.TryGetItemAsync(GAME_DIRECTORY_NAME) is not StorageFolder gameFolder)
-            {
-                return false;
-            }
-
-            StorageFolder? lcuFolder;
-            if (region is GameRegion.Riot)
-            {
-                lcuFolder = rootFolder;
-            }
-            else
-            {
-                if ((lcuFolder = await rootFolder.TryGetItemAsync(LCU_DIRECTORY_NAME) as StorageFolder) is null)
-                {
-                    return false;
-                }
-            }
-
-            if (await gameFolder.TryGetItemAsync(GAME_EXECUTE_File_NAME) is not StorageFile gameExecuteFile)
-            {
-                return false;
-            }
-
-            if (await lcuFolder.TryGetItemAsync(LCU_EXECUTE_File_NAME) is not StorageFile lcuExecuteFile)
-            {
-                return false;
-            }
-
-            GameFolder = gameFolder;
-            GameExecuteFile = gameExecuteFile;
-
-            LCUFolder = lcuFolder;
-            LCUExecuteFile = lcuExecuteFile;
-
-            return true;
+            return false;
         }
 
-        return false;
+        if (Directory.Exists(rootFolder) is false)
+        {
+            return false;
+        }
+
+        var gameFolder = Path.Combine(rootFolder, GAME_DIRECTORY_NAME);
+        if (Directory.Exists(gameFolder) is false)
+        {
+            return false;
+        }
+
+        var lcuFolder = region is GameRegion.Riot ? rootFolder : Path.Combine(rootFolder, LCU_DIRECTORY_NAME);
+        if (Directory.Exists(lcuFolder) is false)
+        {
+            return false;
+        }
+
+        var gameExecuteFile = Path.Combine(gameFolder, GAME_EXECUTE_File_NAME);
+        if (File.Exists(gameExecuteFile) is false)
+        {
+            return false;
+        }
+
+        var lcuExecuteFile = Path.Combine(lcuFolder, LCU_EXECUTE_File_NAME);
+        if (File.Exists(lcuExecuteFile) is false)
+        {
+            return false;
+        }
+
+        GameFolder = gameFolder;
+        GameExecuteFile = gameExecuteFile;
+
+        LCUFolder = lcuFolder;
+        LCUExecuteFile = lcuExecuteFile;
+
+        return true;
     }
 }

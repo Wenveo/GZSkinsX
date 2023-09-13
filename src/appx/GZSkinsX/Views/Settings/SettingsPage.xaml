@@ -99,7 +99,7 @@
                         <controls:SettingsCard.Description>
                             <RichTextBlock Opacity=".8">
                                 <Paragraph>
-                                    <Run Text="{x:Bind ViewModel.GameFolder.Path, Mode=OneWay}" />
+                                    <Run Text="{x:Bind ViewModel.GameFolder, Mode=OneWay}" />
                                 </Paragraph>
                             </RichTextBlock>
                         </controls:SettingsCard.Description>
@@ -134,7 +134,7 @@
                         <controls:SettingsCard.Description>
                             <RichTextBlock Opacity=".8">
                                 <Paragraph>
-                                    <Run Text="{x:Bind ViewModel.ModsFolder.Path, Mode=OneWay}" />
+                                    <Run Text="{x:Bind ViewModel.ModsFolder, Mode=OneWay}" />
                                 </Paragraph>
                             </RichTextBlock>
                         </controls:SettingsCard.Description>
@@ -148,7 +148,7 @@
                         <controls:SettingsCard.Description>
                             <RichTextBlock Opacity=".8">
                                 <Paragraph>
-                                    <Run Text="{x:Bind ViewModel.WadsFolder.Path, Mode=OneWay}" />
+                                    <Run Text="{x:Bind ViewModel.WadsFolder, Mode=OneWay}" />
                                 </Paragraph>
                             </RichTextBlock>
                         </controls:SettingsCard.Description>

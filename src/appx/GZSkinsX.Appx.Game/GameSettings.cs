@@ -28,7 +28,12 @@ internal sealed class GameSettings
     /// <summary>
     /// 用于存储当前游戏区域的键字符串常量。
     /// </summary>
-    private const string CURRENT_REGION_GUID = "CurrentRegion";
+    private const string CURRENT_REGION_NAME = "CurrentRegion";
+
+    /// <summary>
+    /// 用于存储当前游戏根目录的键字符串常量。
+    /// </summary>
+    private const string ROOT_DIRECTORY_NAME = "RootDirectory";
 
     /// <summary>
     /// 用于存储本地数据的数据节点。
@@ -36,24 +41,21 @@ internal sealed class GameSettings
     private readonly ISettingsSection _settingsSection;
 
     /// <summary>
-    /// 表示当前游戏区域的字段。
-    /// </summary>
-    private GameRegion _currentRegion;
-
-    /// <summary>
     /// 获取或设置当前游戏所在的区域。
     /// </summary>
     public GameRegion CurrentRegion
     {
-        get => _currentRegion;
-        set
-        {
-            if (_currentRegion != value)
-            {
-                _currentRegion = value;
-                _settingsSection.Attribute(CURRENT_REGION_GUID, value);
-            }
-        }
+        get => _settingsSection.Attribute<GameRegion>(CURRENT_REGION_NAME);
+        set => _settingsSection.Attribute(CURRENT_REGION_NAME, value);
+    }
+
+    /// <summary>
+    /// 获取或设置当前游戏的根目录。
+    /// </summary>
+    public string? RootDirectory
+    {
+        get => _settingsSection.Attribute<string>(ROOT_DIRECTORY_NAME);
+        set => _settingsSection.Attribute(ROOT_DIRECTORY_NAME, value);
     }
 
     /// <summary>
@@ -61,7 +63,6 @@ internal sealed class GameSettings
     /// </summary>
     public GameSettings()
     {
-        _settingsSection = AppxContext.SettingsService.GetOrCreateSection(THE_GUID, SettingsType.Local);
-        _currentRegion = _settingsSection.Attribute<GameRegion>(CURRENT_REGION_GUID);
+        _settingsSection = AppxContext.SettingsService.GetOrCreateSection(THE_GUID);
     }
 }

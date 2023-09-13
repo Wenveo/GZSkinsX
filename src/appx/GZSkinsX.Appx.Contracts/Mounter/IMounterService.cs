@@ -6,26 +6,26 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 using Windows.Foundation;
-using Windows.Storage;
 
 namespace GZSkinsX.Contracts.Mounter;
 
 /// <summary>
-/// 提供对挂载服务的启动、停止、更新等一系列的功能集成。
+/// 提供对组件服务的启动、停止、更新等一系列的功能集成。
 /// </summary>
 public interface IMounterService
 {
     /// <summary>
-    /// 获取当前挂载服务的运行状态。
+    /// 获取当前组件服务的运行状态。
     /// </summary>
-    /// <returns>如果挂载服务正在运行则为 true，否则为 false。</returns>
+    /// <returns>如果组件服务正在运行则为 true，否则为 false。</returns>
     bool IsMTRunning { get; }
 
     /// <summary>
-    /// 用于判断挂载服务是否正在运行中的事件，该事件支持实时监听运行状态更改。
+    /// 用于判断组件服务是否正在运行中的事件，该事件支持实时监听运行状态更改。
     /// </summary>
     event TypedEventHandler<IMounterService, bool>? IsRunningChanged;
 
@@ -36,46 +36,34 @@ public interface IMounterService
     Task<bool> CheckForUpdatesAsync();
 
     /// <summary>
-    /// 获取当前组件的包元数据信息。
-    /// </summary>
-    /// <param name="filter">筛选并获取指定成员的值，默认为获取所有成员的值。</param>
-    /// <returns>如果未找到有效的文件/目录则会抛出异常，否则将返回具体的包元数据信息。</returns>
-    Task<MTPackageMetadata> GetCurrentPackageMetadataAsync(params string[] filter);
-
-    /// <summary>
-    /// 获取当前挂载服务的工作目录。
-    /// </summary>
-    /// <returns>如果未下载/安装服务组件或文件夹不存在时将抛出异常，否则将返回具体的工作目录。</returns>
-    Task<StorageFolder> GetMounterWorkingDirectoryAsync();
-
-    /// <summary>
-    /// 启动挂载服务。
+    /// 启动组件服务。
     /// </summary>
     Task LaunchAsync();
 
     /// <summary>
-    /// 通过指定的参数运行挂载服务。
+    /// 通过指定的参数运行组件服务。
     /// </summary>
-    /// <param name="args">启动参数。</param>
+    /// <param name="args">用于启动的参数。</param>
     Task LaunchAsync(string args);
 
     /// <summary>
-    /// 终止挂载服务。
+    /// 终止组件服务。
     /// </summary>
     Task TerminateAsync();
 
     /// <summary>
     /// 尝试获取当前组件的包元数据信息。
     /// </summary>
-    /// <param name="filter">筛选并获取指定成员的值，默认为获取所有成员的值。</param>
-    /// <returns>如果未找到有效的文件/目录则会返回 <seealso cref="MTPackageMetadata.Empty"/>，否则将返回非空的包元数据信息。</returns>
-    Task<MTPackageMetadata> TryGetCurrentPackageMetadataAsync(params string[] filter);
+    /// <param name="filter">筛选并获取指定成员的值，默认将获取所有成员的值。</param>
+    /// <returns>如果成功获取到当前组件的包元数据便会将其返回，否则将返回 null。</returns>
+    Task<MTPackageMetadata?> TryGetCurrentPackageMetadataAsync(params string[] filter);
 
     /// <summary>
-    /// 尝试获取当前挂载服务的工作目录。
+    /// 尝试获取当前服务组件的工作目录。
     /// </summary>
-    /// <returns>如果未下载/安装服务组件或文件夹不存在时将返回空文件夹，否则将返回非空的工作目录。</returns>
-    Task<StorageFolder?> TryGetMounterWorkingDirectoryAsync();
+    /// <param name="result">当此方法返回时，如果成功找到该工作目录便会将其返回，否则将返回 null。</param>
+    /// <returns>如果成功获取到该工作目录将返回 true，否则返回 false。</returns>
+    bool TryGetMounterWorkingDirectory([NotNullWhen(true)] out string? result);
 
     /// <summary>
     /// 从服务器中下载和更新组件。
@@ -83,7 +71,7 @@ public interface IMounterService
     /// 注意，此方法为强制性更新，在进行下载和更新前请务必使用 <seealso cref="CheckForUpdatesAsync"/> 检查是否有必要更新。
     /// </para>
     /// </summary>
-    /// <param name="progress">进度更新。</param>
+    /// <param name="progress">用于报告进度更新。</param>
     Task UpdateAsync(IProgress<double>? progress = null);
 
     /// <summary>

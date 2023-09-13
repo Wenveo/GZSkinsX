@@ -78,7 +78,7 @@ internal sealed partial class StartUpViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task OnDone()
+    private void OnDone()
     {
         if (SelectedFolder is null || string.IsNullOrEmpty(SelectedFolder.Path))
         {
@@ -93,7 +93,7 @@ internal sealed partial class StartUpViewModel : ObservableObject
         }
 
         var selectedRegion = (GameRegion)(RegionsSelectedIndex + (IsRiotSupported ? 1 : 2));
-        if (await _gameService.TryUpdateAsync(SelectedFolder, selectedRegion) is false)
+        if (_gameService.TryUpdate(SelectedFolder.Path, selectedRegion) is false)
         {
             ShowErrorMessage(ResourceHelper.GetLocalized("Resources/StartUp_Error_Directory_Invalid"));
             return;

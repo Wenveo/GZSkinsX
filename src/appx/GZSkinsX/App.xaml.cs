@@ -7,12 +7,9 @@
 
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
-using GZSkinsX.Contracts.Game;
-using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.Extension;
 
@@ -33,12 +30,8 @@ public partial class App : Application
     /// <summary>
     /// Use the <see cref="Lazy{T}"/> to initialize the services for the current application.
     /// </summary>
-    private static Lazy<Func<App, Task>> InitializeServiceAsync { get; } = new(() => async (app) =>
+    private static Lazy<Action<App>> InitializeServiceAsync { get; } = new(() => (app) =>
     {
-        var gameService = AppxContext.Resolve<IGameService>();
-        var rootFolder = await gameService.TryGetRootFolderAsync();
-        await gameService.TryUpdateAsync(rootFolder, gameService.CurrentRegion);
-
         var extensionService = AppxContext.Resolve<ExtensionService>();
         extensionService.LoadAdvanceExtensions(AdvanceExtensionTrigger.BeforeUniversalExtensions);
         foreach (var rsrc in extensionService.GetMergedResourceDictionaries())
@@ -81,11 +74,11 @@ public partial class App : Application
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
-    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         if (InitializeServiceAsync.IsValueCreated is false)
         {
-            await InitializeServiceAsync.Value(this);
+            InitializeServiceAsync.Value(this);
         }
 
         OnAppLaunch(AppInstance.GetCurrent().GetActivatedEventArgs());

@@ -5,60 +5,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
-
 namespace GZSkinsX.Contracts.Mounter;
 
-public readonly struct MTPackageMetadata
+public record class MTPackageMetadata(string Author, string Version, string Description, string AboutTheAuthor, string SettingsFile,
+    string ExecutableFile, string ProcStartupArgs, string ProcTerminateArgs, MTPackageMetadataStartUpArgument[] OtherStartupArgs)
 {
-    public static readonly MTPackageMetadata Empty = new();
-
-    public readonly string Author;
-
-    public readonly string Version;
-
-    public readonly string Description;
-
-    public readonly string AboutTheAuthor;
-
-    public readonly string SettingsFile;
-
-    public readonly string ExecutableFile;
-
-    public readonly string ProcStartupArgs;
-
-    public readonly string ProcTerminateArgs;
-
-    public readonly MTPackageMetadataStartUpArgument[] OtherStartupArgs;
-
-    public readonly bool IsEmpty;
-
-    public MTPackageMetadata()
-    {
-        Author = string.Empty;
-        Version = string.Empty;
-        Description = string.Empty;
-        AboutTheAuthor = string.Empty;
-        SettingsFile = string.Empty;
-        ExecutableFile = string.Empty;
-        ProcStartupArgs = string.Empty;
-        ProcTerminateArgs = string.Empty;
-        OtherStartupArgs = Array.Empty<MTPackageMetadataStartUpArgument>();
-        IsEmpty = true;
-    }
-
-    public MTPackageMetadata(string author, string version, string description, string aboutTheAuthor, string settingsFile, string executableFile,
-        string procStartupArgs, string procTerminateArgs, params MTPackageMetadataStartUpArgument[] otherStartupArgs)
-    {
-        Author = author;
-        Version = version;
-        Description = description;
-        AboutTheAuthor = aboutTheAuthor;
-        SettingsFile = settingsFile;
-        ExecutableFile = executableFile;
-        ProcStartupArgs = procStartupArgs;
-        ProcTerminateArgs = procTerminateArgs;
-        OtherStartupArgs = otherStartupArgs;
-        IsEmpty = false;
-    }
 }

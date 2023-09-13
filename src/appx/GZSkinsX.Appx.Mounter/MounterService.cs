@@ -6,27 +6,26 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Buffers;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Composition;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.IO.Hashing;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Mounter;
 
-using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Storage;
 
@@ -36,15 +35,29 @@ namespace GZSkinsX.Appx.Mounter;
 [Shared, Export(typeof(IMounterService))]
 internal sealed class MounterService : IMounterService
 {
+    /// <summary>
+    /// 获取存放在线的包清单配置链接。
+    /// </summary>
     private static Uri[] OnlineManifests { get; } = new Uri[]
     {
         new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/PackageManifest.json"),
         new Uri("http://x1.gzskins.com/MounterV3/PackageManifest.json")
     };
 
-    private readonly MounterSettings _mounterSettings;
+    /// <summary>
+    /// 获取用于存放服务组件的根文件夹路径。
+    /// </summary>
+    private string MounterRootFolder { get; }
 
-    private readonly HttpClient _httpClient;
+    /// <summary>
+    /// 获取用于存放当前服务上下文内容的本地配置。
+    /// </summary>
+    private MounterSettings MounterSettings { get; }
+
+    /// <summary>
+    /// 获取用于 HTTP 请求的 <see cref="HttpClient"/> 实例。
+    /// </summary>
+    private HttpClient MyHttpClient { get; }
 
     /// <inheritdoc/>
     public bool IsMTRunning
@@ -62,14 +75,17 @@ internal sealed class MounterService : IMounterService
     /// <inheritdoc/>
     public event TypedEventHandler<IMounterService, bool>? IsRunningChanged;
 
-    [ImportingConstructor]
-    public MounterService(MounterSettings mounterSettings)
+    /// <summary>
+    /// 初始化 <see cref="MounterService"/> 的新实例。
+    /// </summary>
+    public MounterService()
     {
-        _mounterSettings = mounterSettings;
-        _httpClient = new HttpClient(new HttpClientHandler
+        MounterSettings = AppxContext.Resolve<MounterSettings>();
+        MyHttpClient = new HttpClient(new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
         });
+        MounterRootFolder = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "Mounter");
 
         var worker = new BackgroundWorker();
         worker.DoWork += DoSomething;
@@ -90,7 +106,7 @@ internal sealed class MounterService : IMounterService
                     if (IsMTRunning is false)
                     {
                         IsRunningChanged?.Invoke(this, false);
-                        AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.CheckExitAsync", "MotClientAgent has exited.");
+                        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.CheckExitAsync", "MotClientAgent has exited.");
                         break;
                     }
                 }
@@ -113,7 +129,7 @@ internal sealed class MounterService : IMounterService
                     if (IsMTRunning)
                     {
                         IsRunningChanged?.Invoke(this, true);
-                        AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.CheckRunAsync", "MotClientAgent is running.");
+                        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.CheckRunAsync", "MotClientAgent is running.");
                         break;
                     }
                 }
@@ -132,13 +148,13 @@ internal sealed class MounterService : IMounterService
                 if (IsMTRunning)
                 {
                     IsRunningChanged?.Invoke(this, true);
-                    AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.DoSomething", "MotClientAgent is running.");
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.DoSomething", "MotClientAgent is running.");
                     await CheckExitAsync();
                 }
                 else
                 {
                     IsRunningChanged?.Invoke(this, false);
-                    AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.DoSomething", "MotClientAgent is not running.");
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.DoSomething", "MotClientAgent is not running.");
                     await CheckRunAsync();
                 }
             }
@@ -151,22 +167,22 @@ internal sealed class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task<bool> CheckForUpdatesAsync()
     {
-        var metadata = await TryGetCurrentPackageMetadataAsync();
-        if (metadata.IsEmpty is false)
+        var metadata = await TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Version));
+        if (metadata is not null)
         {
             try
             {
                 var onlineManifest = await DownloadPackageManifestAsync();
                 if (StringComparer.Ordinal.Equals(metadata.Version, onlineManifest.Version))
                 {
-                    AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.CheckForUpdatesAsync", $"Now is uptodate \"{metadata.Version}\".");
+                    AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.CheckForUpdatesAsync", $"Now is uptodate \"{metadata.Version}\".");
                     return false;
                 }
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Services.MounterService.CheckForUpdatesAsync",
+                    "GZSkinsX.Appx.Mounter.MounterService.CheckForUpdatesAsync",
                     $"""
                     Failed to check updates.
                     {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}
@@ -176,205 +192,231 @@ internal sealed class MounterService : IMounterService
             }
         }
 
-        AppxContext.LoggingService.LogAlways("GZSkinsX.Services.MounterService.CheckForUpdatesAsync", $"Attention needed.");
+        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.CheckForUpdatesAsync", $"Attention needed.");
         return true;
-    }
-
-    /// <inheritdoc/>
-    public async Task<MTPackageMetadata> GetCurrentPackageMetadataAsync(params string[] filter)
-    {
-        return await GetLocalMTPackageMetadataAsync(await GetMounterWorkingDirectoryAsync(), filter);
-    }
-
-    /// <inheritdoc/>
-    public async Task<StorageFolder> GetMounterWorkingDirectoryAsync()
-    {
-        var rootFolder = await GetMounterRootFolderAsync();
-        return await rootFolder.GetFolderAsync(_mounterSettings.WorkingDirectory);
     }
 
     /// <inheritdoc/>
     public async Task LaunchAsync()
     {
-        var workingDirectory = await GetMounterWorkingDirectoryAsync();
+        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        {
+            return;
+        }
 
         var localPackageMetadata =
-            await GetLocalMTPackageMetadataAsync(workingDirectory,
+            await TryGetLocalMTPackageMetadataAsync(workingDirectory,
                 nameof(MTPackageMetadata.ExecutableFile),
                 nameof(MTPackageMetadata.ProcStartupArgs));
 
-        var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        try
+        if (localPackageMetadata is not null)
         {
-            ProcessLaunch(executableFile, localPackageMetadata.ProcStartupArgs);
-            AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.LaunchAsync", "Launch successfully.");
-        }
-        catch (Exception excp)
-        {
-            AppxContext.LoggingService.LogError(
-                "GZSkinsX.Services.MounterService.LaunchAsync",
-                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+            var executableFile = Path.Combine(workingDirectory, localPackageMetadata.ExecutableFile);
+            try
+            {
+                ProcessLaunch(executableFile, localPackageMetadata.ProcStartupArgs);
+                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.LaunchAsync", "Launch successfully.");
+            }
+            catch (Exception excp)
+            {
+                AppxContext.LoggingService.LogError(
+                    "GZSkinsX.Appx.Mounter.MounterService.LaunchAsync",
+                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
-            throw;
+                throw;
+            }
         }
     }
 
     /// <inheritdoc/>
     public async Task LaunchAsync(string args)
     {
-        var workingDirectory = await GetMounterWorkingDirectoryAsync();
+        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        {
+            return;
+        }
 
         var localPackageMetadata =
-            await GetLocalMTPackageMetadataAsync(workingDirectory,
+            await TryGetLocalMTPackageMetadataAsync(workingDirectory,
                 nameof(MTPackageMetadata.ExecutableFile));
 
-        var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-
-        try
+        if (localPackageMetadata is not null)
         {
-            ProcessLaunch(executableFile, args);
-            AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.LaunchAsync2", "Launch successfully.");
-        }
-        catch (Exception excp)
-        {
-            AppxContext.LoggingService.LogError(
-                "GZSkinsX.Services.MounterService.LaunchAsync2",
-                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+            var executableFile = Path.Combine(workingDirectory, localPackageMetadata.ExecutableFile);
+            try
+            {
+                ProcessLaunch(executableFile, args);
+                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.LaunchAsync2", "Launch successfully.");
+            }
+            catch (Exception excp)
+            {
+                AppxContext.LoggingService.LogError(
+                    "GZSkinsX.Appx.Mounter.MounterService.LaunchAsync2",
+                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
-            throw;
+                throw;
+            }
         }
     }
 
     /// <inheritdoc/>
     public async Task TerminateAsync()
     {
-        var workingDirectory = await GetMounterWorkingDirectoryAsync();
+        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        {
+            return;
+        }
 
         var localPackageMetadata =
-            await GetLocalMTPackageMetadataAsync(workingDirectory,
+            await TryGetLocalMTPackageMetadataAsync(workingDirectory,
                 nameof(MTPackageMetadata.ExecutableFile),
                 nameof(MTPackageMetadata.ProcTerminateArgs));
 
-        var executableFile = Path.Combine(workingDirectory.Path, localPackageMetadata.ExecutableFile);
-        try
+        if (localPackageMetadata is not null)
         {
-            ProcessLaunch(executableFile, localPackageMetadata.ProcTerminateArgs);
-            AppxContext.LoggingService.LogOkay("GZSkinsX.Services.MounterService.TerminateAsync", "Terminate successfully.");
-        }
-        catch (Exception excp)
-        {
-            AppxContext.LoggingService.LogError(
-                "GZSkinsX.Services.MounterService.TerminateAsync",
-                $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
+            var executableFile = Path.Combine(workingDirectory, localPackageMetadata.ExecutableFile);
+            try
+            {
+                ProcessLaunch(executableFile, localPackageMetadata.ProcTerminateArgs);
+                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.TerminateAsync", "Launch successfully.");
+            }
+            catch (Exception excp)
+            {
+                AppxContext.LoggingService.LogError(
+                    "GZSkinsX.Appx.Mounter.MounterService.TerminateAsync",
+                    $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
-            throw;
+                throw;
+            }
         }
     }
 
     /// <inheritdoc/>
-    public async Task<MTPackageMetadata> TryGetCurrentPackageMetadataAsync(params string[] filter)
+    public async Task<MTPackageMetadata?> TryGetCurrentPackageMetadataAsync(params string[] filter)
     {
-        try
+        if (TryGetMounterWorkingDirectory(out var workingDirectory))
         {
-            return await GetCurrentPackageMetadataAsync(filter);
+            return await TryGetLocalMTPackageMetadataAsync(workingDirectory, filter);
         }
-        catch
-        {
-            return MTPackageMetadata.Empty;
-        }
-    }
-
-    /// <inheritdoc/>
-    public async Task<StorageFolder?> TryGetMounterWorkingDirectoryAsync()
-    {
-        try
-        {
-            return await GetMounterWorkingDirectoryAsync();
-        }
-        catch
+        else
         {
             return null;
         }
     }
 
     /// <inheritdoc/>
+    public bool TryGetMounterWorkingDirectory([NotNullWhen(true)] out string? result)
+    {
+        var workingDirectory = MounterSettings.WorkingDirectory;
+        if (Directory.Exists(workingDirectory) is false)
+        {
+            result = null;
+            return false;
+        }
+
+        result = workingDirectory;
+        return true;
+    }
+
+    /// <inheritdoc/>
     public async Task UpdateAsync(IProgress<double>? progress = null)
     {
-        var workingDirectory = await TryGetMounterWorkingDirectoryAsync();
-        var previousMetadata = workingDirectory is not null ? await TryGetLocalMTPackageMetadataAsync(workingDirectory,
-            nameof(MTPackageMetadata.Version), nameof(MTPackageMetadata.SettingsFile)) : MTPackageMetadata.Empty;
+        MTPackageMetadata? previousMetadata = null;
 
         var onlineManifest = await DownloadPackageManifestAsync(new((value) => progress?.Report(value * 6)));
-        if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version))
+        if (TryGetMounterWorkingDirectory(out var workingDirectory))
         {
-            AppxContext.LoggingService.LogAlways(
-                "GZSkinsX.Services.MounterService.UpdateAsync",
-                "This component is already up to date.");
-        }
-        else
-        {
-            var destFolder = await DownloadMTPackageAsync(new(onlineManifest.Path), new((value) =>
-            {
-                progress?.Report(6 + value * 94);
-            }));
+            previousMetadata = await TryGetLocalMTPackageMetadataAsync(workingDirectory,
+                nameof(MTPackageMetadata.Version), nameof(MTPackageMetadata.SettingsFile));
 
-            // New Metadata
-            var newMetadata = await GetLocalMTPackageMetadataAsync(destFolder, nameof(MTPackageMetadata.SettingsFile));
-
-            // Copy settings file
-            if (workingDirectory is not null && previousMetadata.IsEmpty is false)
+            if (previousMetadata is not null)
             {
-                var settingsFilePath = Path.Combine(workingDirectory.Path, previousMetadata.SettingsFile);
-                if (File.Exists(settingsFilePath))
+                if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version))
                 {
-                    File.Copy(settingsFilePath, Path.Combine(destFolder.Path, newMetadata.SettingsFile), true);
+                    AppxContext.LoggingService.LogAlways(
+                        "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
+                        "This component is already up to date.");
+
+                    return;
                 }
             }
-
-            _mounterSettings.WorkingDirectory = destFolder.Name;
-
-            AppxContext.LoggingService.LogOkay(
-                "GZSkinsX.Services.MounterService.UpdateAsync",
-                $"The component has been updated to \"{onlineManifest.Version}\".");
         }
 
-        await TryCleanupMounterRootFolderAsync();
+        var destFolder = await DownloadMTPackageAsync(new(onlineManifest.Path!), new((value) =>
+        {
+            progress?.Report(6 + value * 94);
+        }));
+
+        if (workingDirectory is not null && previousMetadata is not null)
+        {
+            var newMetadata = await TryGetLocalMTPackageMetadataAsync(destFolder, nameof(MTPackageMetadata.SettingsFile));
+            if (newMetadata is not null)
+            {
+                // Copy settings file
+                var settingsFilePath = Path.Combine(workingDirectory, previousMetadata.SettingsFile);
+                if (File.Exists(settingsFilePath))
+                {
+                    File.Copy(settingsFilePath, Path.Combine(destFolder, newMetadata.SettingsFile), true);
+                }
+            }
+        }
+
+        // 更新当前服务组件的工作目录
+        MounterSettings.WorkingDirectory = destFolder;
+
+        AppxContext.LoggingService.LogOkay(
+            "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
+            $"The component has been updated to \"{onlineManifest.Version}\".");
+
+        TryCleanupMounterRootFolder();
     }
 
     /// <inheritdoc/>
     public async Task<bool> VerifyContentIntegrityAsync()
     {
-        var workingDirectory = await TryGetMounterWorkingDirectoryAsync();
-        if (workingDirectory is null)
+        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
         {
             return false;
         }
 
-        if (await workingDirectory.TryGetItemAsync("_metadata") is not StorageFolder metadataFolder)
+        var blockmapFile = Path.Combine(workingDirectory, "_metadata", "blockmap.json");
+        if (File.Exists(blockmapFile) is false)
         {
             return false;
         }
 
-        if (await metadataFolder.TryGetItemAsync("blockmap.json") is not StorageFile metadataFile)
+        MTPackageBlockMap? localBlockMap;
+        try
+        {
+            using var fileStream = new FileStream(blockmapFile, FileMode.Open, FileAccess.Read);
+            localBlockMap = await JsonSerializer.DeserializeAsync<MTPackageBlockMap>(fileStream);
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.Appx.Mounter.MounterService.VerifyLocalMTPackageIntegrityAsync",
+                $"""
+                    Failed to deserialize block map json "{blockmapFile}".
+                    {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
+                    """);
+
+            return false;
+        }
+
+        if (localBlockMap is null || localBlockMap.Blocks is null)
         {
             return false;
         }
 
-        if (JsonObject.TryParse(await FileIO.ReadTextAsync(metadataFile), out var blockMapJson) is false ||
-            blockMapJson.TryGetValue("Blocks", out var blocksArray) is false || blocksArray.ValueType is not JsonValueType.Array)
-        {
-            return false;
-        }
+        var hashToChecksum = localBlockMap.Blocks.ToFrozenDictionary(
+            a => ulong.Parse(a.Hash, CultureInfo.InvariantCulture),
+            b => ulong.Parse(b.Checksum, CultureInfo.InvariantCulture));
 
-        var localBlockMap = blocksArray.GetArray().ToFrozenDictionary(
-            a => ulong.Parse(a.GetObject()["Hash"].GetString(), CultureInfo.InvariantCulture),
-            b => ulong.Parse(b.GetObject()["Checksum"].GetString(), CultureInfo.InvariantCulture));
-
-        var parentFolderPathLength = workingDirectory.Path.Length + 1;
-        var hashToPath = Directory.EnumerateFiles(workingDirectory.Path, "*", SearchOption.AllDirectories).ToFrozenDictionary(
+        var parentFolderPathLength = workingDirectory.Length + 1;
+        var hashToPath = Directory.EnumerateFiles(workingDirectory, "*", SearchOption.AllDirectories).ToFrozenDictionary(
             a => XxHash64.HashToUInt64(Encoding.UTF8.GetBytes(a[parentFolderPathLength..].Replace('\\', '/'))), b => b);
 
-        foreach (var item in localBlockMap)
+        foreach (var item in hashToChecksum)
         {
             if (hashToPath.TryGetValue(item.Key, out var path) is false)
             {
@@ -391,7 +433,7 @@ internal sealed class MounterService : IMounterService
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "MounterService::VerifyLocalMTPackageIntegrityAsync",
+                    "GZSkinsX.Appx.Mounter.MounterService.VerifyLocalMTPackageIntegrityAsync",
                     $"""
                     Failed to calculate file checksum "{path}".
                     {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
@@ -404,43 +446,32 @@ internal sealed class MounterService : IMounterService
         return true;
     }
 
-    private static async Task<StorageFolder> CreateAnEmptyFolderAsync(StorageFolder relativeTo, string folderName)
-    {
-        var targetFolder = await relativeTo.TryGetItemAsync(folderName);
-        if (targetFolder is not null && targetFolder.IsOfType(StorageItemTypes.Folder))
-        {
-            await targetFolder.DeleteAsync();
-        }
-
-        return await relativeTo.CreateFolderAsync(folderName);
-    }
-
+    /// <summary>
+    /// 从在线的服务器中检索和下载包清单配置。
+    /// </summary>
+    /// <param name="progress">用于报告下载进度。</param>
+    /// <returns>当成功下载包清单时会将其反序列化并返回，但如果出现诸如网络无法访问等原因，将会抛出异常。</returns>
+    /// <exception cref="IndexOutOfRangeException">当尝试从所有可能的在线的服务器中检索和下载无果时将会抛出此异常。</exception>
     private async Task<MTPackageManifest> DownloadPackageManifestAsync(Progress<double>? progress = null)
     {
-        var temp = await GetTemporaryFileAsync();
-
+        using var memoryStream = new MemoryStream();
         foreach (var uri in OnlineManifests)
         {
             try
             {
-                using (var outputStream = await temp.OpenStreamForWriteAsync())
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                await MyHttpClient.DownloadAsync(uri, memoryStream, progress);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+
+                if (await JsonSerializer.DeserializeAsync<MTPackageManifest>(memoryStream) is { } result)
                 {
-                    await _httpClient.DownloadAsync(uri, outputStream, progress);
+                    return result;
                 }
-
-                var content = await FileIO.ReadTextAsync(temp);
-                var jsonObject = JsonObject.Parse(content);
-
-                await temp.DeleteAsync();
-
-                return new MTPackageManifest(
-                    jsonObject[nameof(MTPackageManifest.Path)].GetString(),
-                    jsonObject[nameof(MTPackageManifest.Version)].GetString());
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Services.MounterService.DownloadPackageManifestAsync",
+                    "GZSkinsX.Appx.Mounter.MounterService.DownloadPackageManifestAsync",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
                 continue;
@@ -450,125 +481,203 @@ internal sealed class MounterService : IMounterService
         throw new IndexOutOfRangeException();
     }
 
-    private async Task<StorageFolder> DownloadMTPackageAsync(Uri requestUri, Progress<double>? progress = null)
+    /// <summary>
+    /// 从指定的配置链接中检索和下载组件包。
+    /// </summary>
+    /// <param name="requestUri">请求的下载链接。</param>
+    /// <param name="progress">用于报告下载进度。</param>
+    /// <returns>存放解压后的组件包文件目录。</returns>
+    private async Task<string> DownloadMTPackageAsync(Uri requestUri, Progress<double>? progress = null)
     {
-        var temp = await GetTemporaryFileAsync();
-
-        using (var outputStream = await temp.OpenStreamForWriteAsync())
-        {
-            await _httpClient.DownloadAsync(requestUri, outputStream, progress);
-        }
-
-        var rootFolder = await GetMounterRootFolderAsync();
-        var destFolder = await CreateAnEmptyFolderAsync(rootFolder, Guid.NewGuid().ToString());
+        var tempName = Guid.NewGuid().ToString();
+        var tempFile = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, tempName);
 
         try
         {
-            ZipFile.ExtractToDirectory(temp.Path, destFolder.Path);
+            using var outputStream = new FileStream(tempFile, FileMode.Create, FileAccess.ReadWrite);
+            await MyHttpClient.DownloadAsync(requestUri, outputStream, progress);
+
+            var destFolderPath = Path.Combine(MounterRootFolder, tempName);
+            if (Directory.Exists(destFolderPath) is false)
+            {
+                Directory.CreateDirectory(destFolderPath);
+            }
+
+            outputStream.Seek(0, SeekOrigin.Begin);
+            ZipFile.ExtractToDirectory(outputStream, destFolderPath);
+
+            return destFolderPath;
         }
         catch (Exception excp)
         {
             AppxContext.LoggingService.LogError(
-                "GZSkinsX.Services.MounterService.DownloadMTPackageAsync",
+                "GZSkinsX.Appx.Mounter.MounterService.DownloadMTPackageAsync",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
             throw;
         }
         finally
         {
-            await temp.DeleteAsync();
+            try
+            {
+                File.Delete(tempFile);
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    /// <summary>
+    /// 尝试从指定的组件目录中检索包元数据配置。
+    /// </summary>
+    /// <param name="workingDirectory">目标组件的工作 (根) 目录。</param>
+    /// <param name="filter">筛选并获取指定成员的值，默认将获取所有成员的值。</param>
+    /// <returns>如果成功获取到目标组件的包元数据便会将其返回，否则将返回 null。</returns>
+    private static async Task<MTPackageMetadata?> TryGetLocalMTPackageMetadataAsync(string workingDirectory, params string[] filter)
+    {
+        var metadataFile = Path.Combine(workingDirectory, "_metadata", "package.json");
+        if (File.Exists(metadataFile) is false)
+        {
+            return null;
         }
 
-        return destFolder;
-    }
-
-    private static async Task<MTPackageMetadata> GetLocalMTPackageMetadataAsync(StorageFolder workingDirectory, params string[] filter)
-    {
-        var metadataFolder = await workingDirectory.GetFolderAsync("_metadata");
-        var metadataFile = await metadataFolder.GetFileAsync("package.json");
-
-        var content = await FileIO.ReadTextAsync(metadataFile, default);
-        return ParseMetadataFromString(content, filter);
-    }
-
-    private static async Task<StorageFolder> GetMounterRootFolderAsync()
-    {
-        return await ApplicationData.Current.RoamingFolder.CreateFolderAsync("Mounter", CreationCollisionOption.OpenIfExists);
-    }
-
-    private static async Task<StorageFile> GetTemporaryFileAsync()
-    {
-        return await ApplicationData.Current.TemporaryFolder.CreateFileAsync(Guid.NewGuid().ToString());
-    }
-
-    private static MTPackageMetadata ParseMetadataFromString(string input, params string[] filter)
-    {
-        IEnumerable<MTPackageMetadataStartUpArgument> GetStartUpArgs(JsonObject json, string propName)
+        try
         {
-            if (filter.Length is 0 || filter.Contains(propName, StringComparer.OrdinalIgnoreCase))
+            return ParseMTPackageMetadataFromBytes(await File.ReadAllBytesAsync(metadataFile), filter);
+        }
+        catch (Exception excp)
+        {
+            AppxContext.LoggingService.LogError(
+                "GZSkinsX.App.Mounter.MounterService.TryGetLocalMTPackageMetadata",
+                $"""
+                Failed to parse mt package data. "{excp.Message}".
+                "{excp}: {excp.StackTrace}."
+                """);
+
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// 从指定的字节数据中解析包元数据。
+    /// </summary>
+    /// <param name="jsonData">包元数据的字节数据。</param>
+    /// <param name="filter">筛选并获取指定成员的值，默认将获取所有成员的值。</param>
+    /// <returns>从字节数据中解析的 <see cref="MTPackageMetadata"/> 数据对象实例。</returns>
+    private static MTPackageMetadata ParseMTPackageMetadataFromBytes(ReadOnlySpan<byte> jsonData, params string[] filter)
+    {
+        bool AllowInclude(string propName)
+        {
+            if (filter.Length is 0)
             {
-                if (json.TryGetValue(propName, out var tempValue) is false || tempValue.ValueType is not JsonValueType.Array)
+                return true;
+            }
+
+            return filter.Contains(propName, StringComparer.OrdinalIgnoreCase);
+        }
+
+        bool TryGetValue(ref Utf8JsonReader jsonReader, ref string? field, string propName)
+        {
+            if (jsonReader.ValueTextEquals(propName) && AllowInclude(propName))
+            {
+                if (jsonReader.Read())
                 {
-                    yield break;
-                }
-
-                foreach (var item in tempValue.GetArray())
-                {
-                    if (item.ValueType is not JsonValueType.Object)
-                    {
-                        continue;
-                    }
-
-                    if (item.GetObject().TryGetValue("Name", out var name) is false || name.ValueType is not JsonValueType.String)
-                    {
-                        continue;
-                    }
-
-                    if (item.GetObject().TryGetValue("Value", out var value) is false || name.ValueType is not JsonValueType.String)
-                    {
-                        continue;
-                    }
-
-                    yield return new(name.GetString(), value.GetString());
+                    field = jsonReader.GetString() ?? string.Empty;
+                    return true;
                 }
             }
 
-            yield break;
+            return false;
         }
 
-        string GetValueOrDefault(JsonObject json, string propName)
+        bool TryGetStartUpArgs(ref Utf8JsonReader jsonReader, ref MTPackageMetadataStartUpArgument[] array, string propName)
         {
-            if (filter.Length is 0 || filter.Contains(propName, StringComparer.OrdinalIgnoreCase))
+            if (jsonReader.ValueTextEquals(propName) is false || AllowInclude(propName) is false)
             {
-                if (json.TryGetValue(propName, out var tempValue) && tempValue.ValueType is JsonValueType.String)
+                return false;
+            }
+
+            var list = new List<MTPackageMetadataStartUpArgument>();
+            if (jsonReader.Read() && jsonReader.TokenType is JsonTokenType.StartArray)
+            {
+                string? name = null, value = null;
+                while (jsonReader.Read())
                 {
-                    return tempValue.GetString();
+                    if (jsonReader.TokenType is not JsonTokenType.StartObject)
+                    {
+                        name = null;
+                        value = null;
+                        continue;
+                    }
+
+                    if (jsonReader.TokenType is JsonTokenType.PropertyName)
+                    {
+                        if (jsonReader.ValueTextEquals("Name"))
+                        {
+                            if (jsonReader.Read())
+                            {
+                                name = jsonReader.GetString();
+                            }
+                        }
+                        else if (jsonReader.ValueTextEquals("Value"))
+                        {
+                            if (jsonReader.Read())
+                            {
+                                value = jsonReader.GetString();
+                            }
+                        }
+                    }
+
+                    if (jsonReader.TokenType is not JsonTokenType.EndObject)
+                    {
+                        if (name is not null && value is not null)
+                        {
+                            list.Add(new(name, value));
+                        }
+                    }
                 }
             }
 
-            return string.Empty;
+            array = list.ToArray();
+            return true;
         }
 
-        if (JsonObject.TryParse(input, out var jsonObject) is false)
+        var otherStartupArgs = Array.Empty<MTPackageMetadataStartUpArgument>();
+        string? author, version, description, aboutTheAuthor, settingsFile;
+        string? executableFile, procStartupArgs, procTerminateArgs;
+
+        author = version = description = aboutTheAuthor = settingsFile = null;
+        executableFile = procStartupArgs = procTerminateArgs = null;
+
+        var jsonReader = new Utf8JsonReader(jsonData);
+        while (jsonReader.Read())
         {
-            return MTPackageMetadata.Empty;
+            if (jsonReader.TokenType is not JsonTokenType.PropertyName) { continue; }
+            if (TryGetValue(ref jsonReader, ref author, nameof(MTPackageMetadata.Author))) { continue; }
+            if (TryGetValue(ref jsonReader, ref version, nameof(MTPackageMetadata.Version))) { continue; }
+            if (TryGetValue(ref jsonReader, ref description, nameof(MTPackageMetadata.Description))) { continue; }
+            if (TryGetValue(ref jsonReader, ref aboutTheAuthor, nameof(MTPackageMetadata.AboutTheAuthor))) { continue; }
+            if (TryGetValue(ref jsonReader, ref settingsFile, nameof(MTPackageMetadata.SettingsFile))) { continue; }
+            if (TryGetValue(ref jsonReader, ref executableFile, nameof(MTPackageMetadata.ExecutableFile))) { continue; }
+            if (TryGetValue(ref jsonReader, ref procStartupArgs, nameof(MTPackageMetadata.ProcStartupArgs))) { continue; }
+            if (TryGetValue(ref jsonReader, ref procTerminateArgs, nameof(MTPackageMetadata.ProcTerminateArgs))) { continue; }
+            if (TryGetStartUpArgs(ref jsonReader, ref otherStartupArgs, nameof(MTPackageMetadata.OtherStartupArgs))) { continue; }
         }
 
-        return new MTPackageMetadata(
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.Author)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.Version)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.Description)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.AboutTheAuthor)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.SettingsFile)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.ExecutableFile)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.ProcStartupArgs)),
-            GetValueOrDefault(jsonObject, nameof(MTPackageMetadata.ProcTerminateArgs)),
-            GetStartUpArgs(jsonObject, nameof(MTPackageMetadata.ProcStartupArgs)).ToArray());
+        return new MTPackageMetadata(author ?? string.Empty, version ?? string.Empty, description ?? string.Empty,
+            aboutTheAuthor ?? string.Empty, settingsFile ?? string.Empty, executableFile ?? string.Empty,
+            procStartupArgs ?? string.Empty, procTerminateArgs ?? string.Empty, otherStartupArgs);
     }
 
+    /// <summary>
+    /// 通过指定的可执行程序路径和启动参数去启动新的进程。
+    /// </summary>
+    /// <param name="filePath">可执行程序的完整路径。</param>
+    /// <param name="args">程序的启动参数。</param>
     private static void ProcessLaunch(string filePath, string args)
     {
-        Process.Start(new ProcessStartInfo()
+        Process.Start(new ProcessStartInfo
         {
             Arguments = args,
             FileName = filePath,
@@ -578,67 +687,42 @@ internal sealed class MounterService : IMounterService
         });
     }
 
-    private async Task TryCleanupMounterRootFolderAsync()
+    /// <summary>
+    /// 尝试清理在存放组件的根目录中的多余文件/文件夹。
+    /// </summary>
+    private void TryCleanupMounterRootFolder()
     {
-        var targetFolderName = _mounterSettings.WorkingDirectory;
-
-        var rootFolder = await GetMounterRootFolderAsync();
-        foreach (var item in await rootFolder.GetItemsAsync())
+        if (Directory.Exists(MounterRootFolder) is false)
         {
-            /// 当匹配到与工作目录相同的文件夹时，跳过删除操作
-            /// 除此之外，其余的所有文件/文件夹都将被删除。
-            if (StringComparer.Ordinal.Equals(item.Name, targetFolderName) && item.IsOfType(StorageItemTypes.Folder))
+            return;
+        }
+
+        var targetFolderName = MounterSettings.WorkingDirectory;
+        foreach (var item in new DirectoryInfo(MounterRootFolder).EnumerateFileSystemInfos())
+        {
+            // 当匹配到与工作目录相同的文件夹时，跳过删除操作
+            // 除此之外，其余的所有文件/文件夹都将被删除。
+            if (item is not DirectoryInfo dirInfo || !StringComparer.Ordinal.Equals(dirInfo.Name, targetFolderName))
             {
                 continue;
             }
 
             try
             {
-                await item.DeleteAsync();
+                item.Delete();
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX::Services::MounterService::TryClearMounterRootFolderAsync",
+                    "GZSkinsX.Appx.Mounter.MounterService.TryCleanupMounterRootFolder",
                     $"Failed to delete the storage item ({item.Name}): \"{excp.Message}\".");
             }
         }
     }
 
-    private static async Task<MTPackageMetadata> TryGetLocalMTPackageMetadataAsync(StorageFolder workingDirectory, params string[] filter)
-    {
-        try
-        {
-            return await GetLocalMTPackageMetadataAsync(workingDirectory, filter);
-        }
-        catch
-        {
-            return MTPackageMetadata.Empty;
-        }
-    }
+    private sealed record class MTPackageManifest(string? Path, string? Version) { }
 
-    private readonly struct MTPackageManifest
-    {
-        public static readonly MTPackageManifest Empty = new();
+    private sealed record class MTPackageBlockMap(IList<MTPackageBlockEntry>? Blocks) { }
 
-        public readonly string Path;
-
-        public readonly string Version;
-
-        public readonly bool IsEmpty;
-
-        public MTPackageManifest()
-        {
-            Path = string.Empty;
-            Version = string.Empty;
-            IsEmpty = true;
-        }
-
-        public MTPackageManifest(string path, string version)
-        {
-            Path = path;
-            Version = version;
-            IsEmpty = false;
-        }
-    }
+    private record struct MTPackageBlockEntry(string Hash, string Checksum) { }
 }

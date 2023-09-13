@@ -126,7 +126,7 @@
                     <TextBlock
                         Grid.Row="4"
                         Grid.Column="3"
-                        Text="{x:Bind ModFile.Name, Mode=OneWay}"
+                        Text="{x:Bind FileInfo.Name, Mode=OneWay}"
                         TextWrapping="Wrap" />
 
                     <TextBlock
@@ -153,7 +153,11 @@
                     Width="{StaticResource MyModViewImageWidth}"
                     Height="{StaticResource MyModViewImageHeight}"
                     CornerRadius="{StaticResource MyModViewImageCornerRadius}">
-                    <Image Source="{x:Bind ModImage, Mode=OneWay}" Stretch="UniformToFill" />
+                    <Image Stretch="UniformToFill">
+                        <Image.Source>
+                            <BitmapImage UriSource="{x:Bind ModImage, Mode=OneWay}" />
+                        </Image.Source>
+                    </Image>
                 </Grid>
 
                 <StackPanel

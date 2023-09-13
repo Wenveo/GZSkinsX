@@ -22,11 +22,11 @@ using Windows.Storage;
 
 namespace GZSkinsX.Activation;
 
-internal sealed class FileActivationHandler : IActivationHandler, IActivationHandler2
+internal sealed class FileActivationHandler : IActivationHandler
 {
-    public async Task<bool> CanHandleAsync(AppActivationArguments args)
+    public bool CanHandle(AppActivationArguments args)
     {
-        if (await AppxContext.GameService.TryGetRootFolderAsync() is null)
+        if (AppxContext.GameService.RootDirectory is null)
         {
             return false;
         }
@@ -67,8 +67,7 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
             return;
         }
 
-        await AppxContext.MyModsService.ImportModsAsync(modFiles);
-
+        await AppxContext.MyModsService.ImportModsAsync(modFiles.Select(a => a.Path));
         AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(async () =>
         {
             if (AppxContext.AppxWindow.MainWindow.Content is Frame rootFrame)
@@ -84,11 +83,6 @@ internal sealed class FileActivationHandler : IActivationHandler, IActivationHan
 
         // Just handle once
         AppxContext.ActivationService.UnregisterHandler(this);
-    }
-
-    bool IActivationHandler.CanHandle(AppActivationArguments args)
-    {
-        return false;
     }
 
     [Shared, ExportAdvanceExtension]

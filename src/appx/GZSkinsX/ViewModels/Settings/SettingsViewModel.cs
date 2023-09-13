@@ -17,7 +17,6 @@ using GZSkinsX.Contracts.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace GZSkinsX.ViewModels;
@@ -25,13 +24,13 @@ namespace GZSkinsX.ViewModels;
 internal sealed partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty]
-    private StorageFolder? _gameFolder;
+    private string? _gameFolder;
 
     [ObservableProperty]
-    private StorageFolder? _modsFolder;
+    private string? _modsFolder;
 
     [ObservableProperty]
-    private StorageFolder? _wadsFolder;
+    private string? _wadsFolder;
 
     [ObservableProperty]
     private bool _isEnableBlood;
@@ -68,13 +67,11 @@ internal sealed partial class SettingsViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
-        IsEnableBlood = await AppxContext.MyModsService.GetIsEnableBloodAsync();
-
-        GameFolder = await AppxContext.GameService.TryGetRootFolderAsync();
+        CurrentTheme = AppxContext.ThemeService.CurrentTheme;
+        GameFolder = AppxContext.GameService.RootDirectory;
         ModsFolder = await AppxContext.MyModsService.GetModsFolderAsync();
         WadsFolder = await AppxContext.MyModsService.GetWadsFolderAsync();
-
-        CurrentTheme = AppxContext.ThemeService.CurrentTheme;
+        IsEnableBlood = await AppxContext.MyModsService.GetIsEnableBloodAsync();
     }
 
     async partial void OnIsEnableBloodChanged(bool value)
@@ -106,7 +103,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
         var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
-            var b = await AppxContext.GameService.TryUpdateAsync(folder, AppxContext.GameService.CurrentRegion);
+            var b = AppxContext.GameService.TryUpdate(folder.Path, AppxContext.GameService.CurrentRegion);
             if (b is false)
             {
                 var contentDialog = new ContentDialog()
@@ -121,7 +118,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
             }
             else
             {
-                GameFolder = folder;
+                GameFolder = folder.Path;
             }
         }
     }
@@ -138,8 +135,8 @@ internal sealed partial class SettingsViewModel : ObservableObject
         var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
-            await AppxContext.MyModsService.SetModsFolderAsync(folder);
-            ModsFolder = folder;
+            await AppxContext.MyModsService.SetModsFolderAsync(folder.Path);
+            ModsFolder = folder.Path;
         }
 
     }
@@ -156,8 +153,8 @@ internal sealed partial class SettingsViewModel : ObservableObject
         var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
-            await AppxContext.MyModsService.SetWadsFolderAsync(folder);
-            WadsFolder = folder;
+            await AppxContext.MyModsService.SetWadsFolderAsync(folder.Path);
+            WadsFolder = folder.Path;
         }
     }
 }

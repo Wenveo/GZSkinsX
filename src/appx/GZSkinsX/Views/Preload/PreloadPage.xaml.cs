@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
@@ -42,7 +43,8 @@ internal sealed partial class PreloadPage : Page
         var backgroundWorker = new BackgroundWorker();
         backgroundWorker.DoWork += async (s, e) =>
         {
-            var dispatcherQueue = (e.Argument as DispatcherQueue)!;
+            var dispatcherQueue = (e.Argument as DispatcherQueue);
+            Debug.Assert(dispatcherQueue is not null);
 
             // Try Initialize Module
             try
@@ -63,8 +65,7 @@ internal sealed partial class PreloadPage : Page
                 else
                 {
                     ShowCrashMessage(ResourceHelper.GetLocalized("Resources/Preload_Crash_Failed_To_Verify_Content_Integrity"));
-                    AppxContext.LoggingService.LogError("GZSkinsX.App.Views.PreloadPage.InitializeAsync", $"Failed to verify content integrity.");
-
+                    AppxContext.LoggingService.LogError("GZSkinsX.App.Views.PreloadPage.OnLoaded", $"Failed to verify content integrity.");
                 }
             });
         };

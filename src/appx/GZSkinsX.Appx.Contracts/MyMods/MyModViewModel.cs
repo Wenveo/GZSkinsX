@@ -5,22 +5,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
+using System.IO;
+
 using CommunityToolkit.Mvvm.ComponentModel;
-
-using Microsoft.UI.Xaml.Media;
-
-using Windows.Storage;
 
 namespace GZSkinsX.Contracts.MyMods;
 
-public sealed partial class MyModViewModel(StorageFile modFile, ImageSource modImage,
+public sealed partial class MyModViewModel(FileInfo fileInfo, Uri modImage,
     MyModInfo modInfo, bool enable, int indexOfTable) : ObservableObject
 {
     [ObservableProperty]
-    private StorageFile _modFile = modFile;
+    private FileInfo _fileInfo = fileInfo;
 
     [ObservableProperty]
-    private ImageSource _modImage = modImage;
+    private Uri _modImage = modImage;
 
     [ObservableProperty]
     private MyModInfo _modInfo = modInfo;

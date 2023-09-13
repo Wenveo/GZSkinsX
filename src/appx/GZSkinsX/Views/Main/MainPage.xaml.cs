@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 using CommunityToolkit.WinUI;
 
@@ -65,7 +65,7 @@ internal sealed partial class MainPage : Page
         {
             if (HasLoad is false)
             {
-                if (await AppxContext.MounterService.TryGetMounterWorkingDirectoryAsync() is null)
+                if (AppxContext.MounterService.TryGetMounterWorkingDirectory(out _) is false)
                 {
                     MainLaunchButton.UpdateCompleted += MainLaunchButton_UpdateCompleted;
                     UninitializedContent.Visibility = Visibility.Visible;
@@ -210,12 +210,20 @@ internal sealed partial class MainPage : Page
     private async void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
     {
         var deferral = args.Request.GetDeferral();
-        await DispatcherQueue.EnqueueAsync(() =>
+        await DispatcherQueue.EnqueueAsync(async () =>
         {
-            var items = MyModsGridView.SelectedItems.OfType<MyModViewModel>().Select(a => a.ModFile).ToArray();
-            if (items.Length > 0)
+            var items = new List<StorageFile>();
+            foreach (var item in MyModsGridView.SelectedItems)
             {
-                if (items.Length == 1)
+                if (item is MyModViewModel modViewModel && File.Exists(modViewModel.FileInfo.FullName))
+                {
+                    items.Add(await StorageFile.GetFileFromPathAsync(modViewModel.FileInfo.FullName));
+                }
+            }
+
+            if (items.Count > 0)
+            {
+                if (items.Count == 1)
                 {
                     var format = ResourceHelper.GetLocalized("Resources/Main_Share_Dialog_Title");
                     args.Request.Data.Properties.Title = string.Format(format, items[0].Name);

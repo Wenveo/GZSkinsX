@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Composition;
-using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Game;
@@ -16,16 +15,11 @@ namespace GZSkinsX.Views;
 
 [Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
-internal sealed class StartUpFrame : IWindowFrame, IWindowFrame2
+internal sealed class StartUpFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        return false;
-    }
-
-    public async Task<bool> CanNavigateToAsync(WindowFrameNavigatingEvnetArgs args)
-    {
-        if (await AppxContext.GameService.TryGetRootFolderAsync() is not null)
+        if (AppxContext.GameService.RootDirectory is not null)
         {
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             return false;

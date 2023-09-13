@@ -7,7 +7,6 @@
 
 namespace GZSkinsX.Contracts.MyMods;
 
-public readonly record struct MyModInfo(string Name, string Author, string Description, string DateTime)
+public sealed record class MyModInfo(string Name, string Author, string Description, string DateTime)
 {
-    public static readonly MyModInfo Empty = new(string.Empty, string.Empty, string.Empty, string.Empty);
 }

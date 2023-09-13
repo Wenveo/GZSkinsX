@@ -338,7 +338,7 @@
                 CanReorderItems="False"
                 IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}"
                 ItemTemplate="{StaticResource MyModViewTemplate}"
-                ItemsSource="{x:Bind ViewModel.MyModCollection, Mode=OneWay}"
+                ItemsSource="{x:Bind ViewModel.MyModsCollection, Mode=OneWay}"
                 LostFocus="MyModsGridView_LostFocus"
                 RightTapped="MyModsGridView_RightTapped"
                 SelectedItem="{x:Bind ViewModel.SelectedMod, Mode=TwoWay}"
