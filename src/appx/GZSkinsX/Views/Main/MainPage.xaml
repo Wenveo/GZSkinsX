@@ -532,10 +532,10 @@
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width=".32*" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition
+                    x:Name="SearchBoxColumn"
                     Width="*"
                     MinWidth="80"
-                    MaxWidth="620"
-                    ctrls2:WinUITitleBar.UIContentType="Client" />
+                    MaxWidth="620" />
                 <ColumnDefinition Width=".12*" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Client" />
                 <ColumnDefinition Width="190" ctrls2:WinUITitleBar.UIContentType="Caption" />
@@ -671,6 +671,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Main_MyMods_SerachBox.Visibility" Value="Visible" />
+                        <Setter Target="SearchBoxColumn.(ctrls2:WinUITitleBar.UIContentType)" Value="Client" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -679,6 +680,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="Main_MyMods_SerachBox.Visibility" Value="Collapsed" />
+                        <Setter Target="SearchBoxColumn.(ctrls2:WinUITitleBar.UIContentType)" Value="Caption" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
