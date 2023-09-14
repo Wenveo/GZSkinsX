@@ -6,7 +6,6 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 using GZSkinsX.Contracts.Appx;
@@ -18,9 +17,9 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
-using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.UI.Shell;
 using Windows.Win32.UI.WindowsAndMessaging;
 
 using WinRT.Interop;
@@ -29,10 +28,20 @@ namespace GZSkinsX.Appx.MainApp;
 
 internal sealed partial class ShellWindow : Window
 {
+    private const int MinHeight = 572;
+    private const int MinWidth = 498;
+    private const int Height = 572;
+    private const int Width = 1004;
+
     private ShellWindowSettings WindowSettigns { get; }
+
+    private SUBCLASSPROC? SubClassDelegate { get; set; }
+
+    internal nint WindowHandle { get; }
 
     public ShellWindow(MicaKind kind, bool extendsContentIntoTitleBar)
     {
+        WindowHandle = WindowNative.GetWindowHandle(this);
         SystemBackdrop = new MicaBackdrop { Kind = kind };
         AppWindow.TitleBar.ExtendsContentIntoTitleBar = extendsContentIntoTitleBar;
         AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
@@ -48,19 +57,13 @@ internal sealed partial class ShellWindow : Window
         }
         else
         {
-            var defaultWindowSize = new SizeInt32(1004, 572);
-            if (TryGetScaleAdjustment(out var dpiScale))
-            {
-                defaultWindowSize.Width = (int)(defaultWindowSize.Width * dpiScale.Value);
-                defaultWindowSize.Height = (int)(defaultWindowSize.Height * dpiScale.Value);
-            }
-
-            AppWindow.Resize(defaultWindowSize);
+            var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
+            AppWindow.Resize(new((int)(Width * dpiScale), (int)(Height * dpiScale)));
         }
 
         if (WindowSettigns.IsMaximized)
         {
-            ((OverlappedPresenter)AppWindow.Presenter).Maximize();
+            (AppWindow.Presenter as OverlappedPresenter)?.Maximize();
         }
 
         DispatcherQueue.TryEnqueue(() =>
@@ -73,12 +76,13 @@ internal sealed partial class ShellWindow : Window
             UpdateButtonForegroundColor(themeService.ActualTheme);
         });
 
+        SubscribeWindowSubClass();
         AppWindow.Destroying += OnDestroying;
     }
 
     private void OnDestroying(AppWindow sender, object args)
     {
-        if (((OverlappedPresenter)sender.Presenter).State is OverlappedPresenterState.Maximized)
+        if (sender.Presenter is OverlappedPresenter { State: OverlappedPresenterState.Maximized })
         {
             var windowPlacement = new WINDOWPLACEMENT
             {
@@ -86,7 +90,7 @@ internal sealed partial class ShellWindow : Window
                 showCmd = SHOW_WINDOW_CMD.SW_NORMAL
             };
 
-            if (PInvoke.GetWindowPlacement((HWND)WindowNative.GetWindowHandle(this), ref windowPlacement))
+            if (PInvoke.GetWindowPlacement((HWND)WindowHandle, ref windowPlacement))
             {
                 WindowSettigns.WindowLeft = windowPlacement.rcNormalPosition.X;
                 WindowSettigns.WindowTop = windowPlacement.rcNormalPosition.Y;
@@ -111,6 +115,13 @@ internal sealed partial class ShellWindow : Window
 
             WindowSettigns.IsMaximized = false;
             WindowSettigns.NeedToRestoreWindowState = true;
+        }
+
+        var subClassDelegate = SubClassDelegate;
+        if (subClassDelegate is not null)
+        {
+            SubClassDelegate = null;
+            PInvoke.RemoveWindowSubclass((HWND)WindowHandle, subClassDelegate, 107);
         }
     }
 
@@ -141,26 +152,30 @@ internal sealed partial class ShellWindow : Window
                 Data = (nint)(&accentPolicy)
             };
 
-            return SetWindowCompositionAttribute(WindowNative.GetWindowHandle(this), ref data) == 0;
+            return SetWindowCompositionAttribute(WindowHandle, ref data) == 0;
         }
     }
 
-    private bool TryGetScaleAdjustment([NotNullWhen(true)] out double? dpiScale)
+    private void SubscribeWindowSubClass()
     {
-        var wndId = Win32Interop.GetWindowIdFromWindow(WindowNative.GetWindowHandle(this));
-        var displayArea = DisplayArea.GetFromWindowId(wndId, DisplayAreaFallback.Primary);
-        var hMonitor = Win32Interop.GetMonitorFromDisplayId(displayArea.DisplayId);
-
-        // Get DPI.
-        var result = GetDpiForMonitor(hMonitor, Monitor_DPI_Type.MDT_Default, out var dpiX, out var _);
-        if (result is 0)
+        static LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
         {
-            dpiScale = (uint)(((long)dpiX * 100 + (96 >> 1)) / 96) / 100.0;
-            return true;
+            switch (uMsg)
+            {
+                case PInvoke.WM_GETMINMAXINFO:
+                    var dpiScale = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
+                    var minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+                    minMaxInfo.ptMinTrackSize.X = (int)(MinWidth * dpiScale);
+                    minMaxInfo.ptMinTrackSize.Y = (int)(MinHeight * dpiScale);
+                    Marshal.StructureToPtr(minMaxInfo, lParam, false);
+                    break;
+            }
+
+            return PInvoke.DefSubclassProc(hWnd, uMsg, wParam, lParam);
         }
 
-        dpiScale = null;
-        return false;
+        SubClassDelegate = new SUBCLASSPROC(WindowSubClass);
+        PInvoke.SetWindowSubclass((HWND)WindowHandle, SubClassDelegate, 107, 0);
     }
 
     /// <summary>
@@ -204,15 +219,4 @@ internal sealed partial class ShellWindow : Window
     /// </summary>
     [LibraryImport("user32.dll")]
     private static partial int SetWindowCompositionAttribute(nint hWnd, ref WINCOMPATTRDATA data);
-
-    private enum Monitor_DPI_Type : int
-    {
-        MDT_Effective_DPI = 0,
-        MDT_Angular_DPI = 1,
-        MDT_Raw_DPI = 2,
-        MDT_Default = MDT_Effective_DPI
-    }
-
-    [LibraryImport("Shcore.dll", SetLastError = true)]
-    private static partial int GetDpiForMonitor(nint hmonitor, Monitor_DPI_Type dpiType, out uint dpiX, out uint dpiY);
 }

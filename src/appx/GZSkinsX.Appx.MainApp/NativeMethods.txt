@@ -1,1 +1,12 @@
+// Struct
+MINMAXINFO
+
+// Enum
+WM_GETMINMAXINFO
+
+// Win32 Api
+DefSubclassProc
+GetDpiForWindow
 GetWindowPlacement
+SetWindowSubclass
+RemoveWindowSubclass
