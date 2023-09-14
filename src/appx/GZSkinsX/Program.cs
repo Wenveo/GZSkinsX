@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -34,14 +35,23 @@ namespace GZSkinsX;
 /// </summary>
 internal static partial class Program
 {
+    // Causes incorrect output in the message window.
+    [LibraryImport("User32.dll", StringMarshalling = StringMarshalling.Utf16)]
+    private static partial int MessageBoxW(nint hWnd, string lpText, string lpCaption, uint uType);
+
     [STAThread]
     private static void Main(string[] args)
     {
+        if (EnsureWindowsApp() is false)
+        {
+            Environment.Exit(MessageBoxW(0, $"请确保该应用已被正常安装。{Environment.NewLine}(Please ensure the application has been properly installed.)", string.Empty, 0));
+        }
+
+        ValidationProcessName();
         XamlCheckProcessRequirements();
         WinRT.ComWrappersSupport.InitializeComWrappers();
 
-        var isRedirect = DecideRedirection().GetAwaiter().GetResult();
-        if (EnsureWindowsApp() && !isRedirect)
+        if (!DecideRedirection().GetAwaiter().GetResult())
         {
             try
             {
@@ -79,6 +89,57 @@ internal static partial class Program
             /// 通知应用程序退出的事件。
             extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppExit);
         }
+    }
+
+    private static void ValidationProcessName()
+    {
+#if DEBUG
+        if (Debugger.IsAttached)
+        {
+            return;
+        }
+#endif
+
+        if (File.Exists(Environment.ProcessPath) is false)
+        {
+            return;
+        }
+
+        if (Path.GetFileName(Environment.ProcessPath) is not { } processName)
+        {
+            return;
+        }
+
+        if (StringComparer.OrdinalIgnoreCase.Equals(processName, "GZSkinsX.exe") is false)
+        {
+            return;
+        }
+
+        var workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var lockFile = Path.Combine(workingDirectory, "lockfile.lock");
+        if (File.Exists(lockFile))
+        {
+            File.SetAttributes(lockFile, System.IO.FileAttributes.Normal);
+            var oldProcessName = File.ReadAllText(lockFile) + ".exe";
+            try
+            {
+                File.Delete(Path.Combine(workingDirectory, oldProcessName));
+            }
+            catch
+            {
+            }
+        }
+
+        var newProcessName = Convert.ToHexString(Guid.NewGuid().ToByteArray());
+        File.WriteAllText(lockFile, newProcessName, System.Text.Encoding.UTF8);
+        File.SetAttributes(lockFile, System.IO.FileAttributes.Hidden);
+
+        var newProcessPath = Path.Combine(workingDirectory, newProcessName + ".exe");
+        File.Copy(Environment.ProcessPath, newProcessPath, overwrite: true);
+        File.SetAttributes(newProcessPath, System.IO.FileAttributes.Hidden);
+        Process.Start(new ProcessStartInfo() { FileName = newProcessPath });
+
+        Environment.Exit(0);
     }
 
     /// <summary>

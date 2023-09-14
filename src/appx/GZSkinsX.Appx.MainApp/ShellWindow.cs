@@ -43,6 +43,7 @@ internal sealed partial class ShellWindow : Window
     {
         WindowHandle = WindowNative.GetWindowHandle(this);
         SystemBackdrop = new MicaBackdrop { Kind = kind };
+        AppWindow.Title = Convert.ToHexString(Guid.NewGuid().ToByteArray());
         AppWindow.TitleBar.ExtendsContentIntoTitleBar = extendsContentIntoTitleBar;
         AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
 
