@@ -485,8 +485,18 @@ internal sealed partial class MainViewModel : ObservableObject
         await RefreshCoreAsync();
     }
 
+    public async Task OnInstallAsync(params object[] mods)
+    {
+        await OnInstallAsync(items: mods);
+    }
+
     [RelayCommand]
-    private async Task OnInstallAsync(IList<object>? items)
+    private async Task OnInstallAsync(IList<object>? list)
+    {
+        await OnInstallAsync(items: list);
+    }
+
+    private async Task OnInstallAsync(IEnumerable<object>? items)
     {
         if (items is null || items.Any() is false)
         {
@@ -497,7 +507,9 @@ internal sealed partial class MainViewModel : ObservableObject
         {
             var myModViewModels = items.OfType<MyModViewModel>();
             await MyModsService.InstallModsAsync(myModViewModels.Select(a => a.FileInfo.FullName));
-            myModViewModels.All(item => item.Enable = true);
+
+            var b = myModViewModels.All(item => item.Enable = true);
+            Debug.Assert(b);
 
             AppxContext.LoggingService.LogOkay(
                 "GZSkinsX.App.ViewModels.MainViewModel.OnInstallAsync",
@@ -516,8 +528,18 @@ internal sealed partial class MainViewModel : ObservableObject
         UpdateModInstalledIndex();
     }
 
+    public async Task OnUninstallAsync(params object[] mods)
+    {
+        await OnUninstallAsync(items: mods);
+    }
+
     [RelayCommand]
-    private async Task OnUninstall(IList<object>? items)
+    private async Task OnUninstallAsync(IList<object>? list)
+    {
+        await OnUninstallAsync(items: list);
+    }
+
+    private async Task OnUninstallAsync(IEnumerable<object>? items)
     {
         if (items is null || items.Any() is false)
         {

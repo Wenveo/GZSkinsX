@@ -186,6 +186,22 @@ internal sealed partial class MainPage : Page
         e.Data.SetStorageItems(items);
     }
 
+
+    private async void MyModsGridView_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+    {
+        if (e.OriginalSource is FrameworkElement { DataContext: MyModViewModel item })
+        {
+            if (item.Enable)
+            {
+                await ViewModel.OnUninstallAsync(item);
+            }
+            else
+            {
+                await ViewModel.OnInstallAsync(item);
+            }
+        }
+    }
+
     private void MyModsGridView_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
         if (e.OriginalSource is FrameworkElement { DataContext: MyModViewModel item })
