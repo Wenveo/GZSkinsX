@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using CommunityToolkit.WinUI;
 
@@ -23,7 +24,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
 using Windows.ApplicationModel.DataTransfer;
@@ -144,6 +144,46 @@ internal sealed partial class MainPage : Page
         {
             ViewModel.IsShowInstalledIndex = false;
         }
+    }
+
+
+    private void MyModsGridView_DragOver(object sender, DragEventArgs e)
+    {
+        // Is from the application itself ?
+        if (e.Data is not null && e.Data.Properties.Title == "DragMyModFiles")
+        {
+            return;
+        }
+
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+        }
+    }
+
+    private async void MyModsGridView_Drop(object sender, DragEventArgs e)
+    {
+        if (e.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            var items = await e.DataView.GetStorageItemsAsync();
+            await ViewModel.ImportAsync(items.OfType<StorageFile>());
+        }
+    }
+
+    private async void MyModsGridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+    {
+        e.Data.Properties.Title = "DragMyModFiles";
+
+        var items = new List<StorageFile>();
+        foreach (var item in e.Items.OfType<MyModViewModel>())
+        {
+            if (item.FileInfo.Exists)
+            {
+                items.Add(await StorageFile.GetFileFromPathAsync(item.FileInfo.FullName));
+            }
+        }
+
+        e.Data.SetStorageItems(items);
     }
 
     private void MyModsGridView_RightTapped(object sender, RightTappedRoutedEventArgs e)
