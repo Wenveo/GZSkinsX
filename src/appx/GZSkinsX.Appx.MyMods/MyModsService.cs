@@ -614,13 +614,13 @@ internal sealed class MyModsService : IMyModsService
     /// <param name="subFolderName">子文件夹的名称。</param>
     private static string GetWGZSubFolderPath(string subFolderName)
     {
-        var gameFolder = AppxContext.GameService.GameData.GameFolder;
-        if (Directory.Exists(gameFolder) is false)
+        var targetFolder = KnownFolders.DocumentsLibrary.Path;
+        if (Directory.Exists(targetFolder) is false)
         {
             return string.Empty;
         }
 
-        return Path.Combine(gameFolder, "GeziSkin", subFolderName) + Path.DirectorySeparatorChar;
+        return Path.Combine(targetFolder, "GeziSkin", subFolderName) + Path.DirectorySeparatorChar;
     }
 
     /// <summary>
@@ -640,9 +640,22 @@ internal sealed class MyModsService : IMyModsService
         }
 
         // 设置默认的 Wad 目录路径
-        if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_CUSTOMINSTALL_NAME, out value) is false || string.IsNullOrWhiteSpace(GetStringFromJson(value)))
+        string? wadsFolder;
+        if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_CUSTOMINSTALL_NAME, out value) is false || string.IsNullOrWhiteSpace(wadsFolder = GetStringFromJson(value)))
         {
-            settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = GetWGZSubFolderPath("Wads");
+            settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = wadsFolder = GetWGZSubFolderPath("Wads");
+        }
+
+        // 当目标文件夹不存在时将其创建
+        if (Directory.Exists(wadsFolder) is false)
+        {
+            try
+            {
+                Directory.CreateDirectory(wadsFolder);
+            }
+            catch
+            {
+            }
         }
 
         // 设置默认的 Mod 目录路径
@@ -652,38 +665,51 @@ internal sealed class MyModsService : IMyModsService
             settingsData.GZSkins[MT_SETTINGS_RGZINSTALL_NAME] = modsFolder = GetWGZSubFolderPath("Mods");
         }
 
-        if (Directory.Exists(modsFolder))
+        // 当目标文件夹不存在时将其创建
+        if (Directory.Exists(modsFolder) is false)
         {
-            // 在以下代码中需要手动生成文件的完整路径名，
-            // 并对已安装的模组文件列表进行一个文件检查。
-
-            // 由于生成文件的完整路径时需要手动追加文件扩展名，
-            // 因此使用 StringBuilder 进行 Append 会比使用 Path.Combine 高效。
-            // <!-- Path.Combine(modsFolder, item + ".lolgezi") -->
-
-            var pathBuilder = new StringBuilder();
-            pathBuilder.Append(modsFolder);
-            pathBuilder.Append(Path.DirectorySeparatorChar);
-            var folderPathOffset = pathBuilder.Length;
-
-            var tableBuilder = new StringBuilder();
-            foreach (var item in InstalledMods)
+            try
             {
-                pathBuilder.Append(item);
-                pathBuilder.Append(LOLGEZI_EXTENSION_NAME);
-
-                var filePath = pathBuilder.ToString();
-                if (File.Exists(filePath))
-                {
-                    tableBuilder.Append(item);
-                    tableBuilder.Append(';');
-                }
-
-                pathBuilder.Length = folderPathOffset;
+                Directory.CreateDirectory(modsFolder);
+            }
+            catch
+            {
             }
 
-            settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = await MyModsHelper.EncryptConfigTextAsync(tableBuilder.ToString());
+            // 进入此处时表示目标文件夹不存在，因此将下方配置选项设为空并返回。
+            settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = string.Empty;
+            return;
         }
+
+        // 在以下代码中需要手动生成文件的完整路径名，
+        // 并对已安装的模组文件列表进行一个文件检查。
+
+        // 由于生成文件的完整路径时需要手动追加文件扩展名，
+        // 因此使用 StringBuilder 进行 Append 会比使用 Path.Combine 高效。
+        // <!-- Path.Combine(modsFolder, item + ".lolgezi") -->
+
+        var pathBuilder = new StringBuilder();
+        pathBuilder.Append(modsFolder);
+        pathBuilder.Append(Path.DirectorySeparatorChar);
+        var folderPathOffset = pathBuilder.Length;
+
+        var tableBuilder = new StringBuilder();
+        foreach (var item in InstalledMods)
+        {
+            pathBuilder.Append(item);
+            pathBuilder.Append(LOLGEZI_EXTENSION_NAME);
+
+            var filePath = pathBuilder.ToString();
+            if (File.Exists(filePath))
+            {
+                tableBuilder.Append(item);
+                tableBuilder.Append(';');
+            }
+
+            pathBuilder.Length = folderPathOffset;
+        }
+
+        settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = await MyModsHelper.EncryptConfigTextAsync(tableBuilder.ToString());
     }
 
     /// <summary>
