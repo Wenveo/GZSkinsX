@@ -35,12 +35,13 @@ namespace GZSkinsX;
 internal static partial class Program
 {
     [STAThread]
-    private static async Task<int> Main(string[] args)
+    private static void Main(string[] args)
     {
         XamlCheckProcessRequirements();
         WinRT.ComWrappersSupport.InitializeComWrappers();
 
-        if (EnsureWindowsApp() && !await DecideRedirection())
+        var isRedirect = DecideRedirection().GetAwaiter().GetResult();
+        if (EnsureWindowsApp() && !isRedirect)
         {
             try
             {
@@ -53,7 +54,7 @@ internal static partial class Program
 
             App? mainApp = null;
             var appInstance = AppInstance.GetCurrent();
-            var exportProvider = await InitializeMEFAsync();
+            var exportProvider = InitializeMEFV2().GetAwaiter().GetResult();
 
             AppxContext.InitializeLifetimeService(exportProvider);
 
@@ -78,14 +79,12 @@ internal static partial class Program
             /// 通知应用程序退出的事件。
             extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppExit);
         }
-
-        return 0;
     }
 
     /// <summary>
     /// 初始化 MEF 组件。
     /// </summary>
-    private static async Task<ExportProvider> InitializeMEFAsync()
+    private static async Task<ExportProvider> InitializeMEFV2()
     {
         var catalogV2 = new AssemblyCatalogV2()
             .AddParts(GetAssemblies())
