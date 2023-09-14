@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 using GZSkinsX.Contracts.Appx;
@@ -17,6 +18,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
+using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -46,7 +48,14 @@ internal sealed partial class ShellWindow : Window
         }
         else
         {
-            AppWindow.Resize(new(1000, 572));
+            var defaultWindowSize = new SizeInt32(1004, 572);
+            if (TryGetScaleAdjustment(out var dpiScale))
+            {
+                defaultWindowSize.Width = (int)(defaultWindowSize.Width * dpiScale.Value);
+                defaultWindowSize.Height = (int)(defaultWindowSize.Height * dpiScale.Value);
+            }
+
+            AppWindow.Resize(defaultWindowSize);
         }
 
         if (WindowSettigns.IsMaximized)
@@ -136,6 +145,24 @@ internal sealed partial class ShellWindow : Window
         }
     }
 
+    private bool TryGetScaleAdjustment([NotNullWhen(true)] out double? dpiScale)
+    {
+        var wndId = Win32Interop.GetWindowIdFromWindow(WindowNative.GetWindowHandle(this));
+        var displayArea = DisplayArea.GetFromWindowId(wndId, DisplayAreaFallback.Primary);
+        var hMonitor = Win32Interop.GetMonitorFromDisplayId(displayArea.DisplayId);
+
+        // Get DPI.
+        var result = GetDpiForMonitor(hMonitor, Monitor_DPI_Type.MDT_Default, out var dpiX, out var _);
+        if (result is 0)
+        {
+            dpiScale = (uint)(((long)dpiX * 100 + (96 >> 1)) / 96) / 100.0;
+            return true;
+        }
+
+        dpiScale = null;
+        return false;
+    }
+
     /// <summary>
     /// DWM window accent state.
     /// </summary>
@@ -177,4 +204,15 @@ internal sealed partial class ShellWindow : Window
     /// </summary>
     [LibraryImport("user32.dll")]
     private static partial int SetWindowCompositionAttribute(nint hWnd, ref WINCOMPATTRDATA data);
+
+    private enum Monitor_DPI_Type : int
+    {
+        MDT_Effective_DPI = 0,
+        MDT_Angular_DPI = 1,
+        MDT_Raw_DPI = 2,
+        MDT_Default = MDT_Effective_DPI
+    }
+
+    [LibraryImport("Shcore.dll", SetLastError = true)]
+    private static partial int GetDpiForMonitor(nint hmonitor, Monitor_DPI_Type dpiType, out uint dpiX, out uint dpiY);
 }
