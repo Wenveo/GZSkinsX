@@ -186,6 +186,10 @@ internal sealed partial class MainPage : Page
         e.Data.SetStorageItems(items);
     }
 
+    private void MyModsGridView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        MyModsGridView.SmoothScrollIntoViewWithItemAsync(e.ClickedItem);
+    }
 
     private async void MyModsGridView_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
     {
