@@ -130,6 +130,7 @@
                 <MenuFlyoutItem
                     Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
                     CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                    KeyboardAcceleratorTextOverride="Del"
                     Text="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
                     Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <MenuFlyoutItem.KeyboardAccelerators>
@@ -224,6 +225,7 @@
                         Click="CloseMyModsContextMenu_Click"
                         Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
                         CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        KeyboardAcceleratorTextOverride="Del"
                         Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
                         Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.KeyboardAccelerators>
@@ -450,6 +452,7 @@
                     <AppBarButton
                         Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
                         CommandParameter="{x:Bind MyModsGridView.SelectedItems}"
+                        KeyboardAcceleratorTextOverride="Del"
                         Label="{markups:LocalizedString ResourceKey=Resources/Main_MyMods_Commands_Delete}"
                         Visibility="{x:Bind ViewModel.SelectedIsNotNull, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.KeyboardAccelerators>
