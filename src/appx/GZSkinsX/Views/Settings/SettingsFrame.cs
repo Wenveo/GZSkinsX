@@ -7,7 +7,7 @@
 
 using GZSkinsX.Contracts.WindowManager;
 
-namespace GZSkinsX.Views.Settings;
+namespace GZSkinsX.Views;
 
 [System.Composition.Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.Settings_Guid, PageType = typeof(SettingsPage))]

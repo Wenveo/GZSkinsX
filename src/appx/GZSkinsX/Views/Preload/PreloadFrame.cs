@@ -7,7 +7,7 @@
 
 using GZSkinsX.Contracts.WindowManager;
 
-namespace GZSkinsX.Views.Preload;
+namespace GZSkinsX.Views;
 
 [System.Composition.Shared, ExportWindowFrame]
 [WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
