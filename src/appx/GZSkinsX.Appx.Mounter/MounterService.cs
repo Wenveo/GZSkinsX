@@ -459,11 +459,11 @@ internal sealed class MounterService : IMounterService
         {
             try
             {
-                memoryStream.Seek(0, SeekOrigin.Begin);
                 await MyHttpClient.DownloadAsync(uri, memoryStream, progress);
                 memoryStream.Seek(0, SeekOrigin.Begin);
 
-                if (await JsonSerializer.DeserializeAsync<MTPackageManifest>(memoryStream) is { } result)
+                if (await JsonSerializer.DeserializeAsync<MTPackageManifest>(memoryStream) is { } result &&
+                    !string.IsNullOrWhiteSpace(result.Path) && !string.IsNullOrWhiteSpace(result.Version))
                 {
                     return result;
                 }
@@ -473,9 +473,10 @@ internal sealed class MounterService : IMounterService
                 AppxContext.LoggingService.LogError(
                     "GZSkinsX.Appx.Mounter.MounterService.DownloadPackageManifestAsync",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
-
-                continue;
             }
+
+            Array.Fill<byte>(memoryStream.GetBuffer(), 0x20);
+            memoryStream.Seek(0, SeekOrigin.Begin);
         }
 
         throw new IndexOutOfRangeException();
