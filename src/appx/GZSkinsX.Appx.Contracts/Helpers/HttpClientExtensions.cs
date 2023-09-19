@@ -34,7 +34,7 @@ public static class HttpClientExtensions
             var relativeProgress = new Progress<long>(totalBytes => progress.Report((double)totalBytes / contentLength.Value));
 
             // Use extension method to report progress while downloading.
-            await download.CopyToAsync(destination, 20_480, relativeProgress, cancellationToken).ConfigureAwait(false);
+            await download.CopyToAsync(destination, 16_384, relativeProgress, cancellationToken).ConfigureAwait(false);
         }
 
         // Flush the destination stream.
