@@ -7,7 +7,6 @@
 
 using System;
 using System.Composition;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
@@ -19,10 +18,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 
 using Windows.UI.ViewManagement;
-
-using Windows.Win32;
-using Windows.Win32.UI.Accessibility;
-using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace GZSkinsX.Appx.Themes;
 
@@ -43,7 +38,13 @@ internal sealed class ThemeService : IThemeService
     /// <summary>
     /// 用于对 UI 元素设置的访问。
     /// </summary>
-    private readonly UISettings _settings;
+    private readonly UISettings _settings = new();
+
+    /// <summary>
+    /// 用于对辅助性设置的访问。
+    /// </summary>
+
+    private readonly AccessibilitySettings _accessible = new();
 
     /// <inheritdoc/>
     public ElementTheme ActualTheme { get; private set; }
@@ -56,25 +57,7 @@ internal sealed class ThemeService : IThemeService
     }
 
     /// <inheritdoc/>
-    public bool IsHighContrast
-    {
-        get
-        {
-            unsafe
-            {
-                var highContrast = new HIGHCONTRASTW
-                {
-                    cbSize = (uint)Marshal.SizeOf(typeof(HIGHCONTRASTW))
-                };
-
-                var ret = PInvoke.SystemParametersInfo(
-                    SYSTEM_PARAMETERS_INFO_ACTION.SPI_GETHIGHCONTRAST,
-                    highContrast.cbSize, &highContrast, 0);
-
-                return ret > 0 && (highContrast.dwFlags & HIGHCONTRASTW_FLAGS.HCF_HIGHCONTRASTON) == HIGHCONTRASTW_FLAGS.HCF_HIGHCONTRASTON;
-            }
-        }
-    }
+    public bool IsHighContrast { get; private set; }
 
     /// <inheritdoc/>
     public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
@@ -86,8 +69,6 @@ internal sealed class ThemeService : IThemeService
     {
         _themeSettings = AppxContext.Resolve<ThemeSettings>();
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
-        _settings = new();
         _settings.ColorValuesChanged += OnColorValuesChanged;
 
         ActualTheme = CurrentTheme is not ElementTheme.Default ? CurrentTheme
@@ -106,19 +87,21 @@ internal sealed class ThemeService : IThemeService
     {
         await _dispatcherQueue.EnqueueAsync(() =>
         {
-            if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
+            if (_accessible.HighContrast && _accessible.HighContrastScheme.IndexOf("white", StringComparison.OrdinalIgnoreCase) != -1)
             {
-                ActualTheme = frameworkElement.ActualTheme;
-                CurrentTheme = frameworkElement.RequestedTheme;
+                // If our HighContrastScheme is ON & a lighter one, then we should remain in 'Light' theme mode for Monaco Themes Perspective
+                IsHighContrast = false;
+                ActualTheme = ElementTheme.Light;
             }
             else
             {
+                // Otherwise, we just set to what's in the system as we'd expect.
+                IsHighContrast = _accessible.HighContrast;
                 ActualTheme = Application.Current.RequestedTheme == default ? ElementTheme.Light : ElementTheme.Dark;
-                CurrentTheme = ElementTheme.Default;
             }
 
             UXThemeHelper.ApplyThemeForApp(ActualTheme is ElementTheme.Dark);
-            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ActualTheme, CurrentTheme, IsHighContrast));
+            ThemeChanged?.Invoke(this, new(ActualTheme, CurrentTheme, IsHighContrast));
         });
     }
 
@@ -139,7 +122,7 @@ internal sealed class ThemeService : IThemeService
             }
 
             UXThemeHelper.ApplyThemeForApp(ActualTheme is ElementTheme.Dark);
-            ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(ActualTheme, CurrentTheme, IsHighContrast));
+            ThemeChanged?.Invoke(this, new(ActualTheme, CurrentTheme, IsHighContrast));
         });
     }
 }
