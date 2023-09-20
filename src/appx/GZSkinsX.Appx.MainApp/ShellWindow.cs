@@ -29,16 +29,19 @@ namespace GZSkinsX.Appx.MainApp;
 
 internal sealed partial class ShellWindow : Window
 {
-    private const int MinHeight = 572;
-    private const int MinWidth = 498;
-    private const int Height = 572;
-    private const int Width = 1004;
-
     private ShellWindowSettings WindowSettigns { get; }
 
     private SUBCLASSPROC? SubClassDelegate { get; set; }
 
     internal nint WindowHandle { get; }
+
+    public int MinHeight { get; set; } = 572;
+
+    public int MinWidth { get; set; } = 498;
+
+    public int Height { get; set; } = 1004;
+
+    public int Width { get; set; } = 572;
 
     public ShellWindow(MicaKind kind, bool extendsContentIntoTitleBar)
     {
@@ -160,7 +163,7 @@ internal sealed partial class ShellWindow : Window
 
     private void SubscribeWindowSubClass()
     {
-        static LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
+        LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
         {
             switch (uMsg)
             {
