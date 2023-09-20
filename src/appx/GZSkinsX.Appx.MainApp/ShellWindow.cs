@@ -71,15 +71,11 @@ internal sealed partial class ShellWindow : Window
             (AppWindow.Presenter as OverlappedPresenter)?.Maximize();
         }
 
-        DispatcherQueue.TryEnqueue(() =>
-        {
-            TryApplyAero();
+        DispatcherQueue.TryEnqueue(() => TryApplyAero());
 
-            var themeService = AppxContext.ThemeService;
-            themeService.ThemeChanged += OnThemeChanged;
-
-            UpdateButtonForegroundColor(themeService.ActualTheme);
-        });
+        var themeService = AppxContext.ThemeService;
+        themeService.ThemeChanged += OnThemeChanged;
+        UpdateButtonForegroundColor(themeService.ActualTheme);
 
         SubscribeWindowSubClass();
         AppWindow.Destroying += OnDestroying;
