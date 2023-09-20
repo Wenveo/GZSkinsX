@@ -614,13 +614,28 @@ internal sealed class MyModsService : IMyModsService
     /// <param name="subFolderName">子文件夹的名称。</param>
     private static string GetWGZSubFolderPath(string subFolderName)
     {
-        var targetFolder = KnownFolders.DocumentsLibrary.Path;
-        if (Directory.Exists(targetFolder) is false)
+        var targetFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        if (string.IsNullOrWhiteSpace(targetFolder))
         {
             return string.Empty;
         }
+        else
+        {
+            // Try Create ?
+            if (Directory.Exists(targetFolder) is false)
+            {
+                try
+                {
+                    Directory.CreateDirectory(targetFolder);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
 
-        return Path.Combine(targetFolder, "GeziSkin", subFolderName) + Path.DirectorySeparatorChar;
+            return Path.Combine(targetFolder, "GeziSkin", subFolderName) + Path.DirectorySeparatorChar;
+        }
     }
 
     /// <summary>
