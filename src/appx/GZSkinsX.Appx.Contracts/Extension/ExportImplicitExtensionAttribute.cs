@@ -11,13 +11,13 @@ using System.Composition;
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 声明目标类以 <see cref="IAdvanceExtension"/> 类型导出。
+/// 声明目标类以 <see cref="IImplicitExtension"/> 类型导出。
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ExportAdvanceExtensionAttribute : ExportAttribute
+public sealed class ExportImplicitExtensionAttribute : ExportAttribute
 {
     /// <summary>
-    /// 初始化 <see cref="ExportAdvanceExtensionAttribute"/> 的新实例，并以 <see cref="IAdvanceExtension"/> 类型导出。
+    /// 初始化 <see cref="ExportImplicitExtensionAttribute"/> 的新实例，并以 <see cref="IImplicitExtension"/> 类型导出。
     /// </summary>
-    public ExportAdvanceExtensionAttribute() : base(typeof(IAdvanceExtension)) { }
+    public ExportImplicitExtensionAttribute() : base(typeof(IImplicitExtension)) { }
 }

@@ -8,9 +8,9 @@
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 先行扩展的触发类型。
+/// 隐式扩展的触发类型。
 /// </summary>
-public enum AdvanceExtensionTrigger
+public enum ImplicitExtensionTrigger
 {
     /// <summary>
     /// 在加载应用程序通用扩展之前。

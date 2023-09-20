@@ -85,9 +85,9 @@ internal sealed class FileActivationHandler : IActivationHandler
         AppxContext.ActivationService.UnregisterHandler(this);
     }
 
-    [Shared, ExportAdvanceExtension]
-    [AdvanceExtensionMetadata(Order = double.MinValue)]
-    private sealed class AutoLoaded : IAdvanceExtension
+    [Shared, ExportImplicitExtension]
+    [ImplicitExtensionMetadata(Order = double.MinValue)]
+    private sealed class AutoLoaded : IImplicitExtension
     {
         public AutoLoaded()
         {

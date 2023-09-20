@@ -8,9 +8,9 @@
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 使用该接口表明为先行扩展。
+/// 使用该接口表明为隐式扩展。
 /// </summary>
-public interface IAdvanceExtension
+public interface IImplicitExtension
 {
 
 }

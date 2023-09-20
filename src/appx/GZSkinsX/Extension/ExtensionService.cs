@@ -24,9 +24,9 @@ namespace GZSkinsX.Extension;
 internal sealed class ExtensionService
 {
     /// <summary>
-    /// 存放已枚举的先行扩展的集合。
+    /// 存放已枚举的隐式扩展的集合。
     /// </summary>
-    private readonly Lazy<IAdvanceExtension, AdvanceExtensionMetadataAttribute>[] _mefAdvanceExtensions;
+    private readonly Lazy<IImplicitExtension, ImplicitExtensionMetadataAttribute>[] _mefImplicitExtensions;
 
     /// <summary>
     /// 存放已枚举的通用扩展的集合。
@@ -52,15 +52,13 @@ internal sealed class ExtensionService
     /// </summary>
     [ImportingConstructor]
     public ExtensionService(
-        [ImportMany] IEnumerable<Lazy<IAdvanceExtension, AdvanceExtensionMetadataAttribute>> mefAdvanceExtensions,
+        [ImportMany] IEnumerable<Lazy<IImplicitExtension, ImplicitExtensionMetadataAttribute>> mefImplicitExtensions,
         [ImportMany] IEnumerable<Lazy<IUniversalExtension, UniversalExtensionMetadataAttribute>> mefUniversalExtensions)
     {
-        _mefAdvanceExtensions = mefAdvanceExtensions.OrderBy(a => a.Metadata.Order).ToArray();
+        _mefImplicitExtensions = mefImplicitExtensions.OrderBy(a => a.Metadata.Order).ToArray();
         _mefUniversalExtensions = mefUniversalExtensions.OrderBy(a => a.Metadata.Order).ToArray();
 
-        AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.ExtensionService",
-            "Successfully initialized.");
+        AppxContext.LoggingService.LogAlways("GZSkinsX.ExtensionService", "Successfully initialized.");
     }
 
     /// <summary>
@@ -81,12 +79,12 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// 通过筛选指定触发类型的先行扩展进行加载。
+    /// 通过筛选指定触发类型的隐式扩展进行加载。
     /// </summary>
     /// <param name="trigger">指定的触发类型。</param>
-    public void LoadAdvanceExtensions(AdvanceExtensionTrigger trigger)
+    public void LoadImplicitExtensions(ImplicitExtensionTrigger trigger)
     {
-        foreach (var extension in _mefAdvanceExtensions)
+        foreach (var extension in _mefImplicitExtensions)
         {
             if (extension.Metadata.Trigger == trigger)
             {
@@ -95,8 +93,8 @@ internal sealed class ExtensionService
         }
 
         AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.ExtensionService.LoadAdvanceExtensions",
-            $"Load all AdvanceExtension of type '{trigger}'.");
+            "GZSkinsX.ExtensionService.LoadImplicitExtensions",
+            $"Load all ImplicitExtension of type '{trigger}'.");
     }
 
     /// <summary>

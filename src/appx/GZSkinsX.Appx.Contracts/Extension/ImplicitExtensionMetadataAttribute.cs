@@ -11,10 +11,10 @@ using System.Composition;
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 表示先行扩展的元数据类
+/// 表示隐式扩展的元数据类
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class AdvanceExtensionMetadataAttribute : Attribute
+public sealed class ImplicitExtensionMetadataAttribute : Attribute
 {
     /// <summary>
     /// 扩展的加载顺序
@@ -24,5 +24,5 @@ public sealed class AdvanceExtensionMetadataAttribute : Attribute
     /// <summary>
     /// 扩展的触发类型
     /// </summary>
-    public AdvanceExtensionTrigger Trigger { get; set; }
+    public ImplicitExtensionTrigger Trigger { get; set; }
 }
