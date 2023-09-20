@@ -9,6 +9,7 @@ using System;
 using System.Runtime.InteropServices;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Themes;
 
 using Microsoft.UI;
@@ -43,7 +44,7 @@ internal sealed partial class ShellWindow : Window
     {
         WindowHandle = WindowNative.GetWindowHandle(this);
         SystemBackdrop = new MicaBackdrop { Kind = kind };
-        AppWindow.Title = Convert.ToHexString(Guid.NewGuid().ToByteArray());
+        AppWindow.Title = ResourceHelper.GetLocalized("Resources/AppDisplayName");
         AppWindow.TitleBar.ExtendsContentIntoTitleBar = extendsContentIntoTitleBar;
         AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
 
