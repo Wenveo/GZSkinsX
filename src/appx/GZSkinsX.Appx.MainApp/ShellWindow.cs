@@ -35,14 +35,6 @@ internal sealed partial class ShellWindow : Window
 
     internal nint WindowHandle { get; }
 
-    public int MinHeight { get; set; } = 572;
-
-    public int MinWidth { get; set; } = 498;
-
-    public int Height { get; set; } = 1004;
-
-    public int Width { get; set; } = 572;
-
     public ShellWindow(MicaKind kind, bool extendsContentIntoTitleBar)
     {
         WindowHandle = WindowNative.GetWindowHandle(this);
@@ -63,7 +55,7 @@ internal sealed partial class ShellWindow : Window
         else
         {
             var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
-            AppWindow.Resize(new((int)(Width * dpiScale), (int)(Height * dpiScale)));
+            AppWindow.Resize(new((int)(1004 * dpiScale), (int)(572 * dpiScale)));
         }
 
         if (WindowSettigns.IsMaximized)
@@ -159,15 +151,15 @@ internal sealed partial class ShellWindow : Window
 
     private void SubscribeWindowSubClass()
     {
-        LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
+        static LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
         {
             switch (uMsg)
             {
                 case PInvoke.WM_GETMINMAXINFO:
                     var dpiScale = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
                     var minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                    minMaxInfo.ptMinTrackSize.X = (int)(MinWidth * dpiScale);
-                    minMaxInfo.ptMinTrackSize.Y = (int)(MinHeight * dpiScale);
+                    minMaxInfo.ptMinTrackSize.X = (int)(498 * dpiScale);
+                    minMaxInfo.ptMinTrackSize.Y = (int)(572 * dpiScale);
                     Marshal.StructureToPtr(minMaxInfo, lParam, false);
                     break;
             }
