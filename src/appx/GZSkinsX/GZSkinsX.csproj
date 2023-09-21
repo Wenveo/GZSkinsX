@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GZSkinsX.Kernel" Version="0.0.6" />
     <PackageReference Include="MessagePack" Version="2.5.124" />
   </ItemGroup>
   

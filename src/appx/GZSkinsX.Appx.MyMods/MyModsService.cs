@@ -330,7 +330,7 @@ internal sealed class MyModsService : IMyModsService
     }
 
     /// <inheritdoc/>
-    public async Task<Uri> GetModImageAsync(string filePath)
+    public Task<Uri> GetModImageAsync(string filePath)
     {
         try
         {
@@ -341,8 +341,8 @@ internal sealed class MyModsService : IMyModsService
             }
 
             var imageFilePath = Path.Combine(imageCacheFolder, Path.GetFileNameWithoutExtension(filePath));
-            await MyModsHelper.ExtractModImageAsync(filePath, imageFilePath);
-            return new Uri(imageFilePath, UriKind.Absolute);
+            MyModsHelper.ExtractModImage(filePath, imageFilePath);
+            return Task.FromResult<Uri>(new(imageFilePath, UriKind.Absolute));
         }
         catch (Exception excp)
         {
@@ -350,22 +350,22 @@ internal sealed class MyModsService : IMyModsService
                 "GZSkinsX.Appx.MyMods.MyModsService.GetModImage",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
 
-            return new Uri("ms-appx:///Assets/Images/Mod_Preview_Empty.png");
+            return Task.FromResult<Uri>(new("ms-appx:///Assets/Images/Mod_Preview_Empty.png"));
         }
     }
 
     /// <inheritdoc/>
-    public async Task<MyModInfo> ReadModInfoAsync(string filePath)
+    public Task<MyModInfo> ReadModInfoAsync(string filePath)
     {
-        return await MyModsHelper.ReadModInfoAsync(filePath);
+        return Task.FromResult(MyModsHelper.ReadModInfo(filePath));
     }
 
     /// <inheritdoc/>
-    public async Task<MyModInfo?> TryReadModInfoAsync(string filePath)
+    public Task<MyModInfo?> TryReadModInfoAsync(string filePath)
     {
         try
         {
-            return await MyModsHelper.ReadModInfoAsync(filePath);
+            return Task.FromResult<MyModInfo?>(MyModsHelper.ReadModInfo(filePath));
         }
         catch (Exception excp)
         {
@@ -373,7 +373,7 @@ internal sealed class MyModsService : IMyModsService
                 "GZSkinsX.Appx.MyMods.MyModsService.TryReadModInfo",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
 
-            return null;
+            return Task.FromResult<MyModInfo?>(null);
         }
     }
 
@@ -490,14 +490,14 @@ internal sealed class MyModsService : IMyModsService
     /// 对传入的已加密的字符串进行解密并返回模组文件列表。
     /// </summary>
     /// <param name="encryptedStr">加密后的模组文件列表字符串。</param>
-    private static async IAsyncEnumerable<string> ParseRGZFileTableAsync(string? encryptedStr)
+    private static IEnumerable<string> ParseRGZFileTable(string? encryptedStr)
     {
         if (string.IsNullOrWhiteSpace(encryptedStr))
         {
             yield break;
         }
 
-        var result = await MyModsHelper.DecryptConfigTextAsync(encryptedStr);
+        var result = MyModsHelper.DecryptConfigText(encryptedStr);
         if (string.IsNullOrWhiteSpace(result))
         {
             yield break;
@@ -531,14 +531,14 @@ internal sealed class MyModsService : IMyModsService
             var settingsData = GetOrCreateSettingsData(settingsRoot);
             if (settingsData.GZSkins is null)
             {
-                await BuildMTSettingsDataAsync(settingsData);
+                BuildMTSettingsData(settingsData);
                 Debug.Assert(settingsData.GZSkins is not null);
                 await UpdateSettingsCoreAsync(settingsFile, settingsRoot, settingsData);
             }
 
             if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_FILETABLE_NAME, out var fileTable))
             {
-                await foreach (var item in ParseRGZFileTableAsync(GetStringFromJson(fileTable)))
+                foreach (var item in ParseRGZFileTable(GetStringFromJson(fileTable)))
                 {
                     InstalledMods.Add(item);
                 }
@@ -584,7 +584,7 @@ internal sealed class MyModsService : IMyModsService
             }
         }
 
-        await BuildMTSettingsDataAsync(settingsData);
+        BuildMTSettingsData(settingsData);
 
         try
         {
@@ -642,7 +642,7 @@ internal sealed class MyModsService : IMyModsService
     /// 当前的上下文数据保存至指定的配置数据节点中。
     /// </summary>
     /// <param name="settingsData">需要写入的配置数据节点。</param>
-    private async Task BuildMTSettingsDataAsync(MTSettingsData settingsData)
+    private void BuildMTSettingsData(MTSettingsData settingsData)
     {
         settingsData.GZSkins ??= new();
         settingsData.GZSkins[MT_SETTINGS_ENABLE_NAME] = true;
@@ -724,7 +724,7 @@ internal sealed class MyModsService : IMyModsService
             pathBuilder.Length = folderPathOffset;
         }
 
-        settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = await MyModsHelper.EncryptConfigTextAsync(tableBuilder.ToString());
+        settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = MyModsHelper.EncryptConfigText(tableBuilder.ToString());
     }
 
     /// <summary>
