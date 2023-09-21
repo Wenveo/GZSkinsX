@@ -405,7 +405,7 @@ internal sealed partial class MainViewModel : ObservableObject
             var destFilePath = Path.Combine(modsFolder, destFilename);
             if (File.Exists(destFilePath) is false)
             {
-                fileInfo.CopyTo(destFilename);
+                fileInfo.CopyTo(destFilePath);
                 AppxContext.LoggingService.LogOkay(
                     "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
                     $"The mod file \"{destFilename}\" have been imported.");
@@ -436,7 +436,7 @@ internal sealed partial class MainViewModel : ObservableObject
                     continue;
                 }
 
-                fileInfo.CopyTo(destFilename, true);
+                fileInfo.CopyTo(destFilePath, true);
                 AppxContext.LoggingService.LogOkay(
                     "GZSkinsX.App.ViewModels.MainViewModel.ImportAsync",
                     $"The existing mod file have been successfully replaced.");
