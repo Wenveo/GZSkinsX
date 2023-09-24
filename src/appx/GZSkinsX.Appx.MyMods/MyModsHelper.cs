@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 using CommunityToolkit.HighPerformance.Buffers;
 
@@ -18,6 +18,9 @@ namespace GZSkinsX.Appx.MyMods;
 
 internal static class MyModsHelper
 {
+    [UnsafeAccessor(UnsafeAccessorKind.StaticMethod, Name = "wcslen")]
+    private static extern unsafe int wcslen(string? _, char* ptr);
+
     private static StringPool MyStringPool { get; } = new();
 
     public static string EncryptConfigText(string str)
@@ -33,7 +36,7 @@ internal static class MyModsHelper
             fixed (char* ch = str)
             {
                 KernelInterop.EncryptConfigText(ch, ref buffer);
-                var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer.ToPointer(), Count((char*)buffer)));
+                var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer.ToPointer(), wcslen(null, (char*)buffer)));
                 KernelInterop.FreeCryptographicBuffer(buffer);
                 return value;
             }
@@ -53,7 +56,7 @@ internal static class MyModsHelper
             fixed (char* ch = str)
             {
                 KernelInterop.DecryptConfigText(ch, ref buffer);
-                var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer.ToPointer(), Count((char*)buffer)));
+                var value = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(buffer.ToPointer(), wcslen(null, (char*)buffer)));
                 KernelInterop.FreeCryptographicBuffer(buffer);
                 return value;
             }
@@ -110,27 +113,27 @@ internal static class MyModsHelper
                 name = author = description = datetime = string.Empty;
 
                 var ptr = (*skinInfoPtr).name;
-                if (ptr != (char*)0)
+                if (ptr != (char*)nint.Zero)
                 {
-                    name = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
+                    name = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
                 }
 
                 ptr = (*skinInfoPtr).author;
-                if (ptr != (char*)0)
+                if (ptr != (char*)nint.Zero)
                 {
-                    author = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
+                    author = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
                 }
 
                 ptr = (*skinInfoPtr).description;
-                if (ptr != (char*)0)
+                if (ptr != (char*)nint.Zero)
                 {
-                    description = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
+                    description = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
                 }
 
                 ptr = (*skinInfoPtr).datetime;
-                if (ptr != (char*)0)
+                if (ptr != (char*)nint.Zero)
                 {
-                    datetime = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, Count(ptr)));
+                    datetime = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
                 }
 
                 KernelInterop.FreeLegacySkinInfo(skinInfoPtr);
@@ -152,16 +155,5 @@ internal static class MyModsHelper
 
         var message = string.Format(format, fileName);
         return new InvalidOperationException(message);
-    }
-
-    private static unsafe int Count(char* ch)
-    {
-        var count = 0;
-        while (*ch++ != char.MinValue)
-        {
-            count++;
-        }
-
-        return count;
     }
 }
