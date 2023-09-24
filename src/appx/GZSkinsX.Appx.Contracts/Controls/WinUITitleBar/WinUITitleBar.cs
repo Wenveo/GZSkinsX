@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -62,17 +63,12 @@ public static class WinUITitleBar
 
     private static void UpdateDragRegionForCustomTitleBar(Grid titleBar)
     {
-        if (titleBar.IsLoaded is false || titleBar.XamlRoot is null)
+        if (titleBar.IsLoaded is false || titleBar.XamlRoot is not { } xamlRoot)
         {
             return;
         }
 
-        if (GetTargetWindow(titleBar) is not { } targetWindow)
-        {
-            return;
-        }
-
-        var scaleAdjustment = titleBar.XamlRoot.RasterizationScale;
+        var scaleAdjustment = xamlRoot.RasterizationScale;
         var dragRectsList = new List<Windows.Graphics.RectInt32>();
 
         int x = 0, height = (int)(Math.Round(titleBar.ActualHeight * scaleAdjustment));
@@ -90,21 +86,8 @@ public static class WinUITitleBar
         }
 
         var dragRects = dragRectsList.ToArray();
-        targetWindow.AppWindow.TitleBar.SetDragRectangles(dragRects);
-    }
-
-    public static readonly DependencyProperty TargetWindowProperty =
-        DependencyProperty.RegisterAttached("TargetWindow", typeof(Window),
-            typeof(WinUITitleBar), new PropertyMetadata(null));
-
-    public static Window GetTargetWindow(Grid obj)
-    {
-        return (Window)obj.GetValue(TargetWindowProperty);
-    }
-
-    public static void SetTargetWindow(Grid obj, Window? value)
-    {
-        obj.SetValue(TargetWindowProperty, value);
+        var appWindowId = xamlRoot.ContentIslandEnvironment.AppWindowId;
+        AppWindow.GetFromWindowId(appWindowId).TitleBar.SetDragRectangles(dragRects);
     }
 
     public static readonly DependencyProperty UIContentTypeProperty =

@@ -8,7 +8,6 @@
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Controls;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.ViewModels;
@@ -36,12 +35,6 @@ internal sealed partial class SettingsPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         DispatcherQueue.EnqueueAsync(ViewModel.InitializeAsync).FireAndForget();
-        WinUITitleBar.SetTargetWindow(FakeTitleBar, AppxContext.AppxWindow.MainWindow);
-    }
-
-    protected override void OnNavigatedFrom(NavigationEventArgs e)
-    {
-        WinUITitleBar.SetTargetWindow(FakeTitleBar, null);
     }
 
     private void GoBack_Click(object sender, RoutedEventArgs e)

@@ -527,7 +527,10 @@
             <TextBlock x:Uid="Main_Uninitialized_Message" FontWeight="Bold" />
         </StackPanel>
 
-        <Grid x:Name="AppTitleBar" Padding="0,0,0,6" ctrls2:WinUITitleBar.IsWindowTitleBar="True">
+        <Grid
+            x:Name="AppTitleBar"
+            Padding="0,0,0,6"
+            ctrls2:WinUITitleBar.IsWindowTitleBar="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width=".32*" ctrls2:WinUITitleBar.UIContentType="Caption" />
