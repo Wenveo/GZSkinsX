@@ -5,52 +5,81 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Contracts.Controls;
 
-public partial class WinUITitleBar : Grid
+public static class WinUITitleBar
 {
-    public static readonly DependencyProperty TargetWindowProperty =
-        DependencyProperty.Register(nameof(TargetWindow), typeof(Window),
-            typeof(WinUITitleBar), new PropertyMetadata(null, OnTargetWindowChangedCallback));
+    public static readonly DependencyProperty IsWindowTitleBarProperty =
+        DependencyProperty.RegisterAttached("IsWindowTitleBar", typeof(bool),
+            typeof(WinUITitleBar), new PropertyMetadata(false, OnIsWindowTitleBarChangedCallback));
 
-    public Window TargetWindow
+    public static bool GetIsWindowTitleBar(Grid obj)
     {
-        get => (Window)GetValue(TargetWindowProperty);
-        set => SetValue(TargetWindowProperty, value);
+        return (bool)obj.GetValue(IsWindowTitleBarProperty);
     }
 
-    public WinUITitleBar()
+    public static void SetIsWindowTitleBar(Grid obj, bool value)
     {
-        Loaded += (s, e) => UpdateDragRegionForCustomTitleBar();
-        SizeChanged += (s, e) => UpdateDragRegionForCustomTitleBar();
+        obj.SetValue(IsWindowTitleBarProperty, value);
     }
 
-    private void UpdateDragRegionForCustomTitleBar()
+    private static void OnIsWindowTitleBarChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (IsLoaded is false || XamlRoot is null)
+        if (d is Grid titleBar)
+        {
+            titleBar.Loaded -= OnTitleBarLoaded;
+            titleBar.SizeChanged -= OnTitleBarSizeChanged;
+
+            if (e.NewValue is bool b && b)
+            {
+                titleBar.Loaded += OnTitleBarLoaded;
+                titleBar.SizeChanged += OnTitleBarSizeChanged;
+            }
+        }
+    }
+
+    private static void OnTitleBarLoaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is Grid titleBar)
+        {
+            UpdateDragRegionForCustomTitleBar(titleBar);
+        }
+    }
+
+    private static void OnTitleBarSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is Grid titleBar)
+        {
+            UpdateDragRegionForCustomTitleBar(titleBar);
+        }
+    }
+
+    private static void UpdateDragRegionForCustomTitleBar(Grid titleBar)
+    {
+        if (titleBar.IsLoaded is false || titleBar.XamlRoot is null)
         {
             return;
         }
 
-        if (TargetWindow is not { } targetWindow)
+        if (GetTargetWindow(titleBar) is not { } targetWindow)
         {
             return;
         }
 
-        var scaleAdjustment = XamlRoot.RasterizationScale;
+        var scaleAdjustment = titleBar.XamlRoot.RasterizationScale;
         var dragRectsList = new List<Windows.Graphics.RectInt32>();
 
-        int x = 0, height = (int)(ActualHeight * scaleAdjustment);
-        for (var i = 0; i < ColumnDefinitions.Count; i++)
+        int x = 0, height = (int)(Math.Round(titleBar.ActualHeight * scaleAdjustment));
+        for (var i = 0; i < titleBar.ColumnDefinitions.Count; i++)
         {
-            var column = ColumnDefinitions[i];
-            var physicalWidth = (int)(column.ActualWidth * scaleAdjustment);
+            var column = titleBar.ColumnDefinitions[i];
+            var physicalWidth = (int)(Math.Round(column.ActualWidth * scaleAdjustment));
 
             if (GetUIContentType(column) is WinUITitleBarUIContentType.Caption)
             {
@@ -64,16 +93,18 @@ public partial class WinUITitleBar : Grid
         targetWindow.AppWindow.TitleBar.SetDragRectangles(dragRects);
     }
 
-    private static void OnTargetWindowChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        var titleBar = d as WinUITitleBar;
-        Debug.Assert(titleBar is not null);
-        if (titleBar is null)
-        {
-            return;
-        }
+    public static readonly DependencyProperty TargetWindowProperty =
+        DependencyProperty.RegisterAttached("TargetWindow", typeof(Window),
+            typeof(WinUITitleBar), new PropertyMetadata(null));
 
-        titleBar.UpdateDragRegionForCustomTitleBar();
+    public static Window GetTargetWindow(Grid obj)
+    {
+        return (Window)obj.GetValue(TargetWindowProperty);
+    }
+
+    public static void SetTargetWindow(Grid obj, Window? value)
+    {
+        obj.SetValue(TargetWindowProperty, value);
     }
 
     public static readonly DependencyProperty UIContentTypeProperty =

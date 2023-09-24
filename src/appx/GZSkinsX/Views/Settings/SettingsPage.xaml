@@ -208,11 +208,11 @@
             </StackPanel>
         </ScrollViewer>
 
-        <ctrls2:WinUITitleBar x:Name="FakeTitleBar">
-            <ctrls2:WinUITitleBar.ColumnDefinitions>
+        <Grid x:Name="FakeTitleBar" ctrls2:WinUITitleBar.IsWindowTitleBar="True">
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Client" />
                 <ColumnDefinition Width="*" ctrls2:WinUITitleBar.UIContentType="Caption" />
-            </ctrls2:WinUITitleBar.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
             <Button
                 x:Uid="Settings_Back_Button"
@@ -232,6 +232,6 @@
                     </AnimatedIcon.Source>
                 </AnimatedIcon>
             </Button>
-        </ctrls2:WinUITitleBar>
+        </Grid>
     </Grid>
 </Page>

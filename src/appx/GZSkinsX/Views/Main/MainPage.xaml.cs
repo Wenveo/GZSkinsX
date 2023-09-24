@@ -103,7 +103,7 @@ internal sealed partial class MainPage : Page
 
         }, DispatcherQueuePriority.Normal).FireAndForget();
 
-        AppTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, AppxContext.AppxWindow.MainWindow);
+        WinUITitleBar.SetTargetWindow(AppTitleBar, AppxContext.AppxWindow.MainWindow);
         DataTransferManagerHelper.GetDataTransferManager().DataRequested += DataTransferManager_DataRequested;
     }
 
@@ -118,7 +118,7 @@ internal sealed partial class MainPage : Page
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
-        AppTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, null);
+        WinUITitleBar.SetTargetWindow(AppTitleBar, null);
         DataTransferManagerHelper.GetDataTransferManager().DataRequested -= DataTransferManager_DataRequested;
     }
 

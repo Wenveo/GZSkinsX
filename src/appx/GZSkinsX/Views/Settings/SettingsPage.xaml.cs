@@ -36,12 +36,12 @@ internal sealed partial class SettingsPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         DispatcherQueue.EnqueueAsync(ViewModel.InitializeAsync).FireAndForget();
-        FakeTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, AppxContext.AppxWindow.MainWindow);
+        WinUITitleBar.SetTargetWindow(FakeTitleBar, AppxContext.AppxWindow.MainWindow);
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)
     {
-        FakeTitleBar.SetValue(WinUITitleBar.TargetWindowProperty, null);
+        WinUITitleBar.SetTargetWindow(FakeTitleBar, null);
     }
 
     private void GoBack_Click(object sender, RoutedEventArgs e)

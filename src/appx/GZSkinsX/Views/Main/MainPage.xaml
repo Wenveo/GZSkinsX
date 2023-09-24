@@ -527,8 +527,8 @@
             <TextBlock x:Uid="Main_Uninitialized_Message" FontWeight="Bold" />
         </StackPanel>
 
-        <ctrls2:WinUITitleBar x:Name="AppTitleBar" Padding="0,0,0,6">
-            <ctrls2:WinUITitleBar.ColumnDefinitions>
+        <Grid x:Name="AppTitleBar" Padding="0,0,0,6" ctrls2:WinUITitleBar.IsWindowTitleBar="True">
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width=".32*" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition
@@ -540,7 +540,7 @@
                 <ColumnDefinition Width=".12*" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Client" />
                 <ColumnDefinition Width="190" ctrls2:WinUITitleBar.UIContentType="Caption" />
-            </ctrls2:WinUITitleBar.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
 
             <TextBlock
                 Margin="14,4,0,0"
@@ -646,7 +646,7 @@
                     </Button.Flyout>
                 </Button>
             </StackPanel>
-        </ctrls2:WinUITitleBar>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
