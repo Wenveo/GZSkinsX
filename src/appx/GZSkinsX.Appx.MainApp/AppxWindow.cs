@@ -12,6 +12,10 @@ using GZSkinsX.Contracts.Appx;
 
 using Microsoft.UI.Xaml;
 
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
+
 namespace GZSkinsX.Appx.MainApp;
 
 /// <inheritdoc cref="IAppxWindow"/>
@@ -81,7 +85,13 @@ internal sealed class AppxWindow : IAppxWindow
     /// <inheritdoc/>
     public void Activate()
     {
-        _shellWindow.Activate();
+        var hWnd = (HWND)MainWindowHandle;
+        if (PInvoke.IsIconic(hWnd))
+        {
+            PInvoke.ShowWindow(hWnd, SHOW_WINDOW_CMD.SW_SHOWNOACTIVATE);
+        }
+
+        PInvoke.SetForegroundWindow(hWnd);
     }
 
     /// <inheritdoc/>

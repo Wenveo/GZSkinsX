@@ -1,12 +1,25 @@
+// Constants
+WM_GETMINMAXINFO
+
+// Enum
+WINDOW_STYLE
+
 // Struct
 MINMAXINFO
 
-// Enum
-WM_GETMINMAXINFO
-
 // Win32 Api
+CreateSolidBrush
 DefSubclassProc
+DeleteObject
+FillRect
+GetClientRect
+GetDC
 GetDpiForWindow
 GetWindowPlacement
+IsIconic
+ReleaseDC
+ShowWindow
+SetForegroundWindow
+SetWindowLong
 SetWindowSubclass
 RemoveWindowSubclass

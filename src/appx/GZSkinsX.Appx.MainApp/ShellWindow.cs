@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using GZSkinsX.Contracts.Appx;
@@ -29,7 +30,7 @@ namespace GZSkinsX.Appx.MainApp;
 
 internal sealed partial class ShellWindow : Window
 {
-    private ShellWindowSettings WindowSettigns { get; }
+    private ShellWindowSettings WindowSettings { get; }
 
     private SUBCLASSPROC? SubClassDelegate { get; set; }
 
@@ -46,75 +47,72 @@ internal sealed partial class ShellWindow : Window
         AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
-        WindowSettigns = AppxContext.Resolve<ShellWindowSettings>();
-        if (WindowSettigns.NeedToRestoreWindowState)
+        WindowSettings = AppxContext.Resolve<ShellWindowSettings>();
+        if (WindowSettings.NeedToRestoreWindowState)
         {
-            AppWindow.MoveAndResize(new(WindowSettigns.WindowLeft, WindowSettigns.WindowTop,
-                WindowSettigns.WindowWidth, WindowSettigns.WindowHeight));
+            AppWindow.MoveAndResize(new(WindowSettings.WindowLeft, WindowSettings.WindowTop,
+                WindowSettings.WindowWidth, WindowSettings.WindowHeight));
         }
         else
         {
             var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
-            AppWindow.Resize(new((int)(1004 * dpiScale), (int)(572 * dpiScale)));
+            AppWindow.Resize(new((int)(1004 * dpiScale), (int)(578 * dpiScale)));
         }
 
-        if (WindowSettigns.IsMaximized)
+        // Update the win32 window style.
+        UpdateWindowStyle((HWND)WindowHandle);
+
+        // Apply acrylic for the win32 host window.
+        DispatcherQueue.TryEnqueue(ApplyAcrylicForWin32Window);
+
+        // Make sure to maximize the window.
+        if (WindowSettings.IsMaximized)
         {
+            // Maximize the window after UpdateWindowStyle...
+            // Because this will be change the win32 window style.
             (AppWindow.Presenter as OverlappedPresenter)?.Maximize();
         }
-
-        DispatcherQueue.TryEnqueue(() => TryApplyAero());
 
         var themeService = AppxContext.ThemeService;
         themeService.ThemeChanged += OnThemeChanged;
         UpdateButtonForegroundColor(themeService.ActualTheme);
 
-        SubscribeWindowSubClass();
         AppWindow.Destroying += OnDestroying;
+        SubClassDelegate = new SUBCLASSPROC(WindowSubClass);
+        PInvoke.SetWindowSubclass((HWND)WindowHandle, SubClassDelegate, 107, 0);
     }
 
-    private void OnDestroying(AppWindow sender, object args)
+    private unsafe void UpdateWindowStyle(HWND hWnd)
     {
-        if (sender.Presenter is OverlappedPresenter { State: OverlappedPresenterState.Maximized })
+        var newWindowStyle = WINDOW_STYLE.WS_CAPTION | WINDOW_STYLE.WS_THICKFRAME | WINDOW_STYLE.WS_CLIPSIBLINGS |
+            WINDOW_STYLE.WS_VISIBLE | WINDOW_STYLE.WS_OVERLAPPED | WINDOW_STYLE.WS_MINIMIZEBOX | WINDOW_STYLE.WS_MAXIMIZEBOX;
+
+        // Hide the default titlebar buttons.
+        // See also: https://stackoverflow.com/questions/743906/how-to-hide-close-button-in-wpf-window
+        var dwNewWindowStyleLong = (int)newWindowStyle & ~0x80000;
+        var result = PInvoke.SetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, dwNewWindowStyleLong);
+        Debug.Assert(result is not 0);
+
+        // 将系统主题色填充至窗口背景，避免第一次显示时出现白色背景闪烁。
+        // Fill the accent (fallback) color of the win32 window,
+        // to avoid flickering on startup (avoid white or black background...).
+        if (PInvoke.GetClientRect(hWnd, out var rect))
         {
-            var windowPlacement = new WINDOWPLACEMENT
+            var hdc = PInvoke.GetDC(hWnd);
+            if (hdc.Value != nint.Zero)
             {
-                length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
-                showCmd = SHOW_WINDOW_CMD.SW_NORMAL
-            };
+                var accentColor = new Windows.UI.ViewManagement.UISettings().GetColorValue(Windows.UI.ViewManagement.UIColorType.Accent);
+                var fallbackBrush = PInvoke.CreateSolidBrush(new((uint)(accentColor.R + (accentColor.G << 8) + (accentColor.B << 16))));
 
-            if (PInvoke.GetWindowPlacement((HWND)WindowHandle, ref windowPlacement))
-            {
-                WindowSettigns.WindowLeft = windowPlacement.rcNormalPosition.X;
-                WindowSettigns.WindowTop = windowPlacement.rcNormalPosition.Y;
-                WindowSettigns.WindowHeight = windowPlacement.rcNormalPosition.Height;
-                WindowSettigns.WindowWidth = windowPlacement.rcNormalPosition.Width;
+                result = PInvoke.FillRect(hdc, &rect, fallbackBrush);
+                Debug.Assert(result is not 0);
 
-                WindowSettigns.NeedToRestoreWindowState = true;
+                result = PInvoke.DeleteObject(fallbackBrush).Value;
+                Debug.Assert(result is not 0);
+
+                result = PInvoke.ReleaseDC(hWnd, hdc);
+                Debug.Assert(result is not 0);
             }
-            else
-            {
-                WindowSettigns.NeedToRestoreWindowState = false;
-            }
-
-            WindowSettigns.IsMaximized = true;
-        }
-        else
-        {
-            WindowSettigns.WindowLeft = sender.Position.X;
-            WindowSettigns.WindowTop = sender.Position.Y;
-            WindowSettigns.WindowHeight = sender.Size.Height;
-            WindowSettigns.WindowWidth = sender.Size.Width;
-
-            WindowSettigns.IsMaximized = false;
-            WindowSettigns.NeedToRestoreWindowState = true;
-        }
-
-        var subClassDelegate = SubClassDelegate;
-        if (subClassDelegate is not null)
-        {
-            SubClassDelegate = null;
-            PInvoke.RemoveWindowSubclass((HWND)WindowHandle, subClassDelegate, 107);
         }
     }
 
@@ -125,11 +123,76 @@ internal sealed partial class ShellWindow : Window
 
     private void UpdateButtonForegroundColor(ElementTheme newTheme)
     {
-        AppWindow.TitleBar.ButtonForegroundColor =
-            newTheme is ElementTheme.Light ? Colors.Black : Colors.White;
+        AppWindow.TitleBar.ButtonForegroundColor = newTheme is ElementTheme.Light ? Colors.Black : Colors.White;
     }
 
-    private bool TryApplyAero()
+    private void OnDestroying(AppWindow sender, object args)
+    {
+        if (sender.Presenter is OverlappedPresenter { State: OverlappedPresenterState.Maximized })
+        {
+            var windowPlacement = new WINDOWPLACEMENT
+            {
+                length = (uint)Marshal.SizeOf<WINDOWPLACEMENT>(),
+                showCmd = SHOW_WINDOW_CMD.SW_SHOWNORMAL
+            };
+
+            if (PInvoke.GetWindowPlacement((HWND)WindowHandle, ref windowPlacement))
+            {
+                WindowSettings.WindowLeft = windowPlacement.rcNormalPosition.X;
+                WindowSettings.WindowTop = windowPlacement.rcNormalPosition.Y;
+                WindowSettings.WindowHeight = windowPlacement.rcNormalPosition.Height;
+                WindowSettings.WindowWidth = windowPlacement.rcNormalPosition.Width;
+
+                WindowSettings.NeedToRestoreWindowState = true;
+            }
+            else
+            {
+                WindowSettings.NeedToRestoreWindowState = false;
+            }
+
+            WindowSettings.IsMaximized = true;
+        }
+        else
+        {
+            WindowSettings.WindowLeft = sender.Position.X;
+            WindowSettings.WindowTop = sender.Position.Y;
+            WindowSettings.WindowHeight = sender.Size.Height;
+            WindowSettings.WindowWidth = sender.Size.Width;
+
+            WindowSettings.IsMaximized = false;
+            WindowSettings.NeedToRestoreWindowState = true;
+        }
+
+        var subClassDelegate = SubClassDelegate;
+        if (subClassDelegate is not null)
+        {
+            SubClassDelegate = null;
+            PInvoke.RemoveWindowSubclass((HWND)WindowHandle, subClassDelegate, 107);
+        }
+    }
+
+    private unsafe LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
+    {
+        switch (uMsg)
+        {
+            case PInvoke.WM_GETMINMAXINFO:
+                WmGetMinMaxInfo(hWnd, lParam);
+                break;
+        }
+
+        return PInvoke.DefSubclassProc(hWnd, uMsg, wParam, lParam);
+    }
+
+    private static void WmGetMinMaxInfo(HWND hWnd, LPARAM lParam)
+    {
+        var dpiScale = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
+        var minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+        minMaxInfo.ptMinTrackSize.X = (int)(498 * dpiScale);
+        minMaxInfo.ptMinTrackSize.Y = (int)(578 * dpiScale);
+        Marshal.StructureToPtr(minMaxInfo, lParam, false);
+    }
+
+    private void ApplyAcrylicForWin32Window()
     {
         unsafe
         {
@@ -145,30 +208,8 @@ internal sealed partial class ShellWindow : Window
                 Data = (nint)(&accentPolicy)
             };
 
-            return SetWindowCompositionAttribute(WindowHandle, ref data) == 0;
+            SetWindowCompositionAttribute(WindowHandle, ref data);
         }
-    }
-
-    private void SubscribeWindowSubClass()
-    {
-        static LRESULT WindowSubClass(HWND hWnd, uint uMsg, WPARAM wParam, LPARAM lParam, nuint uIdSubclass, nuint dwRefData)
-        {
-            switch (uMsg)
-            {
-                case PInvoke.WM_GETMINMAXINFO:
-                    var dpiScale = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
-                    var minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                    minMaxInfo.ptMinTrackSize.X = (int)(498 * dpiScale);
-                    minMaxInfo.ptMinTrackSize.Y = (int)(572 * dpiScale);
-                    Marshal.StructureToPtr(minMaxInfo, lParam, false);
-                    break;
-            }
-
-            return PInvoke.DefSubclassProc(hWnd, uMsg, wParam, lParam);
-        }
-
-        SubClassDelegate = new SUBCLASSPROC(WindowSubClass);
-        PInvoke.SetWindowSubclass((HWND)WindowHandle, SubClassDelegate, 107, 0);
     }
 
     /// <summary>
@@ -203,7 +244,7 @@ internal sealed partial class ShellWindow : Window
     private struct WINCOMPATTRDATA
     {
         public WINCOMPATTR Attribute;
-        public IntPtr Data;
+        public nint Data;
         public int SizeOfData;
     }
 
