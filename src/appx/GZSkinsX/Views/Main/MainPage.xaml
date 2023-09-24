@@ -306,7 +306,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid RowSpacing="6">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -366,7 +366,7 @@
                 </GridView.ItemContainerTransitions>
                 <GridView.ItemContainerStyle>
                     <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-                        <Setter x:Name="Main_MyMods_GridViewItem_Margin" Property="Margin" Value="0,0,8,12" />
+                        <Setter x:Name="Main_MyMods_GridViewItem_Margin" Property="Margin" Value="0,2,8,14" />
                     </Style>
                 </GridView.ItemContainerStyle>
             </GridView>
@@ -527,7 +527,7 @@
             <TextBlock x:Uid="Main_Uninitialized_Message" FontWeight="Bold" />
         </StackPanel>
 
-        <ctrls2:WinUITitleBar x:Name="AppTitleBar" Grid.Row="0">
+        <ctrls2:WinUITitleBar x:Name="AppTitleBar" Padding="0,0,0,6">
             <ctrls2:WinUITitleBar.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width=".32*" ctrls2:WinUITitleBar.UIContentType="Caption" />
@@ -535,7 +535,8 @@
                     x:Name="SearchBoxColumn"
                     Width="*"
                     MinWidth="80"
-                    MaxWidth="620" />
+                    MaxWidth="620"
+                    ctrls2:WinUITitleBar.UIContentType="Client" />
                 <ColumnDefinition Width=".12*" ctrls2:WinUITitleBar.UIContentType="Caption" />
                 <ColumnDefinition Width="Auto" ctrls2:WinUITitleBar.UIContentType="Client" />
                 <ColumnDefinition Width="190" ctrls2:WinUITitleBar.UIContentType="Caption" />
@@ -551,7 +552,7 @@
                 x:Name="Main_MyMods_SerachBox"
                 x:Uid="Main_MyMods_SerachBox"
                 Grid.Column="2"
-                Margin="0,6,0,0"
+                Margin="0,5,0,-2"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 IsEnabled="{x:Bind ViewModel.EnableWorkspace, Mode=OneWay}"
@@ -574,7 +575,7 @@
 
             <StackPanel
                 Grid.Column="4"
-                Margin="0,6,0,0"
+                Margin="0,8,0,0"
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
                 Spacing="6">
@@ -654,7 +655,7 @@
                         <AdaptiveTrigger MinWindowWidth="1910" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,0,6,12" />
+                        <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,2,6,14" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
@@ -662,17 +663,13 @@
                         <AdaptiveTrigger MinWindowWidth="1340" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,0,4,4" />
+                        <Setter Target="Main_MyMods_GridViewItem_Margin.Value" Value="0,2,4,6" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="560" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="Main_MyMods_SerachBox.Visibility" Value="Visible" />
-                        <Setter Target="SearchBoxColumn.(ctrls2:WinUITitleBar.UIContentType)" Value="Client" />
-                    </VisualState.Setters>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
