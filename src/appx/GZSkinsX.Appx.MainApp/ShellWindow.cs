@@ -47,15 +47,16 @@ internal sealed partial class ShellWindow : Window
         AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
+        var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
         WindowSettings = AppxContext.Resolve<ShellWindowSettings>();
         if (WindowSettings.NeedToRestoreWindowState)
         {
-            AppWindow.MoveAndResize(new(WindowSettings.WindowLeft, WindowSettings.WindowTop,
-                WindowSettings.WindowWidth, WindowSettings.WindowHeight));
+            AppWindow.MoveAndResize(new(
+                (int)Math.Round(WindowSettings.WindowLeft * dpiScale), (int)Math.Round(WindowSettings.WindowTop * dpiScale),
+                (int)Math.Round(WindowSettings.WindowWidth * dpiScale), (int)Math.Round(WindowSettings.WindowHeight * dpiScale)));
         }
         else
         {
-            var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
             AppWindow.Resize(new((int)(1004 * dpiScale), (int)(578 * dpiScale)));
         }
 
@@ -128,6 +129,7 @@ internal sealed partial class ShellWindow : Window
 
     private void OnDestroying(AppWindow sender, object args)
     {
+        var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
         if (sender.Presenter is OverlappedPresenter { State: OverlappedPresenterState.Maximized })
         {
             var windowPlacement = new WINDOWPLACEMENT
@@ -138,10 +140,10 @@ internal sealed partial class ShellWindow : Window
 
             if (PInvoke.GetWindowPlacement((HWND)WindowHandle, ref windowPlacement))
             {
-                WindowSettings.WindowLeft = windowPlacement.rcNormalPosition.X;
-                WindowSettings.WindowTop = windowPlacement.rcNormalPosition.Y;
-                WindowSettings.WindowHeight = windowPlacement.rcNormalPosition.Height;
-                WindowSettings.WindowWidth = windowPlacement.rcNormalPosition.Width;
+                WindowSettings.WindowLeft = (int)Math.Round(windowPlacement.rcNormalPosition.X / dpiScale);
+                WindowSettings.WindowTop = (int)Math.Round(windowPlacement.rcNormalPosition.Y / dpiScale);
+                WindowSettings.WindowHeight = (int)Math.Round(windowPlacement.rcNormalPosition.Height / dpiScale);
+                WindowSettings.WindowWidth = (int)Math.Round(windowPlacement.rcNormalPosition.Width / dpiScale);
 
                 WindowSettings.NeedToRestoreWindowState = true;
             }
@@ -154,10 +156,10 @@ internal sealed partial class ShellWindow : Window
         }
         else
         {
-            WindowSettings.WindowLeft = sender.Position.X;
-            WindowSettings.WindowTop = sender.Position.Y;
-            WindowSettings.WindowHeight = sender.Size.Height;
-            WindowSettings.WindowWidth = sender.Size.Width;
+            WindowSettings.WindowLeft = (int)Math.Round(sender.Position.X / dpiScale);
+            WindowSettings.WindowTop = (int)Math.Round(sender.Position.Y / dpiScale);
+            WindowSettings.WindowHeight = (int)Math.Round(sender.Size.Height / dpiScale);
+            WindowSettings.WindowWidth = (int)Math.Round(sender.Size.Width / dpiScale);
 
             WindowSettings.IsMaximized = false;
             WindowSettings.NeedToRestoreWindowState = true;
