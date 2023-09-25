@@ -37,7 +37,10 @@
             </StackPanel>
         </Grid>
 
-        <ScrollViewer Grid.Row="2" Padding="24,0,24,0">
+        <ScrollViewer
+            x:Name="MainScrollViewer"
+            Grid.Row="2"
+            Padding="24,0,24,0">
             <StackPanel Margin="0,0,0,24" Spacing="20">
                 <StackPanel.ChildrenTransitions>
                     <TransitionCollection>
