@@ -17,10 +17,13 @@ using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media;
 
+using Windows.Foundation;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.Shell;
 using Windows.Win32.UI.WindowsAndMessaging;
 
@@ -30,6 +33,10 @@ namespace GZSkinsX.Appx.MainApp;
 
 internal sealed partial class ShellWindow : Window
 {
+    private NonClientSourceManager? NCSourceManager { get; set; }
+
+    private ShellSystemMenuFlyout? SystemMenuFlyout { get; set; }
+
     private ShellWindowSettings WindowSettings { get; }
 
     private SUBCLASSPROC? SubClassDelegate { get; set; }
@@ -47,17 +54,26 @@ internal sealed partial class ShellWindow : Window
         AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
-        var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
+        var scaling = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
         WindowSettings = AppxContext.Resolve<ShellWindowSettings>();
         if (WindowSettings.NeedToRestoreWindowState)
         {
             AppWindow.MoveAndResize(new(
-                (int)Math.Round(WindowSettings.WindowLeft * dpiScale), (int)Math.Round(WindowSettings.WindowTop * dpiScale),
-                (int)Math.Round(WindowSettings.WindowWidth * dpiScale), (int)Math.Round(WindowSettings.WindowHeight * dpiScale)));
+                (int)Math.Round(WindowSettings.WindowLeft * scaling), (int)Math.Round(WindowSettings.WindowTop * scaling),
+                (int)Math.Round(WindowSettings.WindowWidth * scaling), (int)Math.Round(WindowSettings.WindowHeight * scaling)));
         }
         else
         {
-            AppWindow.Resize(new((int)(1004 * dpiScale), (int)(578 * dpiScale)));
+            AppWindow.Resize(new((int)(1004 * scaling), (int)(578 * scaling)));
+        }
+
+        var manager = NonClientSourceManager.GetFromWindowHandle(WindowHandle);
+        if (manager is not null)
+        {
+            SystemMenuFlyout = new();
+            NCSourceManager = manager;
+            manager.MouseLeftButtonDown += NCMouseLeftButtonDown;
+            manager.MouseRightButtonDown += NCMouseRightButtonDown;
         }
 
         // Update the win32 window style.
@@ -83,6 +99,40 @@ internal sealed partial class ShellWindow : Window
         PInvoke.SetWindowSubclass((HWND)WindowHandle, SubClassDelegate, 107, 0);
     }
 
+    private void NCMouseLeftButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
+    {
+        HideCustomSystemMenu();
+    }
+
+    private void NCMouseRightButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
+    {
+        ShowCustomSystemMenu(args.Position);
+    }
+
+    private void HideCustomSystemMenu()
+    {
+        var systemMenuFlyout = SystemMenuFlyout;
+        if (systemMenuFlyout is not null && systemMenuFlyout.IsOpen)
+        {
+            systemMenuFlyout.Hide();
+        }
+    }
+
+    private void ShowCustomSystemMenu(Point position)
+    {
+        if (Content is not { } windowContent)
+        {
+            return;
+        }
+
+        SystemMenuFlyout?.ShowAt(windowContent, new FlyoutShowOptions()
+        {
+            Position = position,
+            Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft,
+            ShowMode = FlyoutShowMode.Standard
+        });
+    }
+
     private unsafe void UpdateWindowStyle(HWND hWnd)
     {
         var newWindowStyle = WINDOW_STYLE.WS_CAPTION | WINDOW_STYLE.WS_THICKFRAME | WINDOW_STYLE.WS_CLIPSIBLINGS |
@@ -90,9 +140,12 @@ internal sealed partial class ShellWindow : Window
 
         // Hide the default titlebar buttons.
         // See also: https://stackoverflow.com/questions/743906/how-to-hide-close-button-in-wpf-window
-        var dwNewWindowStyleLong = (int)newWindowStyle & ~0x80000;
-        var result = PInvoke.SetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, dwNewWindowStyleLong);
+        var dwNewWindowStyleLong = new nint((int)newWindowStyle & ~0x80000);
+        var result = PInvoke.SetWindowLong(hWnd, -16, dwNewWindowStyleLong);
         Debug.Assert(result is not 0);
+
+        // For Custom System Menu
+        PInvoke.RegisterHotKey(hWnd, 132, HOT_KEY_MODIFIERS.MOD_ALT, 0x20);
 
         // 将系统主题色填充至窗口背景，避免第一次显示时出现白色背景闪烁。
         // Fill the accent (fallback) color of the win32 window,
@@ -129,7 +182,7 @@ internal sealed partial class ShellWindow : Window
 
     private void OnDestroying(AppWindow sender, object args)
     {
-        var dpiScale = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
+        var scaling = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
         if (sender.Presenter is OverlappedPresenter { State: OverlappedPresenterState.Maximized })
         {
             var windowPlacement = new WINDOWPLACEMENT
@@ -140,10 +193,10 @@ internal sealed partial class ShellWindow : Window
 
             if (PInvoke.GetWindowPlacement((HWND)WindowHandle, ref windowPlacement))
             {
-                WindowSettings.WindowLeft = (int)Math.Round(windowPlacement.rcNormalPosition.X / dpiScale);
-                WindowSettings.WindowTop = (int)Math.Round(windowPlacement.rcNormalPosition.Y / dpiScale);
-                WindowSettings.WindowHeight = (int)Math.Round(windowPlacement.rcNormalPosition.Height / dpiScale);
-                WindowSettings.WindowWidth = (int)Math.Round(windowPlacement.rcNormalPosition.Width / dpiScale);
+                WindowSettings.WindowLeft = (int)Math.Round(windowPlacement.rcNormalPosition.X / scaling);
+                WindowSettings.WindowTop = (int)Math.Round(windowPlacement.rcNormalPosition.Y / scaling);
+                WindowSettings.WindowHeight = (int)Math.Round(windowPlacement.rcNormalPosition.Height / scaling);
+                WindowSettings.WindowWidth = (int)Math.Round(windowPlacement.rcNormalPosition.Width / scaling);
 
                 WindowSettings.NeedToRestoreWindowState = true;
             }
@@ -156,19 +209,34 @@ internal sealed partial class ShellWindow : Window
         }
         else
         {
-            WindowSettings.WindowLeft = (int)Math.Round(sender.Position.X / dpiScale);
-            WindowSettings.WindowTop = (int)Math.Round(sender.Position.Y / dpiScale);
-            WindowSettings.WindowHeight = (int)Math.Round(sender.Size.Height / dpiScale);
-            WindowSettings.WindowWidth = (int)Math.Round(sender.Size.Width / dpiScale);
+            WindowSettings.WindowLeft = (int)Math.Round(sender.Position.X / scaling);
+            WindowSettings.WindowTop = (int)Math.Round(sender.Position.Y / scaling);
+            WindowSettings.WindowHeight = (int)Math.Round(sender.Size.Height / scaling);
+            WindowSettings.WindowWidth = (int)Math.Round(sender.Size.Width / scaling);
 
             WindowSettings.IsMaximized = false;
             WindowSettings.NeedToRestoreWindowState = true;
+        }
+
+        var manager = NCSourceManager;
+        if (manager is not null)
+        {
+            NCSourceManager = null;
+            manager.MouseLeftButtonDown -= NCMouseLeftButtonDown;
+            manager.MouseRightButtonDown -= NCMouseRightButtonDown;
+        }
+
+        var systemMenuFlyout = SystemMenuFlyout;
+        if (systemMenuFlyout is not null)
+        {
+            SystemMenuFlyout = null;
         }
 
         var subClassDelegate = SubClassDelegate;
         if (subClassDelegate is not null)
         {
             SubClassDelegate = null;
+            PInvoke.UnregisterHotKey((HWND)WindowHandle, 132);
             PInvoke.RemoveWindowSubclass((HWND)WindowHandle, subClassDelegate, 107);
         }
     }
@@ -180,6 +248,10 @@ internal sealed partial class ShellWindow : Window
             case PInvoke.WM_GETMINMAXINFO:
                 WmGetMinMaxInfo(hWnd, lParam);
                 break;
+
+            case PInvoke.WM_HOTKEY:
+                WmHotKey(wParam);
+                break;
         }
 
         return PInvoke.DefSubclassProc(hWnd, uMsg, wParam, lParam);
@@ -187,11 +259,19 @@ internal sealed partial class ShellWindow : Window
 
     private static void WmGetMinMaxInfo(HWND hWnd, LPARAM lParam)
     {
-        var dpiScale = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
+        var scaling = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
         var minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-        minMaxInfo.ptMinTrackSize.X = (int)(498 * dpiScale);
-        minMaxInfo.ptMinTrackSize.Y = (int)(578 * dpiScale);
+        minMaxInfo.ptMinTrackSize.X = (int)(498 * scaling);
+        minMaxInfo.ptMinTrackSize.Y = (int)(578 * scaling);
         Marshal.StructureToPtr(minMaxInfo, lParam, false);
+    }
+
+    private void WmHotKey(WPARAM wParam)
+    {
+        if (wParam.Value.Equals(132))
+        {
+            ShowCustomSystemMenu(new(10, 38));
+        }
     }
 
     private void ApplyAcrylicForWin32Window()

@@ -1,25 +1,37 @@
 // Constants
+WM_CLOSE
+WM_HOTKEY
 WM_GETMINMAXINFO
+WM_NCLBUTTONDOWN
+WM_NCRBUTTONDOWN
+WM_SYSCOMMAND
 
 // Enum
 WINDOW_STYLE
 
 // Struct
 MINMAXINFO
+WNDPROC
 
 // Win32 Api
+CallWindowProc
 CreateSolidBrush
 DefSubclassProc
 DeleteObject
 FillRect
+FindWindowEx
 GetClientRect
 GetDC
 GetDpiForWindow
 GetWindowPlacement
+GetWindowRect
 IsIconic
+IsZoomed
 ReleaseDC
-ShowWindow
-SetForegroundWindow
-SetWindowLong
-SetWindowSubclass
+RegisterHotKey
 RemoveWindowSubclass
+SendMessage
+SetForegroundWindow
+SetWindowSubclass
+ShowWindow
+UnregisterHotKey

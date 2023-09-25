@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MenuFlyout
+    x:Class="GZSkinsX.Appx.MainApp.ShellSystemMenuFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Appx.MainApp"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
+    Opening="OnOpening"
+    Placement="BottomEdgeAlignedLeft"
+    mc:Ignorable="d">
+
+    <MenuFlyout.MenuFlyoutPresenterStyle>
+        <Style BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}" TargetType="MenuFlyoutPresenter">
+            <Setter Property="Padding" Value="4,5,4,5" />
+        </Style>
+    </MenuFlyout.MenuFlyoutPresenterStyle>
+
+    <MenuFlyoutItem
+        x:Name="RestoreMenuItem"
+        Click="OnRestoreMenuItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Restore}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Glyph="&#xE923;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="R" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+    <MenuFlyoutItem
+        x:Name="MoveMenuItem"
+        Click="OnMoveMenuItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Move}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Glyph="&#xE7C2;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="M" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+    <MenuFlyoutItem
+        x:Name="SizeMenuItem"
+        Click="OnSizeMenuItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Size}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Glyph="&#xE740;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="S" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+    <MenuFlyoutItem
+        x:Name="MinimizeMenuItem"
+        Click="OnMinimizeItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Minimize}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Glyph="&#xE921;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="N" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+    <MenuFlyoutItem
+        x:Name="MaximizeMenuItem"
+        Click="OnMaximizeMenuItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Maximize}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Glyph="&#xE922;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="X" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+    <MenuFlyoutSeparator Padding="8,4,8,4" />
+
+    <MenuFlyoutItem
+        x:Name="SettingsMenuItem"
+        Click="OnSettingsMenuItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Settings}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Glyph="&#xE713;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="I" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+    <MenuFlyoutSeparator Padding="8,4,8,4" />
+
+    <MenuFlyoutItem
+        x:Name="CloseMenuItem"
+        Click="OnCloseMenuItemClick"
+        Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Close}">
+        <MenuFlyoutItem.Icon>
+            <ctrls2:SegoeFluentIcon Margin="1" Glyph="&#xE8BB;" />
+        </MenuFlyoutItem.Icon>
+        <MenuFlyoutItem.KeyboardAccelerators>
+            <KeyboardAccelerator Key="F4" Modifiers="Menu" />
+            <KeyboardAccelerator Key="C" />
+        </MenuFlyoutItem.KeyboardAccelerators>
+    </MenuFlyoutItem>
+
+</MenuFlyout>
