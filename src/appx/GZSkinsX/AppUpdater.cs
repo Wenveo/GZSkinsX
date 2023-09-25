@@ -60,6 +60,20 @@ internal sealed class AppUpdater
         try
         {
             var applicationData = await DownloadApplicationInfoAsync(httpClient);
+            if (string.IsNullOrWhiteSpace(applicationData.MainApp))
+            {
+                return AppInfo.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(applicationData.AppVersion))
+            {
+                return AppInfo.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(applicationData.SupportedMinVersion))
+            {
+                return AppInfo.Empty;
+            }
 
             var needUpdate = Version.Parse(applicationData.AppVersion) != AppxContext.AppxVersion;
             var isSupported = Version.Parse(applicationData.SupportedMinVersion) <= AppxContext.AppxVersion;
