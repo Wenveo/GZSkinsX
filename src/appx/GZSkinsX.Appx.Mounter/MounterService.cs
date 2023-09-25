@@ -18,6 +18,7 @@ using System.IO.Compression;
 using System.IO.Hashing;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace GZSkinsX.Appx.Mounter;
 
 /// <inheritdoc cref="IMounterService"/>
 [Shared, Export(typeof(IMounterService))]
-internal sealed class MounterService : IMounterService
+internal sealed partial class MounterService : IMounterService
 {
     /// <summary>
     /// 获取存放在线的包清单配置链接。
@@ -59,17 +60,13 @@ internal sealed class MounterService : IMounterService
     /// </summary>
     private HttpClient MyHttpClient { get; }
 
+    [LibraryImport("GZSkinsX.Kernel.dll", SetLastError = true)]
+    private static partial int EnsureMotClientAlive();
+
     /// <inheritdoc/>
     public bool IsMTRunning
     {
-        get
-        {
-            using var handle =
-                Windows.Win32.PInvoke.OpenFileMapping(
-                0xF001F, false, "Gz_services:execute");
-
-            return handle.IsInvalid is false;
-        }
+        get => Convert.ToBoolean(EnsureMotClientAlive());
     }
 
     /// <inheritdoc/>
