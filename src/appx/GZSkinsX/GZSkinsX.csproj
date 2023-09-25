@@ -12,6 +12,7 @@
     <UseRidGraph>true</UseRidGraph>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <DisableCompileKernelInterop>true</DisableCompileKernelInterop>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
@@ -31,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GZSkinsX.Kernel" Version="0.0.6" />
+    <PackageReference Include="GZSkinsX.Kernel" Version="0.0.7" />
     <PackageReference Include="MessagePack" Version="2.5.124" />
   </ItemGroup>
   
