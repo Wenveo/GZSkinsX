@@ -44,11 +44,11 @@ internal readonly struct AppInfo
 
 internal sealed class AppUpdater
 {
-    private static Uri[] OnlineApplicationInfos { get; } = new Uri[]
-    {
-        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/ApplicationData.json"),
-        new Uri("http://x1.gzskins.com/MounterV3/ApplicationData.json")
-    };
+    private static Uri[] OnlineApplicationInfos { get; } =
+    [
+        new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/ApplicationData.json"),
+        new("http://x1.gzskins.com/MounterV3/ApplicationData.json")
+    ];
 
     public static async ValueTask<AppInfo> TryGetAppInfoAsync()
     {

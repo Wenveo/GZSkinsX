@@ -39,11 +39,11 @@ internal sealed partial class MounterService : IMounterService
     /// <summary>
     /// 获取存放在线的包清单配置链接。
     /// </summary>
-    private static Uri[] OnlineManifests { get; } = new Uri[]
-    {
-        new Uri("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/PackageManifest.json"),
-        new Uri("http://x1.gzskins.com/MounterV3/PackageManifest.json")
-    };
+    private static Uri[] OnlineManifests { get; } =
+    [
+        new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/PackageManifest.json"),
+        new("http://x1.gzskins.com/MounterV3/PackageManifest.json")
+    ];
 
     /// <summary>
     /// 获取用于存放服务组件的根文件夹路径。
@@ -637,7 +637,7 @@ internal sealed partial class MounterService : IMounterService
                 }
             }
 
-            array = list.ToArray();
+            array = [.. list];
             return true;
         }
 
