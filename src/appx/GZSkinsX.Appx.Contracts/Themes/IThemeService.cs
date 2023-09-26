@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 using Microsoft.UI.Xaml;
 
+using Windows.UI.ViewManagement;
+
 namespace GZSkinsX.Contracts.Themes;
 
 /// <summary>
@@ -17,6 +19,11 @@ namespace GZSkinsX.Contracts.Themes;
 /// </summary>
 public interface IThemeService
 {
+    /// <summary>
+    /// 获取和访问通用的 UI 设置。
+    /// </summary>
+    UISettings UISettings { get; }
+
     /// <summary>
     /// 获取当前应用程序中 UI 的实际元素主题。
     /// </summary>
@@ -31,6 +38,11 @@ public interface IThemeService
     /// 获取当前是否为高对比度主题。
     /// </summary>
     bool IsHighContrast { get; }
+
+    /// <summary>
+    /// 获取高对比度配色方案的名称。
+    /// </summary>
+    string HighContrastScheme { get; }
 
     /// <summary>
     /// UI 主题更改事件，在跟随系统主题更改或手动切换时触发。

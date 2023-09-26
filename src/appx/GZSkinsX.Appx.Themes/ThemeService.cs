@@ -43,21 +43,22 @@ internal sealed class ThemeService : IThemeService
     /// <summary>
     /// 用于对辅助性设置的访问。
     /// </summary>
-
     private readonly AccessibilitySettings _accessible = new();
+
+    /// <inheritdoc/>
+    public UISettings UISettings => _settings;
 
     /// <inheritdoc/>
     public ElementTheme ActualTheme { get; private set; }
 
     /// <inheritdoc/>
-    public ElementTheme CurrentTheme
-    {
-        get => _themeSettings.CurrentTheme;
-        private set => _themeSettings.CurrentTheme = value;
-    }
+    public ElementTheme CurrentTheme => _themeSettings.CurrentTheme;
 
     /// <inheritdoc/>
     public bool IsHighContrast { get; private set; }
+
+    /// <inheritdoc/>
+    public string HighContrastScheme => _accessible.HighContrastScheme;
 
     /// <inheritdoc/>
     public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
@@ -69,7 +70,7 @@ internal sealed class ThemeService : IThemeService
     {
         _themeSettings = AppxContext.Resolve<ThemeSettings>();
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        _settings.ColorValuesChanged += OnColorValuesChanged;
+        _settings.ColorValuesChanged += (s, e) => UpdateProperties();
 
         ActualTheme = CurrentTheme is not ElementTheme.Default ? CurrentTheme
             : Application.Current.RequestedTheme is ApplicationTheme.Light
@@ -78,16 +79,11 @@ internal sealed class ThemeService : IThemeService
         UXThemeHelper.ApplyThemeForApp(ActualTheme is ElementTheme.Dark);
     }
 
-    private void OnColorValuesChanged(UISettings sender, object args)
-    {
-        UpdateProperties();
-    }
-
     private async void UpdateProperties()
     {
         await _dispatcherQueue.EnqueueAsync(() =>
         {
-            if (_accessible.HighContrast && _accessible.HighContrastScheme.IndexOf("white", StringComparison.OrdinalIgnoreCase) != -1)
+            if (_accessible.HighContrast && _accessible.HighContrastScheme.Contains("white", StringComparison.OrdinalIgnoreCase))
             {
                 // If our HighContrastScheme is ON & a lighter one, then we should remain in 'Light' theme mode for Monaco Themes Perspective
                 IsHighContrast = false;
@@ -110,7 +106,7 @@ internal sealed class ThemeService : IThemeService
     {
         await _dispatcherQueue.EnqueueAsync(() =>
         {
-            CurrentTheme = newTheme;
+            _themeSettings.CurrentTheme = newTheme;
             if (AppxContext.AppxWindow.MainWindow.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = newTheme;
