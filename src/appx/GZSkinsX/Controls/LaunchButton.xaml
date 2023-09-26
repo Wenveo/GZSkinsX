@@ -21,12 +21,18 @@
             VerticalContentAlignment="Stretch"
             Click="MultiStateLaunchButton_Click"
             State="LaunchButton_State_Loading">
+
+            <ctrls2:MultiStateToggleButton.KeyboardAccelerators>
+                <KeyboardAccelerator Key="F10" />
+            </ctrls2:MultiStateToggleButton.KeyboardAccelerators>
+
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Default">
                 <StackPanel Orientation="Horizontal">
                     <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
                     <TextBlock x:Uid="LaunchButton_State_Default_Textblock" Margin="8,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
+
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Loading">
                 <StackPanel Orientation="Horizontal">
                     <muxc:ProgressRing
@@ -37,12 +43,14 @@
                     <TextBlock x:Uid="LaunchButton_State_Loading_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
+
             <ctrls2:MultiStateToggleButtonState IsChecked="True" StateName="LaunchButton_State_Running">
                 <StackPanel Orientation="Horizontal">
                     <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xEE95;" />
                     <TextBlock x:Uid="LaunchButton_State_Running_Textblock" Margin="8,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
+
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_CheckForUpdates">
                 <StackPanel Orientation="Horizontal">
                     <muxc:ProgressRing
@@ -53,6 +61,7 @@
                     <TextBlock x:Uid="LaunchButton_State_CheckForUpdates_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
+
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_UpdateFailed">
                 <StackPanel Orientation="Horizontal">
                     <ctrls2:SegoeFluentIcon
@@ -65,6 +74,7 @@
                         Foreground="{ThemeResource ProgressBarErrorForegroundColor}" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
+
             <ctrls2:MultiStateToggleButtonState StateName="LaunchButton_State_Updating">
                 <StackPanel Orientation="Horizontal">
                     <muxc:ProgressRing
@@ -84,6 +94,7 @@
                     </TextBlock>
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
+
             <ctrls2:MultiStateToggleButton.Flyout>
                 <MenuFlyout ctrls2:FlyoutThemeHelper.AllowSyncTheme="True" Placement="Bottom">
                     <MenuFlyoutItem
@@ -91,7 +102,7 @@
                         x:Uid="LaunchButton_Launch_MenuItem"
                         Click="LaunchButton_Launch_MenuItem_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F5" />
+                            <KeyboardAccelerator Key="F10" />
                         </MenuFlyoutItem.KeyboardAccelerators>
                         <MenuFlyoutItem.Icon>
                             <ctrls2:SegoeFluentIcon Glyph="&#xE768;" />
@@ -111,7 +122,7 @@
                         x:Uid="LaunchButton_Terminate_MenuItem"
                         Click="LaunchButton_Terminate_MenuItem_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F5" Modifiers="Shift" />
+                            <KeyboardAccelerator Key="F10" Modifiers="Shift" />
                         </MenuFlyoutItem.KeyboardAccelerators>
                         <MenuFlyoutItem.Icon>
                             <ctrls2:SegoeFluentIcon Glyph="&#xE71A;" />
@@ -137,6 +148,7 @@
                     </MenuFlyoutItem>
                 </MenuFlyout>
             </ctrls2:MultiStateToggleButton.Flyout>
+
         </ctrls2:MultiStateToggleButton>
 
         <muxc:TeachingTip
@@ -186,5 +198,6 @@
                 <ctrls2:SegoeFluentIconSource Glyph="&#xE946;" />
             </muxc:TeachingTip.IconSource>
         </muxc:TeachingTip>
+
     </Grid>
 </UserControl>
