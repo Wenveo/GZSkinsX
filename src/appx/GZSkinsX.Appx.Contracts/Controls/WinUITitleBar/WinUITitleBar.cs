@@ -34,30 +34,17 @@ public static class WinUITitleBar
     {
         if (d is Grid titleBar)
         {
-            titleBar.Loaded -= OnTitleBarLoaded;
-            titleBar.SizeChanged -= OnTitleBarSizeChanged;
+            void OnTitleBarLayoutUpdated(object? sender, object e)
+            {
+                // sender is null in here!?
+                UpdateDragRegionForCustomTitleBar(titleBar);
+            }
 
+            titleBar.LayoutUpdated -= OnTitleBarLayoutUpdated;
             if (e.NewValue is bool b && b)
             {
-                titleBar.Loaded += OnTitleBarLoaded;
-                titleBar.SizeChanged += OnTitleBarSizeChanged;
+                titleBar.LayoutUpdated += OnTitleBarLayoutUpdated;
             }
-        }
-    }
-
-    private static void OnTitleBarLoaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is Grid titleBar)
-        {
-            UpdateDragRegionForCustomTitleBar(titleBar);
-        }
-    }
-
-    private static void OnTitleBarSizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (sender is Grid titleBar)
-        {
-            UpdateDragRegionForCustomTitleBar(titleBar);
         }
     }
 
