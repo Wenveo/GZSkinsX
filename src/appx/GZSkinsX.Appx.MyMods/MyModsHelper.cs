@@ -65,79 +65,79 @@ internal static class MyModsHelper
 
     public static void ExtractModImage(string input, string output)
     {
-        using var fileStream = new FileStream(input, FileMode.Open, FileAccess.Read);
-        using var outputStram = new FileStream(output, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
-
         unsafe
         {
             var length = 0;
             var buffer = new nint();
 
-            var ret = KernelInterop.ReadLegacySkinImage(
-                fileStream.SafeFileHandle.DangerousGetHandle().ToPointer(), ref buffer, ref length);
-
-            if (ret is not 0)
+            fixed (char* ch = input)
             {
-                throw GetKernelInvalidOperationException(ret, input);
+                var ret = KernelInterop.ReadLegacySkinImage(ch, ref buffer, ref length);
+
+                if (ret is not 0)
+                {
+                    throw GetKernelInvalidOperationException(ret, input);
+                }
+
+                using var unmanagedStream = new UnmanagedMemoryStream((byte*)buffer.ToPointer(), length);
+                using var outputStram = new FileStream(output, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+
+                outputStram.Seek(0, default);
+                unmanagedStream.CopyTo(outputStram);
+                KernelInterop.FreeCryptographicBuffer(buffer);
             }
-
-            using var unmanagedStream = new UnmanagedMemoryStream((byte*)buffer.ToPointer(), length);
-
-            outputStram.Seek(0, default);
-            unmanagedStream.CopyTo(outputStram);
-            KernelInterop.FreeCryptographicBuffer(buffer);
         }
     }
 
     public static MyModInfo ReadModInfo(string filePath)
     {
         KernelInterop.InitializeGZXKernelModule();
-        using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
         unsafe
         {
-            var rawDataSpan = stackalloc byte[32];
-            var cStylePointer = (nint)rawDataSpan;
-            var skinInfoPtr = (KernelInterop.LegacySkinInfo*)rawDataSpan;
-
-            var ret = KernelInterop.ReadLegacySkinInfo(
-                fileStream.SafeFileHandle.DangerousGetHandle().ToPointer(), ref cStylePointer);
-
-            if (ret is not 0)
+            fixed (char* ch = filePath)
             {
-                throw GetKernelInvalidOperationException(ret, filePath);
-            }
-            else
-            {
-                string? name, author, description, datetime;
-                name = author = description = datetime = string.Empty;
+                var rawDataSpan = stackalloc byte[32];
+                var cStylePointer = (nint)rawDataSpan;
+                var skinInfoPtr = (KernelInterop.LegacySkinInfo*)rawDataSpan;
 
-                var ptr = (*skinInfoPtr).name;
-                if (ptr != (char*)nint.Zero)
+                var ret = KernelInterop.ReadLegacySkinInfo(ch, ref cStylePointer);
+                if (ret is not 0)
                 {
-                    name = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    throw GetKernelInvalidOperationException(ret, filePath);
                 }
-
-                ptr = (*skinInfoPtr).author;
-                if (ptr != (char*)nint.Zero)
+                else
                 {
-                    author = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
-                }
+                    string? name, author, description, datetime;
+                    name = author = description = datetime = string.Empty;
 
-                ptr = (*skinInfoPtr).description;
-                if (ptr != (char*)nint.Zero)
-                {
-                    description = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
-                }
+                    var ptr = (*skinInfoPtr).name;
+                    if (ptr != (char*)nint.Zero)
+                    {
+                        name = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    }
 
-                ptr = (*skinInfoPtr).datetime;
-                if (ptr != (char*)nint.Zero)
-                {
-                    datetime = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
-                }
+                    ptr = (*skinInfoPtr).author;
+                    if (ptr != (char*)nint.Zero)
+                    {
+                        author = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    }
 
-                KernelInterop.FreeLegacySkinInfo(skinInfoPtr);
-                return new(name, author, description, datetime);
+                    ptr = (*skinInfoPtr).description;
+                    if (ptr != (char*)nint.Zero)
+                    {
+                        description = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    }
+
+                    ptr = (*skinInfoPtr).datetime;
+                    if (ptr != (char*)nint.Zero)
+                    {
+                        datetime = MyStringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    }
+
+                    KernelInterop.FreeLegacySkinInfo(skinInfoPtr);
+                    return new(name, author, description, datetime);
+                }
             }
         }
     }

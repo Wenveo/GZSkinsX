@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GZSkinsX.Kernel" Version="0.0.7" />
+    <PackageReference Include="GZSkinsX.Kernel" Version="0.0.8" />
     <PackageReference Include="MessagePack" Version="2.5.124" />
   </ItemGroup>
   

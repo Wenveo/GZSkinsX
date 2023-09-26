@@ -27,10 +27,10 @@ internal static unsafe partial class KernelInterop
     internal static unsafe partial void FreeLegacySkinInfo(void* skinInfoPtr);
 
     [LibraryImport("GZSkinsX.Kernel.dll", SetLastError = true)]
-    internal static unsafe partial uint ReadLegacySkinImage(void* handle, ref nint buffer, ref int length);
+    internal static unsafe partial uint ReadLegacySkinImage(char* filename, ref nint buffer, ref int length);
 
     [LibraryImport("GZSkinsX.Kernel.dll", SetLastError = true)]
-    internal static unsafe partial uint ReadLegacySkinInfo(void* handle, ref nint skinInfoPtr);
+    internal static unsafe partial uint ReadLegacySkinInfo(char* filename, ref nint skinInfoPtr);
 
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe struct LegacySkinInfo
