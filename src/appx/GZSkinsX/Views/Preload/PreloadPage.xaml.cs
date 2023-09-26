@@ -8,6 +8,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
@@ -32,6 +33,9 @@ namespace GZSkinsX.Views;
 /// </summary>
 internal sealed partial class PreloadPage : Page
 {
+    [LibraryImport("GZSkinsX.Kernel.dll", SetLastError = true)]
+    internal static partial uint InitializeGZXKernelModule();
+
     public PreloadPage()
     {
         InitializeComponent();
@@ -49,7 +53,7 @@ internal sealed partial class PreloadPage : Page
             // Try Initialize Module
             try
             {
-                await AppxContext.MyModsService.UpdateSettingsAsync();
+                await Task.Run(InitializeGZXKernelModule);
             }
             catch
             {
