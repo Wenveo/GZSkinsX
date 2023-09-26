@@ -22,8 +22,6 @@ using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Mounter;
 using GZSkinsX.Contracts.MyMods;
 
-using Windows.Storage;
-
 namespace GZSkinsX.Services.MyMods;
 
 /// <inheritdoc cref="IMyModsService"/>
@@ -41,7 +39,7 @@ internal sealed class MyModsService : IMyModsService
     /// <summary>
     /// 获取本地的图片缓存文件夹路径。
     /// </summary>
-    private string MyImageCacheFolder { get; } = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Local", "MyMods", "Images");
+    private string MyImageCacheFolder { get; } = Path.Combine(AppxContext.LocalCacheFolder, "Local", "MyMods", "Images");
 
     /// <summary>
     /// 自定义的 Json 序列化配置选项。

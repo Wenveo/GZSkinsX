@@ -28,7 +28,6 @@ using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Mounter;
 
 using Windows.Foundation;
-using Windows.Storage;
 
 namespace GZSkinsX.Appx.Mounter;
 
@@ -82,7 +81,7 @@ internal sealed partial class MounterService : IMounterService
         {
             ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
         });
-        MounterRootFolder = Path.Combine(ApplicationData.Current.RoamingFolder.Path, "Mounter");
+        MounterRootFolder = Path.Combine(AppxContext.RoamingFolder, "Mounter");
 
         var worker = new BackgroundWorker();
         worker.DoWork += DoSomething;
@@ -488,7 +487,7 @@ internal sealed partial class MounterService : IMounterService
     private async Task<string> DownloadMTPackageAsync(Uri requestUri, Progress<double>? progress = null)
     {
         var tempName = Guid.NewGuid().ToString();
-        var tempFile = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, tempName);
+        var tempFile = Path.Combine(AppxContext.TemporaryFolder, tempName);
 
         try
         {

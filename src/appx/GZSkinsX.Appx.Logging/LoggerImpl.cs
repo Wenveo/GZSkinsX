@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
-using Windows.Storage;
+using GZSkinsX.Contracts.Appx;
 
 namespace GZSkinsX.Appx.Logging;
 
@@ -46,7 +46,7 @@ internal sealed class LoggerImpl : IDisposable
     {
         if (_logWriter is null)
         {
-            var logsFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Logs");
+            var logsFolder = Path.Combine(AppxContext.LocalFolder, "Logs");
             if (Directory.Exists(logsFolder) is false)
             {
                 Directory.CreateDirectory(logsFolder);

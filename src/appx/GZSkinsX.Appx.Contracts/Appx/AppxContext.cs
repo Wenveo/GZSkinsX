@@ -22,21 +22,47 @@ public static partial class AppxContext
     /// </summary>
     static AppxContext()
     {
-        AppxDirectory = Package.Current.InstalledLocation;
+        AppxDirectory = Package.Current.InstalledLocation.Path;
 
         var packageVersion = Package.Current.Id.Version;
         AppxVersion = new(
             packageVersion.Major, packageVersion.Minor,
             packageVersion.Build, packageVersion.Revision);
+
+        var currentApplicationData = ApplicationData.Current;
+        LocalFolder = currentApplicationData.LocalFolder.Path;
+        LocalCacheFolder = currentApplicationData.LocalCacheFolder.Path;
+        RoamingFolder = currentApplicationData.RoamingFolder.Path;
+        TemporaryFolder = currentApplicationData.TemporaryFolder.Path;
     }
 
     /// <summary>
     /// 获取当前应用程序根目录。
     /// </summary>
-    public static StorageFolder AppxDirectory { get; }
+    public static string AppxDirectory { get; }
 
     /// <summary>
     /// 获取当前应用程序版本。
     /// </summary>
     public static Version AppxVersion { get; }
+
+    /// <summary>
+    /// 获取存储当前应用本地数据的文件夹。
+    /// </summary>
+    public static string LocalFolder { get; }
+
+    /// <summary>
+    /// 获取存储当前应用缓存数据的文件夹。
+    /// </summary>
+    public static string LocalCacheFolder { get; }
+
+    /// <summary>
+    /// 获取存储当前应用漫游数据的文件夹。
+    /// </summary>
+    public static string RoamingFolder { get; }
+
+    /// <summary>
+    /// 获取存储当前应用临时数据的文件夹。
+    /// </summary>
+    public static string TemporaryFolder { get; }
 }

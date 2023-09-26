@@ -10,10 +10,9 @@ using System.IO;
 using System.Threading.Tasks;
 
 using GZSkinsX.Composition.Cache;
+using GZSkinsX.Contracts.Appx;
 
 using Microsoft.VisualStudio.Composition;
-
-using Windows.Storage;
 
 namespace GZSkinsX.Composition;
 
@@ -26,8 +25,7 @@ internal sealed class CompositionContainerV2(AssemblyCatalogV2 catalog)
     /// <summary>
     /// 获取缓存文件的完整路径名称。
     /// </summary>
-    private static string CacheFileFullPath { get; } =
-        Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "mef-cacheV2.bin");
+    private static string CacheFileFullPath { get; } = Path.Combine(AppxContext.LocalCacheFolder, "mef-cacheV2.bin");
 
     /// <summary>
     /// 从已有的缓存中加载或是创建一个新的 <see cref="ExportProvider"/> 实例。

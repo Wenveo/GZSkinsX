@@ -25,8 +25,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.VisualStudio.Composition;
 using Microsoft.Windows.AppLifecycle;
 
-using Windows.Storage;
-
 namespace GZSkinsX;
 
 /// <summary>
@@ -53,7 +51,7 @@ internal static partial class Program
         {
             try
             {
-                ProfileOptimization.SetProfileRoot(ApplicationData.Current.LocalCacheFolder.Path);
+                ProfileOptimization.SetProfileRoot(AppxContext.LocalCacheFolder);
                 ProfileOptimization.StartProfile("startup.profile");
             }
             catch
@@ -117,7 +115,7 @@ internal static partial class Program
         }
 
         Assembly asm;
-        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory.Path, "GZSkinsX.Appx.*.dll")
+        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory, "GZSkinsX.Appx.*.dll")
                 .Where(a => a.IndexOf("GZSkinsX.Appx.Contracts.dll", StringComparison.OrdinalIgnoreCase) is -1))
         {
             try
