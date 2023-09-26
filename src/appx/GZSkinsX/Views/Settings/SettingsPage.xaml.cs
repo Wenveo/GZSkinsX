@@ -34,11 +34,7 @@ internal sealed partial class SettingsPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        DispatcherQueue.EnqueueAsync(async () =>
-        {
-            MainScrollViewer.ScrollToVerticalOffset(0d);
-            await ViewModel.InitializeAsync();
-        }).FireAndForget();
+        DispatcherQueue.EnqueueAsync(ViewModel.InitializeAsync).FireAndForget();
     }
 
     private void GoBack_Click(object sender, RoutedEventArgs e)
