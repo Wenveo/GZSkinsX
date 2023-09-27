@@ -148,13 +148,13 @@
     <value>确定</value>
   </data>
   <data name="Index_DownloadFailed_Title.Text" xml:space="preserve">
-    <value>未知的错误，无法更新应用程序</value>
+    <value>未知的错误，无法更新应用程序。</value>
   </data>
   <data name="Index_Downloading_Title.Text" xml:space="preserve">
     <value>正在更新应用程序，请稍等.....</value>
   </data>
   <data name="Index_PendingRestart_Title.Text" xml:space="preserve">
-    <value>更新已完成，请手动重启应用</value>
+    <value>更新已完成，请手动重启应用。</value>
   </data>
   <data name="LaunchButton_About_Dialog_Author" xml:space="preserve">
     <value>作者：</value>

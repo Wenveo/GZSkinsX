@@ -17,7 +17,6 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using GZSkinsX.Appx.MyMods;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Mounter;
 using GZSkinsX.Contracts.MyMods;
@@ -339,7 +338,7 @@ internal sealed class MyModsService : IMyModsService
             }
 
             var imageFilePath = Path.Combine(imageCacheFolder, Path.GetFileNameWithoutExtension(filePath));
-            MyModsHelper.ExtractModImage(filePath, imageFilePath);
+            AppxContext.KernelService.ExtractWGZModImage(filePath, imageFilePath);
             return Task.FromResult<Uri>(new(imageFilePath, UriKind.Absolute));
         }
         catch (Exception excp)
@@ -355,7 +354,9 @@ internal sealed class MyModsService : IMyModsService
     /// <inheritdoc/>
     public Task<MyModInfo> ReadModInfoAsync(string filePath)
     {
-        return Task.FromResult(MyModsHelper.ReadModInfo(filePath));
+        var wgzModInfo = AppxContext.KernelService.ReadWGZModInfo(filePath);
+        return Task.FromResult<MyModInfo>(new(wgzModInfo.Name,
+            wgzModInfo.Author, wgzModInfo.Description, wgzModInfo.DateTime));
     }
 
     /// <inheritdoc/>
@@ -363,7 +364,9 @@ internal sealed class MyModsService : IMyModsService
     {
         try
         {
-            return Task.FromResult<MyModInfo?>(MyModsHelper.ReadModInfo(filePath));
+            var wgzModInfo = AppxContext.KernelService.ReadWGZModInfo(filePath);
+            return Task.FromResult<MyModInfo?>(new(wgzModInfo.Name,
+                wgzModInfo.Author, wgzModInfo.Description, wgzModInfo.DateTime));
         }
         catch (Exception excp)
         {
@@ -495,7 +498,7 @@ internal sealed class MyModsService : IMyModsService
             yield break;
         }
 
-        var result = MyModsHelper.DecryptConfigText(encryptedStr);
+        var result = AppxContext.KernelService.DecryptConfigText(encryptedStr);
         if (string.IsNullOrWhiteSpace(result))
         {
             yield break;
@@ -722,7 +725,7 @@ internal sealed class MyModsService : IMyModsService
             pathBuilder.Length = folderPathOffset;
         }
 
-        settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = MyModsHelper.EncryptConfigText(tableBuilder.ToString());
+        settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = AppxContext.KernelService.EncryptConfigText(tableBuilder.ToString());
     }
 
     /// <summary>

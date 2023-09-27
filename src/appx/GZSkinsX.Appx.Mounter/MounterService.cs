@@ -18,7 +18,6 @@ using System.IO.Compression;
 using System.IO.Hashing;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -59,13 +58,10 @@ internal sealed partial class MounterService : IMounterService
     /// </summary>
     private HttpClient MyHttpClient { get; }
 
-    [LibraryImport("GZSkinsX.Kernel.dll", SetLastError = true)]
-    private static partial int EnsureMotClientAlive();
-
     /// <inheritdoc/>
     public bool IsMTRunning
     {
-        get => Convert.ToBoolean(EnsureMotClientAlive());
+        get => AppxContext.KernelService.EnsureMotClientAlive();
     }
 
     /// <inheritdoc/>

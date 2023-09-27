@@ -8,7 +8,6 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI;
@@ -23,7 +22,6 @@ using Microsoft.UI.Xaml.Controls;
 
 using Windows.ApplicationModel;
 
-
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace GZSkinsX.Views;
@@ -33,9 +31,6 @@ namespace GZSkinsX.Views;
 /// </summary>
 internal sealed partial class PreloadPage : Page
 {
-    [LibraryImport("GZSkinsX.Kernel.dll", SetLastError = true)]
-    internal static partial uint InitializeGZXKernelModule();
-
     public PreloadPage()
     {
         InitializeComponent();
@@ -53,7 +48,7 @@ internal sealed partial class PreloadPage : Page
             // Try Initialize Module
             try
             {
-                await Task.Run(InitializeGZXKernelModule);
+                await Task.Run(AppxContext.KernelService.InitializeModule);
             }
             catch
             {

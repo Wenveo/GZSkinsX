@@ -5,9 +5,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.WindowManager;
+using System.Threading.Tasks;
 
+using CommunityToolkit.WinUI;
+
+using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
+using GZSkinsX.Contracts.WindowManager;
+using GZSkinsX.ViewModels;
+
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 
@@ -20,14 +28,33 @@ namespace GZSkinsX.Views;
 /// </summary>
 internal sealed partial class IndexPage : Page
 {
+    public IndexViewModel ViewModel { get; } = new();
+
     public IndexPage()
     {
         InitializeComponent();
         Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async void OnLoaded(object sender, RoutedEventArgs e)
     {
-        AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+        await DispatcherQueue.EnqueueAsync(async () =>
+        {
+            try
+            {
+                if (AppxContext.KernelService.VerifyModuleIntegrity())
+                {
+                    AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.StartUp_Guid);
+                    Task.Run(AppxContext.KernelService.UpdateManifestAsync).FireAndForget();
+                    return;
+                }
+            }
+            catch
+            {
+            }
+
+            ContentGrid.Visibility = Visibility.Visible;
+            await ViewModel.TryDownloadAsync();
+        }, DispatcherQueuePriority.Normal);
     }
 }

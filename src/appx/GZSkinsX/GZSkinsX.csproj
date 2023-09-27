@@ -36,6 +36,7 @@
     <ProjectReference Include="..\GZSkinsX.Appx.Activation\GZSkinsX.Appx.Activation.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Game\GZSkinsX.Appx.Game.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Appx.Kernel\GZSkinsX.Appx.Kernel.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Logging\GZSkinsX.Appx.Logging.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.MainApp\GZSkinsX.Appx.MainApp.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Mounter\GZSkinsX.Appx.Mounter.csproj" />
