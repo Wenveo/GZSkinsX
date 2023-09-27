@@ -10,11 +10,11 @@
 
   <Identity
     Name="61610AakStudio.64359D0915987"
-    Publisher="CN=Wenveo"
+    Publisher="CN=23368CF6-33BA-4BD5-A112-861D8F4E666D"
     ProcessorArchitecture="x64"
     Version="3.1.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="a9602f80-51cb-4afc-aa10-3cf70950108e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="8963bdda-bd44-4de3-b0d6-afb68ef8979f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ms-resource:AppStoreName</DisplayName>
