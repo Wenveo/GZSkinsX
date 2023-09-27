@@ -20,6 +20,7 @@
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch"
             Click="MultiStateLaunchButton_Click"
+            KeyboardAcceleratorPlacementMode="Hidden"
             State="LaunchButton_State_Loading">
 
             <ctrls2:MultiStateToggleButton.KeyboardAccelerators>
