@@ -11,7 +11,7 @@ using System.IO;
 using System.IO.Hashing;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 using CommunityToolkit.HighPerformance.Buffers;
@@ -28,9 +28,6 @@ namespace GZSkinsX.Appx.Kernel;
 [Shared, Export(typeof(IKernelService))]
 internal sealed class KernelService : IKernelService
 {
-    [UnsafeAccessor(UnsafeAccessorKind.StaticMethod, Name = "wcslen")]
-    private static extern unsafe int wcslen(string? _, char* ptr);
-
     /// <summary>
     /// 获取在线的模块清单列表。
     /// </summary>
@@ -124,7 +121,7 @@ internal sealed class KernelService : IKernelService
         fixed (char* ch = str)
         {
             interop.EncryptConfigText(ch, ref buffer);
-            var value = _stringPool.GetOrAdd(new ReadOnlySpan<char>(buffer.ToPointer(), wcslen(null, (char*)buffer)));
+            var value = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated((char*)buffer));
             interop.FreeCryptographicBuffer(buffer);
             return value;
         }
@@ -148,7 +145,7 @@ internal sealed class KernelService : IKernelService
         fixed (char* ch = str)
         {
             interop.DecryptConfigText(ch, ref buffer);
-            var value = _stringPool.GetOrAdd(new ReadOnlySpan<char>(buffer.ToPointer(), wcslen(null, (char*)buffer)));
+            var value = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated((char*)buffer));
             interop.FreeCryptographicBuffer(buffer);
             return value;
         }
@@ -204,25 +201,25 @@ internal sealed class KernelService : IKernelService
                 var ptr = (*modInfoPtr).name;
                 if (ptr != (char*)nint.Zero)
                 {
-                    name = _stringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    name = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
                 }
 
                 ptr = (*modInfoPtr).author;
                 if (ptr != (char*)nint.Zero)
                 {
-                    author = _stringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    author = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
                 }
 
                 ptr = (*modInfoPtr).description;
                 if (ptr != (char*)nint.Zero)
                 {
-                    description = _stringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    description = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
                 }
 
                 ptr = (*modInfoPtr).datetime;
                 if (ptr != (char*)nint.Zero)
                 {
-                    datetime = _stringPool.GetOrAdd(new ReadOnlySpan<char>(ptr, wcslen(null, ptr)));
+                    datetime = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
                 }
 
                 interop.FreeLegacySkinInfo(modInfoPtr);
