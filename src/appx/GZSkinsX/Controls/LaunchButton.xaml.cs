@@ -508,13 +508,4 @@ internal sealed partial class LaunchButton : UserControl
     {
         await UpdateLaunchStateAsync();
     }
-
-    private void Indeterminate_ProgressRing_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is ProgressRing self)
-        {
-            self.SetValue(ProgressRing.IsIndeterminateProperty, false);
-            self.SetValue(ProgressRing.IsIndeterminateProperty, true);
-        }
-    }
 }

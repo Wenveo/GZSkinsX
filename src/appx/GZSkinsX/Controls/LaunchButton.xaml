@@ -39,8 +39,7 @@
                     <muxc:ProgressRing
                         x:Name="LaunchButton_State_Loading_ProgressRing"
                         Width="16"
-                        Height="16"
-                        Loaded="Indeterminate_ProgressRing_Loaded" />
+                        Height="16" />
                     <TextBlock x:Uid="LaunchButton_State_Loading_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>
@@ -57,8 +56,7 @@
                     <muxc:ProgressRing
                         x:Name="LaunchButton_State_CheckForUpdates_ProgressRing"
                         Width="16"
-                        Height="16"
-                        Loaded="Indeterminate_ProgressRing_Loaded" />
+                        Height="16" />
                     <TextBlock x:Uid="LaunchButton_State_CheckForUpdates_Textblock" Margin="10,0,0,0" />
                 </StackPanel>
             </ctrls2:MultiStateToggleButtonState>

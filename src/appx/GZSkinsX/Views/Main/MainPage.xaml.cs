@@ -307,13 +307,4 @@ internal sealed partial class MainPage : Page
 
         deferral.Complete();
     }
-
-    private void Main_Loading_ProgressRing_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is ProgressRing self)
-        {
-            self.SetValue(ProgressRing.IsIndeterminateProperty, false);
-            self.SetValue(ProgressRing.IsIndeterminateProperty, true);
-        }
-    }
 }
