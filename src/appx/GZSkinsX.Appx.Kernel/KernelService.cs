@@ -291,13 +291,13 @@ internal sealed class KernelService : IKernelService
         var modulePath = _modulePath;
         if (File.Exists(modulePath) is false)
         {
-            return true;
+            return false;
         }
 
         var moduleChecksum = _settings.ModuleChecksum;
         if (string.IsNullOrWhiteSpace(moduleChecksum))
         {
-            return true;
+            return false;
         }
 
         return ValidationChecksum(modulePath, moduleChecksum);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
@@ -10,7 +10,7 @@
 
   <Identity
     Name="61610AakStudio.64359D0915987"
-    Publisher="CN=23368CF6-33BA-4BD5-A112-861D8F4E666D"
+    Publisher="CN=Wenveo"
     ProcessorArchitecture="x64"
     Version="3.1.0.0" />
 

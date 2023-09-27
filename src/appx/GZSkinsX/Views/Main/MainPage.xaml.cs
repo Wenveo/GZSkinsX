@@ -80,7 +80,7 @@ internal sealed partial class MainPage : Page
                 ContentGrid.Visibility = Visibility.Visible;
                 UninitializedContent.Visibility = Visibility.Collapsed;
 
-                if (await AppxContext.MounterService.VerifyContentIntegrityAsync() is false)
+                if (/*await AppxContext.MounterService.VerifyContentIntegrityAsync() is false*/ false)
                 {
                     await MainLaunchButton.OnUpdateAsync();
                 }
