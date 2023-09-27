@@ -5,6 +5,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+#pragma warning disable SYSLIB1054
+
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -26,10 +28,10 @@ namespace Windows.Win32
         /// <para>Reserve extra window memory by specifying a nonzero value in the <b>cbWndExtra</b> member of the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/ns-winuser-wndclassexa">WNDCLASSEX</a> structure used with the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-registerclassexa">RegisterClassEx</a> function.</para>
         /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-getwindowlongw#">Read more on docs.microsoft.com</see>.</para>
         /// </remarks>
-        [LibraryImport("USER32.dll", EntryPoint = "GetWindowLongW", SetLastError = true)]
+        [DllImport("USER32.dll", EntryPoint = "GetWindowLongW", SetLastError = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         [SupportedOSPlatform("windows5.0")]
-        private static partial int GetWindowLongPtr32(nint hWnd, int nIndex);
+        private static extern int GetWindowLongPtr32(nint hWnd, int nIndex);
 
         /// <summary>Retrieves information about the specified window. The function also retrieves the value at a specified offset into the extra window memory. (Unicode)</summary>
         /// <param name="hWnd">
@@ -45,10 +47,10 @@ namespace Windows.Win32
         /// <para>> [!NOTE] > The winuser.h header defines GetWindowLongPtr as an alias which automatically selects the ANSI or Unicode version of this function based on the definition of the UNICODE preprocessor constant. Mixing usage of the encoding-neutral alias with code that not encoding-neutral can lead to mismatches that result in compilation or runtime errors. For more information, see [Conventions for Function Prototypes](/windows/win32/intl/conventions-for-function-prototypes).</para>
         /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-getwindowlongptrw#">Read more on docs.microsoft.com</see>.</para>
         /// </remarks>
-        [LibraryImport("USER32.dll", EntryPoint = "GetWindowLongPtrW", SetLastError = true)]
+        [DllImport("USER32.dll", EntryPoint = "GetWindowLongPtrW", SetLastError = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         [SupportedOSPlatform("windows5.0")]
-        private static partial nint GetWindowLongPtr64(nint hWnd, int nIndex);
+        private static extern nint GetWindowLongPtr64(nint hWnd, int nIndex);
 
         /// <summary>Changes an attribute of the specified window. The function also sets the 32-bit (long) value at the specified offset into the extra window memory. (Unicode)</summary>
         /// <param name="hWnd">
@@ -67,10 +69,10 @@ namespace Windows.Win32
         /// <para>Certain window data is cached, so changes you make using <b>SetWindowLong</b> will not take effect until you call the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-setwindowpos">SetWindowPos</a> function. Specifically, if you change any of the frame styles, you must call <b>SetWindowPos</b> with the <b>SWP_FRAMECHANGED</b> flag for the cache to be updated properly. If you use <b>SetWindowLong</b> with the <b>GWL_WNDPROC</b> index to replace the window procedure, the window procedure must conform to the guidelines specified in the description of the <a href="https://docs.microsoft.com/previous-versions/windows/desktop/legacy/ms633573(v=vs.85)">WindowProc</a> callback function. If you use <b>SetWindowLong</b> with the <b>DWL_MSGRESULT</b> index to set the return value for a message processed by a dialog procedure, you should return <b>TRUE</b> directly afterward. Otherwise, if you call any function that results in your dialog procedure receiving a window message, the nested window message could overwrite the return value you set using <b>DWL_MSGRESULT</b>. Calling <b>SetWindowLong</b> with the <b>GWL_WNDPROC</b> index creates a subclass of the window class used to create the window. An application can subclass a system class, but should not subclass a window class created by another process. The <b>SetWindowLong</b> function creates the window subclass by changing the window procedure associated with a particular window class, causing the system to call the new window procedure instead of the previous one. An application must pass any messages not processed by the new window procedure to the previous window procedure by calling <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-callwindowproca">CallWindowProc</a>. This allows the application to create a chain of window procedures. Reserve extra window memory by specifying a nonzero value in the <b>cbWndExtra</b> member of the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/ns-winuser-wndclassexa">WNDCLASSEX</a> structure used with the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-registerclassexa">RegisterClassEx</a> function. You must not call <b>SetWindowLong</b> with the <b>GWL_HWNDPARENT</b> index to change the parent of a child window. Instead, use the <a href="https://docs.microsoft.com/windows/desktop/api/winuser/nf-winuser-setparent">SetParent</a> function. If the window has a class style of <b>CS_CLASSDC</b> or <b>CS_OWNDC</b>, do not set the extended window styles <b>WS_EX_COMPOSITED</b> or <b>WS_EX_LAYERED</b>. Calling <b>SetWindowLong</b> to set the style on a progressbar will reset its position.</para>
         /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-setwindowlongw#">Read more on docs.microsoft.com</see>.</para>
         /// </remarks>
-        [LibraryImport("USER32.dll", EntryPoint = "SetWindowLongW", SetLastError = true)]
+        [DllImport("USER32.dll", EntryPoint = "SetWindowLongW", SetLastError = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         [SupportedOSPlatform("windows5.0")]
-        private static partial int SetWindowLongPtr32(nint hWnd, int nIndex, int dwNewLong);
+        private static extern int SetWindowLongPtr32(nint hWnd, int nIndex, int dwNewLong);
 
         /// <summary>Changes an attribute of the specified window. (Unicode)</summary>
         /// <param name="hWnd">
@@ -90,10 +92,10 @@ namespace Windows.Win32
         /// <para>> [!NOTE] > The winuser.h header defines SetWindowLongPtr as an alias which automatically selects the ANSI or Unicode version of this function based on the definition of the UNICODE preprocessor constant. Mixing usage of the encoding-neutral alias with code that not encoding-neutral can lead to mismatches that result in compilation or runtime errors. For more information, see [Conventions for Function Prototypes](/windows/win32/intl/conventions-for-function-prototypes).</para>
         /// <para><see href="https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-setwindowlongptrw#">Read more on docs.microsoft.com</see>.</para>
         /// </remarks>
-        [LibraryImport("USER32.dll", EntryPoint = "SetWindowLongPtrW", SetLastError = true)]
+        [DllImport("USER32.dll", EntryPoint = "SetWindowLongPtrW", SetLastError = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         [SupportedOSPlatform("windows5.0")]
-        private static partial nint SetWindowLongPtr64(nint hWnd, int nIndex, nint dwNewLong);
+        private static extern nint SetWindowLongPtr64(nint hWnd, int nIndex, nint dwNewLong);
 
         /// <inheritdoc cref="GetWindowLongPtr64(nint, int)"/>
         public static nint GetWindowLong(nint hWnd, int nIndex)

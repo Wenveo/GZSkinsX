@@ -20,7 +20,6 @@ internal static class StreamExtensions
     {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(destination);
-        ArgumentOutOfRangeException.ThrowIfNegative(bufferSize);
 
         var buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
         try

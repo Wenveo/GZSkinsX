@@ -487,8 +487,10 @@ internal sealed partial class MounterService : IMounterService
 
         try
         {
-            using var outputStream = new FileStream(tempFile, FileMode.Create, FileAccess.ReadWrite);
-            await MyHttpClient.DownloadAsync(requestUri, outputStream, progress);
+            using (var outputStream = new FileStream(tempFile, FileMode.Create, FileAccess.ReadWrite))
+            {
+                await MyHttpClient.DownloadAsync(requestUri, outputStream, progress);
+            }
 
             var destFolderPath = Path.Combine(MounterRootFolder, tempName);
             if (Directory.Exists(destFolderPath) is false)
@@ -496,9 +498,7 @@ internal sealed partial class MounterService : IMounterService
                 Directory.CreateDirectory(destFolderPath);
             }
 
-            outputStream.Seek(0, SeekOrigin.Begin);
-            ZipFile.ExtractToDirectory(outputStream, destFolderPath);
-
+            ZipFile.ExtractToDirectory(tempFile, destFolderPath);
             return destFolderPath;
         }
         catch (Exception excp)
@@ -670,13 +670,16 @@ internal sealed partial class MounterService : IMounterService
     /// <param name="args">程序的启动参数。</param>
     private static void ProcessLaunch(string filePath, string args)
     {
+        // Bug in .NET 8 RC1
+        // See https://github.com/dotnet/runtime/issues/92046
+
         Process.Start(new ProcessStartInfo
         {
             Arguments = args,
             FileName = filePath,
             UseShellExecute = true,
+            CreateNoWindow = true,
             Verb = "RunAs",
-            WorkingDirectory = Path.GetDirectoryName(filePath)
         });
     }
 
