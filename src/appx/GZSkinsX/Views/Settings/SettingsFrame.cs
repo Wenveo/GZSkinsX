@@ -5,6 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.WindowManager;
 
 namespace GZSkinsX.Views;
@@ -15,6 +16,16 @@ internal sealed class SettingsFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
+        if (AppxContext.GameService.RootDirectory is null)
+        {
+            return false;
+        }
+
+        if (AppxContext.GameService.CurrentRegion == default)
+        {
+            return false;
+        }
+
         return true;
     }
 }

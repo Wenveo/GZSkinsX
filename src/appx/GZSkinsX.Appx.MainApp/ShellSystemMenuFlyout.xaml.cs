@@ -56,6 +56,32 @@ internal sealed partial class ShellSystemMenuFlyout : MenuFlyout
             SizeMenuItem.IsEnabled = true;
             MaximizeMenuItem.IsEnabled = true;
         }
+
+        if (CanNavigateToSettings())
+        {
+            SettingsMenuItem.Visibility = Visibility.Visible;
+            SeparatorOfSettingsGroup.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            SettingsMenuItem.Visibility = Visibility.Collapsed;
+            SeparatorOfSettingsGroup.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private static bool CanNavigateToSettings()
+    {
+        if (AppxContext.GameService.RootDirectory is null)
+        {
+            return false;
+        }
+
+        if (AppxContext.GameService.CurrentRegion == default)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void HideMenuAndDosomething(Action<HWND> action)

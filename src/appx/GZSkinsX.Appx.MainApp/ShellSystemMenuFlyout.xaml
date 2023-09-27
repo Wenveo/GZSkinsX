@@ -79,7 +79,7 @@
         </MenuFlyoutItem.KeyboardAccelerators>
     </MenuFlyoutItem>
 
-    <MenuFlyoutSeparator Padding="8,4,8,4" />
+    <MenuFlyoutSeparator x:Name="SeparatorOfSettingsGroup" Padding="8,4,8,4" />
 
     <MenuFlyoutItem
         x:Name="SettingsMenuItem"
