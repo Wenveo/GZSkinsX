@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -51,50 +52,49 @@ internal sealed partial class MainViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(SelectedIsNotNull))]
     private MyModViewModel? _selectedMod;
 
-    private IEnumerable<MyModViewModel> _myModsCollection = Array.Empty<MyModViewModel>();
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MyModsCount))]
+    [NotifyPropertyChangedFor(nameof(ShouldShowMyModsCount))]
+    private IEnumerable<MyModViewModel>? _myModsCollection;
 
-    public IEnumerable<MyModViewModel> MyModsCollection
-    {
-        get
-        {
-            var filter = ModsFilter;
-            if (filter is null || filter == string.Empty)
-            {
-                foreach (var item in _myModsCollection)
-                {
-                    yield return item;
-                }
-
-                GC.Collect();
-                yield break;
-            }
-
-            foreach (var item in _myModsCollection)
-            {
-                if (item.FileInfo.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ||
-                    item.ModInfo.Name.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ||
-                    item.ModInfo.Author.Contains(filter, StringComparison.InvariantCultureIgnoreCase) ||
-                    item.ModInfo.Description.Contains(filter, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    yield return item;
-                }
-            }
-        }
-        set
-        {
-            SetProperty(ref _myModsCollection, value, nameof(MyModsCollection));
-            OnPropertyChanged(nameof(ShouldShowMyModsCount));
-            OnPropertyChanged(nameof(MyModsCount));
-        }
-    }
+    private readonly Dictionary<string, MyModViewModel> _pathToModViewModel = [];
 
     public bool SelectedIsNull => SelectedMod is null;
 
     public bool SelectedIsNotNull => SelectedMod is not null;
 
-    public bool ShouldShowMyModsCount => !string.IsNullOrEmpty(ModsFilter) || MyModsCollection.Any();
+    public bool ShouldShowMyModsCount
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(ModsFilter))
+            {
+                return true;
+            }
 
-    public int MyModsCount => MyModsCollection.Count();
+            var myModsCollection = MyModsCollection;
+            if (myModsCollection is not null && myModsCollection.Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public int MyModsCount
+    {
+        get
+        {
+            var myModsCollection = MyModsCollection;
+            if (myModsCollection is null)
+            {
+                return 0;
+            }
+
+            return myModsCollection.Count();
+        }
+    }
 
     public IMyModsService MyModsService { get; }
 
@@ -104,6 +104,30 @@ internal sealed partial class MainViewModel : ObservableObject
     {
         MyModsService = AppxContext.MyModsService;
         DispatcherQueue = AppxContext.AppxWindow.MainWindow.DispatcherQueue;
+    }
+
+    partial void OnModsFilterChanged(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            MyModsCollection = _pathToModViewModel.Values.OrderBy(a => a.ModInfo.FileInfo.Name);
+            // 当筛选内容为空时，手动进行一次垃圾回收
+            // 避免筛选过程中产生的过多的内存占用。
+            GC.Collect();
+        }
+        else
+        {
+            MyModsCollection = _pathToModViewModel.Values.Where(item =>
+            {
+                if (item.ModInfo.FileInfo.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)) return true;
+                if (item.ModInfo.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase)) return true;
+                if (item.ModInfo.Author.Contains(value, StringComparison.InvariantCultureIgnoreCase)) return true;
+                if (item.ModInfo.Description.Contains(value, StringComparison.InvariantCultureIgnoreCase)) return true;
+                if (item.ModInfo.DateTime.Contains(value, StringComparison.InvariantCultureIgnoreCase)) return true;
+
+                return false;
+            });
+        }
     }
 
     [RelayCommand]
@@ -129,9 +153,9 @@ internal sealed partial class MainViewModel : ObservableObject
         var storageItems = new List<StorageFile>();
         foreach (var item in items)
         {
-            if (item is MyModViewModel modViewModel && File.Exists(modViewModel.FileInfo.FullName))
+            if (item is MyModViewModel modViewModel && File.Exists(modViewModel.ModInfo.FileInfo.FullName))
             {
-                storageItems.Add(await StorageFile.GetFileFromPathAsync(modViewModel.FileInfo.FullName));
+                storageItems.Add(await StorageFile.GetFileFromPathAsync(modViewModel.ModInfo.FileInfo.FullName));
             }
         }
 
@@ -158,7 +182,7 @@ internal sealed partial class MainViewModel : ObservableObject
             RequestedOperation = DataPackageOperation.Copy
         };
 
-        var files = items.OfType<MyModViewModel>().Select(a => a.FileInfo).ToArray();
+        var files = items.OfType<MyModViewModel>().Select(a => a.ModInfo.FileInfo).ToArray();
         if (files.Length == 1)
         {
             dataPackage.SetText($"\"{files[0].FullName}\"");
@@ -204,8 +228,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (string.IsNullOrEmpty(modsFolder) || string.IsNullOrWhiteSpace(modsFolder))
         {
             AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
-                    $"Warning: The mods folder is null!");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
+                $"Warning: The mods folder is null!");
 
             return;
         }
@@ -213,8 +237,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (Directory.Exists(modsFolder) is false)
         {
             AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
-                    $"Warning: The mods folder is not exists!");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenInFileExplorerAsync",
+                $"Warning: The mods folder is not exists!");
 
             return;
         }
@@ -222,9 +246,9 @@ internal sealed partial class MainViewModel : ObservableObject
         var options = new FolderLauncherOptions();
         foreach (var item in items)
         {
-            if (item is MyModViewModel modViewModel && File.Exists(modViewModel.FileInfo.FullName))
+            if (item is MyModViewModel modViewModel && File.Exists(modViewModel.ModInfo.FileInfo.FullName))
             {
-                options.ItemsToSelect.Add(await StorageFile.GetFileFromPathAsync(modViewModel.FileInfo.FullName));
+                options.ItemsToSelect.Add(await StorageFile.GetFileFromPathAsync(modViewModel.ModInfo.FileInfo.FullName));
             }
         }
 
@@ -258,8 +282,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (string.IsNullOrEmpty(modsFolder) || string.IsNullOrWhiteSpace(modsFolder))
         {
             AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
-                    $"Warning: The mods folder is null!");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
+                $"Warning: The mods folder is null!");
 
             return;
         }
@@ -267,8 +291,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (Directory.Exists(modsFolder) is false)
         {
             AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
-                    $"Warning: The mods folder is not exists!");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
+                $"Warning: The mods folder is not exists!");
 
             return;
         }
@@ -276,8 +300,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(modsFolder)))
         {
             AppxContext.LoggingService.LogOkay(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
-                    $"Successfully open the mods folder.");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenModFolderAsync",
+                $"Successfully open the mods folder.");
         }
         else
         {
@@ -294,8 +318,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (string.IsNullOrEmpty(wadsFolder) || string.IsNullOrWhiteSpace(wadsFolder))
         {
             AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
-                    $"Warning: The wads folder is null!");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
+                $"Warning: The wads folder is null!");
 
             return;
         }
@@ -303,8 +327,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (Directory.Exists(wadsFolder) is false)
         {
             AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
-                    $"Warning: The wads folder is not exists!");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
+                $"Warning: The wads folder is not exists!");
 
             return;
         }
@@ -312,8 +336,8 @@ internal sealed partial class MainViewModel : ObservableObject
         if (await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(wadsFolder)))
         {
             AppxContext.LoggingService.LogOkay(
-                    "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
-                    $"Successfully open the wads folder.");
+                "GZSkinsX.App.ViewModels.MainViewModel.OnOpenWadFolderAsync",
+                $"Successfully open the wads folder.");
         }
         else
         {
@@ -459,7 +483,7 @@ internal sealed partial class MainViewModel : ObservableObject
             return;
         }
 
-        foreach (var fileInfo in items.OfType<MyModViewModel>().Select(a => a.FileInfo))
+        foreach (var fileInfo in items.OfType<MyModViewModel>().Select(a => a.ModInfo.FileInfo))
         {
             try
             {
@@ -506,14 +530,14 @@ internal sealed partial class MainViewModel : ObservableObject
         try
         {
             var myModViewModels = items.OfType<MyModViewModel>();
-            await MyModsService.InstallModsAsync(myModViewModels.Select(a => a.FileInfo.FullName));
+            await MyModsService.InstallModsAsync(myModViewModels.Select(a => a.ModInfo.FileInfo.FullName));
 
-            var b = myModViewModels.All(item => item.Enable = true);
+            var b = myModViewModels.All(item => item.IsInstalled = true);
             Debug.Assert(b);
 
             AppxContext.LoggingService.LogOkay(
                 "GZSkinsX.App.ViewModels.MainViewModel.OnInstallAsync",
-                $"One or more mods were successfully installed. Items: \"{string.Join(',', myModViewModels.Select(a => a.FileInfo.Name))}\".");
+                $"One or more mods were successfully installed. Items: \"{string.Join(',', myModViewModels.Select(a => a.ModInfo.FileInfo.Name))}\".");
         }
         catch (Exception excp)
         {
@@ -549,14 +573,14 @@ internal sealed partial class MainViewModel : ObservableObject
         try
         {
             var myModViewModels = items.OfType<MyModViewModel>();
-            await MyModsService.UninstallModsAsync(myModViewModels.Select(a => a.FileInfo.Name));
+            await MyModsService.UninstallModsAsync(myModViewModels.Select(a => a.ModInfo.FileInfo.Name));
 
-            var b = myModViewModels.Any(item => item.Enable = false);
+            var b = myModViewModels.Any(item => item.IsInstalled = false);
             Debug.Assert(b is false);
 
             AppxContext.LoggingService.LogOkay(
                 "GZSkinsX.App.ViewModels.MainViewModel.OnUninstallAsync",
-                $"One or more mods were successfully uninstalled. Items: \"{string.Join(',', myModViewModels.Select(a => a.FileInfo.Name))}\".");
+                $"One or more mods were successfully uninstalled. Items: \"{string.Join(',', myModViewModels.Select(a => a.ModInfo.FileInfo.Name))}\".");
         }
         catch (Exception excp)
         {
@@ -603,11 +627,11 @@ internal sealed partial class MainViewModel : ObservableObject
 
     private void UpdateModInstalledIndex()
     {
-        foreach (var item in MyModsCollection)
+        foreach (var item in _pathToModViewModel.Values)
         {
-            if (item.Enable)
+            if (item.IsInstalled)
             {
-                item.IndexOfTable = MyModsService.IndexOfTable(item.FileInfo.Name) + 1;
+                item.IndexOfTable = MyModsService.IndexOfTable(item.ModInfo.FileInfo.Name) + 1;
                 item.IsShowIndex = IsShowInstalledIndex;
             }
             else
@@ -619,9 +643,9 @@ internal sealed partial class MainViewModel : ObservableObject
 
     partial void OnIsShowInstalledIndexChanged(bool value)
     {
-        foreach (var item in MyModsCollection)
+        foreach (var item in _pathToModViewModel.Values)
         {
-            if (item.Enable)
+            if (item.IsInstalled)
             {
                 item.IsShowIndex = value;
             }
@@ -635,21 +659,40 @@ internal sealed partial class MainViewModel : ObservableObject
             var myModsService = MyModsService;
             await myModsService.RefreshAsync();
 
-            var newList = new List<MyModViewModel>();
-            var modsFolder = await myModsService.GetModsFolderAsync();
+            // 移除不存在的项
+            foreach (var item in _pathToModViewModel.Where(item =>
+            {
+                return item.Value.ModInfo.FileInfo.Exists is false;
+            }).ToArray())
+            {
+                _pathToModViewModel.Remove(item.Key);
+            }
 
+            var modsFolder = await myModsService.GetModsFolderAsync();
             if (Directory.Exists(modsFolder))
             {
                 foreach (var file in Directory.EnumerateFiles(modsFolder))
                 {
                     var modInfo = await myModsService.TryReadModInfoAsync(file);
-                    if (modInfo is not null)
+                    if (MyModInfo.IsEmpty(modInfo))
                     {
-                        var modImage = await myModsService.GetModImageAsync(file);
-                        var indexOfTable = myModsService.IndexOfTable(file) + 1;
-                        var isInstalled = myModsService.IsInstalled(file);
+                        continue;
+                    }
 
-                        newList.Add(new(new(file), modImage, modInfo, isInstalled, indexOfTable));
+                    var modImage = await myModsService.GetModImageAsync(file);
+                    var indexOfTable = myModsService.IndexOfTable(file) + 1;
+                    var isInstalled = myModsService.IsInstalled(file);
+
+                    if (_pathToModViewModel.TryGetValue(file, out var modViewModel))
+                    {
+                        modViewModel.ModImage = modImage;
+                        modViewModel.ModInfo = modInfo;
+                        modViewModel.IsInstalled = isInstalled;
+                        modViewModel.IndexOfTable = indexOfTable;
+                    }
+                    else
+                    {
+                        _pathToModViewModel.Add(file, new(modInfo, modImage, isInstalled, indexOfTable));
                     }
                 }
             }
@@ -660,7 +703,10 @@ internal sealed partial class MainViewModel : ObservableObject
                 "GZSkinsX.App.ViewModels.MainViewModel.RefreshCoreAsync",
                 $"The mods collection have been successfully refreshed.");
 
-            await DispatcherQueue.EnqueueAsync(() => MyModsCollection = newList);
+            await DispatcherQueue.EnqueueAsync(() =>
+            {
+                MyModsCollection = _pathToModViewModel.Values.OrderBy(a => a.ModInfo.FileInfo.Name);
+            });
         }
         catch (Exception excp)
         {

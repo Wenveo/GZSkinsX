@@ -175,9 +175,9 @@ internal sealed partial class MainPage : Page
         var items = new List<StorageFile>();
         foreach (var item in e.Items.OfType<MyModViewModel>())
         {
-            if (item.FileInfo.Exists)
+            if (item.ModInfo.FileInfo.Exists)
             {
-                items.Add(await StorageFile.GetFileFromPathAsync(item.FileInfo.FullName));
+                items.Add(await StorageFile.GetFileFromPathAsync(item.ModInfo.FileInfo.FullName));
             }
         }
 
@@ -193,7 +193,7 @@ internal sealed partial class MainPage : Page
     {
         if (e.OriginalSource is FrameworkElement { DataContext: MyModViewModel item })
         {
-            if (item.Enable)
+            if (item.IsInstalled)
             {
                 await ViewModel.OnUninstallAsync(item);
             }
@@ -278,9 +278,9 @@ internal sealed partial class MainPage : Page
             var items = new List<StorageFile>();
             foreach (var item in MyModsGridView.SelectedItems)
             {
-                if (item is MyModViewModel modViewModel && File.Exists(modViewModel.FileInfo.FullName))
+                if (item is MyModViewModel modViewModel && File.Exists(modViewModel.ModInfo.FileInfo.FullName))
                 {
-                    items.Add(await StorageFile.GetFileFromPathAsync(modViewModel.FileInfo.FullName));
+                    items.Add(await StorageFile.GetFileFromPathAsync(modViewModel.ModInfo.FileInfo.FullName));
                 }
             }
 

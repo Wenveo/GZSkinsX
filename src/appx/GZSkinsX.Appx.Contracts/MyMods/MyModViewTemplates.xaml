@@ -117,7 +117,7 @@
                         Grid.Row="3"
                         Grid.Column="3"
                         FontWeight="Bold"
-                        Text="{x:Bind Enable, Mode=OneWay, Converter={StaticResource MyModViewStatusContentConverter}}" />
+                        Text="{x:Bind IsInstalled, Mode=OneWay, Converter={StaticResource MyModViewStatusContentConverter}}" />
 
                     <TextBlock
                         x:Uid="MyModView_Tooltip_FileName"
@@ -126,7 +126,7 @@
                     <TextBlock
                         Grid.Row="4"
                         Grid.Column="3"
-                        Text="{x:Bind FileInfo.Name, Mode=OneWay}"
+                        Text="{x:Bind ModInfo.FileInfo.Name, Mode=OneWay}"
                         TextWrapping="Wrap" />
 
                     <TextBlock
@@ -185,7 +185,7 @@
                     Background="{ThemeResource MyModViewStatusBackgroundInstall}"
                     BorderBrush="{ThemeResource MyModViewStatusBorderBrushInstall}"
                     CornerRadius="{StaticResource MyModViewStatusCornerRadius}"
-                    Visibility="{x:Bind Enable, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{x:Bind IsInstalled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <TextBlock
                         Margin="8,4"
                         FontSize="12"
@@ -202,7 +202,7 @@
                     Background="{ThemeResource MyModViewStatusBackgroundUninstall}"
                     BorderBrush="{ThemeResource MyModViewStatusBorderBrushUninstall}"
                     CornerRadius="{StaticResource MyModViewStatusCornerRadius}"
-                    Visibility="{x:Bind Enable, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
+                    Visibility="{x:Bind IsInstalled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}">
                     <TextBlock
                         Margin="8,4"
                         FontSize="12"

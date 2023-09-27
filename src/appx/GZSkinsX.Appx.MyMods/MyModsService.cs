@@ -352,21 +352,21 @@ internal sealed class MyModsService : IMyModsService
     }
 
     /// <inheritdoc/>
-    public Task<MyModInfo> ReadModInfoAsync(string filePath)
+    public ValueTask<MyModInfo> ReadModInfoAsync(string filePath)
     {
         var wgzModInfo = AppxContext.KernelService.ReadWGZModInfo(filePath);
-        return Task.FromResult<MyModInfo>(new(wgzModInfo.Name,
-            wgzModInfo.Author, wgzModInfo.Description, wgzModInfo.DateTime));
+        return ValueTask.FromResult<MyModInfo>(new(wgzModInfo.Name, wgzModInfo.Author,
+            wgzModInfo.Description, wgzModInfo.DateTime, new FileInfo(filePath)));
     }
 
     /// <inheritdoc/>
-    public Task<MyModInfo?> TryReadModInfoAsync(string filePath)
+    public ValueTask<MyModInfo> TryReadModInfoAsync(string filePath)
     {
         try
         {
             var wgzModInfo = AppxContext.KernelService.ReadWGZModInfo(filePath);
-            return Task.FromResult<MyModInfo?>(new(wgzModInfo.Name,
-                wgzModInfo.Author, wgzModInfo.Description, wgzModInfo.DateTime));
+            return ValueTask.FromResult<MyModInfo>(new(wgzModInfo.Name, wgzModInfo.Author,
+                wgzModInfo.Description, wgzModInfo.DateTime, new FileInfo(filePath)));
         }
         catch (Exception excp)
         {
@@ -374,7 +374,7 @@ internal sealed class MyModsService : IMyModsService
                 "GZSkinsX.Appx.MyMods.MyModsService.TryReadModInfo",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}");
 
-            return Task.FromResult<MyModInfo?>(null);
+            return ValueTask.FromResult<MyModInfo>(MyModInfo.Empty);
         }
     }
 

@@ -130,14 +130,14 @@ public interface IMyModsService
     /// </summary>
     /// <param name="filePath">模组文件的路径。</param>
     /// <returns>当此操作完成时，将返回该模组文件的模组信息。</returns>
-    Task<MyModInfo> ReadModInfoAsync(string filePath);
+    ValueTask<MyModInfo> ReadModInfoAsync(string filePath);
 
     /// <summary>
     /// 尝试读取目标模组文件的模组信息。
     /// </summary>
     /// <param name="filePath">模组文件的路径。</param>
     /// <returns>如果成功读取该模组的文件的模组信息便会将其返回，否则将返回 null。</returns>
-    Task<MyModInfo?> TryReadModInfoAsync(string filePath);
+    ValueTask<MyModInfo> TryReadModInfoAsync(string filePath);
 
     /// <summary>
     /// 刷新当前模组服务的上下文。
