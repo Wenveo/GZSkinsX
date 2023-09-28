@@ -6,6 +6,7 @@
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <UseRidGraph>true</UseRidGraph>
+    <UseAppxLibInfo>true</UseAppxLibInfo>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
