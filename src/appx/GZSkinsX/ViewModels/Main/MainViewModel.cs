@@ -63,38 +63,9 @@ internal sealed partial class MainViewModel : ObservableObject
 
     public bool SelectedIsNotNull => SelectedMod is not null;
 
-    public bool ShouldShowMyModsCount
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(ModsFilter))
-            {
-                return true;
-            }
+    public bool ShouldShowMyModsCount => !string.IsNullOrEmpty(ModsFilter) || MyModsCollection?.Any() == true;
 
-            var myModsCollection = MyModsCollection;
-            if (myModsCollection is not null && myModsCollection.Any())
-            {
-                return true;
-            }
-
-            return false;
-        }
-    }
-
-    public int MyModsCount
-    {
-        get
-        {
-            var myModsCollection = MyModsCollection;
-            if (myModsCollection is null)
-            {
-                return 0;
-            }
-
-            return myModsCollection.Count();
-        }
-    }
+    public int MyModsCount => MyModsCollection?.Count() ?? 0;
 
     public IMyModsService MyModsService { get; }
 
@@ -662,7 +633,7 @@ internal sealed partial class MainViewModel : ObservableObject
             // 移除不存在的项
             foreach (var item in _pathToModViewModel.Where(item =>
             {
-                return item.Value.ModInfo.FileInfo.Exists is false;
+                return File.Exists(item.Value.ModInfo.FileInfo.FullName) is false;
             }).ToArray())
             {
                 _pathToModViewModel.Remove(item.Key);
@@ -685,10 +656,13 @@ internal sealed partial class MainViewModel : ObservableObject
 
                     if (_pathToModViewModel.TryGetValue(file, out var modViewModel))
                     {
-                        modViewModel.ModImage = modImage;
-                        modViewModel.ModInfo = modInfo;
-                        modViewModel.IsInstalled = isInstalled;
-                        modViewModel.IndexOfTable = indexOfTable;
+                        await DispatcherQueue.EnqueueAsync(() =>
+                        {
+                            modViewModel.ModImage = modImage;
+                            modViewModel.ModInfo = modInfo;
+                            modViewModel.IsInstalled = isInstalled;
+                            modViewModel.IndexOfTable = indexOfTable;
+                        });
                     }
                     else
                     {
