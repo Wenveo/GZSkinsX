@@ -510,8 +510,7 @@
                 Margin="24,0,0,0"
                 DataContext="{x:Bind ViewModel, Mode=OneWay}"
                 Opacity="0.7"
-                Text="{Binding MyModsCount, Converter={StaticResource StringFormatConverter}, ConverterParameter={markups:LocalizedString ResourceKey=Resources/Main_MyMods_Collection_Count}}"
-                Visibility="{Binding ShouldShowMyModsCount, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                Text="{Binding MyModsCount, Converter={StaticResource StringFormatConverter}, ConverterParameter={markups:LocalizedString ResourceKey=Resources/Main_MyMods_Collection_Count}}" />
         </Grid>
 
         <ProgressRing

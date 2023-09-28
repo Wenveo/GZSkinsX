@@ -43,7 +43,6 @@ internal sealed partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(MyModsCollection))]
-    [NotifyPropertyChangedFor(nameof(ShouldShowMyModsCount))]
     [NotifyPropertyChangedFor(nameof(MyModsCount))]
     private string? _modsFilter;
 
@@ -54,7 +53,6 @@ internal sealed partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(MyModsCount))]
-    [NotifyPropertyChangedFor(nameof(ShouldShowMyModsCount))]
     private IEnumerable<MyModViewModel>? _myModsCollection;
 
     private readonly Dictionary<string, MyModViewModel> _pathToModViewModel = [];
@@ -62,8 +60,6 @@ internal sealed partial class MainViewModel : ObservableObject
     public bool SelectedIsNull => SelectedMod is null;
 
     public bool SelectedIsNotNull => SelectedMod is not null;
-
-    public bool ShouldShowMyModsCount => !string.IsNullOrEmpty(ModsFilter) || MyModsCollection?.Any() == true;
 
     public int MyModsCount => MyModsCollection?.Count() ?? 0;
 
