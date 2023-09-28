@@ -193,7 +193,7 @@
                             <controls:SettingsCard ContentAlignment="Left">
                                 <StackPanel Spacing="6">
                                     <HyperlinkButton x:Uid="Settings_About_App_Website_HyperlinkButton" />
-                                    <HyperlinkButton x:Uid="Settings_About_App_RateAndReview_HyperlinkButton" />
+                                    <HyperlinkButton x:Uid="Settings_About_App_RateAndReview_HyperlinkButton" Click="RateAndReview_Click" />
                                 </StackPanel>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>

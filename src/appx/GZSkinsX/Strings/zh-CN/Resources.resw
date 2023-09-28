@@ -369,9 +369,6 @@
   <data name="Settings_About_App_RateAndReview_HyperlinkButton.Content" xml:space="preserve">
     <value>评分及反馈</value>
   </data>
-  <data name="Settings_About_App_RateAndReview_HyperlinkButton.NavigateUri" xml:space="preserve">
-    <value>ms-windows-store://review/?PFN=61610AakStudio.64359D0915987_8fr87xx5s0whj</value>
-  </data>
   <data name="Settings_About_App_Website_HyperlinkButton.Content" xml:space="preserve">
     <value>格子皮肤站</value>
   </data>
