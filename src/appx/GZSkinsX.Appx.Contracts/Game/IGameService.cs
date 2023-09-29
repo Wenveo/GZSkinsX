@@ -30,6 +30,12 @@ public interface IGameService
     IGameData GameData { get; }
 
     /// <summary>
+    /// 确认游戏数据是否为有效的。
+    /// </summary>
+    /// <returns>如果当前游戏数据是有效的则返回 true，否则返回 false。</returns>
+    bool EnsureGameDataIsValid();
+
+    /// <summary>
     /// 尝试从传入指定的游戏目录以及区域来更新当前游戏数据的基本路径信息。
     /// </summary>
     /// <param name="rootFolder">游戏的根目录文件夹。</param>

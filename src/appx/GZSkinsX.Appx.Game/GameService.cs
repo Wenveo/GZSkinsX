@@ -46,6 +46,12 @@ internal sealed class GameService : IGameService
     }
 
     /// <inheritdoc/>
+    public bool EnsureGameDataIsValid()
+    {
+        return _gameData.TryUpdate(_settings.RootDirectory, _settings.CurrentRegion);
+    }
+
+    /// <inheritdoc/>
     public bool TryUpdate([NotNullWhen(true)] string? rootFolder, GameRegion region)
     {
         if (_gameData.TryUpdate(rootFolder, region))

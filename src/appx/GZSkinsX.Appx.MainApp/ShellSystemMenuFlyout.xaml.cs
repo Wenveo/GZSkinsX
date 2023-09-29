@@ -57,7 +57,7 @@ internal sealed partial class ShellSystemMenuFlyout : MenuFlyout
             MaximizeMenuItem.IsEnabled = true;
         }
 
-        if (CanNavigateToSettings())
+        if (AppxContext.GameService.EnsureGameDataIsValid())
         {
             SettingsMenuItem.Visibility = Visibility.Visible;
             SeparatorOfSettingsGroup.Visibility = Visibility.Visible;
@@ -67,21 +67,6 @@ internal sealed partial class ShellSystemMenuFlyout : MenuFlyout
             SettingsMenuItem.Visibility = Visibility.Collapsed;
             SeparatorOfSettingsGroup.Visibility = Visibility.Collapsed;
         }
-    }
-
-    private static bool CanNavigateToSettings()
-    {
-        if (AppxContext.GameService.RootDirectory is null)
-        {
-            return false;
-        }
-
-        if (AppxContext.GameService.CurrentRegion == default)
-        {
-            return false;
-        }
-
-        return true;
     }
 
     private void HideMenuAndDosomething(Action<HWND> action)

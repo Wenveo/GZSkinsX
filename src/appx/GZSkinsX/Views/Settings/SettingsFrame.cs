@@ -16,16 +16,6 @@ internal sealed class SettingsFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        if (AppxContext.GameService.RootDirectory is null)
-        {
-            return false;
-        }
-
-        if (AppxContext.GameService.CurrentRegion == default)
-        {
-            return false;
-        }
-
-        return true;
+        return AppxContext.GameService.EnsureGameDataIsValid();
     }
 }
