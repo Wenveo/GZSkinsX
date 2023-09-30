@@ -125,7 +125,7 @@ internal sealed partial class PreloadPage : Page
     private async Task TryCheckUpdatesAsync()
     {
         var updateInfo = await AppUpdater.TryGetAppInfoAsync();
-        if (updateInfo.IsEmpty)
+        if (updateInfo is null)
         {
             return;
         }

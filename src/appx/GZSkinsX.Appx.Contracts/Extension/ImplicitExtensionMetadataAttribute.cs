@@ -11,18 +11,18 @@ using System.Composition;
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 表示隐式扩展的元数据类
+/// 表示隐式扩展的元数据类。
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public sealed class ImplicitExtensionMetadataAttribute : Attribute
 {
     /// <summary>
-    /// 扩展的加载顺序
+    /// 扩展的加载顺序。
     /// </summary>
     public double Order { get; set; }
 
     /// <summary>
-    /// 扩展的触发类型
+    /// 扩展的触发类型。
     /// </summary>
     public ImplicitExtensionTrigger Trigger { get; set; }
 }

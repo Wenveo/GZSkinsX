@@ -157,7 +157,7 @@ internal sealed class WindowManagerService : IWindowManagerService
             : windowFrame.CanNavigateTo(args);
 
         AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.Appx.WindowManagerService.NavigateCore",
+            "GZSkinsX.Appx.WindowManager.WindowManagerService.NavigateCore",
             $"{(b ? "Can" : "Cannot")} navigate to the frame \"{context.Metadata.Guid}\".");
 
         if (b)
@@ -166,7 +166,7 @@ internal sealed class WindowManagerService : IWindowManagerService
                 args.NavigationTransitionInfo ?? new DrillInNavigationTransitionInfo()))
             {
                 AppxContext.LoggingService.LogOkay(
-                    "GZSkinsX.Appx.WindowManagerService.NavigateCore",
+                    "GZSkinsX.Appx.WindowManager.WindowManagerService.NavigateCore",
                     $"Successfully navigate to the frame \"{context.Metadata.Guid}\".");
 
                 _frame.BackStack.Clear();
@@ -174,7 +174,7 @@ internal sealed class WindowManagerService : IWindowManagerService
             else
             {
                 AppxContext.LoggingService.LogWarning(
-                    "GZSkinsX.Appx.WindowManagerService.NavigateCore",
+                    "GZSkinsX.Appx.WindowManager.WindowManagerService.NavigateCore",
                     $"Failed to navigate to the frame \"{context.Metadata.Guid}\".");
             }
         }

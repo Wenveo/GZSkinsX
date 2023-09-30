@@ -680,6 +680,7 @@ internal sealed partial class MounterService : IMounterService
             UseShellExecute = true,
             CreateNoWindow = true,
             Verb = "RunAs",
+            WorkingDirectory = Path.GetDirectoryName(filePath)
         });
     }
 

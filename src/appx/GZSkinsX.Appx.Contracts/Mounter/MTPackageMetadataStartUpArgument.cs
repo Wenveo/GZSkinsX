@@ -7,6 +7,11 @@
 
 namespace GZSkinsX.Contracts.Mounter;
 
-public readonly record struct MTPackageMetadataStartUpArgument(string Name, string Value)
+/// <summary>
+/// 服务组件的启动参数信息。
+/// </summary>
+/// <param name="Name">启动参数的名称。</param>
+/// <param name="Value">启动参数的具体值。</param>
+public record class MTPackageMetadataStartUpArgument(string Name, string Value)
 {
 }

@@ -55,14 +55,17 @@ public static class WinUITitleBar
             return;
         }
 
+        var columnDefinitions = titleBar.ColumnDefinitions;
+        var columnDefinitionsCount = columnDefinitions.Count;
+
         var scaleAdjustment = xamlRoot.RasterizationScale;
         var dragRectsList = new List<Windows.Graphics.RectInt32>();
 
-        int x = 0, height = (int)(Math.Round(titleBar.ActualHeight * scaleAdjustment));
-        for (var i = 0; i < titleBar.ColumnDefinitions.Count; i++)
+        int x = 0, height = (int)Math.Round(titleBar.ActualHeight * scaleAdjustment);
+        for (var i = 0; i < columnDefinitionsCount; i++)
         {
-            var column = titleBar.ColumnDefinitions[i];
-            var physicalWidth = (int)(Math.Round(column.ActualWidth * scaleAdjustment));
+            var column = columnDefinitions[i];
+            var physicalWidth = (int)Math.Round(column.ActualWidth * scaleAdjustment);
 
             if (GetUIContentType(column) is WinUITitleBarUIContentType.Caption)
             {

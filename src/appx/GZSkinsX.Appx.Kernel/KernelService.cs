@@ -386,10 +386,23 @@ internal sealed class KernelService : IKernelService
         throw new IndexOutOfRangeException();
     }
 
+    /// <summary>
+    /// 表示模块的清单信息。
+    /// </summary>
+    /// <param name="Path">模块文件的在线路径。</param>
+    /// <param name="Checksum">模块文件的校验和。</param>
     private record struct ModuleManifest(string Path, string Checksum)
     {
+        /// <summary>
+        /// 表示为空的模块清单。
+        /// </summary>
         public static readonly ModuleManifest Empty = new();
 
+        /// <summary>
+        /// 判断目标模块清单是否为空。
+        /// </summary>
+        /// <param name="moduleManifest">需要确认的模块清单。</param>
+        /// <returns>当目标模块清单不等于 <see cref="Empty"/> 并且子成员不为空时返回 true，否则返回 false。</returns>
         public static bool IsEmpty(in ModuleManifest moduleManifest)
         {
             if (moduleManifest == Empty) return true;

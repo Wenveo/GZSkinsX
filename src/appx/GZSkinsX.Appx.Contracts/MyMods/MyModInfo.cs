@@ -17,7 +17,7 @@ namespace GZSkinsX.Contracts.MyMods;
 /// <param name="Description">描述信息。</param>
 /// <param name="DateTime">创建日期。</param>
 /// <param name="FileInfo">文件信息。</param>
-public record struct MyModInfo(string Name, string Author, string Description, string DateTime, FileInfo FileInfo)
+public readonly record struct MyModInfo(string Name, string Author, string Description, string DateTime, FileInfo FileInfo)
 {
     /// <summary>
     /// 表示空的模组信息。

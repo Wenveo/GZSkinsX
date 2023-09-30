@@ -11,11 +11,18 @@ using Microsoft.UI.Xaml.Markup;
 
 namespace GZSkinsX.Contracts.Markups;
 
+/// <summary>
+/// 一个用于获取程序本地化资源的 XAML 标记扩展。
+/// </summary>
 [MarkupExtensionReturnType(ReturnType = typeof(string))]
 public sealed class LocalizedStringExtension : MarkupExtension
 {
+    /// <summary>
+    /// 获取或设置与目标资源所关联的键。
+    /// </summary>
     public string? ResourceKey { get; set; }
 
+    /// <inheritdoc/>
     protected override object ProvideValue()
     {
         if (string.IsNullOrEmpty(ResourceKey))

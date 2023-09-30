@@ -39,7 +39,6 @@ internal sealed class MRTCoreMap(ResourceMap resourceMap) : IMRTCoreMap
     public IMRTCoreMap GetSubtree(string reference)
     {
         ArgumentException.ThrowIfNullOrEmpty(reference);
-        var subtree = _resourceMap.GetSubtree(reference);
-        return new MRTCoreMap(subtree);
+        return new MRTCoreMap(_resourceMap.GetSubtree(reference));
     }
 }

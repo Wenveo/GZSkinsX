@@ -18,23 +18,23 @@ using Windows.ApplicationModel.Activation;
 
 namespace GZSkinsX.Appx.Activation;
 
+/// <inheritdoc cref="IActivationService"/>
 [Shared, Export(typeof(IActivationService))]
 internal sealed class ActivationService : IActivationService
 {
-    private readonly List<IActivationHandler> _handlers = new();
-
+    /// <inheritdoc/>
     public async Task ActivateAsync(AppActivationArguments args)
     {
         if (args.Data is IActivatedEventArgs uwpArgs)
         {
             AppxContext.LoggingService.LogAlways(
-                "GZSkinsX.Appx.ActivationService.ActivateAsync",
+                "GZSkinsX.Appx.Activation.ActivationService.ActivateAsync",
                 $"{{Type = {uwpArgs.GetType()}, Kind = {uwpArgs.Kind}, PreviousExecutionState = {uwpArgs.PreviousExecutionState}}}");
         }
         else
         {
             AppxContext.LoggingService.LogAlways(
-                "GZSkinsX.Appx.ActivationService.ActivateAsync",
+                "GZSkinsX.Appx.Activation.ActivationService.ActivateAsync",
                 $"{{Type = {args.Data.GetType()}, Kind = {args.Kind}}}");
         }
 
@@ -61,6 +61,7 @@ internal sealed class ActivationService : IActivationService
         }
     }
 
+    /// <inheritdoc/>
     public void RegisterHandler(IActivationHandler handler)
     {
         if (handler is null)
@@ -71,6 +72,7 @@ internal sealed class ActivationService : IActivationService
         _handlers.Add(handler);
     }
 
+    /// <inheritdoc/>
     public void UnregisterHandler(IActivationHandler handler)
     {
         if (handler is null)
@@ -80,4 +82,9 @@ internal sealed class ActivationService : IActivationService
 
         _handlers.Remove(handler);
     }
+
+    /// <summary>
+    /// 用于存储所有已注册的激活程序的列表。
+    /// </summary>
+    private readonly List<IActivationHandler> _handlers = new();
 }

@@ -7,40 +7,14 @@
 
 using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 
-using Windows.Data.Json;
-
 namespace GZSkinsX;
 
-internal readonly struct AppInfo
-{
-    public static readonly AppInfo Empty = new();
-
-    public readonly bool IsSupported;
-
-    public readonly bool NeedUpdates;
-
-    public readonly string UriString;
-
-    public readonly bool IsEmpty;
-
-    public AppInfo()
-    {
-        UriString = string.Empty;
-        IsEmpty = true;
-    }
-
-    public AppInfo(bool isSupported, bool needUpdates, string uriString)
-    {
-        IsSupported = isSupported;
-        NeedUpdates = needUpdates;
-        UriString = uriString;
-        IsEmpty = false;
-    }
-}
+internal sealed record class AppInfo(bool IsSupported, bool NeedUpdates, string UriString);
 
 internal sealed class AppUpdater
 {
@@ -50,7 +24,7 @@ internal sealed class AppUpdater
         new("http://x1.gzskins.com/MounterV3/ApplicationData.json")
     ];
 
-    public static async ValueTask<AppInfo> TryGetAppInfoAsync()
+    public static async Task<AppInfo?> TryGetAppInfoAsync()
     {
         using var httpClient = new HttpClient(new HttpClientHandler
         {
@@ -60,21 +34,6 @@ internal sealed class AppUpdater
         try
         {
             var applicationData = await DownloadApplicationInfoAsync(httpClient);
-            if (string.IsNullOrWhiteSpace(applicationData.MainApp))
-            {
-                return AppInfo.Empty;
-            }
-
-            if (string.IsNullOrWhiteSpace(applicationData.AppVersion))
-            {
-                return AppInfo.Empty;
-            }
-
-            if (string.IsNullOrWhiteSpace(applicationData.SupportedMinVersion))
-            {
-                return AppInfo.Empty;
-            }
-
             var needUpdate = Version.Parse(applicationData.AppVersion) != AppxContext.AppxVersion;
             var isSupported = Version.Parse(applicationData.SupportedMinVersion) <= AppxContext.AppxVersion;
 
@@ -86,7 +45,7 @@ internal sealed class AppUpdater
                 "GZSkinsX.App.AppUpdater.TryGetAppInfoAsync",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
-            return AppInfo.Empty;
+            return null;
         }
         finally
         {
@@ -98,48 +57,27 @@ internal sealed class AppUpdater
     {
         foreach (var uri in OnlineApplicationInfos)
         {
-            using var response = await httpClient.GetAsync(uri);
-            response.EnsureSuccessStatusCode();
+            var result = await httpClient.GetFromJsonAsync<ApplicationInfo>(uri);
+            if (result is null || string.IsNullOrEmpty(result.MainApp))
+            {
+                continue;
+            }
 
-            var result = await response.Content.ReadAsStringAsync();
-            var jsonObject = JsonObject.Parse(result);
+            if (string.IsNullOrEmpty(result.AppVersion))
+            {
+                continue;
+            }
 
-            return new ApplicationInfo(
-                jsonObject[nameof(ApplicationInfo.MainApp)].GetString(),
-                jsonObject[nameof(ApplicationInfo.AppVersion)].GetString(),
-                jsonObject[nameof(ApplicationInfo.SupportedMinVersion)].GetString());
+            if (string.IsNullOrEmpty(result.SupportedMinVersion))
+            {
+                continue;
+            }
+
+            return result;
         }
 
         throw new IndexOutOfRangeException();
     }
 
-
-    private readonly struct ApplicationInfo
-    {
-        public static readonly ApplicationInfo Empty = new();
-
-        public readonly string MainApp;
-
-        public readonly string AppVersion;
-
-        public readonly string SupportedMinVersion;
-
-        public readonly bool IsEmpty;
-
-        public ApplicationInfo()
-        {
-            MainApp = string.Empty;
-            AppVersion = string.Empty;
-            SupportedMinVersion = string.Empty;
-            IsEmpty = true;
-        }
-
-        public ApplicationInfo(string mainApp, string appVersion, string supportedMinVersion)
-        {
-            MainApp = mainApp;
-            AppVersion = appVersion;
-            SupportedMinVersion = supportedMinVersion;
-            IsEmpty = false;
-        }
-    }
+    private sealed record class ApplicationInfo(string MainApp, string AppVersion, string SupportedMinVersion) { }
 }

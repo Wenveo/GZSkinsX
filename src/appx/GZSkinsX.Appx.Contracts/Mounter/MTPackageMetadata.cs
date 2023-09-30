@@ -7,6 +7,18 @@
 
 namespace GZSkinsX.Contracts.Mounter;
 
+/// <summary>
+/// 服务组件包的元数据信息结构。
+/// </summary>
+/// <param name="Author">作者名称。</param>
+/// <param name="Version">版本字符串。</param>
+/// <param name="Description">包描述。</param>
+/// <param name="AboutTheAuthor">作者链接。</param>
+/// <param name="SettingsFile">配置文件的路径（相对路径）。</param>
+/// <param name="ExecutableFile">服务组件的启动程序（相对路径）。</param>
+/// <param name="ProcStartupArgs">服务组件的启动参数。</param>
+/// <param name="ProcTerminateArgs">终止服务组件的参数。</param>
+/// <param name="OtherStartupArgs">其它的启动参数选项。</param>
 public record class MTPackageMetadata(string Author, string Version, string Description, string AboutTheAuthor, string SettingsFile,
     string ExecutableFile, string ProcStartupArgs, string ProcTerminateArgs, MTPackageMetadataStartUpArgument[] OtherStartupArgs)
 {

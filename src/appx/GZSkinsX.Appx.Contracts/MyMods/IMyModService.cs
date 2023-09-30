@@ -123,21 +123,21 @@ public interface IMyModsService
     /// </summary>
     /// <param name="filePath">模组文件的路径。</param>
     /// <returns>当此操作完成时，将返回该模组文件的本地缓存图片地址。</returns>
-    Task<Uri> GetModImageAsync(string filePath);
+    Uri GetModImage(string filePath);
 
     /// <summary>
     /// 读取目标模组文件的模组信息。
     /// </summary>
     /// <param name="filePath">模组文件的路径。</param>
     /// <returns>当此操作完成时，将返回该模组文件的模组信息。</returns>
-    ValueTask<MyModInfo> ReadModInfoAsync(string filePath);
+    MyModInfo ReadModInfo(string filePath);
 
     /// <summary>
     /// 尝试读取目标模组文件的模组信息。
     /// </summary>
     /// <param name="filePath">模组文件的路径。</param>
-    /// <returns>如果成功读取该模组的文件的模组信息便会将其返回，否则将返回 null。</returns>
-    ValueTask<MyModInfo> TryReadModInfoAsync(string filePath);
+    /// <returns>如果成功读取该模组文件的模组信息便会将其返回，否则将返回 null。</returns>
+    MyModInfo? TryReadModInfo(string filePath);
 
     /// <summary>
     /// 刷新当前模组服务的上下文。

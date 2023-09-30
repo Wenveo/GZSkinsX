@@ -5,8 +5,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#nullable enable
-
 using System;
 using System.Composition;
 
@@ -22,7 +20,7 @@ namespace GZSkinsX.Appx.MRTCore;
 internal sealed class MRTCoreService : IMRTCoreService
 {
     /// <summary>
-    /// 当前应用程序的本地化资源管理实例
+    /// 当前应用程序的本地化资源管理实例。
     /// </summary>
     private readonly ResourceManager _resourceManager;
 
@@ -35,7 +33,7 @@ internal sealed class MRTCoreService : IMRTCoreService
     public IMRTCoreMap MainResourceMap => _mainResourceMap;
 
     /// <summary>
-    /// 初始化 <see cref="MRTCoreService"/> 的新实例
+    /// 初始化 <see cref="MRTCoreService"/> 的新实例。
     /// </summary>
     public MRTCoreService()
     {
@@ -51,7 +49,7 @@ internal sealed class MRTCoreService : IMRTCoreService
     private void OnResourceNotFound(ResourceManager sender, ResourceNotFoundEventArgs args)
     {
         AppxContext.LoggingService.LogError(
-            "GZSkinsX.Appx.MRTCore.OnResourceNotFound",
+            "GZSkinsX.Appx.MRTCore.MRTCoreService.OnResourceNotFound",
             $"The specific resource was not found \"{args.Name}\".");
     }
 

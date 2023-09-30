@@ -16,7 +16,7 @@ namespace GZSkinsX.Contracts.Kernel;
 public interface IKernelService
 {
     /// <summary>
-    /// 初始化核心模块 (非必需)。
+    /// 初始化核心模块（非必需）。
     /// <para>
     /// 由于模块初始化需要耗费一定的时间，如果能够提前进行调用，那么将能减少之后的首次操作所需的时间。
     /// </para>
@@ -48,7 +48,7 @@ public interface IKernelService
     /// </summary>
     /// <param name="input">格子模组文件的路径。</param>
     /// <param name="output">图片的输出路径。</param>
-    /// <exception cref="System.InvalidOperationException">当核心模块不存在或输入的文件无效时抛出。</exception>
+    /// <exception cref="InvalidOperationException">当核心模块不存在或输入的文件无效时抛出。</exception>
     void ExtractWGZModImage(string input, string output);
 
     /// <summary>
@@ -56,7 +56,7 @@ public interface IKernelService
     /// </summary>
     /// <param name="filePath">格子模组文件的路径。</param>
     /// <returns>返回已读取的格子模组文件的信息。</returns>
-    /// <exception cref="System.InvalidOperationException">当核心模块不存在或输入的文件无效时抛出。</exception>
+    /// <exception cref="InvalidOperationException">当核心模块不存在或输入的文件无效时抛出。</exception>
     WGZModInfo ReadWGZModInfo(string filePath);
 
     /// <summary>

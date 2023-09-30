@@ -92,6 +92,7 @@ internal sealed class AppxWindow : IAppxWindow
         }
 
         PInvoke.SetForegroundWindow(hWnd);
+        PInvoke.ShowWindow(hWnd, SHOW_WINDOW_CMD.SW_SHOW);
     }
 
     /// <inheritdoc/>

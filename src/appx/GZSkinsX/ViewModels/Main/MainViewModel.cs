@@ -343,7 +343,7 @@ internal sealed partial class MainViewModel : ObservableObject
         {
             try
             {
-                await MyModsService.ReadModInfoAsync(item);
+                MyModsService.ReadModInfo(item);
                 verifiedFiles.Add(item);
             }
             catch (Exception excp)
@@ -636,37 +636,40 @@ internal sealed partial class MainViewModel : ObservableObject
             }
 
             var modsFolder = await myModsService.GetModsFolderAsync();
-            if (Directory.Exists(modsFolder))
+            if (Directory.Exists(modsFolder) is false)
             {
-                foreach (var file in Directory.EnumerateFiles(modsFolder))
+                goto UpdateSettings;
+            }
+
+            foreach (var file in Directory.EnumerateFiles(modsFolder))
+            {
+                var modInfo = myModsService.TryReadModInfo(file);
+                if (modInfo.HasValue is false)
                 {
-                    var modInfo = await myModsService.TryReadModInfoAsync(file);
-                    if (MyModInfo.IsEmpty(modInfo))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    var modImage = await myModsService.GetModImageAsync(file);
-                    var indexOfTable = myModsService.IndexOfTable(file) + 1;
-                    var isInstalled = myModsService.IsInstalled(file);
+                var modImage = myModsService.GetModImage(file);
+                var indexOfTable = myModsService.IndexOfTable(file) + 1;
+                var isInstalled = myModsService.IsInstalled(file);
 
-                    if (_pathToModViewModel.TryGetValue(file, out var modViewModel))
+                if (_pathToModViewModel.TryGetValue(file, out var modViewModel))
+                {
+                    await DispatcherQueue.EnqueueAsync(() =>
                     {
-                        await DispatcherQueue.EnqueueAsync(() =>
-                        {
-                            modViewModel.ModImage = modImage;
-                            modViewModel.ModInfo = modInfo;
-                            modViewModel.IsInstalled = isInstalled;
-                            modViewModel.IndexOfTable = indexOfTable;
-                        });
-                    }
-                    else
-                    {
-                        _pathToModViewModel.Add(file, new(modInfo, modImage, isInstalled, indexOfTable));
-                    }
+                        modViewModel.ModImage = modImage;
+                        modViewModel.ModInfo = modInfo.Value;
+                        modViewModel.IsInstalled = isInstalled;
+                        modViewModel.IndexOfTable = indexOfTable;
+                    });
+                }
+                else
+                {
+                    _pathToModViewModel.Add(file, new(modInfo.Value, modImage, isInstalled, indexOfTable));
                 }
             }
 
+        UpdateSettings:
             await myModsService.UpdateSettingsAsync();
 
             AppxContext.LoggingService.LogOkay(

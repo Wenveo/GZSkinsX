@@ -450,7 +450,6 @@ internal sealed partial class LaunchButton : UserControl
         }
 
         var richTextBlock = new RichTextBlock();
-
         if (!string.IsNullOrEmpty(metadata.Version) && !string.IsNullOrWhiteSpace(metadata.Version))
         {
             var versionPara = new Paragraph();

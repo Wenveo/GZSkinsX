@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.MRTCore;
@@ -42,8 +43,14 @@ public static class ResourceHelper
     /// </summary>
     /// <param name="resourceKey">需要获取的本地化的资源的键。</param>
     /// <returns>返回获取到的本地化的资源。</returns>
-    public static string GetLocalized(string resourceKey)
+    [return: NotNullIfNotNull(nameof(resourceKey))]
+    public static string? GetLocalized(string? resourceKey)
     {
+        if (string.IsNullOrWhiteSpace(resourceKey))
+        {
+            return null;
+        }
+
         string? result;
         if (s_resxCache.TryGetValue(resourceKey, out var weakResx))
         {
@@ -65,8 +72,15 @@ public static class ResourceHelper
     /// </summary>
     /// <param name="resourceKey">需要获取的本地化的资源的键。</param>
     /// <returns>如果传入的 <paramref name="resourceKey"/> 包含特定的标识符则会获取本地化的资源，否则将会返回原对象。</returns>
-    public static string GetResxLocalizedOrDefault(string resourceKey)
+
+    [return: NotNullIfNotNull(nameof(resourceKey))]
+    public static string? GetResxLocalizedOrDefault(string? resourceKey)
     {
+        if (string.IsNullOrWhiteSpace(resourceKey))
+        {
+            return null;
+        }
+
         if (resourceKey.StartsWith("resx:"))
         {
             string? result;

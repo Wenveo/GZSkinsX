@@ -20,7 +20,7 @@ public interface IGameService
     GameRegion CurrentRegion { get; }
 
     /// <summary>
-    /// 获取当前游戏的根目录 (路径)。
+    /// 获取当前游戏的根目录（路径）。
     /// </summary>
     string? RootDirectory { get; }
 
@@ -30,7 +30,7 @@ public interface IGameService
     IGameData GameData { get; }
 
     /// <summary>
-    /// 确认游戏数据是否为有效的。
+    /// 确认当前游戏数据是否为有效的。
     /// </summary>
     /// <returns>如果当前游戏数据是有效的则返回 true，否则返回 false。</returns>
     bool EnsureGameDataIsValid();

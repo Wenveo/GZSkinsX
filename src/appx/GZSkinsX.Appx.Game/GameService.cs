@@ -20,7 +20,7 @@ internal sealed class GameService : IGameService
     /// <summary>
     /// 用于存储以及更新配置。
     /// </summary>
-    private readonly GameSettings _settings;
+    private readonly GameSettings _settings = AppxContext.Resolve<GameSettings>();
 
     /// <summary>
     /// 当前内部游戏数据实例。
@@ -41,8 +41,7 @@ internal sealed class GameService : IGameService
     /// </summary>
     public GameService()
     {
-        _settings = AppxContext.Resolve<GameSettings>();
-        TryUpdate(_settings.RootDirectory, _settings.CurrentRegion);
+        EnsureGameDataIsValid();
     }
 
     /// <inheritdoc/>
@@ -59,14 +58,14 @@ internal sealed class GameService : IGameService
             _settings.CurrentRegion = region;
             _settings.RootDirectory = rootFolder;
 
-            AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.GameService.TryUpdate",
+            AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Game.GameService.TryUpdate",
                 $"Update game data successfully /p:GameRegion=\"{region}\" /p:RootDirectory=\"{rootFolder}\"");
 
             return true;
         }
 
         var path = rootFolder is not null ? rootFolder : "<null>";
-        AppxContext.LoggingService.LogWarning("GZSkinsX.Appx.GameService.TryUpdateAsync",
+        AppxContext.LoggingService.LogWarning("GZSkinsX.Appx.Game.GameService.TryUpdateAsync",
             $"Failed to update game data /p:GameRegion=\"{region}\" /p:RootDirectory=\"{path}\".");
 
         return false;

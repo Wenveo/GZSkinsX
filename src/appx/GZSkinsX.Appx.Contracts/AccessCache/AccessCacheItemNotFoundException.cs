@@ -9,6 +9,10 @@ using System;
 
 namespace GZSkinsX.Contracts.AccessCache;
 
+/// <summary>
+/// 表示在找不到指定的可访问缓存项时发生的异常。
+/// </summary>
+/// <param name="itemName">缓存项的名称。</param>
 public sealed class AccessCacheItemNotFoundException(string itemName)
     : Exception($"No item with a matching name was found in the stored list: {itemName}")
 { }
