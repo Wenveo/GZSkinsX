@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Controls;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Mounter;
 
@@ -21,9 +20,9 @@ using Microsoft.UI.Xaml.Documents;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace GZSkinsX.Controls;
+namespace GZSkinsX.Contracts.Controls;
 
-internal sealed partial class LaunchButton : UserControl
+public sealed partial class LaunchButton : UserControl
 {
 #pragma warning disable format
     internal const string DefaultState         = "LaunchButton_State_Default";
@@ -273,7 +272,7 @@ internal sealed partial class LaunchButton : UserControl
     {
         HideAllTeachingTips();
 
-        var format = ResourceHelper.GetLocalized("Resources/LaunchButton_RunFailedTeachingTip_ErrorMessage");
+        var format = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_RunFailedTeachingTip_ErrorMessage");
         LaunchButton_RunFailedTeachingTip.Subtitle = string.Format(format, content);
         LaunchButton_RunFailedTeachingTip.IsOpen = true;
 
@@ -287,7 +286,7 @@ internal sealed partial class LaunchButton : UserControl
         var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Version));
         if (metadata is not null)
         {
-            var format = ResourceHelper.GetLocalized("Resources/LaunchButton_UpToDateTeachingTip_CurrentVersion");
+            var format = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_UpToDateTeachingTip_CurrentVersion");
             LaunchButton_UpToDateTeachingTip.Subtitle = string.Format(format, metadata.Version);
         }
         else
@@ -453,7 +452,7 @@ internal sealed partial class LaunchButton : UserControl
         if (!string.IsNullOrEmpty(metadata.Version) && !string.IsNullOrWhiteSpace(metadata.Version))
         {
             var versionPara = new Paragraph();
-            versionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Version") });
+            versionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_About_Dialog_Version") });
             versionPara.Inlines.Add(new Run() { Text = metadata.Version });
 
             richTextBlock.Blocks.Add(versionPara);
@@ -462,7 +461,7 @@ internal sealed partial class LaunchButton : UserControl
         if (!string.IsNullOrEmpty(metadata.Author) && !string.IsNullOrWhiteSpace(metadata.Author))
         {
             var authorPara = new Paragraph();
-            authorPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Author") });
+            authorPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_About_Dialog_Author") });
 
             if (string.IsNullOrEmpty(metadata.AboutTheAuthor) || string.IsNullOrWhiteSpace(metadata.AboutTheAuthor))
             {
@@ -481,7 +480,7 @@ internal sealed partial class LaunchButton : UserControl
         if (!string.IsNullOrEmpty(metadata.Description) && !string.IsNullOrWhiteSpace(metadata.Description))
         {
             var descriptionPara = new Paragraph();
-            descriptionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Description") });
+            descriptionPara.Inlines.Add(new Run() { Text = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_About_Dialog_Description") });
             descriptionPara.Inlines.Add(new Run() { Text = metadata.Description });
 
             richTextBlock.Blocks.Add(descriptionPara);
@@ -491,8 +490,8 @@ internal sealed partial class LaunchButton : UserControl
         {
             XamlRoot = XamlRoot,
             Content = richTextBlock,
-            CloseButtonText = ResourceHelper.GetLocalized("Resources/Common_Dialog_OK"),
-            Title = ResourceHelper.GetLocalized("Resources/LaunchButton_About_Dialog_Title"),
+            CloseButtonText = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_About_Dialog_CloseButtonText"),
+            Title = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_About_Dialog_Title"),
         };
 
         await contentDialog.ShowAsync();

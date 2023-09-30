@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:animations="using:CommunityToolkit.WinUI.Animations"
-    xmlns:ctrls="using:GZSkinsX.Controls"
     xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:GZSkinsX.Views"
@@ -583,7 +582,7 @@
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
                 Spacing="6">
-                <ctrls:LaunchButton x:Name="MainLaunchButton" Height="32" />
+                <ctrls2:LaunchButton x:Name="MainLaunchButton" Height="32" />
 
                 <Button
                     x:Uid="Main_Settings_Menu"
