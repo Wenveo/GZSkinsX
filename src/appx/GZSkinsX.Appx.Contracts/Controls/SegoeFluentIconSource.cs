@@ -15,8 +15,10 @@ public sealed class SegoeFluentIconSource : Microsoft.UI.Xaml.Controls.FontIconS
     /// <summary>
     /// 初始化 <see cref="SegoeFluentIconSource"/> 的新实例。
     /// </summary>
-    public SegoeFluentIconSource()
-    {
-        FontFamily = StaticFontFamilys.SegoeFluentIcons;
-    }
+    public SegoeFluentIconSource() => FontFamily = StaticFontFamilys.SegoeFluentIcons;
+
+    /// <summary>
+    /// 使用特定的字符代码初始化 <see cref="SegoeFluentIconSource"/> 的新实例。
+    /// </summary>
+    public SegoeFluentIconSource(string glyph) : this() => Glyph = glyph;
 }

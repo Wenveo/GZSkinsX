@@ -15,8 +15,10 @@ public sealed class SegoeMDL2Assets : Microsoft.UI.Xaml.Controls.FontIcon
     /// <summary>
     /// 初始化 <see cref="SegoeMDL2Assets"/> 的新实例。
     /// </summary>
-    public SegoeMDL2Assets()
-    {
-        FontFamily = StaticFontFamilys.SegoeMDL2Assets;
-    }
+    public SegoeMDL2Assets() => FontFamily = StaticFontFamilys.SegoeMDL2Assets;
+
+    /// <summary>
+    /// 使用特定的字符代码初始化 <see cref="SegoeMDL2Assets"/> 的新实例。
+    /// </summary>
+    public SegoeMDL2Assets(string glyph) : this() => Glyph = glyph;
 }
