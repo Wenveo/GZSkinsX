@@ -8,7 +8,7 @@
     xmlns:local="using:GZSkinsX.Appx.MainApp"
     xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
+    ctrls2:FlyoutThemeHelper.FixThemeSync="True"
     Opening="OnOpening"
     Placement="BottomEdgeAlignedLeft"
     mc:Ignorable="d">
@@ -86,7 +86,7 @@
         Click="OnSettingsMenuItemClick"
         Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Settings}">
         <MenuFlyoutItem.Icon>
-            <ctrls2:SegoeFluentIcon Glyph="&#xE713;" />
+            <ctrls2:SegoeFluentIcon Margin="-1" Glyph="&#xE713;" />
         </MenuFlyoutItem.Icon>
         <MenuFlyoutItem.KeyboardAccelerators>
             <KeyboardAccelerator Key="I" />

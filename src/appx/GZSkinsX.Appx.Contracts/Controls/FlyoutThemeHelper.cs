@@ -19,11 +19,11 @@ namespace GZSkinsX.Contracts.Controls;
 
 public static class FlyoutThemeHelper
 {
-    public static readonly DependencyProperty AllowSyncThemeProperty =
-        DependencyProperty.RegisterAttached("AllowSyncTheme", typeof(bool),
-            typeof(FlyoutThemeHelper), new PropertyMetadata(false, OnAllowSyncThemeChangedCallback));
+    public static readonly DependencyProperty FixThemeSyncProperty =
+        DependencyProperty.RegisterAttached("FixThemeSync", typeof(bool),
+            typeof(FlyoutThemeHelper), new PropertyMetadata(false, OnFixThemeSyncChangedCallback));
 
-    private static void OnAllowSyncThemeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnFixThemeSyncChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var flyout = d as FlyoutBase;
         if (flyout is not null)
@@ -89,13 +89,13 @@ public static class FlyoutThemeHelper
         // More...
     }
 
-    public static bool GetAllowSyncTheme(FlyoutBase obj)
+    public static bool GetFixThemeSync(FlyoutBase obj)
     {
-        return (bool)obj.GetValue(AllowSyncThemeProperty);
+        return (bool)obj.GetValue(FixThemeSyncProperty);
     }
 
-    public static void SetAllowSyncTheme(FlyoutBase obj, bool value)
+    public static void SetFixThemeSync(FlyoutBase obj, bool value)
     {
-        obj.SetValue(AllowSyncThemeProperty, value);
+        obj.SetValue(FixThemeSyncProperty, value);
     }
 }

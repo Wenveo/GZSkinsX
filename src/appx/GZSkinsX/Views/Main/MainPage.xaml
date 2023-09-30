@@ -22,7 +22,7 @@
 
             <MenuFlyout
                 x:Name="ContentGrid_ContextFlyout_Win10"
-                ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
+                ctrls2:FlyoutThemeHelper.FixThemeSync="True"
                 Placement="BottomEdgeAlignedLeft">
                 <MenuFlyoutItem
                     Command="{x:Bind ViewModel.InstallCommand, Mode=OneWay}"
@@ -147,7 +147,7 @@
 
             <CommandBarFlyout
                 x:Name="ContentGrid_ContextFlyout_Win11"
-                ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
+                ctrls2:FlyoutThemeHelper.FixThemeSync="True"
                 Placement="BottomEdgeAlignedLeft">
                 <CommandBarFlyout.PrimaryCommands>
                     <AppBarButton
@@ -601,7 +601,7 @@
                     <Button.Flyout>
                         <MenuFlyout
                             x:Name="MainSettingsMenuFlyout"
-                            ctrls2:FlyoutThemeHelper.AllowSyncTheme="True"
+                            ctrls2:FlyoutThemeHelper.FixThemeSync="True"
                             Opening="OnMainSettingsMenuFlyoutOpening"
                             Placement="Bottom">
                             <RadioMenuFlyoutItem
