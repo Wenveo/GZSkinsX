@@ -4,7 +4,6 @@
     <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>GZSkinsX</RootNamespace>
-    <DefaultLanguage>zh-CN</DefaultLanguage>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x64</Platforms>
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
