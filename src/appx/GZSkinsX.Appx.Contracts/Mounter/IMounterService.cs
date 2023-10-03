@@ -67,9 +67,6 @@ public interface IMounterService
 
     /// <summary>
     /// 从服务器中下载和更新组件。
-    /// <para>
-    /// 注意，此方法为强制性更新，在进行下载和更新前请务必使用 <seealso cref="CheckForUpdatesAsync"/> 检查是否有必要更新。
-    /// </para>
     /// </summary>
     /// <param name="progress">用于报告进度更新。</param>
     Task UpdateAsync(IProgress<double>? progress = null);

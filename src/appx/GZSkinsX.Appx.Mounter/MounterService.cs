@@ -313,32 +313,35 @@ internal sealed partial class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task UpdateAsync(IProgress<double>? progress = null)
     {
+        var checkVersion = false;
         MTPackageMetadata? previousMetadata = null;
-
-        var onlineManifest = await DownloadPackageManifestAsync(new((value) => progress?.Report(value * 6)));
         if (TryGetMounterWorkingDirectory(out var workingDirectory))
         {
             previousMetadata = await TryGetLocalMTPackageMetadataAsync(workingDirectory,
                 nameof(MTPackageMetadata.Version), nameof(MTPackageMetadata.SettingsFile));
 
-            if (previousMetadata is not null)
+            if (await VerifyContentIntegrityCoreAsync(workingDirectory))
             {
-                if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version))
-                {
-                    AppxContext.LoggingService.LogAlways(
-                        "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
-                        "This component is already up to date.");
-
-                    return;
-                }
+                // 当校验完包内容后
+                // 再次检查组件版本
+                checkVersion = true;
             }
         }
 
-        var destFolder = await DownloadMTPackageAsync(new(onlineManifest.Path!), new((value) =>
+        var onlineManifest = await DownloadPackageManifestAsync();
+        if (checkVersion && previousMetadata is not null)
         {
-            progress?.Report(6 + value * 94);
-        }));
+            if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version))
+            {
+                AppxContext.LoggingService.LogAlways(
+                    "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
+                    "This component is already up to date.");
 
+                return;
+            }
+        }
+
+        var destFolder = await DownloadMTPackageAsync(new(onlineManifest.Path!), new((value) => progress?.Report(value * 100)));
         if (workingDirectory is not null && previousMetadata is not null)
         {
             var newMetadata = await TryGetLocalMTPackageMetadataAsync(destFolder, nameof(MTPackageMetadata.SettingsFile));
@@ -371,6 +374,12 @@ internal sealed partial class MounterService : IMounterService
             return false;
         }
 
+        return await VerifyContentIntegrityCoreAsync(workingDirectory);
+    }
+
+    /// <inheritdoc cref="VerifyContentIntegrityAsync"/>
+    private static async Task<bool> VerifyContentIntegrityCoreAsync(string workingDirectory)
+    {
         var blockmapFile = Path.Combine(workingDirectory, "_metadata", "blockmap.json");
         if (File.Exists(blockmapFile) is false)
         {
@@ -386,7 +395,7 @@ internal sealed partial class MounterService : IMounterService
         catch (Exception excp)
         {
             AppxContext.LoggingService.LogError(
-                "GZSkinsX.Appx.Mounter.MounterService.VerifyLocalMTPackageIntegrityAsync",
+                "GZSkinsX.Appx.Mounter.MounterService.VerifyContentIntegrityCoreAsync",
                 $"""
                     Failed to deserialize block map json "{blockmapFile}".
                     {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
@@ -425,7 +434,7 @@ internal sealed partial class MounterService : IMounterService
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.VerifyLocalMTPackageIntegrityAsync",
+                    "GZSkinsX.Appx.Mounter.MounterService.VerifyContentIntegrityAsync",
                     $"""
                     Failed to calculate file checksum "{path}".
                     {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
