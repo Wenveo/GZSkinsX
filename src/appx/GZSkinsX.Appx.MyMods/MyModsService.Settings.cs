@@ -182,10 +182,21 @@ partial class MyModsService
 
         // 设置默认的 Wad 目录路径
         string? wadsFolder;
-        if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_CUSTOMINSTALL_NAME, out value) is false ||
-            string.IsNullOrWhiteSpace(wadsFolder = GetStringFromJson(value)))
+        if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_CUSTOMINSTALL_NAME, out value))
         {
-            settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = wadsFolder = GetWGZSubFolderPath("Wads");
+            wadsFolder = GetStringFromJson(value);
+            if (string.IsNullOrWhiteSpace(wadsFolder))
+            {
+                wadsFolder = GetWGZSubFolderPath("Wads");
+            }
+            else if (wadsFolder[^1] != Path.DirectorySeparatorChar)
+            {
+                wadsFolder = Path.GetFullPath(wadsFolder) + Path.DirectorySeparatorChar;
+            }
+        }
+        else
+        {
+            wadsFolder = GetWGZSubFolderPath("Wads");
         }
 
         // 当目标文件夹不存在时将其创建
@@ -197,15 +208,32 @@ partial class MyModsService
             }
             catch
             {
+                // 如果无法创建目录或者给定的路径无效而引发了异常，
+                // 那么将此变量的内容设为空，避免写出无效的路径。
+                wadsFolder = string.Empty;
             }
         }
 
+        // 将 Wad 目录的路径写出到配置。
+        settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = wadsFolder;
+
         // 设置默认的 Mod 目录路径
         string? modsFolder;
-        if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_RGZINSTALL_NAME, out value) is false ||
-            string.IsNullOrWhiteSpace(modsFolder = GetStringFromJson(value)))
+        if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_RGZINSTALL_NAME, out value))
         {
-            settingsData.GZSkins[MT_SETTINGS_RGZINSTALL_NAME] = modsFolder = GetWGZSubFolderPath("Mods");
+            modsFolder = GetStringFromJson(value);
+            if (string.IsNullOrWhiteSpace(modsFolder))
+            {
+                modsFolder = GetWGZSubFolderPath("Mods");
+            }
+            else if (modsFolder[^1] != Path.DirectorySeparatorChar)
+            {
+                modsFolder = Path.GetFullPath(modsFolder) + Path.DirectorySeparatorChar;
+            }
+        }
+        else
+        {
+            modsFolder = GetWGZSubFolderPath("Mods");
         }
 
         // 当目标文件夹不存在时将其创建
@@ -217,12 +245,15 @@ partial class MyModsService
             }
             catch
             {
+                // 同理，如果给定的路径无效或无法创建文件夹时清空配置，并跳过下方的文件表生成。
+                settingsData.GZSkins[MT_SETTINGS_RGZINSTALL_NAME] = string.Empty;
+                settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = string.Empty;
+                return;
             }
-
-            // 进入此处时表示目标文件夹不存在，因此将下方配置选项设为空并返回。
-            settingsData.GZSkins[MT_SETTINGS_FILETABLE_NAME] = string.Empty;
-            return;
         }
+
+        // 将 Mod 目录的路径写出到配置。
+        settingsData.GZSkins[MT_SETTINGS_RGZINSTALL_NAME] = modsFolder;
 
         // 在以下代码中需要手动生成文件的完整路径名，
         // 并对已安装的模组文件列表进行一个文件检查。
