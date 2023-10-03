@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -136,7 +137,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
         if (folder is not null)
         {
             await AppxContext.MyModsService.SetModsFolderAsync(folder.Path);
-            ModsFolder = folder.Path;
+            ModsFolder = folder.Path + Path.DirectorySeparatorChar;
         }
 
     }
@@ -154,7 +155,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
         if (folder is not null)
         {
             await AppxContext.MyModsService.SetWadsFolderAsync(folder.Path);
-            WadsFolder = folder.Path;
+            WadsFolder = folder.Path + Path.DirectorySeparatorChar;
         }
     }
 }
