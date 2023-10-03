@@ -94,6 +94,22 @@ public static class FlyoutThemeHelper
         }
         else if (sender is CommandBarFlyout muxcCommandBarFlyout)
         {
+            static void FixIsPointerOver(IEnumerable<ICommandBarElement> elements)
+            {
+                foreach (var item in elements)
+                {
+                    // AppBarButton & AppBarToggleButton
+                    if (item is ButtonBase { IsPointerOver: true } button)
+                    {
+                        button.ClearValue(ButtonBase.IsPointerOverProperty);
+                    }
+                }
+            }
+
+            // 部分元素可能会在打开时，明明鼠标不在其位置上但仍具有类似 Hover 的外观或行为
+            FixIsPointerOver(muxcCommandBarFlyout.PrimaryCommands);
+            FixIsPointerOver(muxcCommandBarFlyout.SecondaryCommands);
+
             SyncThemeCore(muxcCommandBarFlyout.PrimaryCommands.OfType<FrameworkElement>(), actualTheme);
             SyncThemeCore(muxcCommandBarFlyout.SecondaryCommands.OfType<FrameworkElement>(), actualTheme);
         }
