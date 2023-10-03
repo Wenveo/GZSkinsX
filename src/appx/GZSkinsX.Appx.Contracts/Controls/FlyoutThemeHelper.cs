@@ -65,6 +65,17 @@ public static class FlyoutThemeHelper
                     SyncThemeCore(subItem.Items, requestedTheme);
                 }
 
+                var previousTheme = item.ActualTheme;
+                if (previousTheme == requestedTheme)
+                {
+                    // 如果与先前的主题相同
+                    // 那么先取反，切换一遍
+                    // 避免相同的主题不生效
+                    item.RequestedTheme =
+                        requestedTheme is ElementTheme.Light ?
+                        ElementTheme.Dark : ElementTheme.Light;
+                }
+
                 item.RequestedTheme = requestedTheme;
             }
         }
