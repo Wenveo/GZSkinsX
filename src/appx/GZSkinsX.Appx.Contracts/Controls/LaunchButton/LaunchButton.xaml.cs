@@ -176,7 +176,7 @@ public sealed partial class LaunchButton : UserControl
 
     public async Task OnTerminateAndUpdateAsync()
     {
-        if (EnsureState(UpdatingState) || EnsureState(RunningState) is false)
+        if ((EnsureState(UpdatingState) || EnsureState(RunningState) is false) && EnsureState(CheckForUpdatesState) is false)
         {
             return;
         }
@@ -184,14 +184,14 @@ public sealed partial class LaunchButton : UserControl
         try
         {
             await AppxContext.MounterService.TerminateAsync();
+            await OnUpdateAsync();
         }
         catch (Exception excp)
         {
             await ShowRunFailedTeachingTipAsync(excp.Message);
+            await UpdateLaunchStateAsync();
             return;
         }
-
-        await OnUpdateAsync();
     }
 
     public async Task OnUpdateAsync()
@@ -204,6 +204,7 @@ public sealed partial class LaunchButton : UserControl
         HideAllTeachingTips();
 
         LaunchButton_State_Updating_ProgressRing.Value = 0;
+        LaunchButton_State_Updating_ProgressRing.IsIndeterminate = true;
         AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
 
         await UpdateLaunchStateAsync(UpdatingState);
@@ -219,6 +220,7 @@ public sealed partial class LaunchButton : UserControl
                 await DispatcherQueue.EnqueueAsync(() =>
                 {
                     LaunchButton_State_Updating_ProgressRing.Value = p;
+                    LaunchButton_State_Updating_ProgressRing.IsIndeterminate = false;
                 });
             }));
 
