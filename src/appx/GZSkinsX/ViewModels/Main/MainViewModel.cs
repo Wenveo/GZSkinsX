@@ -626,19 +626,33 @@ internal sealed partial class MainViewModel : ObservableObject
             var myModsService = MyModsService;
             await myModsService.RefreshAsync();
 
-            // 移除不存在的项
-            foreach (var item in _pathToModViewModel.Where(item =>
-            {
-                return File.Exists(item.Value.ModInfo.FileInfo.FullName) is false;
-            }).ToArray())
-            {
-                _pathToModViewModel.Remove(item.Key);
-            }
-
             var modsFolder = await myModsService.GetModsFolderAsync();
             if (Directory.Exists(modsFolder) is false)
             {
                 goto UpdateSettings;
+            }
+            else
+            {
+                var realModFolder = Path.GetFullPath(modsFolder);
+
+                // 移除不存在的项
+                foreach (var item in _pathToModViewModel.Where(item =>
+                {
+                    var fileInfo = item.Value.ModInfo.FileInfo;
+                    if (fileInfo.DirectoryName != realModFolder)
+                    {
+                        // 当文件夹不匹配时应当移除。
+                        return true;
+                    }
+                    else
+                    {
+                        // 其次是判断目标文件夹中该文件是否不存在。
+                        return File.Exists(fileInfo.FullName) is false;
+                    }
+                }).ToArray())
+                {
+                    _pathToModViewModel.Remove(item.Key);
+                }
             }
 
             foreach (var file in Directory.EnumerateFiles(modsFolder))
