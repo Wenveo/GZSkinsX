@@ -26,6 +26,7 @@ public static partial class AppxContext
         "GZSkinsX.Contracts.Activation.IActivationService",
         "GZSkinsX.Contracts.Appx.IAppxTitleBar",
         "GZSkinsX.Contracts.Appx.IAppxWindow",
+        "GZSkinsX.Contracts.ContextMenu.IContextMenuService",
         "GZSkinsX.Contracts.Game.IGameService",
         "GZSkinsX.Contracts.Kernel.IKernelService",
         "GZSkinsX.Contracts.Logging.ILoggingService",
