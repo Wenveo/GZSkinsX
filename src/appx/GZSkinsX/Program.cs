@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Composition;
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Extension;
 
 using Microsoft.UI.Dispatching;
@@ -41,7 +40,7 @@ internal static partial class Program
     {
         if (EnsureWindowsApp() is false)
         {
-            Environment.Exit(MessageBoxW(0, $"请确保该应用已被正常安装。{Environment.NewLine}(Please ensure the application has been properly installed.)", string.Empty, 0));
+            Environment.Exit(MessageBoxW(0, $"请确保该应用已被正常安装。{Environment.NewLine}(Make sure the application is installed correctly.)", string.Empty, 0));
         }
 
         XamlCheckProcessRequirements();
@@ -83,7 +82,7 @@ internal static partial class Program
             }
 
             /// 通知应用程序退出的事件。
-            extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppExit);
+            extensionService.OnAppExit();
         }
     }
 

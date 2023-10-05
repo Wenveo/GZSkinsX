@@ -5,19 +5,25 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System;
-using System.Composition;
-
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 表示通用扩展的元数据类。
+/// 关于自动加载的扩展的激活规则。
 /// </summary>
-[MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class UniversalExtensionMetadataAttribute : Attribute
+public enum AutoLoadedActivationConstraint
 {
     /// <summary>
-    /// 扩展的加载顺序。
+    /// 在加载应用扩展之前。
     /// </summary>
-    public double Order { get; set; }
+    BeforeExtensions,
+
+    /// <summary>
+    /// 在加载完应用扩展之后。
+    /// </summary>
+    AfterExtensions,
+
+    /// <summary>
+    /// 在应用载入完成后激活。
+    /// </summary>
+    AppLoaded,
 }

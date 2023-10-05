@@ -11,18 +11,18 @@ using System.Composition;
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 表示隐式扩展的元数据类。
+/// 包含有关应用程序扩展的附加信息，并声明目标类型为应用程序扩展对象。
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ImplicitExtensionMetadataAttribute : Attribute
+public sealed class ExtensionContractAttribute : ExportAttribute
 {
     /// <summary>
-    /// 扩展的加载顺序。
+    /// 初始化 <see cref="ExtensionContractAttribute"/> 的新实例，并以 <see cref="IExtension"/> 类型导出。
     /// </summary>
-    public double Order { get; set; }
+    public ExtensionContractAttribute() : base(typeof(IExtension)) { }
 
     /// <summary>
-    /// 扩展的触发类型。
+    /// 获取和设置扩展的加载顺序。
     /// </summary>
-    public ImplicitExtensionTrigger Trigger { get; set; }
+    public double Order { get; set; }
 }

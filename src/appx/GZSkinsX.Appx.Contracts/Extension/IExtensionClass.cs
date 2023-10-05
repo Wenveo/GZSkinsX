@@ -8,9 +8,8 @@
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 使用该接口表明为隐式扩展。
+/// 应用程序的通用扩展接口，所有的 "应用程序扩展" 都应继承于此。
 /// </summary>
-public interface IImplicitExtension
+public interface IExtensionClass
 {
-
 }

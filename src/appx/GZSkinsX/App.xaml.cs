@@ -33,15 +33,13 @@ public partial class App : Application
     private static Lazy<Action<App>> InitializeServiceAsync { get; } = new(() => (app) =>
     {
         var extensionService = AppxContext.Resolve<ExtensionService>();
-        extensionService.LoadImplicitExtensions(ImplicitExtensionTrigger.BeforeUniversalExtensions);
+        extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.BeforeExtensions);
         foreach (var rsrc in extensionService.GetMergedResourceDictionaries())
         {
             app.Resources.MergedDictionaries.Add(rsrc);
         }
 
-        extensionService.LoadImplicitExtensions(ImplicitExtensionTrigger.AfterUniversalExtensions);
-        extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.Loaded);
-        extensionService.LoadImplicitExtensions(ImplicitExtensionTrigger.AfterUniversalExtensionsLoaded);
+        extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.AfterExtensions);
     });
 
     /// <summary>
@@ -59,10 +57,9 @@ public partial class App : Application
         CompositionTarget.Rendering -= OnRendering;
 
         var extensionService = AppxContext.Resolve<ExtensionService>();
-        extensionService.LoadImplicitExtensions(ImplicitExtensionTrigger.AppLoaded);
-        extensionService.NotifyUniversalExtensions(UniversalExtensionEvent.AppLoaded);
-
+        extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.AppLoaded);
         AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
+        extensionService.OnAppLoaded();
     }
 
     internal void OnActivated(object? sender, AppActivationArguments e)

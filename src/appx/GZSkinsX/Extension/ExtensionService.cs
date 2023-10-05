@@ -24,49 +24,35 @@ namespace GZSkinsX.Extension;
 internal sealed class ExtensionService
 {
     /// <summary>
-    /// 存放已枚举的隐式扩展的集合。
+    /// 存放已枚举的自动加载的扩展的集合。
     /// </summary>
-    private readonly Lazy<IImplicitExtension, ImplicitExtensionMetadataAttribute>[] _mefImplicitExtensions;
+    private readonly Lazy<IExtensionClass, AutoLoadedContractAttribute>[] _mefAutoLoaded;
 
     /// <summary>
-    /// 存放已枚举的通用扩展的集合。
+    /// 存放已枚举的应用程序扩展的集合。
     /// </summary>
-    private readonly Lazy<IUniversalExtension, UniversalExtensionMetadataAttribute>[] _mefUniversalExtensions;
-
-    /// <summary>
-    /// 获取所有通用扩展的实例。
-    /// </summary>
-    public IEnumerable<IUniversalExtension> Extensions
-    {
-        get
-        {
-            foreach (var item in _mefUniversalExtensions)
-            {
-                yield return item.Value;
-            }
-        }
-    }
+    private readonly Lazy<IExtension, ExtensionContractAttribute>[] _mefExtensions;
 
     /// <summary>
     /// 初始化 <see cref="ExtensionService"/> 的新实例。
     /// </summary>
     [ImportingConstructor]
     public ExtensionService(
-        [ImportMany] IEnumerable<Lazy<IImplicitExtension, ImplicitExtensionMetadataAttribute>> mefImplicitExtensions,
-        [ImportMany] IEnumerable<Lazy<IUniversalExtension, UniversalExtensionMetadataAttribute>> mefUniversalExtensions)
+        [ImportMany] IEnumerable<Lazy<IExtensionClass, AutoLoadedContractAttribute>> mefAutoLoaded,
+        [ImportMany] IEnumerable<Lazy<IExtension, ExtensionContractAttribute>> mefExtensions)
     {
-        _mefImplicitExtensions = mefImplicitExtensions.OrderBy(a => a.Metadata.Order).ToArray();
-        _mefUniversalExtensions = mefUniversalExtensions.OrderBy(a => a.Metadata.Order).ToArray();
+        _mefAutoLoaded = [.. mefAutoLoaded.OrderBy(a => a.Metadata.Order)];
+        _mefExtensions = [.. mefExtensions.OrderBy(a => a.Metadata.Order)];
 
-        AppxContext.LoggingService.LogAlways("GZSkinsX.ExtensionService", "Successfully initialized.");
+        AppxContext.LoggingService.LogAlways("GZSkinsX.Extension.ExtensionService", "Successfully initialized.");
     }
 
     /// <summary>
-    /// 获取所有通用扩展中声明的资源字典的集合。
+    /// 获取所有应用程序扩展中声明的资源字典的集合。
     /// </summary>
     public IEnumerable<ResourceDictionary> GetMergedResourceDictionaries()
     {
-        foreach (var extension in _mefUniversalExtensions)
+        foreach (var extension in _mefExtensions)
         {
             var value = extension.Value;
             foreach (var rsrc in value.MergedResourceDictionaries)
@@ -79,37 +65,51 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// 通过筛选指定触发类型的隐式扩展进行加载。
+    /// 通过筛选指定激活规则的自动加载的扩展进行激活。
     /// </summary>
-    /// <param name="trigger">指定的触发类型。</param>
-    public void LoadImplicitExtensions(ImplicitExtensionTrigger trigger)
+    /// <param name="rule">指定的激活规则。</param>
+    public void LoadAutoLoaded(AutoLoadedActivationConstraint rule)
     {
-        foreach (var extension in _mefImplicitExtensions)
+        foreach (var extension in _mefAutoLoaded)
         {
-            if (extension.Metadata.Trigger == trigger)
+            if (extension.Metadata.LoadedWhen == rule)
             {
                 _ = extension.Value;
             }
         }
 
         AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.ExtensionService.LoadImplicitExtensions",
-            $"Load all ImplicitExtension of type '{trigger}'.");
+            "GZSkinsX.Extension.ExtensionService.LoadAutoLoaded",
+            $"Load AutoLoaded extensions of loaded when '{rule}'.");
     }
 
     /// <summary>
-    /// 对所有的通用扩展进行事件通知。
+    /// 对所有的应用程序扩展通知"已加载"事件。
     /// </summary>
-    /// <param name="eventType">需要通知的事件类型。</param>
-    public void NotifyUniversalExtensions(UniversalExtensionEvent eventType)
+    public void OnAppLoaded()
     {
-        foreach (var extension in _mefUniversalExtensions)
+        foreach (var extension in _mefExtensions)
         {
-            extension.Value.OnEvent(eventType);
+            extension.Value.OnAppLoaded();
         }
 
         AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.ExtensionService.NotifyUniversalExtensions",
-            $"Notify event '{eventType}' for all universal extensions.");
+            "GZSkinsX.Extension.ExtensionService.LoadExtensions",
+            $"Notify all application extensions of 'AppLoaded'.");
+    }
+
+    /// <summary>
+    /// 对所有的应用程序扩展通知"退出"事件。
+    /// </summary>
+    public void OnAppExit()
+    {
+        foreach (var extension in _mefExtensions)
+        {
+            extension.Value.OnAppExit();
+        }
+
+        AppxContext.LoggingService.LogAlways(
+            "GZSkinsX.Extension.ExtensionService.LoadExtensions",
+            $"Notify all application extensions of 'AppExit'.");
     }
 }

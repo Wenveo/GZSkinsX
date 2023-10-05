@@ -8,20 +8,17 @@
 namespace GZSkinsX.Contracts.Extension;
 
 /// <summary>
-/// 通用扩展触发的事件类型。
+/// 扩展类的配置。
 /// </summary>
-public enum UniversalExtensionEvent
+public sealed record class ExtensionConfiguration
 {
     /// <summary>
-    /// 当扩展被加载时发生。
+    /// 获取有关扩展的描述性信息。
     /// </summary>
-    Loaded,
+    public required ExtensionMetadata Metadata { get; init; }
+
     /// <summary>
-    /// 当应用加载时发生。
+    /// 初始化 <see cref="ExtensionConfiguration"/> 的新实例。
     /// </summary>
-    AppLoaded,
-    /// <summary>
-    /// 当应用退出时发生。
-    /// </summary>
-    AppExit
+    public ExtensionConfiguration() { }
 }
