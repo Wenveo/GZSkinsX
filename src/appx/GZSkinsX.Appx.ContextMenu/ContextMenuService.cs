@@ -391,13 +391,15 @@ internal sealed class ContextMenuService : IContextMenuService
         {
             menuFlyout.Opening += (s, e) =>
             {
-                if (menuFlyout.Items.Count > 0)
-                {
-                    menuFlyout.Items.Clear();
-                }
+                // 清空列表中的所有元素
+                if (menuFlyout.Items.Count > 0) menuFlyout.Items.Clear();
 
-                var uiContext = callback is not null ? callback(menuFlyout, e) : new ContextMenuUIContext(menuFlyout, e);
-                CreateMenuSubItems(groups, menuFlyout.Items, uiContext);
+                // 重新创建新的菜单项列表
+                CreateMenuSubItems(groups, menuFlyout.Items, callback is not null
+                    ? callback(menuFlyout, e) : new ContextMenuUIContext(menuFlyout, e));
+
+                // 如果没有元素则不应显示，否则将会显示一块空白的上下文菜单。
+                if (menuFlyout.Items.Count == 0) menuFlyout.Hide();
             };
 
             menuFlyout.Closed += (s, e) =>
