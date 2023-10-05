@@ -24,7 +24,7 @@ public sealed class ContextMenuItemContractAttribute : ExportAttribute
     /// <summary>
     /// 表示该菜单项的 <see cref="System.Guid"/> 字符串值，该值具有唯一性。
     /// </summary>
-    public required string? Guid { get; init; }
+    public required string Guid { get; init; }
 
     /// <summary>
     /// 表示该菜单项所归属的父菜单项的 <see cref="System.Guid"/> 字符串值。

@@ -138,7 +138,7 @@ internal sealed class ContextMenuService : IContextMenuService
                 pair.Value.Items.Clear();
                 foreach (var item in origList)
                 {
-                    var guid = new Guid(item.Metadata.Guid!);
+                    var guid = new Guid(item.Metadata.Guid);
                     if (hashSet.Contains(guid))
                         continue;
 
