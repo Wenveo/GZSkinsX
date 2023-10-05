@@ -28,9 +28,14 @@ namespace GZSkinsX;
 public partial class App : Application
 {
     /// <summary>
+    /// Gets an object that can be used to synchronize access to the InitializeServices.
+    /// </summary>
+    private object SyncRoot { get; } = new();
+
+    /// <summary>
     /// Use the <see cref="Lazy{T}"/> to initialize the services for the current application.
     /// </summary>
-    private static Lazy<Action<App>> InitializeServiceAsync { get; } = new(() => (app) =>
+    private static Lazy<Action<App>> InitializeServices { get; } = new(() => (app) =>
     {
         var extensionService = AppxContext.Resolve<ExtensionService>();
         extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.BeforeExtensions);
@@ -52,16 +57,26 @@ public partial class App : Application
         CompositionTarget.Rendering += OnRendering;
     }
 
+    /// <summary>
+    /// Load when rendering the UI.
+    /// </summary>
     private void OnRendering(object? sender, object e)
     {
         CompositionTarget.Rendering -= OnRendering;
 
-        var extensionService = AppxContext.Resolve<ExtensionService>();
-        extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.AppLoaded);
-        AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
-        extensionService.OnAppLoaded();
+        lock (SyncRoot)
+        {
+            var extensionService = AppxContext.Resolve<ExtensionService>();
+            extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.AppLoaded);
+            extensionService.OnAppLoaded();
+
+            AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Index_Guid);
+        }
     }
 
+    /// <summary>
+    /// Handle when an app activation is triggered that was registered.
+    /// </summary>
     internal void OnActivated(object? sender, AppActivationArguments e)
     {
         OnAppLaunch(e);
@@ -73,9 +88,12 @@ public partial class App : Application
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        if (InitializeServiceAsync.IsValueCreated is false)
+        lock (SyncRoot)
         {
-            InitializeServiceAsync.Value(this);
+            if (InitializeServices.IsValueCreated is false)
+            {
+                InitializeServices.Value(this);
+            }
         }
 
         OnAppLaunch(AppInstance.GetCurrent().GetActivatedEventArgs());
