@@ -94,7 +94,7 @@ internal sealed class ExtensionService
         }
 
         AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.Extension.ExtensionService.LoadExtensions",
+            "GZSkinsX.Extension.ExtensionService.OnAppLoaded",
             $"Notify all application extensions of 'AppLoaded'.");
     }
 
@@ -109,7 +109,7 @@ internal sealed class ExtensionService
         }
 
         AppxContext.LoggingService.LogAlways(
-            "GZSkinsX.Extension.ExtensionService.LoadExtensions",
+            "GZSkinsX.Extension.ExtensionService.OnAppExit",
             $"Notify all application extensions of 'AppExit'.");
     }
 }
