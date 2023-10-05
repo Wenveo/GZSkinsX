@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+  <PropertyGroup>
+    <NoWarn>CS8002;$(NoWarn)</NoWarn>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(UseAppxLibInfo)' == 'true'">
     <Version>3.1.1.0</Version>
     <DefaultLanguage>zh-CN</DefaultLanguage>
