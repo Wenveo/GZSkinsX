@@ -171,14 +171,15 @@ internal sealed class ContextMenuService : IContextMenuService
 
         var toolTip = itemContext.ToolTip;
         if (toolTip is not null)
-            ToolTipService.SetToolTip(uiObject, toolTip);
+            ToolTipService.SetToolTip(uiObject, toolTip is string str ?
+                ResourceHelper.GetResxLocalizedOrDefault(str) : toolTip);
 
         foreach (var keyboardAccelerator in itemContext.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             uiObject.KeyboardAccelerators.Add(keyboardAccelerator);
 
         var textOverride = itemContext.KeyboardAcceleratorTextOverride;
         if (string.IsNullOrWhiteSpace(textOverride) is false)
-            uiObject.KeyboardAcceleratorTextOverride = textOverride;
+            uiObject.KeyboardAcceleratorTextOverride = ResourceHelper.GetResxLocalizedOrDefault(textOverride);
 
         uiObject.IsEnabled = itemContext.IsEnabled(uiContext);
     }
@@ -216,7 +217,8 @@ internal sealed class ContextMenuService : IContextMenuService
 
         var toolTip = menuItem.ToolTip;
         if (toolTip is not null)
-            ToolTipService.SetToolTip(menuFlyoutSubItem, toolTip);
+            ToolTipService.SetToolTip(menuFlyoutSubItem, toolTip is string str ?
+                ResourceHelper.GetResxLocalizedOrDefault(str) : toolTip);
 
         foreach (var keyboardAccelerator in menuItem.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             menuFlyoutSubItem.KeyboardAccelerators.Add(keyboardAccelerator);
