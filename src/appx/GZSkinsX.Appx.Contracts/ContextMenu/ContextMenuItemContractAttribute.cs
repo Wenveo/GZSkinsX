@@ -24,20 +24,20 @@ public sealed class ContextMenuItemContractAttribute : ExportAttribute
     /// <summary>
     /// 表示该菜单项的 <see cref="System.Guid"/> 字符串值，该值具有唯一性。
     /// </summary>
-    public required string? Guid { get; set; }
+    public required string? Guid { get; init; }
 
     /// <summary>
     /// 表示该菜单项所归属的父菜单项的 <see cref="System.Guid"/> 字符串值。
     /// </summary>
-    public string? OwnerGuid { get; set; }
+    public string? OwnerGuid { get; init; }
 
     /// <summary>
     /// 表示该菜单项所在的分组，格式以 "double,Guid" 形式表示。
     /// </summary>
-    public string? Group { get; set; }
+    public string? Group { get; init; }
 
     /// <summary>
     /// 表示该菜单项位于分组中的排序顺序。
     /// </summary>
-    public double Order { get; set; }
+    public double Order { get; init; }
 }

@@ -24,5 +24,5 @@ public sealed class ExtensionContractAttribute : ExportAttribute
     /// <summary>
     /// 获取和设置扩展的加载顺序。
     /// </summary>
-    public double Order { get; set; }
+    public double Order { get; init; }
 }

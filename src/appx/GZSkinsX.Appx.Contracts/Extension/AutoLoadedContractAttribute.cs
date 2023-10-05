@@ -25,12 +25,12 @@ public sealed class AutoLoadedContractAttribute : ExportAttribute
     }
 
     /// <summary>
-    /// 获取和设置扩展的加载顺序。
-    /// </summary>
-    public double Order { get; set; }
-
-    /// <summary>
     /// 获取和设置扩展加载应当何时加载。
     /// </summary>
-    public AutoLoadedActivationConstraint LoadedWhen { get; set; }
+    public AutoLoadedActivationConstraint LoadedWhen { get; init; }
+
+    /// <summary>
+    /// 获取和设置扩展的加载顺序。
+    /// </summary>
+    public double Order { get; init; }
 }

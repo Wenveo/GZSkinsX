@@ -24,10 +24,10 @@ public sealed class WindowFrameContractAttribute : ExportAttribute
     /// <summary>
     /// 声明当前页面元素的标识符，该值具有唯一性。
     /// </summary>
-    public required string Guid { get; set; }
+    public required string Guid { get; init; }
 
     /// <summary>
     /// 用于导航的目标页面类型，该页面类型必须为 <see cref="Microsoft.UI.Xaml.Controls.Page"/>，且不能为空。
     /// </summary>
-    public required Type PageType { get; set; }
+    public required Type PageType { get; init; }
 }
