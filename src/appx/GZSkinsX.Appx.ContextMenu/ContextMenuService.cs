@@ -176,7 +176,6 @@ internal sealed class ContextMenuService : IContextMenuService
             uiObject.KeyboardAccelerators.Add(keyboardAccelerator);
 
         uiObject.IsEnabled = itemContext.IsEnabled(uiContext);
-        uiObject.Visibility = BoolToVisibilityConvert.ToVisibility(itemContext.IsVisible(uiContext));
     }
 
     /// <summary>
@@ -332,7 +331,12 @@ internal sealed class ContextMenuService : IContextMenuService
                 needSeparator = true;
 
             foreach (var item in itemGroup.Items)
-                collection.Add(CreateContextMenuItem(item.Value, item.Metadata, uiContext));
+            {
+                if (item.Value.IsVisible(uiContext))
+                {
+                    collection.Add(CreateContextMenuItem(item.Value, item.Metadata, uiContext));
+                }
+            }
         }
     }
 
