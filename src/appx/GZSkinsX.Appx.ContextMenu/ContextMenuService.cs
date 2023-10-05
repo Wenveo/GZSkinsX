@@ -17,6 +17,7 @@ using GZSkinsX.Contracts.Utilities;
 
 using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 using Windows.Foundation.Metadata;
 
@@ -172,7 +173,7 @@ internal sealed class ContextMenuService : IContextMenuService
         if (toolTip is not null)
             ToolTipService.SetToolTip(uiObject, toolTip);
 
-        foreach (var keyboardAccelerator in itemContext.GetKeyboardAccelerators())
+        foreach (var keyboardAccelerator in itemContext.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             uiObject.KeyboardAccelerators.Add(keyboardAccelerator);
 
         uiObject.IsEnabled = itemContext.IsEnabled(uiContext);
@@ -213,7 +214,7 @@ internal sealed class ContextMenuService : IContextMenuService
         if (toolTip is not null)
             ToolTipService.SetToolTip(menuFlyoutSubItem, toolTip);
 
-        foreach (var keyboardAccelerator in menuItem.GetKeyboardAccelerators())
+        foreach (var keyboardAccelerator in menuItem.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             menuFlyoutSubItem.KeyboardAccelerators.Add(keyboardAccelerator);
 
         return menuFlyoutSubItem;

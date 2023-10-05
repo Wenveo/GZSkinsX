@@ -18,35 +18,19 @@ namespace GZSkinsX.Contracts.ContextMenu;
 public abstract class ContextRadioMenuItemBase : IContextRadioMenuItem
 {
     /// <inheritdoc/>
-    public string? GroupName { get; protected set; }
+    public virtual string? GroupName => null;
 
     /// <inheritdoc/>
-    public string? Header { get; protected set; }
+    public virtual string? Header => null;
 
     /// <inheritdoc/>
-    public IconElement? Icon { get; protected set; }
+    public virtual IconElement? Icon => null;
 
     /// <inheritdoc/>
-    public object? ToolTip { get; protected set; }
-
-    /// <summary>
-    /// 初始化 <see cref="ContextRadioMenuItemBase"/> 的新实例。
-    /// </summary>
-    public ContextRadioMenuItemBase() { }
-
-    /// <summary>
-    /// 使用指定的组名称、标头、图标、和提示来初始化 <see cref="ContextRadioMenuItemBase"/> 的新实例。
-    /// </summary>
-    public ContextRadioMenuItemBase(string? groupName, string? header, IconElement? icon, object? toolTip)
-    {
-        GroupName = groupName;
-        Header = header;
-        Icon = icon;
-        ToolTip = toolTip;
-    }
+    public virtual IEnumerable<KeyboardAccelerator> KeyboardAccelerators { get { yield break; } }
 
     /// <inheritdoc/>
-    public virtual IEnumerable<KeyboardAccelerator> GetKeyboardAccelerators() { yield break; }
+    public virtual object? ToolTip => null;
 
     /// <inheritdoc/>
     public virtual bool IsChecked(IContextMenuUIContext context) => false;

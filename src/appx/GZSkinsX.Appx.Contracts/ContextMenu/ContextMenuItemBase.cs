@@ -18,31 +18,16 @@ namespace GZSkinsX.Contracts.ContextMenu;
 public abstract class ContextMenuItemBase : IContextMenuItem
 {
     /// <inheritdoc/>
-    public string? Header { get; protected set; }
+    public virtual string? Header => null;
 
     /// <inheritdoc/>
-    public IconElement? Icon { get; protected set; }
+    public virtual IconElement? Icon => null;
 
     /// <inheritdoc/>
-    public object? ToolTip { get; protected set; }
-
-    /// <summary>
-    /// 初始化 <see cref="ContextMenuItemBase"/> 的新实例。
-    /// </summary>
-    public ContextMenuItemBase() { }
-
-    /// <summary>
-    /// 使用指定的标头、图标、和提示来初始化 <see cref="ContextMenuItemBase"/> 的新实例。
-    /// </summary>
-    public ContextMenuItemBase(string? header, IconElement? icon, object? toolTip)
-    {
-        Header = header;
-        Icon = icon;
-        ToolTip = toolTip;
-    }
+    public virtual IEnumerable<KeyboardAccelerator> KeyboardAccelerators { get { yield break; } }
 
     /// <inheritdoc/>
-    public virtual IEnumerable<KeyboardAccelerator> GetKeyboardAccelerators() { yield break; }
+    public virtual object? ToolTip => null;
 
     /// <inheritdoc/>
     public virtual bool IsEnabled(IContextMenuUIContext context) => true;

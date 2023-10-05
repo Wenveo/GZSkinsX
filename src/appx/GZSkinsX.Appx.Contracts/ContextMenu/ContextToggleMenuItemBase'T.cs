@@ -20,31 +20,16 @@ public abstract class ContextToggleMenuItemBase<TContext>
     : IContextToggleMenuItem where TContext : IContextMenuUIContext
 {
     /// <inheritdoc/>
-    public string? Header { get; protected set; }
+    public virtual string? Header => null;
 
     /// <inheritdoc/>
-    public IconElement? Icon { get; protected set; }
+    public virtual IconElement? Icon => null;
 
     /// <inheritdoc/>
-    public object? ToolTip { get; protected set; }
-
-    /// <summary>
-    /// 初始化 <see cref="ContextToggleMenuItemBase"/> 的新实例。
-    /// </summary>
-    public ContextToggleMenuItemBase() { }
-
-    /// <summary>
-    /// 使用指定的标头、图标、和提示来初始化 <see cref="ContextToggleMenuItemBase"/> 的新实例。
-    /// </summary>
-    public ContextToggleMenuItemBase(string? header, IconElement? icon, object? toolTip)
-    {
-        Header = header;
-        Icon = icon;
-        ToolTip = toolTip;
-    }
+    public virtual IEnumerable<KeyboardAccelerator> KeyboardAccelerators { get { yield break; } }
 
     /// <inheritdoc/>
-    public virtual IEnumerable<KeyboardAccelerator> GetKeyboardAccelerators() { yield break; }
+    public virtual object? ToolTip => null;
 
     /// <inheritdoc cref="IContextToggleMenuItem.IsChecked(IContextMenuUIContext)"/>
     public virtual bool IsChecked(TContext context) => false;

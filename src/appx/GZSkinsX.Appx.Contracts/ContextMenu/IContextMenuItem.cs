@@ -35,7 +35,7 @@ public interface IContextMenuItem
     /// <summary>
     /// 获取与菜单项所绑定的键盘快捷键。
     /// </summary>
-    IEnumerable<KeyboardAccelerator> GetKeyboardAccelerators();
+    IEnumerable<KeyboardAccelerator> KeyboardAccelerators { get; }
 
     /// <summary>
     /// 通过当前 UI 上下文判断是否应该显示此菜单项。
