@@ -176,6 +176,10 @@ internal sealed class ContextMenuService : IContextMenuService
         foreach (var keyboardAccelerator in itemContext.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             uiObject.KeyboardAccelerators.Add(keyboardAccelerator);
 
+        var textOverride = itemContext.KeyboardAcceleratorTextOverride;
+        if (string.IsNullOrWhiteSpace(textOverride) is false)
+            uiObject.KeyboardAcceleratorTextOverride = textOverride;
+
         uiObject.IsEnabled = itemContext.IsEnabled(uiContext);
     }
 

@@ -32,6 +32,9 @@ public abstract class ContextRadioMenuItemBase<TContext>
     public virtual IEnumerable<KeyboardAccelerator> KeyboardAccelerators { get { yield break; } }
 
     /// <inheritdoc/>
+    public virtual string? KeyboardAcceleratorTextOverride => null;
+
+    /// <inheritdoc/>
     public virtual object? ToolTip => null;
 
     /// <inheritdoc cref="IContextRadioMenuItem.IsChecked(IContextMenuUIContext)"/>

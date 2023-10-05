@@ -29,6 +29,9 @@ public abstract class ContextMenuItemBase<TContext>
     public virtual IEnumerable<KeyboardAccelerator> KeyboardAccelerators { get { yield break; } }
 
     /// <inheritdoc/>
+    public virtual string? KeyboardAcceleratorTextOverride => null;
+
+    /// <inheritdoc/>
     public virtual object? ToolTip => null;
 
     /// <inheritdoc cref="IContextMenuItem.IsEnabled(IContextMenuUIContext)"/>
