@@ -11,11 +11,16 @@ using System.Composition;
 namespace GZSkinsX.Contracts.ContextMenu;
 
 /// <summary>
-/// 表示上下文菜单项的元数据类。
+/// 包含有关上下文菜单项的附加信息，并声明目标类以 <see cref="IContextMenuItem"/> 类型导出。
 /// </summary>
 [MetadataAttribute, AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-public sealed class ContextMenuItemMetadataAttribute : Attribute
+public sealed class ContextMenuItemContractAttribute : ExportAttribute
 {
+    /// <summary>
+    /// 初始化 <see cref="ContextMenuItemContractAttribute"/> 的新实例，并以 <see cref="IContextMenuItem"/> 类型导出。
+    /// </summary>
+    public ContextMenuItemContractAttribute() : base(typeof(IContextMenuItem)) { }
+
     /// <summary>
     /// 表示该菜单项的 <see cref="System.Guid"/> 字符串值，该值具有唯一性。
     /// </summary>

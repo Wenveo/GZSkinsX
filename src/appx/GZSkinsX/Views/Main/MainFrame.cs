@@ -11,8 +11,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 
 namespace GZSkinsX.Views;
 
-[System.Composition.Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Main_Guid, PageType = typeof(MainPage))]
+[System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Main_Guid, PageType = typeof(MainPage))]
 internal sealed class MainFrame : IWindowFrame
 {
     /// <inheritdoc/>

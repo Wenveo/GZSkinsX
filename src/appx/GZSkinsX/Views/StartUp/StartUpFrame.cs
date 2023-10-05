@@ -5,16 +5,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using System.Composition;
-
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Game;
 using GZSkinsX.Contracts.WindowManager;
 
 namespace GZSkinsX.Views;
 
-[Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
+[System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
 internal sealed class StartUpFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)

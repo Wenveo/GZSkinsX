@@ -9,8 +9,7 @@ using GZSkinsX.Contracts.WindowManager;
 
 namespace GZSkinsX.Views;
 
-[System.Composition.Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Index_Guid, PageType = typeof(IndexPage))]
+[System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Index_Guid, PageType = typeof(IndexPage))]
 internal sealed class IndexFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)

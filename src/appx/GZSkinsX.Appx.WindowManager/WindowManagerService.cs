@@ -26,7 +26,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// <summary>
     /// 存放所有已导出的 <see cref="IWindowFrame"/> 类型对象。
     /// </summary>
-    private readonly IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> _windowFrames;
+    private readonly IEnumerable<Lazy<IWindowFrame, WindowFrameContractAttribute>> _windowFrames;
 
     /// <summary>
     /// 使用 <see cref="Guid"/> 作为 Key 并存储所有 <see cref="IWindowFrame"/> 上下文对象。
@@ -56,7 +56,7 @@ internal sealed class WindowManagerService : IWindowManagerService
     /// 初始化 <see cref="WindowManagerService"/> 的新实例。
     /// </summary>
     [ImportingConstructor]
-    public WindowManagerService([ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameMetadataAttribute>> windowFrames)
+    public WindowManagerService([ImportMany] IEnumerable<Lazy<IWindowFrame, WindowFrameContractAttribute>> windowFrames)
     {
         _windowFrames = windowFrames;
 

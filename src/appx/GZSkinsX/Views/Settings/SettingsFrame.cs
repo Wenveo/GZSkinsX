@@ -10,8 +10,7 @@ using GZSkinsX.Contracts.WindowManager;
 
 namespace GZSkinsX.Views;
 
-[System.Composition.Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Settings_Guid, PageType = typeof(SettingsPage))]
+[System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Settings_Guid, PageType = typeof(SettingsPage))]
 internal sealed class SettingsFrame : IWindowFrame
 {
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)

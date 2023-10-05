@@ -9,8 +9,7 @@ using GZSkinsX.Contracts.WindowManager;
 
 namespace GZSkinsX.Views;
 
-[System.Composition.Shared, ExportWindowFrame]
-[WindowFrameMetadata(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
+[System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Preload_Guid, PageType = typeof(PreloadPage))]
 internal sealed class PreloadFrame : IWindowFrame
 {
     /// <inheritdoc/>

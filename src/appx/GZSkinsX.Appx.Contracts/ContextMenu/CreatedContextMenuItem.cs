@@ -22,7 +22,7 @@ public readonly struct CreatedContextMenuItem
     /// <summary>
     /// 获取该上下文菜单项的元数据。
     /// </summary>
-    public ContextMenuItemMetadataAttribute? Metadata { get; }
+    public ContextMenuItemContractAttribute? Metadata { get; }
 
     /// <summary>
     /// 获取该上下文菜单项。
@@ -52,7 +52,7 @@ public readonly struct CreatedContextMenuItem
     /// </summary>
     /// <param name="metadata">与上下文菜单项所关联的元数据。</param>
     /// <param name="contextMenuItem">上下文菜单项的派生实现的实例。</param>
-    public CreatedContextMenuItem(ContextMenuItemMetadataAttribute metadata, IContextMenuItem contextMenuItem)
+    public CreatedContextMenuItem(ContextMenuItemContractAttribute metadata, IContextMenuItem contextMenuItem)
     {
         Metadata = metadata;
         ContextMenuItem = contextMenuItem;

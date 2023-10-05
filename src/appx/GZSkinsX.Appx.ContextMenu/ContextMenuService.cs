@@ -48,14 +48,14 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// 用于存储导出的 <see cref="IContextMenuItem"/> 对象以及 <see cref="ContextMenuItemMetadataAttribute"/> 的元数据类。
+    /// 用于存储导出的 <see cref="IContextMenuItem"/> 对象以及 <see cref="ContextMenuItemContractAttribute"/> 的元数据类。
     /// </summary>
-    private sealed class ContextMenuItemMD(Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> lazy)
+    private sealed class ContextMenuItemMD(Lazy<IContextMenuItem, ContextMenuItemContractAttribute> lazy)
     {
         /// <summary>
         /// 当前上下文中的懒加载对象。
         /// </summary>
-        private readonly Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute> _lazy = lazy;
+        private readonly Lazy<IContextMenuItem, ContextMenuItemContractAttribute> _lazy = lazy;
 
         /// <summary>
         /// 获取当前上下文的 <see cref="IContextMenuItem"/> 对象。
@@ -63,15 +63,15 @@ internal sealed class ContextMenuService : IContextMenuService
         public IContextMenuItem Value => _lazy.Value;
 
         /// <summary>
-        /// 获取当前上下文的 <see cref="ContextMenuItemMetadataAttribute"/> 元数据。
+        /// 获取当前上下文的 <see cref="ContextMenuItemContractAttribute"/> 元数据。
         /// </summary>
-        public ContextMenuItemMetadataAttribute Metadata => _lazy.Metadata;
+        public ContextMenuItemContractAttribute Metadata => _lazy.Metadata;
     }
 
     /// <summary>
-    /// 用于存放所有已枚举的 <see cref="IContextMenuItem"/> 菜单项和 <see cref="ContextMenuItemMetadataAttribute"/> 元数据的集合。
+    /// 用于存放所有已枚举的 <see cref="IContextMenuItem"/> 菜单项和 <see cref="ContextMenuItemContractAttribute"/> 元数据的集合。
     /// </summary>
-    private readonly IEnumerable<Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute>> _mefItems;
+    private readonly IEnumerable<Lazy<IContextMenuItem, ContextMenuItemContractAttribute>> _mefItems;
 
     /// <summary>
     /// 用于存放所有已序列化后的组，并以 <see cref="Guid">OwnerGuid</see> 作为键。
@@ -82,7 +82,7 @@ internal sealed class ContextMenuService : IContextMenuService
     /// 初始化 <see cref="ContextMenuService"/> 的新实例。
     /// </summary>
     [ImportingConstructor]
-    public ContextMenuService([ImportMany] IEnumerable<Lazy<IContextMenuItem, ContextMenuItemMetadataAttribute>> mefItems)
+    public ContextMenuService([ImportMany] IEnumerable<Lazy<IContextMenuItem, ContextMenuItemContractAttribute>> mefItems)
     {
         _mefItems = mefItems;
         _guidToGroups = [];
@@ -270,14 +270,14 @@ internal sealed class ContextMenuService : IContextMenuService
     }
 
     /// <summary>
-    /// 通过传入的 <see cref="IContextMenuItem"/> 对象和 <see cref="ContextMenuItemMetadataAttribute"/> 元数据创建一个新的 <see cref="MenuFlyoutItemBase"/> 类型实例。
+    /// 通过传入的 <see cref="IContextMenuItem"/> 对象和 <see cref="ContextMenuItemContractAttribute"/> 元数据创建一个新的 <see cref="MenuFlyoutItemBase"/> 类型实例。
     /// </summary>
     /// <param name="item">传入的上下文菜单项。</param>
     /// <param name="metadata">与上下文菜单项相关联的元数据。</param>
     /// <param name="uiContext">上下文菜单所关联的 UI 上下文内容。</param>
     /// <returns>已创建的 <see cref="MenuFlyoutItemBase"/> 类型实例。</returns>
     private MenuFlyoutItemBase CreateContextMenuItem(IContextMenuItem item,
-        ContextMenuItemMetadataAttribute metadata, IContextMenuUIContext uiContext)
+        ContextMenuItemContractAttribute metadata, IContextMenuUIContext uiContext)
     {
         if (Guid.TryParse(metadata.Guid, out var guid) &&
             _guidToGroups.TryGetValue(guid, out var subItemGroup))

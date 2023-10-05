@@ -18,7 +18,7 @@ public interface IWindowFrameContext
     IWindowFrame Value { get; }
 
     /// <summary>
-    /// 获取当前上下文的 <see cref="WindowFrameMetadataAttribute"/> 元数据。
+    /// 获取当前上下文的 <see cref="WindowFrameContractAttribute"/> 元数据。
     /// </summary>
-    WindowFrameMetadataAttribute Metadata { get; }
+    WindowFrameContractAttribute Metadata { get; }
 }
