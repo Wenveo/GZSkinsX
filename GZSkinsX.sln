@@ -45,7 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.MyMods", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.Kernel", "src\appx\GZSkinsX.Appx.Kernel\GZSkinsX.Appx.Kernel.csproj", "{08003177-8111-4159-B498-3E3D862707DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.ContextMenu", "src\appx\GZSkinsX.Appx.ContextMenu\GZSkinsX.Appx.ContextMenu.csproj", "{3266414E-969B-4BEA-B28A-E54031C17E72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.ContextMenu", "src\appx\GZSkinsX.Appx.ContextMenu\GZSkinsX.Appx.ContextMenu.csproj", "{3266414E-969B-4BEA-B28A-E54031C17E72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Command", "src\appx\GZSkinsX.Appx.Command\GZSkinsX.Appx.Command.csproj", "{95507E23-F802-4E9E-B82B-7F70D719C4B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +181,14 @@ Global
 		{3266414E-969B-4BEA-B28A-E54031C17E72}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3266414E-969B-4BEA-B28A-E54031C17E72}.Release|x64.ActiveCfg = Release|Any CPU
 		{3266414E-969B-4BEA-B28A-E54031C17E72}.Release|x64.Build.0 = Release|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Debug|x64.Build.0 = Debug|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +209,7 @@ Global
 		{1C1BEB51-81C2-4155-BC06-A4362CB6F18A} = {FD663BF3-1C0C-49E2-9E59-08E495492D41}
 		{08003177-8111-4159-B498-3E3D862707DE} = {FD663BF3-1C0C-49E2-9E59-08E495492D41}
 		{3266414E-969B-4BEA-B28A-E54031C17E72} = {FD663BF3-1C0C-49E2-9E59-08E495492D41}
+		{95507E23-F802-4E9E-B82B-7F70D719C4B6} = {FD663BF3-1C0C-49E2-9E59-08E495492D41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E782B25F-825D-48AA-97CE-60A31C18A8E8}

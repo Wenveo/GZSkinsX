@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>GZSkinsX.Appx.Command</RootNamespace>
+    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <UseRidGraph>true</UseRidGraph>
+    <UseAppxLibInfo>true</UseAppxLibInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
+  </ItemGroup>
+</Project>

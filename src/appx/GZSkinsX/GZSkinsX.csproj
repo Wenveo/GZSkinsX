@@ -34,6 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Appx.AccessCache\GZSkinsX.Appx.AccessCache.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Activation\GZSkinsX.Appx.Activation.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Appx.Command\GZSkinsX.Appx.Command.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.ContextMenu\GZSkinsX.Appx.ContextMenu.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Game\GZSkinsX.Appx.Game.csproj" />
