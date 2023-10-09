@@ -419,8 +419,9 @@ internal sealed class ContextMenuService : IContextMenuService
 
             menuFlyout.Closed += (s, e) =>
             {
-                // 释放对图标和提示的引用
-                foreach (var item in menuFlyout.Items)
+                static void DisposeReferences(IEnumerable<MenuFlyoutItemBase> items)
+                {
+                    foreach (var item in items)
                 {
                     if (item is MenuFlyoutItem menuFlyoutItem)
                     {
@@ -429,10 +430,15 @@ internal sealed class ContextMenuService : IContextMenuService
                     else if (item is MenuFlyoutSubItem menuFlyoutSubItem)
                     {
                         menuFlyoutSubItem.Icon = null;
+                            DisposeReferences(menuFlyoutSubItem.Items);
                     }
 
                     ToolTipService.SetToolTip(item, null);
                 }
+                }
+
+                // 释放对图标和提示的引用
+                DisposeReferences(menuFlyout.Items);
             };
         }
         else
