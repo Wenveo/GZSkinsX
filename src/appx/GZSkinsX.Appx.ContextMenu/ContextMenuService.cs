@@ -397,15 +397,21 @@ internal sealed class ContextMenuService : IContextMenuService
         {
             menuFlyout.Opening += (s, e) =>
             {
+                // 应用上下文菜单的配置选项
+                if (options is not null)
+                    ApplyOptionsForMenuFlyout(menuFlyout, options);
+
                 // 清空列表中的所有元素
-                if (menuFlyout.Items.Count > 0) menuFlyout.Items.Clear();
+                if (menuFlyout.Items.Count > 0)
+                    menuFlyout.Items.Clear();
 
                 // 重新创建新的菜单项列表
                 CreateMenuSubItems(groups, menuFlyout.Items, callback is not null
                     ? callback(menuFlyout, e) : new ContextMenuUIContext(menuFlyout, e));
 
                 // 如果没有元素则不应显示，否则将会显示一块空白的上下文菜单。
-                if (menuFlyout.Items.Count == 0) menuFlyout.Hide();
+                if (menuFlyout.Items.Count == 0)
+                    menuFlyout.Hide();
             };
 
             menuFlyout.Closed += (s, e) =>
@@ -426,9 +432,14 @@ internal sealed class ContextMenuService : IContextMenuService
                 }
             };
         }
-
-        if (options is not null)
-            ApplyOptionsForMenuFlyout(menuFlyout, options);
+        else
+        {
+            if (options is not null)
+            {
+                // 如果没有枚举到菜单项，并且上下文菜单的配置选项不为空，则添加默认的应用配置选项的行为。
+                menuFlyout.Opening += (s, e) => ApplyOptionsForMenuFlyout(menuFlyout, options);
+            }
+        }
 
         return menuFlyout;
     }
