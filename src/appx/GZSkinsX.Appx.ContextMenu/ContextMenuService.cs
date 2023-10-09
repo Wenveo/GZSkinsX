@@ -286,14 +286,7 @@ internal sealed class ContextMenuService : IContextMenuService
     private MenuFlyoutItemBase CreateContextMenuItem(IContextMenuItem item,
         ContextMenuItemContractAttribute metadata, IContextMenuUIContext uiContext)
     {
-        if (Guid.TryParse(metadata.Guid, out var guid) &&
-            _guidToGroups.TryGetValue(guid, out var subItemGroup))
-        {
-            var menuFlyoutSubItem = CreateMenuSubItem(item);
-            CreateMenuSubItems(subItemGroup, menuFlyoutSubItem.Items, uiContext);
-            return menuFlyoutSubItem;
-        }
-        else if (item is IContextMenuItemProvider provider)
+        if (item is IContextMenuItemProvider provider)
         {
             var menuFlyoutSubItem2 = CreateMenuSubItem(item);
             foreach (var subItem in provider.CreateSubItems())
@@ -317,8 +310,18 @@ internal sealed class ContextMenuService : IContextMenuService
         }
         else
         {
+            if (Guid.TryParse(metadata.Guid, out var guid) &&
+                _guidToGroups.TryGetValue(guid, out var subItemGroup))
+            {
+                var menuFlyoutSubItem = CreateMenuSubItem(item);
+                CreateMenuSubItems(subItemGroup, menuFlyoutSubItem.Items, uiContext);
+                return menuFlyoutSubItem;
+            }
+            else
+            {
             return CreateMenuItem(item, uiContext);
         }
+    }
     }
 
     /// <summary>
