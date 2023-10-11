@@ -18,9 +18,6 @@ namespace GZSkinsX.Contracts.ContextMenu;
 public abstract class ContextRadioMenuItemBase : IContextRadioMenuItem
 {
     /// <inheritdoc/>
-    public virtual string? GroupName => null;
-
-    /// <inheritdoc/>
     public virtual string? Header => null;
 
     /// <inheritdoc/>

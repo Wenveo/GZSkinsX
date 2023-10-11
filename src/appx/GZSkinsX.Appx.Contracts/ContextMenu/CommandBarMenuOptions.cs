@@ -11,14 +11,17 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace GZSkinsX.Contracts.ContextMenu;
 
-/// <inheritdoc cref="IContextMenuOptions"/>
-public sealed class ContextMenuOptions : IContextMenuOptions
+/// <inheritdoc cref="ICommandBarMenuOptions"/>
+public sealed class CommandBarMenuOptions : ICommandBarMenuOptions
 {
     /// <inheritdoc/>
     public bool AllowFocusOnInteraction { get; init; }
 
     /// <inheritdoc/>
     public bool AllowFocusWhenDisabled { get; init; }
+
+    /// <inheritdoc/>
+    public bool AlwaysExpanded { get; init; }
 
     /// <inheritdoc/>
     public bool AreOpenCloseAnimationsEnabled { get; init; }
@@ -38,15 +41,17 @@ public sealed class ContextMenuOptions : IContextMenuOptions
     /// <inheritdoc/>
     public FlyoutShowMode ShowMode { get; init; }
 
+    /// <inheritdoc/>
+    public IContextMenuOptions? SubMenuOptions { get; init; }
+
     /// <summary>
-    /// 初始化 <see cref="ContextMenuOptions"/> 的新实例。
+    /// 初始化 <see cref="CommandBarMenuOptions"/> 的新实例。
     /// </summary>
-    public ContextMenuOptions()
+    public CommandBarMenuOptions()
     {
         AllowFocusOnInteraction = true;
-        AreOpenCloseAnimationsEnabled = true;
         LightDismissOverlayMode = LightDismissOverlayMode.Auto;
-        Placement = FlyoutPlacementMode.Top;
+        Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
         ShowMode = FlyoutShowMode.Standard;
     }
 }

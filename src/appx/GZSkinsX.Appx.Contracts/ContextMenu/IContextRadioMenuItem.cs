@@ -10,13 +10,13 @@ namespace GZSkinsX.Contracts.ContextMenu;
 /// <summary>
 /// 表示与其组中其他单选菜单项互斥的菜单项。
 /// </summary>
+/// <remarks>
+/// 如果该元素存在于菜单的根部，并且通过 <see cref="IContextMenuService.CreateCommandBarMenu"/> 进行创建上下文命令菜单，
+/// 那么此元素类型将会被替换为 <see cref="IContextToggleMenuItem"/>，因为在上下文命令菜单中不支持此类型。
+/// 不过在其它方面表现都正常。
+/// </remarks>
 public interface IContextRadioMenuItem : IContextMenuItem
 {
-    /// <summary>
-    /// 获取此菜单项与其它菜单项互斥的组的名称。
-    /// </summary>
-    string? GroupName { get; }
-
     /// <summary>
     /// 通过当前 UI 上下文判断当前菜单项是否为选中状态。
     /// </summary>

@@ -20,9 +20,6 @@ public abstract class ContextRadioMenuItemBase<TContext>
     : IContextRadioMenuItem where TContext : IContextMenuUIContext
 {
     /// <inheritdoc/>
-    public virtual string? GroupName => null;
-
-    /// <inheritdoc/>
     public virtual string? Header => null;
 
     /// <inheritdoc/>

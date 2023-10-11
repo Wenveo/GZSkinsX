@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace GZSkinsX.Contracts.ContextMenu;
 
@@ -15,34 +15,66 @@ namespace GZSkinsX.Contracts.ContextMenu;
 public interface IContextMenuService
 {
     /// <summary>
-    /// 通过指定的 <see cref="System.Guid"/> 字符串值创建一个新的 <see cref="MenuFlyout"/> 实现。
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值创建一个新的上下文命令菜单实现。
     /// </summary>
     /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
-    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例。</returns>
-    MenuFlyout CreateContextMenu(string ownerGuidString);
+    /// <returns>已创建的上下文命令菜单实例。</returns>
+    FlyoutBase CreateCommandBarMenu(string ownerGuidString);
 
     /// <summary>
-    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ContextMenuOptions"/> 上下文菜单选项配置创建一个新的 <see cref="MenuFlyout"/> 实现。
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ICommandBarMenuOptions"/> 配置选项创建一个新的上下文命令菜单实现。
     /// </summary>
     /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
     /// <param name="options">需要应用到 UI 上下文菜单上的属性配置选项。</param>
-    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例。</returns>
-    MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuOptions options);
+    /// <returns>已创建的上下文命令菜单实例。</returns>
+    FlyoutBase CreateCommandBarMenu(string ownerGuidString, ICommandBarMenuOptions options);
 
     /// <summary>
-    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的 <see cref="MenuFlyout"/> 实现。
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的上下文命令菜单实现。
     /// </summary>
     /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
     /// <param name="callback">目标 UI 上下文的回调委托。</param>
-    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例。</returns>
-    MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuUIContextCallback callback);
+    /// <returns>已创建的上下文命令菜单实例。</returns>
+    FlyoutBase CreateCommandBarMenu(string ownerGuidString, ContextMenuUIContextCallback callback);
 
     /// <summary>
-    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ContextMenuOptions"/> 上下文菜单选项配置以及 <see cref="ContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的 <see cref="MenuFlyout"/> 实现。
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ICommandBarMenuOptions"/> 配置选项以及 <see cref="ContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的上下文命令菜单实现。
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
+    /// <param name="options">需要应用到 UI 上下文菜单上的属性配置选项。</param>
+    /// <param name="callback">目标 UI 上下文的回调委托。</param>
+    /// <returns>已创建的上下文命令菜单实例。</returns>
+    FlyoutBase CreateCommandBarMenu(string ownerGuidString, ICommandBarMenuOptions options, ContextMenuUIContextCallback callback);
+
+    /// <summary>
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值创建一个新的上下文菜单实现。
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
+    /// <returns>已创建的上下文菜单实例。</returns>
+    FlyoutBase CreateContextMenu(string ownerGuidString);
+
+    /// <summary>
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="IContextMenuOptions"/> 配置选项创建一个新的上下文菜单实现。
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
+    /// <param name="options">需要应用到 UI 上下文菜单上的属性配置选项。</param>
+    /// <returns>已创建的上下文菜单实例。</returns>
+    FlyoutBase CreateContextMenu(string ownerGuidString, IContextMenuOptions options);
+
+    /// <summary>
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="ContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的上下文菜单实现。
+    /// </summary>
+    /// <param name="ownerGuidString">子菜单项所归属的 <see cref="System.Guid"/> 字符串值。</param>
+    /// <param name="callback">目标 UI 上下文的回调委托。</param>
+    /// <returns>已创建的上下文菜单实例。</returns>
+    FlyoutBase CreateContextMenu(string ownerGuidString, ContextMenuUIContextCallback callback);
+
+    /// <summary>
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值和 <see cref="IContextMenuOptions"/> 配置选项以及 <see cref="ContextMenuUIContextCallback"/> UI 上下文的回调委托创建一个新的上下文菜单实现。
     /// </summary>
     /// <param name="ownerGuidString">子菜单项所归属的 <see cref="Guid"/> 字符串值。</param>
     /// <param name="options">需要应用到 UI 上下文菜单上的属性配置选项。</param>
     /// <param name="callback">目标 UI 上下文的回调委托。</param>
-    /// <returns>已创建的 <see cref="MenuFlyout"/> 类型实例。</returns>
-    MenuFlyout CreateContextMenu(string ownerGuidString, ContextMenuOptions options, ContextMenuUIContextCallback callback);
+    /// <returns>已创建的上下文菜单实例。</returns>
+    FlyoutBase CreateContextMenu(string ownerGuidString, IContextMenuOptions options, ContextMenuUIContextCallback callback);
 }
