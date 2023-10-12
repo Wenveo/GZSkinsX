@@ -144,18 +144,18 @@ internal sealed partial class ShellWindow : Window
         var result = PInvoke.SetWindowLong(hWnd, -16, dwNewWindowStyleLong);
         Debug.Assert(result is not 0);
 
-        // For Custom System Menu
+        // To show the custom system menu ( [MOD_ALT] Alt + Space [0x20] ).
         PInvoke.RegisterHotKey(hWnd, 132, HOT_KEY_MODIFIERS.MOD_ALT, 0x20);
 
         // 将系统主题色填充至窗口背景，避免第一次显示时出现白色背景闪烁。
-        // Fill the accent (fallback) color of the win32 window,
+        // Fill the (fallback) accent color to the win32 window background,
         // to avoid flickering on startup (avoid white or black background...).
         if (PInvoke.GetClientRect(hWnd, out var rect))
         {
             var hdc = PInvoke.GetDC(hWnd);
             if (hdc.Value != nint.Zero)
             {
-                var accentColor = new Windows.UI.ViewManagement.UISettings().GetColorValue(Windows.UI.ViewManagement.UIColorType.Accent);
+                var accentColor = AppxContext.ThemeService.UISettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Accent);
                 var fallbackBrush = PInvoke.CreateSolidBrush(new((uint)(accentColor.R + (accentColor.G << 8) + (accentColor.B << 16))));
 
                 result = PInvoke.FillRect(hdc, &rect, fallbackBrush);
