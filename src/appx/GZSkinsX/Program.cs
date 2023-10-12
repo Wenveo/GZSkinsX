@@ -65,11 +65,10 @@ internal static partial class Program
 
             /// 在此获取和加载扩展服务的实例，而不是在 Application.Start 内。
             var extensionService = exportProvider.GetExportedValue<ExtensionService>();
-
             Application.Start((p) =>
             {
                 SynchronizationContext.SetSynchronizationContext(
-                    new DispatcherQueueSynchronizationContext(
+                    new DispatcherQueueSynchronizationContextX(
                         DispatcherQueue.GetForCurrentThread()));
 
                 mainApp = new();

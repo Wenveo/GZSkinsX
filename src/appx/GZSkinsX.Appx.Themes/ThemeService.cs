@@ -68,8 +68,8 @@ internal sealed class ThemeService : IThemeService
     /// </summary>
     public ThemeService()
     {
+        _dispatcherQueue = AppxContext.DispatcherQueue;
         _themeSettings = AppxContext.Resolve<ThemeSettings>();
-        _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         _settings.ColorValuesChanged += (s, e) => UpdateProperties();
 
         ActualTheme = CurrentTheme is not ElementTheme.Default ? CurrentTheme

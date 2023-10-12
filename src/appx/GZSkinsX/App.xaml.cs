@@ -108,6 +108,6 @@ public partial class App : Application
         await AppxContext.ActivationService.ActivateAsync(activationArgs);
 
         // Ensure the current window is active
-        AppxContext.AppxWindow.MainWindow.DispatcherQueue.TryEnqueue(AppxContext.AppxWindow.Activate);
+        AppxContext.DispatcherQueue.TryEnqueue(AppxContext.AppxWindow.Activate);
     }
 }
