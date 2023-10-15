@@ -17,7 +17,7 @@ internal sealed class StartUpFrame : IWindowFrame
     /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        if (!AppxContext.GameService.EnsureGameDataIsValid())
+        if (AppxContext.GameService.EnsureGameDataIsValid())
         {
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             return false;
