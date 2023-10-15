@@ -9,14 +9,15 @@ using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Game;
 using GZSkinsX.Contracts.WindowManager;
 
-namespace GZSkinsX.Views;
+namespace GZSkinsX.Appx.MainApp.Views;
 
 [System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.StartUp_Guid, PageType = typeof(StartUpPage))]
 internal sealed class StartUpFrame : IWindowFrame
 {
+    /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        if (AppxContext.GameService.RootDirectory is not null)
+        if (!AppxContext.GameService.EnsureGameDataIsValid())
         {
             AppxContext.WindowManagerService.NavigateTo(WindowFrameConstants.Preload_Guid);
             return false;

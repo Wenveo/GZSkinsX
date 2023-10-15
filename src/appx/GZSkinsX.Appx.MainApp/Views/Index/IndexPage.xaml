@@ -1,9 +1,9 @@
 <Page
-    x:Class="GZSkinsX.Views.IndexPage"
+    x:Class="GZSkinsX.Appx.MainApp.Views.IndexPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:GZSkinsX.Views"
+    xmlns:local="using:GZSkinsX.Appx.MainApp.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -27,39 +27,54 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock
+            x:Name="Index_Downloading_Title"
             x:Uid="Index_Downloading_Title"
             Grid.Row="1"
             Grid.Column="2"
             FontSize="16"
             FontWeight="Bold"
-            Visibility="{x:Bind ViewModel.IsDownloading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+            Visibility="Collapsed" />
 
         <TextBlock
+            x:Name="Index_DownloadFailed_Title"
             x:Uid="Index_DownloadFailed_Title"
             Grid.Row="1"
             Grid.Column="2"
             FontSize="16"
             FontWeight="Bold"
-            Visibility="{x:Bind ViewModel.HasError, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+            Visibility="Collapsed" />
 
         <TextBlock
+            x:Name="Index_PendingRestart_Title"
             x:Uid="Index_PendingRestart_Title"
             Grid.Row="1"
             Grid.Column="2"
             FontSize="16"
             FontWeight="Bold"
-            Visibility="{x:Bind ViewModel.IsPendingRestart, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+            Visibility="Collapsed" />
 
         <ProgressBar
+            x:Name="Index_Downloading_ProgressBar"
             Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="3"
-            IsIndeterminate="{x:Bind ViewModel.InProgress, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-            ShowError="{x:Bind ViewModel.HasError, Mode=OneWay}"
-            Value="{x:Bind ViewModel.ProgressValue, Mode=OneWay}" />
+            IsIndeterminate="True"
+            Visibility="Collapsed" />
+
+        <Button
+            x:Name="Index_ShowError_Button"
+            x:Uid="Index_ShowError_Button"
+            Grid.Row="5"
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Right"
+            Click="ShowError_Click"
+            Visibility="Collapsed" />
     </Grid>
 </Page>

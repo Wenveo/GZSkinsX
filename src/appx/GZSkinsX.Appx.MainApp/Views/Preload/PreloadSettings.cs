@@ -11,20 +11,20 @@ using GZSkinsX.Contracts.Appx;
 
 using GZSkinsX.Contracts.Settings;
 
-namespace GZSkinsX.Views;
+namespace GZSkinsX.Appx.MainApp.Views;
 
 [Shared, Export]
 internal sealed class PreloadSettings
 {
     private const string THE_GUID = "99092BD3-A425-403C-9EFA-A5C126B77F88";
-    private const string DONTNEEDSHOWTHEAVAILABLEUPDATEDIALOG_NAME = "DontNeedShowTheAvailableUpdateDialog";
+    private const string DONT_NEED_SHOW_THE_AVAILABLE_UPDATE_DIALOG_NAME = "DontNeedShowTheAvailableUpdateDialog";
 
     private readonly ISettingsSection _settingsSection;
 
     public bool DontNeedShowTheAvailableUpdateDialog
     {
-        get => _settingsSection.Attribute<bool>(DONTNEEDSHOWTHEAVAILABLEUPDATEDIALOG_NAME);
-        set => _settingsSection.Attribute(DONTNEEDSHOWTHEAVAILABLEUPDATEDIALOG_NAME, value);
+        get => _settingsSection.Attribute<bool>(DONT_NEED_SHOW_THE_AVAILABLE_UPDATE_DIALOG_NAME);
+        set => _settingsSection.Attribute(DONT_NEED_SHOW_THE_AVAILABLE_UPDATE_DIALOG_NAME, value);
     }
 
     public PreloadSettings()

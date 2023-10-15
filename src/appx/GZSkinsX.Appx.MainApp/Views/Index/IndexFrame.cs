@@ -7,11 +7,12 @@
 
 using GZSkinsX.Contracts.WindowManager;
 
-namespace GZSkinsX.Views;
+namespace GZSkinsX.Appx.MainApp.Views;
 
 [System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Index_Guid, PageType = typeof(IndexPage))]
 internal sealed class IndexFrame : IWindowFrame
 {
+    /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
         return true;
