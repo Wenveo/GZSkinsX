@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
+using CommunityToolkit.Mvvm.Input;
+
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Command;
 using GZSkinsX.Contracts.Helpers;
@@ -79,7 +81,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// <summary>
     /// 触发按钮点击的事件行为。
     /// </summary>
-    private void OnClick(object sender, RoutedEventArgs e)
+    private void OnClick()
     {
         _commandBarButton.OnClick();
     }
@@ -100,7 +102,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
             _hasLoaded = true;
         }
 
-        _appBarButton.Click += OnClick;
+        _appBarButton.Command = new RelayCommand(OnClick);
 
         var notifyPropertyChanged = _commandBarButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
@@ -114,7 +116,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// </summary>
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        _appBarButton.Click -= OnClick;
+        _appBarButton.Command = null;
 
         var notifyPropertyChanged = _commandBarButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)

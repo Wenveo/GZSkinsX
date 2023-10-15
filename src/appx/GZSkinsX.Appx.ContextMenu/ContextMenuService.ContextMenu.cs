@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
+using CommunityToolkit.Mvvm.Input;
+
 using GZSkinsX.Contracts.ContextMenu;
 using GZSkinsX.Contracts.Helpers;
 
@@ -70,13 +72,15 @@ partial class ContextMenuService
         IContextMenuUIContext uiContext,
         Action? closeFlyoutAction = null)
     {
-        var menuFlyoutItem = new MenuFlyoutItem();
-        SetCommonUIProperties(menuFlyoutItem, menuItem, uiContext);
-        menuFlyoutItem.Click += (s, e) =>
+        var menuFlyoutItem = new MenuFlyoutItem()
         {
-            closeFlyoutAction?.Invoke();
-            menuItem.OnExecute(uiContext);
+            Command = new RelayCommand(() =>
+            {
+                closeFlyoutAction?.Invoke();
+                menuItem.OnExecute(uiContext);
+            })
         };
+        SetCommonUIProperties(menuFlyoutItem, menuItem, uiContext);
 
         return menuFlyoutItem;
     }
@@ -125,14 +129,13 @@ partial class ContextMenuService
         {
             IsChecked = menuItem.IsChecked(uiContext)
         };
-        SetCommonUIProperties(toggleMenuFlyoutItem, menuItem, uiContext);
-
-        toggleMenuFlyoutItem.Click += (s, e) =>
+        toggleMenuFlyoutItem.Command = new RelayCommand(() =>
         {
             closeFlyoutAction?.Invoke();
             menuItem.OnClick(toggleMenuFlyoutItem.IsChecked, uiContext);
             menuItem.OnExecute(uiContext);
-        };
+        });
+        SetCommonUIProperties(toggleMenuFlyoutItem, menuItem, uiContext);
 
         return toggleMenuFlyoutItem;
     }
@@ -153,14 +156,13 @@ partial class ContextMenuService
         {
             IsChecked = menuItem.IsChecked(uiContext)
         };
-        SetCommonUIProperties(radioMenuFlyoutItem, menuItem, uiContext);
-
-        radioMenuFlyoutItem.Click += (s, e) =>
+        radioMenuFlyoutItem.Command = new RelayCommand(() =>
         {
             closeFlyoutAction?.Invoke();
             menuItem.OnClick(radioMenuFlyoutItem.IsChecked, uiContext);
             menuItem.OnExecute(uiContext);
-        };
+        });
+        SetCommonUIProperties(radioMenuFlyoutItem, menuItem, uiContext);
 
         return radioMenuFlyoutItem;
     }

@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
+using CommunityToolkit.Mvvm.Input;
+
 using GZSkinsX.Contracts.Command;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Utilities;
@@ -65,7 +67,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// <summary>
     /// 触发按钮点击的事件行为。
     /// </summary>
-    private void OnClick(object sender, RoutedEventArgs e)
+    private void OnClick()
     {
         _commandBarToggleButton.OnClick();
     }
@@ -97,7 +99,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
             _hasLoaded = true;
         }
 
-        _appBarToggleButton.Click += OnClick;
+        _appBarToggleButton.Command = new RelayCommand(OnClick);
         _appBarToggleButton.Checked += OnChecked;
         _appBarToggleButton.Unchecked += OnUnchecked;
 
@@ -113,7 +115,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        _appBarToggleButton.Click -= OnClick;
+        _appBarToggleButton.Command = null;
         _appBarToggleButton.Checked -= OnChecked;
         _appBarToggleButton.Unchecked -= OnUnchecked;
 

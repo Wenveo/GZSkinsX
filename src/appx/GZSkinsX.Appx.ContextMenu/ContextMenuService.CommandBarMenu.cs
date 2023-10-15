@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using CommunityToolkit.Mvvm.Input;
+
 using GZSkinsX.Contracts.ContextMenu;
 using GZSkinsX.Contracts.Helpers;
 
@@ -69,11 +71,14 @@ partial class ContextMenuService
         IContextMenuUIContext uiContext,
         Action? closeFlyoutAction = null)
     {
-        var uiObject = new AppBarButton { IsEnabled = menuItem.IsEnabled(uiContext) };
-        uiObject.Click += (s, e) =>
+        var uiObject = new AppBarButton
         {
-            closeFlyoutAction?.Invoke();
-            menuItem.OnExecute(uiContext);
+            Command = new RelayCommand(() =>
+            {
+                closeFlyoutAction?.Invoke();
+                menuItem.OnExecute(uiContext);
+            }),
+            IsEnabled = menuItem.IsEnabled(uiContext)
         };
 
         var icon = menuItem.Icon;
@@ -116,12 +121,12 @@ partial class ContextMenuService
             IsEnabled = menuItem.IsEnabled(uiContext),
             IsChecked = menuItem.IsChecked(uiContext)
         };
-        uiObject.Click += (s, e) =>
+        uiObject.Command = new RelayCommand(() =>
         {
             closeFlyoutAction?.Invoke();
             menuItem.OnClick(uiObject.IsChecked is true, uiContext);
             menuItem.OnExecute(uiContext);
-        };
+        });
 
         var icon = menuItem.Icon;
         if (icon is not null)
