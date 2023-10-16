@@ -40,6 +40,11 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     private readonly ICommandBarButton _commandBarButton;
 
     /// <summary>
+    /// 存放与命令栏所关联的 UI 上下文。
+    /// </summary>
+    private readonly ICommandBarUIContext? _uiContext;
+
+    /// <summary>
     /// 内部管理的 UI 对象成员。
     /// </summary>
     private readonly AppBarButton _appBarButton;
@@ -55,8 +60,10 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// <summary>
     /// 初始化 <see cref="CommandBarButtonContainer"/> 的新实例。
     /// </summary>
-    public CommandBarButtonContainer(IList<ICommandBarElement> parentContainer, ICommandBarButton commandBarButton)
+    public CommandBarButtonContainer(IList<ICommandBarElement> parentContainer,
+        ICommandBarButton commandBarButton, ICommandBarUIContext? uiContext)
     {
+        _uiContext = uiContext;
         _parentContainer = parentContainer;
         _commandBarButton = commandBarButton;
         _appBarButton = new AppBarButton();
@@ -83,7 +90,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// </summary>
     private void OnClick()
     {
-        _commandBarButton.OnClick();
+        _commandBarButton.OnClick(_uiContext);
     }
 
     /// <summary>
@@ -93,7 +100,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     {
         if (_hasLoaded is false)
         {
-            _commandBarButton.OnInitialize();
+            _commandBarButton.OnInitialize(_uiContext);
 
             var buttonContextMenu = _commandBarButton as ICommandBarButtonContextMenu;
             if (buttonContextMenu is not null && string.IsNullOrWhiteSpace(buttonContextMenu.ContextMenuGuid) is false)

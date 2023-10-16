@@ -18,7 +18,7 @@ namespace GZSkinsX.Contracts.Command;
 /// <summary>
 /// 表示派生自 <see cref="ICommandBarButton"/> 的抽象类，提供从接口成员到 UI 属性的双向绑定的支持实现。
 /// </summary>
-public abstract partial class CommandBarButtonVM : ObservableObject, ICommandBarButton
+public abstract partial class CommandBarButtonBase : ObservableObject, ICommandBarButton
 {
     /// <inheritdoc cref="ICommandBarButton.DisplayName"/>
     [ObservableProperty] protected string? _displayName;
@@ -42,8 +42,8 @@ public abstract partial class CommandBarButtonVM : ObservableObject, ICommandBar
     [ObservableProperty] protected object? _toolTip;
 
     /// <inheritdoc/>
-    public virtual void OnClick() { }
+    public virtual void OnClick(ICommandBarUIContext? ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnInitialize() { }
+    public virtual void OnInitialize(ICommandBarUIContext? ctx) { }
 }

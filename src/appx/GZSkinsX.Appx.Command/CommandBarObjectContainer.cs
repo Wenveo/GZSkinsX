@@ -33,6 +33,11 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
     private readonly ICommandBarObject _commandBarObject;
 
     /// <summary>
+    /// 存放与命令栏所关联的 UI 上下文。
+    /// </summary>
+    private readonly ICommandBarUIContext? _uiContext;
+
+    /// <summary>
     /// 内部管理的 UI 对象成员。
     /// </summary>
     private readonly AppBarElementContainer _appBarElementContainer;
@@ -48,8 +53,10 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
     /// <summary>
     /// 初始化 <see cref="CommandBarObjectContainer"/> 的新实例。
     /// </summary>
-    public CommandBarObjectContainer(IList<ICommandBarElement> parentContainer, ICommandBarObject commandBarObject)
+    public CommandBarObjectContainer(IList<ICommandBarElement> parentContainer,
+        ICommandBarObject commandBarObject, ICommandBarUIContext? uiContext)
     {
+        _uiContext = uiContext;
         _parentContainer = parentContainer;
         _commandBarObject = commandBarObject;
         _appBarElementContainer = new AppBarElementContainer();
@@ -64,7 +71,7 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
     {
         if (_hasLoaded is false)
         {
-            _commandBarObject.OnInitialize();
+            _commandBarObject.OnInitialize(_uiContext);
             _hasLoaded = true;
         }
 

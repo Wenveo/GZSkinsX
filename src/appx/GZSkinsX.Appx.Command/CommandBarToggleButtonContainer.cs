@@ -40,6 +40,11 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     private readonly ICommandBarToggleButton _commandBarToggleButton;
 
     /// <summary>
+    /// 存放与命令栏所关联的 UI 上下文。
+    /// </summary>
+    private readonly ICommandBarUIContext? _uiContext;
+
+    /// <summary>
     /// 内部管理的 UI 对象成员。
     /// </summary>
     private readonly AppBarToggleButton _appBarToggleButton;
@@ -55,13 +60,16 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// <summary>
     /// 初始化 <see cref="CommandBarToggleButtonContainer"/> 的新实例。
     /// </summary>
-    public CommandBarToggleButtonContainer(IList<ICommandBarElement> parentContainer, ICommandBarToggleButton commandBarToggleButton)
+    public CommandBarToggleButtonContainer(IList<ICommandBarElement> parentContainer,
+        ICommandBarToggleButton commandBarToggleButton, ICommandBarUIContext? uiContext)
     {
+        _uiContext = uiContext;
         _parentContainer = parentContainer;
         _commandBarToggleButton = commandBarToggleButton;
         _appBarToggleButton = new AppBarToggleButton();
         _appBarToggleButton.Loaded += OnLoaded;
         _appBarToggleButton.Unloaded += OnUnloaded;
+        _uiContext = uiContext;
     }
 
     /// <summary>
@@ -69,7 +77,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void OnClick()
     {
-        _commandBarToggleButton.OnClick();
+        _commandBarToggleButton.OnClick(_uiContext);
     }
 
     /// <summary>
@@ -77,7 +85,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void OnChecked(object sender, RoutedEventArgs e)
     {
-        _commandBarToggleButton.OnChecked();
+        _commandBarToggleButton.OnChecked(_uiContext);
     }
 
     /// <summary>
@@ -85,7 +93,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void OnUnchecked(object sender, RoutedEventArgs e)
     {
-        _commandBarToggleButton.OnUnchecked();
+        _commandBarToggleButton.OnUnchecked(_uiContext);
     }
 
     /// <summary>
@@ -95,7 +103,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     {
         if (_hasLoaded is false)
         {
-            _commandBarToggleButton.OnInitialize();
+            _commandBarToggleButton.OnInitialize(_uiContext);
             _hasLoaded = true;
         }
 

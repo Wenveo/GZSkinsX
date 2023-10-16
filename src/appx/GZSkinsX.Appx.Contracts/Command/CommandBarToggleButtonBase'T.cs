@@ -10,14 +10,21 @@ namespace GZSkinsX.Contracts.Command;
 /// <summary>
 /// 表示派生自 <see cref="ICommandBarToggleButton"/> 的抽象类，提供从接口成员到 UI 属性的双向绑定的支持实现。
 /// </summary>
-public abstract partial class CommandBarToggleButtonVM : CommandBarButtonVM, ICommandBarToggleButton
+public abstract partial class CommandBarToggleButtonBase<TUIContext> : CommandBarButtonBase, ICommandBarToggleButton
+    where TUIContext : ICommandBarUIContext
 {
     /// <inheritdoc cref="ICommandBarToggleButton.IsChecked"/>
     [CommunityToolkit.Mvvm.ComponentModel.ObservableProperty] protected bool _isChecked;
 
     /// <inheritdoc/>
-    public virtual void OnChecked() { }
+    public virtual void OnChecked(TUIContext? ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnUnchecked() { }
+    public virtual void OnUnchecked(TUIContext? ctx) { }
+
+    /// <inheritdoc/>
+    void ICommandBarToggleButton.OnChecked(ICommandBarUIContext? ctx) => OnChecked((TUIContext?)ctx);
+
+    /// <inheritdoc/>
+    void ICommandBarToggleButton.OnUnchecked(ICommandBarUIContext? ctx) => OnUnchecked((TUIContext?)ctx);
 }

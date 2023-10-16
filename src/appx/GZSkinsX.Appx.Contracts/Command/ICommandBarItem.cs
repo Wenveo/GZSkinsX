@@ -25,5 +25,6 @@ public interface ICommandBarItem
     /// <summary>
     /// 在 UI 初始化时触发的行为。
     /// </summary>
-    void OnInitialize();
+    /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
+    void OnInitialize(ICommandBarUIContext? ctx);
 }

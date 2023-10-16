@@ -27,7 +27,7 @@ internal sealed class CommandBarService : ICommandBarService
     /// <summary>
     /// 用于存储导出的 <see cref="ICommandBarItem"/> 对象以及 <see cref="CommandBarItemContractAttribute"/> 元数据。
     /// </summary>
-    internal sealed class CommandBarItemMD(Lazy<ICommandBarItem, CommandBarItemContractAttribute> lazy)
+    private sealed class CommandBarItemMD(Lazy<ICommandBarItem, CommandBarItemContractAttribute> lazy)
     {
         /// <summary>
         /// 当前上下文中的懒加载对象。
@@ -48,7 +48,7 @@ internal sealed class CommandBarService : ICommandBarService
     /// <summary>
     /// 用于存储命令项的组的上下文信息。
     /// </summary>
-    internal sealed class CommandBarItemGroupMD(string name, double order)
+    private sealed class CommandBarItemGroupMD(string name, double order)
     {
         /// <summary>
         /// 获取该分组的名称。
@@ -135,17 +135,19 @@ internal sealed class CommandBarService : ICommandBarService
     /// </summary>
     /// <param name="collection">用于将已创建的 UI 子元素的添加至目标集合的列表。</param>
     /// <param name="items">用于创建 UI 子元素的集合。</param>
-    private static void CreateSubItems(IObservableVector<ICommandBarElement> collection, IEnumerable<CommandBarItemMD> items)
+    /// <param name="uiContext">指定与命令栏所关联的 UI 上下文。</param>
+    private static void CreateSubItems(IObservableVector<ICommandBarElement> collection,
+        IEnumerable<CommandBarItemMD> items, ICommandBarUIContext? uiContext = null)
     {
         foreach (var item in items)
         {
             var value = item.Value;
             if (value is ICommandBarToggleButton toggleButton)
-                collection.Add(new CommandBarToggleButtonContainer(collection, toggleButton).UIObject);
+                collection.Add(new CommandBarToggleButtonContainer(collection, toggleButton, uiContext).UIObject);
             else if (value is ICommandBarButton button)
-                collection.Add(new CommandBarButtonContainer(collection, button).UIObject);
+                collection.Add(new CommandBarButtonContainer(collection, button, uiContext).UIObject);
             else if (value is ICommandBarObject uiObject)
-                collection.Add(new CommandBarObjectContainer(collection, uiObject).UIObject);
+                collection.Add(new CommandBarObjectContainer(collection, uiObject, uiContext).UIObject);
             else
                 continue;
         }
@@ -156,8 +158,9 @@ internal sealed class CommandBarService : ICommandBarService
     /// 内部的用于创建命令栏的核心实现。
     /// </summary>
     /// <param name="ownerGuidString">子命令项所归属的 <see cref="Guid"/> 字符串值。</param>
+    /// <param name="uiContext">指定与命令栏所关联的 UI 上下文。</param>
     /// <returns>已创建的 <see cref="CommandBar"/> 类型实例。</returns>
-    private CommandBar CreateCommandBarCore(string ownerGuidString)
+    private CommandBar CreateCommandBarCore(string ownerGuidString, ICommandBarUIContext? uiContext = null)
     {
         var commandBar = new CommandBar();
         if (Guid.TryParse(ownerGuidString, out var ownerGuid) &&
@@ -176,7 +179,7 @@ internal sealed class CommandBarService : ICommandBarService
                     else
                         primaryNeedSeparator = true;
 
-                    CreateSubItems(commandBar.PrimaryCommands, primaryCommands);
+                    CreateSubItems(commandBar.PrimaryCommands, primaryCommands, uiContext);
                 }
 
                 var secondaryCommands = group.Items.Where(item => item.Metadata.Placement is CommandBarItemPlacement.Secondary);
@@ -187,7 +190,7 @@ internal sealed class CommandBarService : ICommandBarService
                     else
                         secondaryNeedSeparator = true;
 
-                    CreateSubItems(commandBar.SecondaryCommands, secondaryCommands);
+                    CreateSubItems(commandBar.SecondaryCommands, secondaryCommands, uiContext);
                 }
             }
         }
@@ -196,5 +199,10 @@ internal sealed class CommandBarService : ICommandBarService
     }
 
     /// <inheritdoc/>
-    public CommandBar CreateCommandBar(string ownerGuidString) => CreateCommandBarCore(ownerGuidString);
+    public CommandBar CreateCommandBar(string ownerGuidString)
+    => CreateCommandBarCore(ownerGuidString, null);
+
+    /// <inheritdoc/>
+    public CommandBar CreateCommandBar(string ownerGuidString, ICommandBarUIContext uiContext)
+    => CreateCommandBarCore(ownerGuidString, uiContext);
 }

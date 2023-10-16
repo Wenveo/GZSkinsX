@@ -20,4 +20,12 @@ public interface ICommandBarService
     /// <param name="ownerGuidString">子命令项所归属的 <see cref="System.Guid"/> 字符串值。</param>
     /// <returns>已创建的 <see cref="CommandBar"/> 类型实例。</returns>
     CommandBar CreateCommandBar(string ownerGuidString);
+
+    /// <summary>
+    /// 通过指定的 <see cref="System.Guid"/> 字符串值创建一个新的 <see cref="CommandBar"/> 实现。
+    /// </summary>
+    /// <param name="ownerGuidString">子命令项所归属的 <see cref="System.Guid"/> 字符串值。</param>
+    /// <param name="uiContext">指定与命令栏所关联的 UI 上下文。</param>
+    /// <returns>已创建的 <see cref="CommandBar"/> 类型实例。</returns>
+    CommandBar CreateCommandBar(string ownerGuidString, ICommandBarUIContext uiContext);
 }

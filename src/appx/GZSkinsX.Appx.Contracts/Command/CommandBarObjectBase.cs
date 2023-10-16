@@ -12,7 +12,7 @@ namespace GZSkinsX.Contracts.Command;
 /// <summary>
 /// 表示派生自 <see cref="ICommandBarObject"/> 的抽象类，提供从接口成员到 UI 属性的双向绑定的支持实现。
 /// </summary>
-public abstract partial class CommandBarObjectVM : ObservableObject, ICommandBarObject
+public abstract partial class CommandBarObjectBase : ObservableObject, ICommandBarObject
 {
     /// <inheritdoc cref="ICommandBarItem.IsEnabled"/>
     [ObservableProperty] protected bool _isEnabled = true;
@@ -24,5 +24,5 @@ public abstract partial class CommandBarObjectVM : ObservableObject, ICommandBar
     [ObservableProperty] protected object? _uIObject;
 
     /// <inheritdoc/>
-    public virtual void OnInitialize() { }
+    public virtual void OnInitialize(ICommandBarUIContext ctx) { }
 }
