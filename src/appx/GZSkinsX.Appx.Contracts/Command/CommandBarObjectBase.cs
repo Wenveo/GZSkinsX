@@ -24,5 +24,5 @@ public abstract partial class CommandBarObjectBase : ObservableObject, ICommandB
     [ObservableProperty] protected object? _uIObject;
 
     /// <inheritdoc/>
-    public virtual void OnInitialize(ICommandBarUIContext ctx) { }
+    public virtual void OnInitialize(ICommandBarUIContext? ctx) { }
 }
