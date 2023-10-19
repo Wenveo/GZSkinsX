@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime;
 using System.Runtime.InteropServices;
@@ -108,28 +107,53 @@ internal static partial class Program
             // Self Assembly
             yield return typeof(App).Assembly;
 
+            // GZSkinsX.Appx.AccessCache
+            yield return typeof(Appx.AccessCache.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.Activation
+            yield return typeof(Appx.Activation.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.Command
+            yield return typeof(Appx.Command.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.ContextMenu
+            yield return typeof(Appx.ContextMenu.AppxContract).Assembly;
+
             // GZSkinsX.Appx.Contracts
-            yield return typeof(AppxContext).Assembly;
-        }
+            yield return typeof(Contracts.AppxContract).Assembly;
 
-        Assembly asm;
-        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory, "GZSkinsX.Appx.*.dll")
-                .Where(a => a.IndexOf("GZSkinsX.Appx.Contracts.dll", StringComparison.OrdinalIgnoreCase) is -1))
-        {
-            try
-            {
-                asm = Assembly.LoadFile(filePath);
-            }
-            catch (Exception excp)
-            {
-                AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Program.GetAssemblies",
-                    $"Failed to load appx extension assembly: \"{filePath}\". Message = \"{excp.Message}\".");
+            // GZSkinsX.Appx.Game
+            yield return typeof(Appx.Game.AppxContract).Assembly;
 
-                continue;
-            }
+            // GZSkinsX.Appx.Kernel
+            yield return typeof(Appx.Kernel.AppxContract).Assembly;
 
-            yield return asm;
+            // GZSkinsX.Appx.Logging
+            yield return typeof(Appx.Logging.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.MainApp
+            yield return typeof(Appx.MainApp.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.Mounter
+            yield return typeof(Appx.Mounter.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.MRTCore
+            yield return typeof(Appx.MRTCore.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.MyMods
+            yield return typeof(Appx.MyMods.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.Navigation
+            yield return typeof(Appx.Navigation.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.Settings
+            yield return typeof(Appx.Settings.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.Themes
+            yield return typeof(Appx.Themes.AppxContract).Assembly;
+
+            // GZSkinsX.Appx.WindowManager
+            yield return typeof(Appx.WindowManager.AppxContract).Assembly;
         }
     }
 
