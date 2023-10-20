@@ -46,4 +46,10 @@ public abstract partial class CommandBarButtonBase : ObservableObject, ICommandB
 
     /// <inheritdoc/>
     public virtual void OnInitialize(ICommandBarUIContext? ctx) { }
+
+    /// <inheritdoc/>
+    public virtual void OnLoaded(ICommandBarUIContext? ctx) { }
+
+    /// <inheritdoc/>
+    public virtual void OnUnloaded(ICommandBarUIContext? ctx) { }
 }

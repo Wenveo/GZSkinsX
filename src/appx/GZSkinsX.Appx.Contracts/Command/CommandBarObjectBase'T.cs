@@ -24,9 +24,21 @@ public abstract partial class CommandBarObjectBase<TUIContext> : ObservableObjec
     /// <inheritdoc cref="ICommandBarObject.UIObject"/>
     [ObservableProperty] protected object? _uIObject;
 
-    /// <inheritdoc/>
+    /// <inheritdoc cref="ICommandBarItem.OnInitialize(ICommandBarUIContext?)"/>
     public virtual void OnInitialize(TUIContext? ctx) { }
+
+    /// <inheritdoc cref="ICommandBarItem.OnLoaded(ICommandBarUIContext?)"/>
+    public virtual void OnLoaded(TUIContext? ctx) { }
+
+    /// <inheritdoc cref="ICommandBarItem.OnUnloaded(ICommandBarUIContext?)"/>
+    public virtual void OnUnloaded(TUIContext? ctx) { }
 
     /// <inheritdoc/>
     void ICommandBarItem.OnInitialize(ICommandBarUIContext? ctx) => OnInitialize((TUIContext?)ctx);
+
+    /// <inheritdoc/>
+    void ICommandBarItem.OnLoaded(ICommandBarUIContext? ctx) => OnLoaded((TUIContext?)ctx);
+
+    /// <inheritdoc/>
+    void ICommandBarItem.OnUnloaded(ICommandBarUIContext? ctx) => OnUnloaded((TUIContext?)ctx);
 }

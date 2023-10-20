@@ -110,6 +110,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
         _appBarToggleButton.Command = new RelayCommand(OnClick);
         _appBarToggleButton.Checked += OnChecked;
         _appBarToggleButton.Unchecked += OnUnchecked;
+        _commandBarToggleButton.OnLoaded(_uiContext);
 
         var notifyPropertyChanged = _commandBarToggleButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
@@ -126,6 +127,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
         _appBarToggleButton.Command = null;
         _appBarToggleButton.Checked -= OnChecked;
         _appBarToggleButton.Unchecked -= OnUnchecked;
+        _commandBarToggleButton.OnUnloaded(_uiContext);
 
         var notifyPropertyChanged = _commandBarToggleButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)

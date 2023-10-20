@@ -110,6 +110,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
         }
 
         _appBarButton.Command = new RelayCommand(OnClick);
+        _commandBarButton.OnLoaded(_uiContext);
 
         var notifyPropertyChanged = _commandBarButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
@@ -124,6 +125,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
         _appBarButton.Command = null;
+        _commandBarButton.OnUnloaded(_uiContext);
 
         var notifyPropertyChanged = _commandBarButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)

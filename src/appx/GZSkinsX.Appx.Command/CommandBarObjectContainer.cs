@@ -75,6 +75,8 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
             _hasLoaded = true;
         }
 
+        _commandBarObject.OnLoaded(_uiContext);
+
         var notifyPropertyChanged = _commandBarObject as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
             notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
@@ -87,6 +89,8 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
     /// </summary>
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
+        _commandBarObject.OnUnloaded(_uiContext);
+
         var notifyPropertyChanged = _commandBarObject as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
             notifyPropertyChanged.PropertyChanged -= OnPropertyChanged;
