@@ -43,7 +43,7 @@ namespace $(RootNamespace)
     <WriteLinesToFile File="$(_AppxContractFile)" Lines="$(_AppxContractContent)" Overwrite="true" />
   </Target>
 
-  <Target Name="CleanAppxContractFileTarget" BeforeTargets="Clean" Condition="Exists('$(_AppxContractFile)')" >
+  <Target Name="CleanAppxContractFileTarget" BeforeTargets="IncrementalClean" Condition="Exists('$(_AppxContractFile)')" >
     <Delete Files="$(_AppxContractFile)" ContinueOnError="false" />
   </Target>
 </Project>
