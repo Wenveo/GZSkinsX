@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
+using CommunityToolkit.HighPerformance;
+
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.MRTCore;
 
@@ -27,7 +29,7 @@ public static class ResourceHelper
     /// <summary>
     /// 用于缓存本地化资源的字典。
     /// </summary>
-    private static readonly Dictionary<string, WeakReference> s_resxCache;
+    private static readonly Dictionary<int, WeakReference> s_resxCache;
 
     /// <summary>
     /// 初始化 <see cref="ResourceHelper"/> 的静态成员。
@@ -35,7 +37,7 @@ public static class ResourceHelper
     static ResourceHelper()
     {
         s_mrtCoreMap = AppxContext.MRTCoreService.MainResourceMap;
-        s_resxCache = new Dictionary<string, WeakReference>();
+        s_resxCache = new Dictionary<int, WeakReference>();
     }
 
     /// <summary>
@@ -52,7 +54,8 @@ public static class ResourceHelper
         }
 
         string? result;
-        if (s_resxCache.TryGetValue(resourceKey, out var weakResx))
+        var djb2HashCode = resourceKey.GetDjb2HashCode();
+        if (s_resxCache.TryGetValue(djb2HashCode, out var weakResx))
         {
             result = weakResx.Target as string;
             if (result is not null)
@@ -62,7 +65,7 @@ public static class ResourceHelper
         }
 
         result = s_mrtCoreMap.GetString(resourceKey);
-        s_resxCache[resourceKey] = new WeakReference(result);
+        s_resxCache[djb2HashCode] = new WeakReference(result);
 
         return result;
     }
@@ -84,9 +87,9 @@ public static class ResourceHelper
         if (resourceKey.StartsWith("resx:"))
         {
             string? result;
-            var cacheKey = resourceKey[5..];
-
-            if (s_resxCache.TryGetValue(cacheKey, out var weakResx))
+            var realResKey = resourceKey[5..];
+            var djb2HashCode = realResKey.GetDjb2HashCode();
+            if (s_resxCache.TryGetValue(djb2HashCode, out var weakResx))
             {
                 result = weakResx.Target as string;
                 if (result is not null)
@@ -95,8 +98,8 @@ public static class ResourceHelper
                 }
             }
 
-            result = s_mrtCoreMap.GetString(cacheKey);
-            s_resxCache[resourceKey] = new WeakReference(result);
+            result = s_mrtCoreMap.GetString(realResKey);
+            s_resxCache[djb2HashCode] = new WeakReference(result);
 
             return result;
         }
