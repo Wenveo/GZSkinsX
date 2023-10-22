@@ -13,7 +13,6 @@ using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 
 using GZSkinsX.Contracts.Command;
-using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Utilities;
 
 using Microsoft.UI.Xaml;
@@ -190,9 +189,8 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void UpdateDisplayName()
     {
-        var displayName = _commandBarToggleButton.DisplayName;
-        var localizedName = ResourceHelper.GetResxLocalizedOrDefault(displayName);
-        AutomationProperties.SetName(_appBarToggleButton, _appBarToggleButton.Label = localizedName);
+        AutomationProperties.SetName(_appBarToggleButton,
+            _appBarToggleButton.Label = _commandBarToggleButton.DisplayName);
     }
 
     /// <summary>
@@ -246,8 +244,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void UpdateKeyboardAcceleratorTextOverride()
     {
-        var textOverride = _commandBarToggleButton.KeyboardAcceleratorTextOverride;
-        _appBarToggleButton.KeyboardAcceleratorTextOverride = ResourceHelper.GetResxLocalizedOrDefault(textOverride);
+        _appBarToggleButton.KeyboardAcceleratorTextOverride = _commandBarToggleButton.KeyboardAcceleratorTextOverride;
     }
 
     /// <summary>
@@ -255,9 +252,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// </summary>
     private void UpdateToolTip()
     {
-        var toolTip = _commandBarToggleButton.ToolTip;
-        ToolTipService.SetToolTip(_appBarToggleButton, toolTip is string str ?
-            ResourceHelper.GetResxLocalizedOrDefault(str) : toolTip);
+        ToolTipService.SetToolTip(_appBarToggleButton, _commandBarToggleButton.ToolTip);
     }
 
     /// <summary>

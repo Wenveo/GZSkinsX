@@ -14,7 +14,6 @@ using CommunityToolkit.Mvvm.Input;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Command;
-using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Utilities;
 
 using Microsoft.UI.Xaml;
@@ -184,9 +183,8 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// </summary>
     private void UpdateDisplayName()
     {
-        var displayName = _commandBarButton.DisplayName;
-        var localizedName = ResourceHelper.GetResxLocalizedOrDefault(displayName);
-        AutomationProperties.SetName(_appBarButton, _appBarButton.Label = localizedName);
+        AutomationProperties.SetName(_appBarButton,
+            _appBarButton.Label = _commandBarButton.DisplayName);
     }
 
     /// <summary>
@@ -232,8 +230,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// </summary>
     private void UpdateKeyboardAcceleratorTextOverride()
     {
-        var textOverride = _commandBarButton.KeyboardAcceleratorTextOverride;
-        _appBarButton.KeyboardAcceleratorTextOverride = ResourceHelper.GetResxLocalizedOrDefault(textOverride);
+        _appBarButton.KeyboardAcceleratorTextOverride = _commandBarButton.KeyboardAcceleratorTextOverride;
     }
 
     /// <summary>
@@ -241,9 +238,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// </summary>
     private void UpdateToolTip()
     {
-        var toolTip = _commandBarButton.ToolTip;
-        ToolTipService.SetToolTip(_appBarButton, toolTip is string str ?
-            ResourceHelper.GetResxLocalizedOrDefault(str) : toolTip);
+        ToolTipService.SetToolTip(_appBarButton, _commandBarButton.ToolTip);
     }
 
     /// <summary>

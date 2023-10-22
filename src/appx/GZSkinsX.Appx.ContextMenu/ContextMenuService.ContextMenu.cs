@@ -13,7 +13,6 @@ using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.Input;
 
 using GZSkinsX.Contracts.ContextMenu;
-using GZSkinsX.Contracts.Helpers;
 
 using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Controls;
@@ -43,19 +42,18 @@ partial class ContextMenuService
 
         var header = menuItem.Header;
         if (header is not null)
-            AutomationProperties.SetName(uiObject, uiObject.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
+            AutomationProperties.SetName(uiObject, uiObject.Text = header);
 
         var toolTip = menuItem.ToolTip;
         if (toolTip is not null)
-            ToolTipService.SetToolTip(uiObject, toolTip is string str ?
-                ResourceHelper.GetResxLocalizedOrDefault(str) : toolTip);
+            ToolTipService.SetToolTip(uiObject, toolTip);
 
         foreach (var keyboardAccelerator in menuItem.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             uiObject.KeyboardAccelerators.Add(keyboardAccelerator);
 
         var textOverride = menuItem.KeyboardAcceleratorTextOverride;
         if (string.IsNullOrWhiteSpace(textOverride) is false)
-            uiObject.KeyboardAcceleratorTextOverride = ResourceHelper.GetResxLocalizedOrDefault(textOverride);
+            uiObject.KeyboardAcceleratorTextOverride = textOverride;
 
         uiObject.IsEnabled = menuItem.IsEnabled(uiContext);
     }
@@ -100,12 +98,11 @@ partial class ContextMenuService
 
         var header = menuItem.Header;
         if (header is not null)
-            AutomationProperties.SetName(menuFlyoutSubItem, menuFlyoutSubItem.Text = ResourceHelper.GetResxLocalizedOrDefault(header));
+            AutomationProperties.SetName(menuFlyoutSubItem, menuFlyoutSubItem.Text = header);
 
         var toolTip = menuItem.ToolTip;
         if (toolTip is not null)
-            ToolTipService.SetToolTip(menuFlyoutSubItem, toolTip is string str ?
-                ResourceHelper.GetResxLocalizedOrDefault(str) : toolTip);
+            ToolTipService.SetToolTip(menuFlyoutSubItem, toolTip);
 
         foreach (var keyboardAccelerator in menuItem.KeyboardAccelerators.OfType<KeyboardAccelerator>())
             menuFlyoutSubItem.KeyboardAccelerators.Add(keyboardAccelerator);
