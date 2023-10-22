@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 using CommunityToolkit.Mvvm.Input;
 
@@ -228,18 +227,18 @@ partial class ContextMenuService
         var needSeparator = false;
         foreach (var itemGroup in groups.Values)
         {
+            var visiableItems = itemGroup.Items.Where(item => item.Value.IsVisible(uiContext));
+            if (visiableItems.Any() is false)
+                continue;
+
             if (needSeparator)
                 collection.Add(new MenuFlyoutSeparator());
             else
                 needSeparator = true;
 
-            foreach (var item in CollectionsMarshal.AsSpan(itemGroup.Items))
-            {
-                if (item.Value.IsVisible(uiContext))
-                {
-                    collection.Add(CreateContextMenuItem(item.Value, item.Metadata, uiContext, closeFlyoutAction));
-                }
-            }
+            foreach (var item in visiableItems)
+                collection.Add(CreateContextMenuItem(item.Value,
+                    item.Metadata, uiContext, closeFlyoutAction));
         }
     }
 

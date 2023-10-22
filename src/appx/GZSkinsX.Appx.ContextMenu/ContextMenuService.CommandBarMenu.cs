@@ -12,6 +12,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 
 using GZSkinsX.Contracts.ContextMenu;
+using GZSkinsX.Contracts.Controls;
 
 using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Controls;
@@ -251,29 +252,38 @@ partial class ContextMenuService
 
         foreach (var group in itemGroups.Values)
         {
-            var visibleElements = group.Items.Where(item => item.Value.IsVisible(uiContext));
-            foreach (var item in visibleElements.Where(item => item.Value is not ISecondaryCommandBarItem))
+            var visibleItems = group.Items.Where(item => item.Value.IsVisible(uiContext));
+
+            var primaryItems = visibleItems.Where(item => item.Value is not ISecondaryCommandBarItem);
+            if (primaryItems.Any())
             {
                 if (primaryNeedSeparator)
                     primaryCommands.Add(new AppBarSeparator());
                 else
                     primaryNeedSeparator = true;
 
-                primaryCommands.Add(
-                    CreateCommandBarItem(item.Value, item.Metadata,
-                        uiContext, options, closeFlyoutAction));
+                foreach (var item in primaryItems)
+                {
+                    primaryCommands.Add(
+                        CreateCommandBarItem(item.Value, item.Metadata,
+                            uiContext, options, closeFlyoutAction));
+                }
             }
 
-            foreach (var item in visibleElements.Where(item => item.Value is ISecondaryCommandBarItem))
+            var secondaryItems = visibleItems.Where(item => item.Value is ISecondaryCommandBarItem);
+            if (secondaryItems.Any())
             {
                 if (secondaryNeedSeparator)
                     secondaryCommands.Add(new AppBarSeparator());
                 else
                     secondaryNeedSeparator = true;
 
-                secondaryCommands.Add(
-                    CreateCommandBarItem(item.Value, item.Metadata,
-                        uiContext, options, closeFlyoutAction));
+                foreach (var item in secondaryItems)
+                {
+                    secondaryCommands.Add(
+                        CreateCommandBarItem(item.Value, item.Metadata,
+                            uiContext, options, closeFlyoutAction));
+                }
             }
         }
     }
@@ -345,13 +355,15 @@ partial class ContextMenuService
             }
         }
 
+        // 此 CommandBarFlyout 元素在切换主题后重新打开时仍存在主题不同步的问题，即使集合已全部清空并且列表项重新创建。
+        FlyoutThemeHelper.SetFixThemeSync(commandBarFlyout, true);
         return commandBarFlyout;
     }
 
     /// <summary>
     /// 释放对上下文命令菜单项中的资源引用。
     /// </summary>
-    /// <param name="items">需要释放的上下文命令菜单项的元素集合。</param>
+    /// <param name="elements">需要释放的上下文命令菜单项的元素集合。</param>
     private static void DisposeReferences(IEnumerable<ICommandBarElement> elements)
     {
         foreach (var item in elements)
