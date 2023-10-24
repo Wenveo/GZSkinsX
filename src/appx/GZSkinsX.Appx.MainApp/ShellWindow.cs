@@ -101,21 +101,30 @@ internal sealed partial class ShellWindow : Window
 
     private void NCMouseLeftButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
     {
-        HideCustomSystemMenu();
+        if (Content is { XamlRoot: { } xamlRoot })
+        {
+            foreach (var popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(xamlRoot))
+            {
+                // 判断是否有已打开的内容框
+                if (popup.Child as ContentDialog is not null)
+                {
+                    continue;
     }
 
-    private void NCMouseRightButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
+                // 判断是否为内容框背后的背景层
+                if (popup.Child is Rectangle { Name: "SmokeLayerBackground" })
     {
         ShowCustomSystemMenu(args.Position);
     }
 
-    private void HideCustomSystemMenu()
-    {
-        var systemMenuFlyout = SystemMenuFlyout;
-        if (systemMenuFlyout is not null && systemMenuFlyout.IsOpen)
-        {
-            systemMenuFlyout.Hide();
+                popup.IsOpen = false;
+            }
         }
+    }
+
+    private void NCMouseRightButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
+        {
+        ShowCustomSystemMenu(args.Position);
     }
 
     private void ShowCustomSystemMenu(Point position)
