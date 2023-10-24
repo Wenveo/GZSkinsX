@@ -42,27 +42,27 @@ public abstract partial class CommandBarButtonBase<TUIContext> : ObservableObjec
     /// <inheritdoc cref="ICommandBarButton.ToolTip"/>
     [ObservableProperty] protected object? _toolTip;
 
-    /// <inheritdoc cref="ICommandBarButton.OnClick(ICommandBarUIContext?)"/>
-    public virtual void OnClick(TUIContext? ctx) { }
+    /// <inheritdoc cref="ICommandBarButton.OnClick(ICommandBarUIContext)"/>
+    public virtual void OnClick(TUIContext ctx) { }
 
-    /// <inheritdoc cref="ICommandBarItem.OnInitialize(ICommandBarUIContext?)"/>
-    public virtual void OnInitialize(TUIContext? ctx) { }
+    /// <inheritdoc cref="ICommandBarItem.OnInitialize(ICommandBarUIContext)"/>
+    public virtual void OnInitialize(TUIContext ctx) { }
 
-    /// <inheritdoc cref="ICommandBarItem.OnLoaded(ICommandBarUIContext?)"/>
-    public virtual void OnLoaded(TUIContext? ctx) { }
+    /// <inheritdoc cref="ICommandBarItem.OnLoaded(ICommandBarUIContext)"/>
+    public virtual void OnLoaded(TUIContext ctx) { }
 
-    /// <inheritdoc cref="ICommandBarItem.OnUnloaded(ICommandBarUIContext?)"/>
-    public virtual void OnUnloaded(TUIContext? ctx) { }
-
-    /// <inheritdoc/>
-    void ICommandBarButton.OnClick(ICommandBarUIContext? ctx) => OnClick((TUIContext?)ctx);
+    /// <inheritdoc cref="ICommandBarItem.OnUnloaded(ICommandBarUIContext)"/>
+    public virtual void OnUnloaded(TUIContext ctx) { }
 
     /// <inheritdoc/>
-    void ICommandBarItem.OnInitialize(ICommandBarUIContext? ctx) => OnInitialize((TUIContext?)ctx);
+    void ICommandBarButton.OnClick(ICommandBarUIContext ctx) => OnClick((TUIContext)ctx);
 
     /// <inheritdoc/>
-    void ICommandBarItem.OnLoaded(ICommandBarUIContext? ctx) => OnLoaded((TUIContext?)ctx);
+    void ICommandBarItem.OnInitialize(ICommandBarUIContext ctx) => OnInitialize((TUIContext)ctx);
 
     /// <inheritdoc/>
-    void ICommandBarItem.OnUnloaded(ICommandBarUIContext? ctx) => OnUnloaded((TUIContext?)ctx);
+    void ICommandBarItem.OnLoaded(ICommandBarUIContext ctx) => OnLoaded((TUIContext)ctx);
+
+    /// <inheritdoc/>
+    void ICommandBarItem.OnUnloaded(ICommandBarUIContext ctx) => OnUnloaded((TUIContext)ctx);
 }

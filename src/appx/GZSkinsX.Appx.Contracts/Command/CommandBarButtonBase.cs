@@ -42,14 +42,14 @@ public abstract partial class CommandBarButtonBase : ObservableObject, ICommandB
     [ObservableProperty] protected object? _toolTip;
 
     /// <inheritdoc/>
-    public virtual void OnClick(ICommandBarUIContext? ctx) { }
+    public virtual void OnClick(ICommandBarUIContext ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnInitialize(ICommandBarUIContext? ctx) { }
+    public virtual void OnInitialize(ICommandBarUIContext ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnLoaded(ICommandBarUIContext? ctx) { }
+    public virtual void OnLoaded(ICommandBarUIContext ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnUnloaded(ICommandBarUIContext? ctx) { }
+    public virtual void OnUnloaded(ICommandBarUIContext ctx) { }
 }

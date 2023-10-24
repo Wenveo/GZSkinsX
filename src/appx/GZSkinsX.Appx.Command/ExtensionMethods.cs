@@ -37,6 +37,7 @@ internal static class ExtensionMethods
         }
 
         var previousIndex = -1;
+        var separatorCount = 0;
         for (var i = 0; i < collection.Count; i++)
         {
             var element = collection[i];
@@ -59,7 +60,14 @@ internal static class ExtensionMethods
                 }
 
                 previousIndex = i;
+                separatorCount++;
             }
+        }
+
+        // 判断索引是否超出数组范围
+        if (previousIndex < 0 || previousIndex > collection.Count)
+        {
+            return;
         }
 
         // 如果到了最后的一个分隔符
@@ -69,7 +77,7 @@ internal static class ExtensionMethods
         // 所以在此处需要再往下进行判断
         // 以决定最后的这一个分隔符是否可见
 
-        if (collection[previousIndex] is AppBarSeparator lastSeparator)
+        if (separatorCount > 1 && collection[previousIndex] is AppBarSeparator lastSeparator)
         {
             var position = previousIndex + 1;
             if (collection.Count > position && HasVisibleElement(position, collection.Count))

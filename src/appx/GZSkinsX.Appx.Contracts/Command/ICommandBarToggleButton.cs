@@ -21,11 +21,11 @@ public interface ICommandBarToggleButton : ICommandBarButton
     /// 在切换至选中状态中触发的事件行为。
     /// </summary>
     /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
-    void OnChecked(ICommandBarUIContext? ctx);
+    void OnChecked(ICommandBarUIContext ctx);
 
     /// <summary>
     /// 在切换至未选中状态中触发的事件行为。
     /// </summary>
     /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
-    void OnUnchecked(ICommandBarUIContext? ctx);
+    void OnUnchecked(ICommandBarUIContext ctx);
 }

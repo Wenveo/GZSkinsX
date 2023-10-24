@@ -26,17 +26,17 @@ public interface ICommandBarItem
     /// 在 UI 初始化时触发的行为。
     /// </summary>
     /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
-    void OnInitialize(ICommandBarUIContext? ctx);
+    void OnInitialize(ICommandBarUIContext ctx);
 
     /// <summary>
     /// 在载入 UI 元素时触发的行为。
     /// </summary>
     /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
-    void OnLoaded(ICommandBarUIContext? ctx);
+    void OnLoaded(ICommandBarUIContext ctx);
 
     /// <summary>
     /// 在卸载 UI 元素时触发的行为。
     /// </summary>
     /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
-    void OnUnloaded(ICommandBarUIContext? ctx);
+    void OnUnloaded(ICommandBarUIContext ctx);
 }

@@ -35,7 +35,7 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
     /// <summary>
     /// 存放与命令栏所关联的 UI 上下文。
     /// </summary>
-    private readonly ICommandBarUIContext? _uiContext;
+    private readonly ICommandBarUIContext _uiContext;
 
     /// <summary>
     /// 内部管理的 UI 对象成员。
@@ -54,26 +54,33 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
     /// 初始化 <see cref="CommandBarObjectContainer"/> 的新实例。
     /// </summary>
     public CommandBarObjectContainer(IList<ICommandBarElement> parentContainer,
-        ICommandBarObject commandBarObject, ICommandBarUIContext? uiContext)
+        ICommandBarObject commandBarObject, ICommandBarUIContext uiContext)
     {
         _uiContext = uiContext;
         _parentContainer = parentContainer;
         _commandBarObject = commandBarObject;
-        _appBarElementContainer = new AppBarElementContainer();
-        _appBarElementContainer.Loaded += OnLoaded;
-        _appBarElementContainer.Unloaded += OnUnloaded;
+        _appBarElementContainer = new AppBarElementContainer { DataContext = this };
+        _appBarElementContainer.DispatcherQueue.TryEnqueue(EnsureInitialize);
     }
 
     /// <summary>
-    /// 在 UI 元素载入时触发的事件行为。
+    /// 确认是否已初始化。
     /// </summary>
-    private void OnLoaded(object sender, RoutedEventArgs e)
+    private void EnsureInitialize()
     {
         if (_hasLoaded is false)
         {
             _commandBarObject.OnInitialize(_uiContext);
+
             _hasLoaded = true;
+            UpdateUIState();
         }
+    }
+
+    /// <inheritdoc/>
+    public void OnLoaded()
+    {
+        EnsureInitialize();
 
         _commandBarObject.OnLoaded(_uiContext);
 
@@ -84,10 +91,8 @@ internal sealed class CommandBarObjectContainer : ICommandBarItemContainer<AppBa
         UpdateUIState();
     }
 
-    /// <summary>
-    /// 在 UI 元素从父对象中移除触发的事件行为。
-    /// </summary>
-    private void OnUnloaded(object sender, RoutedEventArgs e)
+    /// <inheritdoc/>
+    public void OnUnloaded()
     {
         _commandBarObject.OnUnloaded(_uiContext);
 

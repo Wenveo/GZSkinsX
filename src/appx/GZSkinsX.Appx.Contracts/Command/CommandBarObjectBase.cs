@@ -24,11 +24,11 @@ public abstract partial class CommandBarObjectBase : ObservableObject, ICommandB
     [ObservableProperty] protected object? _uIObject;
 
     /// <inheritdoc/>
-    public virtual void OnInitialize(ICommandBarUIContext? ctx) { }
+    public virtual void OnInitialize(ICommandBarUIContext ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnLoaded(ICommandBarUIContext? ctx) { }
+    public virtual void OnLoaded(ICommandBarUIContext ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnUnloaded(ICommandBarUIContext? ctx) { }
+    public virtual void OnUnloaded(ICommandBarUIContext ctx) { }
 }

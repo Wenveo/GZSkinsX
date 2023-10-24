@@ -18,4 +18,14 @@ internal interface ICommandBarItemContainer
     /// 获取该容器提供的命令栏元素的对象实例。
     /// </summary>
     ICommandBarElement UIObject { get; }
+
+    /// <summary>
+    /// 在 UI 元素载入时触发的事件行为。
+    /// </summary>
+    void OnLoaded();
+
+    /// <summary>
+    /// 在 UI 元素被移除时触发的事件行为。
+    /// </summary>
+    void OnUnloaded();
 }

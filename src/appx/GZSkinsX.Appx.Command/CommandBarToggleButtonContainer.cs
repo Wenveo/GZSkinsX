@@ -41,7 +41,7 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// <summary>
     /// 存放与命令栏所关联的 UI 上下文。
     /// </summary>
-    private readonly ICommandBarUIContext? _uiContext;
+    private readonly ICommandBarUIContext _uiContext;
 
     /// <summary>
     /// 内部管理的 UI 对象成员。
@@ -60,15 +60,59 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     /// 初始化 <see cref="CommandBarToggleButtonContainer"/> 的新实例。
     /// </summary>
     public CommandBarToggleButtonContainer(IList<ICommandBarElement> parentContainer,
-        ICommandBarToggleButton commandBarToggleButton, ICommandBarUIContext? uiContext)
+        ICommandBarToggleButton commandBarToggleButton, ICommandBarUIContext uiContext)
     {
         _uiContext = uiContext;
         _parentContainer = parentContainer;
         _commandBarToggleButton = commandBarToggleButton;
-        _appBarToggleButton = new AppBarToggleButton();
-        _appBarToggleButton.Loaded += OnLoaded;
-        _appBarToggleButton.Unloaded += OnUnloaded;
-        _uiContext = uiContext;
+        _appBarToggleButton = new AppBarToggleButton { DataContext = this };
+        _appBarToggleButton.DispatcherQueue.TryEnqueue(EnsureInitialize);
+    }
+
+    /// <summary>
+    /// 确认是否已初始化。
+    /// </summary>
+    private void EnsureInitialize()
+    {
+        if (_hasLoaded is false)
+        {
+            _commandBarToggleButton.OnInitialize(_uiContext);
+
+            _hasLoaded = true;
+            UpdateUIState();
+        }
+    }
+
+    /// <inheritdoc/>
+    public void OnLoaded()
+    {
+        EnsureInitialize();
+
+        _appBarToggleButton.Command = new RelayCommand(OnClick);
+        _appBarToggleButton.Checked += OnChecked;
+        _appBarToggleButton.Unchecked += OnUnchecked;
+        _commandBarToggleButton.OnLoaded(_uiContext);
+
+        var notifyPropertyChanged = _commandBarToggleButton as INotifyPropertyChanged;
+        if (notifyPropertyChanged is not null)
+            notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
+
+        UpdateUIState();
+    }
+
+    /// <inheritdoc/>
+    public void OnUnloaded()
+    {
+        _appBarToggleButton.Command = null;
+        _appBarToggleButton.Checked -= OnChecked;
+        _appBarToggleButton.Unchecked -= OnUnchecked;
+        _commandBarToggleButton.OnUnloaded(_uiContext);
+
+        var notifyPropertyChanged = _commandBarToggleButton as INotifyPropertyChanged;
+        if (notifyPropertyChanged is not null)
+            notifyPropertyChanged.PropertyChanged -= OnPropertyChanged;
+
+        ClearUIState();
     }
 
     /// <summary>
@@ -93,46 +137,6 @@ internal sealed class CommandBarToggleButtonContainer : ICommandBarItemContainer
     private void OnUnchecked(object sender, RoutedEventArgs e)
     {
         _commandBarToggleButton.OnUnchecked(_uiContext);
-    }
-
-    /// <summary>
-    /// 在 UI 元素载入时触发的事件行为。
-    /// </summary>
-    private void OnLoaded(object sender, RoutedEventArgs e)
-    {
-        if (_hasLoaded is false)
-        {
-            _commandBarToggleButton.OnInitialize(_uiContext);
-            _hasLoaded = true;
-        }
-
-        _appBarToggleButton.Command = new RelayCommand(OnClick);
-        _appBarToggleButton.Checked += OnChecked;
-        _appBarToggleButton.Unchecked += OnUnchecked;
-        _commandBarToggleButton.OnLoaded(_uiContext);
-
-        var notifyPropertyChanged = _commandBarToggleButton as INotifyPropertyChanged;
-        if (notifyPropertyChanged is not null)
-            notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
-
-        UpdateUIState();
-    }
-
-    /// <summary>
-    /// 在 UI 元素从父对象中移除触发的事件行为。
-    /// </summary>
-    private void OnUnloaded(object sender, RoutedEventArgs e)
-    {
-        _appBarToggleButton.Command = null;
-        _appBarToggleButton.Checked -= OnChecked;
-        _appBarToggleButton.Unchecked -= OnUnchecked;
-        _commandBarToggleButton.OnUnloaded(_uiContext);
-
-        var notifyPropertyChanged = _commandBarToggleButton as INotifyPropertyChanged;
-        if (notifyPropertyChanged is not null)
-            notifyPropertyChanged.PropertyChanged -= OnPropertyChanged;
-
-        ClearUIState();
     }
 
     /// <summary>

@@ -16,8 +16,8 @@ public abstract partial class CommandBarToggleButtonBase : CommandBarButtonBase,
     [CommunityToolkit.Mvvm.ComponentModel.ObservableProperty] protected bool _isChecked;
 
     /// <inheritdoc/>
-    public virtual void OnChecked(ICommandBarUIContext? ctx) { }
+    public virtual void OnChecked(ICommandBarUIContext ctx) { }
 
     /// <inheritdoc/>
-    public virtual void OnUnchecked(ICommandBarUIContext? ctx) { }
+    public virtual void OnUnchecked(ICommandBarUIContext ctx) { }
 }

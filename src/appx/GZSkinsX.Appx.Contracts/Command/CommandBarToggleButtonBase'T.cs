@@ -16,15 +16,15 @@ public abstract partial class CommandBarToggleButtonBase<TUIContext> : CommandBa
     /// <inheritdoc cref="ICommandBarToggleButton.IsChecked"/>
     [CommunityToolkit.Mvvm.ComponentModel.ObservableProperty] protected bool _isChecked;
 
-    /// <inheritdoc cref="ICommandBarToggleButton.OnChecked(ICommandBarUIContext?)"/>
-    public virtual void OnChecked(TUIContext? ctx) { }
+    /// <inheritdoc cref="ICommandBarToggleButton.OnChecked(ICommandBarUIContext)"/>
+    public virtual void OnChecked(TUIContext ctx) { }
 
-    /// <inheritdoc cref="ICommandBarToggleButton.OnUnchecked(ICommandBarUIContext?)"/>
-    public virtual void OnUnchecked(TUIContext? ctx) { }
-
-    /// <inheritdoc/>
-    void ICommandBarToggleButton.OnChecked(ICommandBarUIContext? ctx) => OnChecked((TUIContext?)ctx);
+    /// <inheritdoc cref="ICommandBarToggleButton.OnUnchecked(ICommandBarUIContext)"/>
+    public virtual void OnUnchecked(TUIContext ctx) { }
 
     /// <inheritdoc/>
-    void ICommandBarToggleButton.OnUnchecked(ICommandBarUIContext? ctx) => OnUnchecked((TUIContext?)ctx);
+    void ICommandBarToggleButton.OnChecked(ICommandBarUIContext ctx) => OnChecked((TUIContext)ctx);
+
+    /// <inheritdoc/>
+    void ICommandBarToggleButton.OnUnchecked(ICommandBarUIContext ctx) => OnUnchecked((TUIContext)ctx);
 }

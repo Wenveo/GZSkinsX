@@ -46,5 +46,5 @@ public interface ICommandBarButton : ICommandBarItem
     /// 命令按钮的默认点击事件行为。
     /// </summary>
     /// <param name="ctx">与当前命令栏有关的 UI 上下文。</param>
-    void OnClick(ICommandBarUIContext? ctx);
+    void OnClick(ICommandBarUIContext ctx);
 }

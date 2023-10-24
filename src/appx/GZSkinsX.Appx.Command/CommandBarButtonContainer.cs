@@ -41,7 +41,7 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// <summary>
     /// 存放与命令栏所关联的 UI 上下文。
     /// </summary>
-    private readonly ICommandBarUIContext? _uiContext;
+    private readonly ICommandBarUIContext _uiContext;
 
     /// <summary>
     /// 内部管理的 UI 对象成员。
@@ -60,14 +60,13 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     /// 初始化 <see cref="CommandBarButtonContainer"/> 的新实例。
     /// </summary>
     public CommandBarButtonContainer(IList<ICommandBarElement> parentContainer,
-        ICommandBarButton commandBarButton, ICommandBarUIContext? uiContext)
+        ICommandBarButton commandBarButton, ICommandBarUIContext uiContext)
     {
         _uiContext = uiContext;
         _parentContainer = parentContainer;
         _commandBarButton = commandBarButton;
-        _appBarButton = new AppBarButton();
-        _appBarButton.Loaded += OnLoaded;
-        _appBarButton.Unloaded += OnUnloaded;
+        _appBarButton = new AppBarButton { DataContext = this };
+        _appBarButton.DispatcherQueue.TryEnqueue(EnusreInitialize);
 
         FixChevronPanelVisibility();
     }
@@ -85,17 +84,9 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
     }
 
     /// <summary>
-    /// 触发按钮点击的事件行为。
+    /// 确认是否已初始化。
     /// </summary>
-    private void OnClick()
-    {
-        _commandBarButton.OnClick(_uiContext);
-    }
-
-    /// <summary>
-    /// 在 UI 元素载入时触发的事件行为。
-    /// </summary>
-    private void OnLoaded(object sender, RoutedEventArgs e)
+    private void EnusreInitialize()
     {
         if (_hasLoaded is false)
         {
@@ -106,7 +97,14 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
                 _appBarButton.Flyout = AppxContext.ContextMenuService.CreateContextMenu(buttonContextMenu.ContextMenuGuid);
 
             _hasLoaded = true;
+            UpdateUIState();
         }
+    }
+
+    /// <inheritdoc/>
+    public void OnLoaded()
+    {
+        EnusreInitialize();
 
         _appBarButton.Command = new RelayCommand(OnClick);
         _commandBarButton.OnLoaded(_uiContext);
@@ -118,19 +116,24 @@ internal sealed class CommandBarButtonContainer : ICommandBarItemContainer<AppBa
         UpdateUIState();
     }
 
-    /// <summary>
-    /// 在 UI 元素从父对象中移除触发的事件行为。
-    /// </summary>
-    private void OnUnloaded(object sender, RoutedEventArgs e)
+    /// <inheritdoc/>
+    public void OnUnloaded()
     {
         _appBarButton.Command = null;
-        _commandBarButton.OnUnloaded(_uiContext);
 
         var notifyPropertyChanged = _commandBarButton as INotifyPropertyChanged;
         if (notifyPropertyChanged is not null)
             notifyPropertyChanged.PropertyChanged -= OnPropertyChanged;
 
         ClearUIState();
+    }
+
+    /// <summary>
+    /// 触发按钮点击的事件行为。
+    /// </summary>
+    private void OnClick()
+    {
+        _commandBarButton.OnClick(_uiContext);
     }
 
     /// <summary>

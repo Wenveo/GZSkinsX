@@ -14,6 +14,7 @@ using System.Linq;
 using GZSkinsX.Contracts.Command;
 using GZSkinsX.Contracts.Utilities;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 using Windows.Foundation.Collections;
@@ -65,6 +66,11 @@ internal sealed class CommandBarService : ICommandBarService
         /// </summary>
         public List<CommandBarItemMD> Items { get; } = new List<CommandBarItemMD>();
     }
+
+    /// <summary>
+    /// 定义空的命令栏 UI 上下文类。
+    /// </summary>
+    private sealed class EmptyCommandBarUIContext : ICommandBarUIContext { }
 
     /// <summary>
     /// 表示已枚举的所有导出的 <see cref="ICommandBarItem"/> 命令项 和 <see cref="CommandBarItemContractAttribute"/> 元数据的集合。
@@ -136,8 +142,10 @@ internal sealed class CommandBarService : ICommandBarService
     /// <param name="collection">用于将已创建的 UI 子元素的添加至目标集合的列表。</param>
     /// <param name="items">用于创建 UI 子元素的集合。</param>
     /// <param name="uiContext">指定与命令栏所关联的 UI 上下文。</param>
-    private static void CreateSubItems(IObservableVector<ICommandBarElement> collection,
-        IEnumerable<CommandBarItemMD> items, ICommandBarUIContext? uiContext = null)
+    private static void CreateSubItems(
+        IObservableVector<ICommandBarElement> collection,
+        IEnumerable<CommandBarItemMD> items,
+        ICommandBarUIContext uiContext)
     {
         foreach (var item in items)
         {
@@ -166,6 +174,8 @@ internal sealed class CommandBarService : ICommandBarService
         if (Guid.TryParse(ownerGuidString, out var ownerGuid) &&
             _guidToGroups.TryGetValue(ownerGuid, out var itemGroups))
         {
+            uiContext ??= new EmptyCommandBarUIContext();
+
             var primaryNeedSeparator = false;
             var secondaryNeedSeparator = false;
 
@@ -193,6 +203,46 @@ internal sealed class CommandBarService : ICommandBarService
                     CreateSubItems(commandBar.SecondaryCommands, secondaryCommands, uiContext);
                 }
             }
+
+            commandBar.Loaded += (s, e) =>
+            {
+                static void RaiseLoadedEvent(IObservableVector<ICommandBarElement> elements)
+                {
+                    foreach (var item in elements)
+                    {
+                        if (item is FrameworkElement { DataContext: ICommandBarItemContainer container })
+                        {
+                            container.OnLoaded();
+                        }
+                    }
+                }
+
+                if (s is CommandBar { PrimaryCommands: { Count: > 0 } primaryCommands, SecondaryCommands: { Count: > 0 } secondaryCommands })
+                {
+                    RaiseLoadedEvent(primaryCommands);
+                    RaiseLoadedEvent(secondaryCommands);
+                }
+            };
+
+            commandBar.Unloaded += (s, e) =>
+            {
+                static void RaiseUnloadedEvent(IObservableVector<ICommandBarElement> elements)
+                {
+                    foreach (var item in elements)
+                    {
+                        if (item is FrameworkElement { DataContext: ICommandBarItemContainer container })
+                        {
+                            container.OnUnloaded();
+                        }
+                    }
+                }
+
+                if (s is CommandBar { PrimaryCommands: { Count: > 0 } primaryCommands, SecondaryCommands: { Count: > 0 } secondaryCommands })
+                {
+                    RaiseUnloadedEvent(primaryCommands);
+                    RaiseUnloadedEvent(secondaryCommands);
+                }
+            };
         }
 
         return commandBar;
