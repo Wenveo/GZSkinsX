@@ -13,17 +13,17 @@ namespace GZSkinsX.Contracts.Navigation;
 public static class NavigationConstants
 {
     /// <summary>
-    /// 表示位于主页面中的导航视图的 <see cref="System.Guid"/> 字符串值。
+    /// Main / NavigationView
     /// </summary>
     public const string MAIN_NAV_GUID = "3CD3B21D-BC3D-4344-95C2-52C2EF68B626";
 
     /// <summary>
-    /// 表示位于主页面中的导航视图的 'General' 组。
+    /// Main / NavigationView / Group / General
     /// </summary>
     public const string GROUP_MAIN_NAV_GENERAL = "0,C1E738C6-0FBE-4AD7-8F42-D384A935540B";
 
     /// <summary>
-    /// 表示位于主页面中的导航视图的 'DevTools' 组。
+    /// Main / NavigationView / Group / DevTools
     /// </summary>
     public const string GROUP_MAIN_NAV_DEVTOOLS = "1000,4C575955-C122-4CD2-A23F-06EAB2E1D378";
 }

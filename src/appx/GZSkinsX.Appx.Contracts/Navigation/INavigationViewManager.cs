@@ -14,22 +14,22 @@ using Microsoft.UI.Xaml.Navigation;
 namespace GZSkinsX.Contracts.Navigation;
 
 /// <summary>
-/// 表示对导航视图的抽象管理，并提供针对导航项的导航功能实现。
+/// 有关导航视图的抽象管理，提供针对导航项的导航功能实现。
 /// </summary>
 public interface INavigationViewManager
 {
     /// <summary>
-    /// 表示能否向后导航。
+    /// 获取能否向后导航。
     /// </summary>
     bool CanGoBack { get; }
 
     /// <summary>
-    /// 表示能否向前导航。
+    /// 获取能否向前导航。
     /// </summary>
     bool CanGoForward { get; }
 
     /// <summary>
-    /// 表示该 <see cref="INavigationViewManager"/> 中的 UI 对象。
+    /// 获取导航视图的 UI 对象实例。
     /// </summary>
     object UIObject { get; }
 

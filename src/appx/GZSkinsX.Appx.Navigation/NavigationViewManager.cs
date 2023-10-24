@@ -10,10 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using GZSkinsX.Contracts.Controls;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Navigation;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -23,14 +26,29 @@ namespace GZSkinsX.Appx.Navigation;
 internal sealed class NavigationViewManager : INavigationViewManager
 {
     /// <summary>
-    /// 内部的 <see cref="NavigationView"/> 成员定义。
+    /// 提供用于呈现导航视图项的面板，以及页面内容。
     /// </summary>
     private readonly NavigationView _navigationView;
 
     /// <summary>
-    /// 内部的 <see cref="Frame"/> 成员定义。
+    /// 用于呈现页面内容以及实现导航功能。
     /// </summary>
     private readonly Frame _rootFrame;
+
+    /// <summary>
+    /// 有关搜索行为的搜索框控件。
+    /// </summary>
+    private readonly AutoSuggestBox? _searchBoxControl;
+
+    /// <summary>
+    /// 默认的搜索框占位文本。
+    /// </summary>
+    private readonly string _defaultPlaceholderText;
+
+    /// <summary>
+    /// 存放用于接管搜索行为的对象。
+    /// </summary>
+    private INavigationViewSearchHolder? _searchHolder;
 
     /// <summary>
     /// 此成员用于帮助 OnNavigated 方法中快速枚举导航视图项。
@@ -62,6 +80,112 @@ internal sealed class NavigationViewManager : INavigationViewManager
         _rootFrame = frame;
         _rootFrame.Navigated += OnNavigated;
         _navigationView.SelectionChanged += OnNavSelectionChanged;
+
+        string? placeholderText = null;
+        if (navigationView is INavigationViewCustomSearchBox customSearchBox)
+        {
+            _searchBoxControl = customSearchBox.SearchBoxControl;
+            placeholderText = customSearchBox.DefaultPlaceholderText;
+        }
+        else
+        {
+            _searchBoxControl = _navigationView.AutoSuggestBox ??
+                new() { QueryIcon = new SegoeFluentIcon("\uE11A") };
+        }
+
+        _defaultPlaceholderText = placeholderText ?? ResourceHelper.GetLocalized(
+                    "GZSkinsX.Appx.Navigation/Resources/NavigationView_SearchBoxControl_DefaultPlaceholderText");
+
+        if (_searchBoxControl is not null)
+        {
+            _searchBoxControl.KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden;
+            _searchBoxControl.ItemTemplate = new QueryNavigationViewItemTemplate();
+            _searchBoxControl.QuerySubmitted += OnSearchBoxControlQuerySubmitted;
+            _searchBoxControl.TextChanged += OnSearchBoxControlTextChanged;
+
+            var ctrlF_Hotkey = new KeyboardAccelerator
+            {
+                Key = Windows.System.VirtualKey.F,
+                Modifiers = Windows.System.VirtualKeyModifiers.Control
+            };
+
+            ctrlF_Hotkey.Invoked += OnControlFInvoked;
+            _searchBoxControl.KeyboardAccelerators.Add(ctrlF_Hotkey);
+        }
+    }
+
+    /// <summary>
+    /// 在触发快捷键 Ctrl+F 时调用，并激活搜索框控件。 
+    /// </summary>
+    private void OnControlFInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+    {
+        _searchBoxControl?.Focus(FocusState.Keyboard);
+    }
+
+    /// <summary>
+    /// 在选择建议的导航项时触发的方法。
+    /// </summary>
+    private async void OnSearchBoxControlQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+    {
+        if (args.ChosenSuggestion is QueryNavigationViewItem item)
+        {
+            await NavigateCoreAsync(item.GuidString, null, null);
+        }
+    }
+
+    /// <summary>
+    /// 在搜索框文本更改后触发的处理方法。
+    /// </summary>
+    private void OnSearchBoxControlTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason is not AutoSuggestionBoxTextChangeReason.SuggestionChosen)
+        {
+            var searchHolder = _searchHolder;
+            if (searchHolder is not null)
+            {
+                searchHolder.OnSearchTextChanged(this, sender.Text);
+                return;
+            }
+
+            var querySplit = sender.Text.Split(" ");
+            var suggestions = QueryItems(_navigationView.MenuItems, querySplit)
+                .Concat(QueryItems(_navigationView.FooterMenuItems, querySplit));
+
+            if (suggestions.Any() is false)
+                sender.ItemsSource = QueryNavigationViewItem.EmptyArray;
+            else
+                sender.ItemsSource = suggestions;
+        }
+
+        static IEnumerable<QueryNavigationViewItem> QueryItems(IList<object> menuItems, string[] tokens)
+        {
+            foreach (var item in menuItems.OfType<NavigationViewItem>())
+            {
+                if (NavigationViewItemHelper.GetItemContext(item) is { } ctx &&
+                    item is { SelectsOnInvoked: true, Content: string header })
+                {
+                    foreach (var queryToken in tokens)
+                    {
+                        if (header.IndexOf(queryToken, StringComparison.CurrentCultureIgnoreCase) is not -1)
+                        {
+                            if (item.Icon is FontIcon fontIcon)
+                            {
+                                yield return new(header, fontIcon.Glyph, fontIcon.FontFamily, ctx.Metadata.Guid);
+                            }
+                            else
+                            {
+                                yield return new(header, string.Empty, item.FontFamily, ctx.Metadata.Guid);
+                            }
+                        }
+                    }
+                }
+
+                foreach (var subItem in QueryItems(item.MenuItems, tokens))
+                {
+                    yield return subItem;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -80,6 +204,20 @@ internal sealed class NavigationViewManager : INavigationViewManager
 
             Navigated?.Invoke(sender, e);
             _tempNavItem = null;
+        }
+
+        if (_searchBoxControl is not null)
+        {
+            if (_rootFrame.Content is INavigationViewSearchHolder searchHolder)
+            {
+                _searchHolder = searchHolder;
+                _searchBoxControl.PlaceholderText = searchHolder.GetPlaceholderText();
+            }
+            else
+            {
+                _searchHolder = null;
+                _searchBoxControl.PlaceholderText = _defaultPlaceholderText;
+            }
         }
     }
 
@@ -283,8 +421,8 @@ internal sealed class NavigationViewManager : INavigationViewManager
             var beforeNavItemCtx = GetCurrentNavItemCtx();
             infoOverride ??= new DrillInNavigationTransitionInfo();
 
-            _rootFrame.Tag = guidString;
             _tempNavItem = item;
+            _rootFrame.Tag = guidString;
 
             if (_rootFrame.Navigate(ctx.Metadata.PageType, parameter, infoOverride))
             {

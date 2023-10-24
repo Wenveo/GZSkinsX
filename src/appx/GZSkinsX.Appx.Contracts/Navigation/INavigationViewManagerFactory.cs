@@ -18,7 +18,7 @@ public interface INavigationViewManagerFactory
     /// 通过指定的 <see cref="System.Guid"/> 字符串值创建一个新的 <see cref="INavigationViewManager"/> 实现。
     /// </summary>
     /// <param name="ownerGuidString">导航项所归属的 <see cref="System.Guid"/> 字符串值。</param>
-    /// <returns>已创建的 <see cref="INavigationViewManager"/> 类型实例。</returns>
+    /// <returns>已创建的导航视图管理实例。</returns>
     INavigationViewManager CreateNavigationViewManager(string ownerGuidString);
 
     /// <summary>
@@ -26,6 +26,6 @@ public interface INavigationViewManagerFactory
     /// </summary>
     /// <param name="ownerGuidString">导航项所归属的 <see cref="System.Guid"/> 字符串值。</param>
     /// <param name="targetElement">用于添加导航项的目标导航视图元素。</param>
-    /// <returns>已创建的 <see cref="INavigationViewManager"/> 类型实例。</returns>
+    /// <returns>已创建的导航视图管理实例。</returns>
     INavigationViewManager CreateNavigationViewManager(string ownerGuidString, NavigationView targetElement);
 }
