@@ -28,7 +28,7 @@
 
             <local:MultiStateToggleButtonState StateName="LaunchButton_State_Default">
                 <StackPanel Orientation="Horizontal">
-                    <local:SegoeFluentIcon FontSize="16" Glyph="&#xF5B0;" />
+                    <local:SegoeFluentIcon FontSize="16" Glyph="&#xE768;" />
                     <TextBlock x:Uid="LaunchButton_State_Default_Textblock" Margin="8,0,0,0" />
                 </StackPanel>
             </local:MultiStateToggleButtonState>
