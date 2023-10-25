@@ -37,7 +37,7 @@ internal sealed partial class CustomizedNavView : NavigationView, INavigationVie
         Loaded += OnLoaded;
 
         MainGlobalMenu.Flyout = AppxContext.ContextMenuService.CreateContextMenu(ContextMenuConstants.MAIN_GLOBALMENU_CTX_GUID,
-            new ContextMenuOptions { Placement = Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.BottomEdgeAlignedLeft },
+            new ContextMenuOptions { Placement = Microsoft.UI.Xaml.Controls.Primitives.FlyoutPlacementMode.Bottom },
             (s, e) => new MainGlobalMenuUIContext(s, AppxContext.ThemeService.CurrentTheme));
     }
 
