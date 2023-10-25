@@ -15,7 +15,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Mounter;
+using GZSkinsX.Contracts.MotClient;
 
 namespace GZSkinsX.Appx.MyMods;
 
@@ -36,12 +36,12 @@ partial class MyModsService
     /// <returns>如果服务组件未安装或不存在有效的包元数据将返回 null，否则将根据服务组件中的包元数据返回所指定的配置文件的完整路径。</returns>
     private static async Task<string?> TryGetMTSettingsFilePathAsync()
     {
-        if (AppxContext.MounterService.TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        if (AppxContext.MotClientService.TryGetMotClientAgentWorkingDirectory(out var workingDirectory) is false)
         {
             return null;
         }
 
-        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.SettingsFile));
+        var metadata = await AppxContext.MotClientService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.SettingsFile));
         if (metadata is null)
         {
             return null;

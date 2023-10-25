@@ -45,13 +45,13 @@ internal sealed partial class CustomizedNavView : NavigationView, INavigationVie
     {
         if (HasLoaded is false)
         {
-            if (AppxContext.MounterService.TryGetMounterWorkingDirectory(out _) is false)
+            if (AppxContext.MotClientService.TryGetMotClientAgentWorkingDirectory(out _) is false)
             {
                 MainLaunchButton.UpdateCompleted += OnMainLaunchButtonUpdateCompleted;
                 VisualStateManager.GoToState(this, "DisableRootContent", true);
                 await MainLaunchButton.OnUpdateAsync();
             }
-            else if (await AppxContext.MounterService.VerifyContentIntegrityAsync() is false)
+            else if (await AppxContext.MotClientService.VerifyContentIntegrityAsync() is false)
             {
                 await MainLaunchButton.OnUpdateAsync();
             }

@@ -134,8 +134,8 @@ internal static partial class Program
             // GZSkinsX.Appx.MainApp
             yield return typeof(Appx.MainApp.AppxContract).Assembly;
 
-            // GZSkinsX.Appx.Mounter
-            yield return typeof(Appx.Mounter.AppxContract).Assembly;
+            // GZSkinsX.Appx.MotClient
+            yield return typeof(Appx.MotClient.AppxContract).Assembly;
 
             // GZSkinsX.Appx.MRTCore
             yield return typeof(Appx.MRTCore.AppxContract).Assembly;

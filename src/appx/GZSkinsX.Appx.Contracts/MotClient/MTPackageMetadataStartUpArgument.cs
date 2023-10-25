@@ -5,7 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-namespace GZSkinsX.Contracts.Mounter;
+namespace GZSkinsX.Contracts.MotClient;
 
 /// <summary>
 /// 服务组件的启动参数信息。

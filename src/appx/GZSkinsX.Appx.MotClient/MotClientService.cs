@@ -24,15 +24,15 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
-using GZSkinsX.Contracts.Mounter;
+using GZSkinsX.Contracts.MotClient;
 
 using Windows.Foundation;
 
-namespace GZSkinsX.Appx.Mounter;
+namespace GZSkinsX.Appx.MotClient;
 
-/// <inheritdoc cref="IMounterService"/>
-[Shared, Export(typeof(IMounterService))]
-internal sealed partial class MounterService : IMounterService
+/// <inheritdoc cref="IMotClientAgentService"/>
+[Shared, Export(typeof(IMotClientService))]
+internal sealed partial class MotClientAgentService : IMotClientService
 {
     /// <summary>
     /// 获取存放在线的包清单配置链接。
@@ -46,12 +46,12 @@ internal sealed partial class MounterService : IMounterService
     /// <summary>
     /// 获取用于存放服务组件的根文件夹路径。
     /// </summary>
-    private string MounterRootFolder { get; }
+    private string MotClientRootFolder { get; }
 
     /// <summary>
     /// 获取用于存放当前服务上下文内容的本地配置。
     /// </summary>
-    private MounterSettings MounterSettings { get; }
+    private MotClientSettings MotClientSettings { get; }
 
     /// <summary>
     /// 获取用于 HTTP 请求的 <see cref="HttpClient"/> 实例。
@@ -65,19 +65,19 @@ internal sealed partial class MounterService : IMounterService
     }
 
     /// <inheritdoc/>
-    public event TypedEventHandler<IMounterService, bool>? IsRunningChanged;
+    public event TypedEventHandler<IMotClientService, bool>? IsRunningChanged;
 
     /// <summary>
-    /// 初始化 <see cref="MounterService"/> 的新实例。
+    /// 初始化 <see cref="MotClientAgentService"/> 的新实例。
     /// </summary>
-    public MounterService()
+    public MotClientAgentService()
     {
-        MounterSettings = AppxContext.Resolve<MounterSettings>();
+        MotClientSettings = AppxContext.Resolve<MotClientSettings>();
         MyHttpClient = new HttpClient(new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
         });
-        MounterRootFolder = Path.Combine(AppxContext.RoamingFolder, "Mounter");
+        MotClientRootFolder = Path.Combine(AppxContext.RoamingFolder, "MotClient");
 
         var worker = new BackgroundWorker();
         worker.DoWork += DoSomething;
@@ -191,7 +191,7 @@ internal sealed partial class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task LaunchAsync()
     {
-        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        if (TryGetMotClientAgentWorkingDirectory(out var workingDirectory) is false)
         {
             return;
         }
@@ -223,7 +223,7 @@ internal sealed partial class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task LaunchAsync(string args)
     {
-        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        if (TryGetMotClientAgentWorkingDirectory(out var workingDirectory) is false)
         {
             return;
         }
@@ -254,7 +254,7 @@ internal sealed partial class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task TerminateAsync()
     {
-        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        if (TryGetMotClientAgentWorkingDirectory(out var workingDirectory) is false)
         {
             return;
         }
@@ -286,7 +286,7 @@ internal sealed partial class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task<MTPackageMetadata?> TryGetCurrentPackageMetadataAsync(params string[] filter)
     {
-        if (TryGetMounterWorkingDirectory(out var workingDirectory))
+        if (TryGetMotClientAgentWorkingDirectory(out var workingDirectory))
         {
             return await TryGetLocalMTPackageMetadataAsync(workingDirectory, filter);
         }
@@ -297,9 +297,9 @@ internal sealed partial class MounterService : IMounterService
     }
 
     /// <inheritdoc/>
-    public bool TryGetMounterWorkingDirectory([NotNullWhen(true)] out string? result)
+    public bool TryGetMotClientAgentWorkingDirectory([NotNullWhen(true)] out string? result)
     {
-        var workingDirectory = MounterSettings.WorkingDirectory;
+        var workingDirectory = MotClientSettings.WorkingDirectory;
         if (Directory.Exists(workingDirectory) is false)
         {
             result = null;
@@ -315,7 +315,7 @@ internal sealed partial class MounterService : IMounterService
     {
         var checkVersion = false;
         MTPackageMetadata? previousMetadata = null;
-        if (TryGetMounterWorkingDirectory(out var workingDirectory))
+        if (TryGetMotClientAgentWorkingDirectory(out var workingDirectory))
         {
             previousMetadata = await TryGetLocalMTPackageMetadataAsync(workingDirectory,
                 nameof(MTPackageMetadata.Version), nameof(MTPackageMetadata.SettingsFile));
@@ -357,7 +357,7 @@ internal sealed partial class MounterService : IMounterService
         }
 
         // 更新当前服务组件的工作目录
-        MounterSettings.WorkingDirectory = destFolder;
+        MotClientSettings.WorkingDirectory = destFolder;
 
         AppxContext.LoggingService.LogOkay(
             "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
@@ -369,7 +369,7 @@ internal sealed partial class MounterService : IMounterService
     /// <inheritdoc/>
     public async Task<bool> VerifyContentIntegrityAsync()
     {
-        if (TryGetMounterWorkingDirectory(out var workingDirectory) is false)
+        if (TryGetMotClientAgentWorkingDirectory(out var workingDirectory) is false)
         {
             return false;
         }
@@ -501,7 +501,7 @@ internal sealed partial class MounterService : IMounterService
                 await MyHttpClient.DownloadAsync(requestUri, outputStream, progress);
             }
 
-            var destFolderPath = Path.Combine(MounterRootFolder, tempName);
+            var destFolderPath = Path.Combine(MotClientRootFolder, tempName);
             if (Directory.Exists(destFolderPath) is false)
             {
                 Directory.CreateDirectory(destFolderPath);
@@ -698,13 +698,13 @@ internal sealed partial class MounterService : IMounterService
     /// </summary>
     private void TryCleanupMounterRootFolder()
     {
-        if (Directory.Exists(MounterRootFolder) is false)
+        if (Directory.Exists(MotClientRootFolder) is false)
         {
             return;
         }
 
-        var targetFolderName = MounterSettings.WorkingDirectory;
-        foreach (var item in new DirectoryInfo(MounterRootFolder).EnumerateFileSystemInfos())
+        var targetFolderName = MotClientSettings.WorkingDirectory;
+        foreach (var item in new DirectoryInfo(MotClientRootFolder).EnumerateFileSystemInfos())
         {
             // 当匹配到与工作目录相同的文件夹时，跳过删除操作
             // 除此之外，其余的所有文件/文件夹都将被删除。

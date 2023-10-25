@@ -10,10 +10,10 @@ using System.Composition;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Settings;
 
-namespace GZSkinsX.Appx.Mounter;
+namespace GZSkinsX.Appx.MotClient;
 
-[Shared, Export(typeof(MounterSettings))]
-internal sealed class MounterSettings
+[Shared, Export(typeof(MotClientSettings))]
+internal sealed class MotClientSettings
 {
     private const string THE_GUID = "593A56BE-B064-4D49-A2BC-AE9E97058FA9";
     private const string WORKINGDIRECTORY_NAME = "WorkingDirectory";
@@ -26,7 +26,7 @@ internal sealed class MounterSettings
         set => _settingsSection.Attribute(WORKINGDIRECTORY_NAME, value);
     }
 
-    public MounterSettings()
+    public MotClientSettings()
     {
         _settingsSection = AppxContext.SettingsService.GetOrCreateSection(THE_GUID, SettingsType.Roaming);
     }

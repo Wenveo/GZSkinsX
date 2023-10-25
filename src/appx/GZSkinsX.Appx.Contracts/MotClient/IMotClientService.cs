@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 using Windows.Foundation;
 
-namespace GZSkinsX.Contracts.Mounter;
+namespace GZSkinsX.Contracts.MotClient;
 
 /// <summary>
 /// 提供对组件服务的启动、停止、更新等一系列的功能集成。
 /// </summary>
-public interface IMounterService
+public interface IMotClientService
 {
     /// <summary>
     /// 获取当前组件服务的运行状态。
@@ -27,7 +27,7 @@ public interface IMounterService
     /// <summary>
     /// 用于判断组件服务是否正在运行中的事件，该事件支持实时监听运行状态更改。
     /// </summary>
-    event TypedEventHandler<IMounterService, bool>? IsRunningChanged;
+    event TypedEventHandler<IMotClientService, bool>? IsRunningChanged;
 
     /// <summary>
     /// 检查服务组件是否有更新的内容。
@@ -63,7 +63,7 @@ public interface IMounterService
     /// </summary>
     /// <param name="result">当此方法返回时，如果成功找到该工作目录便会将其返回，否则将返回 null。</param>
     /// <returns>如果成功获取到该工作目录将返回 true，否则返回 false。</returns>
-    bool TryGetMounterWorkingDirectory([NotNullWhen(true)] out string? result);
+    bool TryGetMotClientAgentWorkingDirectory([NotNullWhen(true)] out string? result);
 
     /// <summary>
     /// 从服务器中下载和更新组件。

@@ -12,7 +12,7 @@ using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Helpers;
-using GZSkinsX.Contracts.Mounter;
+using GZSkinsX.Contracts.MotClient;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -47,11 +47,11 @@ public sealed partial class LaunchButton : UserControl
         await UpdateMoreLaunchOptionsAsync();
         await UpdateAboutMenuItemVisibility();
 
-        AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
-        AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
+        AppxContext.MotClientService.IsRunningChanged -= OnIsRunningChanged;
+        AppxContext.MotClientService.IsRunningChanged += OnIsRunningChanged;
     }
 
-    private void OnIsRunningChanged(IMounterService sender, bool args)
+    private void OnIsRunningChanged(IMotClientService sender, bool args)
     {
         DispatcherQueue.TryEnqueue(async () =>
         {
@@ -92,11 +92,11 @@ public sealed partial class LaunchButton : UserControl
         {
             if (string.IsNullOrEmpty(args))
             {
-                await AppxContext.MounterService.LaunchAsync();
+                await AppxContext.MotClientService.LaunchAsync();
             }
             else
             {
-                await AppxContext.MounterService.LaunchAsync(args);
+                await AppxContext.MotClientService.LaunchAsync(args);
             }
         }
         catch (Exception excp)
@@ -114,7 +114,7 @@ public sealed partial class LaunchButton : UserControl
 
         try
         {
-            await AppxContext.MounterService.TerminateAsync();
+            await AppxContext.MotClientService.TerminateAsync();
         }
         catch (Exception excp)
         {
@@ -138,7 +138,7 @@ public sealed partial class LaunchButton : UserControl
         bool needUpdate;
         try
         {
-            needUpdate = await AppxContext.MounterService.CheckForUpdatesAsync();
+            needUpdate = await AppxContext.MotClientService.CheckForUpdatesAsync();
         }
         catch
         {
@@ -150,7 +150,7 @@ public sealed partial class LaunchButton : UserControl
             return;
         }
 
-        if (needUpdate is false && await AppxContext.MounterService.VerifyContentIntegrityAsync())
+        if (needUpdate is false && await AppxContext.MotClientService.VerifyContentIntegrityAsync())
         {
             DispatcherQueue.TryEnqueue(async () =>
             {
@@ -162,7 +162,7 @@ public sealed partial class LaunchButton : UserControl
         {
             await DispatcherQueue.EnqueueAsync(async () =>
             {
-                if (AppxContext.MounterService.IsMTRunning)
+                if (AppxContext.MotClientService.IsMTRunning)
                 {
                     await ShowServerIsRunningTeachingTipAsync();
                 }
@@ -183,7 +183,7 @@ public sealed partial class LaunchButton : UserControl
 
         try
         {
-            await AppxContext.MounterService.TerminateAsync();
+            await AppxContext.MotClientService.TerminateAsync();
             await OnUpdateAsync();
         }
         catch (Exception excp)
@@ -205,7 +205,7 @@ public sealed partial class LaunchButton : UserControl
 
         LaunchButton_State_Updating_ProgressRing.Value = 0;
         LaunchButton_State_Updating_ProgressRing.IsIndeterminate = true;
-        AppxContext.MounterService.IsRunningChanged -= OnIsRunningChanged;
+        AppxContext.MotClientService.IsRunningChanged -= OnIsRunningChanged;
 
         await UpdateLaunchStateAsync(UpdatingState);
         await Task.Run(OnUpdateCoreAsync);
@@ -215,7 +215,7 @@ public sealed partial class LaunchButton : UserControl
     {
         try
         {
-            await AppxContext.MounterService.UpdateAsync(new Progress<double>(async (p) =>
+            await AppxContext.MotClientService.UpdateAsync(new Progress<double>(async (p) =>
             {
                 await DispatcherQueue.EnqueueAsync(() =>
                 {
@@ -244,7 +244,7 @@ public sealed partial class LaunchButton : UserControl
             });
         }
 
-        AppxContext.MounterService.IsRunningChanged += OnIsRunningChanged;
+        AppxContext.MotClientService.IsRunningChanged += OnIsRunningChanged;
     }
 
     private bool EnsureState(string state)
@@ -285,7 +285,7 @@ public sealed partial class LaunchButton : UserControl
     {
         HideAllTeachingTips();
 
-        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Version));
+        var metadata = await AppxContext.MotClientService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Version));
         if (metadata is not null)
         {
             var format = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/LaunchButton_UpToDateTeachingTip_CurrentVersion");
@@ -322,7 +322,7 @@ public sealed partial class LaunchButton : UserControl
 
     private async Task UpdateLaunchStateAsync()
     {
-        await UpdateLaunchStateAsync(AppxContext.MounterService.IsMTRunning ? RunningState : DefaultState);
+        await UpdateLaunchStateAsync(AppxContext.MotClientService.IsMTRunning ? RunningState : DefaultState);
     }
 
     private async Task UpdateLaunchStateAsync(string state)
@@ -388,7 +388,7 @@ public sealed partial class LaunchButton : UserControl
             return menuFlyoutItem;
         }
 
-        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.OtherStartupArgs));
+        var metadata = await AppxContext.MotClientService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.OtherStartupArgs));
         if (metadata is not null && metadata.OtherStartupArgs.Length is not < 1)
         {
             for (var i = 0; i < metadata.OtherStartupArgs.Length; i++)
@@ -415,7 +415,7 @@ public sealed partial class LaunchButton : UserControl
 
     private async Task UpdateAboutMenuItemVisibility()
     {
-        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Author));
+        var metadata = await AppxContext.MotClientService.TryGetCurrentPackageMetadataAsync(nameof(MTPackageMetadata.Author));
         LaunchButton_About_MenuItem.Visibility = metadata is null ? Visibility.Collapsed : Visibility.Visible;
     }
 
@@ -441,7 +441,7 @@ public sealed partial class LaunchButton : UserControl
 
     private async void LaunchButton_About_MenuItem_Click(object sender, RoutedEventArgs e)
     {
-        var metadata = await AppxContext.MounterService.TryGetCurrentPackageMetadataAsync(
+        var metadata = await AppxContext.MotClientService.TryGetCurrentPackageMetadataAsync(
             nameof(MTPackageMetadata.Author), nameof(MTPackageMetadata.Version),
             nameof(MTPackageMetadata.Description), nameof(MTPackageMetadata.AboutTheAuthor));
 

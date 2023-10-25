@@ -41,7 +41,7 @@
     <ProjectReference Include="..\GZSkinsX.Appx.Kernel\GZSkinsX.Appx.Kernel.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Logging\GZSkinsX.Appx.Logging.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.MainApp\GZSkinsX.Appx.MainApp.csproj" />
-    <ProjectReference Include="..\GZSkinsX.Appx.Mounter\GZSkinsX.Appx.Mounter.csproj" />
+    <ProjectReference Include="..\GZSkinsX.Appx.MotClient\GZSkinsX.Appx.MotClient.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.MRTCore\GZSkinsX.Appx.MRTCore.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.MyMods\GZSkinsX.Appx.MyMods.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Navigation\GZSkinsX.Appx.Navigation.csproj" />

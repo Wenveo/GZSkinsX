@@ -37,13 +37,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.Logging", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.MainApp", "src\appx\GZSkinsX.Appx.MainApp\GZSkinsX.Appx.MainApp.csproj", "{49CC2F04-D5E6-4FBB-B379-8F79B4C3B528}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.Mounter", "src\appx\GZSkinsX.Appx.Mounter\GZSkinsX.Appx.Mounter.csproj", "{27764511-8041-49B7-B81F-BCB9F3A2F150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.MotClient", "src\appx\GZSkinsX.Appx.MotClient\GZSkinsX.Appx.MotClient.csproj", "{27764511-8041-49B7-B81F-BCB9F3A2F150}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.MRTCore", "src\appx\GZSkinsX.Appx.MRTCore\GZSkinsX.Appx.MRTCore.csproj", "{995F0739-6228-41C1-9679-EC0E07707525}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.MyMods", "src\appx\GZSkinsX.Appx.MyMods\GZSkinsX.Appx.MyMods.csproj", "{1C1BEB51-81C2-4155-BC06-A4362CB6F18A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZSkinsX.Appx.Navigation", "src\appx\GZSkinsX.Appx.Navigation\GZSkinsX.Appx.Navigation.csproj", "{A711A9E0-B680-48F2-8E83-CAC4CDEB0257}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.Navigation", "src\appx\GZSkinsX.Appx.Navigation\GZSkinsX.Appx.Navigation.csproj", "{A711A9E0-B680-48F2-8E83-CAC4CDEB0257}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.Settings", "src\appx\GZSkinsX.Appx.Settings\GZSkinsX.Appx.Settings.csproj", "{7A190DBA-7CFE-450C-ABD2-0F026B80F5A0}"
 EndProject
