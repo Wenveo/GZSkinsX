@@ -59,7 +59,8 @@ internal sealed partial class ShellWindow : Window
 
         var scaling = (double)PInvoke.GetDpiForWindow((HWND)WindowHandle) / 96;
         WindowSettings = AppxContext.Resolve<ShellWindowSettings>();
-        if (WindowSettings.NeedToRestoreWindowState)
+        if (WindowSettings.NeedToRestoreWindowState && // 判断是否大于或等于最小宽高
+            WindowSettings.WindowWidth >= 812 && WindowSettings.WindowHeight >= 582)
         {
             AppWindow.MoveAndResize(new(
                 (int)Math.Round(WindowSettings.WindowLeft * scaling), (int)Math.Round(WindowSettings.WindowTop * scaling),
@@ -67,7 +68,7 @@ internal sealed partial class ShellWindow : Window
         }
         else
         {
-            AppWindow.Resize(new((int)(1004 * scaling), (int)(814 * scaling)));
+            AppWindow.Resize(new((int)(812 * scaling), (int)(582 * scaling)));
         }
 
         var manager = NonClientSourceManager.GetFromWindowHandle(WindowHandle);
