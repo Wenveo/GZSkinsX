@@ -28,6 +28,26 @@ public static class ContextMenuConstants
     public const string GROUP_MAIN_GLOBALMENU_CTX_SETTINGS_GUID = "10,B7E16C88-B7C1-481D-9FC7-A02E40155466";
 
     /// <summary>
+    /// Shell System Menu
+    /// </summary>
+    public const string SHELL_SYSTEMMENU_CTX_GUID = "60802DEC-D19F-4817-9A0D-BB240F1D6849";
+
+    /// <summary>
+    /// Shell System Menu / Group / General
+    /// </summary>
+    public const string GROUP_SHELL_SYSTEMMENU_CTX_GENERAL_GUID = "0,54A448A0-D45A-484C-A396-753F62735CCC";
+
+    /// <summary>
+    /// Shell Window Menu / Group / Settings
+    /// </summary>
+    public const string GROUP_SHELL_SYSTEMMENU_CTX_SETTINGS_GUID = "10,A9F7B72E-7D43-4F2C-AE14-253086D21374";
+
+    /// <summary>
+    /// Shell Window Menu / Group / Close
+    /// </summary>
+    public const string GROUP_SHELL_SYSTEMMENU_CTX_CLOSE_GUID = "10000,BB34A98B-76B2-4763-BB91-77A3AE2DE293";
+
+    /// <summary>
     /// MyModsView / ContextMenu_Win10
     /// </summary>
     public const string MYMODSVIEW_CTX_WIN10_GUID = "6D46E73A-9033-4AA4-A430-4A64D536204B";

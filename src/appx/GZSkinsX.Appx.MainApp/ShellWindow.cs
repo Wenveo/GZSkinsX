@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.ContextMenu;
 using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Themes;
 
@@ -37,7 +38,7 @@ internal sealed partial class ShellWindow : Window
 {
     private NonClientSourceManager? NCSourceManager { get; set; }
 
-    private ShellSystemMenuFlyout? SystemMenuFlyout { get; set; }
+    private FlyoutBase? SystemMenuFlyout { get; set; }
 
     private ShellWindowSettings WindowSettings { get; }
 
@@ -72,10 +73,13 @@ internal sealed partial class ShellWindow : Window
         var manager = NonClientSourceManager.GetFromWindowHandle(WindowHandle);
         if (manager is not null)
         {
-            SystemMenuFlyout = new();
             NCSourceManager = manager;
             manager.MouseLeftButtonDown += NCMouseLeftButtonDown;
             manager.MouseRightButtonDown += NCMouseRightButtonDown;
+
+            SystemMenuFlyout = AppxContext.ContextMenuService.CreateContextMenu(
+                ContextMenuConstants.SHELL_SYSTEMMENU_CTX_GUID, new ContextMenuOptions { Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft },
+                (s, e) => new ShellSystemMenuUIContext { AppWindowId = AppWindow.Id, WindowHandle = WindowHandle, IsMaximized = PInvoke.IsZoomed((HWND)WindowHandle) });
         }
 
         // Update the win32 window style.
