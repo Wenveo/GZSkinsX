@@ -10,7 +10,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Collections.Immutable" Version="8.0.0-rc.1.23419.4" />
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0-rc.2.23479.6" />
   </ItemGroup>
 
   <ItemGroup>
