@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Diagnostics;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -22,13 +23,13 @@ partial class MyModsService
     }
 
     /// <inheritdoc/>
-    public async Task<string?> GetModsFolderAsync()
+    public async Task<string?> GetModFolderAsync()
     {
         return GetStringFromJson(await TryGetMTSettingsValueAsync(MT_SETTINGS_RGZINSTALL_NAME));
     }
 
     /// <inheritdoc/>
-    public async Task<string?> GetWadsFolderAsync()
+    public async Task<string?> GetWadFolderAsync()
     {
         return GetStringFromJson(await TryGetMTSettingsValueAsync(MT_SETTINGS_CUSTOMINSTALL_NAME));
     }
@@ -45,18 +46,18 @@ partial class MyModsService
     }
 
     /// <inheritdoc/>
-    public async Task SetModsFolderAsync(string newFolder)
+    public async Task SetModFolderAsync(string newFolder)
     {
         if (await TrySetMTSettingsValueAsync(MT_SETTINGS_RGZINSTALL_NAME, newFolder))
         {
             AppxContext.LoggingService.LogAlways(
-                "GZSkinsX.Appx.MyMods.MyModsService.SetModsFolderAsync",
+                "GZSkinsX.Appx.MyMods.MyModsService.SetModFolderAsync",
                 $"The mods folder have been changed, new folder: \"{newFolder}\".");
         }
     }
 
     /// <inheritdoc/>
-    public async Task SetWadsFolderAsync(string newFolder)
+    public async Task SetWadFolderAsync(string newFolder)
     {
         if (await TrySetMTSettingsValueAsync(MT_SETTINGS_CUSTOMINSTALL_NAME, newFolder))
         {
@@ -118,11 +119,11 @@ partial class MyModsService
     {
         if (obj is JsonElement elem && elem.ValueKind is JsonValueKind.String)
         {
-            return elem.GetString();
+            return elem.GetString()?.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         }
         else if (obj is string s)
         {
-            return s;
+            return s.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         }
         else
         {

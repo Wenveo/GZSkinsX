@@ -51,8 +51,15 @@ internal sealed partial class IndexPage : Page
         {
         }
 
-        ContentGrid.Visibility = Visibility.Visible;
-        await StartDownloadAsync();
+        if ((await AppxUpdater.IsRequiredUpdates()) is true)
+        {
+            await AppxUpdater.ShowDialogIfNeedUpdatesAsync();
+        }
+        else
+        {
+            ContentGrid.Visibility = Visibility.Visible;
+            await StartDownloadAsync();
+        }
     }
 
     private async Task StartDownloadAsync()

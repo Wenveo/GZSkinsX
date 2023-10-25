@@ -24,12 +24,12 @@ public interface IMyModsService
     /// <summary>
     /// 获取当前模组配置中设置的存放 ".lolgezi" 类型的文件的目录。
     /// </summary>
-    Task<string?> GetModsFolderAsync();
+    Task<string?> GetModFolderAsync();
 
     /// <summary>
     /// 获取当前模组配置中设置的存放 ".wad.client" 类型的文件的目录。
     /// </summary>
-    Task<string?> GetWadsFolderAsync();
+    Task<string?> GetWadFolderAsync();
 
     /// <summary>
     /// 对当前的模组配置设置是否启用红色血液选项。
@@ -41,13 +41,13 @@ public interface IMyModsService
     /// 为当前模组配置中的存放 ".lolgezi" 类型的文件的目录设置一个新的路径。
     /// </summary>
     /// <param name="newFolder">需要设置的新的目录路径。</param>
-    Task SetModsFolderAsync(string newFolder);
+    Task SetModFolderAsync(string newFolder);
 
     /// <summary>
     /// 为当前模组配置中的存放 ".wad.client" 类型的文件的目录设置一个新的路径。
     /// </summary>
     /// <param name="newFolder">需要设置的新的目录路径。</param>
-    Task SetWadsFolderAsync(string newFolder);
+    Task SetWadFolderAsync(string newFolder);
 
     /// <summary>
     /// 清楚当前模组配置中的所有已安装项。

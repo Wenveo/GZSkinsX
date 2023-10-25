@@ -17,8 +17,10 @@ using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Shapes;
 
 using Windows.Foundation;
 using Windows.Win32;
@@ -64,7 +66,7 @@ internal sealed partial class ShellWindow : Window
         }
         else
         {
-            AppWindow.Resize(new((int)(1004 * scaling), (int)(578 * scaling)));
+            AppWindow.Resize(new((int)(1004 * scaling), (int)(814 * scaling)));
         }
 
         var manager = NonClientSourceManager.GetFromWindowHandle(WindowHandle);
@@ -109,13 +111,13 @@ internal sealed partial class ShellWindow : Window
                 if (popup.Child as ContentDialog is not null)
                 {
                     continue;
-    }
+                }
 
                 // 判断是否为内容框背后的背景层
                 if (popup.Child is Rectangle { Name: "SmokeLayerBackground" })
-    {
-        ShowCustomSystemMenu(args.Position);
-    }
+                {
+                    continue;
+                }
 
                 popup.IsOpen = false;
             }
@@ -123,7 +125,7 @@ internal sealed partial class ShellWindow : Window
     }
 
     private void NCMouseRightButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
-        {
+    {
         ShowCustomSystemMenu(args.Position);
     }
 
@@ -270,8 +272,8 @@ internal sealed partial class ShellWindow : Window
     {
         var scaling = (double)PInvoke.GetDpiForWindow(hWnd) / 96;
         var minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-        minMaxInfo.ptMinTrackSize.X = (int)(498 * scaling);
-        minMaxInfo.ptMinTrackSize.Y = (int)(578 * scaling);
+        minMaxInfo.ptMinTrackSize.X = (int)(812 * scaling);
+        minMaxInfo.ptMinTrackSize.Y = (int)(582 * scaling);
         Marshal.StructureToPtr(minMaxInfo, lParam, false);
     }
 

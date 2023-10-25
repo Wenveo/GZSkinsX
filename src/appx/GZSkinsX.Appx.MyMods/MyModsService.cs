@@ -128,15 +128,10 @@ internal sealed partial class MyModsService : IMyModsService
     /// <inheritdoc cref="ImportModsAsync(IEnumerable{string}, bool)"/>
     private async Task ImportModsCoreAsync(IEnumerable<string> files, bool overwrite)
     {
-        var modsFolder = await GetModsFolderAsync();
-        if (string.IsNullOrWhiteSpace(modsFolder))
+        var modFolder = await GetModFolderAsync();
+        if (Directory.Exists(modFolder) is false)
         {
             return;
-        }
-
-        if (Directory.Exists(modsFolder) is false)
-        {
-            Directory.CreateDirectory(modsFolder);
         }
 
         foreach (var item in files)
@@ -150,7 +145,7 @@ internal sealed partial class MyModsService : IMyModsService
             var destFilename = StringComparer.OrdinalIgnoreCase.Equals(fileInfo.Extension, LOLGEZI_EXTENSION_NAME)
                 ? fileInfo.Name : Path.GetFileNameWithoutExtension(fileInfo.FullName) + LOLGEZI_EXTENSION_NAME;
 
-            var destFilePath = Path.Combine(modsFolder, destFilename);
+            var destFilePath = Path.Combine(modFolder, destFilename);
             if (File.Exists(destFilePath) && overwrite is false)
             {
                 AppxContext.LoggingService.LogWarning(
@@ -195,8 +190,8 @@ internal sealed partial class MyModsService : IMyModsService
     /// <inheritdoc cref="InstallModsAsync(IEnumerable{string})"/>
     private async Task InstallModsCoreAsync(IEnumerable<string> files)
     {
-        var modsFolder = await GetModsFolderAsync();
-        if (Directory.Exists(modsFolder) is false)
+        var modFolder = await GetModFolderAsync();
+        if (Directory.Exists(modFolder) is false)
         {
             return;
         }

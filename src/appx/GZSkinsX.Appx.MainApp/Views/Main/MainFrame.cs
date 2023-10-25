@@ -9,7 +9,7 @@ using GZSkinsX.Contracts.WindowManager;
 
 using Microsoft.UI.Xaml.Media.Animation;
 
-namespace GZSkinsX.Views;
+namespace GZSkinsX.Appx.MainApp.Views;
 
 [System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Main_Guid, PageType = typeof(MainPage))]
 internal sealed class MainFrame : IWindowFrame
@@ -17,8 +17,8 @@ internal sealed class MainFrame : IWindowFrame
     /// <inheritdoc/>
     public bool CanNavigateTo(WindowFrameNavigatingEvnetArgs args)
     {
-        // Should enable animation ?
-        if (args.Parameter is not bool b || b is false)
+        // Should disable animation ?
+        if (args.Parameter is bool b && b)
         {
             args.NavigationTransitionInfo = new SuppressNavigationTransitionInfo();
         }

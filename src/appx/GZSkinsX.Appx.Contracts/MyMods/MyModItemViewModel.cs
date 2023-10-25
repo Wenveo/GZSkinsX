@@ -18,7 +18,7 @@ namespace GZSkinsX.Contracts.MyMods;
 /// <param name="modImage">模组的图片路径。</param>
 /// <param name="isInstalled">是否为已安装。</param>
 /// <param name="indexOfTable">模组的安装顺序。</param>
-public sealed partial class MyModViewModel(MyModInfo modInfo, Uri modImage, bool isInstalled, int indexOfTable) : ObservableObject
+public sealed partial class MyModItemViewModel(MyModInfo modInfo, Uri modImage, bool isInstalled, int indexOfTable) : ObservableObject
 {
     /// <summary>
     /// 表示该模组的基本信息。

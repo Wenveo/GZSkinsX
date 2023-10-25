@@ -208,28 +208,28 @@
     <value>更多选项</value>
     <comment>Automation name for the secondary button.</comment>
   </data>
-  <data name="MyModView_Status_Installed" xml:space="preserve">
+  <data name="MyModItem_Status_Installed" xml:space="preserve">
     <value>已安装</value>
   </data>
-  <data name="MyModView_Status_Uninstalled" xml:space="preserve">
+  <data name="MyModItem_Status_Uninstalled" xml:space="preserve">
     <value>未安装</value>
   </data>
-  <data name="MyModView_Tooltip_Author.Text" xml:space="preserve">
+  <data name="MyModItem_Tooltip_Author.Text" xml:space="preserve">
     <value>作者：</value>
   </data>
-  <data name="MyModView_Tooltip_DateTime.Text" xml:space="preserve">
+  <data name="MyModItem_Tooltip_DateTime.Text" xml:space="preserve">
     <value>创建日期：</value>
   </data>
-  <data name="MyModView_Tooltip_Description.Text" xml:space="preserve">
+  <data name="MyModItem_Tooltip_Description.Text" xml:space="preserve">
     <value>描述：</value>
   </data>
-  <data name="MyModView_Tooltip_FileName.Text" xml:space="preserve">
+  <data name="MyModItem_Tooltip_FileName.Text" xml:space="preserve">
     <value>文件名称：</value>
   </data>
-  <data name="MyModView_Tooltip_Name.Text" xml:space="preserve">
+  <data name="MyModItem_Tooltip_Name.Text" xml:space="preserve">
     <value>名称：</value>
   </data>
-  <data name="MyModView_Tooltip_Status.Text" xml:space="preserve">
+  <data name="MyModItem_Tooltip_Status.Text" xml:space="preserve">
     <value>状态：</value>
   </data>
 </root>

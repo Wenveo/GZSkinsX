@@ -5,19 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-using Microsoft.UI.Xaml;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+using GZSkinsX.Contracts.Command;
 
 namespace GZSkinsX.Contracts.MyMods;
 
 /// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
+/// 有关模组视图中的命令栏 UI 上下文信息。
 /// </summary>
-public sealed partial class MyModViewTemplates : ResourceDictionary
+/// <param name="MyModsView">模组视图对象实例。</param>
+public sealed record class MyModsViewCommandBarUIContext(IMyModsView MyModsView) : ICommandBarUIContext
 {
-    public MyModViewTemplates()
-    {
-        InitializeComponent();
-    }
+
 }

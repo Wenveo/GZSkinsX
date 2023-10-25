@@ -8,11 +8,6 @@
     <UseRidGraph>true</UseRidGraph>
     <UseAppxLibInfo>true</UseAppxLibInfo>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Views\Index\IndexPage.xaml" />
-    <None Remove="Views\Preload\PreloadPage.xaml" />
-    <None Remove="Views\StartUp\StartUpPage.xaml" />
-  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.46-beta">
@@ -23,17 +18,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Index\IndexPage.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Views\Preload\PreloadPage.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Views\StartUp\StartUpPage.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
   </ItemGroup>
 </Project>

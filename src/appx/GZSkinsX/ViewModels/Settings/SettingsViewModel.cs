@@ -70,8 +70,8 @@ internal sealed partial class SettingsViewModel : ObservableObject
     {
         CurrentTheme = AppxContext.ThemeService.CurrentTheme;
         GameFolder = AppxContext.GameService.RootDirectory;
-        ModsFolder = await AppxContext.MyModsService.GetModsFolderAsync();
-        WadsFolder = await AppxContext.MyModsService.GetWadsFolderAsync();
+        ModsFolder = await AppxContext.MyModsService.GetModFolderAsync();
+        WadsFolder = await AppxContext.MyModsService.GetWadFolderAsync();
         IsEnableBlood = await AppxContext.MyModsService.GetIsEnableBloodAsync();
     }
 
@@ -136,7 +136,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
         var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
-            await AppxContext.MyModsService.SetModsFolderAsync(folder.Path);
+            await AppxContext.MyModsService.SetModFolderAsync(folder.Path);
             ModsFolder = folder.Path + Path.DirectorySeparatorChar;
         }
 
@@ -154,7 +154,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
         var folder = await folderPicker.PickSingleFolderAsync();
         if (folder is not null)
         {
-            await AppxContext.MyModsService.SetWadsFolderAsync(folder.Path);
+            await AppxContext.MyModsService.SetWadFolderAsync(folder.Path);
             WadsFolder = folder.Path + Path.DirectorySeparatorChar;
         }
     }

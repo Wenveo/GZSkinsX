@@ -117,127 +117,97 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppxUpdater_Available_Update_Dialog_CloseButtonText" xml:space="preserve">
-    <value>取消</value>
+  <data name="ModsViewItem_Header" xml:space="preserve">
+    <value>模组</value>
   </data>
-  <data name="AppxUpdater_Available_Update_Dialog_Content" xml:space="preserve">
-    <value>检查到有新的版本，是否立即更新？</value>
+  <data name="ModsView_Collection_Count" xml:space="preserve">
+    <value>{0} 个模组</value>
   </data>
-  <data name="AppxUpdater_Available_Update_Dialog_PrimaryButtonText" xml:space="preserve">
+  <data name="ModsView_SearchBox_PlaceholderText" xml:space="preserve">
+    <value>筛选此列表...</value>
+  </data>
+  <data name="ModsView_Title.Text" xml:space="preserve">
+    <value>全部模组</value>
+  </data>
+  <data name="MyModsView_Commands_ClearAllInstalled" xml:space="preserve">
+    <value>清除所有已安装项</value>
+  </data>
+  <data name="MyModsView_Commands_Copy" xml:space="preserve">
+    <value>复制文件</value>
+  </data>
+  <data name="MyModsView_Commands_Copy2" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="MyModsView_Commands_CopyAsPath" xml:space="preserve">
+    <value>复制为路径</value>
+  </data>
+  <data name="MyModsView_Commands_CopyAsPath2" xml:space="preserve">
+    <value>复制文件所在路径</value>
+  </data>
+  <data name="MyModsView_Commands_Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="MyModsView_Commands_DeselectAll" xml:space="preserve">
+    <value>取消选中</value>
+  </data>
+  <data name="MyModsView_Commands_DeselectAll2_Count" xml:space="preserve">
+    <value>已选择 {0} 项</value>
+  </data>
+  <data name="MyModsView_Commands_Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="MyModsView_Commands_Import2" xml:space="preserve">
+    <value>导入模组</value>
+  </data>
+  <data name="MyModsView_Commands_Install" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="MyModsView_Commands_OpenInFileExplorer" xml:space="preserve">
+    <value>在资源管理器中显示</value>
+  </data>
+  <data name="MyModsView_Commands_OpenModFolder" xml:space="preserve">
+    <value>打开 模组 文件夹</value>
+  </data>
+  <data name="MyModsView_Commands_OpenWadFolder" xml:space="preserve">
+    <value>打开 WAD 文件夹</value>
+  </data>
+  <data name="MyModsView_Commands_Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="MyModsView_Commands_SelectAll" xml:space="preserve">
+    <value>全部选中</value>
+  </data>
+  <data name="MyModsView_Commands_Share" xml:space="preserve">
+    <value>共享</value>
+  </data>
+  <data name="MyModsView_Commands_Uninstall" xml:space="preserve">
+    <value>卸载</value>
+  </data>
+  <data name="MyModsView_InvaliedFileDialog_CloseButtonText" xml:space="preserve">
     <value>确定</value>
   </data>
-  <data name="AppxUpdater_Available_Update_Dialog_Title" xml:space="preserve">
-    <value>有可用更新</value>
+  <data name="MyModsView_InvaliedFileDialog_Title" xml:space="preserve">
+    <value>发生了意料之外的错误。</value>
   </data>
-  <data name="AppxUpdater_Unsupported_AppVersion_Dialog_CloseButtonText" xml:space="preserve">
-    <value>退出</value>
+  <data name="MyModsView_ReplaceOrSkipFileDialog_CloseButtonText" xml:space="preserve">
+    <value>跳过</value>
   </data>
-  <data name="AppxUpdater_Unsupported_AppVersion_Dialog_Content" xml:space="preserve">
-    <value>请更新至最新版本再打开此应用。</value>
+  <data name="MyModsView_ReplaceOrSkipFileDialog_Content" xml:space="preserve">
+    <value>目标文件夹已存在具有相同名称的文件，是否要替换该文件 "{0}" ？</value>
   </data>
-  <data name="AppxUpdater_Unsupported_AppVersion_Dialog_PrimaryButtonText" xml:space="preserve">
-    <value>从 Microsoft Store 中获取更新</value>
+  <data name="MyModsView_ReplaceOrSkipFileDialog_PrimaryButtonText" xml:space="preserve">
+    <value>替换目标文件</value>
   </data>
-  <data name="AppxUpdater_Unsupported_AppVersion_Dialog_Title" xml:space="preserve">
-    <value>该应用的版本已不受支持</value>
+  <data name="MyModsView_ReplaceOrSkipFileDialog_Title" xml:space="preserve">
+    <value>替换或跳过文件？</value>
   </data>
-  <data name="Index_DownloadFailed_Title.Text" xml:space="preserve">
-    <value>未知的错误，无法更新应用程序。</value>
+  <data name="MyModsView_Share_Dialog_Failed_Text" xml:space="preserve">
+    <value>目前没有可共享的内容</value>
   </data>
-  <data name="Index_Downloading_Title.Text" xml:space="preserve">
-    <value>正在更新应用程序，请稍等.....</value>
+  <data name="MyModsView_Share_Dialog_Multiple_Items_Title" xml:space="preserve">
+    <value>正在共享文件 {0}, {1} ...</value>
   </data>
-  <data name="Index_PendingRestart_Title.Text" xml:space="preserve">
-    <value>更新已完成，请手动重启应用。</value>
-  </data>
-  <data name="Index_ShowError_Button.Content" xml:space="preserve">
-    <value>查看错误堆栈</value>
-  </data>
-  <data name="Index_ShowError_Dialog_CloseText" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="MainGlobalMenu.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>全局菜单</value>
-  </data>
-  <data name="Main_GlobalMenu_Settings" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="Main_GlobalMenu_Themes_Dark" xml:space="preserve">
-    <value>深色</value>
-  </data>
-  <data name="Main_GlobalMenu_Themes_Default" xml:space="preserve">
-    <value>跟随系统</value>
-  </data>
-  <data name="Main_GlobalMenu_Themes_Light" xml:space="preserve">
-    <value>浅色</value>
-  </data>
-  <data name="Preload_Crash_Failed_To_Verify_Content_Integrity" xml:space="preserve">
-    <value>灾难性故障：应用程序缺少核心组件或已被破坏。</value>
-  </data>
-  <data name="Preload_Loading_Title.Text" xml:space="preserve">
-    <value>正在加载中</value>
-  </data>
-  <data name="Shell_SystemMenu_Close" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="Shell_SystemMenu_Maximize" xml:space="preserve">
-    <value>最大化</value>
-  </data>
-  <data name="Shell_SystemMenu_Minimize" xml:space="preserve">
-    <value>最小化</value>
-  </data>
-  <data name="Shell_SystemMenu_Move" xml:space="preserve">
-    <value>移动</value>
-  </data>
-  <data name="Shell_SystemMenu_Restore" xml:space="preserve">
-    <value>还原</value>
-  </data>
-  <data name="Shell_SystemMenu_Settings" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="Shell_SystemMenu_Size" xml:space="preserve">
-    <value>大小</value>
-  </data>
-  <data name="StartUp_Error_Directory_Invalid" xml:space="preserve">
-    <value>选择的游戏目录无效，请重新选择！</value>
-  </data>
-  <data name="StartUp_Error_Directory_Null" xml:space="preserve">
-    <value>游戏目录不能为空！</value>
-  </data>
-  <data name="StartUp_Error_Region_Null" xml:space="preserve">
-    <value>请设置游戏区域！</value>
-  </data>
-  <data name="StartUp_Initialize_Default_Title" xml:space="preserve">
-    <value>设置游戏基本信息</value>
-  </data>
-  <data name="StartUp_Initialize_Directory_Browser.Content" xml:space="preserve">
-    <value>浏览</value>
-  </data>
-  <data name="StartUp_Initialize_Directory_Subtitle.Text" xml:space="preserve">
-    <value>选择英雄联盟游戏所在的文件夹</value>
-  </data>
-  <data name="StartUp_Initialize_Directory_Title.Text" xml:space="preserve">
-    <value>游戏目录</value>
-  </data>
-  <data name="StartUp_Initialize_Invalid_Title" xml:space="preserve">
-    <value>无效的游戏目录，请重新设置。</value>
-  </data>
-  <data name="StartUp_Initialize_OKButton.Content" xml:space="preserve">
-    <value>确认</value>
-  </data>
-  <data name="StartUp_Initialize_Region_Helper.ToolTipService.ToolTip" xml:space="preserve">
-    <value>除中国内地以外的地区都由拳头游戏 (Riot Games) 官方运营（这里简称拳头服，也可称作官方/直营服），而中国内地则是由腾讯游戏独家代理运营。（马服）</value>
-  </data>
-  <data name="StartUp_Initialize_Region_Riot" xml:space="preserve">
-    <value>拳头服</value>
-  </data>
-  <data name="StartUp_Initialize_Region_Subtitle.Text" xml:space="preserve">
-    <value>设置游戏所在的区域/服务器</value>
-  </data>
-  <data name="StartUp_Initialize_Region_Tencent" xml:space="preserve">
-    <value>腾讯服</value>
-  </data>
-  <data name="StartUp_Initialize_Region_Title.Text" xml:space="preserve">
-    <value>区域</value>
+  <data name="MyModsView_Share_Dialog_Single_Item_Title" xml:space="preserve">
+    <value>正在共享文件 {0}</value>
   </data>
 </root>

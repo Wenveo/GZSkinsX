@@ -218,30 +218,30 @@ partial class MyModsService
         settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = wadsFolder;
 
         // 设置默认的 Mod 目录路径
-        string? modsFolder;
+        string? modFolder;
         if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_RGZINSTALL_NAME, out value))
         {
-            modsFolder = GetStringFromJson(value);
-            if (string.IsNullOrWhiteSpace(modsFolder))
+            modFolder = GetStringFromJson(value);
+            if (string.IsNullOrWhiteSpace(modFolder))
             {
-                modsFolder = GetWGZSubFolderPath("Mods");
+                modFolder = GetWGZSubFolderPath("Mods");
             }
-            else if (modsFolder[^1] != Path.DirectorySeparatorChar)
+            else if (modFolder[^1] != Path.DirectorySeparatorChar)
             {
-                modsFolder = Path.GetFullPath(modsFolder) + Path.DirectorySeparatorChar;
+                modFolder = Path.GetFullPath(modFolder) + Path.DirectorySeparatorChar;
             }
         }
         else
         {
-            modsFolder = GetWGZSubFolderPath("Mods");
+            modFolder = GetWGZSubFolderPath("Mods");
         }
 
         // 当目标文件夹不存在时将其创建
-        if (Directory.Exists(modsFolder) is false)
+        if (Directory.Exists(modFolder) is false)
         {
             try
             {
-                Directory.CreateDirectory(modsFolder);
+                Directory.CreateDirectory(modFolder);
             }
             catch
             {
@@ -253,7 +253,7 @@ partial class MyModsService
         }
 
         // 将 Mod 目录的路径写出到配置。
-        settingsData.GZSkins[MT_SETTINGS_RGZINSTALL_NAME] = modsFolder;
+        settingsData.GZSkins[MT_SETTINGS_RGZINSTALL_NAME] = modFolder;
 
         // 在以下代码中需要手动生成文件的完整路径名，
         // 并对已安装的模组文件列表进行一个文件检查。
@@ -263,7 +263,7 @@ partial class MyModsService
         // <!-- Path.Combine(modsFolder, item + ".lolgezi") -->
 
         var pathBuilder = new StringBuilder();
-        pathBuilder.Append(modsFolder);
+        pathBuilder.Append(modFolder);
         pathBuilder.Append(Path.DirectorySeparatorChar);
         var folderPathOffset = pathBuilder.Length;
 

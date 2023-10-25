@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="GZSkinsX.Appx.MyMods.Views.ModsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Appx.MyMods.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myMods2="using:GZSkinsX.Contracts.MyMods"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <myMods2:MyModItemTemplates />
+    </Page.Resources>
+
+    <Grid
+        x:Name="ContentGrid"
+        Background="{ThemeResource NavigationViewContentBackground}"
+        BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
+        BorderThickness="0,1,0,0"
+        DragOver="ContentGrid_DragOver"
+        Drop="ContentGrid_Drop"
+        LostFocus="ContentGrid_LostFocus"
+        PreviewKeyDown="ContentGrid_PreviewKeyDown"
+        PreviewKeyUp="ContentGrid_PreviewKeyUp">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="36" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <GridView
+            x:Name="MyModsGridView"
+            Grid.Row="4"
+            Padding="24,0,20,0"
+            AllowDrop="True"
+            CanDragItems="True"
+            CanReorderItems="False"
+            DoubleTapped="MyModsGridView_DoubleTapped"
+            DragItemsStarting="MyModsGridView_DragItemsStarting"
+            IsDoubleTapEnabled="True"
+            IsItemClickEnabled="True"
+            ItemClick="MyModsGridView_ItemClick"
+            ItemTemplate="{StaticResource MyModItemTemplate}"
+            RightTapped="MyModsGridView_RightTapped"
+            SelectionMode="Extended">
+            <GridView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <ContentThemeTransition />
+                    <RepositionThemeTransition />
+                </TransitionCollection>
+            </GridView.ItemContainerTransitions>
+            <GridView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                    <Setter x:Name="Mods_GridViewItem_Margin" Property="Margin" Value="0,2,8,14" />
+                </Style>
+            </GridView.ItemContainerStyle>
+        </GridView>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="12" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="24" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <ctrls2:SegoeFluentIcon
+                    Margin="0,0,6,0"
+                    FontSize="24"
+                    Glyph="&#xE74C;" />
+                <TextBlock
+                    x:Uid="ModsView_Title"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold" />
+            </StackPanel>
+
+            <ContentControl
+                x:Name="ModsCommandBarPresenter"
+                Grid.Column="3"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch" />
+        </Grid>
+
+        <TextBlock
+            x:Name="ModsView_Subtitle"
+            Grid.Row="2"
+            Margin="24,0,0,0"
+            Opacity=".7" />
+
+        <ProgressRing
+            x:Name="LoadingProgressRing"
+            Grid.RowSpan="5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsIndeterminate="True"
+            Visibility="Collapsed" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1910" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Mods_GridViewItem_Margin.Value" Value="0,2,6,14" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1340" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Mods_GridViewItem_Margin.Value" Value="0,2,4,6" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>
