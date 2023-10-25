@@ -5,6 +5,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
@@ -35,6 +36,11 @@ internal sealed class GameData : IGameData
     /// </summary>
     private const string LCU_EXECUTE_File_NAME = "LeagueClient.exe";
 
+    /// <summary>
+    /// 定义此成员用于存储根路径，以及在更新时判断与先前的路径是否相同。
+    /// </summary>
+    private string? RootFolder { get; set; }
+
     /// <inheritdoc/>
     public string? GameFolder { get; private set; }
 
@@ -52,7 +58,7 @@ internal sealed class GameData : IGameData
     [MemberNotNullWhen(true, nameof(GameFolder), nameof(GameExecuteFile))]
     public bool TryUpdate([NotNullWhen(true)] string? rootFolder, GameRegion region)
     {
-        if (string.IsNullOrEmpty(rootFolder) || region is GameRegion.Unknown)
+        if (string.IsNullOrWhiteSpace(rootFolder) || region is GameRegion.Unknown)
         {
             return false;
         }
@@ -60,6 +66,18 @@ internal sealed class GameData : IGameData
         if (Directory.Exists(rootFolder) is false)
         {
             return false;
+        }
+
+        var previousRootFolder = RootFolder;
+        if (string.IsNullOrWhiteSpace(previousRootFolder) is false &&
+            StringComparer.Ordinal.Equals(previousRootFolder, rootFolder))
+        {
+            // 如果与先前的根路径相同，则优先判断此前的成员路径是否有效。
+            if (Directory.Exists(GameFolder) && File.Exists(GameExecuteFile)
+                && Directory.Exists(LCUFolder) && File.Exists(LCUExecuteFile))
+            {
+                return true;
+            }
         }
 
         var gameFolder = Path.Combine(rootFolder, GAME_DIRECTORY_NAME);
@@ -86,6 +104,7 @@ internal sealed class GameData : IGameData
             return false;
         }
 
+        RootFolder = rootFolder;
         GameFolder = gameFolder;
         GameExecuteFile = gameExecuteFile;
 
