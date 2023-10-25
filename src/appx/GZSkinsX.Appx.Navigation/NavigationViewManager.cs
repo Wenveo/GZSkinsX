@@ -43,7 +43,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
     /// <summary>
     /// 默认的搜索框占位文本。
     /// </summary>
-    private readonly string _defaultPlaceholderText;
+    private readonly string? _defaultPlaceholderText;
 
     /// <summary>
     /// 存放用于接管搜索行为的对象。
@@ -70,7 +70,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
     /// <summary>
     /// 初始化 <see cref="NavigationViewManager"/> 的新实例。
     /// </summary>
-    public NavigationViewManager(NavigationView navigationView)
+    public NavigationViewManager(NavigationView navigationView, bool doNotCreateSearchBox)
     {
         _navigationView = navigationView;
 
@@ -81,36 +81,39 @@ internal sealed class NavigationViewManager : INavigationViewManager
         _rootFrame.Navigated += OnNavigated;
         _navigationView.SelectionChanged += OnNavSelectionChanged;
 
-        string? placeholderText = null;
-        if (navigationView is INavigationViewCustomSearchBox customSearchBox)
+        if (doNotCreateSearchBox is false)
         {
-            _searchBoxControl = customSearchBox.SearchBoxControl;
-            placeholderText = customSearchBox.DefaultPlaceholderText;
-        }
-        else
-        {
-            _searchBoxControl = _navigationView.AutoSuggestBox ??
-                new() { QueryIcon = new SegoeFluentIcon("\uE11A") };
-        }
-
-        _defaultPlaceholderText = placeholderText ?? ResourceHelper.GetLocalized(
-                    "GZSkinsX.Appx.Navigation/Resources/NavigationView_SearchBoxControl_DefaultPlaceholderText");
-
-        if (_searchBoxControl is not null)
-        {
-            _searchBoxControl.KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden;
-            _searchBoxControl.ItemTemplate = new QueryNavigationViewItemTemplate();
-            _searchBoxControl.QuerySubmitted += OnSearchBoxControlQuerySubmitted;
-            _searchBoxControl.TextChanged += OnSearchBoxControlTextChanged;
-
-            var ctrlF_Hotkey = new KeyboardAccelerator
+            string? placeholderText = null;
+            if (navigationView is INavigationViewCustomSearchBox customSearchBox)
             {
-                Key = Windows.System.VirtualKey.F,
-                Modifiers = Windows.System.VirtualKeyModifiers.Control
-            };
+                _searchBoxControl = customSearchBox.SearchBoxControl;
+                placeholderText = customSearchBox.DefaultPlaceholderText;
+            }
+            else
+            {
+                _searchBoxControl = _navigationView.AutoSuggestBox ??
+                    new() { QueryIcon = new SegoeFluentIcon("\uE11A") };
+            }
 
-            ctrlF_Hotkey.Invoked += OnControlFInvoked;
-            _searchBoxControl.KeyboardAccelerators.Add(ctrlF_Hotkey);
+            _defaultPlaceholderText = placeholderText ?? ResourceHelper.GetLocalized(
+                        "GZSkinsX.Appx.Navigation/Resources/NavigationView_SearchBoxControl_DefaultPlaceholderText");
+
+            if (_searchBoxControl is not null)
+            {
+                _searchBoxControl.KeyboardAcceleratorPlacementMode = KeyboardAcceleratorPlacementMode.Hidden;
+                _searchBoxControl.ItemTemplate = new QueryNavigationViewItemTemplate();
+                _searchBoxControl.QuerySubmitted += OnSearchBoxControlQuerySubmitted;
+                _searchBoxControl.TextChanged += OnSearchBoxControlTextChanged;
+
+                var ctrlF_Hotkey = new KeyboardAccelerator
+                {
+                    Key = Windows.System.VirtualKey.F,
+                    Modifiers = Windows.System.VirtualKeyModifiers.Control
+                };
+
+                ctrlF_Hotkey.Invoked += OnControlFInvoked;
+                _searchBoxControl.KeyboardAccelerators.Add(ctrlF_Hotkey);
+            }
         }
     }
 

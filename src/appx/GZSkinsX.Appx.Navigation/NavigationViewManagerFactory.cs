@@ -145,10 +145,11 @@ internal sealed class NavigationViewManagerFactory : INavigationViewManagerFacto
     /// 内部的用于创建和返回 <see cref="INavigationViewManager"/> 实例的核心实现。
     /// </summary>
     /// <param name="ownerGuidString">导航项所归属的 <see cref="Guid"/> 字符串值。</param>
-    /// <param name="navigationView">用于添加导航项的目标导航视图元素。</param>
+    /// <param name="options">用于创建导航视图管理的配置选项。</param>
     /// <returns>已创建的 <see cref="NavigationViewManager"/> 类型实例。</returns>
-    private INavigationViewManager NavigationViewManagerCore(string ownerGuidString, NavigationView navigationView)
+    private INavigationViewManager NavigationViewManagerCore(string ownerGuidString, NavigationViewManagerOptions? options)
     {
+        var navigationView = options?.Target ?? new NavigationView();
         if (Guid.TryParse(ownerGuidString, out var ownerGuid) &&
             _guidToGroups.TryGetValue(ownerGuid, out var itemGroups))
         {
@@ -185,14 +186,14 @@ internal sealed class NavigationViewManagerFactory : INavigationViewManagerFacto
             }
         }
 
-        return new NavigationViewManager(navigationView);
+        return new NavigationViewManager(navigationView, options?.DoNotCreateSearchBox is true);
     }
 
     /// <inheritdoc/>
     public INavigationViewManager CreateNavigationViewManager(string ownerGuidString)
-    => NavigationViewManagerCore(ownerGuidString, new NavigationView());
+    => NavigationViewManagerCore(ownerGuidString, null);
 
     /// <inheritdoc/>
-    public INavigationViewManager CreateNavigationViewManager(string ownerGuidString, NavigationView targetElement)
-    => NavigationViewManagerCore(ownerGuidString, targetElement);
+    public INavigationViewManager CreateNavigationViewManager(string ownerGuidString, NavigationViewManagerOptions options)
+    => NavigationViewManagerCore(ownerGuidString, options);
 }
