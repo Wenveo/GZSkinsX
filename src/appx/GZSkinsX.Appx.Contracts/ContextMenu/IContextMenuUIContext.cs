@@ -12,13 +12,5 @@ namespace GZSkinsX.Contracts.ContextMenu;
 /// </summary>
 public interface IContextMenuUIContext
 {
-    /// <summary>
-    /// 获取当前 UI 上下文中的 UI 对象。
-    /// </summary>
-    object UIObject { get; }
 
-    /// <summary>
-    /// 获取当前 UI 上下文中的参数。
-    /// </summary>
-    object Parameter { get; }
 }

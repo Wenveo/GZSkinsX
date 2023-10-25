@@ -14,10 +14,9 @@ namespace GZSkinsX.Contracts.Appx;
 /// <summary>
 /// 有关全局菜单的 UI 上下文信息。
 /// </summary>
-/// <param name="sender">浮动菜单对象实例。</param>
-/// <param name="currentTheme">当前应用使用的主题。</param>
-public sealed class MainGlobalMenuUIContext(object sender, ElementTheme currentTheme)
-    : ContextMenuUIContext<object, ElementTheme>(uiObject: sender, parameter: currentTheme)
+/// <param name="UIObject">浮动菜单对象实例。</param>
+/// <param name="CurrentTheme">当前应用使用的主题。</param>
+public sealed record class MainGlobalMenuUIContext(object UIObject, ElementTheme CurrentTheme) : IContextMenuUIContext
 {
 
 }

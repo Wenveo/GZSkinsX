@@ -12,11 +12,15 @@ namespace GZSkinsX.Contracts.ContextMenu;
 /// </summary>
 /// <param name="uiObject">指定当前 UI 上下文中的 UI 对象。</param>
 /// <param name="parameter">指定当前 UI 上下文中的参数。</param>
-public class ContextMenuUIContext(object uiObject, object parameter) : IContextMenuUIContext
+public sealed class ContextMenuUIContext(object uiObject, object parameter) : IContextMenuUIContext
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// 获取当前 UI 上下文中的 UI 对象。
+    /// </summary>
     public object UIObject { get; } = uiObject;
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// 获取当前 UI 上下文中的参数。
+    /// </summary>
     public object Parameter { get; } = parameter;
 }

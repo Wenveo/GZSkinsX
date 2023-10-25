@@ -12,10 +12,9 @@ namespace GZSkinsX.Contracts.MyMods;
 /// <summary>
 /// 有关模组视图中的上下文菜单的 UI 上下文信息。
 /// </summary>
-/// <param name="sender">浮动菜单对象实例。</param>
-/// <param name="myModsView">模组视图对象实例。</param>
-public sealed class MyModsViewContextMenuUIContext(object sender, IMyModsView myModsView)
-    : ContextMenuUIContext<object, IMyModsView>(uiObject: sender, parameter: myModsView)
+/// <param name="UIObject">浮动菜单对象实例。</param>
+/// <param name="MyModsView">模组视图对象实例。</param>
+public sealed record class MyModsViewContextMenuUIContext(object UIObject, IMyModsView MyModsView) : IContextMenuUIContext
 {
 
 }

@@ -33,7 +33,7 @@ sealed file class ThemeLightMenuItem : ContextRadioMenuItemBase<MainGlobalMenuUI
 
     public override bool IsChecked(MainGlobalMenuUIContext context)
     {
-        return context.Parameter is ElementTheme.Light;
+        return context.CurrentTheme is ElementTheme.Light;
     }
 
     public override async void OnExecute(MainGlobalMenuUIContext context)
@@ -55,7 +55,7 @@ sealed file class ThemeDarkMenuItem : ContextRadioMenuItemBase<MainGlobalMenuUIC
 
     public override bool IsChecked(MainGlobalMenuUIContext context)
     {
-        return context.Parameter is ElementTheme.Dark;
+        return context.CurrentTheme is ElementTheme.Dark;
     }
 
     public override async void OnExecute(MainGlobalMenuUIContext context)
@@ -77,7 +77,7 @@ sealed file class ThemeDefaultMenuItem : ContextRadioMenuItemBase<MainGlobalMenu
 
     public override bool IsChecked(MainGlobalMenuUIContext context)
     {
-        return context.Parameter is ElementTheme.Default;
+        return context.CurrentTheme is ElementTheme.Default;
     }
 
     public override async void OnExecute(MainGlobalMenuUIContext context)

@@ -447,15 +447,15 @@ internal class CommandCodeContextMenuItem(CommandCodes commandCode) : ContextMen
 
     public override IEnumerable<KeyboardAccelerator> KeyboardAccelerators => CommandManager.GetKeyboardAccelerator(commandCode);
 
-    public override void OnExecute(MyModsViewContextMenuUIContext context) => CommandManager.Execute(commandCode, context.Parameter);
+    public override void OnExecute(MyModsViewContextMenuUIContext context) => CommandManager.Execute(commandCode, context.MyModsView);
 }
 
 internal class CommandCodeContextMenuItem_VisibleWhenSelectedItemIsNotNull(CommandCodes commandCode) : CommandCodeContextMenuItem(commandCode)
 {
-    public override bool IsVisible(MyModsViewContextMenuUIContext context) => context.Parameter.SelectedItem is not null;
+    public override bool IsVisible(MyModsViewContextMenuUIContext context) => context.MyModsView.SelectedItem is not null;
 }
 
 internal class CommandCodeContextMenuItem_VisibleWhenSelectedItemIsNull(CommandCodes commandCode) : CommandCodeContextMenuItem(commandCode)
 {
-    public override bool IsVisible(MyModsViewContextMenuUIContext context) => context.Parameter.SelectedItem is null;
+    public override bool IsVisible(MyModsViewContextMenuUIContext context) => context.MyModsView.SelectedItem is null;
 }
