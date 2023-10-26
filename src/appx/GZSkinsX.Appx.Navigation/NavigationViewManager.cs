@@ -452,12 +452,10 @@ internal sealed class NavigationViewManager : INavigationViewManager
         var navItem = FindNavItem(guidString);
         if (navItem is not null && NavigationViewItemHelper.GetItemContext(navItem) is { } ctx)
         {
-            var beforeNavItemCtx = GetCurrentNavItemCtx();
-            infoOverride ??= new DrillInNavigationTransitionInfo();
-
             _tempNavItem = navItem;
             _rootFrame.Tag = guidString;
 
+            var beforeNavItemCtx = GetCurrentNavItemCtx();
             if (_rootFrame.Navigate(ctx.Metadata.PageType, parameter, infoOverride))
             {
                 if (beforeNavItemCtx is not null)
