@@ -418,13 +418,13 @@ internal sealed class NavigationViewManager : INavigationViewManager
     /// </summary>
     private async Task NavigateCoreAsync(string guidString, object? parameter, NavigationTransitionInfo? infoOverride)
     {
-        var item = FindNavItem(guidString);
-        if (item is { DataContext: NavigationItemMD { Metadata.PageType: not null } ctx })
+        var navItem = FindNavItem(guidString);
+        if (navItem is not null && NavigationViewItemHelper.GetItemContext(navItem) is { } ctx)
         {
             var beforeNavItemCtx = GetCurrentNavItemCtx();
             infoOverride ??= new DrillInNavigationTransitionInfo();
 
-            _tempNavItem = item;
+            _tempNavItem = navItem;
             _rootFrame.Tag = guidString;
 
             if (_rootFrame.Navigate(ctx.Metadata.PageType, parameter, infoOverride))
