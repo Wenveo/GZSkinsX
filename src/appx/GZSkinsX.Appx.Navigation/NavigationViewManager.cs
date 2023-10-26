@@ -91,7 +91,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
             }
             else
             {
-                _searchBoxControl = _navigationView.AutoSuggestBox ??
+                _searchBoxControl = _navigationView.AutoSuggestBox ??=
                     new() { QueryIcon = new SegoeFluentIcon("\uE11A") };
             }
 
