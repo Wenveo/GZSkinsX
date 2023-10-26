@@ -25,13 +25,15 @@ partial class MyModsService
     /// <inheritdoc/>
     public async Task<string?> GetModFolderAsync()
     {
-        return GetStringFromJson(await TryGetMTSettingsValueAsync(MT_SETTINGS_RGZINSTALL_NAME));
+        return GetStringFromJson(await TryGetMTSettingsValueAsync(MT_SETTINGS_RGZINSTALL_NAME))
+               ?.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
     }
 
     /// <inheritdoc/>
     public async Task<string?> GetWadFolderAsync()
     {
-        return GetStringFromJson(await TryGetMTSettingsValueAsync(MT_SETTINGS_CUSTOMINSTALL_NAME));
+        return GetStringFromJson(await TryGetMTSettingsValueAsync(MT_SETTINGS_CUSTOMINSTALL_NAME))
+               ?.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
     }
 
     /// <inheritdoc/>
@@ -119,11 +121,11 @@ partial class MyModsService
     {
         if (obj is JsonElement elem && elem.ValueKind is JsonValueKind.String)
         {
-            return elem.GetString()?.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return elem.GetString();
         }
         else if (obj is string s)
         {
-            return s.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+            return s;
         }
         else
         {

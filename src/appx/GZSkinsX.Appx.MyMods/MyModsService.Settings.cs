@@ -175,47 +175,47 @@ partial class MyModsService
 
         // 设置默认的红色血液选项
         if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_BLOOD_NAME, out var value) is false ||
-            (value is JsonElement elem && elem.ValueKind is not JsonValueKind.True or JsonValueKind.False))
+            value is not JsonElement { ValueKind: JsonValueKind.True or JsonValueKind.False })
         {
             settingsData.GZSkins[MT_SETTINGS_BLOOD_NAME] = false;
         }
 
         // 设置默认的 Wad 目录路径
-        string? wadsFolder;
+        string? wadFolder;
         if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_CUSTOMINSTALL_NAME, out value))
         {
-            wadsFolder = GetStringFromJson(value);
-            if (string.IsNullOrWhiteSpace(wadsFolder))
+            wadFolder = GetStringFromJson(value);
+            if (string.IsNullOrWhiteSpace(wadFolder))
             {
-                wadsFolder = GetWGZSubFolderPath("Wads");
+                wadFolder = GetWGZSubFolderPath("Wads");
             }
-            else if (wadsFolder[^1] != Path.DirectorySeparatorChar)
+            else if (wadFolder[^1] != Path.DirectorySeparatorChar)
             {
-                wadsFolder = Path.GetFullPath(wadsFolder) + Path.DirectorySeparatorChar;
+                wadFolder = Path.GetFullPath(wadFolder) + Path.DirectorySeparatorChar;
             }
         }
         else
         {
-            wadsFolder = GetWGZSubFolderPath("Wads");
+            wadFolder = GetWGZSubFolderPath("Wads");
         }
 
         // 当目标文件夹不存在时将其创建
-        if (Directory.Exists(wadsFolder) is false)
+        if (Directory.Exists(wadFolder) is false)
         {
             try
             {
-                Directory.CreateDirectory(wadsFolder);
+                Directory.CreateDirectory(wadFolder);
             }
             catch
             {
                 // 如果无法创建目录或者给定的路径无效而引发了异常，
                 // 那么将此变量的内容设为空，避免写出无效的路径。
-                wadsFolder = string.Empty;
+                wadFolder = string.Empty;
             }
         }
 
         // 将 Wad 目录的路径写出到配置。
-        settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = wadsFolder;
+        settingsData.GZSkins[MT_SETTINGS_CUSTOMINSTALL_NAME] = wadFolder;
 
         // 设置默认的 Mod 目录路径
         string? modFolder;
