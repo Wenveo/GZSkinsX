@@ -49,6 +49,8 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
     public ModsView()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+
         MyModsView = new(MyModsGridView);
         CollectionCount_FormatString = ResourceHelper.GetLocalized("GZSkinsX.Appx.MyMods/Resources/ModsView_Collection_Count");
 
@@ -68,6 +70,11 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
         commandBar.Resources.Add("CommandBarBorderBrushOpen", new SolidColorBrush(Colors.Transparent));
         commandBar.DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
         ModsCommandBarPresenter.Content = commandBar;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        MyModsView.RefreshAsync().FireAndForget();
     }
 
     private void OnItemsVectorChanged(IObservableVector<object> sender, IVectorChangedEventArgs @event)
@@ -94,7 +101,6 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
 
         MyModsView.RefreshStarting += OnModsViewRefreshStarting;
         MyModsView.RefreshCompleted += OnModsViewRefreshCompleted;
-        DispatcherQueue.EnqueueAsync(MyModsView.RefreshAsync).FireAndForget();
     }
 
     private void OnModsViewRefreshStarting(object? sender, EventArgs e)

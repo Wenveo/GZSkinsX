@@ -100,7 +100,7 @@
             x:Name="ModsView_Subtitle"
             Grid.Row="2"
             Margin="24,0,0,0"
-            Opacity=".7" />
+            Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}" />
 
         <ProgressRing
             x:Name="LoadingProgressRing"
