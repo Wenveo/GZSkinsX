@@ -50,6 +50,8 @@
     <FontWeight x:Key="MyModItemStatusFontWeightInstall">Bold</FontWeight>
     <FontWeight x:Key="MyModItemStatusFontWeightUninstall">Normal</FontWeight>
 
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+
     <converters:BoolToObjectConverter
         x:Key="MyModItemStatusContentConverter"
         FalseValue="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.Contracts/Resources/MyModItem_Status_Uninstalled}"
