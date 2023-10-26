@@ -5,11 +5,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+using System.Diagnostics;
+
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Navigation;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -28,14 +32,14 @@ internal sealed partial class MainPage : Page
         if (AppxContext.DispatcherQueue.HasThreadAccess)
         {
             return AppxContext.NavigationViewManagerFactory.CreateNavigationViewManager(
-                NavigationConstants.MAIN_NAV_GUID, new CustomizedNavView());
+                NavigationConstants.MAIN_NAV_GUID, new() { Target = new CustomizedNavView() });
         }
         else
         {
             return AppxContext.DispatcherQueue.EnqueueAsync(() =>
             {
                 return AppxContext.NavigationViewManagerFactory.CreateNavigationViewManager(
-                    NavigationConstants.MAIN_NAV_GUID, new CustomizedNavView());
+                    NavigationConstants.MAIN_NAV_GUID, new() { Target = new CustomizedNavView() });
             }).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     });
@@ -47,7 +51,28 @@ internal sealed partial class MainPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        contentPresenter.Content = NavManager.Value.UIObject;
+        if (NavManager.IsValueCreated is false)
+        {
+            var navManager = NavManager.Value;
+            var navView = navManager.UIObject as CustomizedNavView;
+            Debug.Assert(navView is not null);
+
+            navView.Loaded += OnNavVewLoaded;
+            contentPresenter.Content = navView;
+        }
+        else
+        {
+            contentPresenter.Content = NavManager.Value.UIObject;
+        }
+
+        static void OnNavVewLoaded(object sender, RoutedEventArgs e)
+        {
+            var navView = sender as CustomizedNavView;
+            Debug.Assert(navView is not null);
+
+            navView.Loaded -= OnNavVewLoaded;
+            navView.InitializeAsync(NavManager.Value).FireAndForget();
+        }
     }
 
     protected override void OnNavigatedFrom(NavigationEventArgs e)

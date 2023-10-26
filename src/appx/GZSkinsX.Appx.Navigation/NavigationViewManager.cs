@@ -378,6 +378,37 @@ internal sealed class NavigationViewManager : INavigationViewManager
     }
 
     /// <inheritdoc/>
+    public void NavigateToFirstItem()
+    {
+        var itemToSelect = GetFirstNavItem(_navigationView.MenuItems) ??
+                           GetFirstNavItem(_navigationView.FooterMenuItems);
+
+        if (itemToSelect is not null)
+        {
+            _navigationView.SelectedItem = itemToSelect;
+        }
+
+        static NavigationViewItem? GetFirstNavItem(IEnumerable<object> items)
+        {
+            foreach (var item in items.OfType<NavigationViewItem>())
+            {
+                if (item.SelectsOnInvoked)
+                {
+                    return item;
+                }
+
+                var subItem = GetFirstNavItem(item.MenuItems);
+                if (subItem is not null)
+                {
+                    return subItem;
+                }
+            }
+
+            return null;
+        }
+    }
+
+    /// <inheritdoc/>
     public async void NavigateTo(string guidString)
     {
         await NavigateCoreAsync(guidString, null, null);

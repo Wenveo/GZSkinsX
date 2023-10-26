@@ -63,6 +63,11 @@ public interface INavigationViewManager
     Task<bool> GoForwardAsync();
 
     /// <summary>
+    /// 导航至第一个可见的元素。
+    /// </summary>
+    void NavigateToFirstItem();
+
+    /// <summary>
     /// 导航到与标识符匹配的指定页面。
     /// </summary>
     /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值。</param>
