@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="GZSkinsX.Appx.MyMods.Settings.ModsSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Appx.MyMods.Settings"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer Padding="24,0,24,24">
+        <StackPanel Spacing="12">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+
+            <TextBlock
+                FontSize="24"
+                FontWeight="SemiBold"
+                Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MyMods/Resources/Settings_Mods_Title}" />
+
+            <StackPanel Spacing="4">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <controls:SettingsCard x:Uid="Settings_Mods_Blood">
+                    <controls:SettingsCard.HeaderIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xEB42;" />
+                    </controls:SettingsCard.HeaderIcon>
+                    <ToggleSwitch x:Name="BloodToogleSwitch" Toggled="OnBloodToogleSwitchToggled" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard x:Uid="Settings_Mods_ModFolder">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run x:Name="ModFolderTextBlock" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <controls:SettingsCard.HeaderIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE8D5;" />
+                    </controls:SettingsCard.HeaderIcon>
+                    <Button Click="OnBrowserModFolder" Content="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MyMods/Resources/Settings_Mods_BrowserFolder}" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard x:Uid="Settings_Mods_WadFolder">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run x:Name="WadFolderTextBlock" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <controls:SettingsCard.HeaderIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE8D5;" />
+                    </controls:SettingsCard.HeaderIcon>
+                    <Button Click="OnBrowserWadFolder" Content="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MyMods/Resources/Settings_Mods_BrowserFolder}" />
+                </controls:SettingsCard>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -210,4 +210,22 @@
   <data name="MyModsView_Share_Dialog_Single_Item_Title" xml:space="preserve">
     <value>正在共享文件 {0}</value>
   </data>
+  <data name="Settings_Mods_Blood.Description" xml:space="preserve">
+    <value>启用游戏内被和谐的红血特效</value>
+  </data>
+  <data name="Settings_Mods_Blood.Header" xml:space="preserve">
+    <value>红色血液</value>
+  </data>
+  <data name="Settings_Mods_BrowserFolder" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="Settings_Mods_ModFolder.Header" xml:space="preserve">
+    <value>模组目录</value>
+  </data>
+  <data name="Settings_Mods_Title" xml:space="preserve">
+    <value>模组</value>
+  </data>
+  <data name="Settings_Mods_WadFolder.Header" xml:space="preserve">
+    <value>WAD目录</value>
+  </data>
 </root>

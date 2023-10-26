@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="GZSkinsX.Appx.MainApp.Settings.AboutThisAppPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Appx.MainApp.Settings"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer Padding="24,0,24,24">
+        <StackPanel Spacing="12">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+
+            <TextBlock
+                FontSize="24"
+                FontWeight="SemiBold"
+                Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Settings_AboutThisApp_Title}" />
+
+            <StackPanel Spacing="4">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <controls:SettingsExpander x:Uid="Settings_AboutThisApp_AppInfo">
+                    <controls:SettingsExpander.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.ThemeDictionaries>
+                                <ResourceDictionary x:Key="Default">
+                                    <BitmapImage x:Key="Settings_AboutTheApp_Icon" UriSource="/Assets/Square44x44Logo.altform-unplated_targetsize-48.png" />
+                                </ResourceDictionary>
+                                <ResourceDictionary x:Key="Light">
+                                    <BitmapImage x:Key="Settings_AboutTheApp_Icon" UriSource="/Assets/Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+                                </ResourceDictionary>
+                            </ResourceDictionary.ThemeDictionaries>
+                        </ResourceDictionary>
+                    </controls:SettingsExpander.Resources>
+                    <controls:SettingsExpander.HeaderIcon>
+                        <ImageIcon Source="{ThemeResource Settings_AboutTheApp_Icon}" />
+                    </controls:SettingsExpander.HeaderIcon>
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard
+                            x:Uid="Settings_AboutThisApp_AppInfo_Privacy"
+                            Click="OnNavigateToPrivacy"
+                            IsClickEnabled="True">
+                            <controls:SettingsCard.ActionIcon>
+                                <ctrls2:SegoeFluentIcon Glyph="&#xE8A7;" />
+                            </controls:SettingsCard.ActionIcon>
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                    <RichTextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                        <Paragraph>
+                            <Run x:Name="VersionTextBlock" />
+                        </Paragraph>
+                    </RichTextBlock>
+                </controls:SettingsExpander>
+
+                <controls:SettingsCard
+                    x:Uid="Settings_AboutThisApp_RateAndReview"
+                    Click="OnRateAndReview"
+                    IsClickEnabled="True">
+                    <controls:SettingsCard.HeaderIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE1CF;" />
+                    </controls:SettingsCard.HeaderIcon>
+                    <controls:SettingsCard.ActionIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE8A7;" />
+                    </controls:SettingsCard.ActionIcon>
+                </controls:SettingsCard>
+            </StackPanel>
+
+            <StackPanel Spacing="6">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock x:Uid="Settings_AboutThisApp_OpenSource" />
+
+                <StackPanel Spacing="4">
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    <controls:SettingsCard
+                        x:Uid="Settings_AboutThisApp_OpenSource_GitHub"
+                        Click="OnNavigateToGitHubRepo"
+                        IsClickEnabled="True">
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE774;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <controls:SettingsCard.ActionIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8A7;" />
+                        </controls:SettingsCard.ActionIcon>
+                    </controls:SettingsCard>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

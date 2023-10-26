@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="GZSkinsX.Appx.MainApp.Settings.LicensesViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.Appx.MainApp.Settings"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer Padding="24,0,24,24">
+        <StackPanel Spacing="12">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+
+            <StackPanel Spacing="4">
+                <TextBlock
+                    FontSize="24"
+                    FontWeight="SemiBold"
+                    Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Settings_Licenses_Title}" />
+                <TextBlock
+                    FontSize="12"
+                    Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"
+                    Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Settings_Licenses_Subtitle}" />
+            </StackPanel>
+
+            <StackPanel Spacing="4">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <controls:SettingsCard Header=".NET Community Toolkit">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/CommunityToolkit/dotnet" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/CommunityToolkit/dotnet/blob/main/License.md" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard Header="Windows Community Toolkit">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/CommunityToolkit/Windows" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/CommunityToolkit/Windows/blob/main/License.md" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard Header="MessagePack for C#">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/MessagePack-CSharp/MessagePack-CSharp" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/MessagePack-CSharp/MessagePack-CSharp/blob/master/LICENSE" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard Header="CsWin32">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/microsoft/CsWin32" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/microsoft/CsWin32/blob/main/LICENSE" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard Header="Fluent UI System Icons">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/microsoft/fluentui-system-icons" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard Header="VS-MEF">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/microsoft/vs-mef" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/microsoft/vs-mef/blob/main/LICENSE" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard Header="Windows App SDK">
+                    <controls:SettingsCard.Description>
+                        <RichTextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                            <Paragraph>
+                                <Run Text="https://github.com/microsoft/WindowsAppSDK" />
+                            </Paragraph>
+                        </RichTextBlock>
+                    </controls:SettingsCard.Description>
+                    <HyperlinkButton Content="MIT License" NavigateUri="https://github.com/microsoft/WindowsAppSDK/blob/main/LICENSE" />
+                </controls:SettingsCard>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -8,7 +8,9 @@
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.WindowManager;
 
-namespace GZSkinsX.Views;
+using Microsoft.UI.Xaml.Media.Animation;
+
+namespace GZSkinsX.Appx.MainApp.Views;
 
 [System.Composition.Shared, WindowFrameContract(Guid = WindowFrameConstants.Settings_Guid, PageType = typeof(SettingsPage))]
 internal sealed class SettingsFrame : IWindowFrame

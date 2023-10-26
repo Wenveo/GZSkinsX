@@ -177,6 +177,48 @@
   <data name="Preload_Loading_Title.Text" xml:space="preserve">
     <value>正在加载中</value>
   </data>
+  <data name="Settings_AboutThisApp_AppInfo.Description" xml:space="preserve">
+    <value>© 2022 - 2023 GZSkins, Inc. 保留所有权利。</value>
+  </data>
+  <data name="Settings_AboutThisApp_AppInfo.Header" xml:space="preserve">
+    <value>格子</value>
+  </data>
+  <data name="Settings_AboutThisApp_AppInfo_Privacy.Header" xml:space="preserve">
+    <value>隐私协议</value>
+  </data>
+  <data name="Settings_AboutThisApp_OpenSource.Text" xml:space="preserve">
+    <value>开放源代码</value>
+  </data>
+  <data name="Settings_AboutThisApp_OpenSource_GitHub.Header" xml:space="preserve">
+    <value>GitHub 存储库</value>
+  </data>
+  <data name="Settings_AboutThisApp_RateAndReview.Header" xml:space="preserve">
+    <value>评分及反馈</value>
+  </data>
+  <data name="Settings_AboutThisApp_Title" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Settings_General_GameFolder.Header" xml:space="preserve">
+    <value>游戏目录</value>
+  </data>
+  <data name="Settings_General_GameFolder_Browser.Content" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="Settings_General_Theme.Description" xml:space="preserve">
+    <value>选择应用程序的颜色主题</value>
+  </data>
+  <data name="Settings_General_Theme.Header" xml:space="preserve">
+    <value>颜色主题</value>
+  </data>
+  <data name="Settings_General_Title" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="Settings_Licenses_Subtitle" xml:space="preserve">
+    <value>该应用使用了以下的开源库。</value>
+  </data>
+  <data name="Settings_Licenses_Title" xml:space="preserve">
+    <value>协议</value>
+  </data>
   <data name="Shell_SystemMenu_Close" xml:space="preserve">
     <value>关闭</value>
   </data>
