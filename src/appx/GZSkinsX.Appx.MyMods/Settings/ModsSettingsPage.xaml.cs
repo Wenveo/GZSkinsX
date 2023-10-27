@@ -40,6 +40,8 @@ internal sealed partial class ModsSettingsPage : Page
         BloodToogleSwitch.IsOn = await AppxContext.MyModsService.GetIsEnableBloodAsync();
         ModFolderTextBlock.Text = await AppxContext.MyModsService.GetModFolderAsync();
         WadFolderTextBlock.Text = await AppxContext.MyModsService.GetWadFolderAsync();
+
+        BloodToogleSwitch.Toggled += OnBloodToogleSwitchToggled;
     }
 
     private async void OnBloodToogleSwitchToggled(object sender, RoutedEventArgs e)
