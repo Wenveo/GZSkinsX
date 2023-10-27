@@ -52,10 +52,11 @@ internal sealed partial class AboutThisAppPage : Page
 
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
-        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
         Guid = NavigationConstants.SETTINGS_NAV_ABOUT_GUID,
+        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
+        Order = NavigationConstants.ORDER_SETTINGS_NAV_ABOUT,
         Header = "resx:GZSkinsX.Appx.MainApp/Resources/Settings_AboutThisApp_Title",
-        PageType = typeof(AboutThisAppPage), Order = 10000)]
+        PageType = typeof(AboutThisAppPage))]
     private sealed class AboutThisAppItem : INavigationItem
     {
         public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE946" };

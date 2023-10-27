@@ -33,6 +33,11 @@ public static class NavigationConstants
     public const string GROUP_MAIN_NAV_DEVTOOLS = "1000,4C575955-C122-4CD2-A23F-06EAB2E1D378";
 
     /// <summary>
+    /// Main / NavigationView / Mods - Order
+    /// </summary>
+    public const double ORDER_MAIN_NAV_MODS = 10;
+
+    /// <summary>
     /// Settings / NavigationView
     /// </summary>
     public const string SETTINGS_NAV_GUID = "32BB66C9-7405-4E08-9577-43EEA165EBC2";
@@ -61,4 +66,24 @@ public static class NavigationConstants
     /// Settings / NavigationView / Group / Default
     /// </summary>
     public const string GROUP_SETTINGS_NAV_DEFAULT = "0,4C25B186-13B3-4AFC-AA58-80935C5E6A70";
+
+    /// <summary>
+    /// Settings / NavigationView / General - Order
+    /// </summary>
+    public const double ORDER_SETTINGS_NAV_GENERAL = 0;
+
+    /// <summary>
+    /// Settings / NavigationView / Mods - Order
+    /// </summary>
+    public const double ORDER_SETTINGS_NAV_MODS = 10;
+
+    /// <summary>
+    /// Settings / NavigationView / Licenses - Order
+    /// </summary>
+    public const double ORDER_SETTINGS_NAV_LICENSES = 100;
+
+    /// <summary>
+    /// Settings / NavigationView / About - Order
+    /// </summary>
+    public const double ORDER_SETTINGS_NAV_ABOUT = 10000;
 }

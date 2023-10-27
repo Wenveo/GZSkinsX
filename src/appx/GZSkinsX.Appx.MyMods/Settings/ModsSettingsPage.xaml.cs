@@ -85,10 +85,11 @@ internal sealed partial class ModsSettingsPage : Page
 
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
-        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
         Guid = NavigationConstants.SETTINGS_NAV_MODS_GUID,
+        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
+        Order = NavigationConstants.ORDER_SETTINGS_NAV_MODS,
         Header = "resx:GZSkinsX.Appx.MyMods/Resources/Settings_Mods_Title",
-        PageType = typeof(ModsSettingsPage), Order = 10)]
+        PageType = typeof(ModsSettingsPage))]
     internal sealed class ModsSettingsItem : INavigationItem
     {
         public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE74C" };

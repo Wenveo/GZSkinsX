@@ -114,10 +114,11 @@ internal sealed partial class GeneralSettingsPage : Page
 
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
-        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
         Guid = NavigationConstants.SETTINGS_NAV_GENERAL_GUID,
+        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
+        Order = NavigationConstants.ORDER_SETTINGS_NAV_GENERAL,
         Header = "resx:GZSkinsX.Appx.MainApp/Resources/Settings_General_Title",
-        PageType = typeof(GeneralSettingsPage), Order = 0)]
+        PageType = typeof(GeneralSettingsPage))]
     internal sealed class GeneralSettingsItem : INavigationItem
     {
         public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE9E9" };

@@ -18,10 +18,11 @@ namespace GZSkinsX.Appx.MyMods.Views;
 
 [Shared, NavigationItemContract(
     OwnerGuid = NavigationConstants.MAIN_NAV_GUID,
-    Group = NavigationConstants.GROUP_MAIN_NAV_GENERAL,
     Guid = NavigationConstants.MAIN_NAV_MODS_GUID,
+    Group = NavigationConstants.GROUP_MAIN_NAV_GENERAL,
+    Order = NavigationConstants.ORDER_MAIN_NAV_MODS,
     Header = "resx:GZSkinsX.Appx.MyMods/Resources/ModsViewItem_Header",
-    PageType = typeof(ModsView), Order = 10)]
+    PageType = typeof(ModsView))]
 internal sealed class ModsViewItem : INavigationItem
 {
     public IconElement Icon => new SegoeFluentIcon { Glyph = "\uE74C" };

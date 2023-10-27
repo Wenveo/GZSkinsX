@@ -31,10 +31,11 @@ internal sealed partial class LicensesViewPage : Page
 
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
-        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
         Guid = NavigationConstants.SETTINGS_NAV_LICENSES_GUID,
+        Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
+        Order = NavigationConstants.ORDER_SETTINGS_NAV_LICENSES,
         Header = "resx:GZSkinsX.Appx.MainApp/Resources/Settings_Licenses_Title",
-        PageType = typeof(LicensesViewPage), Order = 100)]
+        PageType = typeof(LicensesViewPage))]
     private sealed class LicensesViewItem : INavigationItem
     {
         public IconElement Icon => new SegoeFluentIcon { Glyph = "\uF571" };
