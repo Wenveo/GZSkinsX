@@ -158,7 +158,7 @@ internal sealed partial class MyModsService : IMyModsService
             try
             {
                 ReadModInfo(item);
-                File.Copy(item, destFilename, true);
+                File.Copy(item, destFilePath, true);
                 AppxContext.LoggingService.LogOkay(
                     "GZSkinsX.Appx.MyMods.MyModsService.ImportModsCore",
                     $"The mod file \"{destFilename}\" have been imported.");
