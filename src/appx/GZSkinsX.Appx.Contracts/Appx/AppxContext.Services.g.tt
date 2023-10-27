@@ -72,7 +72,7 @@ public static partial class AppxContext
     public static T Resolve<T>() where T : class
     {
         EnsureInitialized();
-        return _exportProvider.GetExportedValue<T>();
+        return _resolver.Resolve<T>();
     }
 
     /// <summary>
@@ -84,17 +84,7 @@ public static partial class AppxContext
     public static bool TryResolve<T>([global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value) where T : class
     {
         EnsureInitialized();
-
-        try
-        {
-            value = _exportProvider.GetExportedValue<T>();
-        }
-        catch
-        {
-            value = null;
-        }
-
-        return value is not null;
+        return _resolver.TryResolve<T>(out value);
     }
     
     /// <summary>
@@ -112,23 +102,23 @@ public static partial class AppxContext
         }
 
         EnsureInitialized();
-        return service = _exportProvider.GetExportedValue<T>();
+        return service = _resolver.Resolve<T>();
     }
 
     /// <summary>
-    /// 用于获取和检索所有已导出的类型的组件容器。
+    /// 用于获取和检索所有已导出的类型的解析器。
     /// </summary>
-    private static global::Microsoft.VisualStudio.Composition.ExportProvider? _exportProvider;
+    private static IServiceResolver? _resolver;
     
     /// <summary>
     /// 确认当前应用程序上下文是否已初始化。
     /// </summary>
     /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化时发生。</exception>
-    [global::System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_exportProvider))]
+    [global::System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_resolver))]
     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     private static void EnsureInitialized()
     {
-        if (_exportProvider is not null)
+        if (_resolver is not null)
         {
             return;
         }

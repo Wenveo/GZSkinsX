@@ -40,7 +40,7 @@ public static partial class AppxContext
                 return s_dispatcherQueue;
             }
 
-            if (_exportProvider is not null)
+            if (_resolver is not null)
             {
                 s_dispatcherQueue = AppxWindow.MainWindow.DispatcherQueue;
                 return s_dispatcherQueue;

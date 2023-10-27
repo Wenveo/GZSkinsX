@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime;
@@ -57,10 +58,10 @@ internal static partial class Program
             }
 
             App? mainApp = null;
+
             var appInstance = AppInstance.GetCurrent();
             var exportProvider = InitializeMEFV2().GetAwaiter().GetResult();
-
-            AppxContext.InitializeLifetimeService(exportProvider);
+            AppxContext.InitializeLifetimeService(new ServiceResolver(exportProvider));
 
             /// 在此获取和加载扩展服务的实例，而不是在 Application.Start 内。
             var extensionService = exportProvider.GetExportedValue<ExtensionService>();
@@ -217,4 +218,28 @@ internal static partial class Program
     [LibraryImport("kernel32.dll", SetLastError = true)]
     private static unsafe partial int GetCurrentPackageFullName(
          ref int packageFullNameLength, [Optional] char* packageFullName);
+
+    /// <summary>
+    /// 默认的服务解析器实现。
+    /// </summary>
+    private sealed class ServiceResolver(ExportProvider exportProvider) : IServiceResolver
+    {
+        /// <inheritdoc/>
+        public T Resolve<T>() where T : class => exportProvider.GetExportedValue<T>();
+
+        /// <inheritdoc/>
+        public bool TryResolve<T>([NotNullWhen(true)] out T? value) where T : class
+        {
+            try
+            {
+                value = exportProvider.GetExportedValue<T>();
+                return true;
+            }
+            catch
+            {
+                value = null;
+                return false;
+            }
+        }
+    }
 }
