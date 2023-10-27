@@ -182,7 +182,7 @@ sealed file class MaximizeMenuItem : ContextMenuItemBase<ShellSystemMenuUIContex
     Guid = "A3D28798-979F-40FD-9B46-EDC64DE7C1D3", Order = 0)]
 sealed file class SettingsMenuItem : ContextMenuItemBase<ShellSystemMenuUIContext>
 {
-    public override IconElement? Icon => new SegoeFluentIcon("\uE713") { Margin = new(-1) };
+    public override IconElement? Icon => new SegoeFluentIcon("\uE713") { Margin = new(-2, -2, -2, -1) };
 
     public override string? Header => ResourceHelper.GetLocalized(
         "GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Settings");
@@ -217,7 +217,7 @@ sealed file class SettingsMenuItem : ContextMenuItemBase<ShellSystemMenuUIContex
     Guid = "5B7D747B-937E-4F1F-BF3F-0C4003687C70", Order = 0)]
 sealed file class CloseMenuItem : ContextMenuItemBase<ShellSystemMenuUIContext>
 {
-    public override IconElement? Icon => new SegoeFluentIcon("\uE8BB") { Margin = new(1) };
+    public override IconElement? Icon => new SegoeFluentIcon("\uE8BB");
 
     public override string? Header => ResourceHelper.GetLocalized(
         "GZSkinsX.Appx.MainApp/Resources/Shell_SystemMenu_Close");
