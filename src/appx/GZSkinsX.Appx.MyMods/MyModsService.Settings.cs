@@ -62,20 +62,22 @@ partial class MyModsService
             return null;
         }
 
+        MTSettingsRoot? settingsRoot = null;
+        FileStream? fileStream = null;
         try
         {
-            using var fileStream = new FileStream(settingsFile, FileMode.Open, FileAccess.Read);
-            var settingsRoot = await JsonSerializer.DeserializeAsync<MTSettingsRoot>(fileStream, MyJsonSerializerOptions);
-            if (settingsRoot is not null)
-            {
-                return settingsRoot;
-            }
+            fileStream = new FileStream(settingsFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            settingsRoot = await JsonSerializer.DeserializeAsync<MTSettingsRoot>(fileStream, MyJsonSerializerOptions);
         }
         catch
         {
         }
+        finally
+        {
+            fileStream?.Dispose();
+        }
 
-        return null;
+        return settingsRoot;
     }
 
     /// <summary>
@@ -111,10 +113,10 @@ partial class MyModsService
         }
 
         BuildMTSettingsData(settingsData);
-
+        FileStream? outputStream = null;
         try
         {
-            using var outputStream = new FileStream(settingsFile, FileMode.Create, FileAccess.Write);
+            outputStream = new FileStream(settingsFile, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
             await JsonSerializer.SerializeAsync(outputStream, settingsRoot, MyJsonSerializerOptions);
 
             AppxContext.LoggingService.LogOkay(
@@ -131,6 +133,10 @@ partial class MyModsService
                 """);
 
             throw;
+        }
+        finally
+        {
+            outputStream?.Dispose();
         }
     }
 
@@ -175,7 +181,7 @@ partial class MyModsService
 
         // 设置默认的红色血液选项
         if (settingsData.GZSkins.TryGetValue(MT_SETTINGS_BLOOD_NAME, out var value) is false ||
-            value is not JsonElement { ValueKind: JsonValueKind.True or JsonValueKind.False })
+            (value is not bool && value is not JsonElement { ValueKind: JsonValueKind.True or JsonValueKind.False }))
         {
             settingsData.GZSkins[MT_SETTINGS_BLOOD_NAME] = false;
         }
