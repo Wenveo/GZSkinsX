@@ -38,6 +38,26 @@ public static class NavigationConstants
     public const string SETTINGS_NAV_GUID = "32BB66C9-7405-4E08-9577-43EEA165EBC2";
 
     /// <summary>
+    /// Settings / NavigationView / General
+    /// </summary>
+    public const string SETTINGS_NAV_GENERAL_GUID = "A0176E55-C5C4-41F1-9B69-0E6E0C7FB7E9";
+
+    /// <summary>
+    /// Settings / NavigationView / Mods
+    /// </summary>
+    public const string SETTINGS_NAV_MODS_GUID = "B587DDD7-39CF-4BA0-B03E-7DE82F777A7F";
+
+    /// <summary>
+    /// Settings / NavigationView / Licenses
+    /// </summary>
+    public const string SETTINGS_NAV_LICENSES_GUID = "DD332445-54CE-4B42-906A-15795F607340";
+
+    /// <summary>
+    /// Settings / NavigationView / About
+    /// </summary>
+    public const string SETTINGS_NAV_ABOUT_GUID = "469065ED-D729-443A-8135-E0B6B34FD1B1";
+
+    /// <summary>
     /// Settings / NavigationView / Group / Default
     /// </summary>
     public const string GROUP_SETTINGS_NAV_DEFAULT = "0,4C25B186-13B3-4AFC-AA58-80935C5E6A70";

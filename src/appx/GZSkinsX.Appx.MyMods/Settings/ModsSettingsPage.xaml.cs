@@ -86,7 +86,7 @@ internal sealed partial class ModsSettingsPage : Page
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
         Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
-        Guid = "B587DDD7-39CF-4BA0-B03E-7DE82F777A7F",
+        Guid = NavigationConstants.SETTINGS_NAV_MODS_GUID,
         Header = "resx:GZSkinsX.Appx.MyMods/Resources/Settings_Mods_Title",
         PageType = typeof(ModsSettingsPage), Order = 10)]
     internal sealed class ModsSettingsItem : INavigationItem

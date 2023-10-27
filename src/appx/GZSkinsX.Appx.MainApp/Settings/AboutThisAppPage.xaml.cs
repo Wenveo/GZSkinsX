@@ -23,6 +23,7 @@ using Windows.System;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace GZSkinsX.Appx.MainApp.Settings;
+
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
@@ -52,7 +53,7 @@ internal sealed partial class AboutThisAppPage : Page
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
         Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
-        Guid = "469065ED-D729-443A-8135-E0B6B34FD1B1",
+        Guid = NavigationConstants.SETTINGS_NAV_ABOUT_GUID,
         Header = "resx:GZSkinsX.Appx.MainApp/Resources/Settings_AboutThisApp_Title",
         PageType = typeof(AboutThisAppPage), Order = 10000)]
     private sealed class AboutThisAppItem : INavigationItem

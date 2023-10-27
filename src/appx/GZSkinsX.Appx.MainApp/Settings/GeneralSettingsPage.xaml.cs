@@ -115,7 +115,7 @@ internal sealed partial class GeneralSettingsPage : Page
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
         Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
-        Guid = "A0176E55-C5C4-41F1-9B69-0E6E0C7FB7E9",
+        Guid = NavigationConstants.SETTINGS_NAV_GENERAL_GUID,
         Header = "resx:GZSkinsX.Appx.MainApp/Resources/Settings_General_Title",
         PageType = typeof(GeneralSettingsPage), Order = 0)]
     internal sealed class GeneralSettingsItem : INavigationItem

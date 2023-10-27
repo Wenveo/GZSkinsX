@@ -32,7 +32,7 @@ internal sealed partial class LicensesViewPage : Page
     [Shared, NavigationItemContract(
         OwnerGuid = NavigationConstants.SETTINGS_NAV_GUID,
         Group = NavigationConstants.GROUP_SETTINGS_NAV_DEFAULT,
-        Guid = "DD332445-54CE-4B42-906A-15795F607340",
+        Guid = NavigationConstants.SETTINGS_NAV_LICENSES_GUID,
         Header = "resx:GZSkinsX.Appx.MainApp/Resources/Settings_Licenses_Title",
         PageType = typeof(LicensesViewPage), Order = 100)]
     private sealed class LicensesViewItem : INavigationItem
