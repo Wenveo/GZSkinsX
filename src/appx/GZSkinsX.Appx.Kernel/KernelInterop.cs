@@ -107,8 +107,8 @@ internal sealed unsafe class KernelInterop(FreeLibrarySafeHandle moduleHandle)
 [StructLayout(LayoutKind.Sequential)]
 internal unsafe struct NativeModInfo
 {
-    public char* name;
-    public char* author;
-    public char* description;
-    public char* datetime;
+    public byte* name;
+    public byte* author;
+    public byte* description;
+    public byte* datetime;
 }

@@ -12,6 +12,7 @@ using System.IO.Hashing;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 
 using CommunityToolkit.HighPerformance.Buffers;
@@ -58,6 +59,11 @@ internal sealed class KernelService : IKernelService
     private readonly StringPool _stringPool = new();
 
     /// <summary>
+    /// 获取中文字符集的字符编码。
+    /// </summary>
+    private readonly Encoding _gbkEncoding;
+
+    /// <summary>
     /// 核心模块的互操作包装类。
     /// </summary>
     private KernelInterop? _interop;
@@ -82,6 +88,15 @@ internal sealed class KernelService : IKernelService
 
             return _interop;
         }
+    }
+
+    /// <summary>
+    /// 初始化 <see cref="KernelService"/> 的新实例。
+    /// </summary>
+    public KernelService()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        _gbkEncoding = Encoding.GetEncoding("GB2312");
     }
 
     /// <inheritdoc/>
@@ -198,28 +213,31 @@ internal sealed class KernelService : IKernelService
                 string? name, author, description, datetime;
                 name = author = description = datetime = string.Empty;
 
+                var zero = (byte*)nint.Zero;
+                var encoding = _gbkEncoding;
+
                 var ptr = (*modInfoPtr).name;
-                if (ptr != (char*)nint.Zero)
+                if (ptr != zero)
                 {
-                    name = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
+                    name = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr), encoding);
                 }
 
                 ptr = (*modInfoPtr).author;
-                if (ptr != (char*)nint.Zero)
+                if (ptr != zero)
                 {
-                    author = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
+                    author = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr), encoding);
                 }
 
                 ptr = (*modInfoPtr).description;
-                if (ptr != (char*)nint.Zero)
+                if (ptr != zero)
                 {
-                    description = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
+                    description = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr), encoding);
                 }
 
                 ptr = (*modInfoPtr).datetime;
-                if (ptr != (char*)nint.Zero)
+                if (ptr != zero)
                 {
-                    datetime = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr));
+                    datetime = _stringPool.GetOrAdd(MemoryMarshal.CreateReadOnlySpanFromNullTerminated(ptr), encoding);
                 }
 
                 interop.FreeLegacySkinInfo(modInfoPtr);
