@@ -98,7 +98,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
                     if (IsMTRunning is false)
                     {
                         IsRunningChanged?.Invoke(this, false);
-                        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.CheckExitAsync", "MotClientAgent has exited.");
+                        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.MotClient.MotClientService.CheckExitAsync", "MotClientAgent has exited.");
                         break;
                     }
                 }
@@ -121,7 +121,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
                     if (IsMTRunning)
                     {
                         IsRunningChanged?.Invoke(this, true);
-                        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.CheckRunAsync", "MotClientAgent is running.");
+                        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.MotClient.MotClientService.CheckRunAsync", "MotClientAgent is running.");
                         break;
                     }
                 }
@@ -140,13 +140,13 @@ internal sealed partial class MotClientAgentService : IMotClientService
                 if (IsMTRunning)
                 {
                     IsRunningChanged?.Invoke(this, true);
-                    AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.DoSomething", "MotClientAgent is running.");
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.MotClient.MotClientService.DoSomething", "MotClientAgent is running.");
                     await CheckExitAsync();
                 }
                 else
                 {
                     IsRunningChanged?.Invoke(this, false);
-                    AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.DoSomething", "MotClientAgent is not running.");
+                    AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.MotClient.MotClientService.DoSomething", "MotClientAgent is not running.");
                     await CheckRunAsync();
                 }
             }
@@ -167,14 +167,14 @@ internal sealed partial class MotClientAgentService : IMotClientService
                 var onlineManifest = await DownloadPackageManifestAsync();
                 if (StringComparer.Ordinal.Equals(metadata.Version, onlineManifest.Version))
                 {
-                    AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.CheckForUpdatesAsync", $"Now is uptodate \"{metadata.Version}\".");
+                    AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.MotClient.MotClientService.CheckForUpdatesAsync", $"Now is uptodate \"{metadata.Version}\".");
                     return false;
                 }
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.CheckForUpdatesAsync",
+                    "GZSkinsX.Appx.MotClient.MotClientService.CheckForUpdatesAsync",
                     $"""
                     Failed to check updates.
                     {excp}: "{excp.Message}". {Environment.NewLine}{excp.StackTrace}
@@ -184,7 +184,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
             }
         }
 
-        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.Mounter.MounterService.CheckForUpdatesAsync", $"Attention needed.");
+        AppxContext.LoggingService.LogAlways("GZSkinsX.Appx.MotClient.MotClientService.CheckForUpdatesAsync", $"Attention needed.");
         return true;
     }
 
@@ -207,12 +207,12 @@ internal sealed partial class MotClientAgentService : IMotClientService
             try
             {
                 ProcessLaunch(executableFile, localPackageMetadata.ProcStartupArgs);
-                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.LaunchAsync", "Launch successfully.");
+                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.MotClient.MotClientService.LaunchAsync", "Launch successfully.");
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.LaunchAsync",
+                    "GZSkinsX.Appx.MotClient.MotClientService.LaunchAsync",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
                 throw;
@@ -238,12 +238,12 @@ internal sealed partial class MotClientAgentService : IMotClientService
             try
             {
                 ProcessLaunch(executableFile, args);
-                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.LaunchAsync2", "Launch successfully.");
+                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.MotClient.MotClientService.LaunchAsync2", "Launch successfully.");
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.LaunchAsync2",
+                    "GZSkinsX.Appx.MotClient.MotClientService.LaunchAsync2",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
                 throw;
@@ -270,12 +270,12 @@ internal sealed partial class MotClientAgentService : IMotClientService
             try
             {
                 ProcessLaunch(executableFile, localPackageMetadata.ProcTerminateArgs);
-                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.Mounter.MounterService.TerminateAsync", "Launch successfully.");
+                AppxContext.LoggingService.LogOkay("GZSkinsX.Appx.MotClient.MotClientService.TerminateAsync", "Launch successfully.");
             }
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.TerminateAsync",
+                    "GZSkinsX.Appx.MotClient.MotClientService.TerminateAsync",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
                 throw;
@@ -334,7 +334,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
             if (StringComparer.Ordinal.Equals(previousMetadata.Version, onlineManifest.Version))
             {
                 AppxContext.LoggingService.LogAlways(
-                    "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
+                    "GZSkinsX.Appx.MotClient.MotClientService.UpdateAsync",
                     "This component is already up to date.");
 
                 return;
@@ -360,7 +360,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
         MotClientSettings.WorkingDirectory = destFolder;
 
         AppxContext.LoggingService.LogOkay(
-            "GZSkinsX.Appx.Mounter.MounterService.UpdateAsync",
+            "GZSkinsX.Appx.MotClient.MotClientService.UpdateAsync",
             $"The component has been updated to \"{onlineManifest.Version}\".");
 
         TryCleanupMounterRootFolder();
@@ -389,13 +389,13 @@ internal sealed partial class MotClientAgentService : IMotClientService
         MTPackageBlockMap? localBlockMap;
         try
         {
-            using var fileStream = new FileStream(blockmapFile, FileMode.Open, FileAccess.Read);
+            using var fileStream = new FileStream(blockmapFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             localBlockMap = await JsonSerializer.DeserializeAsync<MTPackageBlockMap>(fileStream);
         }
         catch (Exception excp)
         {
             AppxContext.LoggingService.LogError(
-                "GZSkinsX.Appx.Mounter.MounterService.VerifyContentIntegrityCoreAsync",
+                "GZSkinsX.Appx.MotClient.MotClientService.VerifyContentIntegrityCoreAsync",
                 $"""
                     Failed to deserialize block map json "{blockmapFile}".
                     {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
@@ -434,7 +434,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.VerifyContentIntegrityAsync",
+                    "GZSkinsX.Appx.MotClient.MotClientService.VerifyContentIntegrityAsync",
                     $"""
                     Failed to calculate file checksum "{path}".
                     {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
@@ -472,7 +472,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.DownloadPackageManifestAsync",
+                    "GZSkinsX.Appx.MotClient.MotClientService.DownloadPackageManifestAsync",
                     $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
             }
 
@@ -513,7 +513,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
         catch (Exception excp)
         {
             AppxContext.LoggingService.LogError(
-                "GZSkinsX.Appx.Mounter.MounterService.DownloadMTPackageAsync",
+                "GZSkinsX.Appx.MotClient.MotClientService.DownloadMTPackageAsync",
                 $"{excp}: \"{excp.Message}\". {Environment.NewLine}{excp.StackTrace}.");
 
             throw;
@@ -551,7 +551,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
         catch (Exception excp)
         {
             AppxContext.LoggingService.LogError(
-                "GZSkinsX.App.Mounter.MounterService.TryGetLocalMTPackageMetadata",
+                "GZSkinsX.App.Mounter.MotClientService.TryGetLocalMTPackageMetadata",
                 $"""
                 Failed to parse mt package data. "{excp.Message}".
                 "{excp}: {excp.StackTrace}."
@@ -720,7 +720,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
             catch (Exception excp)
             {
                 AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Appx.Mounter.MounterService.TryCleanupMounterRootFolder",
+                    "GZSkinsX.Appx.MotClient.MotClientService.TryCleanupMounterRootFolder",
                     $"Failed to delete the storage item ({item.Name}): \"{excp.Message}\".");
             }
         }
