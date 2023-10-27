@@ -37,7 +37,7 @@ internal sealed partial class CustomizedNavView : NavigationView, INavigationVie
             (s, e) => new MainGlobalMenuUIContext(s, AppxContext.ThemeService.CurrentTheme));
     }
 
-    public async Task InitializeAsync(INavigationViewManager navManager)
+    public async Task InitializeAsync()
     {
         if (AppxContext.MotClientService.TryGetMotClientAgentWorkingDirectory(out _) is false)
         {
@@ -53,8 +53,6 @@ internal sealed partial class CustomizedNavView : NavigationView, INavigationVie
         {
             await MainLaunchButton.InitializeAsync();
         }
-
-        navManager.NavigateToFirstItem();
     }
 
     private void OnMainLaunchButtonUpdateCompleted(object? sender, System.EventArgs e)

@@ -35,15 +35,28 @@ internal sealed partial class SettingsPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        if (DispatcherQueue.TryEnqueue(NavigationViewManager.NavigateToFirstItem) is false)
+        if (DispatcherQueue.TryEnqueue(OnNavigatedToCore) is false)
         {
             Loaded += OnLoaded;
         }
 
-        void OnLoaded(object sender, RoutedEventArgs e)
+        void OnLoaded(object sender, RoutedEventArgs _)
         {
             Loaded -= OnLoaded;
-            NavigationViewManager.NavigateToFirstItem();
+            OnNavigatedToCore();
+        }
+
+        void OnNavigatedToCore()
+        {
+            var navManager = NavigationViewManager;
+            if (e.Parameter is NavigationViewNavigateArgs args && navManager.CanNavigate(args))
+            {
+                navManager.NavigateTo(args);
+            }
+            else
+            {
+                navManager.NavigateToFirstItem();
+            }
         }
     }
 

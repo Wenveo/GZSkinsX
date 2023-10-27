@@ -314,6 +314,18 @@ internal sealed class NavigationViewManager : INavigationViewManager
     }
 
     /// <inheritdoc/>
+    public bool CanNavigate(NavigationViewNavigateArgs args)
+    {
+        if (args is { NavItemGuid: { } guidString })
+        {
+            return FindNavItem(guidString) is { } navItem &&
+                   NavigationViewItemHelper.GetItemContext(navItem) != null;
+        }
+
+        return false;
+    }
+
+    /// <inheritdoc/>
     public bool GoBack()
     {
         if (_rootFrame.CanGoBack)
@@ -409,6 +421,12 @@ internal sealed class NavigationViewManager : INavigationViewManager
     }
 
     /// <inheritdoc/>
+    public async void NavigateTo(NavigationViewNavigateArgs args)
+    {
+        await NavigateCoreAsync(args.NavItemGuid, args.Parameter, args.NavigationTransitionInfo);
+    }
+
+    /// <inheritdoc/>
     public async void NavigateTo(string guidString)
     {
         await NavigateCoreAsync(guidString, null, null);
@@ -424,6 +442,12 @@ internal sealed class NavigationViewManager : INavigationViewManager
     public async void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride)
     {
         await NavigateCoreAsync(guidString, parameter, infoOverride);
+    }
+
+    /// <inheritdoc/>
+    public async Task NavigateToAsync(NavigationViewNavigateArgs args)
+    {
+        await NavigateCoreAsync(args.NavItemGuid, args.Parameter, args.NavigationTransitionInfo);
     }
 
     /// <inheritdoc/>

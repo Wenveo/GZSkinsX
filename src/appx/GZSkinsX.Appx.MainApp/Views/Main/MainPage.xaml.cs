@@ -6,16 +6,20 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System.Diagnostics;
+using System.Linq;
 
 using CommunityToolkit.WinUI;
 
 using GZSkinsX.Contracts.Appx;
-using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Navigation;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.AppLifecycle;
+
+using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -47,6 +51,9 @@ internal sealed partial class MainPage : Page
     public MainPage()
     {
         InitializeComponent();
+
+        AppxContext.ActivationService.UnregisterHandler(Activations.MainActivationHandler.Instance);
+        AppxContext.ActivationService.RegisterHandler(Activations.MainActivationHandler.Instance);
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -62,16 +69,42 @@ internal sealed partial class MainPage : Page
         }
         else
         {
-            contentPresenter.Content = NavManager.Value.UIObject;
+            var navManager = NavManager.Value;
+            contentPresenter.Content = navManager.UIObject;
+
+            if (e.Parameter is NavigationViewNavigateArgs args && navManager.CanNavigate(args))
+            {
+                navManager.NavigateTo(args);
+            }
         }
 
-        static void OnNavVewLoaded(object sender, RoutedEventArgs e)
+        async void OnNavVewLoaded(object sender, RoutedEventArgs _)
         {
+            var navManager = NavManager.Value;
             var navView = sender as CustomizedNavView;
             Debug.Assert(navView is not null);
 
             navView.Loaded -= OnNavVewLoaded;
-            navView.InitializeAsync(NavManager.Value).FireAndForget();
+            await navView.InitializeAsync();
+
+            var activationArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+            if (activationArgs is { Kind: ExtendedActivationKind.File, Data: FileActivatedEventArgs fileArgs })
+            {
+                var files = fileArgs.Files.OfType<StorageFile>();
+                if (files.Any())
+                {
+                    navManager.NavigateTo(NavigationConstants.MAIN_NAV_MODS_GUID, files);
+                }
+            }
+
+            if (e.Parameter is NavigationViewNavigateArgs args && navManager.CanNavigate(args))
+            {
+                navManager.NavigateTo(args);
+            }
+            else
+            {
+                navManager.NavigateToFirstItem();
+            }
         }
     }
 

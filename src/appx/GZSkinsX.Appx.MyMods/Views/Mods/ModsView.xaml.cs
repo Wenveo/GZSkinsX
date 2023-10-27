@@ -94,13 +94,28 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
         }
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    protected override async void OnNavigatedTo(NavigationEventArgs e)
     {
         OnItemsVectorChanged(MyModsGridView.Items, null!);
         MyModsGridView.Items.VectorChanged += OnItemsVectorChanged;
 
         MyModsView.RefreshStarting += OnModsViewRefreshStarting;
         MyModsView.RefreshCompleted += OnModsViewRefreshCompleted;
+
+        if (e.Parameter is IEnumerable<StorageFile> modFiles)
+        {
+            // 避免在导入文件前刷新集合。
+            Loaded -= OnLoaded;
+
+            // 导入文件
+            await MyModsView.ImportAsync(modFiles);
+
+            // 如果 UI 已经加载，那么下方添加的 OnLoaded 将不会引发，因此在这手动进行刷新。
+            if (IsLoaded) await MyModsView.RefreshAsync();
+
+            // 重新添加回事件。
+            Loaded += OnLoaded;
+        }
     }
 
     private void OnModsViewRefreshStarting(object? sender, EventArgs e)

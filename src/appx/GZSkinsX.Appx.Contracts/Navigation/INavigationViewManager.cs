@@ -39,6 +39,13 @@ public interface INavigationViewManager
     event NavigatedEventHandler? Navigated;
 
     /// <summary>
+    /// 检索指定的导航参数并确认能否进行导航。
+    /// </summary>
+    /// <param name="args">指定的导航相关的参数。</param>
+    /// <returns>如果成功检索导航参数并且有效时返回 true，否则返回 false。</returns>
+    bool CanNavigate(NavigationViewNavigateArgs args);
+
+    /// <summary>
     /// 向后导航。
     /// </summary>
     /// <returns>在完成操作时返回 true，否则返回 false。</returns>
@@ -68,10 +75,23 @@ public interface INavigationViewManager
     void NavigateToFirstItem();
 
     /// <summary>
+    /// 检索指定的参数进行导航。
+    /// </summary>
+    /// <param name="args">指定的导航相关的参数。</param>
+    void NavigateTo(NavigationViewNavigateArgs args);
+
+    /// <summary>
     /// 导航到与标识符匹配的指定页面。
     /// </summary>
     /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值。</param>
     void NavigateTo(string guidString);
+
+    /// <summary>
+    /// 导航到与标识符匹配的指定页面，并传递导航参数。
+    /// </summary>
+    /// <param name="guidString">视图对象的 <see cref="Guid"/> 的字符串值。</param>
+    /// <param name="parameter">传递给目标页面的参数。</param>
+    void NavigateTo(string guidString, object parameter);
 
     /// <summary>
     /// 导航到与标识符匹配的指定页面，并传递导航参数和指定页面动画切换。
@@ -80,6 +100,12 @@ public interface INavigationViewManager
     /// <param name="parameter">传递给目标页面的参数。</param>
     /// <param name="infoOverride">有关动画切换的信息。</param>
     void NavigateTo(string guidString, object parameter, NavigationTransitionInfo infoOverride);
+
+    /// <summary>
+    /// 可等待的检索指定的参数进行导航的异步方法。
+    /// </summary>
+    /// <param name="args">指定的导航相关的参数。</param>
+    Task NavigateToAsync(NavigationViewNavigateArgs args);
 
     /// <summary>
     /// 可等待的导航到与标识符匹配的指定页面的异步方法。

@@ -18,6 +18,11 @@ public static class NavigationConstants
     public const string MAIN_NAV_GUID = "3CD3B21D-BC3D-4344-95C2-52C2EF68B626";
 
     /// <summary>
+    /// Main / NavigationView / Mods
+    /// </summary>
+    public const string MAIN_NAV_MODS_GUID = "6ADAA585-3915-4689-A1E3-7418FD3055CD";
+
+    /// <summary>
     /// Main / NavigationView / Group / General
     /// </summary>
     public const string GROUP_MAIN_NAV_GENERAL = "0,C1E738C6-0FBE-4AD7-8F42-D384A935540B";

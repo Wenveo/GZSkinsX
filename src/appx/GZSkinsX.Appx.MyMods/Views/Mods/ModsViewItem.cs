@@ -19,7 +19,7 @@ namespace GZSkinsX.Appx.MyMods.Views;
 [Shared, NavigationItemContract(
     OwnerGuid = NavigationConstants.MAIN_NAV_GUID,
     Group = NavigationConstants.GROUP_MAIN_NAV_GENERAL,
-    Guid = "6ADAA585-3915-4689-A1E3-7418FD3055CD",
+    Guid = NavigationConstants.MAIN_NAV_MODS_GUID,
     Header = "resx:GZSkinsX.Appx.MyMods/Resources/ModsViewItem_Header",
     PageType = typeof(ModsView), Order = 10)]
 internal sealed class ModsViewItem : INavigationItem
