@@ -70,6 +70,28 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
         commandBar.Resources.Add("CommandBarBorderBrushOpen", new SolidColorBrush(Colors.Transparent));
         commandBar.DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
         ModsCommandBarPresenter.Content = commandBar;
+        InitializeKeyboardAccelerators();
+    }
+
+    private void InitializeKeyboardAccelerators()
+    {
+        IEnumerable<KeyboardAccelerator> GetKeyboardAccelerators(Commands.CommandCodes commandCode)
+        {
+            foreach (var item in Commands.CommandManager.GetKeyboardAccelerators(commandCode))
+            {
+                item.Invoked += (s, e) => Commands.CommandManager.Execute(commandCode, MyModsView);
+                yield return item;
+            }
+        }
+
+        var keyboardAccelerators = KeyboardAccelerators;
+        foreach (Commands.CommandCodes commandCode in Enum.GetValues(typeof(Commands.CommandCodes)))
+        {
+            foreach (var item in GetKeyboardAccelerators(commandCode))
+            {
+                keyboardAccelerators.Add(item);
+            }
+        }
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
