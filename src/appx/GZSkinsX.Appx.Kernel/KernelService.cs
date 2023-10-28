@@ -34,8 +34,8 @@ internal sealed class KernelService : IKernelService
     /// </summary>
     private readonly Uri[] _moduleManifests =
     [
-        new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/Kernel/ModuleManifest.json"),
-        new("http://x1.gzskins.com/MounterV3/Kernel/ModuleManifest.json")
+        new("http://pan.x1.skn.lol/d/%20PanGZSkinsX/MounterV3/Kernel/ModuleManifestV2.json"),
+        new("http://x1.gzskins.com/MounterV3/Kernel/ModuleManifestV2.json")
     ];
 
     /// <summary>
@@ -390,14 +390,23 @@ internal sealed class KernelService : IKernelService
     /// <summary>
     /// 获取在线的模块清单数据。
     /// </summary>
-    private async ValueTask<ModuleManifest> DownloadModuleManifestAsync(HttpClient httpClient)
+    private async ValueTask<ModuleItem> DownloadModuleManifestAsync(HttpClient httpClient)
     {
+        var appVersion = AppxContext.AppxVersion.ToString();
         foreach (var uri in _moduleManifests)
         {
-            var result = await httpClient.GetFromJsonAsync<ModuleManifest>(uri);
-            if (ModuleManifest.IsEmpty(result) is false)
+            var result = await httpClient.GetFromJsonAsync<ModuleList>(uri);
+            foreach (var item in result.Modules)
             {
-                return result;
+                if (ModuleItem.IsEmpty(item))
+                {
+                    continue;
+                }
+
+                if (StringComparer.OrdinalIgnoreCase.Equals(item.ForAppVersion, appVersion))
+                {
+                    return item;
+                }
             }
         }
 
@@ -405,27 +414,34 @@ internal sealed class KernelService : IKernelService
     }
 
     /// <summary>
+    /// 有关模块信息的列表。
+    /// </summary>
+    /// <param name="Items">模块列表内容。</param>
+    private record struct ModuleList(ModuleItem[] Modules) { }
+
+    /// <summary>
     /// 表示模块的清单信息。
     /// </summary>
     /// <param name="Path">模块文件的在线路径。</param>
     /// <param name="Checksum">模块文件的校验和。</param>
-    private record struct ModuleManifest(string Path, string Checksum)
+    private record struct ModuleItem(string Path, string Checksum, string ForAppVersion)
     {
         /// <summary>
         /// 表示为空的模块清单。
         /// </summary>
-        public static readonly ModuleManifest Empty = new();
+        public static readonly ModuleItem Empty = new();
 
         /// <summary>
         /// 判断目标模块清单是否为空。
         /// </summary>
         /// <param name="moduleManifest">需要确认的模块清单。</param>
         /// <returns>当目标模块清单不等于 <see cref="Empty"/> 并且子成员不为空时返回 true，否则返回 false。</returns>
-        public static bool IsEmpty(in ModuleManifest moduleManifest)
+        public static bool IsEmpty(in ModuleItem moduleManifest)
         {
             if (moduleManifest == Empty) return true;
             if (string.IsNullOrWhiteSpace(moduleManifest.Path) is false) return false;
             if (string.IsNullOrWhiteSpace(moduleManifest.Checksum) is false) return false;
+            if (string.IsNullOrWhiteSpace(moduleManifest.ForAppVersion) is false) return false;
 
             return true;
         }
