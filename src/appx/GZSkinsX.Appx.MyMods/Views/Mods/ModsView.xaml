@@ -8,6 +8,8 @@
     xmlns:local="using:GZSkinsX.Appx.MyMods.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:myMods2="using:GZSkinsX.Contracts.MyMods"
+    AllowDrop="True"
+    KeyboardAcceleratorPlacementMode="Hidden"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -18,12 +20,7 @@
         x:Name="ContentGrid"
         Background="{ThemeResource NavigationViewContentBackground}"
         BorderBrush="{ThemeResource NavigationViewContentGridBorderBrush}"
-        BorderThickness="0,1,0,0"
-        DragOver="ContentGrid_DragOver"
-        Drop="ContentGrid_Drop"
-        LostFocus="ContentGrid_LostFocus"
-        PreviewKeyDown="ContentGrid_PreviewKeyDown"
-        PreviewKeyUp="ContentGrid_PreviewKeyUp">
+        BorderThickness="0,1,0,0">
         <Grid.ChildrenTransitions>
             <TransitionCollection>
                 <EntranceThemeTransition />

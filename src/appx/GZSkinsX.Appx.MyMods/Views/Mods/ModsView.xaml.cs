@@ -185,32 +185,40 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
         MyModsView.RefreshCompleted -= OnModsViewRefreshCompleted;
     }
 
-    private void ContentGrid_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+    protected override void OnPreviewKeyDown(KeyRoutedEventArgs e)
     {
+        base.OnPreviewKeyDown(e);
+
         if (e.Key is Windows.System.VirtualKey.V)
         {
             MyModsView.IsShowInstalledIndex = true;
         }
     }
 
-    private void ContentGrid_PreviewKeyUp(object sender, KeyRoutedEventArgs e)
+    protected override void OnPreviewKeyUp(KeyRoutedEventArgs e)
     {
+        base.OnPreviewKeyUp(e);
+
         if (MyModsView.IsShowInstalledIndex)
         {
             MyModsView.IsShowInstalledIndex = false;
         }
     }
 
-    private void ContentGrid_LostFocus(object sender, RoutedEventArgs e)
+    protected override void OnLostFocus(RoutedEventArgs e)
     {
+        base.OnLostFocus(e);
+
         if (MyModsView.IsShowInstalledIndex)
         {
             MyModsView.IsShowInstalledIndex = false;
         }
     }
 
-    private void ContentGrid_DragOver(object sender, DragEventArgs e)
+    protected override void OnDragOver(DragEventArgs e)
     {
+        base.OnDragOver(e);
+
         // Is from the application itself ?
         if (e.Data is { Properties.Title: "DragMyModFiles" })
         {
@@ -223,8 +231,10 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
         }
     }
 
-    private async void ContentGrid_Drop(object sender, DragEventArgs e)
+    protected override async void OnDrop(DragEventArgs e)
     {
+        base.OnDrop(e);
+
         if (e.DataView.Contains(StandardDataFormats.StorageItems))
         {
             var items = await e.DataView.GetStorageItemsAsync();
