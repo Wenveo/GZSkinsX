@@ -25,7 +25,7 @@ sealed file class DeselectAll2Command : CommandBarButtonBase<MyModsViewCommandBa
     {
         Icon = CommandManager.GetIcon(CommandCodes.DeselectAll);
         DisplayName = string.Format(_formatString, ctx.MyModsView.SelectedItems.Count());
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.DeselectAll);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.DeselectAll);
         IsVisible = ctx.MyModsView.SelectedItem is not null;
     }
 
@@ -68,7 +68,7 @@ sealed file class InstallCommand : CommandBarButtonBase<MyModsViewCommandBarUICo
     {
         Icon = CommandManager.GetIcon(CommandCodes.Install);
         DisplayName = CommandManager.GetHeader(CommandCodes.Install);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.Install);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.Install);
         IsVisible = ctx.MyModsView.SelectedItem is not null;
     }
 
@@ -102,7 +102,7 @@ sealed file class UninstallCommand : CommandBarButtonBase<MyModsViewCommandBarUI
     {
         Icon = CommandManager.GetIcon(CommandCodes.Uninstall);
         DisplayName = CommandManager.GetHeader(CommandCodes.Uninstall);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.Uninstall);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.Uninstall);
         IsVisible = ctx.MyModsView.SelectedItem is not null;
     }
 
@@ -136,7 +136,7 @@ sealed file class ImportCommand : CommandBarButtonBase<MyModsViewCommandBarUICon
     {
         Icon = CommandManager.GetIcon(CommandCodes.Import);
         DisplayName = CommandManager.GetHeader(CommandCodes.Import);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.Import);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.Import);
         IsVisible = ctx.MyModsView.SelectedItem is not null;
     }
 
@@ -170,7 +170,7 @@ sealed file class DeleteCommand : CommandBarButtonBase<MyModsViewCommandBarUICon
     {
         Icon = CommandManager.GetIcon(CommandCodes.Delete);
         DisplayName = CommandManager.GetHeader(CommandCodes.Delete);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.Delete);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.Delete);
         KeyboardAcceleratorTextOverride = CommandManager.GetKeyboardAcceleratorTextOverride(CommandCodes.Delete);
         IsVisible = ctx.MyModsView.SelectedItem is not null;
     }
@@ -205,7 +205,7 @@ sealed file class Import2Command : CommandBarButtonBase<MyModsViewCommandBarUICo
     {
         Icon = CommandManager.GetIcon(CommandCodes.Import);
         DisplayName = CommandManager.GetHeader2(CommandCodes.Import);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.Import);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.Import);
         IsVisible = ctx.MyModsView.SelectedItem is null;
     }
 
@@ -241,7 +241,7 @@ sealed file class SelectAllCommand : CommandBarButtonBase<MyModsViewCommandBarUI
     {
         Icon = CommandManager.GetIcon(CommandCodes.SelectAll);
         DisplayName = CommandManager.GetHeader(CommandCodes.SelectAll);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.SelectAll);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.SelectAll);
     }
 
     public override void OnClick(MyModsViewCommandBarUIContext ctx)
@@ -260,7 +260,7 @@ sealed file class DeselectAllCommand : CommandBarButtonBase<MyModsViewCommandBar
     {
         Icon = CommandManager.GetIcon(CommandCodes.DeselectAll);
         DisplayName = CommandManager.GetHeader(CommandCodes.DeselectAll);
-        KeyboardAccelerators = CommandManager.GetKeyboardAccelerator(CommandCodes.DeselectAll);
+        KeyboardAccelerators = CommandManager.GetKeyboardAccelerators(CommandCodes.DeselectAll);
         KeyboardAcceleratorTextOverride = CommandManager.GetKeyboardAcceleratorTextOverride(CommandCodes.DeselectAll);
     }
 

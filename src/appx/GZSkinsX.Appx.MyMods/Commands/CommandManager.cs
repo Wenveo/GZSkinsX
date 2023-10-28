@@ -74,82 +74,81 @@ internal static class CommandManager
         _ => GetHeader(commandCode)
     };
 
-    public static IEnumerable<KeyboardAccelerator> GetKeyboardAccelerator(CommandCodes commandCode)
+    public static IEnumerable<KeyboardAccelerator> GetKeyboardAccelerators(CommandCodes commandCode)
     {
         return commandCode switch
         {
-            CommandCodes.Delete => GetDeleteKeyboardAccelerator(),
-            CommandCodes.Import => GetImportKeyboardAccelerator(),
-            CommandCodes.Install => GetInstallKeyboardAccelerator(),
-            CommandCodes.Uninstall => GetUninstallKeyboardAccelerator(),
-            CommandCodes.Copy => GetCopyKeyboardAccelerator(),
-            CommandCodes.CopyAsPath => GetCopyAsPathKeyboardAccelerator(),
-            CommandCodes.OpenInFileExplorer => GetOpenInFileExplorerKeyboardAccelerator(),
-            CommandCodes.Refresh => GetRefreshKeyboardAccelerator(),
-            CommandCodes.SelectAll => GetSelectAllKeyboardAccelerator(),
-            CommandCodes.DeselectAll => GetDeselectAllKeyboardAccelerator(),
-            CommandCodes.Share => GetShareKeyboardAccelerator(),
-            _ => GetNoneKeyboardAccelerator(),
+            CommandCodes.Delete => GetDeleteKeyboardAccelerators(),
+            CommandCodes.Import => GetImportKeyboardAccelerators(),
+            CommandCodes.Install => GetInstallKeyboardAccelerators(),
+            CommandCodes.Uninstall => GetUninstallKeyboardAccelerators(),
+            CommandCodes.Copy => GetCopyKeyboardAccelerators(),
+            CommandCodes.CopyAsPath => GetCopyAsPathKeyboardAccelerators(),
+            CommandCodes.OpenInFileExplorer => GetOpenInFileExplorerKeyboardAccelerators(),
+            CommandCodes.Refresh => GetRefreshKeyboardAccelerators(),
+            CommandCodes.SelectAll => GetSelectAllKeyboardAccelerators(),
+            CommandCodes.DeselectAll => GetDeselectAllKeyboardAccelerators(),
+            CommandCodes.Share => GetShareKeyboardAccelerators(),
+            _ => GetNoneKeyboardAccelerators(),
         };
 
-        static IEnumerable<KeyboardAccelerator> GetNoneKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetNoneKeyboardAccelerators()
         {
             yield break;
         }
 
-        static IEnumerable<KeyboardAccelerator> GetDeleteKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetDeleteKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.Delete };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetImportKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetImportKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.O, Modifiers = VirtualKeyModifiers.Control };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetInstallKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetInstallKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.E, Modifiers = VirtualKeyModifiers.Control };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetUninstallKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetUninstallKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.E, Modifiers = VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetCopyKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetCopyKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.C, Modifiers = VirtualKeyModifiers.Control };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetCopyAsPathKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetCopyAsPathKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.C, Modifiers = VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetOpenInFileExplorerKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetOpenInFileExplorerKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.F3 };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetRefreshKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetRefreshKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.F5 };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetSelectAllKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetSelectAllKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.A, Modifiers = VirtualKeyModifiers.Control };
         }
 
-        static IEnumerable<KeyboardAccelerator> GetDeselectAllKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetDeselectAllKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.D, Modifiers = VirtualKeyModifiers.Control };
             yield return new KeyboardAccelerator { Key = VirtualKey.Escape };
         }
 
-
-        static IEnumerable<KeyboardAccelerator> GetShareKeyboardAccelerator()
+        static IEnumerable<KeyboardAccelerator> GetShareKeyboardAccelerators()
         {
             yield return new KeyboardAccelerator { Key = VirtualKey.S, Modifiers = VirtualKeyModifiers.Menu };
         }
@@ -466,7 +465,7 @@ internal class CommandCodeContextMenuItem(CommandCodes commandCode) : ContextMen
 
     public override IconElement? Icon => CommandManager.GetIcon(commandCode);
 
-    public override IEnumerable<KeyboardAccelerator> KeyboardAccelerators => CommandManager.GetKeyboardAccelerator(commandCode);
+    public override IEnumerable<KeyboardAccelerator> KeyboardAccelerators => CommandManager.GetKeyboardAccelerators(commandCode);
 
     public override void OnExecute(MyModsViewContextMenuUIContext context) => CommandManager.Execute(commandCode, context.MyModsView);
 }
