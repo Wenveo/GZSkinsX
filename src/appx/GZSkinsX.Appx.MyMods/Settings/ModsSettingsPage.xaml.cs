@@ -17,6 +17,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
+using Windows.Foundation.Metadata;
 using Windows.Storage.Pickers;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -37,11 +38,23 @@ internal sealed partial class ModsSettingsPage : Page
 
     private async void InitializeUIObject()
     {
+        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+        {
+            ModsViewSettings_Panel.Visibility = Visibility.Visible;
+            UseLegacyWin10ContextMenuToogleSwitch.IsOn = AppxContext.Resolve<Views.ModsViewSettings>().UseLegacyWin10StyleContextMenu;
+            UseLegacyWin10ContextMenuToogleSwitch.Toggled += OnUseLegacyWin10ContextMenuToogleSwitchToggled;
+        }
+
         BloodToogleSwitch.IsOn = await AppxContext.MyModsService.GetIsEnableBloodAsync();
         ModFolderTextBlock.Text = await AppxContext.MyModsService.GetModFolderAsync();
         WadFolderTextBlock.Text = await AppxContext.MyModsService.GetWadFolderAsync();
 
         BloodToogleSwitch.Toggled += OnBloodToogleSwitchToggled;
+    }
+
+    private void OnUseLegacyWin10ContextMenuToogleSwitchToggled(object sender, RoutedEventArgs e)
+    {
+        AppxContext.Resolve<Views.ModsViewSettings>().UseLegacyWin10StyleContextMenu = UseLegacyWin10ContextMenuToogleSwitch.IsOn;
     }
 
     private async void OnBloodToogleSwitchToggled(object sender, RoutedEventArgs e)

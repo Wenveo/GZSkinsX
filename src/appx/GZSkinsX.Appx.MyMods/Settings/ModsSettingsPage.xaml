@@ -66,6 +66,33 @@
                     <Button Click="OnBrowserWadFolder" Content="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MyMods/Resources/Settings_Mods_BrowserFolder}" />
                 </controls:SettingsCard>
             </StackPanel>
+
+            <StackPanel
+                x:Name="ModsViewSettings_Panel"
+                Spacing="6"
+                Visibility="Collapsed">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock x:Uid="Settings_Mods_View" FontWeight="Bold" />
+
+                <StackPanel Spacing="4">
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    <controls:SettingsCard x:Uid="Settings_Mods_View_UsLegaceWin10ContextMenu">
+                        <controls:SettingsCard.HeaderIcon>
+                            <ctrls2:SegoeFluentIcon Glyph="&#xE8C4;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <ToggleSwitch x:Name="UseLegacyWin10ContextMenuToogleSwitch" x:Uid="Settings_Mods_View_UsLegaceWin10ContextMenu_ToogleSwitch" />
+                    </controls:SettingsCard>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>

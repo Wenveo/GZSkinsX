@@ -225,6 +225,21 @@
   <data name="Settings_Mods_Title" xml:space="preserve">
     <value>模组</value>
   </data>
+  <data name="Settings_Mods_View.Text" xml:space="preserve">
+    <value>视图</value>
+  </data>
+  <data name="Settings_Mods_View_UsLegaceWin10ContextMenu.Description" xml:space="preserve">
+    <value>使用针对 Win10 所定制的右键菜单（此选项仅在 Win11 上可见）。</value>
+  </data>
+  <data name="Settings_Mods_View_UsLegaceWin10ContextMenu.Header" xml:space="preserve">
+    <value>使用 Win10 样式的右键菜单</value>
+  </data>
+  <data name="Settings_Mods_View_UsLegaceWin10ContextMenu_ToogleSwitch.OffContent" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Settings_Mods_View_UsLegaceWin10ContextMenu_ToogleSwitch.OnContent" xml:space="preserve">
+    <value>是</value>
+  </data>
   <data name="Settings_Mods_WadFolder.Header" xml:space="preserve">
     <value>WAD目录</value>
   </data>

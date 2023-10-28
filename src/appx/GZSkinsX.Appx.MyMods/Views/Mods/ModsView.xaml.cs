@@ -42,6 +42,10 @@ namespace GZSkinsX.Appx.MyMods.Views;
 /// </summary>
 internal sealed partial class ModsView : Page, INavigationViewSearchHolder
 {
+    private Lazy<FlyoutBase> LazyWin11ContextMenu { get; }
+
+    private Lazy<FlyoutBase> LazyWin10ContextMenu { get; }
+
     public MyModsView MyModsView { get; }
 
     private string CollectionCount_FormatString { get; }
@@ -52,18 +56,18 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
         Loaded += OnLoaded;
 
         MyModsView = new(MyModsGridView);
-        CollectionCount_FormatString = ResourceHelper.GetLocalized("GZSkinsX.Appx.MyMods/Resources/ModsView_Collection_Count");
-
-        if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+        LazyWin11ContextMenu = new(() =>
         {
-            ContentGrid.ContextFlyout = AppxContext.ContextMenuService.CreateCommandBarMenu(ContextMenuConstants.MYMODSVIEW_CTX_WIN11_GUID,
+            return AppxContext.ContextMenuService.CreateCommandBarMenu(ContextMenuConstants.MYMODSVIEW_CTX_WIN11_GUID,
                 new CommandBarMenuOptions { Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft }, (s, e) => new MyModsViewContextMenuUIContext(s, MyModsView));
-        }
-        else
+        });
+        LazyWin10ContextMenu = new(() =>
         {
-            ContentGrid.ContextFlyout = AppxContext.ContextMenuService.CreateContextMenu(ContextMenuConstants.MYMODSVIEW_CTX_WIN10_GUID,
+            return AppxContext.ContextMenuService.CreateContextMenu(ContextMenuConstants.MYMODSVIEW_CTX_WIN10_GUID,
                 new ContextMenuOptions { Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft }, (s, e) => new MyModsViewContextMenuUIContext(s, MyModsView));
-        }
+        });
+
+        CollectionCount_FormatString = ResourceHelper.GetLocalized("GZSkinsX.Appx.MyMods/Resources/ModsView_Collection_Count");
 
         var commandBar = AppxContext.CommandBarService.CreateCommandBar(CommandConstants.MYMODSVIEW_COMMANDBAR_GUID, new MyModsViewCommandBarUIContext(MyModsView));
         commandBar.Resources.Add("CommandBarBackgroundOpen", new SolidColorBrush(Colors.Transparent));
@@ -96,6 +100,17 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        var modsViewSettings = AppxContext.Resolve<ModsViewSettings>();
+        if (modsViewSettings.UseLegacyWin10StyleContextMenu is false &&
+            ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 13))
+        {
+            ContentGrid.ContextFlyout = LazyWin11ContextMenu.Value;
+        }
+        else
+        {
+            ContentGrid.ContextFlyout = LazyWin10ContextMenu.Value;
+        }
+
         MyModsView.RefreshAsync().FireAndForget();
     }
 
@@ -132,8 +147,8 @@ internal sealed partial class ModsView : Page, INavigationViewSearchHolder
             // 导入文件
             await MyModsView.ImportAsync(modFiles);
 
-            // 如果 UI 已经加载，那么下方添加的 OnLoaded 将不会引发，因此在这手动进行刷新。
-            if (IsLoaded) await MyModsView.RefreshAsync();
+            // 如果 UI 已经加载，那么下方注册的 OnLoaded 事件方法将不会引发，因此在这手动进行调用。
+            if (IsLoaded) OnLoaded(this, null!);
 
             // 重新添加回事件。
             Loaded += OnLoaded;
