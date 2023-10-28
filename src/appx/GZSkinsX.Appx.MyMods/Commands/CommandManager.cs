@@ -162,9 +162,30 @@ internal static class CommandManager
         _ => null
     };
 
+    public static bool CanExecute(CommandCodes commandCode, IMyModsView myModsView) => commandCode switch
+    {
+        CommandCodes.Delete or
+        CommandCodes.Install or
+        CommandCodes.Uninstall or
+        CommandCodes.Copy or
+        CommandCodes.CopyAsPath or
+        CommandCodes.OpenInFileExplorer or
+        CommandCodes.Share => myModsView?.SelectedItem is not null,
+
+        CommandCodes.Import or
+        CommandCodes.ClearAllInstalled or
+        CommandCodes.OpenModFolder or
+        CommandCodes.OpenWadFolder or
+        CommandCodes.Refresh or
+        CommandCodes.SelectAll or
+        CommandCodes.DeselectAll => myModsView is not null,
+
+        _ => false
+    };
+
     public static void Execute(CommandCodes commandCode, IMyModsView myModsView)
     {
-        if (myModsView is null)
+        if (CanExecute(commandCode, myModsView) is false)
         {
             return;
         }
