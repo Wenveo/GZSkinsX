@@ -10,6 +10,7 @@
     xmlns:myMods2="using:GZSkinsX.Contracts.MyMods"
     AllowDrop="True"
     KeyboardAcceleratorPlacementMode="Hidden"
+    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
     <Page.Resources>
