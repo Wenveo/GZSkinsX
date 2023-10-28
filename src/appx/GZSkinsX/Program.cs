@@ -9,9 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime;
 using System.Runtime.InteropServices;
+using System.Runtime.Loader;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -99,7 +101,7 @@ internal static partial class Program
     }
 
     /// <summary>
-    /// 获取当前 Appx 的扩展程序集
+    /// 获取当前 Appx 的扩展程序集。
     /// </summary>
     private static IEnumerable<Assembly> GetAssemblies()
     {
@@ -108,81 +110,59 @@ internal static partial class Program
             // Self Assembly
             yield return typeof(App).Assembly;
 
-            // GZSkinsX.Appx.AccessCache
-            yield return typeof(Appx.AccessCache.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.Activation
-            yield return typeof(Appx.Activation.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.Command
-            yield return typeof(Appx.Command.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.ContextMenu
-            yield return typeof(Appx.ContextMenu.AppxContract).Assembly;
-
             // GZSkinsX.Appx.Contracts
-            yield return typeof(Contracts.AppxContract).Assembly;
+            yield return typeof(AppxContext).Assembly;
+        }
 
-            // GZSkinsX.Appx.Game
-            yield return typeof(Appx.Game.AppxContract).Assembly;
+        Assembly asm;
+        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory, "GZSkinsX.Appx.*.dll")
+                .Where(a => a.IndexOf("GZSkinsX.Appx.Contracts.dll", StringComparison.OrdinalIgnoreCase) is -1))
+        {
+            try
+            {
+                var asmName = AssemblyLoadContext.GetAssemblyName(filePath);
+                asm = AssemblyLoadContext.Default.LoadFromAssemblyName(asmName);
+            }
+            catch (BadImageFormatException)
+            {
+                continue;
+            }
+            catch (FileNotFoundException)
+            {
+                continue;
+            }
+            catch (FileLoadException)
+            {
+                continue;
+            }
 
-            // GZSkinsX.Appx.Kernel
-            yield return typeof(Appx.Kernel.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.Logging
-            yield return typeof(Appx.Logging.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.MainApp
-            yield return typeof(Appx.MainApp.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.MotClient
-            yield return typeof(Appx.MotClient.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.MRTCore
-            yield return typeof(Appx.MRTCore.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.MyMods
-            yield return typeof(Appx.MyMods.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.Navigation
-            yield return typeof(Appx.Navigation.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.Settings
-            yield return typeof(Appx.Settings.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.Themes
-            yield return typeof(Appx.Themes.AppxContract).Assembly;
-
-            // GZSkinsX.Appx.WindowManager
-            yield return typeof(Appx.WindowManager.AppxContract).Assembly;
+            yield return asm;
         }
     }
 
     /// <summary>
-    /// 获取当前应用程序的外部扩展程序集
+    /// 获取当前应用目录中的扩展程序集。
     /// </summary>
     private static IEnumerable<Assembly> GetExtensionAssemblies()
     {
-        var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        var pluginsFolder = Path.Combine(userProfile, ".gzskinsx");
-        if (Directory.Exists(pluginsFolder) is false)
-        {
-            yield break;
-        }
-
         Assembly asm;
-        foreach (var filePath in Directory.EnumerateFiles(pluginsFolder, "*.x.dll", SearchOption.AllDirectories))
+        foreach (var filePath in Directory.EnumerateFiles(AppxContext.AppxDirectory, "*.x.dll"))
         {
             try
             {
-                asm = Assembly.LoadFile(filePath);
+                var asmName = AssemblyLoadContext.GetAssemblyName(filePath);
+                asm = AssemblyLoadContext.Default.LoadFromAssemblyName(asmName);
             }
-            catch (Exception excp)
+            catch (BadImageFormatException)
             {
-                AppxContext.LoggingService.LogError(
-                    "GZSkinsX.Program.GetExtensionAssemblies",
-                    $"Failed to load extern extension assembly: \"{filePath}\". Message = \"{excp.Message}\".");
-
+                continue;
+            }
+            catch (FileNotFoundException)
+            {
+                continue;
+            }
+            catch (FileLoadException)
+            {
                 continue;
             }
 
