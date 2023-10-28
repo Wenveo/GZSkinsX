@@ -36,7 +36,7 @@ internal sealed class MyModsView : IMyModsView
     /// <summary>
     /// 存放模组项的字典集合，并使用 Djb2 Hash 作为其关联的键。
     /// </summary>
-    private readonly Dictionary<int, MyModItemViewModel> _hashCodeToItemViewModel;
+    private readonly Dictionary<int, MyModItemViewModel> _hashCodeToItemViewModel = [];
 
     /// <summary>
     /// 模组视图的 UI 对象实例。
@@ -125,10 +125,10 @@ internal sealed class MyModsView : IMyModsView
     }
 
     /// <inheritdoc/>
-    public IEnumerable<MyModItemViewModel> SelectedItems => _myModsGridView.SelectedItems.OfType<MyModItemViewModel>();
+    public IEnumerable<MyModItemViewModel> SelectedItems { get; private set; } = [];
 
     /// <inheritdoc/>
-    public MyModItemViewModel? SelectedItem => _myModsGridView.SelectedItem as MyModItemViewModel;
+    public MyModItemViewModel? SelectedItem { get; private set; }
 
     /// <inheritdoc/>
     public event EventHandler<MyModsViewSelectionChangedArgs>? SelectionChanged;
@@ -148,7 +148,6 @@ internal sealed class MyModsView : IMyModsView
     /// </summary>
     public MyModsView(GridView myModsGridView)
     {
-        _hashCodeToItemViewModel = [];
         _myModsGridView = myModsGridView;
         _myModsGridView.SelectionChanged += OnSelectionChanged;
     }
@@ -158,6 +157,8 @@ internal sealed class MyModsView : IMyModsView
     /// </summary>
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        SelectedItem = _myModsGridView.SelectedItem as MyModItemViewModel;
+        SelectedItems = _myModsGridView.SelectedItems.OfType<MyModItemViewModel>();
         SelectionChanged?.Invoke(this, new()
         {
             AddedItems = e.AddedItems.OfType<MyModItemViewModel>(),
