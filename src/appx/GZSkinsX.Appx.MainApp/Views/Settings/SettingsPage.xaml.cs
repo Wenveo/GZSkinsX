@@ -6,6 +6,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using GZSkinsX.Contracts.Appx;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.Navigation;
 using GZSkinsX.Contracts.WindowManager;
 
@@ -29,8 +30,13 @@ internal sealed partial class SettingsPage : Page
     {
         InitializeComponent();
 
-        NavigationViewManager = AppxContext.NavigationViewManagerFactory.CreateNavigationViewManager(
-            NavigationConstants.SETTINGS_NAV_GUID, new() { Target = SettingsNavigationView });
+        NavigationViewManager = AppxContext.NavigationViewManagerFactory
+            .CreateNavigationViewManager(NavigationConstants.SETTINGS_NAV_GUID, new()
+            {
+                Target = SettingsNavigationView,
+                DefaultPlaceholderText = ResourceHelper.GetLocalized(
+                    "GZSkinsX.Appx.MainApp/Resources/Settings_NavigationViewManager_DefaultPlaceholderText")
+            });
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
