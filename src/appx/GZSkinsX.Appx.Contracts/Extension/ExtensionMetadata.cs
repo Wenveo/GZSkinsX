@@ -29,7 +29,7 @@ public sealed record class ExtensionMetadata
     /// <summary>
     /// 获取扩展的版本。
     /// </summary>
-    public Version Version { get; }
+    public string? Version { get; }
 
     /// <summary>
     /// 获取扩展的发布者名称。
@@ -53,7 +53,7 @@ public sealed record class ExtensionMetadata
     /// <param name="version">扩展的版本。</param>
     /// <param name="publisherName">扩展的发布者名称。</param>
     /// <param name="displayName">用于显示在扩展管理器 UI 中的用户友好的包名称。</param>
-    public ExtensionMetadata(string id, Version version, string publisherName, string displayName)
+    public ExtensionMetadata(string id, string version, string publisherName, string displayName)
     {
         Id = id;
         Version = version;
