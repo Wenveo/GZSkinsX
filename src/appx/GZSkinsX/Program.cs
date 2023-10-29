@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading;
@@ -205,14 +207,32 @@ internal static partial class Program
     private sealed class ServiceResolver(ExportProvider exportProvider) : IServiceResolver
     {
         /// <inheritdoc/>
-        public T Resolve<T>() where T : class => exportProvider.GetExportedValue<T>();
+        public T Resolve<T>() where T : class
+        {
+            var type = typeof(T);
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+            {
+                Debug.Assert(type.GenericTypeArguments.Length == 1);
+                var itemType = type.GenericTypeArguments.Single();
+                if (itemType.IsGenericType && itemType.GetGenericTypeDefinition() == typeof(Lazy<,>))
+                {
+                    var genericTypes = itemType.GenericTypeArguments;
+                    Debug.Assert(genericTypes != null && genericTypes.Length == 2);
+                    return Unsafe.As<T>(exportProvider.GetExports(genericTypes[0], genericTypes[1], null));
+                }
+
+                return Unsafe.As<T>(exportProvider.GetExportedValues(itemType, null));
+            }
+
+            return exportProvider.GetExportedValue<T>();
+        }
 
         /// <inheritdoc/>
         public bool TryResolve<T>([NotNullWhen(true)] out T? value) where T : class
         {
             try
             {
-                value = exportProvider.GetExportedValue<T>();
+                value = Resolve<T>();
                 return true;
             }
             catch
