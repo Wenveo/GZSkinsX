@@ -43,12 +43,12 @@ internal sealed partial class AboutThisAppPage : Page
         if (configurations.Any())
         {
             ExtensionsViewPanel.Visibility = Visibility.Visible;
-            ExtensionsListView.ItemsSource = configurations;
-            ExtensionsListView.SelectedIndex = 0;
             ExtensionsListView.SelectionChanged += (s, e) =>
             {
                 PreviewSelectedItemHost.Visibility = BoolToVisibilityConvert.ToVisibility(ExtensionsListView.SelectedItem is not null);
             };
+            ExtensionsListView.ItemsSource = configurations;
+            ExtensionsListView.SelectedIndex = 0;
         }
     }
 
