@@ -58,6 +58,7 @@ public static partial class AppxContext
     /// </summary>
     public static <#= services[j] #> <#= shortNames[j] #>
     {
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         get => CheckAccess(ref <#= staticFields[j] #>);
     }
 
@@ -69,6 +70,7 @@ public static partial class AppxContext
     /// </summary>
     /// <typeparam name="T">需要获取的已声明的导出类型。</typeparam>
     /// <returns>返回已检索的 <typeparamref name="T"/> 类型导出的实例。</returns>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static T Resolve<T>() where T : class
     {
         EnsureInitialized();
@@ -81,6 +83,7 @@ public static partial class AppxContext
     /// <typeparam name="T">目标类型中使用 <see cref="global::System.Composition.ExportAttribute"/> 所声明的导出类型。</typeparam>
     /// <param name="value">已获取到的类型实例，但如果获取失败则会返回 default。</param>
     /// <returns>当获取成功时返回 true，否则返回 false。</returns>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static bool TryResolve<T>([global::System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value) where T : class
     {
         EnsureInitialized();
@@ -94,6 +97,7 @@ public static partial class AppxContext
     /// <param name="service">需要检查的成员对象。</param>
     /// <returns>已获取的非空的 <typeparamref name="T"/> 类型对象实例。</returns>
     /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化，或找不到指定 <typeparamref name="T"/> 导出类型的对象时发生。</exception>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     private static T CheckAccess<T>([global::System.Diagnostics.CodeAnalysis.NotNull] ref T? service) where T : class
     {
         if (service is not null)
@@ -114,6 +118,7 @@ public static partial class AppxContext
     /// 确认当前应用程序上下文是否已初始化。
     /// </summary>
     /// <exception cref="global::System.InvalidOperationException">当应用程序未初始化时发生。</exception>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_resolver))]
     [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     private static void EnsureInitialized()
