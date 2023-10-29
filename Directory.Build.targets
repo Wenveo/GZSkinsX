@@ -3,11 +3,18 @@
   <PropertyGroup>
     <NoWarn>CS8002;$(NoWarn)</NoWarn>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(UseWinUI)' == 'true'">
+    <DefaultLanguage>zh-CN</DefaultLanguage>
+  </PropertyGroup>
   
   <PropertyGroup Condition="'$(UseAppxLibInfo)' == 'true'">
-    <Version>3.2.0.0</Version>
-    <DefaultLanguage>zh-CN</DefaultLanguage>
     <Copyright>Copyright © 2022 - $([System.DateTime]::Today.ToString(yyyy))</Copyright>
+    <EnableStrongName>true</EnableStrongName>
+    <Version>3.2.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(EnableStrongName)' == 'true'">
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)SharedKey.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>True</SignAssembly>
   </PropertyGroup>
