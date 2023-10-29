@@ -231,7 +231,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
     private void OnNavSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         if (args.SelectedItem is NavigationViewItem { SelectsOnInvoked: true } navItem &&
-            NavigationViewItemHelper.GetItemContext(navItem) is { } ctx)
+            NavigationViewItemHelper.GetItemContext(navItem) is { Metadata.PageType: not null } ctx)
         {
             _tempNavItem = navItem;
             _rootFrame.Navigate(ctx.Metadata.PageType);
@@ -475,13 +475,13 @@ internal sealed class NavigationViewManager : INavigationViewManager
     private async Task NavigateCoreAsync(string guidString, object? parameter, NavigationTransitionInfo? infoOverride)
     {
         var navItem = FindNavItem(guidString);
-        if (navItem is not null && NavigationViewItemHelper.GetItemContext(navItem) is { } ctx)
+        if (navItem is not null && NavigationViewItemHelper.GetItemContext(navItem) is { Metadata.PageType: { } targetPageType })
         {
             _tempNavItem = navItem;
             _rootFrame.Tag = guidString;
 
             var beforeNavItemCtx = GetCurrentNavItemCtx();
-            if (_rootFrame.Navigate(ctx.Metadata.PageType, parameter, infoOverride))
+            if (_rootFrame.Navigate(targetPageType, parameter, infoOverride))
             {
                 if (beforeNavItemCtx is not null)
                 {

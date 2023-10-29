@@ -49,7 +49,7 @@ public sealed class NavigationItemContractAttribute : ExportAttribute
     /// <summary>
     /// 表示该导航项所关联的页面类型。
     /// </summary>
-    public required Type PageType { get; init; }
+    public Type? PageType { get; init; }
 
     /// <summary>
     /// 表示该导航项所处的位置。
