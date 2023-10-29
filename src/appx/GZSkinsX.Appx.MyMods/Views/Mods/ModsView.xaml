@@ -13,6 +13,14 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <SuppressNavigationTransitionInfo />
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
     <Page.Resources>
         <myMods2:MyModItemTemplates />
     </Page.Resources>
