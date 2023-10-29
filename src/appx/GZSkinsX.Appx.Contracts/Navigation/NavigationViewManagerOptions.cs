@@ -23,4 +23,9 @@ public sealed class NavigationViewManagerOptions
     /// 是否自动创建搜索框以及基本功能实现。
     /// </summary>
     public bool DoNotCreateSearchBox { get; init; }
+
+    /// <summary>
+    /// 用于显示在搜索框中的默认占位文本。
+    /// </summary>
+    public string? DefaultPlaceholderText { get; init; }
 }

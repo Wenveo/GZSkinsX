@@ -70,7 +70,8 @@ internal sealed class NavigationViewManager : INavigationViewManager
     /// <summary>
     /// 初始化 <see cref="NavigationViewManager"/> 的新实例。
     /// </summary>
-    public NavigationViewManager(NavigationView navigationView, bool doNotCreateSearchBox)
+    public NavigationViewManager(NavigationView navigationView,
+        bool doNotCreateSearchBox, string? defaultPlaceholderText)
     {
         _navigationView = navigationView;
 
@@ -83,11 +84,10 @@ internal sealed class NavigationViewManager : INavigationViewManager
 
         if (doNotCreateSearchBox is false)
         {
-            string? placeholderText = null;
             if (navigationView is INavigationViewCustomSearchBox customSearchBox)
             {
                 _searchBoxControl = customSearchBox.SearchBoxControl;
-                placeholderText = customSearchBox.DefaultPlaceholderText;
+                defaultPlaceholderText = customSearchBox.DefaultPlaceholderText;
             }
             else
             {
@@ -95,7 +95,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
                     new() { QueryIcon = new SegoeFluentIcon("\uE11A") };
             }
 
-            _defaultPlaceholderText = placeholderText ?? ResourceHelper.GetLocalized(
+            _defaultPlaceholderText = defaultPlaceholderText ?? ResourceHelper.GetLocalized(
                         "GZSkinsX.Appx.Navigation/Resources/NavigationView_SearchBoxControl_DefaultPlaceholderText");
 
             if (_searchBoxControl is not null)

@@ -186,7 +186,7 @@ internal sealed class NavigationViewManagerFactory : INavigationViewManagerFacto
             }
         }
 
-        return new NavigationViewManager(navigationView, options?.DoNotCreateSearchBox is true);
+        return new NavigationViewManager(navigationView, options?.DoNotCreateSearchBox is true, options?.DefaultPlaceholderText);
     }
 
     /// <inheritdoc/>
