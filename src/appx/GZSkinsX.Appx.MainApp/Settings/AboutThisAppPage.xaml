@@ -6,13 +6,14 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extension="using:GZSkinsX.Contracts.Extension"
     xmlns:local="using:GZSkinsX.Appx.MainApp.Settings"
     xmlns:markups="using:GZSkinsX.Contracts.Markups"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <ScrollViewer Padding="24,0,24,24">
-        <StackPanel Spacing="12">
+        <StackPanel>
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
@@ -21,11 +22,12 @@
             </StackPanel.ChildrenTransitions>
 
             <TextBlock
+                Margin="0,0,0,12"
                 FontSize="24"
                 FontWeight="SemiBold"
                 Text="{markups:LocalizedString ResourceKey=GZSkinsX.Appx.MainApp/Resources/Settings_AboutThisApp_Title}" />
 
-            <StackPanel Spacing="4">
+            <StackPanel Margin="0,0,0,12" Spacing="4">
                 <StackPanel.ChildrenTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
@@ -66,6 +68,7 @@
                 </controls:SettingsExpander>
 
                 <controls:SettingsCard
+                    x:Name="RateAndReviewCard"
                     x:Uid="Settings_AboutThisApp_RateAndReview"
                     Click="OnRateAndReview"
                     IsClickEnabled="True">
@@ -76,6 +79,163 @@
                         <ctrls2:SegoeFluentIcon Glyph="&#xE8A7;" />
                     </controls:SettingsCard.ActionIcon>
                 </controls:SettingsCard>
+            </StackPanel>
+
+            <StackPanel
+                x:Name="ExtensionsViewPanel"
+                Margin="0,0,0,12"
+                Spacing="6"
+                Visibility="Collapsed">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock x:Uid="Settings_AboutThisApp_Extensions" FontWeight="Bold" />
+
+                <ListView
+                    x:Name="ExtensionsListView"
+                    Height="160"
+                    Padding="2,4"
+                    Background="{ThemeResource LayerFillColorAltBrush}"
+                    BorderBrush="{x:Bind RateAndReviewCard.BorderBrush, Mode=OneWay}"
+                    BorderThickness="1"
+                    CanDragItems="False"
+                    CornerRadius="4">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="extension:ExtensionConfiguration">
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Viewbox Width="16" Height="16">
+                                    <Viewbox.Child>
+                                        <Binding Mode="OneTime" Path="Metadata.Icon">
+                                            <Binding.TargetNullValue>
+                                                <ctrls2:SegoeFluentIcon Glyph="&#xECAA;" />
+                                            </Binding.TargetNullValue>
+                                        </Binding>
+                                    </Viewbox.Child>
+                                </Viewbox>
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Text="{x:Bind Metadata.DisplayName}" />
+
+                                <ctrls2:SegoeMDL2Assets
+                                    Grid.Column="2"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Glyph="&#xE738;" />
+
+                                <TextBlock
+                                    Grid.Column="3"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Text="{x:Bind Metadata.Version}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ContentPresenter
+                    x:Name="PreviewSelectedItemHost"
+                    Grid.Column="1"
+                    Background="{x:Bind RateAndReviewCard.Background, Mode=OneWay}"
+                    BorderBrush="{x:Bind RateAndReviewCard.BorderBrush, Mode=OneWay}"
+                    BorderThickness="1"
+                    Content="{x:Bind ExtensionsListView.SelectedItem, Mode=OneWay}"
+                    CornerRadius="4"
+                    Visibility="Collapsed">
+                    <ContentPresenter.ContentTemplate>
+                        <DataTemplate x:DataType="extension:ExtensionConfiguration">
+                            <Grid Padding="12" RowSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width=".2*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    Grid.ColumnSpan="3"
+                                    FontSize="12"
+                                    FontWeight="Bold"
+                                    Text="{x:Bind Metadata.Desctiption}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    x:Uid="ExtensionConfigurationItem_Version"
+                                    Grid.Row="1"
+                                    FontSize="13"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+                                <RichTextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    FontSize="13"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+                                    <Paragraph>
+                                        <Run Text="{x:Bind Metadata.Version}" />
+                                    </Paragraph>
+                                </RichTextBlock>
+
+                                <TextBlock
+                                    x:Uid="ExtensionConfigurationItem_Id"
+                                    Grid.Row="2"
+                                    FontSize="13"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+                                <RichTextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    FontSize="13"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+                                    <Paragraph>
+                                        <Run Text="{x:Bind Metadata.Id}" />
+                                    </Paragraph>
+                                </RichTextBlock>
+
+                                <TextBlock
+                                    x:Uid="ExtensionConfigurationItem_PublisherName"
+                                    Grid.Row="3"
+                                    FontSize="13"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+                                <RichTextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    FontSize="13"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+                                    <Paragraph>
+                                        <Run Text="{x:Bind Metadata.PublisherName}" />
+                                    </Paragraph>
+                                </RichTextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ContentPresenter.ContentTemplate>
+                </ContentPresenter>
             </StackPanel>
 
             <StackPanel Spacing="6">

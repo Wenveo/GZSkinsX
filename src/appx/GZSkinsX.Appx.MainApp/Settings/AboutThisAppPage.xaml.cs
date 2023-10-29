@@ -6,12 +6,16 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 using System;
+using System.Collections.Generic;
 using System.Composition;
+using System.Linq;
 using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Controls;
+using GZSkinsX.Contracts.Extension;
 using GZSkinsX.Contracts.Navigation;
+using GZSkinsX.Contracts.Utilities;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -33,6 +37,19 @@ internal sealed partial class AboutThisAppPage : Page
     {
         InitializeComponent();
         VersionTextBlock.Text = AppxContext.AppxVersion.ToString();
+
+        var extensions = AppxContext.Resolve<IEnumerable<Lazy<IExtension, ExtensionContractAttribute>>>();
+        var configurations = extensions.Select(item => item.Value.ExtensionConfiguration);
+        if (configurations.Any())
+        {
+            ExtensionsViewPanel.Visibility = Visibility.Visible;
+            ExtensionsListView.ItemsSource = configurations;
+            ExtensionsListView.SelectedIndex = 0;
+            ExtensionsListView.SelectionChanged += (s, e) =>
+            {
+                PreviewSelectedItemHost.Visibility = BoolToVisibilityConvert.ToVisibility(ExtensionsListView.SelectedItem is not null);
+            };
+        }
     }
 
     private async void OnNavigateToPrivacy(object sender, RoutedEventArgs e)

@@ -141,6 +141,15 @@
   <data name="AppxUpdater_Unsupported_AppVersion_Dialog_Title" xml:space="preserve">
     <value>该应用的版本已不受支持</value>
   </data>
+  <data name="ExtensionConfigurationItem_Id.Text" xml:space="preserve">
+    <value>标识符</value>
+  </data>
+  <data name="ExtensionConfigurationItem_PublisherName.Text" xml:space="preserve">
+    <value>发布者名称</value>
+  </data>
+  <data name="ExtensionConfigurationItem_Version.Text" xml:space="preserve">
+    <value>版本</value>
+  </data>
   <data name="Index_DownloadFailed_Title.Text" xml:space="preserve">
     <value>未知的错误，无法更新应用程序。</value>
   </data>
@@ -185,6 +194,9 @@
   </data>
   <data name="Settings_AboutThisApp_AppInfo_Privacy.Header" xml:space="preserve">
     <value>隐私协议</value>
+  </data>
+  <data name="Settings_AboutThisApp_Extensions.Text" xml:space="preserve">
+    <value>已集成的扩展</value>
   </data>
   <data name="Settings_AboutThisApp_OpenSource.Text" xml:space="preserve">
     <value>开放源代码</value>
