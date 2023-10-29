@@ -396,6 +396,11 @@ internal sealed class KernelService : IKernelService
         foreach (var uri in _moduleManifests)
         {
             var result = await httpClient.GetFromJsonAsync<ModuleList>(uri);
+            if (result.Modules is null)
+            {
+                continue;
+            }
+
             foreach (var item in result.Modules)
             {
                 if (ModuleItem.IsEmpty(item))
