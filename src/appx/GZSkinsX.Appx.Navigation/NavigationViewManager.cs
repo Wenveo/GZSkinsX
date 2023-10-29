@@ -214,6 +214,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
             if (_rootFrame.Content is INavigationViewSearchHolder searchHolder)
             {
                 _searchHolder = searchHolder;
+                _searchBoxControl.ClearValue(ItemsControl.ItemsSourceProperty);
                 _searchBoxControl.PlaceholderText = searchHolder.GetPlaceholderText();
             }
             else
