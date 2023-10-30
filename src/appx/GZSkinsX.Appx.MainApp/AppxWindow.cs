@@ -88,11 +88,12 @@ internal sealed class AppxWindow : IAppxWindow
         var hWnd = (HWND)MainWindowHandle;
         if (PInvoke.IsIconic(hWnd))
         {
-            PInvoke.ShowWindow(hWnd, SHOW_WINDOW_CMD.SW_SHOWNOACTIVATE);
+            PInvoke.ShowWindow(hWnd, SHOW_WINDOW_CMD.SW_RESTORE);
         }
-
-        PInvoke.SetForegroundWindow(hWnd);
-        PInvoke.ShowWindow(hWnd, SHOW_WINDOW_CMD.SW_SHOW);
+        else
+        {
+            PInvoke.SetForegroundWindow(hWnd);
+        }
     }
 
     /// <inheritdoc/>
