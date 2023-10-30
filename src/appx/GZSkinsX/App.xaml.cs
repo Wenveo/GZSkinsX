@@ -39,11 +39,6 @@ public partial class App : Application
     {
         var extensionService = AppxContext.Resolve<ExtensionService>();
         extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.BeforeExtensions);
-        foreach (var rsrc in extensionService.GetMergedResourceDictionaries())
-        {
-            app.Resources.MergedDictionaries.Add(rsrc);
-        }
-
         extensionService.LoadAutoLoaded(AutoLoadedActivationConstraint.AfterExtensions);
     });
 

@@ -20,11 +20,6 @@ public interface IExtension : IExtensionClass
     ExtensionConfiguration ExtensionConfiguration { get; }
 
     /// <summary>
-    /// 获取用于合并的资源字典列表，资源路径必须是相对于程序集的 (例如: Themes/Generic.xaml)。
-    /// </summary>
-    IEnumerable<string> MergedResourceDictionaries { get; }
-
-    /// <summary>
     /// 在应用加载完成后触发的事件方法。
     /// </summary>
     void OnAppLoaded() { }

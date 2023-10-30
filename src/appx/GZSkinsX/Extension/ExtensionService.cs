@@ -48,23 +48,6 @@ internal sealed class ExtensionService
     }
 
     /// <summary>
-    /// 获取所有应用程序扩展中声明的资源字典的集合。
-    /// </summary>
-    public IEnumerable<ResourceDictionary> GetMergedResourceDictionaries()
-    {
-        foreach (var extension in _mefExtensions)
-        {
-            var value = extension.Value;
-            foreach (var rsrc in value.MergedResourceDictionaries)
-            {
-                var asm = value.GetType().Assembly.GetName();
-                var uri = new Uri($"ms-appx:///{asm.Name}/{rsrc}", UriKind.Absolute);
-                yield return new ResourceDictionary { Source = uri };
-            }
-        }
-    }
-
-    /// <summary>
     /// 通过筛选指定激活规则的自动加载的扩展进行激活。
     /// </summary>
     /// <param name="rule">指定的激活规则。</param>
