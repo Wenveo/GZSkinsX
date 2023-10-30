@@ -6,6 +6,8 @@
 
   <PropertyGroup Condition="'$(UseWinUI)' == 'true'">
     <DefaultLanguage>zh-CN</DefaultLanguage>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(UseAppxLibInfo)' == 'true'">
