@@ -213,7 +213,7 @@
   <data name="Settings_General_GameFolder.Header" xml:space="preserve">
     <value>游戏目录</value>
   </data>
-  <data name="Settings_General_GameFolder_Browser.Content" xml:space="preserve">
+  <data name="Settings_General_GameFolder_Browse.Content" xml:space="preserve">
     <value>浏览</value>
   </data>
   <data name="Settings_General_Theme.Description" xml:space="preserve">
@@ -267,7 +267,7 @@
   <data name="StartUp_Initialize_Default_Title" xml:space="preserve">
     <value>设置游戏基本信息</value>
   </data>
-  <data name="StartUp_Initialize_Directory_Browser.Content" xml:space="preserve">
+  <data name="StartUp_Initialize_Directory_Browse.Content" xml:space="preserve">
     <value>浏览</value>
   </data>
   <data name="StartUp_Initialize_Directory_Subtitle.Text" xml:space="preserve">

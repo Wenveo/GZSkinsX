@@ -62,7 +62,7 @@ internal sealed partial class StartUpPage : Page
         StartUp_Initialize_Region_Selector.Items.Clear();
     }
 
-    private async void OnBrowser(object sender, RoutedEventArgs e)
+    private async void OnBrowse(object sender, RoutedEventArgs e)
     {
         var folderPicker = new FolderPicker();
         folderPicker.FileTypeFilter.Add("*");

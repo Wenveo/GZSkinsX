@@ -62,7 +62,7 @@ internal sealed partial class ModsSettingsPage : Page
         await AppxContext.MyModsService.SetIsEnableBloodAsync(BloodToogleSwitch.IsOn);
     }
 
-    private async void OnBrowserModFolder(object sender, RoutedEventArgs e)
+    private async void OnBrowseModFolder(object sender, RoutedEventArgs e)
     {
         var folderPicker = new FolderPicker();
         folderPicker.FileTypeFilter.Add("*");
@@ -79,7 +79,7 @@ internal sealed partial class ModsSettingsPage : Page
         }
     }
 
-    private async void OnBrowserWadFolder(object sender, RoutedEventArgs e)
+    private async void OnBrowseWadFolder(object sender, RoutedEventArgs e)
     {
         var folderPicker = new FolderPicker();
         folderPicker.FileTypeFilter.Add("*");

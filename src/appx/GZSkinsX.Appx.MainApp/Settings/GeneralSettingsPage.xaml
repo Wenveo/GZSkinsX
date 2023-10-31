@@ -81,7 +81,7 @@
                     <controls:SettingsCard.HeaderIcon>
                         <ctrls2:SegoeFluentIcon Glyph="&#xE8B7;" />
                     </controls:SettingsCard.HeaderIcon>
-                    <Button x:Uid="Settings_General_GameFolder_Browser" Click="OnBrowserGameFolder" />
+                    <Button x:Uid="Settings_General_GameFolder_Browse" Click="OnBrowseGameFolder" />
                 </controls:SettingsCard>
             </StackPanel>
         </StackPanel>

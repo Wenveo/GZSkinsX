@@ -40,7 +40,7 @@ internal sealed partial class GeneralSettingsPage : Page
         GameFolderTextBlock.Text = AppxContext.GameService.RootDirectory;
     }
 
-    private async void OnBrowserGameFolder(object sender, RoutedEventArgs e)
+    private async void OnBrowseGameFolder(object sender, RoutedEventArgs e)
     {
         var folderPicker = new FolderPicker();
         folderPicker.FileTypeFilter.Add("*");

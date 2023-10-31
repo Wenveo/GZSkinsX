@@ -62,11 +62,11 @@
             Grid.Column="1"
             IsReadOnly="True" />
         <Button
-            x:Uid="StartUp_Initialize_Directory_Browser"
+            x:Uid="StartUp_Initialize_Directory_Browse"
             Grid.Row="8"
             Grid.Column="3"
             HorizontalAlignment="Right"
-            Click="OnBrowser" />
+            Click="OnBrowse" />
         <StackPanel Grid.Row="10" Grid.Column="1">
             <TextBlock
                 x:Uid="StartUp_Initialize_Region_Title"
