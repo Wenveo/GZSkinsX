@@ -1127,6 +1127,7 @@
                                 <VisualStateGroup x:Name="RootContentStates">
                                     <VisualState x:Name="EnableRootContent">
                                         <VisualState.Setters>
+                                            <Setter Target="PaneCustomContentOnTopPane.IsEnabled" Value="True" />
                                             <Setter Target="TopFooterMenuItemsHostContainer.IsEnabled" Value="true" />
                                             <Setter Target="TopNavMenuItemsHostContainer.IsEnabled" Value="true" />
                                             <Setter Target="TopNavOverflowButton.IsEnabled" Value="true" />
@@ -1138,6 +1139,7 @@
                                     </VisualState>
                                     <VisualState x:Name="DisableRootContent">
                                         <VisualState.Setters>
+                                            <Setter Target="PaneCustomContentOnTopPane.IsEnabled" Value="False" />
                                             <Setter Target="TopFooterMenuItemsHostContainer.IsEnabled" Value="false" />
                                             <Setter Target="TopNavMenuItemsHostContainer.IsEnabled" Value="false" />
                                             <Setter Target="TopNavOverflowButton.IsEnabled" Value="false" />
