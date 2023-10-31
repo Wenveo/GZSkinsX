@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="GZSkinsX.DevTools.Generators.Views.HashGeneratorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GZSkinsX.DevTools.Generators.Views"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <Grid Padding="24,36" RowSpacing="24">
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition x:Name="PaddingColumn" Width="Auto" />
+                <ColumnDefinition x:Name="RightPanelColumn" Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                x:Name="TitlePanel"
+                Grid.Row="0"
+                IsHitTestVisible="False"
+                Orientation="Horizontal">
+                <ctrls2:SegoeFluentIcon
+                    Margin="0,0,6,0"
+                    FontSize="24"
+                    Glyph="&#xE928;" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/HashGenerator_Title}" />
+            </StackPanel>
+
+            <StackPanel
+                x:Name="InputPanel"
+                Grid.Row="1"
+                Spacing="6">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <controls:SettingsCard x:Uid="HashGenerator_InputPanel_MatchCase">
+                    <controls:SettingsCard.HeaderIcon>
+                        <MatchCaseIcon xmlns="using:GZSkinsX.DevTools.Generators.Assets.Icons" />
+                    </controls:SettingsCard.HeaderIcon>
+                    <ToggleSwitch x:Name="MatchCaseToggleSwitch" x:Uid="HashGenerator_InputPanel_MatchCase_ToggleSwitch" />
+                </controls:SettingsCard>
+
+                <controls:SettingsCard x:Uid="HashGenerator_InputPanel_OutputType">
+                    <controls:SettingsCard.HeaderIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE9E9;" />
+                    </controls:SettingsCard.HeaderIcon>
+                    <ComboBox
+                        x:Name="OutputTypeSelector"
+                        x:Uid="HashGenerator_InputPanel_OutputType_ComboBox"
+                        SelectedIndex="1">
+                        <ComboBoxItem x:Uid="HashGenerator_InputPanel_OutputType_DecItem" />
+                        <ComboBoxItem x:Uid="HashGenerator_InputPanel_OutputType_HexItem" />
+                    </ComboBox>
+                </controls:SettingsCard>
+
+                <Grid Margin="0,6,0,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        x:Name="InputPanel_Title"
+                        x:Uid="HashGenerator_InputPanel_Title"
+                        Margin="0,0,0,1"
+                        VerticalAlignment="Bottom"
+                        FontWeight="Bold" />
+
+                    <StackPanel
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        Spacing="8">
+                        <Button
+                            x:Name="PasteToInputTextBoxButton"
+                            Height="32"
+                            AutomationProperties.LabeledBy="{x:Bind InputPanel_Title}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Paste}"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Paste}">
+                            <StackPanel
+                                Margin="2,0,2,0"
+                                IsHitTestVisible="False"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <ctrls2:SegoeFluentIcon FontSize="16" Glyph="&#xE77F;" />
+                                <TextBlock VerticalAlignment="Center" Text="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Paste}" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            x:Name="ClearInputTextButton"
+                            Height="32"
+                            AutomationProperties.LabeledBy="{x:Bind InputPanel_Title}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Clear}"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Clear}">
+                            <ctrls2:SegoeFluentIcon
+                                Margin="0,2,0,0"
+                                FontSize="18"
+                                Glyph="&#xE894;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <TextBox
+                    x:Name="InputTextBox"
+                    x:Uid="HashGenerator_InputPanel_InputTextBox"
+                    Height="148"
+                    AutomationProperties.LabeledBy="{x:Bind InputPanel_Title}"
+                    MaxLength="960"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <StackPanel x:Name="ResultPanel" Grid.Row="2">
+                <StackPanel.Resources>
+                    <SolidColorBrush x:Key="TextControlBorderBrush" Color="{ThemeResource ControlStrokeColorDefault}" />
+                    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{ThemeResource ControlStrokeColorDefault}" />
+                </StackPanel.Resources>
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <TextBlock
+                    x:Name="ResultPanelTitle"
+                    x:Uid="HashGenerator_ResultPanel_Title"
+                    Margin="0,0,0,12"
+                    FontWeight="Bold"
+                    Visibility="Collapsed" />
+
+                <StackPanel Margin="0,0,0,12" Spacing="4">
+                    <TextBlock x:Name="ResultPanel_Crc32" Text="Crc32" />
+                    <Grid Margin="0,2,0,0" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="Crc32OutputTextBox"
+                            x:Uid="HashGenerator_ResultPanel_Crc32OutputTextBox"
+                            AutomationProperties.LabeledBy="{x:Bind ResultPanel_Crc32}"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                        <Button
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.LabeledBy="{x:Bind Crc32OutputTextBox}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}"
+                            Command="{x:Bind CopyResultCommand(1)}"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}">
+                            <ctrls2:SegoeFluentIcon
+                                FontSize="16"
+                                Glyph="&#xE8C8;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,0,12" Spacing="4">
+                    <TextBlock x:Name="ResultPanel_FNV1a" Text="FNV-1a" />
+                    <Grid Margin="0,2,0,0" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="FNV1aOutputTextBox"
+                            x:Uid="HashGenerator_ResultPanel_FNV1aOutputTextBox"
+                            AutomationProperties.LabeledBy="{x:Bind ResultPanel_FNV1a}"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                        <Button
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.LabeledBy="{x:Bind FNV1aOutputTextBox}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}"
+                            Command="{x:Bind CopyResultCommand(2)}"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}">
+                            <ctrls2:SegoeFluentIcon
+                                FontSize="16"
+                                Glyph="&#xE8C8;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,0,12" Spacing="4">
+                    <TextBlock x:Name="ResultPanel_XxHash32" Text="XxHash32" />
+                    <Grid Margin="0,2,0,0" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="XxHash32OutputTextBox"
+                            x:Uid="HashGenerator_ResultPanel_XxHash32OutputTextBox"
+                            AutomationProperties.LabeledBy="{x:Bind ResultPanel_XxHash32}"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                        <Button
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.LabeledBy="{x:Bind XxHash32OutputTextBox}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}"
+                            Command="{x:Bind CopyResultCommand(3)}"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}">
+                            <ctrls2:SegoeFluentIcon
+                                FontSize="16"
+                                Glyph="&#xE8C8;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <TextBlock x:Name="ResultPanel_XxHash64" Text="XxHash64" />
+                    <Grid Margin="0,2,0,0" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="XxHash64OutputTextBox"
+                            x:Uid="HashGenerator_ResultPanel_XxHash64OutputTextBox"
+                            AutomationProperties.LabeledBy="{x:Bind ResultPanel_XxHash64}"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                        <Button
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.LabeledBy="{x:Bind XxHash64OutputTextBox}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}"
+                            Command="{x:Bind CopyResultCommand(4)}"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}">
+                            <ctrls2:SegoeFluentIcon
+                                FontSize="16"
+                                Glyph="&#xE8C8;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="960" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PaddingColumn.Width" Value=".04*" />
+                        <Setter Target="RightPanelColumn.Width" Value=".7*" />
+                        <Setter Target="InputPanel.(Grid.RowSpan)" Value="2" />
+                        <Setter Target="InputTextBox.Height" Value="105" />
+                        <Setter Target="ResultPanel.(Grid.Column)" Value="2" />
+                        <Setter Target="ResultPanel.(Grid.Row)" Value="1" />
+                        <Setter Target="ResultPanel.(Grid.RowSpan)" Value="3" />
+                        <Setter Target="ResultPanelTitle.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PaddingColumn.Width" Value="Auto" />
+                        <Setter Target="RightPanelColumn.Width" Value="Auto" />
+                        <Setter Target="InputPanel.(Grid.RowSpan)" Value="1" />
+                        <Setter Target="InputTextBox.Height" Value="148" />
+                        <Setter Target="ResultPanel.(Grid.Column)" Value="0" />
+                        <Setter Target="ResultPanel.(Grid.Row)" Value="2" />
+                        <Setter Target="ResultPanel.(Grid.RowSpan)" Value="1" />
+                        <Setter Target="ResultPanelTitle.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </ScrollViewer>
+</Page>

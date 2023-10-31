@@ -19,6 +19,7 @@
   <PropertyGroup>
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
@@ -32,6 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\extensions\GZSkinsX.DevTools.Generators\GZSkinsX.DevTools.Generators.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.AccessCache\GZSkinsX.Appx.AccessCache.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Activation\GZSkinsX.Appx.Activation.csproj" />
     <ProjectReference Include="..\GZSkinsX.Appx.Command\GZSkinsX.Appx.Command.csproj" />

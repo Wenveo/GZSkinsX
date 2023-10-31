@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="GZSkinsX.DevTools.Generators.Views.ChecksumGeneratorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ctrls2="using:GZSkinsX.Contracts.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="using:GZSkinsX.DevTools.Generators.Assets.Icons"
+    xmlns:local="using:GZSkinsX.DevTools.Generators.Views"
+    xmlns:markups="using:GZSkinsX.Contracts.Markups"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <Grid Padding="24,36" RowSpacing="24">
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                x:Name="TitlePanel"
+                IsHitTestVisible="False"
+                Orientation="Horizontal"
+                Spacing="6">
+                <icons:ChecksumGeneratorIcon
+                    Width="22"
+                    Height="22"
+                    Margin="0,-1,0,0"
+                    Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Text="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/ChecksumGenerator_Title}" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Spacing="6">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <controls:SettingsCard x:Uid="ChecksumGenerator_HashAlgorithm">
+                    <controls:SettingsCard.HeaderIcon>
+                        <ctrls2:SegoeFluentIcon Glyph="&#xE8AB;" />
+                    </controls:SettingsCard.HeaderIcon>
+
+                    <ComboBox x:Name="HashAlgorithmSelector" x:Uid="ChecksumGenerator_HashAlgorithm_Selector">
+                        <ComboBoxItem Content="MD5" />
+                        <ComboBoxItem Content="SHA-1" />
+                        <ComboBoxItem Content="SHA-256" />
+                        <ComboBoxItem Content="SHA-384" />
+                        <ComboBoxItem Content="SHA-512" />
+                        <ComboBoxItem Content="XxHash3" />
+                        <ComboBoxItem Content="XxHash64" />
+                    </ComboBox>
+                </controls:SettingsCard>
+
+                <Grid
+                    x:Name="DragDropArea"
+                    Height="120"
+                    Margin="0,18,0,0"
+                    AllowDrop="True"
+                    Background="Transparent"
+                    CornerRadius="4"
+                    DragLeave="Grid_DragLeave"
+                    DragOver="Grid_DragOver"
+                    Drop="Grid_Drop">
+
+                    <Rectangle
+                        x:Name="DragDropArea_Rectangle"
+                        Fill="Transparent"
+                        Stroke="{ThemeResource TextFillColorTertiaryBrush}"
+                        StrokeDashArray="4 4"
+                        StrokeThickness="1" />
+
+                    <StackPanel
+                        x:Name="DragDropOrBrowsePanel"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="8">
+                        <TextBlock x:Uid="ChecksumGenerator_DragDropArea_DragAndDrop" HorizontalAlignment="Center" />
+                        <TextBlock x:Uid="ChecksumGenerator_DragDropArea_Or" HorizontalAlignment="Center" />
+                        <HyperlinkButton
+                            x:Uid="ChecksumGenerator_DragDropArea_BrowseFile"
+                            HorizontalAlignment="Center"
+                            Click="OnBrowseFile" />
+                    </StackPanel>
+
+                    <ProgressRing
+                        x:Name="InProgress_ProgressRing"
+                        Width="32"
+                        Height="32"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsIndeterminate="True"
+                        Visibility="Collapsed" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Spacing="12">
+                <StackPanel Spacing="4">
+                    <StackPanel.Resources>
+                        <SolidColorBrush x:Key="TextControlBorderBrush" Color="{ThemeResource ControlStrokeColorDefault}" />
+                        <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{ThemeResource ControlStrokeColorDefault}" />
+                    </StackPanel.Resources>
+
+                    <TextBlock x:Name="ResultPanel_Title" x:Uid="ChecksumGenerator_ResultPanel_Title" />
+
+                    <Grid Margin="0,2,0,0" ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="OutputTextBox"
+                            x:Uid="ChecksumGenerator_ResultPanel_OutputTextBox"
+                            AutomationProperties.LabeledBy="{x:Bind ResultPanel_Title}"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                        <Button
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.LabeledBy="{x:Bind ResultPanel_Title}"
+                            AutomationProperties.Name="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}"
+                            Click="OnCopyChecksum"
+                            ToolTipService.ToolTip="{markups:LocalizedString ResourceKey=GZSkinsX.DevTools.Generators.x/Resources/Common_Copy}">
+                            <ctrls2:SegoeFluentIcon
+                                FontSize="16"
+                                Glyph="&#xE8C8;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Spacing="6">
+                    <TextBlock x:Name="HashComparison_Title" x:Uid="ChecksumGenerator_HashComparison_Title" />
+
+                    <Grid ColumnSpacing="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="OutputComparisonTextBox"
+                            x:Uid="ChecksumGenerator_HashComparison_OutputComparisonTextBox"
+                            AutomationProperties.LabeledBy="{x:Bind HashComparison_Title}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+                        <Button
+                            x:Uid="ChecksumGenerator_HashComparison_BrowseFileToComparisonButton"
+                            Grid.Column="1"
+                            VerticalAlignment="Stretch"
+                            AutomationProperties.LabeledBy="{x:Bind OutputComparisonTextBox}"
+                            Click="OnBrowseFileToComparison">
+                            <ctrls2:SegoeFluentIcon
+                                FontSize="16"
+                                Glyph="&#xE8E5;"
+                                IsHitTestVisible="False" />
+                        </Button>
+                    </Grid>
+
+                    <InfoBar x:Name="ComparisonResultInfoBar" IsClosable="False" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="InProgressState">
+                    <VisualState.StateTriggers>
+                        <StateTrigger x:Name="InProgressStateTrigger" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="HashAlgorithmSelector.IsEnabled" Value="False" />
+                        <Setter Target="DragDropArea.AllowDrop" Value="False" />
+                        <Setter Target="DragDropOrBrowsePanel.Visibility" Value="Collapsed" />
+                        <Setter Target="InProgress_ProgressRing.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DragEnterState">
+                    <VisualState.StateTriggers>
+                        <StateTrigger x:Name="DragEnterStateTrigger" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DragDropArea_Rectangle.Stroke" Value="{ThemeResource FocusStrokeColorOuterBrush}" />
+                        <Setter Target="DragDropArea_Rectangle.Fill" Value="{ThemeResource LayerFillColorDefaultBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </ScrollViewer>
+</Page>

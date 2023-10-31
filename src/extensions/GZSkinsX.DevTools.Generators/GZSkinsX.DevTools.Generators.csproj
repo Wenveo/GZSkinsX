@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>GZSkinsX.DevTools.Generators</RootNamespace>
+    <AssemblyName>GZSkinsX.DevTools.Generators.x</AssemblyName>
+    <RuntimeIdentifiers>win10-x64;</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <Version>0.0.1</Version>
+    <EnableStrongName>true</EnableStrongName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\appx\GZSkinsX.Appx.Contracts\GZSkinsX.Appx.Contracts.csproj" />
+  </ItemGroup>
+</Project>
