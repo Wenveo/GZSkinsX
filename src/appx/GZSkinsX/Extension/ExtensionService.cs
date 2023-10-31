@@ -13,8 +13,6 @@ using System.Linq;
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
 
-using Microsoft.UI.Xaml;
-
 namespace GZSkinsX.Extension;
 
 /// <summary>
