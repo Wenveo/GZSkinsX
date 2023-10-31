@@ -19,7 +19,7 @@
             Margin="12,0,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
-            <FontIcon FontFamily="{Binding FontFamily, FallbackValue={x:Null}}" Glyph="{Binding Glyph, FallbackValue={x:Null}}" />
+            <ContentPresenter Content="{x:Bind Icon}" />
         </Viewbox>
         <TextBlock
             Grid.Column="1"

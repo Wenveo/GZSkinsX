@@ -171,14 +171,7 @@ internal sealed class NavigationViewManager : INavigationViewManager
                     {
                         if (header.IndexOf(queryToken, StringComparison.CurrentCultureIgnoreCase) is not -1)
                         {
-                            if (item.Icon is FontIcon fontIcon)
-                            {
-                                yield return new(header, fontIcon.Glyph, fontIcon.FontFamily, ctx.Metadata.Guid);
-                            }
-                            else
-                            {
-                                yield return new(header, string.Empty, item.FontFamily, ctx.Metadata.Guid);
-                            }
+                            yield return new(header, ctx.Value.Icon!, ctx.Metadata.Guid);
                         }
                     }
                 }

@@ -7,7 +7,7 @@
 
 using GZSkinsX.Contracts.Helpers;
 
-using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GZSkinsX.Appx.Navigation;
 
@@ -18,14 +18,12 @@ namespace GZSkinsX.Appx.Navigation;
 /// <param name="Glyph">用于呈现的图标字形。</param>
 /// <param name="FontFamily">用于呈现的图标字体。</param>
 /// <param name="GuidString">与导航项关联的 <see cref="System.Guid"/> 字符串值。</param>
-internal sealed record class QueryNavigationViewItem(string Title, string Glyph, FontFamily FontFamily, string GuidString)
+internal sealed record class QueryNavigationViewItem(string Title, IconElement Icon, string GuidString)
 {
     /// <summary>
     /// 表示空的查询项。
     /// </summary>
-    public static QueryNavigationViewItem Empty = new(
-        ResourceHelper.GetLocalized("GZSkinsX.Appx.Navigation/Resources/NavigationView_Query_NotResultFound"),
-        string.Empty, FontFamily.XamlAutoFontFamily, string.Empty);
+    public static QueryNavigationViewItem Empty = new(ResourceHelper.GetLocalized("GZSkinsX.Appx.Navigation/Resources/NavigationView_Query_NotResultFound"), null!, string.Empty);
 
     /// <summary>
     /// 表示空的查询项的集合。
