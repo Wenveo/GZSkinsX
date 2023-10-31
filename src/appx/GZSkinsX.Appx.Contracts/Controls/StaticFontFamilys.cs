@@ -23,4 +23,9 @@ internal static class StaticFontFamilys
     /// See <see href="https://learn.microsoft.com/zh-cn/windows/apps/design/style/segoe-fluent-icons-font"/>
     /// </summary>
     public static readonly FontFamily SegoeMDL2Assets = new("/Assets/Fonts/Segoe MDL2 Assets.ttf#Segoe MDL2 Assets");
+
+    /// <summary>
+    /// See <see href="https://github.com/microsoft/fluentui-system-icons"/>
+    /// </summary>
+    public static readonly FontFamily FluentSystemIcons = new("/Assets/Fonts/FluentSystemIcons-Resizable.ttf#FluentSystemIcons-Resizable");
 }
