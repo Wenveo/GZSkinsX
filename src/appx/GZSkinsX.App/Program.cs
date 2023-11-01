@@ -44,7 +44,7 @@ internal static partial class Program
     {
         if (EnsureWindowsApp() is false)
         {
-            Environment.Exit(MessageBoxW(0, $"请确保该应用已被正常安装。{Environment.NewLine}(Make sure the application is installed correctly.)", string.Empty, 0));
+            Environment.Exit(MessageBoxW(0, $"请确保该应用已被正常安装！{Environment.NewLine}(Please ensure that the application is properly installed!)", string.Empty, 0));
         }
 
         XamlCheckProcessRequirements();
