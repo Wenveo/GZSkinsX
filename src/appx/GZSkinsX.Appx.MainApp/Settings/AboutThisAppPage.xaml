@@ -12,8 +12,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer Padding="24,0,24,24">
-        <StackPanel>
+    <ScrollViewer>
+        <StackPanel Margin="24,0,24,24">
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
