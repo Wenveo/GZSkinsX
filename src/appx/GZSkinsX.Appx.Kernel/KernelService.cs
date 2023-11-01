@@ -59,6 +59,11 @@ internal sealed class KernelService : IKernelService
     private readonly StringPool _stringPool = new();
 
     /// <summary>
+    /// 用于计算校验和的 XxHash64 算法实例。
+    /// </summary>
+    private readonly XxHash64 _xxHash64 = new();
+
+    /// <summary>
     /// 获取中文字符集的字符编码。
     /// </summary>
     private readonly Encoding _gbkEncoding;
@@ -279,14 +284,19 @@ internal sealed class KernelService : IKernelService
     /// <param name="modulePath">输入的文件。</param>
     /// <param name="checksumStr">校验和的字符串值。</param>
     /// <returns>当成功校验目标文件并匹配校验和时返回 true，否则将返回 false。</returns>
-    private static bool ValidationChecksum(string modulePath, string checksumStr)
+    private bool ValidationChecksum(string modulePath, string checksumStr)
     {
         if (ulong.TryParse(checksumStr, out var checksum))
         {
+            FileStream? stream = null;
             try
             {
-                var bytes = File.ReadAllBytes(modulePath);
-                var result = XxHash64.HashToUInt64(bytes);
+                stream = new FileStream(modulePath, FileMode.Open,
+                            FileAccess.Read, FileShare.ReadWrite);
+
+                _xxHash64.Append(stream);
+
+                var result = _xxHash64.GetCurrentHashAsUInt64();
                 return result == checksum;
             }
             catch (Exception excp)
@@ -297,6 +307,11 @@ internal sealed class KernelService : IKernelService
                     Failed to calculate file checksum "{modulePath}".
                     {excp}: "{excp.Message}" {Environment.NewLine}{excp.StackTrace}".
                     """);
+            }
+            finally
+            {
+                stream?.Dispose();
+                _xxHash64.Reset();
             }
         }
 

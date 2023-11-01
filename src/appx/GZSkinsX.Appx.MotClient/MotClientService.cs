@@ -44,6 +44,16 @@ internal sealed partial class MotClientAgentService : IMotClientService
     ];
 
     /// <summary>
+    /// 用于计算文件路径哈希的 XxHash3 算法实例。
+    /// </summary>
+    private readonly XxHash64 _xxHash64 = new();
+
+    /// <summary>
+    /// 用于计算文件校验和的 XxHash3 算法实例。
+    /// </summary>
+    private readonly XxHash3 _xxHash3 = new();
+
+    /// <summary>
     /// 获取用于存放服务组件的根文件夹路径。
     /// </summary>
     private string MotClientRootFolder { get; }
@@ -378,7 +388,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
     }
 
     /// <inheritdoc cref="VerifyContentIntegrityAsync"/>
-    private static async Task<bool> VerifyContentIntegrityCoreAsync(string workingDirectory)
+    private async Task<bool> VerifyContentIntegrityCoreAsync(string workingDirectory)
     {
         var blockmapFile = Path.Combine(workingDirectory, "_metadata", "blockmap.json");
         if (File.Exists(blockmapFile) is false)
@@ -386,10 +396,11 @@ internal sealed partial class MotClientAgentService : IMotClientService
             return false;
         }
 
+        FileStream? fileStream = null;
         MTPackageBlockMap? localBlockMap;
         try
         {
-            using var fileStream = new FileStream(blockmapFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            fileStream = new FileStream(blockmapFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             localBlockMap = await JsonSerializer.DeserializeAsync<MTPackageBlockMap>(fileStream);
         }
         catch (Exception excp)
@@ -403,6 +414,10 @@ internal sealed partial class MotClientAgentService : IMotClientService
 
             return false;
         }
+        finally
+        {
+            fileStream?.Dispose();
+        }
 
         if (localBlockMap is null || localBlockMap.Blocks is null)
         {
@@ -414,8 +429,16 @@ internal sealed partial class MotClientAgentService : IMotClientService
             b => ulong.Parse(b.Checksum, CultureInfo.InvariantCulture));
 
         var parentFolderPathLength = workingDirectory.Length + 1;
-        var hashToPath = Directory.EnumerateFiles(workingDirectory, "*", SearchOption.AllDirectories).ToFrozenDictionary(
-            a => XxHash64.HashToUInt64(Encoding.UTF8.GetBytes(a[parentFolderPathLength..].Replace('\\', '/'))), b => b);
+        var hashToPath = Directory.EnumerateFiles(workingDirectory, "*", SearchOption.AllDirectories)
+            .ToFrozenDictionary(elementSelector: path => path, keySelector: path =>
+            {
+                var relativePath = path[parentFolderPathLength..].Replace('\\', '/');
+
+                _xxHash64.Reset();
+                _xxHash64.Append(Encoding.UTF8.GetBytes(relativePath));
+                return _xxHash64.GetCurrentHashAsUInt64();
+            });
+
 
         foreach (var item in hashToChecksum)
         {
@@ -426,7 +449,13 @@ internal sealed partial class MotClientAgentService : IMotClientService
 
             try
             {
-                if (XxHash3.HashToUInt64(File.ReadAllBytes(path)) != item.Value)
+                fileStream = new FileStream(path, FileMode.Open,
+                    FileAccess.Read, FileShare.ReadWrite, 4096, true);
+
+                _xxHash3.Reset();
+                await _xxHash3.AppendAsync(fileStream);
+
+                if (_xxHash3.GetCurrentHashAsUInt64() != item.Value)
                 {
                     return false;
                 }
@@ -441,6 +470,10 @@ internal sealed partial class MotClientAgentService : IMotClientService
                     """);
 
                 return false;
+            }
+            finally
+            {
+                fileStream?.Dispose();
             }
         }
 
