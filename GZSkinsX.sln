@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{FD663BF3-1C0C-49E2-9E59-08E495492D41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX", "src\appx\GZSkinsX\GZSkinsX.csproj", "{573D5BFE-1881-4854-BDF8-CA3BF545A52B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.App", "src\appx\GZSkinsX.App\GZSkinsX.App.csproj", "{573D5BFE-1881-4854-BDF8-CA3BF545A52B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.Appx.AccessCache", "src\appx\GZSkinsX.Appx.AccessCache\GZSkinsX.Appx.AccessCache.csproj", "{9E3A58AD-A367-4043-AFF5-F3C717C87B28}"
 EndProject
