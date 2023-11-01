@@ -124,7 +124,7 @@ internal sealed partial class HashGeneratorPage : Page
 
         void GenerateResults(ReadOnlySpan<byte> data, bool isOutputHexNumbers)
         {
-            static uint CalcFNV1aHash(ReadOnlySpan<byte> data)
+            static uint CalcFNV1aHash(scoped ReadOnlySpan<byte> data)
             {
                 var hashCode = 2166136261U;
                 for (var i = 0; i < data.Length; i++)

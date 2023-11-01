@@ -584,7 +584,7 @@ internal sealed partial class MotClientAgentService : IMotClientService
         catch (Exception excp)
         {
             AppxContext.LoggingService.LogError(
-                "GZSkinsX.App.Mounter.MotClientService.TryGetLocalMTPackageMetadata",
+                "GZSkinsX.App.MotClient.MotClientService.TryGetLocalMTPackageMetadata",
                 $"""
                 Failed to parse mt package data. "{excp.Message}".
                 "{excp}: {excp.StackTrace}."
