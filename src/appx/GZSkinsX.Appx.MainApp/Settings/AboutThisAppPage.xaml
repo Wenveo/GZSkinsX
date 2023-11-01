@@ -13,7 +13,7 @@
     mc:Ignorable="d">
 
     <ScrollViewer>
-        <StackPanel Margin="24,0,24,24">
+        <StackPanel Margin="24,0,24,24" Spacing="4">
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition FromVerticalOffset="200" IsStaggeringEnabled="True" />
