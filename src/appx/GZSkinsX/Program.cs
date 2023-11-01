@@ -214,11 +214,21 @@ internal static partial class Program
             {
                 Debug.Assert(type.GenericTypeArguments.Length == 1);
                 var itemType = type.GenericTypeArguments.Single();
-                if (itemType.IsGenericType && itemType.GetGenericTypeDefinition() == typeof(Lazy<,>))
+                if (itemType is { IsGenericType: true })
                 {
-                    var genericTypes = itemType.GenericTypeArguments;
-                    Debug.Assert(genericTypes != null && genericTypes.Length == 2);
-                    return Unsafe.As<T>(exportProvider.GetExports(genericTypes[0], genericTypes[1], null));
+                    if (itemType.GetGenericTypeDefinition() == typeof(Lazy<,>))
+                    {
+                        var genericTypes = itemType.GenericTypeArguments;
+                        Debug.Assert(genericTypes != null && genericTypes.Length == 2);
+                        return Unsafe.As<T>(exportProvider.GetExports(genericTypes[0], genericTypes[1], null));
+                    }
+
+                    if (itemType.GetGenericTypeDefinition() == typeof(Lazy<>))
+                    {
+                        Debug.Assert(itemType.GenericTypeArguments.Length == 1);
+                        var lazyValueType = itemType.GenericTypeArguments.Single();
+                        return Unsafe.As<T>(exportProvider.GetExports(lazyValueType, typeof(IDictionary<string, object>), null));
+                    }
                 }
 
                 return Unsafe.As<T>(exportProvider.GetExportedValues(itemType, null));
