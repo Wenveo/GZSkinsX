@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Packages.props = Directory.Packages.props
 		LICENSE.txt = LICENSE.txt
 		nuget.config = nuget.config
+		README.md = README.md
+		SharedKey.snk = SharedKey.snk
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{FD663BF3-1C0C-49E2-9E59-08E495492D41}"
