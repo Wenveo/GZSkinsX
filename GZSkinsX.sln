@@ -57,6 +57,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GZSkinsX.DevTools.Generators", "src\extensions\GZSkinsX.DevTools.Generators\GZSkinsX.DevTools.Generators.csproj", "{6125F7CA-E8F6-4624-B4EA-68EFBE986EB6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifacts", "Artifacts", "{F54F8B6E-77B3-43BB-8B68-092306FE3F9D}"
+	ProjectSection(SolutionItems) = preProject
+		artifacts\Screenshot(1).png = artifacts\Screenshot(1).png
+		artifacts\Screenshot(2).png = artifacts\Screenshot(2).png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +243,7 @@ Global
 		{09E1DC41-8C6F-4803-85A6-A5F3CCF5F3D1} = {FD663BF3-1C0C-49E2-9E59-08E495492D41}
 		{375E74F6-5F5D-40E6-9F3F-17A2483E9518} = {FD663BF3-1C0C-49E2-9E59-08E495492D41}
 		{6125F7CA-E8F6-4624-B4EA-68EFBE986EB6} = {375E74F6-5F5D-40E6-9F3F-17A2483E9518}
+		{F54F8B6E-77B3-43BB-8B68-092306FE3F9D} = {F0FC6B6C-E90E-446D-A448-FE21B443EFAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E782B25F-825D-48AA-97CE-60A31C18A8E8}

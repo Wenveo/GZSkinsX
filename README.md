@@ -7,6 +7,8 @@
 	<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
 </a>
 
+![Screenshot1](https://raw.githubusercontent.com/Wenveo/GZSkinsX/dev/Artifacts/Screenshot(1).png)
+![Screenshot2](https://raw.githubusercontent.com/Wenveo/GZSkinsX/dev/Artifacts/Screenshot(2).png)
 
 ## 构建
 
