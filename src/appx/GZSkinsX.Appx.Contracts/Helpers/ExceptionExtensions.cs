@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 using GZSkinsX.Contracts.Appx;
 
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 
 namespace GZSkinsX.Contracts.Helpers;
 
@@ -24,23 +24,19 @@ public static class ExceptionExtensions
 
     public static async Task ShowErrorDialogAsync(this Exception excp, string? title)
     {
+        var paragraph = new Paragraph();
+        paragraph.Inlines.Add(new Run
+        {
+            Text = $"{excp}: \"{excp.Message}\".{Environment.NewLine}    {excp.StackTrace}"
+        });
+
+        var richTextBlock = new RichTextBlock();
+        richTextBlock.Blocks.Add(paragraph);
+
         await new ContentDialog
         {
-            Content = new ScrollViewer
-            {
-                Content = new TextBlock
-                {
-                    Text =
-                    $"""
-                    {excp}: "{excp.Message}"
-
-                        {excp.StackTrace}
-                    """,
-                    TextWrapping = TextWrapping.Wrap
-                }
-            },
-
             DefaultButton = ContentDialogButton.Close,
+            Content = new ScrollViewer { Content = richTextBlock },
             Title = title ?? ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/Common_ErrorDialog_Title"),
             CloseButtonText = ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/Common_ErrorDialog_CloseButtonText"),
             XamlRoot = AppxContext.AppxWindow.MainWindow.Content.XamlRoot
