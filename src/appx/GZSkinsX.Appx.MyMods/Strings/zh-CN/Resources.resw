@@ -217,7 +217,7 @@
     <value>红色血液</value>
   </data>
   <data name="Settings_Mods_BrowseFolder" xml:space="preserve">
-    <value>浏览</value>
+    <value>更改</value>
   </data>
   <data name="Settings_Mods_ModFolder.Header" xml:space="preserve">
     <value>模组目录</value>
