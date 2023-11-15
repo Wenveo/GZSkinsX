@@ -106,7 +106,7 @@ internal sealed partial class ShellWindow : Window
         PInvoke.SetWindowSubclass((HWND)WindowHandle, SubClassDelegate, 107, 0);
     }
 
-    private void NCMouseLeftButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
+    private void NCMouseLeftButtonDown(NonClientSourceManager sender, NonClientMouseButtonEventArgs args)
     {
         if (Content is { XamlRoot: { } xamlRoot })
         {
@@ -129,7 +129,7 @@ internal sealed partial class ShellWindow : Window
         }
     }
 
-    private void NCMouseRightButtonDown(NonClientSourceManager sender, NonClientSourceMouseButtonEventArgs args)
+    private void NCMouseRightButtonDown(NonClientSourceManager sender, NonClientMouseButtonEventArgs args)
     {
         ShowCustomSystemMenu(args.Position);
     }

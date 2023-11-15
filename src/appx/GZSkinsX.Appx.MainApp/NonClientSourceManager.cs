@@ -21,7 +21,7 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace GZSkinsX.Appx.MainApp;
 
-internal sealed record class NonClientSourceMouseButtonEventArgs(Point Position);
+internal sealed record class NonClientMouseButtonEventArgs(Point Position);
 
 internal sealed partial class NonClientSourceManager
 {
@@ -71,9 +71,9 @@ internal sealed partial class NonClientSourceManager
         }
     }
 
-    public event TypedEventHandler<NonClientSourceManager, NonClientSourceMouseButtonEventArgs>? MouseLeftButtonDown;
+    public event TypedEventHandler<NonClientSourceManager, NonClientMouseButtonEventArgs>? MouseLeftButtonDown;
 
-    public event TypedEventHandler<NonClientSourceManager, NonClientSourceMouseButtonEventArgs>? MouseRightButtonDown;
+    public event TypedEventHandler<NonClientSourceManager, NonClientMouseButtonEventArgs>? MouseRightButtonDown;
 
     private readonly WNDPROC _priorWindowProc;
     private readonly WNDPROC _windowProc;
