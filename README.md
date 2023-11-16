@@ -26,7 +26,7 @@ git clone https://github.com/Wenveo/GZSkinsX
 
 ### 3. 编译此项目
 
-- 在 Visual Studio 中打开 `GZSkinsX.sln` 解决方案，找到 `GZSkinsX.App` 右键并点击 `设为启动项目`。
+- 在 Visual Studio 中打开 `GZSkinsX.sln` 解决方案，找到 `GZSkinsX.App` 右键并点击 `设为启动项目`，然后将目标平台设为 `x64`。
 - 展开解决方案视图中 `GZSkinsX.Appx.Contracts` 项目的文件列表，找到 `Appx/AppxContext.Services.g.tt` T4 模板文件将其打开，手动保存以从模板中生成必要的代码。
 - 等待包管理器还原依赖项，然后按 F5 编译运行！
 
