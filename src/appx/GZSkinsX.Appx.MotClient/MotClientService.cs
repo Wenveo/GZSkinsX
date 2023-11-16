@@ -736,19 +736,28 @@ internal sealed partial class MotClientAgentService : IMotClientService
             return;
         }
 
-        var targetFolderName = MotClientSettings.WorkingDirectory;
+        var targetFolderFullName = MotClientSettings.WorkingDirectory;
         foreach (var item in new DirectoryInfo(MotClientRootFolder).EnumerateFileSystemInfos())
         {
             // 当匹配到与工作目录相同的文件夹时，跳过删除操作
             // 除此之外，其余的所有文件/文件夹都将被删除。
-            if (item is not DirectoryInfo dirInfo || !StringComparer.Ordinal.Equals(dirInfo.Name, targetFolderName))
+            var dirInfo = item as DirectoryInfo;
+            if (dirInfo is not null && StringComparer.Ordinal.Equals(dirInfo.FullName, targetFolderFullName))
             {
                 continue;
             }
 
             try
             {
-                item.Delete();
+                if (dirInfo is not null)
+                {
+                    // 强制删除文件夹以及里面的文件
+                    dirInfo.Delete(true);
+                }
+                else
+                {
+                    item.Delete();
+                }
             }
             catch (Exception excp)
             {
