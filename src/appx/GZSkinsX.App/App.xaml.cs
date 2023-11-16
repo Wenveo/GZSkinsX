@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 using GZSkinsX.Contracts.Appx;
 using GZSkinsX.Contracts.Extension;
+using GZSkinsX.Contracts.Helpers;
 using GZSkinsX.Contracts.WindowManager;
 using GZSkinsX.Extension;
 
@@ -49,7 +50,15 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        UnhandledException += OnUnhandledException;
         CompositionTarget.Rendering += OnRendering;
+    }
+
+    private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    {
+        var message = $"{e.Exception}: \"{e.Exception.Message}\". {Environment.NewLine}    {e.Exception.StackTrace}";
+        Program.MessageBoxW(nint.Zero, message, ResourceHelper.GetLocalized("GZSkinsX.Appx.Contracts/Resources/Common_ErrorDialog_Title"), uint.MinValue);
+        AppxContext.LoggingService.LogError("GZSkinsX.App", $"An unhandled exception causes an application to crash. {Environment.NewLine} {message}");
     }
 
     /// <summary>

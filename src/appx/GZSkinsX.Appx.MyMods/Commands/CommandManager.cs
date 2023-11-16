@@ -189,66 +189,73 @@ internal static class CommandManager
             return;
         }
 
-        switch (commandCode)
+        try
         {
-            case CommandCodes.Delete:
-                OnDelete(myModsView);
-                break;
+            switch (commandCode)
+            {
+                case CommandCodes.Delete:
+                    OnDelete(myModsView);
+                    break;
 
-            case CommandCodes.Import:
-                OnImport(myModsView);
-                break;
+                case CommandCodes.Import:
+                    OnImport(myModsView);
+                    break;
 
-            case CommandCodes.Install:
-                OnInstall(myModsView);
-                break;
+                case CommandCodes.Install:
+                    OnInstall(myModsView);
+                    break;
 
-            case CommandCodes.Uninstall:
-                OnUninstall(myModsView);
-                break;
+                case CommandCodes.Uninstall:
+                    OnUninstall(myModsView);
+                    break;
 
-            case CommandCodes.ClearAllInstalled:
-                OnClearAllInstalled(myModsView);
-                break;
+                case CommandCodes.ClearAllInstalled:
+                    OnClearAllInstalled(myModsView);
+                    break;
 
-            case CommandCodes.Copy:
-                OnCopy(myModsView);
-                break;
+                case CommandCodes.Copy:
+                    OnCopy(myModsView);
+                    break;
 
-            case CommandCodes.CopyAsPath:
-                OnCopyAsPath(myModsView);
-                break;
+                case CommandCodes.CopyAsPath:
+                    OnCopyAsPath(myModsView);
+                    break;
 
-            case CommandCodes.OpenInFileExplorer:
-                OnOpenInFileExplorer(myModsView);
-                break;
+                case CommandCodes.OpenInFileExplorer:
+                    OnOpenInFileExplorer(myModsView);
+                    break;
 
-            case CommandCodes.OpenModFolder:
-                OnOpenModFolder(myModsView);
-                break;
+                case CommandCodes.OpenModFolder:
+                    OnOpenModFolder(myModsView);
+                    break;
 
-            case CommandCodes.OpenWadFolder:
-                OnOpenWadFolder(myModsView);
-                break;
+                case CommandCodes.OpenWadFolder:
+                    OnOpenWadFolder(myModsView);
+                    break;
 
-            case CommandCodes.Refresh:
-                OnRefresh(myModsView);
-                break;
+                case CommandCodes.Refresh:
+                    OnRefresh(myModsView);
+                    break;
 
-            case CommandCodes.SelectAll:
-                OnSelectAll(myModsView);
-                break;
+                case CommandCodes.SelectAll:
+                    OnSelectAll(myModsView);
+                    break;
 
-            case CommandCodes.DeselectAll:
-                OnDeselectAll(myModsView);
-                break;
+                case CommandCodes.DeselectAll:
+                    OnDeselectAll(myModsView);
+                    break;
 
-            case CommandCodes.Share:
-                OnShare(myModsView);
-                break;
+                case CommandCodes.Share:
+                    OnShare(myModsView);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception excp)
+        {
+            excp.ShowErrorDialogAsync().FireAndForget();
         }
     }
 

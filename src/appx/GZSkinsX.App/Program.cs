@@ -37,14 +37,14 @@ internal static partial class Program
 {
     // Causes incorrect output in the message window.
     [LibraryImport("User32.dll", StringMarshalling = StringMarshalling.Utf16)]
-    private static partial int MessageBoxW(nint hWnd, string lpText, string lpCaption, uint uType);
+    internal static partial int MessageBoxW(nint hWnd, string lpText, string lpCaption, uint uType);
 
     [STAThread]
     private static void Main(string[] args)
     {
         if (EnsureWindowsApp() is false)
         {
-            Environment.Exit(MessageBoxW(0, $"请确保该应用已被正常安装！{Environment.NewLine}(Please ensure that the application is properly installed!)", string.Empty, 0));
+            Environment.Exit(MessageBoxW(nint.Zero, $"请确保该应用已被正常安装！{Environment.NewLine}(Please ensure that the application is properly installed!)", string.Empty, uint.MinValue));
         }
 
         XamlCheckProcessRequirements();
