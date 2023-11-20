@@ -141,7 +141,7 @@ internal sealed partial class ChecksumGeneratorPage : Page
         }
 
         var selectedHashAlgorithm = HashAlgorithmSelector.SelectedIndex;
-        if (selectedHashAlgorithm is not (>= 0 and <= 5))
+        if (selectedHashAlgorithm is not (>= 0 and <= 6))
         {
             OutputTextBox.ClearValue(TextBox.TextProperty);
             return;
